@@ -1,0 +1,36 @@
+export type RenderQuality = 'low' | 'medium' | 'high'
+
+export type ProfileSettings = {
+  notifications: {
+    raid_alerts: boolean
+    production_ready: boolean
+    market_updates: boolean
+  }
+  render_quality: RenderQuality
+}
+
+export type PlayerProfile = {
+  display_name: string
+  avatar_url: string
+  settings: ProfileSettings
+  updated_at: string
+}
+
+export type Player = {
+  id: string
+  email: string
+  name: string
+  status: 'active' | 'suspended' | 'deleted'
+  role: 'user' | 'admin'
+  profile: PlayerProfile
+  created_at: string
+  updated_at: string
+}
+
+export type AuthResponse = {
+  player: Player
+  access_token: string
+  refresh_token: string
+  access_until: string
+  refresh_until: string
+}

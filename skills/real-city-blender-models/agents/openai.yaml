@@ -1,0 +1,13 @@
+interface:
+  display_name: "Real City Blender Models"
+  short_description: "Модели Real City через Blender MCP"
+  default_prompt: "Use $real-city-blender-models to create a Blender model for a Real City asset from the project docs through Blender MCP."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "blender"
+      description: "Blender MCP server for inspecting, creating, saving, and exporting Real City 3D assets."
+
+policy:
+  allow_implicit_invocation: true

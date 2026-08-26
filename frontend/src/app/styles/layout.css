@@ -1,0 +1,123 @@
+@media (max-width: 1180px) {
+  .resource-bar {
+    left: 72px;
+    right: 12px;
+  }
+
+  .profile-panel {
+    width: 248px;
+  }
+
+  .notification-stack {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --right-panel-width: 260px;
+  }
+
+  .resource-label {
+    max-width: 90px;
+  }
+
+  .resource-chip small,
+  .realtime-chip {
+    display: none;
+  }
+
+  .event-log {
+    right: 284px;
+  }
+
+}
+
+@media (max-width: 760px) {
+  .resource-bar {
+    left: 12px;
+    right: 12px;
+    top: 78px;
+  }
+
+  .profile-panel {
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+
+  .tool-bar {
+    top: auto;
+    bottom: 122px;
+    left: 10px;
+    grid-auto-flow: column;
+    width: auto;
+  }
+
+  .map-widget {
+    left: auto;
+    right: 12px;
+    bottom: 122px;
+  }
+
+  .map-widget-panel {
+    width: min(288px, calc(100vw - 24px));
+  }
+
+  .build-menu-backdrop {
+    padding: 12px;
+  }
+
+  .build-menu {
+    width: 100%;
+    max-height: calc(100vh - 24px);
+  }
+
+  .build-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .inspector {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    top: auto;
+    bottom: 12px;
+    height: 104px;
+    padding: 10px 12px;
+  }
+
+  .inspector .tabs,
+  .inspector-actions {
+    display: none;
+  }
+
+  .event-log,
+  .notification-stack {
+    display: none;
+  }
+
+  .drawer {
+    top: 132px;
+    bottom: 12px;
+    width: auto;
+    left: 12px;
+    right: 12px;
+  }
+
+  .drawer-left,
+  .drawer-right {
+    transform: translateY(calc(100% + 20px));
+  }
+
+  .drawer-open {
+    transform: translateY(0);
+  }
+
+  .map-origin {
+    left: 48%;
+    top: 22%;
+    transform: scale(0.78);
+  }
+}

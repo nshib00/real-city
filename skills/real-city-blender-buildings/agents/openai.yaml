@@ -1,0 +1,5 @@
+interface:
+  display_name: "Real City Blender Buildings"
+  short_description: "Blender-постройки в сеттинге Real City"
+  default_prompt: "Use $real-city-blender-buildings to create a Blender-ready building model brief for Real City."
+
