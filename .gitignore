@@ -21,9 +21,17 @@ coverage/
 .turbo/
 .parcel-cache/
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
 __pycache__/
 **/__pycache__/
 *.py[cod]
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Heavy reference dumps and scraped source material
 reference/
@@ -32,18 +40,38 @@ references/
 **/original-pages/
 **/original-assets/**
 **/original-pages/**
+**/reference-assets/
+**/reference-pages/
+**/source-assets/
+**/raw-assets/
+**/captures/
+**/screenshots/raw/
 
 # Generated asset exports
 tools/assets/**/exports/
 tools/assets/**/generated/
 tools/assets/**/renders/
+tools/assets/**/cache/
+tools/assets/**/tmp/
+tools/assets/**/work/
 frontend/src/assets/**/exports/
 frontend/src/assets/**/generated/
 frontend/src/assets/**/renders/
+frontend/src/assets/**/cache/
+frontend/src/assets/**/tmp/
+frontend/src/assets/**/work/
+frontend/public/assets/**/exports/
+frontend/public/assets/**/generated/
+frontend/public/assets/**/renders/
+frontend/public/assets/**/cache/
+frontend/public/assets/**/tmp/
+frontend/public/assets/**/work/
 
 # Heavy/raw art and 3D source files
 *.blend
 *.blend1
+*.blend2
+*.blend@
 *.fbx
 *.glb
 *.gltf
@@ -57,10 +85,35 @@ frontend/src/assets/**/renders/
 *.swf
 *.fla
 *.psd
+*.psb
 *.kra
 *.xcf
 *.ai
+*.eps
 *.sketch
+*.fig
+*.afdesign
+*.afphoto
+*.clip
+*.spp
+*.sbs
+*.sbsar
+*.ztl
+*.zpr
+
+# Heavy textures and baked image sources
+*.exr
+*.hdr
+*.hdri
+*.tif
+*.tiff
+*.bmp
+*.tga
+*.dds
+*.ktx
+*.ktx2
+*.basis
+*.raw
 
 # Large media and archives
 *.mp4
@@ -68,12 +121,35 @@ frontend/src/assets/**/renders/
 *.avi
 *.mkv
 *.webm
+*.wmv
+*.m4v
+*.mpeg
+*.mpg
 *.wav
 *.aiff
 *.flac
+*.ogg
+*.mp3
 *.zip
 *.tar
 *.tar.gz
 *.tgz
+*.tar.bz2
+*.tar.xz
 *.7z
 *.rar
+*.gz
+*.bz2
+*.xz
+*.iso
+
+# Dumps and local databases
+*.dump
+*.sql.gz
+*.sql.bz2
+*.sql.xz
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
