@@ -8,7 +8,7 @@ args = ["blender-mcp"]
 
 [mcp_servers.blender.env]
 BLENDER_HOST = "172.28.192.1"
-BLENDER_PORT = "9876"
+BLENDER_PORT = "9877"
 DISABLE_TELEMETRY = "true"
 UV_CACHE_DIR = "/tmp/real-city-uv-cache"
 UV_TOOL_DIR = "/tmp/real-city-uv-tools"
