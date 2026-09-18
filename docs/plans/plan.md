@@ -1,6 +1,6 @@
 # Real City — План реализации
 
-Пунктов плана выполнено: 109/270 (40.4%)
+Пунктов плана выполнено: 154/285 (54.0%)
 
 ## Подход к логированию
 
@@ -10,7 +10,7 @@
 
 - HTTP middleware: единый access log для каждого запроса (`request_id`, `method`, `path`, route pattern, `status`, `duration_ms`, `player_id`, `ip`, `user_agent`, размер ответа, error class без PII).
 - WebSocket gateway: lifecycle соединений (`connected`, `authenticated`, `subscribed`, `disconnected`), latency ping/pong, dropped messages, backpressure, reconnect и ошибки протокола.
-- Service layer: бизнес-события (`player.registered`, `building.placed`, `building.completed`, `resource.harvested`, `field.harvested`, `oil_well.claimed`, `fuel.consumed`, `ruin.captured`, `alliance.created`, `combat.resolved`, `monster.moved`, `territory.claimed`, `raid.started`) с идентификаторами сущностей и без секретов.
+- Service layer: бизнес-события (`player.registered`, `player.profile_updated`, `player.xp_awarded`, `player.level_changed`, `building.placed`, `building.completed`, `resource.harvested`, `field.harvested`, `oil_well.claimed`, `fuel.consumed`, `ruin.captured`, `alliance.created`, `combat.resolved`, `monster.moved`, `territory.claimed`, `raid.started`) с идентификаторами сущностей и без секретов.
 - Simulation layer: ticks, чанки, очереди действий, deterministic decisions, slow tick warnings, degraded режимы и конфликтующие команды игроков.
 - Adapter layer: технические события внешних систем (`postgres`, `redis`, `storage`, `worker`, `websocket`, `asset_pipeline`) — latency, retries, degraded fallback, provider status/error code.
 - Domain layer остаётся без логгера и внешних зависимостей.
@@ -59,6 +59,19 @@
 | 1.15 | Unit-тесты HTTP auth/player handlers и auth middleware | `backend/internal/adapter/http/handler/tests/`, `backend/internal/adapter/http/middleware/tests/` | ✅ |
 | 1.16 | Frontend tests auth store, API client interceptors, protected route | `frontend/src/features/auth/**/*.test.tsx`, `frontend/src/shared/api/**/*.test.ts` | ✅ |
 | 1.17 | Событийное логирование auth/player: register/login/logout/refresh, failed auth, profile update, password change; без email/token в логах | `backend/internal/service/auth.go`, `backend/internal/service/player.go` | ✅ |
+| 1.18 | Расширенная модель профиля из `docs/game-design/user-profile-and-levels.md`: публичная и приватная части, `avatarId`, `bannerId`, `title`, `level`, `xp`, `groupId`, `homeCenterId`, агрегированные score и правила скрытия точных ресурсов/уязвимостей | `backend/internal/domain/player/profile.go`, `backend/internal/contract/types.go`, `shared/src/index.ts` | ⏳ |
+| 1.19 | Миграции и репозитории для расширенного профиля: профильные поля, статистические проекции, XP events, badges, featured badges, milestones, last seen с публичным округлением | `backend/db/migrations/`, `backend/db/query/player_profile.sql`, `backend/internal/adapter/postgres/player_profile_repo.go` | ⏳ |
+| 1.20 | Каталог уровней 1-15: пороги опыта, названия, `lucide-react` иконки, открытия по уровням, progress model с `nextLevelXp: null` на максимальном уровне | `backend/internal/domain/player/levels.go`, `shared/player/levels.ts`, `frontend/src/features/player/levels.ts` | ⏳ |
+| 1.21 | `service/profile`: сборка собственного и публичного профиля, расчет прогресса уровня, выбранных значков, публичной активности, примерной области города и приватных настроек | `backend/internal/service/profile.go`, `backend/internal/service/player.go` | ⏳ |
+| 1.22 | `service/xp`: серверное начисление опыта только после завершенных действий, auditable log, soft caps, убывающая отдача и антифарм для связанных/повторяемых действий | `backend/internal/service/xp.go`, `backend/internal/domain/player/xp.go`, `backend/internal/domain/action/` | ⏳ |
+| 1.23 | Profile score projections: `territoryScore`, `economyScore`, `productionScore`, `storageScore`, `tradeScore`, `defenseScore`, `raidScore`, `monsterThreatHandled`, `protectionStatus` без раскрытия точных складов и скрытых cooldown | `backend/internal/service/profile_scores.go`, `backend/internal/service/territory.go`, `backend/internal/service/economy.go`, `backend/internal/service/threat.go` | ⏳ |
+| 1.24 | API профиля: `GET /players/{id}/profile` для публичной карточки, `GET /players/me/profile` для своего профиля, `PATCH /players/me/profile` для титула, аватара, баннера и закрепленных значков | `backend/internal/adapter/http/handler/player.go`, `backend/internal/adapter/http/dto/player.go`, `frontend/src/shared/api/player.ts` | ⏳ |
+| 1.25 | Интеграция XP с игровыми событиями: строительство, апгрейды, удержание ресурсных узлов, логистика, оборона, PvE, торговля, групповой вклад и исследование | `backend/internal/service/building.go`, `backend/internal/service/resource.go`, `backend/internal/service/combat.go`, `backend/internal/service/alliance.go`, `backend/internal/service/market.go` | ⏳ |
+| 1.26 | Frontend экран своего профиля: уровень, прогресс до следующего, открытые возможности, закрепленные значки, экономика/оборона/торговля/рейды, недавние события и подсказки по XP | `frontend/src/features/player/ProfilePanel.tsx`, `frontend/src/features/player/ProfileScreen.tsx`, `frontend/src/features/player/profileApi.ts` | ⏳ |
+| 1.27 | Frontend публичная карточка чужого игрока из карты/инспектора: имя, аватар, уровень, титул, группа, примерная зона поселения, публичные специализации, достижения и агрегированная сила | `frontend/src/features/player/PublicProfileCard.tsx`, `frontend/src/features/inspector/Inspector.tsx`, `frontend/src/features/world-map/` | ⏳ |
+| 1.28 | UI бейджей, milestone-истории, репутации и дипломатических меток: 3-5 закрепленных значков, публичные теги торговец/защитник/исследователь/налетчик/строитель | `frontend/src/features/player/BadgesPanel.tsx`, `frontend/src/features/player/MilestonesPanel.tsx`, `frontend/src/features/player/ReputationTags.tsx` | ⏳ |
+| 1.29 | Тесты backend для уровней, XP caps, приватности публичного профиля, score projections и audit log начислений опыта | `backend/internal/domain/player/*_test.go`, `backend/internal/service/profile_test.go`, `backend/internal/service/xp_test.go` | ⏳ |
+| 1.30 | Тесты frontend для своего/публичного профиля, прогресса уровня, скрытия приватных данных, выбора featured badges и responsive-состояний | `frontend/src/features/player/**/*.test.tsx`, `frontend/src/shared/api/player.test.ts` | ⏳ |
 
 ---
 
@@ -116,7 +129,7 @@
 | 4.2 | Каталог типов зданий MVP: ратуша, землянка, деревянный/каменный дом, многоквартирный дом, вилла, дворец, жилой небоскреб, workshop, warehouse, хранилище монет, market, tower, эволюция стен, road, Союзный дом | `backend/internal/domain/catalog/`, `shared/catalog/buildings.ts` | ✅ |
 | 4.3 | Миграции buildings/building_jobs и индексы по owner/chunk/footprint | `backend/db/migrations/` | ✅ |
 | 4.4 | SQL-запросы и Postgres-репозитории buildings/build jobs | `backend/db/query/building.sql`, `backend/internal/adapter/postgres/building_repo.go` | ✅ |
-| 4.5 | Правила размещения: footprint, занятость тайлов, terrain restrictions, дороги/стены, distance to owned territory | `backend/internal/domain/building/placement.go` | ✅ |
+| 4.5 | Правила размещения: footprint, занятость тайлов, terrain restrictions, дороги/стены; без требования контролируемой территории | `backend/internal/domain/building/placement.go` | ✅ |
 | 4.6 | `service/building`: place, cancel, complete, demolish, repair, list by chunk/player | `backend/internal/service/building.go` | ✅ |
 | 4.7 | HTTP endpoints: `POST /buildings`, `GET /buildings/{id}`, `PATCH /buildings/{id}`, `DELETE /buildings/{id}` | `backend/internal/adapter/http/handler/building.go`, `backend/internal/adapter/http/dto/building.go` | ✅ |
 | 4.8 | Frontend build catalog: категории, стоимость, время строительства, disabled state при нехватке ресурсов | `frontend/src/features/build-catalog/` | ✅ |
@@ -129,6 +142,8 @@
 | 4.15 | Правила времени строительства и апгрейдов: материалы, монеты, свободное население, занятость строителей, остановка/повреждение стройки | `backend/internal/domain/building/build_rules.go`, `backend/internal/service/building.go`, `shared/catalog/buildings.ts` | ✅ |
 | 4.16 | Лимит построек от ратуши: дороги не расходуют лимит, все остальные постройки расходуют; апгрейд ратуши повышает лимит | `backend/internal/domain/building/limits.go`, `backend/internal/domain/catalog/buildings.go`, `frontend/src/features/build-catalog/` | ✅ |
 | 4.17 | Жилая ветка: Землянка → деревянный дом → каменный дом → ветки `многоквартирный дом/жилой небоскреб` и `вилла/дворец` | `backend/internal/domain/catalog/housing.go`, `shared/catalog/buildings.ts`, `frontend/src/assets/buildings/housing/` | ✅ |
+| 4.18 | Таблицы характеристик для всех построек: уровни, прочность, время строительства, стоимость строительства/апгрейдов, население, размер, цепочки переходов и специальные параметры по категориям | `docs/buildings/**/*.md` | ⏳ |
+| 4.19 | Единый источник информации о постройках: вынести баланс из дублирующихся TS/Go каталогов в общий data-каталог и генерировать или валидировать `shared/catalog/buildings.ts` и `backend/internal/domain/catalog/buildings.go` из него | `data/buildings/`, `shared/catalog/buildings.ts`, `backend/internal/domain/catalog/buildings.go`, `tools/` | ⏳ |
 
 ---
 
@@ -184,22 +199,22 @@
 
 | # | Что | Файлы | Статус |
 |---|---|---|---|
-| 7.1 | Simulation config: tick interval, batch size, worker concurrency, lock TTL, catch-up limit, shutdown timeout | `backend/pkg/config/config.go`, `backend/.env.example` | ⏳ |
-| 7.2 | Domain action queue: `GameAction`, statuses, due_at, idempotency key, actor/target refs | `backend/internal/domain/action/`, `backend/db/migrations/` | ⏳ |
-| 7.3 | PostgreSQL action repository: append/fetch due with lock/skip locked/mark done/mark failed/retry | `backend/db/query/action.sql`, `backend/internal/adapter/postgres/action_repo.go` | ⏳ |
-| 7.4 | Transaction boundary для симуляции: unit of work, atomic state update + event append | `backend/internal/service/ports.go`, `backend/internal/adapter/postgres/uow.go` | ⏳ |
-| 7.5 | Simulation worker lifecycle: start/stop, leader lock, tick metrics, panic recovery | `backend/internal/worker/simulation/`, `backend/cmd/worker/` | ⏳ |
-| 7.6 | Завершение строительства по таймеру: activate building, update chunk version, publish event | `backend/internal/worker/simulation/building.go` | ⏳ |
-| 7.7 | Production tick: calculate finished production jobs, add resources with capacity handling, publish deltas | `backend/internal/worker/simulation/production.go` | ⏳ |
-| 7.8 | Resource respawn/depletion tick: restore nodes, spawn limited neutral nodes around active areas | `backend/internal/worker/simulation/resources.go` | ⏳ |
-| 7.9 | Basic offline progress: bounded catch-up при login/load player state | `backend/internal/service/economy.go`, `backend/internal/service/player.go` | ⏳ |
-| 7.10 | Outbox events для надёжной доставки realtime/email/future notifications | `backend/db/migrations/`, `backend/internal/domain/event/`, `backend/internal/adapter/postgres/outbox_repo.go` | ⏳ |
-| 7.11 | Dispatcher outbox → WS/event bus: retry, dead-letter, idempotent event ids | `backend/internal/worker/outbox_dispatcher.go` | ⏳ |
-| 7.12 | Unit-тесты simulation ticks, locking, idempotency, retries и event publication | `backend/internal/worker/simulation/**/*_test.go`, `backend/internal/service/tests/action_test.go` | ⏳ |
-| 7.13 | Логирование simulation/outbox: tick start/success/failure, slow tick, action result, retry/dead-letter | `backend/internal/worker/`, `backend/internal/service/` | ⏳ |
-| 7.14 | Tick полей и грядок: рост по стадиям, готовность урожая, супер-версия, начисление ресурсов и монет | `backend/internal/worker/simulation/fields.go`, `backend/internal/service/field.go` | ⏳ |
-| 7.15 | Tick топлива: потребление бензина активными заводами, остановка/замедление при нехватке, offline catch-up | `backend/internal/worker/simulation/production.go`, `backend/internal/domain/economy/fuel.go` | ⏳ |
-| 7.16 | Tick нефтяных скважин: добыча нефти, contested ownership, depletion/respawn или rate limiting добычи | `backend/internal/worker/simulation/oil.go`, `backend/internal/service/resource.go` | ⏳ |
+| 7.1 | Simulation config: tick interval, batch size, worker concurrency, lock TTL, catch-up limit, shutdown timeout | `backend/pkg/config/config.go`, `backend/.env.example` | ✅ |
+| 7.2 | Domain action queue: `GameAction`, statuses, due_at, idempotency key, actor/target refs | `backend/internal/domain/action/`, `backend/db/migrations/` | ✅ |
+| 7.3 | PostgreSQL action repository: append/fetch due with lock/skip locked/mark done/mark failed/retry | `backend/db/query/action.sql`, `backend/internal/adapter/postgres/action_repo.go` | ✅ |
+| 7.4 | Transaction boundary для симуляции: unit of work, atomic state update + event append | `backend/internal/service/ports.go`, `backend/internal/adapter/postgres/uow.go` | ✅ |
+| 7.5 | Simulation worker lifecycle: start/stop, leader lock, tick metrics, panic recovery | `backend/internal/worker/simulation/`, `backend/cmd/worker/` | ✅ |
+| 7.6 | Завершение строительства по таймеру: activate building, update chunk version, publish event | `backend/internal/worker/simulation/building.go` | ✅ |
+| 7.7 | Production tick: calculate finished production jobs, add resources with capacity handling, publish deltas | `backend/internal/worker/simulation/production.go` | ✅ |
+| 7.8 | Resource respawn/depletion tick: restore nodes, spawn limited neutral nodes around active areas | `backend/internal/worker/simulation/resources.go` | ✅ |
+| 7.9 | Basic offline progress: bounded catch-up при login/load player state | `backend/internal/service/economy.go`, `backend/internal/service/player.go` | ✅ |
+| 7.10 | Outbox events для надёжной доставки realtime/email/future notifications | `backend/db/migrations/`, `backend/internal/domain/event/`, `backend/internal/adapter/postgres/outbox_repo.go` | ✅ |
+| 7.11 | Dispatcher outbox → WS/event bus: retry, dead-letter, idempotent event ids | `backend/internal/worker/outbox_dispatcher.go` | ✅ |
+| 7.12 | Unit-тесты simulation ticks, locking, idempotency, retries и event publication | `backend/internal/worker/simulation/**/*_test.go`, `backend/internal/service/tests/action_test.go` | ✅ |
+| 7.13 | Логирование simulation/outbox: tick start/success/failure, slow tick, action result, retry/dead-letter | `backend/internal/worker/`, `backend/internal/service/` | ✅ |
+| 7.14 | Tick полей и грядок: рост по стадиям, готовность урожая, супер-версия, начисление ресурсов и монет | `backend/internal/worker/simulation/fields.go`, `backend/internal/service/field.go` | ✅ |
+| 7.15 | Tick топлива: потребление бензина активными заводами, остановка/замедление при нехватке, offline catch-up | `backend/internal/worker/simulation/production.go`, `backend/internal/domain/economy/fuel.go` | ✅ |
+| 7.16 | Tick нефтяных скважин: добыча нефти, contested ownership, depletion/respawn или rate limiting добычи | `backend/internal/worker/simulation/oil.go`, `backend/internal/service/resource.go` | ✅ |
 
 ---
 
@@ -207,40 +222,42 @@
 
 | # | Что | Файлы | Статус |
 |---|---|---|---|
-| 8.1 | Domain: `Monster`, `MonsterType`, `Threat`, `MovementIntent`, базовые AI states | `backend/internal/domain/monster/` | ⏳ |
-| 8.2 | Миграции monsters/monster_spawn_points/monster_events | `backend/db/migrations/` | ⏳ |
-| 8.3 | SQL-запросы и репозитории monsters/spawns | `backend/db/query/monster.sql`, `backend/internal/adapter/postgres/monster_repo.go` | ⏳ |
-| 8.4 | Каталог монстров MVP: roaming melee, resource guardian, ruins guardian с параметрами hp/damage/speed/aggro | `backend/internal/domain/catalog/monsters.go`, `shared/catalog/monsters.ts` | ⏳ |
-| 8.5 | AI movement tick: wandering, aggro radius, path constraints, chunk transitions | `backend/internal/worker/simulation/monster_ai.go` | ⏳ |
-| 8.6 | PvE combat rules: attack building/player unit placeholder, damage, death, loot/reward, cooldown | `backend/internal/domain/combat/`, `backend/internal/service/combat.go` | ⏳ |
-| 8.7 | Threat service: calculate danger around player territory, notify clients, inspector status | `backend/internal/service/threat.go` | ⏳ |
-| 8.8 | HTTP endpoints: list monsters in viewport, monster details, attack/defend action | `backend/internal/adapter/http/handler/monster.go`, `backend/internal/adapter/http/dto/monster.go` | ⏳ |
-| 8.9 | Frontend monster renderer: sprite states, health bars, aggro/target overlay, movement interpolation | `frontend/src/game/renderers/monsters.ts`, `frontend/src/features/monster/` | ⏳ |
-| 8.10 | Inspector states для выбранного монстра и угрозы рядом с постройками | `frontend/src/features/inspector/MonsterInspector.tsx`, `frontend/src/features/threat/` | ⏳ |
-| 8.11 | Realtime monster events: moved/attacked/damaged/died/spawned/despawned | `shared/events/monster.ts`, `frontend/src/features/monster/realtime.ts` | ⏳ |
-| 8.12 | Unit-тесты AI movement, aggro, combat calculations, loot, threat service | `backend/internal/domain/monster/tests/`, `backend/internal/domain/combat/tests/` | ⏳ |
-| 8.13 | Frontend tests monster rendering state reducers and inspector actions | `frontend/src/features/monster/**/*.test.tsx` | ⏳ |
-| 8.14 | Событийное логирование PvE: spawn/move/aggro/attack/damage/death/reward; поля `monster_id`, `monster_type`, `target_id`, `chunk_id` | `backend/internal/service/combat.go`, `backend/internal/worker/simulation/monster_ai.go` | ⏳ |
+| 8.1 | Domain: `Monster`, `MonsterType`, `Threat`, `MovementIntent`, базовые AI states | `backend/internal/domain/monster/` | ✅ |
+| 8.2 | Миграции monsters/monster_spawn_points/monster_events | `backend/db/migrations/` | ✅ |
+| 8.3 | SQL-запросы и репозитории monsters/spawns | `backend/db/query/monster.sql`, `backend/internal/adapter/postgres/monster_repo.go` | ✅ |
+| 8.4 | Каталог монстров MVP: roaming melee, resource guardian, ruins guardian с параметрами hp/damage/speed/aggro | `backend/internal/domain/catalog/monsters.go`, `shared/catalog/monsters.ts` | ✅ |
+| 8.5 | AI movement tick: wandering, aggro radius, path constraints, chunk transitions | `backend/internal/worker/simulation/monster_ai.go` | ✅ |
+| 8.6 | PvE combat rules: attack building/player unit placeholder, damage, death, loot/reward, cooldown | `backend/internal/domain/combat/`, `backend/internal/service/combat.go` | ✅ |
+| 8.7 | Threat service: calculate danger around player territory, notify clients, inspector status | `backend/internal/service/threat.go` | ✅ |
+| 8.8 | HTTP endpoints: list monsters in viewport, monster details, attack/defend action | `backend/internal/adapter/http/handler/monster.go`, `backend/internal/adapter/http/dto/monster.go` | ✅ |
+| 8.9 | Frontend monster renderer: sprite states, health bars, aggro/target overlay, movement interpolation | `frontend/src/game/renderers/monsters.ts`, `frontend/src/features/monster/` | ✅ |
+| 8.10 | Inspector states для выбранного монстра и угрозы рядом с постройками | `frontend/src/features/inspector/Inspector.tsx`, `frontend/src/features/threat/` | ✅ |
+| 8.11 | Realtime monster events: moved/attacked/damaged/died/spawned/despawned | `shared/events/monster.ts`, `frontend/src/features/world/realtime.ts` | ✅ |
+| 8.12 | Unit-тесты AI movement, aggro, combat calculations, loot, threat service | `backend/internal/domain/monster/tests/`, `backend/internal/domain/combat/tests/` | ✅ |
+| 8.13 | Frontend tests monster rendering state reducers and inspector actions | `frontend/src/game/renderers/monsters.test.ts`, `frontend/src/features/inspector/Inspector.test.tsx` | ✅ |
+| 8.14 | Событийное логирование PvE: spawn/move/aggro/attack/damage/death/reward; поля `monster_id`, `monster_type`, `target_id`, `chunk_id` | `backend/internal/service/combat.go`, `backend/internal/worker/simulation/monster_ai.go` | ✅ |
 
 ---
 
 ## Фаза 9 — Территория, владение и защита
 
+Статус: исключена из текущего направления. Контролируемая территория удалена из активной логики: игроки могут строить на любой свободной допустимой клетке без требования владения/влияния.
+
 | # | Что | Файлы | Статус |
 |---|---|---|---|
-| 9.1 | Domain: `Territory`, `Claim`, `ProtectionZone`, `Border`, `Influence` | `backend/internal/domain/territory/` | ⏳ |
-| 9.2 | Миграции territory_claims/protection_zones/border_events | `backend/db/migrations/` | ⏳ |
-| 9.3 | SQL-запросы и репозитории territory/protection | `backend/db/query/territory.sql`, `backend/internal/adapter/postgres/territory_repo.go` | ⏳ |
-| 9.4 | Правила влияния построек: city center, roads, towers, walls, contested zones | `backend/internal/domain/territory/rules.go` | ⏳ |
-| 9.5 | `service/territory`: recalculate claims, get owner/protection for tile, validate expansion | `backend/internal/service/territory.go` | ⏳ |
-| 9.6 | Интеграция placement rules с территорией: запрет/стоимость/риск строительства вне влияния | `backend/internal/domain/building/placement.go`, `backend/internal/service/building.go` | ⏳ |
-| 9.7 | Defense service: tower coverage, wall blocking, protected/offline status, vulnerability windows | `backend/internal/service/defense.go`, `backend/internal/domain/combat/defense.go` | ⏳ |
-| 9.8 | HTTP endpoints: territory by viewport, tile ownership/protection, player borders | `backend/internal/adapter/http/handler/territory.go`, `backend/internal/adapter/http/dto/territory.go` | ⏳ |
-| 9.9 | Frontend territory overlay: owner colors, contested/protected/danger states, opacity controls | `frontend/src/game/overlays/territory.ts`, `frontend/src/features/territory/` | ⏳ |
-| 9.10 | Inspector ownership blocks: owner, protection, contest status, allowed actions | `frontend/src/features/inspector/` | ⏳ |
-| 9.11 | Realtime territory events: claimed/lost/contested/protection changed | `shared/events/territory.ts`, `frontend/src/features/territory/realtime.ts` | ⏳ |
-| 9.12 | Unit-тесты territory rules, protection calculations, placement integration | `backend/internal/domain/territory/tests/`, `backend/internal/service/tests/territory_test.go` | ⏳ |
-| 9.13 | Событийное логирование территории: claim/recalculate/protection changed/contested, invalid expansion | `backend/internal/service/territory.go`, `backend/internal/service/defense.go` | ⏳ |
+| 9.1 | Domain: `Territory`, `Claim`, `ProtectionZone`, `Border`, `Influence` | `backend/internal/domain/territory/` | 🚫 |
+| 9.2 | Миграции territory_claims/protection_zones/border_events | `backend/db/migrations/` | 🚫 |
+| 9.3 | SQL-запросы и репозитории territory/protection | `backend/db/query/territory.sql`, `backend/internal/adapter/postgres/territory_repo.go` | 🚫 |
+| 9.4 | Правила влияния построек: city center, roads, towers, walls, contested zones | `backend/internal/domain/territory/territory.go` | 🚫 |
+| 9.5 | `service/territory`: recalculate claims, get owner/protection for tile, validate expansion | `backend/internal/service/territory.go` | 🚫 |
+| 9.6 | Интеграция placement rules с территорией: запрет/стоимость/риск строительства вне влияния | `backend/internal/service/building.go`, `backend/internal/service/territory.go` | 🚫 |
+| 9.7 | Defense service: tower coverage, wall blocking, protected/offline status, vulnerability windows | `backend/internal/service/defense.go`, `backend/internal/domain/territory/territory.go` | 🚫 |
+| 9.8 | HTTP endpoints: territory by viewport, tile ownership/protection, player borders | `backend/internal/adapter/http/handler/territory.go`, `backend/internal/adapter/http/dto/territory.go` | 🚫 |
+| 9.9 | Frontend territory overlay: owner colors, contested/protected/danger states, opacity controls | `frontend/src/game/overlays/territory.ts`, `frontend/src/features/territory/` | 🚫 |
+| 9.10 | Inspector ownership blocks: owner, protection, contest status, allowed actions | `frontend/src/features/inspector/` | 🚫 |
+| 9.11 | Realtime territory events: claimed/lost/contested/protection changed | `shared/events/territory.ts`, `frontend/src/features/world/realtime.ts` | 🚫 |
+| 9.12 | Unit-тесты territory rules, protection calculations, placement integration | `backend/internal/domain/territory/territory_test.go`, `backend/internal/service/territory_test.go` | 🚫 |
+| 9.13 | Событийное логирование территории: claim/recalculate/protection changed/contested, invalid expansion | `backend/internal/service/territory.go`, `backend/internal/service/defense.go` | 🚫 |
 
 ---
 
@@ -269,23 +286,23 @@
 
 | # | Что | Файлы | Статус |
 |---|---|---|---|
-| 11.1 | Domain alliances: `Alliance`, `AllianceMembership`, роли `leader/deputy/officer/member`, назначение казначея одному заместителю, invites, permissions | `backend/internal/domain/alliance/` | ⏳ |
-| 11.2 | Миграции alliances/alliance_members/alliance_invites/alliance_treasury/alliance_buffs/chat_messages/market_orders | `backend/db/migrations/` | ⏳ |
-| 11.3 | SQL-запросы и репозитории alliances/treasury/buffs/chat/market | `backend/db/query/alliance.sql`, `backend/db/query/chat.sql`, `backend/db/query/market.sql` | ⏳ |
-| 11.4 | `service/alliance`: create via Союзный дом, invite, accept/decline, roles, deputy limit 2, treasurer assignment, leave/kick, profile | `backend/internal/service/alliance.go` | ⏳ |
-| 11.5 | Alliance territory placeholders: союзное владение/помощь для руин, нефтяных скважин и защиты без full alliance warfare | `backend/internal/service/territory.go`, `backend/internal/domain/alliance/` | ⏳ |
-| 11.6 | Chat service: global/nearby/alliance/private channels, moderation flags, pagination | `backend/internal/service/chat.go` | ⏳ |
-| 11.7 | Market service MVP: create buy/sell order, cancel, match simple resource trades, fees | `backend/internal/service/market.go`, `backend/internal/domain/market/` | ⏳ |
-| 11.8 | HTTP endpoints alliances/chat/market | `backend/internal/adapter/http/handler/alliance.go`, `backend/internal/adapter/http/handler/chat.go`, `backend/internal/adapter/http/handler/market.go` | ⏳ |
-| 11.9 | Realtime chat and alliance events | `shared/events/chat.ts`, `shared/events/alliance.ts`, `frontend/src/features/chat/realtime.ts` | ⏳ |
-| 11.10 | Frontend alliance panel: membership, invites, roles, treasurer, Союзный дом, казна, баффы, статус союза | `frontend/src/features/alliance/` | ⏳ |
-| 11.11 | Frontend chat UI: channels, unread, moderation-safe rendering, reconnect handling | `frontend/src/features/chat/` | ⏳ |
-| 11.12 | Frontend market UI: orders list, create/cancel, inventory impact preview | `frontend/src/features/market/` | ⏳ |
-| 11.13 | Unit-тесты alliance/chat/market services and permissions | `backend/internal/service/tests/alliance_test.go`, `backend/internal/service/tests/chat_test.go`, `backend/internal/service/tests/market_test.go` | ⏳ |
-| 11.14 | Событийное логирование social: alliance create/invite/role/treasury/buff, chat moderation events, market order lifecycle | `backend/internal/service/alliance.go`, `backend/internal/service/chat.go`, `backend/internal/service/market.go` | ⏳ |
-| 11.15 | Союзный дом как постройка: уровни, лимит участников, открытие офицеров/казначея/баффов, синхронизация с каталогом зданий | `backend/internal/domain/catalog/alliance_buildings.go`, `backend/internal/service/alliance.go`, `frontend/src/features/build-catalog/` | ⏳ |
-| 11.16 | Союзная казна: пожертвования ресурсов, права расходования лидером/казначеем, ledger пожертвований и расходов | `backend/internal/domain/alliance/treasury.go`, `backend/internal/service/alliance_treasury.go`, `frontend/src/features/alliance/TreasuryPanel.tsx` | ⏳ |
-| 11.17 | Союзные баффы: покупка/апгрейд за казну, бонусы строительства/ремонта/добычи/обороны/руин/бензина с caps | `backend/internal/domain/alliance/buffs.go`, `backend/internal/service/alliance_buffs.go`, `shared/catalog/alliance-buffs.ts` | ⏳ |
+| 11.1 | Domain alliances: `Alliance`, `AllianceMembership`, роли `leader/deputy/officer/member`, назначение казначея одному заместителю, invites, permissions | `backend/internal/domain/alliance/` | ✅ |
+| 11.2 | Миграции alliances/alliance_members/alliance_invites/alliance_treasury/alliance_buffs/chat_messages/market_orders | `backend/db/migrations/` | ✅ |
+| 11.3 | SQL-запросы и репозитории alliances/treasury/buffs/chat/market | `backend/db/query/alliance.sql`, `backend/db/query/chat.sql`, `backend/db/query/market.sql` | 🟡 SQL + memory repo |
+| 11.4 | `service/alliance`: create via Союзный дом, invite, accept/decline, roles, deputy limit 2, treasurer assignment, leave/kick, profile | `backend/internal/service/alliance.go` | 🟡 без leave/kick |
+| 11.5 | Alliance territory placeholders: союзное владение/помощь для руин, нефтяных скважин и защиты без full alliance warfare | `backend/internal/service/territory.go`, `backend/internal/domain/alliance/` | ✅ |
+| 11.6 | Chat service: global/nearby/alliance/private channels, moderation flags, pagination | `backend/internal/service/chat.go` | ✅ |
+| 11.7 | Market service MVP: create buy/sell order, cancel, match simple resource trades, fees | `backend/internal/service/market.go`, `backend/internal/domain/market/` | 🟡 без авто-match |
+| 11.8 | HTTP endpoints alliances/chat/market | `backend/internal/adapter/http/handler/alliance.go`, `backend/internal/adapter/http/handler/chat.go`, `backend/internal/adapter/http/handler/market.go` | ✅ |
+| 11.9 | Realtime chat and alliance events | `shared/events/chat.ts`, `shared/events/alliance.ts`, `frontend/src/features/chat/realtime.ts` | 🟡 shared events |
+| 11.10 | Frontend alliance panel: membership, invites, roles, treasurer, Союзный дом, казна, баффы, статус союза | `frontend/src/features/alliance/` | 🟡 MVP |
+| 11.11 | Frontend chat UI: channels, unread, moderation-safe rendering, reconnect handling | `frontend/src/features/chat/` | 🟡 без unread |
+| 11.12 | Frontend market UI: orders list, create/cancel, inventory impact preview | `frontend/src/features/market/` | 🟡 в панели союза |
+| 11.13 | Unit-тесты alliance/chat/market services and permissions | `backend/internal/service/tests/alliance_test.go`, `backend/internal/service/tests/chat_test.go`, `backend/internal/service/tests/market_test.go` | ✅ |
+| 11.14 | Событийное логирование social: alliance create/invite/role/treasury/buff, chat moderation events, market order lifecycle | `backend/internal/service/alliance.go`, `backend/internal/service/chat.go`, `backend/internal/service/market.go` | ✅ |
+| 11.15 | Союзный дом как постройка: уровни, лимит участников, открытие офицеров/казначея/баффов, синхронизация с каталогом зданий | `backend/internal/domain/catalog/alliance_buildings.go`, `backend/internal/service/alliance.go`, `frontend/src/features/build-catalog/` | ✅ |
+| 11.16 | Союзная казна: пожертвования ресурсов, права расходования лидером/казначеем, ledger пожертвований и расходов | `backend/internal/domain/alliance/treasury.go`, `backend/internal/service/alliance_treasury.go`, `frontend/src/features/alliance/TreasuryPanel.tsx` | 🟡 пожертвования + ledger |
+| 11.17 | Союзные баффы: покупка/апгрейд за казну, бонусы строительства/ремонта/добычи/обороны/руин/бензина с caps | `backend/internal/domain/alliance/buffs.go`, `backend/internal/service/alliance_buffs.go`, `shared/catalog/alliance-buffs.ts` | 🟡 caps MVP |
 
 ---
 
@@ -293,15 +310,15 @@
 
 | # | Что | Файлы | Статус |
 |---|---|---|---|
-| 12.1 | Middleware CORS, request id, recoverer, body limit, timeout | `backend/internal/adapter/http/middleware/` | ⏳ |
-| 12.2 | Middleware logger production access log: route pattern, status class, response size, panic marker | `backend/internal/adapter/http/middleware/logger.go` | ⏳ |
-| 12.3 | Rate limiting по risky routes: auth, build/raid, chat, market, uploads, WS commands | `backend/internal/adapter/http/middleware/ratelimit.go`, `backend/internal/adapter/ws/ratelimit.go` | ⏳ |
-| 12.4 | Idempotency keys для небезопасных POST: building placement, raid start, market order, alliance invite | `backend/internal/adapter/http/middleware/idempotency.go`, `backend/internal/adapter/redis/idempotency_store.go` | ⏳ |
-| 12.5 | Сборка router с группами `/api/v1/auth`, `/players`, `/world`, `/buildings`, `/economy`, `/monsters`, `/territory`, `/raids`, `/alliances`, `/chat`, `/market`, `/admin`, `/health`, `/metrics`, `/swagger` | `backend/internal/adapter/http/router.go` | ⏳ |
-| 12.6 | Swagger/OpenAPI annotations и генерация контракта | `backend/docs/swagger/`, `backend/internal/adapter/http/handler/` | ⏳ |
-| 12.7 | Typed frontend API client из OpenAPI или ручной client с contract tests | `frontend/src/shared/api/`, `shared/api/` | ⏳ |
-| 12.8 | API compatibility policy: versioning, error shape, pagination, cursor rules, deprecation notes | `docs/architecture/api.md`, `backend/internal/adapter/http/dto/` | ⏳ |
-| 12.9 | Unit-тесты middleware/router smoke/OpenAPI freshness | `backend/internal/adapter/http/middleware/tests/`, `backend/internal/adapter/http/router_test.go` | ⏳ |
+| 12.1 | Middleware CORS, request id, recoverer, body limit, timeout | `backend/internal/adapter/http/middleware/` | ✅ |
+| 12.2 | Middleware logger production access log: route pattern, status class, response size, panic marker | `backend/internal/adapter/http/middleware/logger.go` | ✅ |
+| 12.3 | Rate limiting по risky routes: auth, build/raid, chat, market, uploads, WS commands | `backend/internal/adapter/http/middleware/ratelimit.go`, `backend/internal/adapter/ws/ratelimit.go` | ✅ |
+| 12.4 | Idempotency keys для небезопасных POST: building placement, raid start, market order, alliance invite | `backend/internal/adapter/http/middleware/idempotency.go`, `backend/internal/adapter/redis/idempotency_store.go` | 🟡 memory + adapter |
+| 12.5 | Сборка router с группами `/api/v1/auth`, `/players`, `/world`, `/buildings`, `/economy`, `/monsters`, `/raids`, `/alliances`, `/chat`, `/market`, `/admin`, `/health`, `/metrics`, `/swagger` | `backend/internal/adapter/http/router.go` | ✅ |
+| 12.6 | Swagger/OpenAPI annotations и генерация контракта | `backend/docs/swagger/`, `backend/internal/adapter/http/handler/` | 🟡 OpenAPI snapshot |
+| 12.7 | Typed frontend API client из OpenAPI или ручной client с contract tests | `frontend/src/shared/api/`, `shared/api/` | ✅ |
+| 12.8 | API compatibility policy: versioning, error shape, pagination, cursor rules, deprecation notes | `docs/architecture/api.md`, `backend/internal/adapter/http/dto/` | ✅ |
+| 12.9 | Unit-тесты middleware/router smoke/OpenAPI freshness | `backend/internal/adapter/http/middleware/tests/`, `backend/internal/adapter/http/router_test.go` | ✅ |
 
 ---
 
@@ -433,7 +450,7 @@
 | 20.6 | Operations docs: deploy, observability, troubleshooting, backup/restore, security | `docs/operations/` | ⏳ |
 | 20.7 | Game design docs: balance tables, building/resource/monster catalog, IP boundaries, future roadmap | `docs/game-design/`, `shared/balance/` | ⏳ |
 | 20.8 | Финальный паспорт playable MVP: реализованные функции, known limitations, проверочный чеклист, demo scenario | `docs/final-mvp.md` | ⏳ |
-| 20.9 | Синхронизация design docs с сеттингом Эолии: монеты, эолийские кристаллы, нефть/бензин, жилье, поля/грядки, Союзный дом, цикличный мир | `docs/visual-style-and-setting-options.md`, `docs/game-design/setting.md`, `docs/product/overview.md` | ⏳ |
+| 20.9 | Синхронизация design docs с сеттингом Эолии: монеты, эолийские кристаллы, нефть/бензин, жилье, поля/грядки, Союзный дом, цикличный мир | `docs/game-design/visual-style-and-setting-options.md`, `docs/game-design/setting.md`, `docs/product/overview.md` | ⏳ |
 
 ## Порядок зависимостей
 
@@ -454,6 +471,7 @@
     ├── Фаза 12 (middleware, роутер, Swagger и API-контракт) — параллельно с 1–11, но финализируется после стабилизации API
     └── Фаза 14 (ассеты, визуальный пайплайн и контент) — параллельно frontend/gameplay фазам, критична до polished MVP
 
+Расширенный профиль игрока из фазы 1 наращивается по мере готовности фаз 4, 5, 8, 9, 10 и 11: эти механики поставляют XP-события, публичные score, достижения, репутацию и групповой контекст.
 Фаза 13 (администрирование и модерация) — после auth, world, realtime и базовых gameplay-сущностей; diagnostics зависят от 7, 15 и 17.
 Фаза 16 (тестирование и качество) — наращивается по всем фазам, финальный проход после завершения прикладных фаз 1–15.
 Фаза 17 (observability) — после базового logger из 0 и realtime/simulation из 6–7; инфраструктура нужна до production-like деплоя.
