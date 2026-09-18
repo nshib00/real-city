@@ -1,6 +1,6 @@
 # Постройки Real City
 
-Документация по постройкам вынесена из общего файла сеттинга в отдельные категории. Общий сеттинг, карта, ресурсы, руины, персонажи и UI остаются в `docs/visual-style-and-setting-options.md`.
+Документация по постройкам вынесена из общего файла сеттинга в отдельные категории. Общий сеттинг, карта, ресурсы, руины, персонажи и UI остаются в `docs/game-design/visual-style-and-setting-options.md`.
 
 ## Категории
 
@@ -17,7 +17,8 @@
 - [Ратуша](center/town-hall.md)
 - [Обзор жилой ветки](houses/overview.md)
 - [Поля и грядки](fields/fields-and-beds.md)
+- [Грядка ветролиста](fields/windleaf-bed.md)
 - [Заводы и мастерские](industry/factories-and-workshops.md)
+- [Лесопильный двор](industry/sawmill-yard.md)
 - [Дороги и логистика](roads/roads-and-logistics.md)
 - [Союзный дом](social/alliance-house.md)
-
