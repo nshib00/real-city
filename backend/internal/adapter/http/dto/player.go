@@ -8,13 +8,18 @@ import (
 
 type Profile struct {
 	DisplayName string                 `json:"display_name"`
+	CityName    string                 `json:"city_name"`
 	AvatarURL   string                 `json:"avatar_url"`
+	Level       int                    `json:"level"`
+	XP          int                    `json:"xp"`
+	NextLevelXP int                    `json:"next_level_xp"`
 	Settings    player.ProfileSettings `json:"settings"`
 	UpdatedAt   time.Time              `json:"updated_at"`
 }
 
 type UpdateProfileRequest struct {
 	DisplayName string                 `json:"display_name"`
+	CityName    string                 `json:"city_name"`
 	AvatarURL   string                 `json:"avatar_url"`
 	Settings    player.ProfileSettings `json:"settings"`
 }
@@ -26,12 +31,21 @@ type ChangePasswordRequest struct {
 
 func Player(p player.Player) PlayerResponse {
 	return PlayerResponse{
-		ID:        p.ID,
-		Email:     p.Email,
-		Name:      p.Name,
-		Status:    p.Status,
-		Role:      p.Role,
-		Profile:   Profile{DisplayName: p.Profile.DisplayName, AvatarURL: p.Profile.AvatarURL, Settings: p.Profile.Settings, UpdatedAt: p.Profile.UpdatedAt},
+		ID:     p.ID,
+		Email:  p.Email,
+		Name:   p.Name,
+		Status: p.Status,
+		Role:   p.Role,
+		Profile: Profile{
+			DisplayName: p.Profile.DisplayName,
+			CityName:    p.Profile.CityName,
+			AvatarURL:   p.Profile.AvatarURL,
+			Level:       p.Profile.Level,
+			XP:          p.Profile.XP,
+			NextLevelXP: player.NextLevelXP(p.Profile.Level),
+			Settings:    p.Profile.Settings,
+			UpdatedAt:   p.Profile.UpdatedAt,
+		},
 		CreatedAt: p.CreatedAt,
 		UpdatedAt: p.UpdatedAt,
 	}

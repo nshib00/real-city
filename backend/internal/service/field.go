@@ -17,7 +17,10 @@ func NewFieldService(economyService *EconomyService) *FieldService {
 
 func (s *FieldService) HarvestWindleaf(ctx context.Context, playerID player.ID, super bool) (economy.Inventory, error) {
 	crop := economy.WindleafCrop()
-	reward := append([]economy.ResourceAmount(nil), crop.BaseReward...)
+	reward := make([]economy.ResourceAmount, 0, len(crop.BaseReward)+2)
+	if !super {
+		reward = append(reward, crop.BaseReward...)
+	}
 	reward = append(reward, economy.ResourceAmount{Resource: economy.ResourceCoins, Amount: crop.CoinReward})
 	if super {
 		reward = append(reward, crop.SuperReward...)

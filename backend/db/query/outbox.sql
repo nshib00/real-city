@@ -1,0 +1,2 @@
+-- Outbox queries are implemented manually in internal/adapter/postgres/outbox_repo.go.
+-- The dispatcher fetches due pending events with row locks and marks them sent, failed, or dead.

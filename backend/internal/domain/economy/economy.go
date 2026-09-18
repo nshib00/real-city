@@ -26,6 +26,7 @@ const (
 	ResourceIronOre        ResourceType = "iron_ore"
 	ResourceCopper         ResourceType = "copper"
 	ResourceResin          ResourceType = "resin"
+	ResourceFlax           ResourceType = "flax"
 	ResourceWindleaf       ResourceType = "windleaf"
 	ResourceHerbs          ResourceType = "herbs"
 	ResourceMushrooms      ResourceType = "mushrooms"
@@ -37,9 +38,17 @@ const (
 	ResourceSteel          ResourceType = "steel"
 	ResourceGlass          ResourceType = "glass"
 	ResourcePlanks         ResourceType = "planks"
+	ResourcePremiumPlanks  ResourceType = "premium_planks"
+	ResourceRope           ResourceType = "rope"
+	ResourceCopperParts    ResourceType = "copper_parts"
+	ResourceIronIngot      ResourceType = "iron_ingot"
+	ResourceGoldIngot      ResourceType = "gold_ingot"
 	ResourceCement         ResourceType = "cement"
 	ResourceConcrete       ResourceType = "concrete"
+	ResourceReinforcedConc ResourceType = "reinforced_concrete"
 	ResourceFabric         ResourceType = "fabric"
+	ResourceMechanism      ResourceType = "mechanism"
+	ResourceSuperMechanism ResourceType = "super_mechanism"
 	ResourceElectronics    ResourceType = "electronics"
 	ResourceSulfur         ResourceType = "sulfur"
 	ResourceExplosives     ResourceType = "explosives"
@@ -48,6 +57,10 @@ const (
 	ResourceSuperSeeds     ResourceType = "super-seeds"
 	ResourceSuperFiber     ResourceType = "super-fiber"
 	ResourceSuperMushrooms ResourceType = "super-mushrooms"
+	ResourceSuperWindleaf  ResourceType = "super-windleaf"
+	ResourceEmeraldDust    ResourceType = "emerald_dust"
+	ResourceElderwoodHeart ResourceType = "elderwood-heart"
+	ResourceRuneTile       ResourceType = "rune_tile"
 )
 
 const (
@@ -141,6 +154,15 @@ func NewInventory(playerID string, now time.Time, coinCapacity int) Inventory {
 	}
 }
 
+func EmptyInventory(playerID string, now time.Time, coinCapacity int) Inventory {
+	return Inventory{
+		PlayerID:     playerID,
+		Items:        map[ResourceType]int{},
+		CoinCapacity: coinCapacity,
+		UpdatedAt:    now,
+	}
+}
+
 func StartingItems() map[ResourceType]int {
 	return map[ResourceType]int{
 		ResourceCoins:          1250,
@@ -154,20 +176,29 @@ func StartingItems() map[ResourceType]int {
 		ResourceIronOre:        38,
 		ResourceCopper:         22,
 		ResourceResin:          16,
+		ResourceFlax:           3,
 		ResourceWindleaf:       27,
 		ResourceHerbs:          31,
 		ResourceMushrooms:      9,
 		ResourceSeeds:          64,
-		ResourceBrick:          74,
+		ResourceBrick:          160,
 		ResourceStoneBlock:     11,
 		ResourceMetal:          58,
 		ResourceIron:           34,
 		ResourceSteel:          12,
 		ResourceGlass:          32,
 		ResourcePlanks:         88,
+		ResourcePremiumPlanks:  0,
+		ResourceRope:           0,
+		ResourceCopperParts:    0,
+		ResourceIronIngot:      0,
+		ResourceGoldIngot:      0,
 		ResourceCement:         26,
 		ResourceConcrete:       14,
+		ResourceReinforcedConc: 0,
 		ResourceFabric:         18,
+		ResourceMechanism:      0,
+		ResourceSuperMechanism: 0,
 		ResourceElectronics:    3,
 		ResourceSulfur:         7,
 		ResourceExplosives:     0,
@@ -176,6 +207,10 @@ func StartingItems() map[ResourceType]int {
 		ResourceSuperSeeds:     3,
 		ResourceSuperFiber:     0,
 		ResourceSuperMushrooms: 1,
+		ResourceSuperWindleaf:  0,
+		ResourceEmeraldDust:    0,
+		ResourceElderwoodHeart: 0,
+		ResourceRuneTile:       0,
 	}
 }
 

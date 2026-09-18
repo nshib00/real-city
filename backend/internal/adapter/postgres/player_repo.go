@@ -40,12 +40,12 @@ func (r *PlayerRepo) Create(ctx context.Context, p player.Player) error {
 	_, err = tx.ExecContext(ctx, `
 		INSERT INTO player_profiles (
 			player_id, display_name, avatar_url, raid_alerts, production_ready,
-			market_updates, render_quality, updated_at
+			market_updates, render_quality, city_name, level, xp, updated_at
 		)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 	`, p.ID, p.Profile.DisplayName, p.Profile.AvatarURL, p.Profile.Settings.Notifications.RaidAlerts,
 		p.Profile.Settings.Notifications.ProductionReady, p.Profile.Settings.Notifications.MarketUpdates,
-		p.Profile.Settings.RenderQuality, p.Profile.UpdatedAt)
+		p.Profile.Settings.RenderQuality, p.Profile.CityName, p.Profile.Level, p.Profile.XP, p.Profile.UpdatedAt)
 	if err != nil {
 		return mapPostgresConflict(err)
 	}
@@ -66,13 +66,29 @@ func (r *PlayerRepo) UpdateProfile(ctx context.Context, id player.ID, profile pl
 	_, err := r.db.ExecContext(ctx, `
 		UPDATE player_profiles
 		SET display_name = $2, avatar_url = $3, raid_alerts = $4, production_ready = $5,
-			market_updates = $6, render_quality = $7, updated_at = $8
+			market_updates = $6, render_quality = $7, city_name = $8, updated_at = $9
 		WHERE player_id = $1
 	`, id, profile.DisplayName, profile.AvatarURL, profile.Settings.Notifications.RaidAlerts,
 		profile.Settings.Notifications.ProductionReady, profile.Settings.Notifications.MarketUpdates,
-		profile.Settings.RenderQuality, now)
+		profile.Settings.RenderQuality, profile.CityName, now)
 	if err != nil {
 		return player.Player{}, err
+	}
+	return r.FindByID(ctx, id)
+}
+
+func (r *PlayerRepo) UpdateProgress(ctx context.Context, id player.ID, xp int, level int) (player.Player, error) {
+	now := time.Now().UTC()
+	result, err := r.db.ExecContext(ctx, `
+		UPDATE player_profiles
+		SET xp = $2, level = $3, updated_at = $4
+		WHERE player_id = $1
+	`, id, xp, level, now)
+	if err != nil {
+		return player.Player{}, err
+	}
+	if rows, _ := result.RowsAffected(); rows == 0 {
+		return player.Player{}, apperror.New(apperror.NotFound, "player not found")
 	}
 	return r.FindByID(ctx, id)
 }
@@ -104,7 +120,7 @@ func (r *PlayerRepo) findOne(ctx context.Context, predicate string, arg string) 
 		SELECT
 			p.id, p.email, p.name, p.password_hash, p.status, p.role, p.created_at, p.updated_at,
 			pr.display_name, pr.avatar_url, pr.raid_alerts, pr.production_ready,
-			pr.market_updates, pr.render_quality, pr.updated_at
+			pr.market_updates, pr.render_quality, pr.city_name, pr.level, pr.xp, pr.updated_at
 		FROM players p
 		JOIN player_profiles pr ON pr.player_id = p.id
 		WHERE `+predicate+` AND p.status <> 'deleted'
@@ -133,11 +149,15 @@ func scanPlayer(row rowScanner) (player.Player, error) {
 		&p.Profile.Settings.Notifications.ProductionReady,
 		&p.Profile.Settings.Notifications.MarketUpdates,
 		&p.Profile.Settings.RenderQuality,
+		&p.Profile.CityName,
+		&p.Profile.Level,
+		&p.Profile.XP,
 		&p.Profile.UpdatedAt,
 	)
 	if errors.Is(err, sql.ErrNoRows) {
 		return player.Player{}, apperror.New(apperror.NotFound, "player not found")
 	}
+	p.Profile = player.NormalizeProfile(p.Profile)
 	return p, err
 }
 

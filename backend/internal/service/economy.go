@@ -14,23 +14,44 @@ import (
 
 const BaseCoinCapacity = 2000
 
+type skipCatchUpKey struct{}
+
 type EconomyService struct {
 	repo      EconomyRepository
 	buildings BuildingRepository
 	log       *slog.Logger
 	now       func() time.Time
+	catchUp   func(context.Context, player.ID) error
+	events    *EventBus
 }
 
 func NewEconomyService(repo EconomyRepository, buildings BuildingRepository, log *slog.Logger) *EconomyService {
 	return &EconomyService{repo: repo, buildings: buildings, log: log, now: func() time.Time { return time.Now().UTC() }}
 }
 
+func (s *EconomyService) SetCatchUp(fn func(context.Context, player.ID) error) {
+	s.catchUp = fn
+}
+
+func (s *EconomyService) SetEventBus(events *EventBus) {
+	s.events = events
+}
+
 func (s *EconomyService) Inventory(ctx context.Context, playerID player.ID) (economy.Inventory, error) {
+	if s.catchUp != nil && ctx.Value(skipCatchUpKey{}) != true {
+		if err := s.catchUp(ctx, playerID); err != nil {
+			return economy.Inventory{}, err
+		}
+	}
 	capacity, err := s.CoinCapacity(ctx, playerID)
 	if err != nil {
 		return economy.Inventory{}, err
 	}
 	return s.repo.GetInventory(ctx, playerID, capacity)
+}
+
+func WithoutCatchUp(ctx context.Context) context.Context {
+	return context.WithValue(ctx, skipCatchUpKey{}, true)
 }
 
 func (s *EconomyService) Spend(ctx context.Context, playerID player.ID, cost []economy.ResourceAmount, reason string) (economy.Inventory, error) {
@@ -39,14 +60,24 @@ func (s *EconomyService) Spend(ctx context.Context, playerID player.ID, cost []e
 		return economy.Inventory{}, err
 	}
 	if !inventory.Spend(cost, s.now()) {
-		s.log.Warn("economy.resource.shortage", "event", "economy.resource.shortage", "player_id", playerID, "reason", reason)
-		return economy.Inventory{}, apperror.New(apperror.Conflict, "not enough resources")
+		fields := make(map[string]string)
+		for _, item := range cost {
+			available := inventory.Items[item.Resource]
+			if available < item.Amount {
+				fields[string(item.Resource)] = fmt.Sprintf("need %d, have %d", item.Amount, available)
+			}
+		}
+		s.log.Warn("economy.resource.shortage", "event", "economy.resource.shortage", "player_id", playerID, "reason", reason, "missing", fields)
+		return economy.Inventory{}, apperror.WithFields(apperror.Conflict, "not enough resources", fields)
 	}
 	if err := s.repo.SaveInventory(ctx, inventory); err != nil {
 		return economy.Inventory{}, err
 	}
 	for _, item := range cost {
 		_ = s.logTransaction(ctx, playerID, economy.TransactionSpend, item, reason)
+	}
+	if s.events != nil {
+		s.events.Publish(Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
 	}
 	return inventory, nil
 }
@@ -65,6 +96,9 @@ func (s *EconomyService) Add(ctx context.Context, playerID player.ID, items []ec
 	}
 	for _, item := range overflow {
 		s.log.Warn("economy.coin_capacity.overflow", "event", "economy.coin_capacity.overflow", "player_id", playerID, "overflow", item.Amount)
+	}
+	if s.events != nil {
+		s.events.Publish(Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
 	}
 	return inventory, overflow, nil
 }

@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"time"
 
+	"real-city/backend/internal/domain/action"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
@@ -17,10 +18,20 @@ type ProductionService struct {
 	economy *EconomyService
 	log     *slog.Logger
 	now     func() time.Time
+	events  *EventBus
+	actions ActionRepository
 }
 
 func NewProductionService(repo EconomyRepository, economyService *EconomyService, log *slog.Logger) *ProductionService {
 	return &ProductionService{repo: repo, economy: economyService, log: log, now: func() time.Time { return time.Now().UTC() }}
+}
+
+func (s *ProductionService) SetEventBus(events *EventBus) {
+	s.events = events
+}
+
+func (s *ProductionService) SetActionQueue(actions ActionRepository) {
+	s.actions = actions
 }
 
 func (s *ProductionService) Recipes(ctx context.Context) ([]economy.ProductionRecipe, error) {
@@ -37,7 +48,7 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 	if !ok {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.NotFound, "production recipe not found")
 	}
-	inventory, err := s.economy.Spend(ctx, playerID, recipe.Input, "production:"+recipe.ID)
+	inventory, err := s.economy.Spend(ctx, playerID, economy.WithFuelCost(recipe.Input, recipe), "production:"+recipe.ID)
 	if err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
@@ -56,11 +67,32 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
+	_ = s.scheduleCompletion(ctx, job)
 	s.log.Info("economy.production.started", "event", "economy.production.started", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID)
 	return job, inventory, nil
 }
 
+func (s *ProductionService) scheduleCompletion(ctx context.Context, job economy.ProductionJob) error {
+	if s.actions == nil {
+		return nil
+	}
+	now := s.now()
+	return s.actions.Append(ctx, action.NewGameAction(
+		action.ID(fmt.Sprintf("act_production_%s_%d", job.ID, job.CompletesAt.UnixNano())),
+		action.TypeCompleteProduction,
+		fmt.Sprintf("production:%s:complete:%d", job.ID, job.CompletesAt.UnixNano()),
+		action.ObjectRef{ID: job.PlayerID, Type: "player"},
+		action.ObjectRef{ID: string(job.ID), Type: "production_job"},
+		job.CompletesAt,
+		now,
+	))
+}
+
 func (s *ProductionService) Complete(ctx context.Context, playerID player.ID, id economy.ProductionJobID) (economy.ProductionJob, economy.Inventory, error) {
+	return s.CompleteAt(ctx, playerID, id, s.now())
+}
+
+func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, economy.Inventory, error) {
 	job, err := s.repo.FindProductionJob(ctx, id)
 	if err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
@@ -75,7 +107,7 @@ func (s *ProductionService) Complete(ctx context.Context, playerID player.ID, id
 	if job.State != economy.ProductionRunning {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "production job is not running")
 	}
-	if job.CompletesAt.After(s.now()) {
+	if job.CompletesAt.After(now) {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "production job is not complete yet")
 	}
 	recipe, ok := catalog.RecipeByID(job.RecipeID)
@@ -83,7 +115,7 @@ func (s *ProductionService) Complete(ctx context.Context, playerID player.ID, id
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.NotFound, "production recipe not found")
 	}
 	job.State = economy.ProductionCompleted
-	job.UpdatedAt = s.now()
+	job.UpdatedAt = now
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
@@ -91,8 +123,31 @@ func (s *ProductionService) Complete(ctx context.Context, playerID player.ID, id
 	if err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
+	s.publish(job, inventory)
 	s.log.Info("economy.production.completed", "event", "economy.production.completed", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID)
 	return job, inventory, nil
+}
+
+func (s *ProductionService) CompleteDue(ctx context.Context, now time.Time, limit int) (int, error) {
+	jobs, err := s.repo.ListDueProductionJobs(ctx, now, limit)
+	if err != nil {
+		return 0, err
+	}
+	completed := 0
+	previousNow := s.now
+	s.now = func() time.Time { return now }
+	defer func() { s.now = previousNow }()
+	ctx = WithoutCatchUp(ctx)
+	for _, job := range jobs {
+		if job.State != economy.ProductionRunning || job.CompletesAt.After(now) {
+			continue
+		}
+		if _, _, err := s.CompleteAt(ctx, player.ID(job.PlayerID), job.ID, now); err != nil {
+			return completed, err
+		}
+		completed++
+	}
+	return completed, nil
 }
 
 func (s *ProductionService) Cancel(ctx context.Context, playerID player.ID, id economy.ProductionJobID) (economy.ProductionJob, error) {
@@ -113,4 +168,15 @@ func (s *ProductionService) Cancel(ctx context.Context, playerID player.ID, id e
 	}
 	s.log.Info("economy.production.cancelled", "event", "economy.production.cancelled", "player_id", playerID, "job_id", job.ID)
 	return job, nil
+}
+
+func (s *ProductionService) publish(job economy.ProductionJob, inventory economy.Inventory) {
+	if s.events == nil {
+		return
+	}
+	s.events.Publish(Event{
+		Type:     EventProductionDone,
+		PlayerID: player.ID(job.PlayerID),
+		Payload:  ProductionPayload{Job: job, Inventory: inventory},
+	})
 }

@@ -30,6 +30,9 @@ func TestAuthServiceRegisterLoginRefreshLogout(t *testing.T) {
 	if registered.Player.Role != "user" {
 		t.Fatalf("registered role = %q", registered.Player.Role)
 	}
+	if registered.Player.Profile.CityName != "Frontier One" || registered.Player.Profile.Level != 1 || registered.Player.Profile.XP != 0 {
+		t.Fatalf("unexpected default profile: %#v", registered.Player.Profile)
+	}
 
 	loggedIn, err := auth.Login(context.Background(), LoginInput{
 		Email:    "test@example.com",

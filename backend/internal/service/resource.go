@@ -2,9 +2,11 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"time"
 
+	"real-city/backend/internal/domain/action"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
@@ -17,6 +19,7 @@ type ResourceService struct {
 	log     *slog.Logger
 	now     func() time.Time
 	events  *EventBus
+	actions ActionRepository
 }
 
 func NewResourceService(repo EconomyRepository, economyService *EconomyService, log *slog.Logger) *ResourceService {
@@ -25,6 +28,10 @@ func NewResourceService(repo EconomyRepository, economyService *EconomyService, 
 
 func (s *ResourceService) SetEventBus(events *EventBus) {
 	s.events = events
+}
+
+func (s *ResourceService) SetActionQueue(actions ActionRepository) {
+	s.actions = actions
 }
 
 func (s *ResourceService) List(ctx context.Context) ([]economy.ResourceNode, error) {
@@ -48,6 +55,37 @@ func (s *ResourceService) List(ctx context.Context) ([]economy.ResourceNode, err
 		}
 	}
 	return nodes, nil
+}
+
+func (s *ResourceService) Tick(ctx context.Context, now time.Time, limit int) (int, error) {
+	nodes, err := s.repo.ListResourceNodes(ctx, DefaultWorldID)
+	if err != nil {
+		return 0, err
+	}
+	previousNow := s.now
+	s.now = func() time.Time { return now }
+	defer func() { s.now = previousNow }()
+	restored := 0
+	for _, node := range nodes {
+		if limit > 0 && restored >= limit {
+			break
+		}
+		if node.State != economy.NodeDepleted || node.RespawnAt == nil || node.RespawnAt.After(now) {
+			continue
+		}
+		node.Amount = node.MaxAmount
+		node.State = economy.NodeNeutral
+		node.OwnerID = ""
+		node.RespawnAt = nil
+		node.UpdatedAt = now
+		if err := s.repo.SaveResourceNode(ctx, node); err != nil {
+			return restored, err
+		}
+		s.publish(node)
+		s.log.Info("simulation.resource.respawned", "event", "simulation.resource.respawned", "node_id", node.ID, "resource", node.Resource, "chunk_id", world.ChunkID(node.MapID, world.ChunkForTile(node.Tile)))
+		restored++
+	}
+	return restored, nil
 }
 
 func (s *ResourceService) Claim(ctx context.Context, id economy.NodeID, playerID player.ID) (economy.ResourceNode, error) {
@@ -94,6 +132,9 @@ func (s *ResourceService) Harvest(ctx context.Context, id economy.NodeID, player
 	if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 		return economy.ResourceNode{}, economy.Inventory{}, err
 	}
+	if node.RespawnAt != nil {
+		_ = s.scheduleRespawn(ctx, node)
+	}
 	inventory, _, err := s.economy.Add(ctx, playerID, []economy.ResourceAmount{{Resource: node.Resource, Amount: harvest}}, "harvest")
 	if err != nil {
 		return economy.ResourceNode{}, economy.Inventory{}, err
@@ -101,6 +142,22 @@ func (s *ResourceService) Harvest(ctx context.Context, id economy.NodeID, player
 	s.publish(node)
 	s.log.Info("economy.resource.harvested", "event", "economy.resource.harvested", "node_id", node.ID, "player_id", playerID, "resource", node.Resource, "amount", harvest)
 	return node, inventory, nil
+}
+
+func (s *ResourceService) scheduleRespawn(ctx context.Context, node economy.ResourceNode) error {
+	if s.actions == nil || node.RespawnAt == nil {
+		return nil
+	}
+	now := s.now()
+	return s.actions.Append(ctx, action.NewGameAction(
+		action.ID(fmt.Sprintf("act_resource_%s_%d", node.ID, node.RespawnAt.UnixNano())),
+		action.TypeRespawnResource,
+		fmt.Sprintf("resource:%s:respawn:%d", node.ID, node.RespawnAt.UnixNano()),
+		action.ObjectRef{},
+		action.ObjectRef{ID: string(node.ID), Type: "resource_node"},
+		*node.RespawnAt,
+		now,
+	))
 }
 
 func (s *ResourceService) publish(node economy.ResourceNode) {

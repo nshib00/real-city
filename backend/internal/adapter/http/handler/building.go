@@ -94,6 +94,13 @@ func (h *BuildingHandler) Patch(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item)})
+	case "rush_complete":
+		item, inventory, crystalCost, err := h.buildings.RushComplete(r.Context(), id, playerID)
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item), "inventory": dto.Inventory(inventory), "rush": dto.RushCompletionResponse{CrystalCost: crystalCost}})
 	case "cancel":
 		if err := h.buildings.Cancel(r.Context(), id, playerID); err != nil {
 			writeError(w, err)
@@ -115,7 +122,7 @@ func (h *BuildingHandler) Patch(w http.ResponseWriter, r *http.Request) {
 		}
 		writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item)})
 	default:
-		writeError(w, apperror.WithFields(apperror.Validation, "unsupported building action", map[string]string{"action": "must be complete, cancel, repair or upgrade"}))
+		writeError(w, apperror.WithFields(apperror.Validation, "unsupported building action", map[string]string{"action": "must be complete, rush_complete, cancel, repair or upgrade"}))
 	}
 }
 

@@ -44,6 +44,7 @@ func (h *PlayerHandler) UpdateMe(w http.ResponseWriter, r *http.Request) {
 	}
 	p, err := h.players.UpdateProfile(r.Context(), playerID, service.UpdateProfileInput{
 		DisplayName: req.DisplayName,
+		CityName:    req.CityName,
 		AvatarURL:   req.AvatarURL,
 		Settings:    req.Settings,
 	})

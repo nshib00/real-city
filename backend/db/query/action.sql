@@ -1,0 +1,2 @@
+-- Action queue queries are implemented manually in internal/adapter/postgres/action_repo.go.
+-- The repository uses SELECT ... FOR UPDATE SKIP LOCKED through a CTE to atomically claim due actions.

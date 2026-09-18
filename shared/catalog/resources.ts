@@ -20,6 +20,7 @@ export const resourceCatalog: ResourceCatalogItem[] = [
   { id: 'iron_ore', name: 'Железная руда', category: 'raw', hasLimit: false, source: 'рудные жилы' },
   { id: 'copper', name: 'Медь', category: 'raw', hasLimit: false, source: 'рудные жилы' },
   { id: 'resin', name: 'Смола', category: 'raw', hasLimit: false, source: 'лесные участки' },
+  { id: 'flax', name: 'Лен', category: 'raw', hasLimit: false, source: 'льняные грядки' },
   { id: 'windleaf', name: 'Ветролист', category: 'raw', hasLimit: false, source: 'грядки ветролиста' },
   { id: 'herbs', name: 'Травы', category: 'raw', hasLimit: false, source: 'поля и грядки' },
   { id: 'mushrooms', name: 'Грибы', category: 'raw', hasLimit: false, source: 'грибные грядки' },
@@ -31,6 +32,10 @@ export const resourceCatalog: ResourceCatalogItem[] = [
   { id: 'steel', name: 'Сталь', category: 'crafted', hasLimit: false, source: 'сталеплавильный завод' },
   { id: 'glass', name: 'Стекло', category: 'crafted', hasLimit: false, source: 'стекольная мастерская' },
   { id: 'planks', name: 'Доски', category: 'crafted', hasLimit: false, source: 'лесопилка' },
+  { id: 'premium_planks', name: 'Премиум-доски', category: 'crafted', hasLimit: false, source: 'поздняя лесопилка' },
+  { id: 'rope', name: 'Веревка', category: 'crafted', hasLimit: false, source: 'канатная мастерская' },
+  { id: 'iron_ingot', name: 'Железный слиток', category: 'crafted', hasLimit: false, source: 'литейная' },
+  { id: 'gold_ingot', name: 'Золотой слиток', category: 'crafted', hasLimit: false, source: 'поздняя литейная' },
   { id: 'cement', name: 'Цемент', category: 'crafted', hasLimit: false, source: 'цементный цех' },
   { id: 'concrete', name: 'Бетон', category: 'crafted', hasLimit: false, source: 'бетонный узел' },
   { id: 'fabric', name: 'Ткань', category: 'crafted', hasLimit: false, source: 'ткацкая мастерская' },
@@ -42,5 +47,7 @@ export const resourceCatalog: ResourceCatalogItem[] = [
   { id: 'super-seeds', name: 'Супер-семена', category: 'rare', hasLimit: false, source: 'супер-урожай' },
   { id: 'super-fiber', name: 'Супер-волокно', category: 'rare', hasLimit: false, source: 'супер-урожай' },
   { id: 'super-mushrooms', name: 'Супер-грибы', category: 'rare', hasLimit: false, source: 'супер-урожай' },
+  { id: 'super-windleaf', name: 'Супер-ветролист', category: 'rare', hasLimit: false, source: 'супер-урожай грядки ветролиста' },
+  { id: 'emerald_dust', name: 'Изумрудная пыль', category: 'rare', hasLimit: false, source: 'огранка редких кристаллов' },
+  { id: 'elderwood-heart', name: 'Сердцевина древня', category: 'rare', hasLimit: false, source: 'редкая находка при рубке леса' },
 ]
-

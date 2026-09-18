@@ -21,12 +21,13 @@ func NewEconomyRepo(db *sql.DB) *EconomyRepo {
 }
 
 func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coinCapacity int) (economy.Inventory, error) {
-	rows, err := r.db.QueryContext(ctx, `SELECT resource, amount, updated_at FROM player_inventories WHERE player_id = $1`, playerID)
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `SELECT resource, amount, updated_at FROM player_inventories WHERE player_id = $1`, playerID)
 	if err != nil {
 		return economy.Inventory{}, err
 	}
 	defer rows.Close()
-	inventory := economy.NewInventory(string(playerID), time.Now().UTC(), coinCapacity)
+	inventory := economy.EmptyInventory(string(playerID), time.Now().UTC(), coinCapacity)
+	rowCount := 0
 	for rows.Next() {
 		var resource string
 		var amount int
@@ -35,20 +36,27 @@ func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coin
 			return economy.Inventory{}, err
 		}
 		inventory.Items[economy.ResourceType(resource)] = amount
-		inventory.UpdatedAt = updatedAt
+		if rowCount == 0 || updatedAt.After(inventory.UpdatedAt) {
+			inventory.UpdatedAt = updatedAt
+		}
+		rowCount++
 	}
 	if err := rows.Err(); err != nil {
 		return economy.Inventory{}, err
 	}
-	if err := r.SaveInventory(ctx, inventory); err != nil {
-		return economy.Inventory{}, err
+	if rowCount == 0 {
+		inventory = economy.NewInventory(string(playerID), time.Now().UTC(), coinCapacity)
+		if err := r.SaveInventory(ctx, inventory); err != nil {
+			return economy.Inventory{}, err
+		}
+		return inventory, nil
 	}
 	return inventory, nil
 }
 
 func (r *EconomyRepo) SaveInventory(ctx context.Context, inventory economy.Inventory) error {
 	for resource, amount := range inventory.Items {
-		if _, err := r.db.ExecContext(ctx, `
+		if _, err := execer(ctx, r.db).ExecContext(ctx, `
 			INSERT INTO player_inventories (player_id, resource, amount, updated_at)
 			VALUES ($1, $2, $3, $4)
 			ON CONFLICT (player_id, resource)
@@ -61,7 +69,7 @@ func (r *EconomyRepo) SaveInventory(ctx context.Context, inventory economy.Inven
 }
 
 func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction) error {
-	_, err := r.db.ExecContext(ctx, `
+	_, err := execer(ctx, r.db).ExecContext(ctx, `
 		INSERT INTO economy_transactions (id, player_id, kind, resource, amount, reason, created_at)
 		VALUES ($1, $2, $3, $4, $5, $6, $7)
 	`, tx.ID, tx.PlayerID, tx.Kind, tx.Resource, tx.Amount, tx.Reason, tx.CreatedAt)
@@ -72,7 +80,7 @@ func (r *EconomyRepo) ListTransactions(ctx context.Context, playerID player.ID, 
 	if limit <= 0 {
 		limit = 20
 	}
-	rows, err := r.db.QueryContext(ctx, `
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, player_id, kind, resource, amount, reason, created_at
 		FROM economy_transactions
 		WHERE player_id = $1
@@ -95,7 +103,7 @@ func (r *EconomyRepo) ListTransactions(ctx context.Context, playerID player.ID, 
 }
 
 func (r *EconomyRepo) ListResourceNodes(ctx context.Context, mapID string) ([]economy.ResourceNode, error) {
-	rows, err := r.db.QueryContext(ctx, `
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, type, resource, amount, max_amount, state, COALESCE(owner_id, ''), tile_x, tile_y, respawn_at, created_at, updated_at
 		FROM resource_nodes
 		WHERE map_id = $1
@@ -117,7 +125,7 @@ func (r *EconomyRepo) ListResourceNodes(ctx context.Context, mapID string) ([]ec
 }
 
 func (r *EconomyRepo) SaveResourceNode(ctx context.Context, node economy.ResourceNode) error {
-	_, err := r.db.ExecContext(ctx, `
+	_, err := execer(ctx, r.db).ExecContext(ctx, `
 		INSERT INTO resource_nodes (id, map_id, type, resource, amount, max_amount, state, owner_id, tile_x, tile_y, respawn_at, created_at, updated_at)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8, ''), $9, $10, $11, $12, $13)
 		ON CONFLICT (id)
@@ -127,7 +135,7 @@ func (r *EconomyRepo) SaveResourceNode(ctx context.Context, node economy.Resourc
 }
 
 func (r *EconomyRepo) FindResourceNode(ctx context.Context, id economy.NodeID) (economy.ResourceNode, error) {
-	row := r.db.QueryRowContext(ctx, `
+	row := execer(ctx, r.db).QueryRowContext(ctx, `
 		SELECT id, map_id, type, resource, amount, max_amount, state, COALESCE(owner_id, ''), tile_x, tile_y, respawn_at, created_at, updated_at
 		FROM resource_nodes
 		WHERE id = $1
@@ -140,7 +148,7 @@ func (r *EconomyRepo) FindResourceNode(ctx context.Context, id economy.NodeID) (
 }
 
 func (r *EconomyRepo) ListProductionJobs(ctx context.Context, playerID player.ID) ([]economy.ProductionJob, error) {
-	rows, err := r.db.QueryContext(ctx, `
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, player_id, building_id, recipe_id, state, started_at, completes_at, created_at, updated_at
 		FROM production_jobs
 		WHERE player_id = $1
@@ -161,8 +169,34 @@ func (r *EconomyRepo) ListProductionJobs(ctx context.Context, playerID player.ID
 	return items, rows.Err()
 }
 
+func (r *EconomyRepo) ListDueProductionJobs(ctx context.Context, now time.Time, limit int) ([]economy.ProductionJob, error) {
+	if limit <= 0 {
+		limit = 100
+	}
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
+		SELECT id, player_id, building_id, recipe_id, state, started_at, completes_at, created_at, updated_at
+		FROM production_jobs
+		WHERE state = $1 AND completes_at <= $2
+		ORDER BY completes_at, id
+		LIMIT $3
+	`, economy.ProductionRunning, now, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := make([]economy.ProductionJob, 0)
+	for rows.Next() {
+		job, err := scanProductionJob(rows)
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, job)
+	}
+	return items, rows.Err()
+}
+
 func (r *EconomyRepo) SaveProductionJob(ctx context.Context, job economy.ProductionJob) error {
-	_, err := r.db.ExecContext(ctx, `
+	_, err := execer(ctx, r.db).ExecContext(ctx, `
 		INSERT INTO production_jobs (id, player_id, building_id, recipe_id, state, started_at, completes_at, created_at, updated_at)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 		ON CONFLICT (id)
@@ -172,7 +206,7 @@ func (r *EconomyRepo) SaveProductionJob(ctx context.Context, job economy.Product
 }
 
 func (r *EconomyRepo) FindProductionJob(ctx context.Context, id economy.ProductionJobID) (economy.ProductionJob, error) {
-	row := r.db.QueryRowContext(ctx, `
+	row := execer(ctx, r.db).QueryRowContext(ctx, `
 		SELECT id, player_id, building_id, recipe_id, state, started_at, completes_at, created_at, updated_at
 		FROM production_jobs
 		WHERE id = $1

@@ -26,6 +26,7 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceIronOre, Name: "Железная руда", Category: "raw"},
 	{Type: economy.ResourceCopper, Name: "Медь", Category: "raw"},
 	{Type: economy.ResourceResin, Name: "Смола", Category: "raw"},
+	{Type: economy.ResourceFlax, Name: "Лен", Category: "raw"},
 	{Type: economy.ResourceWindleaf, Name: "Ветролист", Category: "raw"},
 	{Type: economy.ResourceHerbs, Name: "Травы", Category: "raw"},
 	{Type: economy.ResourceMushrooms, Name: "Грибы", Category: "raw"},
@@ -37,6 +38,10 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceSteel, Name: "Сталь", Category: "crafted"},
 	{Type: economy.ResourceGlass, Name: "Стекло", Category: "crafted"},
 	{Type: economy.ResourcePlanks, Name: "Доски", Category: "crafted"},
+	{Type: economy.ResourcePremiumPlanks, Name: "Премиум-доски", Category: "crafted"},
+	{Type: economy.ResourceRope, Name: "Веревка", Category: "crafted"},
+	{Type: economy.ResourceIronIngot, Name: "Железный слиток", Category: "crafted"},
+	{Type: economy.ResourceGoldIngot, Name: "Золотой слиток", Category: "crafted"},
 	{Type: economy.ResourceCement, Name: "Цемент", Category: "crafted"},
 	{Type: economy.ResourceConcrete, Name: "Бетон", Category: "crafted"},
 	{Type: economy.ResourceFabric, Name: "Ткань", Category: "crafted"},
@@ -48,6 +53,9 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceSuperSeeds, Name: "Супер-семена", Category: "rare"},
 	{Type: economy.ResourceSuperFiber, Name: "Супер-волокно", Category: "rare"},
 	{Type: economy.ResourceSuperMushrooms, Name: "Супер-грибы", Category: "rare"},
+	{Type: economy.ResourceSuperWindleaf, Name: "Супер-ветролист", Category: "rare"},
+	{Type: economy.ResourceEmeraldDust, Name: "Изумрудная пыль", Category: "rare"},
+	{Type: economy.ResourceElderwoodHeart, Name: "Сердцевина древня", Category: "rare", Description: "Редкая находка при рубке леса."},
 }
 
 func ResourceByType(t economy.ResourceType) (ResourceSpec, bool) {

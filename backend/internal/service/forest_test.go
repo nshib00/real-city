@@ -1,0 +1,156 @@
+package service
+
+import (
+	"context"
+	"io"
+	"log/slog"
+	"testing"
+
+	"real-city/backend/internal/adapter/memory"
+	"real-city/backend/internal/domain/economy"
+	"real-city/backend/internal/domain/world"
+)
+
+func TestForestServiceChopAddsElderwoodHeartWhenDropSucceeds(t *testing.T) {
+	ctx := context.Background()
+	coord := world.Coord{X: 1, Y: 1}
+	chunkCoord := world.ChunkForTile(coord)
+	worlds := &forestWorldRepo{
+		chunk: world.Chunk{
+			MapID: DefaultWorldID,
+			Coord: chunkCoord,
+			Tiles: []world.Tile{{
+				MapID:         DefaultWorldID,
+				Coord:         coord,
+				Chunk:         chunkCoord,
+				Terrain:       world.TerrainForest,
+				ForestDensity: 2,
+			}},
+		},
+	}
+	economyService := NewEconomyService(memory.NewEconomyRepo(), nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service := NewForestService(worlds, economyService, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service.rareDrop = func() bool { return true }
+
+	result, err := service.Chop(ctx, "p1", coord)
+	if err != nil {
+		t.Fatalf("expected forest chop to succeed: %v", err)
+	}
+
+	if result.Inventory.Items[economy.ResourceWood] != 421 {
+		t.Fatalf("expected wood to increase to 421, got %d", result.Inventory.Items[economy.ResourceWood])
+	}
+	if result.Inventory.Items[economy.ResourceCoins] != 1252 {
+		t.Fatalf("expected coins to increase to 1252, got %d", result.Inventory.Items[economy.ResourceCoins])
+	}
+	if result.Inventory.Items[economy.ResourceElderwoodHeart] != 1 {
+		t.Fatalf("expected one elderwood heart, got %d", result.Inventory.Items[economy.ResourceElderwoodHeart])
+	}
+}
+
+func TestForestServiceChopAddsCoinsOnEachStage(t *testing.T) {
+	ctx := context.Background()
+	coord := world.Coord{X: 1, Y: 1}
+	chunkCoord := world.ChunkForTile(coord)
+	worlds := &forestWorldRepo{
+		chunk: world.Chunk{
+			MapID: DefaultWorldID,
+			Coord: chunkCoord,
+			Tiles: []world.Tile{{
+				MapID:         DefaultWorldID,
+				Coord:         coord,
+				Chunk:         chunkCoord,
+				Terrain:       world.TerrainForest,
+				ForestDensity: world.MaxForestDensity,
+			}},
+		},
+	}
+	economyService := NewEconomyService(memory.NewEconomyRepo(), nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service := NewForestService(worlds, economyService, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service.rareDrop = func() bool { return false }
+
+	var result ChopForestResult
+	for range world.MaxForestDensity {
+		var err error
+		result, err = service.Chop(ctx, "p1", coord)
+		if err != nil {
+			t.Fatalf("expected forest chop to succeed: %v", err)
+		}
+	}
+
+	if result.Tile.Terrain != world.TerrainGrass || result.Tile.ForestDensity != 0 {
+		t.Fatalf("expected forest to be cleared, got terrain=%s density=%d", result.Tile.Terrain, result.Tile.ForestDensity)
+	}
+	if result.Inventory.Items[economy.ResourceCoins] != 1256 {
+		t.Fatalf("expected coins to increase by 2 for each stage to 1256, got %d", result.Inventory.Items[economy.ResourceCoins])
+	}
+}
+
+func TestForestChopRewardsCanIncludeElderwoodHeart(t *testing.T) {
+	rewards := forestChopRewards(true)
+
+	if len(rewards) != 3 {
+		t.Fatalf("expected wood, coins and elderwood heart rewards, got %d", len(rewards))
+	}
+	assertReward(t, rewards, economy.ResourceWood, 1)
+	assertReward(t, rewards, economy.ResourceCoins, 2)
+	assertReward(t, rewards, economy.ResourceElderwoodHeart, 1)
+}
+
+func TestForestChopRewardsUsuallyOnlyWood(t *testing.T) {
+	rewards := forestChopRewards(false)
+
+	if len(rewards) != 2 {
+		t.Fatalf("expected wood and coins rewards, got %d", len(rewards))
+	}
+	assertReward(t, rewards, economy.ResourceWood, 1)
+	assertReward(t, rewards, economy.ResourceCoins, 2)
+}
+
+func TestElderwoodHeartDropChanceIsOneHundredthPercent(t *testing.T) {
+	if elderwoodHeartDropChance != 0.0001 {
+		t.Fatalf("expected 0.01%% drop chance, got %.8f", elderwoodHeartDropChance)
+	}
+}
+
+func assertReward(t *testing.T, rewards []economy.ResourceAmount, resource economy.ResourceType, amount int) {
+	t.Helper()
+	for _, reward := range rewards {
+		if reward.Resource == resource {
+			if reward.Amount != amount {
+				t.Fatalf("expected %s amount %d, got %d", resource, amount, reward.Amount)
+			}
+			return
+		}
+	}
+	t.Fatalf("expected %s reward", resource)
+}
+
+type forestWorldRepo struct {
+	chunk world.Chunk
+}
+
+func (r *forestWorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, error) {
+	_ = ctx
+	return world.WorldMap{ID: id}, nil
+}
+
+func (r *forestWorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, bool, error) {
+	_ = ctx
+	_ = mapID
+	_ = coord
+	return r.chunk, true, nil
+}
+
+func (r *forestWorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	_ = ctx
+	_ = mapID
+	_ = coords
+	return []world.Chunk{r.chunk}, nil
+}
+
+func (r *forestWorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
+	_ = ctx
+	r.chunk.Tiles[0] = tile
+	return nil
+}

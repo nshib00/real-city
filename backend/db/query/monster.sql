@@ -1,0 +1,2 @@
+-- Monster repository queries are implemented inline for now to keep the MVP build toolchain simple.
+-- Tables are created by migration 000010_monsters.sql.

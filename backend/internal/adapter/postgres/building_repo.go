@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"time"
 
 	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/player"
@@ -20,7 +21,7 @@ func NewBuildingRepo(db *sql.DB) *BuildingRepo {
 }
 
 func (r *BuildingRepo) Create(ctx context.Context, b building.Building) error {
-	_, err := r.db.ExecContext(ctx, `
+	_, err := execer(ctx, r.db).ExecContext(ctx, `
 		INSERT INTO buildings (
 			id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
@@ -31,7 +32,7 @@ func (r *BuildingRepo) Create(ctx context.Context, b building.Building) error {
 }
 
 func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.Building, error) {
-	row := r.db.QueryRowContext(ctx, `
+	row := execer(ctx, r.db).QueryRowContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
 		FROM buildings
@@ -41,7 +42,7 @@ func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.B
 }
 
 func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error) {
-	rows, err := r.db.QueryContext(ctx, `
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
 		FROM buildings
@@ -55,9 +56,24 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 	return scanBuildings(rows)
 }
 
+func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.Building, error) {
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
+		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
+			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+		FROM buildings
+		WHERE map_id = $1
+		ORDER BY created_at, id
+	`, mapID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	return scanBuildings(rows)
+}
+
 func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error) {
 	origin := world.ChunkOrigin(coord)
-	rows, err := r.db.QueryContext(ctx, `
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
 		FROM buildings
@@ -73,8 +89,27 @@ func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord worl
 	return scanBuildings(rows)
 }
 
+func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error) {
+	if limit <= 0 {
+		limit = 100
+	}
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
+		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
+			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+		FROM buildings
+		WHERE state = $1 AND completes_at IS NOT NULL AND completes_at <= $2
+		ORDER BY completes_at, id
+		LIMIT $3
+	`, building.StateBuilding, now, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	return scanBuildings(rows)
+}
+
 func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
-	result, err := r.db.ExecContext(ctx, `
+	result, err := execer(ctx, r.db).ExecContext(ctx, `
 		UPDATE buildings
 		SET type = $2, name = $3, level = $4, state = $5, health = $6,
 			footprint_w = $7, footprint_h = $8, started_at = $9, completes_at = $10, updated_at = $11
@@ -94,7 +129,7 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 }
 
 func (r *BuildingRepo) Delete(ctx context.Context, id building.ID) error {
-	result, err := r.db.ExecContext(ctx, `DELETE FROM buildings WHERE id = $1`, id)
+	result, err := execer(ctx, r.db).ExecContext(ctx, `DELETE FROM buildings WHERE id = $1`, id)
 	if err != nil {
 		return err
 	}

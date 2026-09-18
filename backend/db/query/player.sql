@@ -11,9 +11,12 @@ INSERT INTO player_profiles (
     production_ready,
     market_updates,
     render_quality,
+    city_name,
+    level,
+    xp,
     updated_at
 )
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);
 
 -- name: FindPlayerByID
 SELECT
@@ -31,6 +34,9 @@ SELECT
     pr.production_ready,
     pr.market_updates,
     pr.render_quality,
+    pr.city_name,
+    pr.level,
+    pr.xp,
     pr.updated_at
 FROM players p
 JOIN player_profiles pr ON pr.player_id = p.id
@@ -52,6 +58,9 @@ SELECT
     pr.production_ready,
     pr.market_updates,
     pr.render_quality,
+    pr.city_name,
+    pr.level,
+    pr.xp,
     pr.updated_at
 FROM players p
 JOIN player_profiles pr ON pr.player_id = p.id
@@ -66,7 +75,16 @@ SET
     production_ready = $5,
     market_updates = $6,
     render_quality = $7,
-    updated_at = $8
+    city_name = $8,
+    updated_at = $9
+WHERE player_id = $1;
+
+-- name: UpdateProgress
+UPDATE player_profiles
+SET
+    xp = $2,
+    level = $3,
+    updated_at = $4
 WHERE player_id = $1;
 
 -- name: UpdatePassword

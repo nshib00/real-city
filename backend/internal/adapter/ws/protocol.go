@@ -54,6 +54,10 @@ func normalizePayload(payload any) any {
 		return map[string]any{"building_id": string(value.BuildingID)}
 	case service.ResourceChangedPayload:
 		return map[string]any{"node": dto.ResourceNode(value.Node)}
+	case service.ProductionPayload:
+		return map[string]any{"job": dto.ProductionJob(value.Job), "inventory": dto.Inventory(value.Inventory)}
+	case service.InventoryPayload:
+		return map[string]any{"inventory": dto.Inventory(value.Inventory)}
 	case service.PresencePayload:
 		return map[string]any{"player_id": string(value.PlayerID), "online": value.Online}
 	default:

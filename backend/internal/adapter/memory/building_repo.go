@@ -2,7 +2,9 @@ package memory
 
 import (
 	"context"
+	"sort"
 	"sync"
+	"time"
 
 	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/player"
@@ -54,6 +56,20 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 	return items, nil
 }
 
+func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.Building, error) {
+	_ = ctx
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	items := make([]building.Building, 0)
+	for _, item := range r.buildings {
+		if item.MapID == mapID {
+			items = append(items, item)
+		}
+	}
+	sort.Slice(items, func(i, j int) bool { return items[i].CreatedAt.Before(items[j].CreatedAt) })
+	return items, nil
+}
+
 func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error) {
 	_ = ctx
 	r.mu.RLock()
@@ -63,6 +79,23 @@ func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord worl
 		if item.MapID == mapID && world.ChunkForTile(item.Tile) == coord {
 			items = append(items, item)
 		}
+	}
+	return items, nil
+}
+
+func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error) {
+	_ = ctx
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	items := make([]building.Building, 0)
+	for _, item := range r.buildings {
+		if item.State == building.StateBuilding && item.CompletesAt != nil && !item.CompletesAt.After(now) {
+			items = append(items, item)
+		}
+	}
+	sort.Slice(items, func(i, j int) bool { return items[i].CompletesAt.Before(*items[j].CompletesAt) })
+	if limit > 0 && len(items) > limit {
+		items = items[:limit]
 	}
 	return items, nil
 }

@@ -17,6 +17,10 @@ type PatchBuildingRequest struct {
 	Action string `json:"action"`
 }
 
+type RushCompletionResponse struct {
+	CrystalCost int `json:"crystal_cost"`
+}
+
 type BuildingResponse struct {
 	ID          string     `json:"id"`
 	MapID       string     `json:"map_id"`

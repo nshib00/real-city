@@ -86,6 +86,22 @@ func (r *PlayerRepo) UpdateProfile(ctx context.Context, id player.ID, profile pl
 	return p, nil
 }
 
+func (r *PlayerRepo) UpdateProgress(ctx context.Context, id player.ID, xp int, level int) (player.Player, error) {
+	_ = ctx
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	p, ok := r.players[id]
+	if !ok || p.Status == player.StatusDeleted {
+		return player.Player{}, apperror.New(apperror.NotFound, "player not found")
+	}
+	p.Profile.XP = xp
+	p.Profile.Level = level
+	p.Profile.UpdatedAt = time.Now().UTC()
+	p.UpdatedAt = p.Profile.UpdatedAt
+	r.players[id] = p
+	return p, nil
+}
+
 func (r *PlayerRepo) UpdatePasswordHash(ctx context.Context, id player.ID, passwordHash string) error {
 	_ = ctx
 	r.mu.Lock()

@@ -1,6 +1,7 @@
 package httpadapter
 
 import (
+	"encoding/json"
 	"log/slog"
 	"net/http"
 	"time"
@@ -23,6 +24,12 @@ type RouterDeps struct {
 	Production *service.ProductionService
 	Fields     *service.FieldService
 	Population *service.PopulationService
+	Monsters   *service.MonsterService
+	Combat     *service.CombatService
+	Threats    *service.ThreatService
+	Alliances  *service.AllianceService
+	Chat       *service.ChatService
+	Market     *service.MarketService
 	Tokens     *jwtadapter.Manager
 	Realtime   *wsadapter.Gateway
 }
@@ -34,19 +41,36 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	worldHandler := handler.NewWorldHandler(deps.Worlds, deps.Forests)
 	buildingHandler := handler.NewBuildingHandler(deps.Buildings)
 	economyHandler := handler.NewEconomyHandler(deps.Economy, deps.Resources, deps.Production, deps.Fields, deps.Population)
+	monsterHandler := handler.NewMonsterHandler(deps.Monsters, deps.Combat, deps.Threats)
+	allianceHandler := handler.NewAllianceHandler(deps.Alliances)
+	chatHandler := handler.NewChatHandler(deps.Chat)
+	marketHandler := handler.NewMarketHandler(deps.Market)
 
-	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
+	health := func(w http.ResponseWriter, r *http.Request) {
 		JSON(w, http.StatusOK, Envelope{
 			"status": "ok",
 			"time":   time.Now().UTC().Format(time.RFC3339),
 		})
-	})
+	}
+	mux.HandleFunc("GET /health", health)
+	mux.HandleFunc("GET /healthz", health)
+	mux.HandleFunc("GET /metrics", metrics)
+	mux.HandleFunc("GET /swagger/openapi.json", swaggerOpenAPI)
 	mux.HandleFunc("GET /api/v1/world", worldHandler.World)
 	mux.HandleFunc("GET /api/v1/world/chunks", worldHandler.Chunks)
 	mux.HandleFunc("GET /api/v1/world/viewport", worldHandler.Viewport)
 	mux.HandleFunc("GET /api/v1/buildings/catalog", buildingHandler.Catalog)
 	mux.HandleFunc("GET /api/v1/resources/nodes", economyHandler.ResourceNodes)
 	mux.HandleFunc("GET /api/v1/production/recipes", economyHandler.ProductionRecipes)
+	mux.HandleFunc("GET /api/v1/monsters/catalog", monsterHandler.Catalog)
+	mux.HandleFunc("GET /api/v1/monsters", monsterHandler.List)
+	mux.HandleFunc("GET /api/v1/threats", monsterHandler.Threats)
+	mux.HandleFunc("GET /api/v1/raids", func(w http.ResponseWriter, r *http.Request) {
+		JSON(w, http.StatusOK, Envelope{"raids": []any{}, "status": "placeholder"})
+	})
+	mux.HandleFunc("GET /api/v1/admin/status", func(w http.ResponseWriter, r *http.Request) {
+		JSON(w, http.StatusOK, Envelope{"status": "placeholder"})
+	})
 	if deps.Realtime != nil {
 		mux.Handle("GET /api/v1/realtime", deps.Realtime)
 	}
@@ -72,32 +96,46 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("POST /api/v1/production/jobs", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.StartProduction)))
 	mux.Handle("PATCH /api/v1/production/jobs/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.PatchProduction)))
 	mux.Handle("POST /api/v1/fields/windleaf/harvest", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
-	return accessLog(log, mux)
+	mux.Handle("GET /api/v1/monsters/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.Get)))
+	mux.Handle("POST /api/v1/monsters/{id}/attack", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.Attack)))
+	mux.Handle("GET /api/v1/alliances/me", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Profile)))
+	mux.Handle("POST /api/v1/alliances", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Create)))
+	mux.Handle("POST /api/v1/alliances/invites", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Invite)))
+	mux.Handle("PATCH /api/v1/alliances/invites/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.RespondInvite)))
+	mux.Handle("PATCH /api/v1/alliances/roles", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.SetRole)))
+	mux.Handle("POST /api/v1/alliances/treasury/donations", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Donate)))
+	mux.Handle("POST /api/v1/alliances/buffs", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.UpgradeBuff)))
+	mux.Handle("POST /api/v1/alliances/territory-aid", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.AddTerritoryAid)))
+	mux.Handle("GET /api/v1/chat/messages", middleware.Auth(deps.Tokens, http.HandlerFunc(chatHandler.List)))
+	mux.Handle("POST /api/v1/chat/messages", middleware.Auth(deps.Tokens, http.HandlerFunc(chatHandler.Send)))
+	mux.HandleFunc("GET /api/v1/market/orders", marketHandler.List)
+	mux.Handle("POST /api/v1/market/orders", middleware.Auth(deps.Tokens, http.HandlerFunc(marketHandler.Create)))
+	mux.Handle("DELETE /api/v1/market/orders/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(marketHandler.Cancel)))
+	return middleware.Chain(
+		mux,
+		middleware.RequestID(),
+		middleware.Logger(log),
+		middleware.Recoverer(func(r *http.Request, recovered any, stack []byte) {
+			log.Error("http.panic", "event", "http.panic", "request_id", middleware.RequestIDFromContext(r.Context()), "path", r.URL.Path, "panic", recovered, "stack", string(stack))
+		}),
+		middleware.CORS([]string{"*"}),
+		middleware.BodyLimit(1<<20),
+		middleware.Timeout(5*time.Second),
+		middleware.RateLimit(nil, middleware.DefaultRateLimitRules()),
+		middleware.Idempotency(nil, 24*time.Hour),
+	)
 }
 
-func accessLog(log *slog.Logger, next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		start := time.Now()
-		recorder := &statusRecorder{ResponseWriter: w, status: http.StatusOK}
-		next.ServeHTTP(recorder, r)
-		log.Info("http.request",
-			"event", "http.request",
-			"method", r.Method,
-			"path", r.URL.Path,
-			"status", recorder.status,
-			"duration_ms", time.Since(start).Milliseconds(),
-			"ip", r.RemoteAddr,
-			"user_agent", r.UserAgent(),
-		)
-	})
+func metrics(w http.ResponseWriter, r *http.Request) {
+	_ = r
+	w.Header().Set("Content-Type", "text/plain; version=0.0.4")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte("real_city_http_ready 1\n"))
 }
 
-type statusRecorder struct {
-	http.ResponseWriter
-	status int
-}
-
-func (r *statusRecorder) WriteHeader(status int) {
-	r.status = status
-	r.ResponseWriter.WriteHeader(status)
+func swaggerOpenAPI(w http.ResponseWriter, r *http.Request) {
+	_ = r
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(OpenAPISpec())
 }

@@ -1,0 +1,74 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Real City API",
+    "version": "0.12.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/auth/register": { "post": { "summary": "Register player" } },
+    "/auth/login": { "post": { "summary": "Login player" } },
+    "/auth/refresh": { "post": { "summary": "Refresh tokens" } },
+    "/auth/logout": { "post": { "summary": "Logout current session" } },
+    "/players/me": { "get": { "summary": "Current player profile" }, "patch": { "summary": "Update current player profile" }, "delete": { "summary": "Delete current player" } },
+    "/players/me/password": { "patch": { "summary": "Change password" } },
+    "/world": { "get": { "summary": "Current world summary" } },
+    "/world/chunks": { "get": { "summary": "Visible chunks" } },
+    "/world/viewport": { "get": { "summary": "Viewport snapshot" } },
+    "/world/tiles/chop-forest": { "post": { "summary": "Chop forest tile" } },
+    "/buildings/catalog": { "get": { "summary": "Building catalog" } },
+    "/buildings": { "get": { "summary": "List player buildings" }, "post": { "summary": "Place building" } },
+    "/buildings/{id}": { "get": { "summary": "Get building" }, "patch": { "summary": "Update building" }, "delete": { "summary": "Delete building" } },
+    "/economy/inventory": { "get": { "summary": "Inventory" } },
+    "/economy/transactions": { "get": { "summary": "Economy transactions" } },
+    "/economy/population": { "get": { "summary": "Population summary" } },
+    "/resources/nodes": { "get": { "summary": "Resource nodes" } },
+    "/resources/nodes/{id}": { "patch": { "summary": "Claim or harvest resource node" } },
+    "/production/recipes": { "get": { "summary": "Production recipes" } },
+    "/production/jobs": { "get": { "summary": "List production jobs" }, "post": { "summary": "Start production" } },
+    "/production/jobs/{id}": { "patch": { "summary": "Patch production job" } },
+    "/fields/windleaf/harvest": { "post": { "summary": "Harvest windleaf field" } },
+    "/monsters/catalog": { "get": { "summary": "Monster catalog" } },
+    "/monsters": { "get": { "summary": "List monsters" } },
+    "/monsters/{id}": { "get": { "summary": "Monster details" } },
+    "/monsters/{id}/attack": { "post": { "summary": "Attack monster" } },
+    "/threats": { "get": { "summary": "Threats" } },
+    "/raids": { "get": { "summary": "Raid list placeholder" } },
+    "/admin/status": { "get": { "summary": "Admin status placeholder" } },
+    "/alliances/me": { "get": { "summary": "Alliance profile" } },
+    "/alliances": { "post": { "summary": "Create alliance" } },
+    "/alliances/invites": { "post": { "summary": "Create alliance invite" } },
+    "/alliances/invites/{id}": { "patch": { "summary": "Accept or decline invite" } },
+    "/alliances/roles": { "patch": { "summary": "Set alliance role" } },
+    "/alliances/treasury/donations": { "post": { "summary": "Donate to alliance treasury" } },
+    "/alliances/buffs": { "post": { "summary": "Upgrade alliance buff" } },
+    "/alliances/territory-aid": { "post": { "summary": "Add alliance territory aid" } },
+    "/chat/messages": { "get": { "summary": "List chat messages" }, "post": { "summary": "Send chat message" } },
+    "/market/orders": { "get": { "summary": "List market orders" }, "post": { "summary": "Create market order" } },
+    "/market/orders/{id}": { "delete": { "summary": "Cancel market order" } }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["kind", "message"],
+        "properties": {
+          "kind": { "type": "string" },
+          "message": { "type": "string" },
+          "fields": { "type": "object", "additionalProperties": { "type": "string" } }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

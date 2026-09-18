@@ -2,9 +2,16 @@ package service
 
 import (
 	"context"
+	"time"
 
+	"real-city/backend/internal/domain/action"
+	"real-city/backend/internal/domain/alliance"
 	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/chat"
 	"real-city/backend/internal/domain/economy"
+	outbox "real-city/backend/internal/domain/event"
+	"real-city/backend/internal/domain/market"
+	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 )
@@ -14,6 +21,7 @@ type PlayerRepository interface {
 	FindByID(ctx context.Context, id player.ID) (player.Player, error)
 	FindByEmail(ctx context.Context, email string) (player.Player, error)
 	UpdateProfile(ctx context.Context, id player.ID, profile player.Profile) (player.Player, error)
+	UpdateProgress(ctx context.Context, id player.ID, xp int, level int) (player.Player, error)
 	UpdatePasswordHash(ctx context.Context, id player.ID, passwordHash string) error
 	Delete(ctx context.Context, id player.ID) error
 }
@@ -36,7 +44,9 @@ type BuildingRepository interface {
 	Create(ctx context.Context, b building.Building) error
 	FindByID(ctx context.Context, id building.ID) (building.Building, error)
 	ListByPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error)
+	ListByMap(ctx context.Context, mapID string) ([]building.Building, error)
 	ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error)
+	ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error)
 	Update(ctx context.Context, b building.Building) error
 	Delete(ctx context.Context, id building.ID) error
 }
@@ -50,6 +60,68 @@ type EconomyRepository interface {
 	SaveResourceNode(ctx context.Context, node economy.ResourceNode) error
 	FindResourceNode(ctx context.Context, id economy.NodeID) (economy.ResourceNode, error)
 	ListProductionJobs(ctx context.Context, playerID player.ID) ([]economy.ProductionJob, error)
+	ListDueProductionJobs(ctx context.Context, now time.Time, limit int) ([]economy.ProductionJob, error)
 	SaveProductionJob(ctx context.Context, job economy.ProductionJob) error
 	FindProductionJob(ctx context.Context, id economy.ProductionJobID) (economy.ProductionJob, error)
+}
+
+type AllianceRepository interface {
+	Create(ctx context.Context, item alliance.Alliance) error
+	FindByID(ctx context.Context, id alliance.ID) (alliance.Alliance, error)
+	FindByPlayer(ctx context.Context, playerID player.ID) (alliance.Alliance, alliance.Membership, error)
+	ListMembers(ctx context.Context, id alliance.ID) ([]alliance.Membership, error)
+	SaveMembership(ctx context.Context, item alliance.Membership) error
+	DeleteMembership(ctx context.Context, allianceID alliance.ID, playerID player.ID) error
+	CreateInvite(ctx context.Context, item alliance.Invite) error
+	FindInvite(ctx context.Context, id alliance.InviteID) (alliance.Invite, error)
+	ListInvitesForPlayer(ctx context.Context, playerID player.ID) ([]alliance.Invite, error)
+	UpdateInvite(ctx context.Context, item alliance.Invite) error
+	AddTreasuryEntry(ctx context.Context, item alliance.TreasuryEntry) error
+	ListTreasury(ctx context.Context, id alliance.ID, limit int) ([]alliance.TreasuryEntry, error)
+	SaveBuff(ctx context.Context, item alliance.Buff) error
+	ListBuffs(ctx context.Context, id alliance.ID) ([]alliance.Buff, error)
+	AddTerritoryAid(ctx context.Context, item alliance.TerritoryAid) error
+	ListTerritoryAid(ctx context.Context, id alliance.ID) ([]alliance.TerritoryAid, error)
+}
+
+type ChatRepository interface {
+	AddMessage(ctx context.Context, item chat.Message) error
+	ListMessages(ctx context.Context, playerID player.ID, channel chat.Channel, allianceID alliance.ID, limit int) ([]chat.Message, error)
+}
+
+type MarketRepository interface {
+	CreateOrder(ctx context.Context, item market.Order) error
+	FindOrder(ctx context.Context, id market.OrderID) (market.Order, error)
+	UpdateOrder(ctx context.Context, item market.Order) error
+	ListOrders(ctx context.Context, status market.Status, limit int) ([]market.Order, error)
+}
+
+type MonsterRepository interface {
+	Create(ctx context.Context, item monster.Monster) error
+	FindByID(ctx context.Context, id monster.ID) (monster.Monster, error)
+	ListByMap(ctx context.Context, mapID string) ([]monster.Monster, error)
+	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.Monster, error)
+	Update(ctx context.Context, item monster.Monster) error
+	ListSpawnPoints(ctx context.Context, mapID string) ([]monster.SpawnPoint, error)
+	SaveSpawnPoint(ctx context.Context, item monster.SpawnPoint) error
+	AddEvent(ctx context.Context, item monster.Event) error
+}
+
+type ActionRepository interface {
+	Append(ctx context.Context, item action.GameAction) error
+	FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) ([]action.GameAction, error)
+	MarkDone(ctx context.Context, id action.ID, now time.Time) error
+	MarkFailed(ctx context.Context, id action.ID, message string, retryAt time.Time, now time.Time) error
+}
+
+type OutboxRepository interface {
+	Append(ctx context.Context, item outbox.OutboxEvent) error
+	FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) ([]outbox.OutboxEvent, error)
+	MarkSent(ctx context.Context, id outbox.ID, now time.Time) error
+	MarkFailed(ctx context.Context, id outbox.ID, message string, retryAt time.Time, now time.Time) error
+	MarkDead(ctx context.Context, id outbox.ID, message string, now time.Time) error
+}
+
+type UnitOfWork interface {
+	Do(ctx context.Context, fn func(context.Context) error) error
 }

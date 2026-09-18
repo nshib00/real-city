@@ -24,13 +24,13 @@ func ValidatePlacement(input PlacementInput) error {
 		return apperror.WithFields(apperror.Validation, "building footprint must be positive", map[string]string{"footprint": "must be positive"})
 	}
 	if input.Type != TypeTownHall && input.RequiresTownHall && !input.HasTownHall {
-		return apperror.New(apperror.Conflict, "town hall is required before other buildings")
+		return apperror.New(apperror.Conflict, "сначала постройте ратушу")
 	}
 	if input.Type == TypeTownHall && input.HasTownHall {
-		return apperror.New(apperror.Conflict, "town hall already exists")
+		return apperror.New(apperror.Conflict, "ратуша уже построена")
 	}
 	if input.Type != TypeRoad && input.UsedLimit >= input.BuildingLimit {
-		return apperror.New(apperror.Conflict, "building limit reached")
+		return apperror.WithFields(apperror.Conflict, "лимит построек уже достигнут", map[string]string{"limit": fmt.Sprintf("%d/%d", input.UsedLimit, input.BuildingLimit)})
 	}
 	terrainTiles := terrainTilesByCoord(input.Tile, input.Tiles)
 	for _, coord := range footprintTiles(input.Tile.Coord, input.Footprint) {
@@ -38,18 +38,15 @@ func ValidatePlacement(input PlacementInput) error {
 		if !ok {
 			continue
 		}
-		if tile.Terrain == world.TerrainWater || tile.Terrain == world.TerrainMountain || tile.Terrain == world.TerrainForest {
-			return apperror.WithFields(apperror.Validation, "terrain does not allow building placement", map[string]string{"terrain": string(tile.Terrain), "tile": coordKey(coord)})
-		}
-		if input.Type != TypeRoad && tile.Terrain == world.TerrainOilWell {
-			return apperror.WithFields(apperror.Validation, "oil wells must be claimed by resource mechanics", map[string]string{"terrain": string(tile.Terrain), "tile": coordKey(coord)})
+		if tile.Terrain == world.TerrainWater || tile.Terrain == world.TerrainMountain || tile.Terrain == world.TerrainForest || tile.Terrain == world.TerrainRuins || tile.Terrain == world.TerrainOilWell {
+			return apperror.WithFields(apperror.Validation, "на этой поверхности строить нельзя", map[string]string{"terrain": string(tile.Terrain), "tile": coordKey(coord)})
 		}
 	}
 
 	occupied := occupiedTiles(input.Existing)
 	for _, tile := range footprintTiles(input.Tile.Coord, input.Footprint) {
 		if occupied[tile] {
-			return apperror.WithFields(apperror.Conflict, "tile is occupied", map[string]string{"tile": coordKey(tile)})
+			return apperror.WithFields(apperror.Conflict, "клетка уже занята постройкой", map[string]string{"tile": coordKey(tile)})
 		}
 	}
 	return nil

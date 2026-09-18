@@ -125,6 +125,23 @@ func (r *EconomyRepo) ListProductionJobs(ctx context.Context, playerID player.ID
 	return items, nil
 }
 
+func (r *EconomyRepo) ListDueProductionJobs(ctx context.Context, now time.Time, limit int) ([]economy.ProductionJob, error) {
+	_ = ctx
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	items := make([]economy.ProductionJob, 0)
+	for _, job := range r.jobs {
+		if job.State == economy.ProductionRunning && !job.CompletesAt.After(now) {
+			items = append(items, job)
+		}
+	}
+	sort.Slice(items, func(i, j int) bool { return items[i].CompletesAt.Before(items[j].CompletesAt) })
+	if limit > 0 && len(items) > limit {
+		items = items[:limit]
+	}
+	return items, nil
+}
+
 func (r *EconomyRepo) SaveProductionJob(ctx context.Context, job economy.ProductionJob) error {
 	_ = ctx
 	r.mu.Lock()

@@ -3,6 +3,7 @@ package player
 import (
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"real-city/backend/pkg/apperror"
 )
@@ -45,7 +46,10 @@ type ProfileSettings struct {
 
 type Profile struct {
 	DisplayName string          `json:"display_name"`
+	CityName    string          `json:"city_name"`
 	AvatarURL   string          `json:"avatar_url"`
+	Level       int             `json:"level"`
+	XP          int             `json:"xp"`
 	Settings    ProfileSettings `json:"settings"`
 	UpdatedAt   time.Time       `json:"updated_at"`
 }
@@ -77,6 +81,9 @@ type Session struct {
 func DefaultProfile(name string, now time.Time) Profile {
 	return Profile{
 		DisplayName: name,
+		CityName:    name,
+		Level:       1,
+		XP:          0,
 		Settings: ProfileSettings{
 			Notifications: NotificationSettings{
 				RaidAlerts:      true,
@@ -124,8 +131,54 @@ func ValidateName(name string) error {
 	return nil
 }
 
+var levelThresholds = []int{0, 100, 250, 500, 900, 1400, 2100, 3000, 4100, 5500, 7200, 9200, 11500, 14200, 17400}
+
+func LevelForXP(xp int) int {
+	if xp <= 0 {
+		return 1
+	}
+	level := 1
+	for index, threshold := range levelThresholds {
+		if xp >= threshold {
+			level = index + 1
+		}
+	}
+	return level
+}
+
+func NextLevelXP(level int) int {
+	if level < 1 {
+		level = 1
+	}
+	if level >= len(levelThresholds) {
+		return 0
+	}
+	return levelThresholds[level]
+}
+
+func NormalizeProfile(profile Profile) Profile {
+	profile.DisplayName = strings.TrimSpace(profile.DisplayName)
+	profile.CityName = strings.TrimSpace(profile.CityName)
+	profile.AvatarURL = strings.TrimSpace(profile.AvatarURL)
+	if profile.CityName == "" {
+		profile.CityName = profile.DisplayName
+	}
+	if profile.XP < 0 {
+		profile.XP = 0
+	}
+	profile.Level = LevelForXP(profile.XP)
+	if profile.Settings.RenderQuality == "" {
+		profile.Settings.RenderQuality = RenderQualityMedium
+	}
+	return profile
+}
+
 func ValidateProfile(profile Profile) error {
+	profile = NormalizeProfile(profile)
 	if err := ValidateName(profile.DisplayName); err != nil {
+		return err
+	}
+	if err := validateCityName(profile.CityName); err != nil {
 		return err
 	}
 	switch profile.Settings.RenderQuality {
@@ -136,4 +189,15 @@ func ValidateProfile(profile Profile) error {
 			"render_quality": "must be low, medium or high",
 		})
 	}
+}
+
+func validateCityName(name string) error {
+	name = strings.TrimSpace(name)
+	length := utf8.RuneCountInString(name)
+	if length < 3 || length > 40 {
+		return apperror.WithFields(apperror.Validation, "invalid player data", map[string]string{
+			"city_name": "must be between 3 and 40 characters",
+		})
+	}
+	return nil
 }

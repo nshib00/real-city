@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"log/slog"
+	"math/rand"
 
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
@@ -10,20 +11,28 @@ import (
 	"real-city/backend/pkg/apperror"
 )
 
+const elderwoodHeartDropChance = 0.0001
+
 type ChopForestResult struct {
 	Tile      world.Tile
 	Inventory economy.Inventory
 }
 
 type ForestService struct {
-	worlds  WorldRepository
-	economy *EconomyService
-	log     *slog.Logger
-	events  *EventBus
+	worlds   WorldRepository
+	economy  *EconomyService
+	log      *slog.Logger
+	events   *EventBus
+	rareDrop func() bool
 }
 
 func NewForestService(worlds WorldRepository, economyService *EconomyService, log *slog.Logger) *ForestService {
-	return &ForestService{worlds: worlds, economy: economyService, log: log}
+	return &ForestService{
+		worlds:   worlds,
+		economy:  economyService,
+		log:      log,
+		rareDrop: func() bool { return rand.Float64() < elderwoodHeartDropChance },
+	}
 }
 
 func (s *ForestService) SetEventBus(events *EventBus) {
@@ -47,7 +56,7 @@ func (s *ForestService) Chop(ctx context.Context, playerID player.ID, coord worl
 	if err := s.worlds.UpdateTile(ctx, nextTile); err != nil {
 		return ChopForestResult{}, err
 	}
-	inventory, _, err := s.economy.Add(ctx, playerID, []economy.ResourceAmount{{Resource: economy.ResourceWood, Amount: 1}}, "forest:chop")
+	inventory, _, err := s.economy.Add(ctx, playerID, forestChopRewards(s.rareDrop()), "forest:chop")
 	if err != nil {
 		return ChopForestResult{}, err
 	}
@@ -61,4 +70,15 @@ func (s *ForestService) Chop(ctx context.Context, playerID player.ID, coord worl
 	}
 	s.log.Info("world.forest.chopped", "event", "world.forest.chopped", "player_id", playerID, "tile_x", coord.X, "tile_y", coord.Y, "forest_density", nextTile.ForestDensity)
 	return ChopForestResult{Tile: nextTile, Inventory: inventory}, nil
+}
+
+func forestChopRewards(elderwoodHeart bool) []economy.ResourceAmount {
+	rewards := []economy.ResourceAmount{
+		{Resource: economy.ResourceWood, Amount: 1},
+		{Resource: economy.ResourceCoins, Amount: 2},
+	}
+	if elderwoodHeart {
+		rewards = append(rewards, economy.ResourceAmount{Resource: economy.ResourceElderwoodHeart, Amount: 1})
+	}
+	return rewards
 }
