@@ -23,7 +23,11 @@ describe('auth api', () => {
               role: 'user',
               profile: {
                 display_name: 'Test City',
+                city_name: 'Test City',
                 avatar_url: '',
+                level: 1,
+                xp: 0,
+                next_level_xp: 100,
                 settings: {
                   notifications: {
                     raid_alerts: true,

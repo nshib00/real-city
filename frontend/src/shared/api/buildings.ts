@@ -1,5 +1,5 @@
 import { request } from './client'
-import type { BuildingKind, PlacedBuilding } from '../../game/state/useGameStore'
+import type { BuildingKind, BuildingState, PlacedBuilding } from '../../game/state/useGameStore'
 
 export type BuildingResponse = {
   id: string
@@ -7,7 +7,7 @@ export type BuildingResponse = {
   type: BuildingKind
   name: string
   level: number
-  state: 'planned' | 'building' | 'active' | 'damaged' | 'ruined'
+  state: BuildingState
   health: number
   tile_x: number
   tile_y: number
@@ -45,8 +45,8 @@ export function placeBuilding(input: { type: BuildingKind; tile_x: number; tile_
   })
 }
 
-export function patchBuilding(id: string, action: 'complete' | 'cancel' | 'repair' | 'upgrade') {
-  return request<{ building?: BuildingResponse; status?: string }>(`/buildings/${id}`, {
+export function patchBuilding(id: string, action: 'complete' | 'rush_complete' | 'cancel' | 'repair' | 'upgrade') {
+  return request<{ building?: BuildingResponse; status?: string; inventory?: unknown; rush?: { crystal_cost: number } }>(`/buildings/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ action }),
   })
@@ -64,6 +64,7 @@ export function toPlacedBuilding(response: BuildingResponse): PlacedBuilding {
     level: response.level,
     tile: { x: response.tile_x, y: response.tile_y },
     status: response.state === 'building' || response.state === 'planned' ? 'construction' : 'active',
+    state: response.state,
     health: response.health,
     owner: response.owner_id,
     startedAt: Date.parse(response.started_at),

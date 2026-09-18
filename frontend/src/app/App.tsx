@@ -8,6 +8,7 @@ import { EventLog } from '../features/event-log/EventLog'
 import { ResourceBar } from '../features/hud/ResourceBar'
 import { Inspector } from '../features/inspector/Inspector'
 import { NotificationCenter } from '../features/notifications/NotificationCenter'
+import { MonsterSync } from '../features/monster/MonsterSync'
 import { ProfilePanel } from '../features/player/ProfilePanel'
 import { ProductionPanel } from '../features/production/ProductionPanel'
 import { ResourceRegistry } from '../features/resources/ResourceRegistry'
@@ -29,6 +30,7 @@ export function App() {
           <BuildMenu />
           <BuildingSync />
           <ResourceNodeSync />
+          <MonsterSync />
           <WorldRealtime />
           <ConstructionTicker />
           <IsoMap />

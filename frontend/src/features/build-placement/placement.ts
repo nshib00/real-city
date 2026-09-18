@@ -1,4 +1,4 @@
-import type { BuildingKind, PlacedBuilding } from '../../game/state/useGameStore'
+import type { BuildingKind, MonsterEntity, PlacedBuilding } from '../../game/state/useGameStore'
 import type { TerrainType, WorldTile } from '../../shared/contracts'
 
 export type PlacementPreview = {
@@ -13,6 +13,7 @@ export function validatePlacementPreview(input: {
   footprint?: { width: number; height: number }
   worldTiles?: WorldTile[]
   buildings: PlacedBuilding[]
+  monsters?: MonsterEntity[]
 }): PlacementPreview {
   if (!input.tile) {
     return { valid: false, reason: 'Выберите клетку на карте' }
@@ -24,15 +25,22 @@ export function validatePlacementPreview(input: {
   if (input.kind === 'town_hall' && hasTownHall) {
     return { valid: false, reason: 'Ратуша может быть только одна' }
   }
-  if (input.buildings.some((building) => building.tile.x === input.tile?.x && building.tile.y === input.tile.y)) {
+  const footprint = footprintTiles(input.tile, input.footprint)
+  if (input.buildings.some((building) => footprint.some((tile) => tile.x === building.tile.x && tile.y === building.tile.y))) {
     return { valid: false, reason: 'Клетка уже занята' }
   }
-  const terrainTiles = footprintTiles(input.tile, input.footprint).map((coord) => input.worldTiles?.find((tile) => tile.x === coord.x && tile.y === coord.y)?.terrain ?? (coord.x === input.tile?.x && coord.y === input.tile.y ? input.terrain : null))
+  if (input.monsters?.some((monster) => footprint.some((tile) => tile.x === monster.tile.x && tile.y === monster.tile.y))) {
+    return { valid: false, reason: 'На клетке находится монстр' }
+  }
+  const terrainTiles = footprint.map((coord) => input.worldTiles?.find((tile) => tile.x === coord.x && tile.y === coord.y)?.terrain ?? (coord.x === input.tile?.x && coord.y === input.tile.y ? input.terrain : null))
   if (terrainTiles.some((terrain) => terrain === 'forest')) {
     return { valid: false, reason: isMultiTileFootprint(input.footprint) ? 'Сначала срубите лес на клетках под постройкой' : 'Сначала срубите лес на этой клетке' }
   }
   if (terrainTiles.some((terrain) => terrain === 'water' || terrain === 'mountain')) {
     return { valid: false, reason: 'На реках и горах строить нельзя' }
+  }
+  if (terrainTiles.some((terrain) => terrain === 'ruins' || terrain === 'oil_well')) {
+    return { valid: false, reason: 'На руинах и нефтяных скважинах строить нельзя' }
   }
   return { valid: true, reason: null }
 }

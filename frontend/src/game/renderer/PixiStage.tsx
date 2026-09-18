@@ -1,9 +1,11 @@
-import { Application, Graphics } from 'pixi.js'
+import { Application, Container, Graphics, Sprite, Texture } from 'pixi.js'
 import { useEffect, useRef } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
 
 import type { WorldTile } from '../../shared/contracts'
 import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, wrapGridCoord } from '../coordinates/iso'
+import { preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
+import { tileOccupancyKey } from './visibleObjects'
 
 type Camera = {
   x: number
@@ -18,6 +20,7 @@ type TileCoord = {
 
 type PixiStageProps = {
   tiles: WorldTile[]
+  occupiedTiles: Set<string>
   camera: Camera
   selectedTile: TileCoord | null
   hoveredTile: TileCoord | null
@@ -37,12 +40,14 @@ const TERRAIN_COLORS: Record<string, number> = {
 
 const TILE_POINTS = [0, -TILE_HEIGHT / 2, TILE_WIDTH / 2, 0, 0, TILE_HEIGHT / 2, -TILE_WIDTH / 2, 0]
 
-export function PixiStage({ tiles, camera, selectedTile, hoveredTile, onSelectTile, onHoverTile }: PixiStageProps) {
+export function PixiStage({ tiles, occupiedTiles, camera, selectedTile, hoveredTile, onSelectTile, onHoverTile }: PixiStageProps) {
   const hostRef = useRef<HTMLDivElement | null>(null)
   const appRef = useRef<Application | null>(null)
+  const terrainSpritesRef = useRef<Container | null>(null)
   const terrainRef = useRef<Graphics | null>(null)
   const overlayRef = useRef<Graphics | null>(null)
   const tilesRef = useRef<WorldTile[]>(tiles)
+  const occupiedTilesRef = useRef<Set<string>>(occupiedTiles)
   const cameraRef = useRef<Camera>(camera)
   const selectedTileRef = useRef<TileCoord | null>(selectedTile)
   const hoveredTileRef = useRef<TileCoord | null>(hoveredTile)
@@ -70,12 +75,39 @@ export function PixiStage({ tiles, camera, selectedTile, hoveredTile, onSelectTi
       app = nextApp
       appRef.current = nextApp
       app.ticker.maxFPS = 30
+      terrainSpritesRef.current = new Container()
       terrainRef.current = new Graphics()
       overlayRef.current = new Graphics()
+      app.stage.addChild(terrainSpritesRef.current)
       app.stage.addChild(terrainRef.current)
       app.stage.addChild(overlayRef.current)
       hostRef.current.appendChild(app.canvas)
-      drawStage(nextApp, terrainRef.current, overlayRef.current, tilesRef.current, cameraRef.current, selectedTileRef.current, hoveredTileRef.current)
+      drawStage(
+        nextApp,
+        terrainSpritesRef.current,
+        terrainRef.current,
+        overlayRef.current,
+        tilesRef.current,
+        occupiedTilesRef.current,
+        cameraRef.current,
+        selectedTileRef.current,
+        hoveredTileRef.current,
+      )
+      void preloadTerrainPngTextures().then(() => {
+        if (!disposed && terrainSpritesRef.current && terrainRef.current && overlayRef.current) {
+          drawStage(
+            nextApp,
+            terrainSpritesRef.current,
+            terrainRef.current,
+            overlayRef.current,
+            tilesRef.current,
+            occupiedTilesRef.current,
+            cameraRef.current,
+            selectedTileRef.current,
+            hoveredTileRef.current,
+          )
+        }
+      })
     }
 
     void mount()
@@ -84,6 +116,7 @@ export function PixiStage({ tiles, camera, selectedTile, hoveredTile, onSelectTi
       disposed = true
       app?.destroy()
       appRef.current = null
+      terrainSpritesRef.current = null
       terrainRef.current = null
       overlayRef.current = null
       app = null
@@ -92,16 +125,18 @@ export function PixiStage({ tiles, camera, selectedTile, hoveredTile, onSelectTi
 
   useEffect(() => {
     tilesRef.current = tiles
+    occupiedTilesRef.current = occupiedTiles
     cameraRef.current = camera
     selectedTileRef.current = selectedTile
     hoveredTileRef.current = hoveredTile
     const app = appRef.current
+    const terrainSprites = terrainSpritesRef.current
     const terrain = terrainRef.current
     const overlay = overlayRef.current
-    if (app && terrain && overlay) {
-      drawStage(app, terrain, overlay, tiles, camera, selectedTile, hoveredTile)
+    if (app && terrainSprites && terrain && overlay) {
+      drawStage(app, terrainSprites, terrain, overlay, tiles, occupiedTiles, camera, selectedTile, hoveredTile)
     }
-  }, [camera, hoveredTile, selectedTile, tiles])
+  }, [camera, hoveredTile, occupiedTiles, selectedTile, tiles])
 
   return (
     <div
@@ -125,29 +160,55 @@ export function PixiStage({ tiles, camera, selectedTile, hoveredTile, onSelectTi
   )
 }
 
-function drawStage(app: Application, terrain: Graphics, overlay: Graphics, tiles: WorldTile[], camera: Camera, selectedTile: TileCoord | null, hoveredTile: TileCoord | null) {
+function drawStage(
+  app: Application,
+  terrainSprites: Container,
+  terrain: Graphics,
+  overlay: Graphics,
+  tiles: WorldTile[],
+  occupiedTiles: Set<string>,
+  camera: Camera,
+  selectedTile: TileCoord | null,
+  hoveredTile: TileCoord | null,
+) {
   const width = app.screen.width
   const height = app.screen.height
   const origin = { x: width * 0.48 + camera.x, y: height * 0.16 + camera.y }
   const screenTarget = { x: (width / 2 - origin.x) / camera.zoom, y: (height / 2 - origin.y) / camera.zoom }
+  for (const child of terrainSprites.removeChildren()) {
+    child.destroy()
+  }
   terrain.clear()
   overlay.clear()
 
+  const visibleTiles: { tile: WorldTile; x: number; y: number }[] = []
   for (const tile of tiles) {
     const pos = nearestWrappedScreenCoord(tile, screenTarget)
     const x = origin.x + pos.x * camera.zoom
     const y = origin.y + pos.y * camera.zoom
-    const halfWidth = (TILE_WIDTH * camera.zoom) / 2
-    const halfHeight = (TILE_HEIGHT * camera.zoom) / 2
-    if (x + halfWidth < 0 || x - halfWidth > width || y + halfHeight < 0 || y - halfHeight > height) {
+    const spriteScale = TILE_WIDTH * camera.zoom / TERRAIN_SPRITE.footprintWidth
+    const halfWidth = TERRAIN_SPRITE.width * spriteScale / 2
+    const topHeight = TERRAIN_SPRITE.height * TERRAIN_SPRITE.anchorY * spriteScale
+    const bottomHeight = (TILE_HEIGHT * camera.zoom) / 2
+    if (x + halfWidth < 0 || x - halfWidth > width || y + bottomHeight < 0 || y - topHeight > height) {
       continue
     }
-    drawDiamond(terrain, x, y, camera.zoom, terrainColor(tile), tile.safe_zone ? 0xf2c14e : 0xffffff, tile.safe_zone ? 0.42 : 0.18)
-    if (tile.terrain === 'forest' && tile.forest_density > 0) {
-      drawForestCluster(terrain, x, y, camera.zoom, tile.forest_density)
+    visibleTiles.push({ tile, x, y })
+  }
+
+  visibleTiles.sort((a, b) => a.y - b.y || a.x - b.x)
+  for (const { tile, x, y } of visibleTiles) {
+    if (occupiedTiles.has(tileOccupancyKey(tile))) {
+      continue
     }
-    if (tile.terrain === 'ruins') {
-      drawRuinsMarker(terrain, x, y, camera.zoom)
+    const textureUrl = terrainTextureUrl(tile)
+    if (textureUrl) {
+      drawTerrainSprite(terrainSprites, textureUrl, x, y, camera.zoom)
+      if (tile.safe_zone) {
+        drawDiamondBorder(terrain, x, y, camera.zoom, 0xf2c14e, 0.42)
+      }
+    } else {
+      drawDiamond(terrain, x, y, camera.zoom, terrainColor(tile), tile.safe_zone ? 0xf2c14e : 0xffffff, tile.safe_zone ? 0.42 : 0.18)
     }
   }
 
@@ -157,6 +218,16 @@ function drawStage(app: Application, terrain: Graphics, overlay: Graphics, tiles
   if (selectedTile) {
     drawOverlay(overlay, selectedTile, origin, screenTarget, camera.zoom, 0xf2c14e, 0.9)
   }
+}
+
+function drawTerrainSprite(target: Container, textureUrl: string, x: number, y: number, zoom: number) {
+  const sprite = new Sprite(Texture.from(textureUrl))
+  sprite.anchor.set(TERRAIN_SPRITE.anchorX, TERRAIN_SPRITE.anchorY)
+  sprite.position.set(x, y)
+  const scale = TILE_WIDTH * zoom / TERRAIN_SPRITE.footprintWidth
+  sprite.width = TERRAIN_SPRITE.width * scale
+  sprite.height = TERRAIN_SPRITE.height * scale
+  target.addChild(sprite)
 }
 
 function terrainColor(tile: WorldTile) {
@@ -170,31 +241,10 @@ function drawDiamond(target: Graphics, x: number, y: number, zoom: number, fill:
     .stroke({ color: stroke, alpha: strokeAlpha, width: Math.max(1, zoom) })
 }
 
-function drawForestCluster(target: Graphics, x: number, y: number, zoom: number, density: number) {
-  const count = Math.max(1, Math.min(3, density))
-  const trees = [
-    { x: 0, y: -11 },
-    { x: -14, y: -2 },
-    { x: 14, y: -2 },
-  ].slice(0, count)
-  for (const tree of trees) {
-    const trunkWidth = 4 * zoom
-    const trunkHeight = 9 * zoom
-    const crownRadius = 9 * zoom
-    const tx = x + tree.x * zoom
-    const ty = y + tree.y * zoom
-    target.rect(tx - trunkWidth / 2, ty + 4 * zoom, trunkWidth, trunkHeight).fill({ color: 0x5b3a24 })
-    target.circle(tx, ty, crownRadius).fill({ color: count === 1 ? 0x6faa55 : 0x255f3f })
-    target.circle(tx - 5 * zoom, ty + 3 * zoom, crownRadius * 0.65).fill({ color: 0x2f7449 })
-  }
-}
-
-function drawRuinsMarker(target: Graphics, x: number, y: number, zoom: number) {
-  const block = 9 * zoom
-  target.rect(x - 16 * zoom, y - 8 * zoom, block, 18 * zoom).fill({ color: 0xc9b06a })
-  target.rect(x - 4 * zoom, y - 14 * zoom, block, 24 * zoom).fill({ color: 0xd7c07a })
-  target.rect(x + 9 * zoom, y - 6 * zoom, block, 16 * zoom).fill({ color: 0xb99b58 })
-  target.circle(x, y - 19 * zoom, 4 * zoom).fill({ color: 0xf2c14e })
+function drawDiamondBorder(target: Graphics, x: number, y: number, zoom: number, stroke: number, strokeAlpha: number) {
+  target
+    .poly(TILE_POINTS.map((value, index) => (index % 2 === 0 ? x + value * zoom : y + value * zoom)), true)
+    .stroke({ color: stroke, alpha: strokeAlpha, width: Math.max(1, zoom) })
 }
 
 function drawOverlay(target: Graphics, tile: TileCoord, origin: TileCoord, screenTarget: TileCoord, zoom: number, color: number, alpha: number) {

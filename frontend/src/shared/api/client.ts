@@ -15,13 +15,17 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 async function requestWithAuth<T>(path: string, init: RequestInit | undefined, allowRefresh: boolean): Promise<T> {
   const token = getAccessToken()
+  const headers = new Headers(init?.headers)
+  headers.set('Content-Type', headers.get('Content-Type') ?? 'application/json')
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`)
+  }
+  if (needsIdempotencyKey(path, init?.method) && !headers.has('Idempotency-Key')) {
+    headers.set('Idempotency-Key', createIdempotencyKey())
+  }
   const response = await fetch(`/api/v1${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...init?.headers,
-    },
     ...init,
+    headers,
   })
 
   if (response.status === 401 && allowRefresh && shouldRefresh(path) && getRefreshToken()) {
@@ -41,6 +45,20 @@ async function requestWithAuth<T>(path: string, init: RequestInit | undefined, a
 
 function shouldRefresh(path: string) {
   return !path.startsWith('/auth/login') && !path.startsWith('/auth/register') && !path.startsWith('/auth/refresh')
+}
+
+function needsIdempotencyKey(path: string, method = 'GET') {
+  if (method.toUpperCase() !== 'POST') {
+    return false
+  }
+  return path === '/buildings' || path === '/market/orders' || path === '/alliances/invites'
+}
+
+function createIdempotencyKey() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID()
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`
 }
 
 export async function refreshTokens() {

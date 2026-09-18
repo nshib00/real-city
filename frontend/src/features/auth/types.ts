@@ -11,7 +11,11 @@ export type ProfileSettings = {
 
 export type PlayerProfile = {
   display_name: string
+  city_name: string
   avatar_url: string
+  level: number
+  xp: number
+  next_level_xp: number
   settings: ProfileSettings
   updated_at: string
 }

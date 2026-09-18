@@ -88,11 +88,21 @@ button {
   width: 272px;
   min-height: var(--top-bar-height);
   display: grid;
-  grid-template-columns: 38px minmax(0, 1fr) auto auto;
+  grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
   gap: 8px;
   padding: 8px;
   border-radius: 8px;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.profile-avatar-stack {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
 }
 
 .profile-avatar {
@@ -104,6 +114,51 @@ button {
   color: #1d2a20;
   background: #f2c14e;
   font-weight: 800;
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-large {
+  width: 56px;
+  height: 56px;
+  font-size: 20px;
+}
+
+.profile-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 30px;
+  height: 18px;
+  justify-content: center;
+  margin-top: -10px;
+  padding: 0 5px;
+  color: #1d2a20;
+  background: #f2c14e;
+  border: 1px solid rgba(29, 42, 32, 0.24);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.profile-xp-mini {
+  width: 42px;
+  height: 4px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+}
+
+.profile-xp-mini span,
+.profile-xp-detail div span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #65d184, #f2c14e);
 }
 
 .profile-main {
@@ -123,32 +178,6 @@ button {
 .profile-main span {
   color: var(--color-muted);
   font-size: 12px;
-}
-
-.profile-toggle,
-.profile-quality {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--color-muted);
-}
-
-.profile-quality {
-  grid-column: 2 / 5;
-}
-
-.profile-quality select {
-  min-width: 86px;
-  color: var(--color-text);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--color-panel-border);
-  border-radius: 6px;
-}
-
-.profile-panel .icon-button {
-  width: 32px;
-  height: 32px;
-  font-size: 11px;
 }
 
 .resource-chip,
@@ -241,96 +270,33 @@ button {
 }
 
 .resource-icon {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  color: #14231a;
-  background: #f0d58b;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 6px;
+  color: var(--color-muted);
+  background: transparent;
+  border: 0;
 }
 
-.resource-icon-coins {
-  background: #f2c14e;
+.resource-icon-render {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transform: scale(1.2);
+  transform-origin: center;
 }
 
-.resource-icon-aeolian-crystal {
-  color: #f6efff;
-  background: #8a55d6;
+.resource-icon-topbar {
+  width: 34px;
+  height: 34px;
+  margin: -2px 0;
 }
 
-.resource-icon-wood {
-  color: #fff2dd;
-  background: #8a5d36;
-}
-
-.resource-icon-stone,
-.resource-icon-metal {
-  background: #a9b2b8;
-}
-
-.resource-icon-brick {
-  color: #fff0e8;
-  background: #c6724a;
-}
-
-.resource-icon-oil {
-  color: #f4f7f1;
-  background: #272a31;
-}
-
-.resource-icon-fuel {
-  color: #211407;
-  background: #d8902f;
-}
-
-.resource-icon-glass,
-.resource-icon-clay,
-.resource-icon-sand,
-.resource-icon-coal,
-.resource-icon-iron_ore,
-.resource-icon-iron,
-.resource-icon-steel,
-.resource-icon-copper,
-.resource-icon-concrete,
-.resource-icon-cement,
-.resource-icon-planks,
-.resource-icon-boards,
-.resource-icon-fabric,
-.resource-icon-fiber,
-.resource-icon-resin,
-.resource-icon-herbs,
-.resource-icon-mushrooms,
-.resource-icon-seeds,
-.resource-icon-sulfur,
-.resource-icon-explosives,
-.resource-icon-electronics,
-.resource-icon-super-seeds,
-.resource-icon-super-fiber,
-.resource-icon-super-mushrooms {
-  color: #102319;
-  background: #7ad6c0;
-}
-
-.resource-icon-coal,
-.resource-icon-explosives {
-  color: #f4f7f1;
-  background: #333941;
-}
-
-.resource-icon-steel,
-.resource-icon-iron,
-.resource-icon-iron_ore {
-  color: #17212b;
-  background: #b9c0be;
-}
-
-.resource-icon-concrete,
-.resource-icon-cement {
-  color: #17212b;
-  background: #b7b2a6;
+.resource-icon-topbar .resource-icon-render {
+  transform: scale(1.28);
 }
 
 .realtime-chip-connected {
@@ -404,14 +370,20 @@ button {
 }
 
 .world-miniature {
+  position: relative;
   width: 100%;
   aspect-ratio: 1;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
   overflow: hidden;
   background: #304536;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
+}
+
+.world-district-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .world-district {
@@ -446,6 +418,69 @@ button {
   transform: translate(-50%, -50%);
 }
 
+.world-building-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.world-building-marker {
+  position: absolute;
+  z-index: 2;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  background: #f2c14e;
+  border: 1px solid rgba(12, 18, 20, 0.78);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.world-building-marker:hover,
+.world-building-marker:focus-visible {
+  z-index: 3;
+  outline: 2px solid rgba(255, 255, 255, 0.84);
+  outline-offset: 1px;
+}
+
+.world-building-marker-center {
+  background: #f2c14e;
+}
+
+.world-building-marker-housing {
+  background: #65d184;
+}
+
+.world-building-marker-fields {
+  background: #9ddf55;
+}
+
+.world-building-marker-industry {
+  background: #8fb7ff;
+}
+
+.world-building-marker-defense {
+  background: #ff6f61;
+}
+
+.world-building-marker-roads {
+  background: #d3b17b;
+}
+
+.world-building-marker-storage {
+  background: #b68cff;
+}
+
+.world-building-marker-social {
+  background: #ff9ed1;
+}
+
+.world-building-marker-trade {
+  background: #4fd4c7;
+}
+
 .build-menu-backdrop {
   position: fixed;
   inset: 0;
@@ -460,7 +495,7 @@ button {
   width: min(1120px, calc(100vw - 48px));
   max-height: min(720px, calc(100vh - 48px));
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   padding: 14px;
   overflow: hidden;
   background: var(--color-panel);
@@ -525,6 +560,14 @@ button {
   max-height: 100%;
   overflow-y: auto;
   padding-right: 4px;
+}
+
+.build-error,
+.upgrade-error {
+  margin: 8px 0 0;
+  color: #ffb3b3;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .build-card {
@@ -841,6 +884,76 @@ button {
   color: var(--color-text);
 }
 
+.chat-panel {
+  display: grid;
+  gap: 8px;
+}
+
+.chat-channels,
+.chat-compose {
+  display: flex;
+  gap: 6px;
+}
+
+.chat-channels button,
+.chat-compose button,
+.social-form button {
+  min-height: 30px;
+  padding: 0 10px;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 6px;
+}
+
+.chat-channels button[aria-pressed="true"] {
+  background: rgba(242, 193, 78, 0.18);
+  border-color: rgba(242, 193, 78, 0.52);
+}
+
+.chat-messages {
+  max-height: 86px;
+  overflow: auto;
+}
+
+.chat-messages em {
+  color: #f2c14e;
+  font-style: normal;
+}
+
+.chat-compose input,
+.social-form input,
+.social-form select {
+  min-width: 0;
+  height: 30px;
+  padding: 0 8px;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 6px;
+}
+
+.chat-compose input {
+  flex: 1;
+}
+
+.social-form {
+  display: grid;
+  gap: 8px;
+}
+
+.social-form label {
+  display: grid;
+  gap: 4px;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.market-panel {
+  padding: 10px 0;
+  border-top: 1px solid var(--color-panel-border);
+}
+
 .notification-stack {
   top: 84px;
   right: 328px;
@@ -981,6 +1094,7 @@ button {
 .map-building,
 .map-resource,
 .map-resource-node,
+.map-monster,
 .map-threat {
   position: absolute;
   width: 54px;
@@ -990,6 +1104,52 @@ button {
   border: 2px solid rgba(255, 255, 255, 0.34);
   box-shadow: 0 12px 18px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+}
+
+.map-monster {
+  width: 46px;
+  height: 52px;
+  margin-left: -23px;
+  margin-top: -30px;
+  background: linear-gradient(#e75f5f 0 38%, #7b3140 38% 76%, #322131 76%);
+  border-color: rgba(255, 236, 210, 0.74);
+  border-radius: 48% 48% 36% 36%;
+}
+
+.map-monster-resource_guardian {
+  background: linear-gradient(#b9c0be 0 34%, #6c777d 34% 72%, #303942 72%);
+}
+
+.map-monster-ruins_guardian {
+  width: 54px;
+  height: 58px;
+  background: linear-gradient(#f2c14e 0 24%, #945347 24% 68%, #4b2f35 68%);
+}
+
+.map-monster-aggro,
+.map-monster-attacking {
+  border-color: #f2c14e;
+  box-shadow: 0 0 0 4px rgba(231, 95, 95, 0.24), 0 12px 18px rgba(0, 0, 0, 0.3);
+}
+
+.map-monster-selected {
+  outline: 3px solid rgba(242, 193, 78, 0.96);
+  outline-offset: 2px;
+}
+
+.monster-health {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  bottom: -8px;
+  height: 4px;
+  background: #42c477;
+  border-radius: 999px;
+  transform-origin: left center;
+}
+
+.inspector-card-threat {
+  border-color: rgba(231, 95, 95, 0.48);
 }
 
 .map-resource-node {
@@ -1025,9 +1185,32 @@ button {
   padding: 0;
 }
 
-.map-building-town_hall {
-  background: linear-gradient(#f8d870 0 22%, #ce7952 22% 64%, #7d5642 64%);
-  border-radius: 8px 8px 4px 4px;
+.map-building-town_hall,
+.map-building-dugout,
+.map-building-wood_house,
+.map-building-lumber_yard,
+.map-building-field_bed {
+  width: 441px;
+  height: 331px;
+  margin-left: -220.5px;
+  margin-top: -224px;
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.building-glb-model,
+.building-sprite-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 
 .map-building-warehouse {
@@ -1043,21 +1226,14 @@ button {
   border-radius: 8px;
 }
 
-.map-building-dugout {
-  height: 42px;
-  margin-top: -12px;
-  background: linear-gradient(#7d5b3f 0 42%, #3f3026 42%);
-  border-radius: 50% 50% 8px 8px;
-}
-
-.map-building-field_bed {
+.map-building-field_bed:not(:has(.building-glb-model)):not(:has(.building-sprite-image)) {
   height: 38px;
   margin-top: -12px;
   background: repeating-linear-gradient(90deg, #4f8f4e 0 9px, #7bb45f 9px 18px);
   border-radius: 8px;
 }
 
-.map-building-lumber_yard {
+.map-building-lumber_yard:not(:has(.building-glb-model)):not(:has(.building-sprite-image)) {
   width: 62px;
   background: linear-gradient(#7aa35e 0 26%, #8a5d36 26% 74%, #4a3528 74%);
   border-radius: 6px;
@@ -1116,6 +1292,17 @@ button {
   outline-offset: 2px;
 }
 
+.map-building-dugout.map-building-selected {
+  outline-offset: -28px;
+  border-radius: 10px;
+}
+
+.map-building-town_hall.map-building-selected,
+.map-building-wood_house.map-building-selected {
+  outline-offset: -28px;
+  border-radius: 12px;
+}
+
 .map-building-construction::after {
   content: "";
   position: absolute;
@@ -1129,6 +1316,1041 @@ button {
   animation: construction-pulse 900ms linear infinite;
   pointer-events: none;
 }
+
+.map-building-dugout.map-building-construction::after {
+  inset: 30px 32px 18px;
+  border-radius: 46% 46% 20% 20%;
+}
+
+.map-building-town_hall.map-building-construction::after {
+  inset: 20px 22px 18px;
+  border-radius: 28% 28% 18% 18%;
+}
+
+.map-building-wood_house.map-building-construction::after {
+  inset: 28px 34px 18px;
+  border-radius: 26% 26% 16% 16%;
+}
+
+.dugout-model {
+  --dugout-earth: #825636;
+  --dugout-roof: #3f8037;
+  --dugout-trim: #d8a353;
+  --dugout-door: #6b3a1d;
+  --dugout-accent: #c63f28;
+  --dugout-scale: 1;
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  width: 82px;
+  height: 78px;
+  transform: translateX(-50%) scale(var(--dugout-scale));
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+.dugout-model-l01 {
+  --dugout-scale: 0.88;
+  --dugout-earth: #7b4c2d;
+  --dugout-roof: #3d7832;
+  --dugout-trim: #cf9040;
+  --dugout-door: #5d3218;
+  --dugout-accent: #b73525;
+}
+
+.dugout-model-l02 {
+  --dugout-scale: 0.93;
+  --dugout-earth: #8a5734;
+  --dugout-roof: #449043;
+  --dugout-trim: #e0a94c;
+  --dugout-door: #23736d;
+  --dugout-accent: #22a198;
+}
+
+.dugout-model-l03 {
+  --dugout-scale: 0.98;
+  --dugout-earth: #93633d;
+  --dugout-roof: #55a14d;
+  --dugout-trim: #edd071;
+  --dugout-door: #c9772c;
+  --dugout-accent: #d68a28;
+}
+
+.dugout-model-l04 {
+  --dugout-scale: 1.04;
+  --dugout-earth: #a06d44;
+  --dugout-roof: #68ad57;
+  --dugout-trim: #f0b666;
+  --dugout-door: #9a3428;
+  --dugout-accent: #d33a28;
+}
+
+.dugout-model-l05 {
+  --dugout-scale: 1.1;
+  --dugout-earth: #ad784d;
+  --dugout-roof: #78bd61;
+  --dugout-trim: #f4d783;
+  --dugout-door: #2c58a4;
+  --dugout-accent: #2e66c6;
+}
+
+.dugout-model > span {
+  position: absolute;
+  display: block;
+}
+
+.dugout-model-shadow {
+  left: 12px;
+  right: 10px;
+  bottom: 4px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 50%;
+  transform: skewX(-28deg);
+  filter: blur(1px);
+}
+
+.dugout-model-base {
+  left: 8px;
+  bottom: 7px;
+  width: 66px;
+  height: 34px;
+  background: #71b85a;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.dugout-model-path {
+  left: 31px;
+  bottom: 5px;
+  width: 21px;
+  height: 34px;
+  background: #c28a4e;
+  clip-path: polygon(48% 0, 76% 12%, 62% 100%, 24% 100%, 18% 16%);
+}
+
+.dugout-model-mound {
+  left: 20px;
+  bottom: 21px;
+  width: 44px;
+  height: 31px;
+  background:
+    radial-gradient(circle at 28% 28%, rgba(255, 255, 255, 0.18), transparent 27%),
+    linear-gradient(160deg, var(--dugout-earth), #4c2f1f);
+  border: 2px solid rgba(255, 237, 191, 0.34);
+  border-radius: 50% 50% 34% 34%;
+}
+
+.dugout-model-roof {
+  left: 24px;
+  bottom: 39px;
+  width: 36px;
+  height: 18px;
+  background:
+    radial-gradient(circle at 32% 35%, rgba(255, 255, 255, 0.2), transparent 24%),
+    linear-gradient(160deg, var(--dugout-roof), #24572a);
+  border-radius: 50% 50% 44% 44%;
+}
+
+.dugout-model-roof-patch {
+  left: 44px;
+  bottom: 48px;
+  width: 13px;
+  height: 7px;
+  background: var(--dugout-accent);
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.dugout-model-door {
+  left: 34px;
+  bottom: 22px;
+  width: 14px;
+  height: 22px;
+  background: var(--dugout-door);
+  border-radius: 8px 8px 3px 3px;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.18);
+}
+
+.dugout-model-door-frame {
+  left: 31px;
+  bottom: 42px;
+  width: 20px;
+  height: 5px;
+  background: var(--dugout-trim);
+  border-radius: 4px;
+  box-shadow: -4px 8px 0 -1px var(--dugout-trim), 4px 8px 0 -1px var(--dugout-trim);
+}
+
+.dugout-model-door-accent {
+  left: 34px;
+  bottom: 33px;
+  width: 15px;
+  height: 4px;
+  background: var(--dugout-accent);
+  border-radius: 3px;
+}
+
+.dugout-model-window {
+  right: 25px;
+  bottom: 33px;
+  width: 8px;
+  height: 8px;
+  background: #ffd36f;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 3px;
+  box-shadow: 0 0 8px rgba(255, 195, 72, 0.42);
+  opacity: 0;
+}
+
+.dugout-model-l04 .dugout-model-window,
+.dugout-model-l05 .dugout-model-window {
+  opacity: 1;
+}
+
+.dugout-model-chimney {
+  left: 23px;
+  bottom: 51px;
+  width: 8px;
+  height: 22px;
+  background: linear-gradient(#b9b8ad, #6e7578);
+  border-radius: 3px 3px 1px 1px;
+}
+
+.dugout-model-chimney::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 16px;
+  height: 5px;
+  background: #c9bb92;
+  border-radius: 3px;
+}
+
+.dugout-model-smoke {
+  left: 20px;
+  bottom: 72px;
+  width: 10px;
+  height: 10px;
+  background: rgba(218, 224, 214, 0.7);
+  border-radius: 50%;
+  box-shadow: 7px -8px 0 2px rgba(218, 224, 214, 0.44);
+}
+
+.dugout-model-flag-pole {
+  left: 24px;
+  bottom: 47px;
+  width: 3px;
+  height: 34px;
+  background: #d49a4d;
+  border-radius: 3px;
+}
+
+.dugout-model-flag {
+  left: 26px;
+  bottom: 68px;
+  width: 18px;
+  height: 14px;
+  background: var(--dugout-accent);
+  clip-path: polygon(0 0, 100% 34%, 0 100%);
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.28));
+}
+
+.dugout-model-flowers {
+  bottom: 15px;
+  width: 5px;
+  height: 5px;
+  background: #ffdf4a;
+  border-radius: 50%;
+  box-shadow: 6px 2px 0 #ef5f5f, 11px -1px 0 #e8dfff;
+}
+
+.dugout-model-flowers-left {
+  left: 20px;
+}
+
+.dugout-model-flowers-right {
+  right: 27px;
+}
+
+.dugout-model-scaffold,
+.dugout-model-damage {
+  display: none;
+}
+
+.dugout-model-construction .dugout-model-scaffold {
+  display: block;
+  left: 16px;
+  bottom: 17px;
+  width: 50px;
+  height: 42px;
+  border-left: 3px solid #e0a34e;
+  border-right: 3px solid #e0a34e;
+  border-top: 3px solid #e0a34e;
+}
+
+.dugout-model-construction .dugout-model-scaffold::before,
+.dugout-model-construction .dugout-model-scaffold::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  width: 42px;
+  height: 3px;
+  background: #f2c14e;
+}
+
+.dugout-model-construction .dugout-model-scaffold::before {
+  top: 13px;
+}
+
+.dugout-model-construction .dugout-model-scaffold::after {
+  top: 27px;
+}
+
+.dugout-model-damaged {
+  filter: saturate(0.82) brightness(0.86);
+}
+
+.dugout-model-damaged .dugout-model-damage,
+.dugout-model-ruined .dugout-model-damage {
+  display: block;
+  left: 40px;
+  bottom: 47px;
+  width: 18px;
+  height: 8px;
+  background: #1e1711;
+  border-radius: 50%;
+  transform: rotate(16deg);
+}
+
+.dugout-model-damaged .dugout-model-door,
+.dugout-model-ruined .dugout-model-door {
+  background: #1c140f;
+}
+
+.dugout-model-ruined {
+  opacity: 0.62;
+  filter: grayscale(0.45) brightness(0.72);
+}
+
+.town-hall-model,
+.wood-house-model {
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  transform: translateX(-50%) scale(var(--model-scale));
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+.town-hall-model > span,
+.wood-house-model > span {
+  position: absolute;
+  display: block;
+}
+
+.town-hall-model {
+  --model-scale: 1;
+  --town-wall: #a96834;
+  --town-roof: #4d9b3f;
+  --town-trim: #e9b85b;
+  --town-stone: #b5b4a8;
+  --town-plaza: #c59255;
+  --town-banner: #d33426;
+  width: 124px;
+  height: 118px;
+}
+
+.town-hall-model-l01 {
+  --model-scale: 0.78;
+  --town-wall: #8e5a31;
+  --town-roof: #4f913a;
+  --town-trim: #d49a4d;
+  --town-stone: #9f947c;
+}
+
+.town-hall-model-l02 {
+  --model-scale: 0.82;
+  --town-wall: #9c6536;
+  --town-roof: #5aa447;
+  --town-trim: #dfa953;
+}
+
+.town-hall-model-l03 {
+  --model-scale: 0.87;
+  --town-wall: #c48a4c;
+  --town-roof: #1c8c94;
+  --town-banner: #23848f;
+}
+
+.town-hall-model-l04 {
+  --model-scale: 0.91;
+  --town-wall: #d09b59;
+  --town-roof: #2497a1;
+}
+
+.town-hall-model-l05 {
+  --model-scale: 0.96;
+  --town-wall: #d8ad6b;
+  --town-roof: #d34b2f;
+  --town-stone: #aaa99f;
+}
+
+.town-hall-model-l06 {
+  --model-scale: 1;
+  --town-wall: #dcb572;
+  --town-roof: #c63d2d;
+  --town-stone: #bdbdb3;
+}
+
+.town-hall-model-l07 {
+  --model-scale: 1.04;
+  --town-wall: #bab9ad;
+  --town-roof: #be3428;
+  --town-trim: #777e7e;
+}
+
+.town-hall-model-l08 {
+  --model-scale: 1.08;
+  --town-wall: #c5c3b7;
+  --town-roof: #d55a2e;
+  --town-plaza: #bfbdb2;
+}
+
+.town-hall-model-l09 {
+  --model-scale: 1.12;
+  --town-wall: #bf6b4d;
+  --town-roof: #df8a26;
+  --town-stone: #cbc8ba;
+}
+
+.town-hall-model-l10 {
+  --model-scale: 1.16;
+  --town-wall: #d07a52;
+  --town-roof: #e3a02c;
+  --town-stone: #d5d1bf;
+}
+
+.town-hall-model-shadow {
+  left: 13px;
+  right: 11px;
+  bottom: 2px;
+  height: 34px;
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 50%;
+  filter: blur(1px);
+  transform: skewX(-28deg);
+}
+
+.town-hall-model-base {
+  left: 12px;
+  bottom: 8px;
+  width: 100px;
+  height: 50px;
+  background: #70b957;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.town-hall-model-plaza {
+  left: 39px;
+  bottom: 5px;
+  width: 47px;
+  height: 42px;
+  background: var(--town-plaza);
+  clip-path: polygon(48% 0, 84% 22%, 66% 100%, 28% 100%, 14% 22%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.16);
+}
+
+.town-hall-model-body {
+  left: 37px;
+  bottom: 39px;
+  width: 50px;
+  height: 34px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent 18% 82%, rgba(0, 0, 0, 0.14)),
+    var(--town-wall);
+  border: 2px solid var(--town-trim);
+  border-bottom-color: var(--town-stone);
+  border-radius: 5px 5px 3px 3px;
+}
+
+.town-hall-model-left-wing,
+.town-hall-model-right-wing {
+  bottom: 37px;
+  width: 28px;
+  height: 27px;
+  background: var(--town-wall);
+  border: 2px solid var(--town-trim);
+  border-bottom-color: var(--town-stone);
+  border-radius: 5px 5px 3px 3px;
+  opacity: 0;
+}
+
+.town-hall-model-left-wing {
+  left: 17px;
+}
+
+.town-hall-model-right-wing {
+  right: 17px;
+}
+
+.town-hall-model-l03 .town-hall-model-left-wing,
+.town-hall-model-l04 .town-hall-model-left-wing,
+.town-hall-model-l05 .town-hall-model-left-wing,
+.town-hall-model-l06 .town-hall-model-left-wing,
+.town-hall-model-l07 .town-hall-model-left-wing,
+.town-hall-model-l08 .town-hall-model-left-wing,
+.town-hall-model-l09 .town-hall-model-left-wing,
+.town-hall-model-l10 .town-hall-model-left-wing,
+.town-hall-model-l05 .town-hall-model-right-wing,
+.town-hall-model-l06 .town-hall-model-right-wing,
+.town-hall-model-l07 .town-hall-model-right-wing,
+.town-hall-model-l08 .town-hall-model-right-wing,
+.town-hall-model-l09 .town-hall-model-right-wing,
+.town-hall-model-l10 .town-hall-model-right-wing {
+  opacity: 1;
+}
+
+.town-hall-model-roof {
+  left: 32px;
+  bottom: 70px;
+  width: 60px;
+  height: 25px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 34%), var(--town-roof);
+  clip-path: polygon(50% 0, 100% 42%, 83% 100%, 17% 100%, 0 42%);
+  border-radius: 4px;
+}
+
+.town-hall-model-wing-roof {
+  bottom: 63px;
+  width: 34px;
+  height: 17px;
+  background: var(--town-roof);
+  clip-path: polygon(50% 0, 100% 48%, 82% 100%, 18% 100%, 0 48%);
+  opacity: 0;
+}
+
+.town-hall-model-wing-roof-left {
+  left: 14px;
+}
+
+.town-hall-model-wing-roof-right {
+  right: 14px;
+}
+
+.town-hall-model-l03 .town-hall-model-wing-roof-left,
+.town-hall-model-l04 .town-hall-model-wing-roof-left,
+.town-hall-model-l05 .town-hall-model-wing-roof-left,
+.town-hall-model-l06 .town-hall-model-wing-roof-left,
+.town-hall-model-l07 .town-hall-model-wing-roof-left,
+.town-hall-model-l08 .town-hall-model-wing-roof-left,
+.town-hall-model-l09 .town-hall-model-wing-roof-left,
+.town-hall-model-l10 .town-hall-model-wing-roof-left,
+.town-hall-model-l05 .town-hall-model-wing-roof-right,
+.town-hall-model-l06 .town-hall-model-wing-roof-right,
+.town-hall-model-l07 .town-hall-model-wing-roof-right,
+.town-hall-model-l08 .town-hall-model-wing-roof-right,
+.town-hall-model-l09 .town-hall-model-wing-roof-right,
+.town-hall-model-l10 .town-hall-model-wing-roof-right {
+  opacity: 1;
+}
+
+.town-hall-model-tower {
+  left: 49px;
+  bottom: 75px;
+  width: 26px;
+  height: 35px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent 20% 80%, rgba(0, 0, 0, 0.14)),
+    var(--town-wall);
+  border: 2px solid var(--town-trim);
+  border-bottom: 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.town-hall-model-l04 .town-hall-model-tower,
+.town-hall-model-l05 .town-hall-model-tower,
+.town-hall-model-l06 .town-hall-model-tower {
+  height: 43px;
+}
+
+.town-hall-model-l07 .town-hall-model-tower,
+.town-hall-model-l08 .town-hall-model-tower {
+  height: 51px;
+}
+
+.town-hall-model-l09 .town-hall-model-tower,
+.town-hall-model-l10 .town-hall-model-tower {
+  height: 59px;
+}
+
+.town-hall-model-tower-roof {
+  left: 44px;
+  bottom: 106px;
+  width: 36px;
+  height: 24px;
+  background: var(--town-roof);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.town-hall-model-l04 .town-hall-model-tower-roof,
+.town-hall-model-l05 .town-hall-model-tower-roof,
+.town-hall-model-l06 .town-hall-model-tower-roof {
+  bottom: 114px;
+}
+
+.town-hall-model-l07 .town-hall-model-tower-roof,
+.town-hall-model-l08 .town-hall-model-tower-roof {
+  bottom: 122px;
+}
+
+.town-hall-model-l09 .town-hall-model-tower-roof,
+.town-hall-model-l10 .town-hall-model-tower-roof {
+  bottom: 130px;
+}
+
+.town-hall-model-side-tower {
+  bottom: 64px;
+  width: 16px;
+  height: 38px;
+  background: var(--town-wall);
+  border: 2px solid var(--town-trim);
+  border-radius: 5px 5px 0 0;
+  opacity: 0;
+}
+
+.town-hall-model-side-tower-left {
+  left: 26px;
+}
+
+.town-hall-model-side-tower-right {
+  right: 26px;
+}
+
+.town-hall-model-l07 .town-hall-model-side-tower,
+.town-hall-model-l08 .town-hall-model-side-tower,
+.town-hall-model-l09 .town-hall-model-side-tower,
+.town-hall-model-l10 .town-hall-model-side-tower {
+  opacity: 1;
+}
+
+.town-hall-model-door {
+  left: 54px;
+  bottom: 40px;
+  width: 16px;
+  height: 25px;
+  background: #5d3218;
+  border: 2px solid var(--town-trim);
+  border-radius: 9px 9px 3px 3px;
+}
+
+.town-hall-model-windows {
+  left: 42px;
+  bottom: 54px;
+  width: 7px;
+  height: 9px;
+  background: #ffd36f;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 2px;
+  box-shadow: 34px 0 0 #ffd36f, 13px 39px 0 #ffd36f, 25px 39px 0 #ffd36f, 0 0 9px rgba(255, 195, 72, 0.38);
+}
+
+.town-hall-model-clock {
+  left: 55px;
+  bottom: 102px;
+  width: 14px;
+  height: 14px;
+  background: #efe7c9;
+  border: 2px solid var(--town-trim);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.town-hall-model-l08 .town-hall-model-clock,
+.town-hall-model-l09 .town-hall-model-clock,
+.town-hall-model-l10 .town-hall-model-clock {
+  opacity: 1;
+}
+
+.town-hall-model-balcony {
+  left: 45px;
+  bottom: 67px;
+  width: 34px;
+  height: 8px;
+  background: var(--town-stone);
+  border-radius: 3px;
+  opacity: 0;
+  box-shadow: -8px 5px 0 -2px var(--town-stone), 8px 5px 0 -2px var(--town-stone);
+}
+
+.town-hall-model-l10 .town-hall-model-balcony {
+  opacity: 1;
+}
+
+.town-hall-model-flag-pole {
+  left: 61px;
+  bottom: 125px;
+  width: 3px;
+  height: 35px;
+  background: var(--town-trim);
+  border-radius: 3px;
+}
+
+.town-hall-model-flag {
+  left: 64px;
+  bottom: 148px;
+  width: 21px;
+  height: 15px;
+  background: var(--town-banner);
+  clip-path: polygon(0 0, 100% 35%, 0 100%);
+  filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.28));
+}
+
+.town-hall-model-crates {
+  left: 25px;
+  bottom: 21px;
+  width: 11px;
+  height: 10px;
+  background: #d49a4d;
+  border-radius: 2px;
+  box-shadow: 13px 3px 0 #b8793d, 73px 2px 0 #d49a4d;
+}
+
+.town-hall-model-scaffold,
+.town-hall-model-damage {
+  display: none;
+}
+
+.town-hall-model-construction .town-hall-model-scaffold {
+  display: block;
+  left: 25px;
+  bottom: 38px;
+  width: 74px;
+  height: 62px;
+  border-left: 3px solid #e0a34e;
+  border-right: 3px solid #e0a34e;
+  border-top: 3px solid #e0a34e;
+  box-shadow: inset 0 18px 0 -15px #f2c14e, inset 0 36px 0 -33px #f2c14e;
+}
+
+.town-hall-model-damaged,
+.town-hall-model-ruined {
+  filter: saturate(0.82) brightness(0.84);
+}
+
+.town-hall-model-damaged .town-hall-model-damage,
+.town-hall-model-ruined .town-hall-model-damage {
+  display: block;
+  left: 70px;
+  bottom: 86px;
+  width: 21px;
+  height: 10px;
+  background: #1e1711;
+  border-radius: 50%;
+  transform: rotate(16deg);
+  box-shadow: -35px -12px 0 -3px #2d2118;
+}
+
+.town-hall-model-ruined {
+  opacity: 0.62;
+  filter: grayscale(0.45) brightness(0.72);
+}
+
+.wood-house-model {
+  --model-scale: 1;
+  --wood-wall: #d4a361;
+  --wood-roof: #cf3f2c;
+  --wood-trim: #f0bd63;
+  --wood-accent: #148b93;
+  width: 92px;
+  height: 88px;
+}
+
+.wood-house-model-l01 {
+  --model-scale: 0.9;
+  --wood-wall: #d09a58;
+  --wood-roof: #c7352b;
+}
+
+.wood-house-model-l02 {
+  --model-scale: 0.94;
+  --wood-wall: #d6a765;
+  --wood-roof: #178a9a;
+  --wood-accent: #e8a42f;
+}
+
+.wood-house-model-l03 {
+  --model-scale: 0.98;
+  --wood-wall: #ddb16e;
+  --wood-roof: #d86a27;
+  --wood-accent: #23985a;
+}
+
+.wood-house-model-l04 {
+  --model-scale: 1.03;
+  --wood-wall: #e0b978;
+  --wood-roof: #be3029;
+  --wood-accent: #1c63ac;
+}
+
+.wood-house-model-l05 {
+  --model-scale: 1.08;
+  --wood-wall: #e6c181;
+  --wood-roof: #1c58b8;
+  --wood-accent: #d83b2d;
+}
+
+.wood-house-model-l06 {
+  --model-scale: 1.12;
+  --wood-wall: #edc98f;
+  --wood-roof: #e3a02c;
+  --wood-accent: #148b93;
+}
+
+.wood-house-model-shadow {
+  left: 12px;
+  right: 10px;
+  bottom: 3px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.27);
+  border-radius: 50%;
+  filter: blur(1px);
+  transform: skewX(-28deg);
+}
+
+.wood-house-model-base {
+  left: 9px;
+  bottom: 8px;
+  width: 74px;
+  height: 38px;
+  background: #70b957;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.wood-house-model-path {
+  left: 36px;
+  bottom: 5px;
+  width: 22px;
+  height: 34px;
+  background: #c28a4e;
+  clip-path: polygon(48% 0, 78% 15%, 64% 100%, 23% 100%, 16% 15%);
+}
+
+.wood-house-model-body {
+  left: 27px;
+  bottom: 32px;
+  width: 39px;
+  height: 31px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.11), transparent 18% 82%, rgba(0, 0, 0, 0.14)),
+    var(--wood-wall);
+  border: 2px solid var(--wood-trim);
+  border-bottom-color: #a9a79a;
+  border-radius: 5px 5px 3px 3px;
+}
+
+.wood-house-model-upper {
+  left: 31px;
+  bottom: 62px;
+  width: 31px;
+  height: 18px;
+  background: var(--wood-wall);
+  border: 2px solid var(--wood-trim);
+  border-radius: 5px 5px 2px 2px;
+  opacity: 0;
+}
+
+.wood-house-model-l03 .wood-house-model-upper,
+.wood-house-model-l04 .wood-house-model-upper,
+.wood-house-model-l05 .wood-house-model-upper,
+.wood-house-model-l06 .wood-house-model-upper {
+  opacity: 1;
+}
+
+.wood-house-model-annex {
+  right: 16px;
+  bottom: 32px;
+  width: 21px;
+  height: 25px;
+  background: var(--wood-wall);
+  border: 2px solid var(--wood-trim);
+  border-radius: 5px 5px 3px 3px;
+  opacity: 0;
+}
+
+.wood-house-model-l04 .wood-house-model-annex,
+.wood-house-model-l05 .wood-house-model-annex,
+.wood-house-model-l06 .wood-house-model-annex {
+  opacity: 1;
+}
+
+.wood-house-model-roof {
+  left: 22px;
+  bottom: 59px;
+  width: 49px;
+  height: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 34%), var(--wood-roof);
+  clip-path: polygon(50% 0, 100% 45%, 82% 100%, 18% 100%, 0 45%);
+}
+
+.wood-house-model-dormer {
+  left: 36px;
+  bottom: 74px;
+  width: 17px;
+  height: 14px;
+  background: var(--wood-roof);
+  clip-path: polygon(50% 0, 100% 45%, 82% 100%, 18% 100%, 0 45%);
+  opacity: 0;
+}
+
+.wood-house-model-l03 .wood-house-model-dormer,
+.wood-house-model-l04 .wood-house-model-dormer,
+.wood-house-model-l05 .wood-house-model-dormer,
+.wood-house-model-l06 .wood-house-model-dormer {
+  opacity: 1;
+}
+
+.wood-house-model-annex-roof {
+  right: 12px;
+  bottom: 55px;
+  width: 29px;
+  height: 15px;
+  background: var(--wood-roof);
+  clip-path: polygon(50% 0, 100% 48%, 82% 100%, 18% 100%, 0 48%);
+  opacity: 0;
+}
+
+.wood-house-model-l04 .wood-house-model-annex-roof,
+.wood-house-model-l05 .wood-house-model-annex-roof,
+.wood-house-model-l06 .wood-house-model-annex-roof {
+  opacity: 1;
+}
+
+.wood-house-model-door {
+  left: 39px;
+  bottom: 32px;
+  width: 14px;
+  height: 23px;
+  background: #5d3218;
+  border: 2px solid var(--wood-trim);
+  border-radius: 8px 8px 3px 3px;
+}
+
+.wood-house-model-windows {
+  left: 30px;
+  bottom: 45px;
+  width: 7px;
+  height: 8px;
+  background: #ffd36f;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 2px;
+  box-shadow: 27px 0 0 #ffd36f, 9px 28px 0 #ffd36f, 0 0 8px rgba(255, 195, 72, 0.4);
+}
+
+.wood-house-model-chimney {
+  left: 27px;
+  bottom: 78px;
+  width: 8px;
+  height: 23px;
+  background: linear-gradient(#c5c4ba, #737d81);
+  border-radius: 3px 3px 1px 1px;
+}
+
+.wood-house-model-chimney::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 16px;
+  height: 5px;
+  background: #bdb7a0;
+  border-radius: 3px;
+}
+
+.wood-house-model-smoke {
+  left: 24px;
+  bottom: 101px;
+  width: 10px;
+  height: 10px;
+  background: rgba(218, 224, 214, 0.68);
+  border-radius: 50%;
+  box-shadow: 7px -8px 0 2px rgba(218, 224, 214, 0.43);
+}
+
+.wood-house-model-fence {
+  left: 18px;
+  bottom: 26px;
+  width: 56px;
+  height: 12px;
+  border-top: 3px solid var(--wood-accent);
+  border-left: 3px solid var(--wood-trim);
+  border-right: 3px solid var(--wood-trim);
+  opacity: 0;
+}
+
+.wood-house-model-l02 .wood-house-model-fence,
+.wood-house-model-l03 .wood-house-model-fence,
+.wood-house-model-l04 .wood-house-model-fence,
+.wood-house-model-l05 .wood-house-model-fence,
+.wood-house-model-l06 .wood-house-model-fence {
+  opacity: 1;
+}
+
+.wood-house-model-props {
+  left: 19px;
+  bottom: 17px;
+  width: 7px;
+  height: 7px;
+  background: #ffdf4a;
+  border-radius: 50%;
+  box-shadow: 8px 2px 0 #ef5f5f, 47px 0 0 #8a5d36, 59px -3px 0 #ffd36f;
+}
+
+.wood-house-model-scaffold,
+.wood-house-model-damage {
+  display: none;
+}
+
+.wood-house-model-construction .wood-house-model-scaffold {
+  display: block;
+  left: 20px;
+  bottom: 30px;
+  width: 54px;
+  height: 51px;
+  border-left: 3px solid #e0a34e;
+  border-right: 3px solid #e0a34e;
+  border-top: 3px solid #e0a34e;
+  box-shadow: inset 0 15px 0 -12px #f2c14e, inset 0 30px 0 -27px #f2c14e;
+}
+
+.wood-house-model-damaged,
+.wood-house-model-ruined {
+  filter: saturate(0.82) brightness(0.84);
+}
+
+.wood-house-model-damaged .wood-house-model-damage,
+.wood-house-model-ruined .wood-house-model-damage {
+  display: block;
+  left: 52px;
+  bottom: 66px;
+  width: 17px;
+  height: 8px;
+  background: #1e1711;
+  border-radius: 50%;
+  transform: rotate(16deg);
+  box-shadow: -30px 12px 0 -4px #2d2118;
+}
+
+.wood-house-model-damaged .wood-house-model-door,
+.wood-house-model-ruined .wood-house-model-door {
+  background: #1c140f;
+}
+
+.wood-house-model-ruined {
+  opacity: 0.62;
+  filter: grayscale(0.45) brightness(0.72);
+}
+
 
 .construction-timer {
   position: absolute;
@@ -1306,6 +2528,157 @@ button {
   font-size: 18px;
 }
 
+.profile-drawer-body,
+.profile-settings-form {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-identity {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 6px;
+}
+
+.profile-identity div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.profile-identity strong,
+.profile-identity span,
+.profile-meta dd {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-identity span,
+.profile-meta dt,
+.profile-xp-detail em {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.profile-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.profile-stat-grid article {
+  min-height: 72px;
+  display: grid;
+  align-content: space-between;
+  gap: 5px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 6px;
+}
+
+.profile-stat-grid article span {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.profile-stat-grid article strong {
+  overflow: hidden;
+  color: var(--color-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-xp-detail {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 6px;
+}
+
+.profile-xp-detail > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.profile-xp-detail div {
+  height: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+
+.profile-meta {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.profile-meta div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.profile-meta dd {
+  margin: 0;
+}
+
+.profile-actions,
+.profile-settings-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.profile-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profile-actions button,
+.profile-settings-form button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-text);
+  background: rgba(66, 196, 119, 0.18);
+  border: 1px solid rgba(66, 196, 119, 0.44);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.profile-settings-form label {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.profile-settings-form label:has(input[type="checkbox"]),
+.profile-settings-form label:has(select) {
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.profile-settings-form input:not([type="checkbox"]),
+.profile-settings-form select {
+  width: 100%;
+  min-height: 36px;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 6px;
+}
+
 .resource-registry-list,
 .alliance-list,
 .alliance-buffs {
@@ -1417,6 +2790,16 @@ button {
   border-radius: 6px;
 }
 
+.upgrade-preview {
+  width: 100%;
+  height: 156px;
+  display: grid;
+  place-items: center;
+  color: #17212b;
+  background: #d8c28d;
+  border-radius: 6px;
+}
+
 .upgrade-summary span,
 .upgrade-cost span,
 .upgrade-cost em,
@@ -1444,6 +2827,18 @@ button {
 .upgrade-stats dd {
   margin: 4px 0 0;
   font-weight: 700;
+}
+
+.upgrade-stats dd span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.upgrade-stats dd strong {
+  display: block;
+  color: var(--color-text);
 }
 
 .upgrade-cost {

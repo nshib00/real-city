@@ -29,6 +29,9 @@ describe('ResourceBar', () => {
     expect(screen.getByLabelText('Эолийские кристаллы: 18')).toBeTruthy()
     expect(screen.getByLabelText('Нефть: 36')).toBeTruthy()
     expect(screen.getByLabelText('Бензин: 12')).toBeTruthy()
+    expect(screen.getByLabelText('Ресурсы').querySelector('.resource-chip')?.getAttribute('aria-label')).toBe('Постройки: 0/8')
+    expect(screen.getByLabelText('Монеты: 1240/2000').querySelector('img')?.getAttribute('src')).toBe('/assets/resources/icons/coins.png')
+    expect(screen.getByLabelText('Древесина: 420').querySelector('img')?.getAttribute('src')).toBe('/assets/resources/icons/wood.png')
 
     fireEvent.click(screen.getByLabelText('Реестр ресурсов'))
     expect(useGameStore.getState().uiPreferences.resourceRegistryOpen).toBe(true)
@@ -56,7 +59,7 @@ describe('ResourceBar', () => {
     )
 
     expect(screen.getByLabelText('Жители: 18/13')).toBeTruthy()
-    expect(screen.getByLabelText('Постройки: 4/13')).toBeTruthy()
+    expect(screen.getByLabelText('Постройки: 4/11')).toBeTruthy()
   })
 })
 

@@ -47,6 +47,7 @@ export async function getMe() {
 
 export async function updateMe(input: {
   display_name: string
+  city_name: string
   avatar_url: string
   settings: ProfileSettings
 }) {

@@ -39,15 +39,51 @@ describe('MapWidget', () => {
     expect(useGameStore.getState().viewport.center).toEqual({ x: 14, y: 22 })
     expect(useGameStore.getState().selectedBuildingId).toBe('town_hall-id')
   })
+
+  it('shows compact colored markers for every player building', () => {
+    useGameStore.setState({
+      buildings: [
+        building('field_bed', 'Грядка ветролиста', { x: 12, y: 18 }),
+        building('dugout', 'Землянка', { x: 14, y: 18 }),
+        building('tower', 'Сторожевая башня', { x: 16, y: 18 }),
+      ],
+    })
+    render(<MapWidget />)
+
+    fireEvent.click(screen.getByLabelText('Карта мира'))
+
+    const fieldMarker = screen.getByLabelText('Грядка ветролиста')
+    const houseMarker = screen.getByLabelText('Землянка')
+    const defenseMarker = screen.getByLabelText('Сторожевая башня')
+
+    expect(fieldMarker.classList.contains('world-building-marker-fields')).toBe(true)
+    expect(houseMarker.classList.contains('world-building-marker-housing')).toBe(true)
+    expect(defenseMarker.classList.contains('world-building-marker-defense')).toBe(true)
+    expect(fieldMarker.getAttribute('title')).toBe('Грядка ветролиста')
+  })
+
+  it('focuses and selects a building from its world map marker', () => {
+    useGameStore.setState({
+      buildings: [building('warehouse', 'Склад материалов', { x: 48, y: 96 })],
+    })
+    render(<MapWidget />)
+
+    fireEvent.click(screen.getByLabelText('Карта мира'))
+    fireEvent.click(screen.getByLabelText('Склад материалов'))
+
+    expect(useGameStore.getState().selectedTile).toEqual({ x: 48, y: 96 })
+    expect(useGameStore.getState().viewport.center).toEqual({ x: 48, y: 96 })
+    expect(useGameStore.getState().selectedBuildingId).toBe('warehouse-id')
+  })
 })
 
-function building(kind: BuildingKind): PlacedBuilding {
+function building(kind: BuildingKind, name = 'Ратуша', tile = { x: 14, y: 22 }): PlacedBuilding {
   return {
     id: `${kind}-id`,
     kind,
-    name: 'Ратуша',
+    name,
     level: 1,
-    tile: { x: 14, y: 22 },
+    tile,
     status: 'active',
     health: 100,
     owner: 'test',

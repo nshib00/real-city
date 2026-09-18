@@ -1,0 +1,130 @@
+import { request } from './client'
+
+export type AllianceRole = 'leader' | 'deputy' | 'officer' | 'member'
+
+export type AllianceProfile = {
+  alliance: Alliance | null
+  self: AllianceMember | null
+  members: AllianceMember[]
+  invites: AllianceInvite[]
+  treasury: TreasuryEntry[]
+  buffs: AllianceBuff[]
+  aid: TerritoryAid[]
+}
+
+export type Alliance = {
+  id: string
+  name: string
+  leader_id: string
+  level: number
+  member_limit: number
+}
+
+export type AllianceMember = {
+  player_id: string
+  role: AllianceRole
+  treasurer: boolean
+  joined_at: string
+}
+
+export type AllianceInvite = {
+  id: string
+  alliance_id: string
+  inviter_id: string
+  invitee_id: string
+  status: 'pending' | 'accepted' | 'declined'
+  created_at: string
+}
+
+export type TreasuryEntry = {
+  id: string
+  player_id: string
+  kind: 'donation' | 'spend'
+  resource: string
+  amount: number
+  created_at: string
+}
+
+export type AllianceBuff = {
+  id: string
+  level: number
+}
+
+export type TerritoryAid = {
+  target_type: string
+  target_id: string
+  player_id: string
+  created_at: string
+}
+
+export type ChatMessage = {
+  id: string
+  channel: 'global' | 'nearby' | 'alliance' | 'private'
+  author_id: string
+  body: string
+  flagged: boolean
+  created_at: string
+}
+
+export type MarketOrder = {
+  id: string
+  player_id: string
+  side: 'buy' | 'sell'
+  resource: string
+  amount: number
+  price: number
+  fee: number
+  status: 'open' | 'filled' | 'cancelled'
+  created_at: string
+}
+
+export function getAllianceProfile() {
+  return request<{ profile: AllianceProfile }>('/alliances/me')
+}
+
+export function createAlliance(name: string) {
+  return request<{ profile: AllianceProfile }>('/alliances', {
+    method: 'POST',
+    body: JSON.stringify({ name }),
+  })
+}
+
+export function donateToAlliance(input: { resource: string; amount: number }) {
+  return request<{ profile: AllianceProfile }>('/alliances/treasury/donations', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  })
+}
+
+export function upgradeAllianceBuff(buff_id: string) {
+  return request<{ profile: AllianceProfile }>('/alliances/buffs', {
+    method: 'POST',
+    body: JSON.stringify({ buff_id }),
+  })
+}
+
+export function listChatMessages(channel: ChatMessage['channel']) {
+  return request<{ messages: ChatMessage[] }>(`/chat/messages?channel=${encodeURIComponent(channel)}&limit=60`)
+}
+
+export function sendChatMessage(input: { channel: ChatMessage['channel']; body: string; recipient?: string }) {
+  return request<{ message: ChatMessage }>('/chat/messages', {
+    method: 'POST',
+    body: JSON.stringify({ channel: input.channel, body: input.body, recipient: input.recipient ?? '' }),
+  })
+}
+
+export function listMarketOrders() {
+  return request<{ orders: MarketOrder[] }>('/market/orders')
+}
+
+export function createMarketOrder(input: { side: MarketOrder['side']; resource: string; amount: number; price: number }) {
+  return request<{ order: MarketOrder }>('/market/orders', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  })
+}
+
+export function cancelMarketOrder(id: string) {
+  return request<{ order: MarketOrder }>(`/market/orders/${id}`, { method: 'DELETE' })
+}

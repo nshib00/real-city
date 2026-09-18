@@ -6,6 +6,7 @@ import { useGameStore } from '../../game/state/useGameStore'
 import { realtimeClient } from '../../shared/realtime/client'
 import { toPlacedBuilding, type BuildingResponse } from '../../shared/api/buildings'
 import type { ResourceNodeResponse } from '../../shared/api/economy'
+import type { MonsterPayload } from '../../../../shared/events/monster'
 import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload } from '../../../../shared/events/world'
 
 const DEFAULT_WORLD_ID = 'dev-world'
@@ -17,6 +18,7 @@ export function useWorldRealtime() {
   const addBuilding = useGameStore((state) => state.addBuilding)
   const deleteBuilding = useGameStore((state) => state.deleteBuilding)
   const upsertResourceNode = useGameStore((state) => state.upsertResourceNode)
+  const upsertMonster = useGameStore((state) => state.upsertMonster)
   const setRealtimeStatus = useGameStore((state) => state.setRealtimeStatus)
   const centerChunk = useMemo(() => tileToChunk(viewport.center), [viewport.center])
   const chunkIDs = useMemo(() => chunksAround(centerChunk, viewport.radius).map((chunk) => `${DEFAULT_WORLD_ID}:${chunk.x}:${chunk.y}`), [centerChunk, viewport.radius])
@@ -24,14 +26,14 @@ export function useWorldRealtime() {
   useEffect(() => {
     const offStatus = realtimeClient.onStatus(setRealtimeStatus)
     const offEvent = realtimeClient.onEvent((event) => {
-      applyRealtimeEvent(event, { queryClient, updateWorldTile, addBuilding, deleteBuilding, upsertResourceNode })
+      applyRealtimeEvent(event, { queryClient, updateWorldTile, addBuilding, deleteBuilding, upsertResourceNode, upsertMonster })
     })
     realtimeClient.connect()
     return () => {
       offStatus()
       offEvent()
     }
-  }, [addBuilding, deleteBuilding, queryClient, setRealtimeStatus, upsertResourceNode, updateWorldTile])
+  }, [addBuilding, deleteBuilding, queryClient, setRealtimeStatus, upsertMonster, upsertResourceNode, updateWorldTile])
 
   useEffect(() => {
     realtimeClient.subscribeChunks(chunkIDs)
@@ -46,6 +48,7 @@ export function applyRealtimeEvent(
     addBuilding: ReturnType<typeof useGameStore.getState>['addBuilding']
     deleteBuilding: ReturnType<typeof useGameStore.getState>['deleteBuilding']
     upsertResourceNode: ReturnType<typeof useGameStore.getState>['upsertResourceNode']
+    upsertMonster: ReturnType<typeof useGameStore.getState>['upsertMonster']
   },
 ) {
   switch (event.type) {
@@ -63,6 +66,7 @@ export function applyRealtimeEvent(
       if (payload?.building) {
         handlers.addBuilding(toPlacedBuilding(payload.building as BuildingResponse))
         void handlers.queryClient.invalidateQueries({ queryKey: ['buildings'] })
+        void handlers.queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
       }
       return
     }
@@ -82,6 +86,19 @@ export function applyRealtimeEvent(
       }
       return
     }
+    case 'monster.spawned':
+    case 'monster.moved':
+    case 'monster.attacked':
+    case 'monster.damaged':
+    case 'monster.died':
+    case 'monster.despawned': {
+      const payload = event.payload as MonsterPayload | undefined
+      if (payload?.monster) {
+        handlers.upsertMonster(toMonsterEntity(payload.monster))
+        void handlers.queryClient.invalidateQueries({ queryKey: ['monsters'] })
+      }
+      return
+    }
   }
 }
 
@@ -96,6 +113,23 @@ function toResourceNode(node: ResourceNodeResponse) {
     ownerId: node.owner_id,
     tile: { x: node.tile_x, y: node.tile_y },
     respawnAt: node.respawn_at ? Date.parse(node.respawn_at) : null,
+  }
+}
+
+function toMonsterEntity(monster: MonsterPayload['monster']) {
+  const tile = monster.Tile ? { x: monster.Tile.X, y: monster.Tile.Y } : { x: monster.tile_x ?? 0, y: monster.tile_y ?? 0 }
+  return {
+    id: monster.id,
+    type: monster.type,
+    state: monster.state,
+    tile,
+    targetId: monster.target_id ?? monster.TargetID ?? '',
+    targetType: monster.target_type ?? monster.TargetType ?? '',
+    health: monster.health,
+    maxHealth: monster.max_health ?? monster.MaxHealth ?? monster.health,
+    damage: monster.damage,
+    aggroRadius: monster.aggro_radius ?? monster.AggroRadius ?? 0,
+    updatedAt: Date.parse(monster.updated_at ?? monster.UpdatedAt ?? new Date().toISOString()),
   }
 }
 

@@ -9,6 +9,7 @@ describe('world realtime reducer', () => {
     useGameStore.setState({
       buildings: [],
       resourceNodes: [],
+      monsters: [],
       worldTiles: [{ x: 1, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 }],
     })
   })
@@ -34,6 +35,7 @@ describe('world realtime reducer', () => {
         addBuilding: state.addBuilding,
         deleteBuilding: state.deleteBuilding,
         upsertResourceNode: state.upsertResourceNode,
+        upsertMonster: state.upsertMonster,
       },
     )
 
@@ -66,6 +68,7 @@ describe('world realtime reducer', () => {
         addBuilding: state.addBuilding,
         deleteBuilding: state.deleteBuilding,
         upsertResourceNode: state.upsertResourceNode,
+        upsertMonster: state.upsertMonster,
       },
     )
 

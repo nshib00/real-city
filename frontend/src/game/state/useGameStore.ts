@@ -4,6 +4,7 @@ import type { WorldTile } from '../../shared/contracts'
 
 export type ToolMode = 'select' | 'build' | 'road' | 'repair' | 'raid'
 export type RealtimeStatus = 'connecting' | 'connected' | 'reconnecting' | 'offline'
+export type BuildingState = 'planned' | 'building' | 'active' | 'damaged' | 'ruined'
 export type BuildingKind =
   | 'town_hall'
   | 'dugout'
@@ -41,6 +42,7 @@ export type PlacedBuilding = {
   level: number
   tile: TileCoord
   status: 'active' | 'construction'
+  state?: BuildingState
   health: number
   owner: string
   startedAt: number
@@ -59,13 +61,29 @@ export type ResourceNode = {
   respawnAt: number | null
 }
 
+export type MonsterEntity = {
+  id: string
+  type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian'
+  state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
+  tile: TileCoord
+  targetId: string
+  targetType: string
+  health: number
+  maxHealth: number
+  damage: number
+  aggroRadius: number
+  updatedAt: number
+}
+
 type GameState = {
   tool: ToolMode
   selectedTile: TileCoord | null
   selectedBuildingId: string | null
+  selectedMonsterId: string | null
   hoveredTile: TileCoord | null
   buildings: PlacedBuilding[]
   resourceNodes: ResourceNode[]
+  monsters: MonsterEntity[]
   worldTiles: WorldTile[]
   constructionNow: number
   camera: { x: number; y: number; zoom: number }
@@ -80,11 +98,14 @@ type GameState = {
   setTool: (tool: ToolMode) => void
   selectTile: (tile: TileCoord) => void
   selectBuilding: (buildingId: string) => void
+  selectMonster: (monsterId: string) => void
   hoverTile: (tile: TileCoord | null) => void
   placeBuilding: (input: { kind: BuildingKind; name: string; tile: TileCoord; durationSeconds: number; free?: boolean }) => { ok: true; building: PlacedBuilding } | { ok: false; reason: string }
   addBuilding: (building: PlacedBuilding) => void
   setResourceNodes: (nodes: ResourceNode[]) => void
   upsertResourceNode: (node: ResourceNode) => void
+  setMonsters: (monsters: MonsterEntity[]) => void
+  upsertMonster: (monster: MonsterEntity) => void
   setWorldTiles: (tiles: WorldTile[]) => void
   updateWorldTile: (tile: WorldTile) => void
   tickConstructions: (now: number) => void
@@ -105,9 +126,11 @@ export const useGameStore = create<GameState>((set) => ({
   tool: 'select',
   selectedTile: null,
   selectedBuildingId: null,
+  selectedMonsterId: null,
   hoveredTile: null,
   buildings: [],
   resourceNodes: [],
+  monsters: [],
   worldTiles: [],
   constructionNow: Date.now(),
   camera: { x: 0, y: 0, zoom: 1 },
@@ -126,15 +149,26 @@ export const useGameStore = create<GameState>((set) => ({
     })),
   selectTile: (selectedTile) => {
     const wrappedTile = wrapGridCoord(selectedTile)
-    set({ selectedTile: wrappedTile, selectedBuildingId: null })
+    set({ selectedTile: wrappedTile, selectedBuildingId: null, selectedMonsterId: null })
   },
   selectBuilding: (selectedBuildingId) =>
     set((state) => {
       const building = state.buildings.find((item) => item.id === selectedBuildingId)
       return {
         selectedBuildingId,
+        selectedMonsterId: null,
         selectedTile: building?.tile ?? state.selectedTile,
         tool: 'select',
+      }
+    }),
+  selectMonster: (selectedMonsterId) =>
+    set((state) => {
+      const monster = state.monsters.find((item) => item.id === selectedMonsterId)
+      return {
+        selectedMonsterId,
+        selectedBuildingId: null,
+        selectedTile: monster?.tile ?? state.selectedTile,
+        tool: 'raid',
       }
     }),
   hoverTile: (hoveredTile) => set({ hoveredTile }),
@@ -190,6 +224,12 @@ export const useGameStore = create<GameState>((set) => ({
   upsertResourceNode: (node) =>
     set((state) => ({
       resourceNodes: [...state.resourceNodes.filter((item) => item.id !== node.id), node],
+    })),
+  setMonsters: (monsters) => set({ monsters }),
+  upsertMonster: (monster) =>
+    set((state) => ({
+      monsters: monster.state === 'dead' ? state.monsters.filter((item) => item.id !== monster.id) : [...state.monsters.filter((item) => item.id !== monster.id), monster],
+      selectedMonsterId: monster.state === 'dead' && state.selectedMonsterId === monster.id ? null : state.selectedMonsterId,
     })),
   setWorldTiles: (tiles) => set({ worldTiles: tiles }),
   updateWorldTile: (tile) =>

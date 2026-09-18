@@ -13,6 +13,8 @@ describe('Inspector', () => {
       selectedBuildingId: null,
       hoveredTile: null,
       buildings: [],
+      resourceNodes: [],
+      monsters: [],
       worldTiles: [],
       tool: 'select',
     })
@@ -27,6 +29,7 @@ describe('Inspector', () => {
     expect(screen.getByText('Тайл 2:3')).toBeTruthy()
     expect(screen.getByText('2, 3')).toBeTruthy()
     expect(screen.getByText('2/3')).toBeTruthy()
+    expect(screen.queryByLabelText('Срубить лес')).toBeNull()
 
     fireEvent.click(screen.getByRole('tab', { name: 'Объект' }))
     expect(screen.getByText('Постройка не выбрана')).toBeTruthy()
@@ -88,6 +91,69 @@ describe('Inspector', () => {
     expect(screen.getByText('45 сек')).toBeTruthy()
     expect(screen.getByText('400')).toBeTruthy()
     expect(screen.getByText('10')).toBeTruthy()
+  })
+
+  it('opens build menu from the inspector build action', () => {
+    renderWithClient(<Inspector />)
+
+    fireEvent.click(screen.getByLabelText('Построить'))
+
+    expect(useGameStore.getState().tool).toBe('build')
+    expect(useGameStore.getState().uiPreferences.buildMenuOpen).toBe(true)
+  })
+
+  it('opens town hall upgrade dialog when town hall has next level', () => {
+    useGameStore.setState({
+      buildings: [
+        {
+          id: 'town-hall-test',
+          kind: 'town_hall',
+          name: 'Ратуша',
+          level: 1,
+          tile: { x: 2, y: 3 },
+          status: 'active',
+          health: 100,
+          owner: 'Северный двор',
+          startedAt: 1000,
+          completesAt: null,
+        },
+      ],
+      selectedBuildingId: 'town-hall-test',
+    })
+
+    renderWithClient(<Inspector />)
+    fireEvent.click(screen.getByLabelText('Улучшить'))
+
+    expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
+    expect(screen.getByText('Уровень 1 -> 2')).toBeTruthy()
+    expect(screen.getByText('1 мин 30 сек')).toBeTruthy()
+    expect(screen.getByText('1500')).toBeTruthy()
+  })
+
+  it('shows rush completion crystal cost for construction', () => {
+    useGameStore.setState({
+      constructionNow: 1000,
+      buildings: [
+        {
+          id: 'dugout-test',
+          kind: 'dugout',
+          name: 'Землянка',
+          level: 1,
+          tile: { x: 2, y: 3 },
+          status: 'construction',
+          health: 35,
+          owner: 'Северный двор',
+          startedAt: 1000,
+          completesAt: 1000 + 2 * 60 * 1000,
+        },
+      ],
+      selectedBuildingId: 'dugout-test',
+    })
+
+    renderWithClient(<Inspector />)
+
+    expect(screen.getByText('Мгновенно: 1 крист.')).toBeTruthy()
+    expect(screen.getByLabelText('Завершить за 1 крист.')).toBeTruthy()
   })
 })
 

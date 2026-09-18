@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Hammer, Route, Sprout, Swords, Trash2, TreePine, TrendingUp } from 'lucide-react'
+import { Gem, Hammer, Route, Sprout, Swords, Trash2, TrendingUp } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { tileToChunk } from '../../game/coordinates/iso'
 import { useGameStore, type BuildingKind, type PlacedBuilding } from '../../game/state/useGameStore'
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
 import { deleteBuilding as deleteBuildingRequest, patchBuilding, toPlacedBuilding } from '../../shared/api/buildings'
+import { ApiClientError } from '../../shared/api/client'
 import { harvestWindleafField } from '../../shared/api/economy'
-import { chopForest } from '../../shared/api/world'
+import { attackMonster, toMonster } from '../../shared/api/monsters'
 import { IconButton, Modal, SegmentedControl, Tabs } from '../../shared/ui'
+import { inventoryAmount, useInventory } from '../economy/useInventory'
 import { ResourceIcon } from '../resources/ResourceIcon'
+import { useThreatLevel } from '../threat/ThreatPanel'
 
 type InspectorTab = 'tile' | 'object' | 'player'
 
@@ -27,34 +30,35 @@ const claimModes = [
 export function Inspector() {
   const [activeTab, setActiveTab] = useState<InspectorTab>('tile')
   const [upgradeOpen, setUpgradeOpen] = useState(false)
+  const [upgradeError, setUpgradeError] = useState('')
+  const [constructionError, setConstructionError] = useState('')
   const selectedTile = useGameStore((state) => state.selectedTile)
   const hoveredTile = useGameStore((state) => state.hoveredTile)
   const buildings = useGameStore((state) => state.buildings)
   const resourceNodes = useGameStore((state) => state.resourceNodes)
   const selectedBuildingId = useGameStore((state) => state.selectedBuildingId)
+  const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
   const constructionNow = useGameStore((state) => state.constructionNow)
   const tool = useGameStore((state) => state.tool)
   const setTool = useGameStore((state) => state.setTool)
+  const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const deleteBuilding = useGameStore((state) => state.deleteBuilding)
   const addBuilding = useGameStore((state) => state.addBuilding)
+  const upsertMonster = useGameStore((state) => state.upsertMonster)
   const worldTiles = useGameStore((state) => state.worldTiles)
-  const updateWorldTile = useGameStore((state) => state.updateWorldTile)
   const queryClient = useQueryClient()
+  const inventoryQuery = useInventory()
   const activeTile = selectedTile ?? hoveredTile
   const chunk = activeTile ? tileToChunk(activeTile) : null
   const selectedBuilding = buildings.find((building) => building.id === selectedBuildingId) ?? null
+  const selectedMonster = useGameStore((state) => state.monsters.find((monster) => monster.id === selectedMonsterId) ?? null)
+  const threat = useThreatLevel()
   const nextUpgrade = selectedBuilding ? getNextUpgrade(selectedBuilding) : null
+  const rushCost = selectedBuilding?.status === 'construction' && selectedBuilding.completesAt ? rushCompletionCrystalCost(selectedBuilding.completesAt - constructionNow) : 0
+  const crystals = inventoryAmount(inventoryQuery.data?.inventory.items, 'aeolian-crystal')
   const selectedWorldTile = activeTile ? worldTiles.find((tile) => tile.x === activeTile.x && tile.y === activeTile.y) ?? null : null
   const terrainLabel = selectedWorldTile ? terrainLabels[selectedWorldTile.terrain] : activeTile ? getTerrainLabel(activeTile.x, activeTile.y) : 'Не выбран'
   const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y) ?? null : null
-  const chopMutation = useMutation({
-    mutationFn: chopForest,
-    onSuccess: (result) => {
-      updateWorldTile(result.tile)
-      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
-      void queryClient.invalidateQueries({ queryKey: ['world'] })
-    },
-  })
   const upgradeMutation = useMutation({
     mutationFn: (buildingId: string) => patchBuilding(buildingId, 'upgrade'),
     onSuccess: (result) => {
@@ -64,11 +68,37 @@ export function Inspector() {
       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
       setUpgradeOpen(false)
+      setUpgradeError('')
+    },
+    onError: (error) => {
+      setUpgradeError(error instanceof Error ? error.message : 'Не удалось улучшить постройку')
     },
   })
   const harvestFieldMutation = useMutation({
     mutationFn: () => harvestWindleafField(false),
     onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+  })
+  const rushMutation = useMutation({
+    mutationFn: (buildingId: string) => patchBuilding(buildingId, 'rush_complete'),
+    onSuccess: (result) => {
+      if (result.building) {
+        addBuilding(toPlacedBuilding(result.building))
+      }
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      setConstructionError('')
+    },
+    onError: (error) => {
+      setConstructionError(formatActionError(error))
+    },
+  })
+  const attackMonsterMutation = useMutation({
+    mutationFn: (monsterId: string) => attackMonster(monsterId),
+    onSuccess: (result) => {
+      upsertMonster(toMonster(result.monster))
+      void queryClient.invalidateQueries({ queryKey: ['monsters'] })
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
     },
   })
@@ -81,7 +111,7 @@ export function Inspector() {
 
   return (
     <aside className="inspector" aria-label="Инспектор">
-      <h2>{selectedBuilding ? selectedBuilding.name : activeTile ? `Тайл ${activeTile.x}:${activeTile.y}` : 'Карта мира'}</h2>
+      <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Тайл ${activeTile.x}:${activeTile.y}` : 'Карта мира'}</h2>
       <Tabs items={tabs} active={activeTab} onChange={setActiveTab}>
         {activeTab === 'tile' ? (
           <>
@@ -110,12 +140,28 @@ export function Inspector() {
                   <dd>{resourceStateLabel[selectedResourceNode.state]}</dd>
                 </>
               ) : null}
+              {threat ? (
+                <>
+                  <dt>Угроза</dt>
+                  <dd>уровень {threat.level}</dd>
+                </>
+              ) : null}
             </dl>
             <SegmentedControl items={claimModes} value={tool === 'raid' ? 'raid' : 'build'} label="Режим действия" onChange={setTool} />
           </>
         ) : null}
         {activeTab === 'object' ? (
-          selectedBuilding ? (
+          selectedMonster ? (
+            <div className="inspector-card inspector-card-threat">
+              <strong>{monsterName(selectedMonster.type)}</strong>
+              <span>Состояние: {monsterStateLabel[selectedMonster.state]}</span>
+              <span>Здоровье {selectedMonster.health}/{selectedMonster.maxHealth}</span>
+              <span>Урон: {selectedMonster.damage}</span>
+              <span>Агро-радиус: {selectedMonster.aggroRadius}</span>
+              {selectedMonster.targetId ? <span>Цель: {selectedMonster.targetType} {selectedMonster.targetId}</span> : null}
+              <meter min={0} max={selectedMonster.maxHealth} value={selectedMonster.health} />
+            </div>
+          ) : selectedBuilding ? (
             <div className="inspector-card">
               <strong>
                 {selectedBuilding.name}, уровень {selectedBuilding.level}
@@ -124,8 +170,11 @@ export function Inspector() {
               <span>Владелец: {selectedBuilding.owner}</span>
               <span>Состояние: {selectedBuilding.status === 'active' ? 'работает' : 'строится'}</span>
               {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>До завершения: {formatRemaining(selectedBuilding.completesAt - constructionNow)}</span> : null}
+              {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
+              {selectedBuilding.status === 'construction' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
               <span>Улучшение выполняется из меню этой постройки.</span>
               <meter min={0} max={100} value={selectedBuilding.health} />
+              {constructionError ? <small className="upgrade-error" role="alert">{constructionError}</small> : null}
             </div>
           ) : (
             <div className="inspector-card">
@@ -146,6 +195,17 @@ export function Inspector() {
         {selectedBuilding ? (
           <>
             <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || !nextUpgrade} onClick={() => setUpgradeOpen(true)} />
+            {selectedBuilding.status === 'construction' ? (
+              <IconButton
+                label={`Завершить за ${rushCost} крист.`}
+                icon={Gem}
+                disabled={rushMutation.isPending || rushCost <= 0}
+                onClick={() => {
+                  setConstructionError('')
+                  rushMutation.mutate(selectedBuilding.id)
+                }}
+              />
+            ) : null}
             {selectedBuilding.kind === 'field_bed' ? <IconButton label="Собрать урожай" icon={Sprout} disabled={selectedBuilding.status !== 'active' || harvestFieldMutation.isPending} onClick={() => harvestFieldMutation.mutate()} /> : null}
             <IconButton
               label="Удалить"
@@ -157,17 +217,10 @@ export function Inspector() {
             />
           </>
         ) : null}
-        <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} onClick={() => setTool('build')} />
-        <IconButton
-          label="Срубить лес"
-          icon={TreePine}
-          disabled={!selectedWorldTile || selectedWorldTile.terrain !== 'forest' || selectedWorldTile.forest_density <= 0 || chopMutation.isPending}
-          onClick={() => {
-            if (selectedWorldTile) {
-              chopMutation.mutate({ x: selectedWorldTile.x, y: selectedWorldTile.y })
-            }
-          }}
-        />
+        <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} onClick={() => setBuildMenuOpen(true)} />
+        {selectedMonster ? (
+          <IconButton label="Атаковать" icon={Swords} active disabled={attackMonsterMutation.isPending} onClick={() => attackMonsterMutation.mutate(selectedMonster.id)} />
+        ) : null}
         <IconButton label="Маршрут" icon={Route} active={tool === 'road'} disabled={!activeTile} onClick={() => setTool('road')} />
         <IconButton label="Рейд" icon={Swords} active={tool === 'raid'} disabled={!activeTile} onClick={() => setTool('raid')} />
       </div>
@@ -176,9 +229,14 @@ export function Inspector() {
         nextUpgrade={nextUpgrade}
         open={upgradeOpen}
         pending={upgradeMutation.isPending}
-        onClose={() => setUpgradeOpen(false)}
+        error={upgradeError}
+        onClose={() => {
+          setUpgradeOpen(false)
+          setUpgradeError('')
+        }}
         onUpgrade={() => {
           if (selectedBuilding) {
+            setUpgradeError('')
             upgradeMutation.mutate(selectedBuilding.id)
           }
         }}
@@ -192,6 +250,7 @@ function UpgradeModal({
   nextUpgrade,
   open,
   pending,
+  error,
   onClose,
   onUpgrade,
 }: {
@@ -199,6 +258,7 @@ function UpgradeModal({
   nextUpgrade: UpgradeInfo | null
   open: boolean
   pending: boolean
+  error: string
   onClose: () => void
   onUpgrade: () => void
 }) {
@@ -209,6 +269,9 @@ function UpgradeModal({
     <Modal title="Улучшение постройки" open={open} onClose={onClose}>
       <div className="upgrade-dialog">
         <div className="upgrade-summary">
+          <div className={`upgrade-preview build-icon-${nextUpgrade.type}`} aria-hidden="true">
+            <TrendingUp size={34} />
+          </div>
           <strong>{building.name}</strong>
           <span>
             Уровень {building.level} {'->'} {nextUpgrade.level}
@@ -216,18 +279,15 @@ function UpgradeModal({
           <span>{nextUpgrade.type === building.kind ? 'Улучшение текущей модели' : `Переход в: ${nextUpgrade.name}`}</span>
         </div>
         <dl className="upgrade-stats">
-          <div>
-            <dt>Население</dt>
-            <dd>{nextUpgrade.population}</dd>
-          </div>
-          <div>
-            <dt>Прочность</dt>
-            <dd>{nextUpgrade.health}</dd>
-          </div>
-          <div>
-            <dt>Время</dt>
-            <dd>{formatDuration(nextUpgrade.buildSeconds)}</dd>
-          </div>
+          {upgradeComparisons(building, nextUpgrade).map((item) => (
+            <div key={item.label}>
+              <dt>{item.label}</dt>
+              <dd>
+                <span>{item.before}</span>
+                <strong>{item.after}</strong>
+              </dd>
+            </div>
+          ))}
         </dl>
         <div className="upgrade-cost">
           <span>Стоимость</span>
@@ -250,16 +310,40 @@ function UpgradeModal({
             Улучшить
           </button>
         </div>
+        {error ? <p className="upgrade-error" role="alert">{error}</p> : null}
       </div>
     </Modal>
   )
 }
 
 function formatRemaining(ms: number) {
-  const totalSeconds = Math.max(0, Math.ceil(ms / 1000))
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+	const totalSeconds = Math.max(0, Math.ceil(ms / 1000))
+	const minutes = Math.floor(totalSeconds / 60)
+	const seconds = totalSeconds % 60
+	return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+}
+
+function rushCompletionCrystalCost(ms: number) {
+	if (ms <= 0) {
+		return 0
+	}
+	const step = 3 * 60 * 1000
+	if (ms < step) {
+		return 1
+	}
+	return 2 + Math.floor((ms - step) / step)
+}
+
+function formatActionError(error: unknown) {
+	if (error instanceof ApiClientError) {
+		const fields = error.apiError.fields ?? {}
+		const crystal = fields['aeolian-crystal']
+		if (crystal) {
+			return `Не хватает эолийских кристаллов: ${crystal}`
+		}
+		return error.message
+	}
+	return error instanceof Error ? error.message : 'Не удалось выполнить действие'
 }
 
 function getTerrainLabel(x: number, y: number) {
@@ -271,6 +355,21 @@ function resourceLabel(resource: string) {
   const labels: Record<string, string> = {
     wood: 'Древесина',
     stone: 'Камень',
+    coins: 'Монеты',
+    flax: 'Лен',
+    windleaf: 'Ветролист',
+    mushrooms: 'Грибы',
+    planks: 'Доски',
+    stone_block: 'Каменный блок',
+    brick: 'Кирпич',
+    glass: 'Стекло',
+    premium_planks: 'Премиум-доски',
+    rope: 'Веревка',
+    iron_ingot: 'Железный слиток',
+    gold_ingot: 'Золотой слиток',
+    'super-mushrooms': 'Супер-грибы',
+    'super-windleaf': 'Супер-ветролист',
+    emerald_dust: 'Изумрудная пыль',
     oil: 'Нефть',
   }
   return labels[resource] ?? resource
@@ -283,7 +382,14 @@ type UpgradeInfo = {
   buildSeconds: number
   population: number
   health: number
+  footprint: { width: number; height: number }
   cost: { resource: string; amount: number }[]
+}
+
+type UpgradeComparison = {
+  label: string
+  before: string
+  after: string
 }
 
 function getNextUpgrade(building: PlacedBuilding): UpgradeInfo | null {
@@ -300,6 +406,7 @@ function getNextUpgrade(building: PlacedBuilding): UpgradeInfo | null {
       buildSeconds: nextLevel.buildSeconds,
       population: nextLevel.population,
       health: nextLevel.health,
+      footprint: spec.footprint,
       cost: [...nextLevel.cost],
     }
   }
@@ -316,8 +423,38 @@ function getNextUpgrade(building: PlacedBuilding): UpgradeInfo | null {
     buildSeconds: nextSpec.buildSeconds,
     population: nextSpec.population,
     health: nextSpec.health ?? 100,
+    footprint: nextSpec.footprint,
     cost: [...nextSpec.cost],
   }
+}
+
+function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo): UpgradeComparison[] {
+  const current = getCurrentStats(building)
+  const comparisons: UpgradeComparison[] = [
+    { label: 'Прочность', before: String(current.health), after: String(nextUpgrade.health) },
+    { label: 'Размер', before: `${current.footprint.width}x${current.footprint.height}`, after: `${nextUpgrade.footprint.width}x${nextUpgrade.footprint.height}` },
+    { label: 'Время работ', before: 'сейчас', after: formatDuration(nextUpgrade.buildSeconds) },
+  ]
+  if (building.kind === 'town_hall') {
+    comparisons.push({ label: 'Лимит построек', before: String(buildingLimitForLevel(building.level)), after: String(buildingLimitForLevel(nextUpgrade.level)) })
+  } else if (current.population > 0 || nextUpgrade.population > 0) {
+    comparisons.push({ label: 'Население', before: String(current.population), after: String(nextUpgrade.population) })
+  }
+  return comparisons
+}
+
+function getCurrentStats(building: PlacedBuilding) {
+  const spec = buildingCatalog.find((item) => item.type === building.kind)
+  const level = spec?.upgradeLevels?.find((item) => item.level === building.level)
+  return {
+    health: level?.health ?? spec?.health ?? building.health,
+    population: building.kind === 'town_hall' ? 0 : (level?.population ?? spec?.population ?? 0),
+    footprint: spec?.footprint ?? { width: 1, height: 1 },
+  }
+}
+
+function buildingLimitForLevel(level: number) {
+  return 8 + Math.max(0, level - 1) * 3
 }
 
 function formatDuration(seconds: number) {
@@ -351,3 +488,20 @@ const terrainLabels = {
   oil_well: 'нефтяная скважина',
   ruins: 'руины',
 } as const
+
+function monsterName(type: string) {
+  const names: Record<string, string> = {
+    roaming_melee: 'Бродячий налетчик',
+    resource_guardian: 'Страж залежи',
+    ruins_guardian: 'Сторож руин',
+  }
+  return names[type] ?? type
+}
+
+const monsterStateLabel: Record<string, string> = {
+  idle: 'выжидает',
+  wandering: 'бродит',
+  aggro: 'преследует',
+  attacking: 'атакует',
+  dead: 'повержен',
+}
