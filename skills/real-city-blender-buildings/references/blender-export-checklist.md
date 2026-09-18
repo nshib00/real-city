@@ -21,7 +21,9 @@ Use this checklist before considering a building model ready for implementation.
 - Important props are large enough to see.
 - Materials differ enough between levels.
 - Upgrade level is recognizable without UI text.
-- Construction overlay does not fully hide the completed model.
+- Construction показывает незавершенное здание: недостающие стены, кровлю и отделку, а не готовую модель с лесами.
+- Damaged имеет крупные геометрические разрушения, видимые на игровом размере.
+- Материальные ресурсы стоимости представлены читаемыми частями конструкции.
 - Timer/progress UI has a clear space and does not collide with tall geometry.
 
 ## Performance

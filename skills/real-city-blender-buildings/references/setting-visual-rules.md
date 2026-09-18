@@ -1,5 +1,7 @@
 # Real City Visual Rules
 
+For full 3D asset art direction, `docs/visual-style-guide.md` is the primary source. This file is a compact conversion layer for building briefs.
+
 Real City uses an original setting: Эолия, a bright fantasy world rebuilding after the Great Silence. The world is not empty because it was never inhabited; it is empty because old cities, roads, workshops, markets, towers, gardens, factories, and river settlements were abandoned. Players arrive as new city founders and compete to rebuild, claim ruins, exploit resources, and defend territory.
 
 ## Mood
@@ -9,6 +11,7 @@ Real City uses an original setting: Эолия, a bright fantasy world rebuildin
 - Bright strategic readability, not dark cinematic realism.
 - Gradual movement from earth/wood/stone to brick/metal/glass/concrete.
 - Soft magic exists through eolian crystals and old ruins, but should not dominate every object.
+- Optimized stylized mid-poly, not primitive low-poly: final buildings need shaped silhouettes, visible bevels, volumetric facade elements, readable props, and hand-painted-like material treatment.
 
 ## Palette
 
@@ -35,6 +38,7 @@ Housing:
 - Moves to wood, then stone.
 - Later splits into dense vertical city housing and prestige villas/palaces.
 - Needs domestic props: doors, windows, chimneys, fences, small yards, lights.
+- Avoid `cube + roof + flat door` briefs; even early housing needs a designed entrance, roof thickness, foundation, props, and material breakup.
 
 Fields and beds:
 
