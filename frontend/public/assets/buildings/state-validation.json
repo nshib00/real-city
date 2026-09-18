@@ -1,0 +1,486 @@
+{
+  "revised_models": 48,
+  "unchanged_active_files": 36,
+  "models": [
+    {
+      "name": "dugout_l01_construction",
+      "triangles": 2748,
+      "alpha_bounds": [
+        117,
+        210,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l01_damaged",
+      "triangles": 2868,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l02_active",
+      "triangles": 3036,
+      "alpha_bounds": [
+        117,
+        203,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l02_construction",
+      "triangles": 3136,
+      "alpha_bounds": [
+        117,
+        207,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l02_damaged",
+      "triangles": 3184,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l03_active",
+      "triangles": 3572,
+      "alpha_bounds": [
+        117,
+        197,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l03_construction",
+      "triangles": 3410,
+      "alpha_bounds": [
+        117,
+        202,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l03_damaged",
+      "triangles": 3644,
+      "alpha_bounds": [
+        117,
+        216,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l04_active",
+      "triangles": 5256,
+      "alpha_bounds": [
+        117,
+        191,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l04_construction",
+      "triangles": 3942,
+      "alpha_bounds": [
+        117,
+        199,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l04_damaged",
+      "triangles": 4540,
+      "alpha_bounds": [
+        117,
+        212,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l05_active",
+      "triangles": 6540,
+      "alpha_bounds": [
+        117,
+        185,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l05_construction",
+      "triangles": 5052,
+      "alpha_bounds": [
+        117,
+        195,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "dugout_l05_damaged",
+      "triangles": 5520,
+      "alpha_bounds": [
+        117,
+        208,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l01_construction",
+      "triangles": 4468,
+      "alpha_bounds": [
+        117,
+        170,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l01_damaged",
+      "triangles": 4612,
+      "alpha_bounds": [
+        117,
+        170,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l02_construction",
+      "triangles": 4812,
+      "alpha_bounds": [
+        117,
+        161,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l02_damaged",
+      "triangles": 4876,
+      "alpha_bounds": [
+        117,
+        161,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l03_construction",
+      "triangles": 5344,
+      "alpha_bounds": [
+        117,
+        153,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l03_damaged",
+      "triangles": 5102,
+      "alpha_bounds": [
+        117,
+        153,
+        395,
+        368
+      ]
+    },
+    {
+      "name": "wood_house_l04_construction",
+      "triangles": 2157,
+      "alpha_bounds": [
+        116,
+        162,
+        396,
+        366
+      ]
+    },
+    {
+      "name": "wood_house_l04_damaged",
+      "triangles": 2109,
+      "alpha_bounds": [
+        116,
+        172,
+        396,
+        366
+      ]
+    },
+    {
+      "name": "wood_house_l05_construction",
+      "triangles": 2049,
+      "alpha_bounds": [
+        116,
+        155,
+        396,
+        366
+      ]
+    },
+    {
+      "name": "wood_house_l05_damaged",
+      "triangles": 2145,
+      "alpha_bounds": [
+        116,
+        167,
+        396,
+        366
+      ]
+    },
+    {
+      "name": "wood_house_l06_construction",
+      "triangles": 2433,
+      "alpha_bounds": [
+        116,
+        149,
+        396,
+        366
+      ]
+    },
+    {
+      "name": "wood_house_l06_damaged",
+      "triangles": 2469,
+      "alpha_bounds": [
+        116,
+        161,
+        396,
+        366
+      ]
+    },
+    {
+      "name": "town_hall_l01_construction",
+      "triangles": 2004,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l01_damaged",
+      "triangles": 1700,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l02_construction",
+      "triangles": 2028,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l02_damaged",
+      "triangles": 1712,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l03_construction",
+      "triangles": 2224,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l03_damaged",
+      "triangles": 1976,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l04_construction",
+      "triangles": 2236,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l04_damaged",
+      "triangles": 2012,
+      "alpha_bounds": [
+        116,
+        221,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l05_construction",
+      "triangles": 2352,
+      "alpha_bounds": [
+        116,
+        222,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l05_damaged",
+      "triangles": 2152,
+      "alpha_bounds": [
+        116,
+        217,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l06_construction",
+      "triangles": 2376,
+      "alpha_bounds": [
+        116,
+        221,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l06_damaged",
+      "triangles": 2164,
+      "alpha_bounds": [
+        116,
+        213,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l07_construction",
+      "triangles": 2400,
+      "alpha_bounds": [
+        116,
+        218,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l07_damaged",
+      "triangles": 2176,
+      "alpha_bounds": [
+        116,
+        209,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l08_construction",
+      "triangles": 2564,
+      "alpha_bounds": [
+        116,
+        215,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l08_damaged",
+      "triangles": 2328,
+      "alpha_bounds": [
+        116,
+        205,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l09_construction",
+      "triangles": 2612,
+      "alpha_bounds": [
+        116,
+        215,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l09_damaged",
+      "triangles": 2352,
+      "alpha_bounds": [
+        116,
+        202,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l10_construction",
+      "triangles": 2612,
+      "alpha_bounds": [
+        116,
+        213,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "town_hall_l10_damaged",
+      "triangles": 2476,
+      "alpha_bounds": [
+        116,
+        198,
+        396,
+        364
+      ]
+    },
+    {
+      "name": "lumber_yard_l01_construction",
+      "triangles": 2708,
+      "alpha_bounds": [
+        116,
+        200,
+        396,
+        367
+      ]
+    },
+    {
+      "name": "lumber_yard_l01_damaged",
+      "triangles": 2820,
+      "alpha_bounds": [
+        116,
+        206,
+        396,
+        367
+      ]
+    }
+  ]
+}

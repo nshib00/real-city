@@ -1,0 +1,1055 @@
+{
+  "lumber_yard_l01_active": {
+    "level": 1,
+    "state": "active",
+    "triangles": 2272,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.522
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      207,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l01_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l01_construction": {
+    "level": 1,
+    "state": "construction",
+    "triangles": 2696,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.354
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      217,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l01_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l01_damaged": {
+    "level": 1,
+    "state": "damaged",
+    "triangles": 2572,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.522
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      207,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l01_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l02_active": {
+    "level": 2,
+    "state": "active",
+    "triangles": 2420,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.534
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      206,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l02_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l02_construction": {
+    "level": 2,
+    "state": "construction",
+    "triangles": 2844,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.354
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      215,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l02_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l02_damaged": {
+    "level": 2,
+    "state": "damaged",
+    "triangles": 2720,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.534
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      206,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l02_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l03_active": {
+    "level": 3,
+    "state": "active",
+    "triangles": 2480,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.546
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      205,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l03_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l03_construction": {
+    "level": 3,
+    "state": "construction",
+    "triangles": 2904,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.354
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      214,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l03_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l03_damaged": {
+    "level": 3,
+    "state": "damaged",
+    "triangles": 2792,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "craft",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.546
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      205,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l03_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l04_active": {
+    "level": 4,
+    "state": "active",
+    "triangles": 2824,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.558
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      204,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l04_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l04_construction": {
+    "level": 4,
+    "state": "construction",
+    "triangles": 3260,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.354
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      212,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l04_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l04_damaged": {
+    "level": 4,
+    "state": "damaged",
+    "triangles": 3136,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.558
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      204,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l04_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l05_active": {
+    "level": 5,
+    "state": "active",
+    "triangles": 2920,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.57
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      203,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l05_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l05_construction": {
+    "level": 5,
+    "state": "construction",
+    "triangles": 3356,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.4
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      211,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l05_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l05_damaged": {
+    "level": 5,
+    "state": "damaged",
+    "triangles": 3244,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.57
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      203,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l05_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l06_active": {
+    "level": 6,
+    "state": "active",
+    "triangles": 3080,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.582
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      202,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l06_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l06_construction": {
+    "level": 6,
+    "state": "construction",
+    "triangles": 3516,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.4
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      209,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l06_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l06_damaged": {
+    "level": 6,
+    "state": "damaged",
+    "triangles": 3404,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.582
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      202,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l06_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l07_active": {
+    "level": 7,
+    "state": "active",
+    "triangles": 3456,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.594
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      202,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l07_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l07_construction": {
+    "level": 7,
+    "state": "construction",
+    "triangles": 3892,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.4
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      207,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l07_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l07_damaged": {
+    "level": 7,
+    "state": "damaged",
+    "triangles": 3780,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "mechanized",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.594
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      202,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l07_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l08_active": {
+    "level": 8,
+    "state": "active",
+    "triangles": 3616,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.606
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      201,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l08_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l08_construction": {
+    "level": 8,
+    "state": "construction",
+    "triangles": 4052,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.42
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      206,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l08_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l08_damaged": {
+    "level": 8,
+    "state": "damaged",
+    "triangles": 3940,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.606
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      201,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l08_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l09_active": {
+    "level": 9,
+    "state": "active",
+    "triangles": 3692,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.618
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      200,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l09_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l09_construction": {
+    "level": 9,
+    "state": "construction",
+    "triangles": 4128,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.455
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      204,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l09_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l09_damaged": {
+    "level": 9,
+    "state": "damaged",
+    "triangles": 4016,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.618
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      200,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l09_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l10_active": {
+    "level": 10,
+    "state": "active",
+    "triangles": 3920,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.63
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      199,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l10_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l10_construction": {
+    "level": 10,
+    "state": "construction",
+    "triangles": 4356,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.49
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      202,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l10_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l10_damaged": {
+    "level": 10,
+    "state": "damaged",
+    "triangles": 4244,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "advanced",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.63
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      199,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l10_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l11_active": {
+    "level": 11,
+    "state": "active",
+    "triangles": 3968,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.642
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      199,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l11_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l11_construction": {
+    "level": 11,
+    "state": "construction",
+    "triangles": 4368,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.525
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      201,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l11_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l11_damaged": {
+    "level": 11,
+    "state": "damaged",
+    "triangles": 4292,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.642
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      199,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l11_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l12_active": {
+    "level": 12,
+    "state": "active",
+    "triangles": 4316,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.654
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      198,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l12_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l12_construction": {
+    "level": 12,
+    "state": "construction",
+    "triangles": 4716,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.56
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      199,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l12_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l12_damaged": {
+    "level": 12,
+    "state": "damaged",
+    "triangles": 4640,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.654
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      198,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l12_active",
+    "removed_ground_overlays": 1
+  },
+  "lumber_yard_l13_active": {
+    "level": 13,
+    "state": "active",
+    "triangles": 4316,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.666
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      198,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l13_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l13_construction": {
+    "level": 13,
+    "state": "construction",
+    "triangles": 4716,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.56
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      199,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l13_active",
+    "removed_ground_overlays": 0
+  },
+  "lumber_yard_l13_damaged": {
+    "level": 13,
+    "state": "damaged",
+    "triangles": 4640,
+    "style": "bright fantasy stylized mid-poly",
+    "tier": "prestige",
+    "world_bounds": {
+      "min": [
+        -1.825,
+        -1.825,
+        -0.1
+      ],
+      "max": [
+        1.825,
+        1.825,
+        1.666
+      ]
+    },
+    "alpha_bounds": [
+      116,
+      198,
+      396,
+      367
+    ],
+    "ground_source": "lumber_yard_l13_active",
+    "removed_ground_overlays": 1
+  }
+}

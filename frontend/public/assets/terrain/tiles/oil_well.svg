@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <linearGradient id="oilGround" x1="48" y1="64" x2="190" y2="144" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7a7f5b"/>
+      <stop offset="1" stop-color="#3c4937"/>
+    </linearGradient>
+    <filter id="oilShadow" x="-20%" y="-35%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="5" flood-color="#06090a" flood-opacity=".5"/>
+    </filter>
+  </defs>
+  <g filter="url(#oilShadow)">
+    <path d="M120 52 218 102 120 154 22 102Z" fill="#354335"/>
+    <path d="M22 102 120 154 120 165 22 113Z" fill="#2a372d"/>
+    <path d="M218 102 120 154 120 165 218 113Z" fill="#202b25"/>
+    <path d="M120 44 218 96 120 148 22 96Z" fill="url(#oilGround)" stroke="#c9d991" stroke-opacity=".26" stroke-width="2"/>
+    <ellipse cx="123" cy="121" rx="38" ry="14" fill="#07080a" opacity=".86"/>
+    <ellipse cx="127" cy="117" rx="24" ry="7" fill="#233345" opacity=".86"/>
+    <path d="M96 113 127 44 158 113Z" fill="none" stroke="#2c2f33" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M108 86h38M102 100h50M116 70h22" stroke="#6b6f6d" stroke-width="5" stroke-linecap="round"/>
+    <path d="M126 44c16 4 27 14 34 30" fill="none" stroke="#30343a" stroke-width="7" stroke-linecap="round"/>
+    <rect x="158" y="73" width="10" height="42" rx="3" fill="#22272c"/>
+    <circle cx="163" cy="72" r="8" fill="#565b5b"/>
+    <path d="M73 126c17-5 35-4 52 2 20 7 37 5 51-4" fill="none" stroke="#16191b" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+{
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "size": [
+    512,
+    512
+  ],
+  "footprint": 3.6,
+  "footprint_pixels": 480,
+  "anchor": [
+    256,
+    320
+  ],
+  "camera_elevation": 30,
+  "tiles": {
+    "grass": {
+      "triangles": 1044,
+      "objects": 16,
+      "png": "grass.png",
+      "glb": "grass.glb"
+    },
+    "forest": {
+      "triangles": 4912,
+      "objects": 56,
+      "png": "forest.png",
+      "glb": "forest.glb"
+    },
+    "forest_thinned": {
+      "triangles": 3688,
+      "objects": 50,
+      "png": "forest_thinned.png",
+      "glb": "forest_thinned.glb"
+    },
+    "forest_sparse": {
+      "triangles": 2464,
+      "objects": 44,
+      "png": "forest_sparse.png",
+      "glb": "forest_sparse.glb"
+    },
+    "water": {
+      "triangles": 540,
+      "objects": 13,
+      "png": "water.png",
+      "glb": "water.glb"
+    },
+    "mountain": {
+      "triangles": 2124,
+      "objects": 18,
+      "png": "mountain.png",
+      "glb": "mountain.glb"
+    },
+    "road": {
+      "triangles": 1092,
+      "objects": 27,
+      "png": "road.png",
+      "glb": "road.glb"
+    },
+    "oil_well": {
+      "triangles": 1116,
+      "objects": 22,
+      "png": "oil_well.png",
+      "glb": "oil_well.glb"
+    },
+    "ruins": {
+      "triangles": 2196,
+      "objects": 42,
+      "png": "ruins.png",
+      "glb": "ruins.glb"
+    }
+  }
+}

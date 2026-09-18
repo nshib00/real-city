@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <linearGradient id="waterTop" x1="42" y1="72" x2="202" y2="132" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8ee7ff"/>
+      <stop offset=".52" stop-color="#47bfe8"/>
+      <stop offset="1" stop-color="#1d81c4"/>
+    </linearGradient>
+    <filter id="waterShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#10253a" flood-opacity=".34"/>
+    </filter>
+  </defs>
+  <g filter="url(#waterShadow)">
+    <path d="M120 52 218 102 120 154 22 102Z" fill="#135d8c"/>
+    <path d="M22 102 120 154 120 165 22 113Z" fill="#0f567a"/>
+    <path d="M218 102 120 154 120 165 218 113Z" fill="#0a436b"/>
+    <path d="M120 44 218 96 120 148 22 96Z" fill="#80db7a"/>
+    <path d="M50 92c26-11 45-12 70-2 26 10 45 9 70-3l28 9-98 52-98-52Z" fill="url(#waterTop)"/>
+    <path d="M53 91c25 13 44 14 66 4 22-10 40-9 67 3" fill="none" stroke="#d7fbff" stroke-linecap="round" stroke-opacity=".74" stroke-width="4"/>
+    <path d="M68 108c18 7 31 7 47 0 14-6 27-5 43 2" fill="none" stroke="#efffff" stroke-linecap="round" stroke-opacity=".58" stroke-width="3"/>
+    <path d="M89 125c16 4 27 3 39-3 9-4 19-3 31 1" fill="none" stroke="#e9fdff" stroke-linecap="round" stroke-opacity=".46" stroke-width="3"/>
+  </g>
+</svg>

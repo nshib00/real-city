@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <linearGradient id="forestTop" x1="45" y1="65" x2="190" y2="145" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8edc65"/>
+      <stop offset="1" stop-color="#357d3c"/>
+    </linearGradient>
+    <filter id="forestShadow" x="-20%" y="-30%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="9" stdDeviation="5" flood-color="#0c1d11" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <g filter="url(#forestShadow)">
+    <path d="M120 52 218 102 120 154 22 102Z" fill="#2f7438"/>
+    <path d="M22 102 120 154 120 165 22 113Z" fill="#2a6532"/>
+    <path d="M218 102 120 154 120 165 218 113Z" fill="#1f522b"/>
+    <path d="M120 44 218 96 120 148 22 96Z" fill="url(#forestTop)" stroke="#c9ffa2" stroke-opacity=".34" stroke-width="2"/>
+    <g>
+      <path d="M88 48 68 84h40Z" fill="#2f8e42"/>
+      <path d="M88 34 63 76h50Z" fill="#42ad4f"/>
+      <rect x="83" y="78" width="10" height="28" rx="2" fill="#6a3b1d"/>
+    </g>
+    <g>
+      <path d="M128 38 102 86h52Z" fill="#26753a"/>
+      <path d="M128 20 96 76h64Z" fill="#3cae50"/>
+      <rect x="122" y="80" width="12" height="35" rx="2" fill="#6a3b1d"/>
+    </g>
+    <g>
+      <path d="M164 58 143 94h42Z" fill="#1f6f3b"/>
+      <path d="M164 43 137 86h54Z" fill="#32974a"/>
+      <rect x="159" y="90" width="10" height="26" rx="2" fill="#5a3219"/>
+    </g>
+    <circle cx="103" cy="116" r="8" fill="#68c457"/>
+    <circle cx="148" cy="119" r="7" fill="#5db64f"/>
+  </g>
+</svg>

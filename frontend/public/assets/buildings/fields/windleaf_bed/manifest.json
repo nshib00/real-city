@@ -1,0 +1,434 @@
+{
+  "asset": "windleaf_bed",
+  "assets": [
+    {
+      "id": "windleaf_bed_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "model": "windleaf_bed_l01_stage01.glb",
+      "sprite": "windleaf_bed_l01_stage01.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "model": "windleaf_bed_l01_stage02.glb",
+      "sprite": "windleaf_bed_l01_stage02.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "model": "windleaf_bed_l01_stage03.glb",
+      "sprite": "windleaf_bed_l01_stage03.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_stage04",
+      "level": 1,
+      "state": "stage04",
+      "model": "windleaf_bed_l01_stage04.glb",
+      "sprite": "windleaf_bed_l01_stage04.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_active",
+      "level": 1,
+      "state": "active",
+      "model": "windleaf_bed_l01_active.glb",
+      "sprite": "windleaf_bed_l01_active.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "model": "windleaf_bed_l01_construction.glb",
+      "sprite": "windleaf_bed_l01_construction.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "model": "windleaf_bed_l01_damaged.glb",
+      "sprite": "windleaf_bed_l01_damaged.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "model": "windleaf_bed_l02_stage01.glb",
+      "sprite": "windleaf_bed_l02_stage01.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "model": "windleaf_bed_l02_stage02.glb",
+      "sprite": "windleaf_bed_l02_stage02.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "model": "windleaf_bed_l02_stage03.glb",
+      "sprite": "windleaf_bed_l02_stage03.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_stage04",
+      "level": 2,
+      "state": "stage04",
+      "model": "windleaf_bed_l02_stage04.glb",
+      "sprite": "windleaf_bed_l02_stage04.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_active",
+      "level": 2,
+      "state": "active",
+      "model": "windleaf_bed_l02_active.glb",
+      "sprite": "windleaf_bed_l02_active.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "model": "windleaf_bed_l02_construction.glb",
+      "sprite": "windleaf_bed_l02_construction.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "model": "windleaf_bed_l02_damaged.glb",
+      "sprite": "windleaf_bed_l02_damaged.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "model": "windleaf_bed_l03_stage01.glb",
+      "sprite": "windleaf_bed_l03_stage01.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "model": "windleaf_bed_l03_stage02.glb",
+      "sprite": "windleaf_bed_l03_stage02.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "model": "windleaf_bed_l03_stage03.glb",
+      "sprite": "windleaf_bed_l03_stage03.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_stage04",
+      "level": 3,
+      "state": "stage04",
+      "model": "windleaf_bed_l03_stage04.glb",
+      "sprite": "windleaf_bed_l03_stage04.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_active",
+      "level": 3,
+      "state": "active",
+      "model": "windleaf_bed_l03_active.glb",
+      "sprite": "windleaf_bed_l03_active.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "model": "windleaf_bed_l03_construction.glb",
+      "sprite": "windleaf_bed_l03_construction.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "model": "windleaf_bed_l03_damaged.glb",
+      "sprite": "windleaf_bed_l03_damaged.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "model": "windleaf_bed_l01_super_stage01.glb",
+      "sprite": "windleaf_bed_l01_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "model": "windleaf_bed_l01_super_stage02.glb",
+      "sprite": "windleaf_bed_l01_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "model": "windleaf_bed_l01_super_stage03.glb",
+      "sprite": "windleaf_bed_l01_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "model": "windleaf_bed_l01_super_stage04.glb",
+      "sprite": "windleaf_bed_l01_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "model": "windleaf_bed_l01_super_stage05.glb",
+      "sprite": "windleaf_bed_l01_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "model": "windleaf_bed_l01_super_stage06.glb",
+      "sprite": "windleaf_bed_l01_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "model": "windleaf_bed_l02_super_stage01.glb",
+      "sprite": "windleaf_bed_l02_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "model": "windleaf_bed_l02_super_stage02.glb",
+      "sprite": "windleaf_bed_l02_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "model": "windleaf_bed_l02_super_stage03.glb",
+      "sprite": "windleaf_bed_l02_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "model": "windleaf_bed_l02_super_stage04.glb",
+      "sprite": "windleaf_bed_l02_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "model": "windleaf_bed_l02_super_stage05.glb",
+      "sprite": "windleaf_bed_l02_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "model": "windleaf_bed_l02_super_stage06.glb",
+      "sprite": "windleaf_bed_l02_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "model": "windleaf_bed_l03_super_stage01.glb",
+      "sprite": "windleaf_bed_l03_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "model": "windleaf_bed_l03_super_stage02.glb",
+      "sprite": "windleaf_bed_l03_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "model": "windleaf_bed_l03_super_stage03.glb",
+      "sprite": "windleaf_bed_l03_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "model": "windleaf_bed_l03_super_stage04.glb",
+      "sprite": "windleaf_bed_l03_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "model": "windleaf_bed_l03_super_stage05.glb",
+      "sprite": "windleaf_bed_l03_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ]
+    },
+    {
+      "id": "windleaf_bed_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "model": "windleaf_bed_l03_super_stage06.glb",
+      "sprite": "windleaf_bed_l03_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ]
+    }
+  ]
+}

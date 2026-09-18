@@ -1,0 +1,122 @@
+[
+  {
+    "name": "dugout_l01_active",
+    "triangles": 2596,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l01_construction",
+    "triangles": 3652,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l01_damaged",
+    "triangles": 2640,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l02_active",
+    "triangles": 2784,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l02_construction",
+    "triangles": 3840,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l02_damaged",
+    "triangles": 2828,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l03_active",
+    "triangles": 3136,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l03_construction",
+    "triangles": 4192,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l03_damaged",
+    "triangles": 3180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l04_active",
+    "triangles": 4444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l04_construction",
+    "triangles": 5500,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l04_damaged",
+    "triangles": 4532,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l05_active",
+    "triangles": 4620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l05_construction",
+    "triangles": 5676,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l05_damaged",
+    "triangles": 4708,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l01_active",
+    "triangles": 5808,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l01_construction",
+    "triangles": 6864,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l01_damaged",
+    "triangles": 6004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l02_active",
+    "triangles": 6116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l02_construction",
+    "triangles": 7172,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l02_damaged",
+    "triangles": 6312,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l03_active",
+    "triangles": 7196,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l03_construction",
+    "triangles": 8252,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "wood_house_l03_damaged",
+    "triangles": 7436,
+    "nonmanifold_edges": 0
+  }
+]

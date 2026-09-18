@@ -1,18 +1,79 @@
 # Dependencies
 node_modules/
+**/node_modules/
 
 # Build outputs
 dist/
+build/
 frontend/dist/
 backend/bin/
+coverage/
+*.tsbuildinfo
 
 # Local environment
 .env
-.env.local
+.env.*
+!.env.example
 
 # Tool caches
 .cache/
-coverage/
+.vite/
+.turbo/
+.parcel-cache/
+.pytest_cache/
+__pycache__/
+**/__pycache__/
+*.py[cod]
 
+# Heavy reference dumps and scraped source material
 reference/
+references/
+**/original-assets/
+**/original-pages/
+**/original-assets/**
+**/original-pages/**
 
+# Generated asset exports
+tools/assets/**/exports/
+tools/assets/**/generated/
+tools/assets/**/renders/
+frontend/src/assets/**/exports/
+frontend/src/assets/**/generated/
+frontend/src/assets/**/renders/
+
+# Heavy/raw art and 3D source files
+*.blend
+*.blend1
+*.fbx
+*.glb
+*.gltf
+*.obj
+*.mtl
+*.dae
+*.usd
+*.usdz
+*.stl
+*.abc
+*.swf
+*.fla
+*.psd
+*.kra
+*.xcf
+*.ai
+*.sketch
+
+# Large media and archives
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wav
+*.aiff
+*.flac
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar

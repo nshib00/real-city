@@ -1,0 +1,354 @@
+[
+  {
+    "name": "dugout_l01_construction",
+    "triangles": 2748,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l01_damaged",
+    "triangles": 2868,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l02_active",
+    "triangles": 3036,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l02_construction",
+    "triangles": 3136,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l02_damaged",
+    "triangles": 3184,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l03_active",
+    "triangles": 3572,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l03_construction",
+    "triangles": 3410,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l03_damaged",
+    "triangles": 3644,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l04_active",
+    "triangles": 5256,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l04_construction",
+    "triangles": 3942,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l04_damaged",
+    "triangles": 4540,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l05_active",
+    "triangles": 6540,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l05_construction",
+    "triangles": 5052,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "dugout_l05_damaged",
+    "triangles": 5520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "name": "lumber_yard_l01_construction",
+    "triangles": 2708,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "lumber_yard_l01_damaged",
+    "triangles": 2820,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l01_construction",
+    "triangles": 4468,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l01_damaged",
+    "triangles": 4612,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l06_construction",
+    "triangles": 9036,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l06_damaged",
+    "triangles": 7464,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l02_construction",
+    "triangles": 4812,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l02_damaged",
+    "triangles": 4876,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l03_construction",
+    "triangles": 5344,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l03_damaged",
+    "triangles": 5102,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l04_construction",
+    "triangles": 6880,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l04_damaged",
+    "triangles": 5672,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l05_construction",
+    "triangles": 7496,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l05_damaged",
+    "triangles": 6432,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l06_active",
+    "triangles": 12508,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l04_active",
+    "triangles": 8796,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "wood_house_l05_active",
+    "triangles": 10372,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l01_active",
+    "triangles": 3068,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l01_construction",
+    "triangles": 3448,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l01_damaged",
+    "triangles": 3344,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l10_active",
+    "triangles": 19496,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l10_construction",
+    "triangles": 17140,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l10_damaged",
+    "triangles": 10876,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l02_active",
+    "triangles": 3256,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l02_construction",
+    "triangles": 3596,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l02_damaged",
+    "triangles": 3496,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l03_active",
+    "triangles": 5056,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l03_construction",
+    "triangles": 5484,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l03_damaged",
+    "triangles": 5032,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l04_active",
+    "triangles": 5468,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l04_construction",
+    "triangles": 5632,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l04_damaged",
+    "triangles": 5484,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l05_active",
+    "triangles": 7648,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l05_construction",
+    "triangles": 7452,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l05_damaged",
+    "triangles": 5804,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l06_active",
+    "triangles": 8552,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l06_construction",
+    "triangles": 7860,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l06_damaged",
+    "triangles": 6344,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l07_active",
+    "triangles": 15316,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l07_construction",
+    "triangles": 14064,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l07_damaged",
+    "triangles": 9952,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l08_active",
+    "triangles": 15540,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l08_construction",
+    "triangles": 14284,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l08_damaged",
+    "triangles": 9948,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l09_active",
+    "triangles": 19100,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l09_construction",
+    "triangles": 17032,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  },
+  {
+    "name": "town_hall_l09_damaged",
+    "triangles": 10492,
+    "nonmanifold_edges": 0,
+    "intentional_flag_boundary_edges": 0
+  }
+]

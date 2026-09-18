@@ -1,0 +1,41 @@
+{
+  "asset": "windleaf_bed",
+  "pipeline": "blender_mcp_midpoly",
+  "blend": "windleaf_bed_l01_l03.blend",
+  "count": 39,
+  "levels": [
+    1,
+    2,
+    3
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "stage04",
+    "active",
+    "construction",
+    "damaged",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "png_size": [
+    512,
+    384
+  ],
+  "anchor": [
+    256,
+    292
+  ],
+  "style": "Aeolian bright fantasy mid-poly",
+  "notes": [
+    "ground tile matches earlier building tile scale and palette",
+    "bed footprint is scaled by 1.28 on the standard 3.6 tile",
+    "L1/L2 walls are log-built; supports are grounded",
+    "all levels include six super-windleaf stages"
+  ]
+}

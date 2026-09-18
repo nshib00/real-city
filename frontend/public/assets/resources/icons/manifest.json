@@ -1,0 +1,763 @@
+{
+  "style": "transparent close-up bright fantasy stylized mid-poly isometric resource icons without bottom backplates, following docs/visual-style-guide.md; png fallback additions generated without Blender",
+  "size": 256,
+  "resources": [
+    {
+      "id": "coins",
+      "name": "Монеты",
+      "category": "basic",
+      "file": "coins.png",
+      "model": "coins.glb",
+      "triangles": 3216,
+      "ortho_scale": 1.296134114265442,
+      "camera_location": [
+        2.896956205368042,
+        -4.075738430023193,
+        3.3175973892211914
+      ]
+    },
+    {
+      "id": "population",
+      "name": "Жители",
+      "category": "basic",
+      "file": "population.png",
+      "model": "population.glb",
+      "triangles": 1956,
+      "ortho_scale": 1.0597219467163086,
+      "camera_location": [
+        2.8096132278442383,
+        -4.04638147354126,
+        3.43436336517334
+      ]
+    },
+    {
+      "id": "aeolian-crystal",
+      "name": "Эолийские кристаллы",
+      "category": "basic",
+      "file": "aeolian-crystal.png",
+      "model": "aeolian-crystal.glb",
+      "triangles": 66,
+      "ortho_scale": 1.3929073810577393,
+      "camera_location": [
+        2.7687788009643555,
+        -3.936547040939331,
+        3.6112749576568604
+      ],
+      "generator": "png-fallback"
+    },
+    {
+      "id": "wood",
+      "name": "Древесина",
+      "category": "raw",
+      "file": "wood.png",
+      "model": "wood.glb",
+      "triangles": 2888,
+      "ortho_scale": 1.7247936725616455,
+      "camera_location": [
+        2.893969774246216,
+        -4.051557540893555,
+        3.351087808609009
+      ]
+    },
+    {
+      "id": "stone",
+      "name": "Камень",
+      "category": "raw",
+      "file": "stone.png",
+      "model": "stone.glb",
+      "triangles": 240,
+      "ortho_scale": 1.4213484525680542,
+      "camera_location": [
+        2.8552439212799072,
+        -4.04759407043457,
+        3.3913378715515137
+      ]
+    },
+    {
+      "id": "clay",
+      "name": "Глина",
+      "category": "raw",
+      "file": "clay.png",
+      "model": "clay.glb",
+      "triangles": 828,
+      "ortho_scale": 1.5329763889312744,
+      "camera_location": [
+        2.8914411067962646,
+        -3.977395534515381,
+        3.447774648666382
+      ]
+    },
+    {
+      "id": "sand",
+      "name": "Песок",
+      "category": "raw",
+      "file": "sand.png",
+      "model": "sand.glb",
+      "triangles": 1676,
+      "ortho_scale": 1.2363563776016235,
+      "camera_location": [
+        2.8860437870025635,
+        -4.04046106338501,
+        3.3724160194396973
+      ]
+    },
+    {
+      "id": "coal",
+      "name": "Уголь",
+      "category": "raw",
+      "file": "coal.png",
+      "model": "coal.glb",
+      "triangles": 240,
+      "ortho_scale": 1.4213484525680542,
+      "camera_location": [
+        2.8552439212799072,
+        -4.04759407043457,
+        3.3913378715515137
+      ]
+    },
+    {
+      "id": "iron_ore",
+      "name": "Железная руда",
+      "category": "raw",
+      "file": "iron_ore.png",
+      "model": "iron_ore.glb",
+      "triangles": 1212,
+      "ortho_scale": 1.4213484525680542,
+      "camera_location": [
+        2.8562633991241455,
+        -4.045984745025635,
+        3.3924591541290283
+      ]
+    },
+    {
+      "id": "copper",
+      "name": "Медь",
+      "category": "raw",
+      "file": "copper.png",
+      "model": "copper.glb",
+      "triangles": 648,
+      "ortho_scale": 1.2920677661895752,
+      "camera_location": [
+        2.9015586376190186,
+        -4.080290794372559,
+        3.307619571685791
+      ]
+    },
+    {
+      "id": "resin",
+      "name": "Смола",
+      "category": "raw",
+      "file": "resin.png",
+      "model": "resin.glb",
+      "triangles": 1284,
+      "ortho_scale": 1.1444454193115234,
+      "camera_location": [
+        2.888552188873291,
+        -4.082035064697266,
+        3.317223310470581
+      ]
+    },
+    {
+      "id": "windleaf",
+      "name": "Ветролист",
+      "category": "raw",
+      "file": "windleaf.png",
+      "model": "windleaf.glb",
+      "triangles": 528,
+      "ortho_scale": 1.2297924757003784,
+      "camera_location": [
+        2.810776710510254,
+        -4.049081802368164,
+        3.429868698120117
+      ]
+    },
+    {
+      "id": "herbs",
+      "name": "Травы",
+      "category": "raw",
+      "file": "herbs.png",
+      "model": "herbs.glb",
+      "triangles": 864,
+      "ortho_scale": 1.0790919065475464,
+      "camera_location": [
+        2.8145878314971924,
+        -3.909618377685547,
+        3.603903293609619
+      ]
+    },
+    {
+      "id": "mushrooms",
+      "name": "Грибы",
+      "category": "raw",
+      "file": "mushrooms.png",
+      "model": "mushrooms.glb",
+      "triangles": 1892,
+      "ortho_scale": 1.0147086381912231,
+      "camera_location": [
+        2.860826015472412,
+        -4.071012496948242,
+        3.3564577102661133
+      ]
+    },
+    {
+      "id": "seeds",
+      "name": "Семена",
+      "category": "raw",
+      "file": "seeds.png",
+      "model": "seeds.glb",
+      "triangles": 1176,
+      "ortho_scale": 0.7944079041481018,
+      "camera_location": [
+        2.9223854541778564,
+        -4.091339588165283,
+        3.2746238708496094
+      ]
+    },
+    {
+      "id": "brick",
+      "name": "Кирпич",
+      "category": "crafted",
+      "file": "brick.png",
+      "model": "brick.glb",
+      "triangles": 1296,
+      "ortho_scale": 1.4242569208145142,
+      "camera_location": [
+        2.8889083862304688,
+        -4.055126667022705,
+        3.351146697998047
+      ]
+    },
+    {
+      "id": "stone_block",
+      "name": "Каменный блок",
+      "category": "crafted",
+      "file": "stone_block.png",
+      "model": "stone_block.glb",
+      "triangles": 324,
+      "ortho_scale": 1.034649133682251,
+      "camera_location": [
+        2.882817268371582,
+        -4.035943984985352,
+        3.381098747253418
+      ]
+    },
+    {
+      "id": "metal",
+      "name": "Металл",
+      "category": "crafted",
+      "file": "metal.png",
+      "model": "metal.glb",
+      "triangles": 1376,
+      "ortho_scale": 1.2540243864059448,
+      "camera_location": [
+        2.9154534339904785,
+        -4.055006980895996,
+        3.32716703414917
+      ]
+    },
+    {
+      "id": "iron",
+      "name": "Железо",
+      "category": "crafted",
+      "file": "iron.png",
+      "model": "iron.glb",
+      "triangles": 648,
+      "ortho_scale": 1.2920677661895752,
+      "camera_location": [
+        2.9015586376190186,
+        -4.080290794372559,
+        3.307619571685791
+      ]
+    },
+    {
+      "id": "steel",
+      "name": "Сталь",
+      "category": "crafted",
+      "file": "steel.png",
+      "model": "steel.glb",
+      "triangles": 648,
+      "ortho_scale": 1.3887706995010376,
+      "camera_location": [
+        2.8854551315307617,
+        -4.039636611938477,
+        3.374000310897827
+      ]
+    },
+    {
+      "id": "glass",
+      "name": "Стекло",
+      "category": "crafted",
+      "file": "glass.png",
+      "model": "glass.glb",
+      "triangles": 648,
+      "ortho_scale": 1.067597508430481,
+      "camera_location": [
+        2.8229544162750244,
+        -3.9428858757019043,
+        3.5539567470550537
+      ]
+    },
+    {
+      "id": "planks",
+      "name": "Доски",
+      "category": "crafted",
+      "file": "planks.png",
+      "model": "planks.glb",
+      "triangles": 756,
+      "ortho_scale": 1.2039844989776611,
+      "camera_location": [
+        2.9131529331207275,
+        -4.078413963317871,
+        3.2994680404663086
+      ]
+    },
+    {
+      "id": "cement",
+      "name": "Цемент",
+      "category": "crafted",
+      "file": "cement.png",
+      "model": "cement.glb",
+      "triangles": 472,
+      "ortho_scale": 1.0279278755187988,
+      "camera_location": [
+        2.8403637409210205,
+        -3.976508855819702,
+        3.4953370094299316
+      ]
+    },
+    {
+      "id": "concrete",
+      "name": "Бетон",
+      "category": "crafted",
+      "file": "concrete.png",
+      "model": "concrete.glb",
+      "triangles": 324,
+      "ortho_scale": 1.0617319345474243,
+      "camera_location": [
+        2.866927146911621,
+        -4.037642478942871,
+        3.3933820724487305
+      ]
+    },
+    {
+      "id": "fabric",
+      "name": "Ткань",
+      "category": "crafted",
+      "file": "fabric.png",
+      "model": "fabric.glb",
+      "triangles": 676,
+      "ortho_scale": 1.1581292152404785,
+      "camera_location": [
+        2.857414484024048,
+        -4.015627861022949,
+        3.4300484657287598
+      ]
+    },
+    {
+      "id": "electronics",
+      "name": "Электроника",
+      "category": "crafted",
+      "file": "electronics.png",
+      "model": "electronics.glb",
+      "triangles": 976,
+      "ortho_scale": 1.071315050125122,
+      "camera_location": [
+        2.9290354251861572,
+        -4.084400653839111,
+        3.277409791946411
+      ]
+    },
+    {
+      "id": "sulfur",
+      "name": "Сера",
+      "category": "crafted",
+      "file": "sulfur.png",
+      "model": "sulfur.glb",
+      "triangles": 390,
+      "ortho_scale": 1.2398321628570557,
+      "camera_location": [
+        2.7937660217285156,
+        -3.9456677436828613,
+        3.576951026916504
+      ]
+    },
+    {
+      "id": "explosives",
+      "name": "Взрывчатка",
+      "category": "crafted",
+      "file": "explosives.png",
+      "model": "explosives.glb",
+      "triangles": 1428,
+      "ortho_scale": 1.008046269416809,
+      "camera_location": [
+        2.856350898742676,
+        -3.9988911151885986,
+        3.4523167610168457
+      ]
+    },
+    {
+      "id": "oil",
+      "name": "Нефть",
+      "category": "fuel",
+      "file": "oil.png",
+      "model": "oil.glb",
+      "triangles": 1216,
+      "ortho_scale": 1.1503314971923828,
+      "camera_location": [
+        2.787224531173706,
+        -4.046313762664795,
+        3.4548027515411377
+      ]
+    },
+    {
+      "id": "fuel",
+      "name": "Бензин",
+      "category": "fuel",
+      "file": "fuel.png",
+      "model": "fuel.glb",
+      "triangles": 568,
+      "ortho_scale": 1.0539851188659668,
+      "camera_location": [
+        2.8529129028320312,
+        -3.993421792984009,
+        3.4624032974243164
+      ]
+    },
+    {
+      "id": "super-seeds",
+      "name": "Супер-семена",
+      "category": "rare",
+      "file": "super-seeds.png",
+      "model": "super-seeds.glb",
+      "triangles": 1176,
+      "ortho_scale": 0.7944079041481018,
+      "camera_location": [
+        2.9223854541778564,
+        -4.091339588165283,
+        3.2746238708496094
+      ]
+    },
+    {
+      "id": "super-fiber",
+      "name": "Супер-волокно",
+      "category": "rare",
+      "file": "super-fiber.png",
+      "model": "super-fiber.glb",
+      "triangles": 2148,
+      "ortho_scale": 1.079666018486023,
+      "camera_location": [
+        2.8206024169921875,
+        -3.9627764225006104,
+        3.5307796001434326
+      ]
+    },
+    {
+      "id": "super-mushrooms",
+      "name": "Супер-грибы",
+      "category": "rare",
+      "file": "super-mushrooms.png",
+      "model": "super-mushrooms.glb",
+      "triangles": 1892,
+      "ortho_scale": 1.0147086381912231,
+      "camera_location": [
+        2.860826015472412,
+        -4.071012496948242,
+        3.3564577102661133
+      ]
+    },
+    {
+      "id": "elderwood-heart",
+      "name": "Сердцевина древня",
+      "category": "rare",
+      "file": "elderwood-heart.png",
+      "model": "elderwood-heart.glb",
+      "triangles": 616,
+      "ortho_scale": 0.9748862981796265,
+      "camera_location": [
+        2.852440595626831,
+        -3.9934165477752686,
+        3.462839126586914
+      ]
+    },
+    {
+      "id": "flax",
+      "name": "Лен",
+      "category": "raw",
+      "file": "flax.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "reed",
+      "name": "Тростник",
+      "category": "raw",
+      "file": "reed.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "fiber",
+      "name": "Волокно",
+      "category": "raw",
+      "file": "fiber.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "dyes",
+      "name": "Красители",
+      "category": "raw",
+      "file": "dyes.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "oil_plants",
+      "name": "Масличные растения",
+      "category": "raw",
+      "file": "oil_plants.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "sugar_cane",
+      "name": "Сахарный стебель",
+      "category": "raw",
+      "file": "sugar_cane.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "rare_flowers",
+      "name": "Редкие цветы",
+      "category": "rare",
+      "file": "rare_flowers.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "crystal_fruit",
+      "name": "Кристальные плоды",
+      "category": "rare",
+      "file": "crystal_fruit.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "sap",
+      "name": "Живица",
+      "category": "raw",
+      "file": "sap.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "premium_planks",
+      "name": "Премиум-доски",
+      "category": "crafted",
+      "file": "premium_planks.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "rope",
+      "name": "Веревка",
+      "category": "crafted",
+      "file": "rope.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "iron_ingot",
+      "name": "Железный слиток",
+      "category": "crafted",
+      "file": "iron_ingot.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "gold_ingot",
+      "name": "Золотой слиток",
+      "category": "crafted",
+      "file": "gold_ingot.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "reinforced_concrete",
+      "name": "Железобетон",
+      "category": "crafted",
+      "file": "reinforced_concrete.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "copper_parts",
+      "name": "Медные детали",
+      "category": "crafted",
+      "file": "copper_parts.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "tools",
+      "name": "Инструменты",
+      "category": "crafted",
+      "file": "tools.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "paper",
+      "name": "Бумага",
+      "category": "crafted",
+      "file": "paper.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "paints",
+      "name": "Краски",
+      "category": "crafted",
+      "file": "paints.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "vegetable_oil",
+      "name": "Масло",
+      "category": "crafted",
+      "file": "vegetable_oil.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "mechanisms",
+      "name": "Механизмы",
+      "category": "crafted",
+      "file": "mechanisms.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "super-mechanisms",
+      "name": "Супер-механизмы",
+      "category": "rare",
+      "file": "super-mechanisms.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "lenses",
+      "name": "Линзы",
+      "category": "crafted",
+      "file": "lenses.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "reinforced_beams",
+      "name": "Усиленные балки",
+      "category": "crafted",
+      "file": "reinforced_beams.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "armor_plates",
+      "name": "Защитные пластины",
+      "category": "crafted",
+      "file": "armor_plates.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "light_crystal",
+      "name": "Светокристаллы",
+      "category": "rare",
+      "file": "light_crystal.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "amber_essence",
+      "name": "Янтарная эссенция",
+      "category": "rare",
+      "file": "amber_essence.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "emerald_dust",
+      "name": "Изумрудная пыль",
+      "category": "rare",
+      "file": "emerald_dust.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "blue_salt",
+      "name": "Синяя соль",
+      "category": "rare",
+      "file": "blue_salt.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "star_glass",
+      "name": "Звездное стекло",
+      "category": "rare",
+      "file": "star_glass.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "stone_heart",
+      "name": "Каменное сердце",
+      "category": "rare",
+      "file": "stone_heart.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "aeolian_alloy",
+      "name": "Эолиевый сплав",
+      "category": "rare",
+      "file": "aeolian_alloy.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "printing_plate",
+      "name": "Печатная пластина",
+      "category": "crafted",
+      "file": "printing_plate.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "runic_tile",
+      "name": "Руническая черепица",
+      "category": "rare",
+      "file": "runic_tile.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "silent_powder",
+      "name": "Тихий порошок",
+      "category": "rare",
+      "file": "silent_powder.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "memory_shard",
+      "name": "Осколки памяти",
+      "category": "rare",
+      "file": "memory_shard.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "super-windleaf",
+      "name": "Супер-ветролист",
+      "category": "rare",
+      "file": "super-windleaf.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "influence_seal",
+      "name": "Знаки влияния",
+      "category": "rare",
+      "file": "influence_seal.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "monster_trophy",
+      "name": "Трофеи монстров",
+      "category": "rare",
+      "file": "monster_trophy.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "relic_fragment",
+      "name": "Реликтовые фрагменты",
+      "category": "rare",
+      "file": "relic_fragment.png",
+      "generator": "png-fallback"
+    },
+    {
+      "id": "festival_token",
+      "name": "Праздничные жетоны",
+      "category": "rare",
+      "file": "festival_token.png",
+      "generator": "png-fallback"
+    }
+  ]
+}

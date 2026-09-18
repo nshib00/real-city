@@ -1,0 +1,92 @@
+[
+  {
+    "terrain": "grass",
+    "triangles": 1044,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "forest",
+    "triangles": 4912,
+    "alpha_bounds": [
+      15,
+      110,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "forest_thinned",
+    "triangles": 3688,
+    "alpha_bounds": [
+      15,
+      110,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "forest_sparse",
+    "triangles": 2464,
+    "alpha_bounds": [
+      15,
+      124,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "water",
+    "triangles": 540,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "mountain",
+    "triangles": 2124,
+    "alpha_bounds": [
+      15,
+      137,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "road",
+    "triangles": 1092,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "oil_well",
+    "triangles": 1116,
+    "alpha_bounds": [
+      15,
+      146,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins",
+    "triangles": 2196,
+    "alpha_bounds": [
+      15,
+      122,
+      497,
+      443
+    ]
+  }
+]

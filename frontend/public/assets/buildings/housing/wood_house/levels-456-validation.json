@@ -1,0 +1,92 @@
+[
+  {
+    "name": "wood_house_l04_active",
+    "triangles": 8796,
+    "alpha_bounds": [
+      117,
+      138,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l04_construction",
+    "triangles": 6880,
+    "alpha_bounds": [
+      117,
+      144,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l04_damaged",
+    "triangles": 5672,
+    "alpha_bounds": [
+      117,
+      144,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l05_active",
+    "triangles": 10372,
+    "alpha_bounds": [
+      117,
+      110,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l05_construction",
+    "triangles": 7496,
+    "alpha_bounds": [
+      117,
+      112,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l05_damaged",
+    "triangles": 6432,
+    "alpha_bounds": [
+      117,
+      112,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l06_active",
+    "triangles": 12508,
+    "alpha_bounds": [
+      117,
+      104,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l06_construction",
+    "triangles": 9036,
+    "alpha_bounds": [
+      117,
+      104,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "wood_house_l06_damaged",
+    "triangles": 7464,
+    "alpha_bounds": [
+      117,
+      104,
+      395,
+      368
+    ]
+  }
+]

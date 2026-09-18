@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <linearGradient id="mountainTop" x1="42" y1="72" x2="196" y2="145" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9ed57b"/>
+      <stop offset="1" stop-color="#477c42"/>
+    </linearGradient>
+    <filter id="mountainShadow" x="-20%" y="-35%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="5" flood-color="#15191a" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <g filter="url(#mountainShadow)">
+    <path d="M120 52 218 102 120 154 22 102Z" fill="#376d3d"/>
+    <path d="M22 102 120 154 120 165 22 113Z" fill="#315f35"/>
+    <path d="M218 102 120 154 120 165 218 113Z" fill="#244f2e"/>
+    <path d="M120 44 218 96 120 148 22 96Z" fill="url(#mountainTop)" stroke="#d9ffc0" stroke-opacity=".28" stroke-width="2"/>
+    <path d="M72 118 118 34 164 118Z" fill="#707b82"/>
+    <path d="M118 34 164 118 124 105Z" fill="#4e5d66"/>
+    <path d="M118 34 98 70 124 105Z" fill="#9aa3a6"/>
+    <path d="M118 34 105 58 129 55Z" fill="#eff4ed"/>
+    <path d="M126 96 159 58 196 126Z" fill="#646f76"/>
+    <path d="M159 58 196 126 164 113Z" fill="#45525a"/>
+    <path d="M159 58 145 84 164 113Z" fill="#8e989c"/>
+    <path d="M159 58 151 74 170 72Z" fill="#eef3ec"/>
+    <path d="M52 126 82 76 116 130Z" fill="#5c686e"/>
+  </g>
+</svg>

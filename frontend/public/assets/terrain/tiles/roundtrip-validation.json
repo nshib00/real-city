@@ -1,0 +1,47 @@
+[
+  {
+    "terrain": "grass",
+    "triangles": 1044,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "forest",
+    "triangles": 4912,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "forest_thinned",
+    "triangles": 3688,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "forest_sparse",
+    "triangles": 2464,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "water",
+    "triangles": 540,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "mountain",
+    "triangles": 2124,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "road",
+    "triangles": 1092,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "oil_well",
+    "triangles": 1116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins",
+    "triangles": 2196,
+    "nonmanifold_edges": 0
+  }
+]

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180">
+  <defs>
+    <linearGradient id="ruinsGround" x1="42" y1="70" x2="198" y2="145" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b8c56d"/>
+      <stop offset="1" stop-color="#6f7a45"/>
+    </linearGradient>
+    <filter id="ruinsShadow" x="-20%" y="-35%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="5" flood-color="#1e1710" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <g filter="url(#ruinsShadow)">
+    <path d="M120 52 218 102 120 154 22 102Z" fill="#6b7342"/>
+    <path d="M22 102 120 154 120 165 22 113Z" fill="#585f39"/>
+    <path d="M218 102 120 154 120 165 218 113Z" fill="#464f31"/>
+    <path d="M120 44 218 96 120 148 22 96Z" fill="url(#ruinsGround)" stroke="#f0e0a3" stroke-opacity=".3" stroke-width="2"/>
+    <path d="M78 116h86l-10 16H88Z" fill="#8b7452"/>
+    <rect x="82" y="77" width="20" height="44" rx="2" fill="#c1ad78"/>
+    <rect x="112" y="61" width="22" height="59" rx="2" fill="#d4bd7c"/>
+    <rect x="149" y="86" width="18" height="36" rx="2" fill="#b79b66"/>
+    <path d="M112 61h22l-7 11h-15Z" fill="#f0d88e"/>
+    <path d="M82 77h20l-6 9H82Z" fill="#ead190"/>
+    <path d="M77 118 105 99l21 19 24-17 31 17" fill="none" stroke="#75613f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="132" cy="47" r="7" fill="#f2c14e"/>
+    <path d="M132 35v-10M132 69v-10M120 47h-10M154 47h-10" stroke="#ffe7a0" stroke-width="3" stroke-linecap="round"/>
+    <rect x="95" y="130" width="18" height="9" rx="2" fill="#bda568"/>
+    <rect x="142" y="126" width="20" height="10" rx="2" fill="#a78f58"/>
+  </g>
+</svg>
