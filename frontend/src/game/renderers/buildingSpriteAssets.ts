@@ -2,9 +2,10 @@ import type { PlacedBuilding } from '../state/useGameStore'
 import { dugoutModelLevel, dugoutModelState } from './dugout'
 import { lumberYardModelLevel, lumberYardModelState } from './lumberYard'
 import { townHallModelLevel, townHallModelState } from './townHall'
+import { windleafBedModelLevel, windleafBedModelState } from './windleafBed'
 import { woodHouseModelLevel, woodHouseModelState } from './woodHouse'
 
-type SpriteState = 'active' | 'construction' | 'damaged' | 'ruined'
+type SpriteState = 'active' | 'construction' | 'damaged' | 'ruined' | `stage${'01' | '02' | '03' | '04'}` | `super_stage${'01' | '02' | '03' | '04' | '05' | '06'}`
 
 export function buildingSpriteAsset(building: PlacedBuilding) {
   if (building.kind === 'town_hall') {
@@ -28,21 +29,4 @@ export function buildingSpriteAsset(building: PlacedBuilding) {
 function spriteUrl(folder: string, name: string, level: number, state: SpriteState) {
   const spriteState = state === 'ruined' ? 'damaged' : state
   return `/assets/buildings/${folder}/${name}_l${String(level).padStart(2, '0')}_${spriteState}.png`
-}
-
-function windleafBedModelLevel(level: number) {
-  return Math.max(1, Math.min(3, level || 1))
-}
-
-function windleafBedModelState(building: PlacedBuilding): SpriteState {
-  if (building.health <= 0 || building.state === 'ruined') {
-    return 'damaged'
-  }
-  if (building.state === 'damaged' || building.health < 50) {
-    return 'damaged'
-  }
-  if (building.status === 'construction' || building.state === 'building') {
-    return 'construction'
-  }
-  return 'active'
 }

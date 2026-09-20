@@ -29,6 +29,12 @@ describe('building sprite assets', () => {
     expect(buildingSpriteAsset(building({ kind: 'field_bed', level: 11, status: 'active', state: 'active', health: 100 }))).toBe(
       '/assets/buildings/fields/windleaf_bed/windleaf_bed_l03_active.png',
     )
+    expect(buildingSpriteAsset(building({ kind: 'field_bed', level: 2, status: 'active', state: 'active', health: 100, fieldStage: 4 }))).toBe(
+      '/assets/buildings/fields/windleaf_bed/windleaf_bed_l02_stage04.png',
+    )
+    expect(buildingSpriteAsset(building({ kind: 'field_bed', level: 3, status: 'active', state: 'active', health: 100, superStage: 6 }))).toBe(
+      '/assets/buildings/fields/windleaf_bed/windleaf_bed_l03_super_stage06.png',
+    )
   })
 
   it('keeps unsupported css fallback buildings without sprite urls', () => {
@@ -36,7 +42,7 @@ describe('building sprite assets', () => {
   })
 })
 
-function building(overrides: Pick<PlacedBuilding, 'kind' | 'level' | 'status' | 'state' | 'health'>): PlacedBuilding {
+function building(overrides: Pick<PlacedBuilding, 'kind' | 'level' | 'status' | 'state' | 'health'> & Partial<PlacedBuilding>): PlacedBuilding {
   return {
     id: 'building-1',
     name: 'Постройка',

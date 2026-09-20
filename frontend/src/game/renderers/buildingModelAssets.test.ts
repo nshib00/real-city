@@ -35,6 +35,12 @@ describe('building model assets', () => {
     expect(buildingModelAsset(windleafBed({ status: 'active', state: 'active', health: 100, level: 11 }))).toBe(
       '/assets/buildings/fields/windleaf_bed/windleaf_bed_l03_active.glb',
     )
+    expect(buildingModelAsset(windleafBed({ status: 'active', state: 'active', health: 100, level: 2, growthStage: 1 }))).toBe(
+      '/assets/buildings/fields/windleaf_bed/windleaf_bed_l02_stage01.glb',
+    )
+    expect(buildingModelAsset(windleafBed({ status: 'active', state: 'active', health: 100, level: 3, superStage: 6 }))).toBe(
+      '/assets/buildings/fields/windleaf_bed/windleaf_bed_l03_super_stage06.glb',
+    )
   })
 })
 
@@ -52,7 +58,7 @@ function lumberYard(overrides: Pick<PlacedBuilding, 'status' | 'state' | 'health
   }
 }
 
-function windleafBed(overrides: Pick<PlacedBuilding, 'status' | 'state' | 'health' | 'level'>): PlacedBuilding {
+function windleafBed(overrides: Pick<PlacedBuilding, 'status' | 'state' | 'health' | 'level'> & Partial<PlacedBuilding>): PlacedBuilding {
   return {
     id: 'windleaf-bed-1',
     kind: 'field_bed',

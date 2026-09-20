@@ -2,6 +2,7 @@ import type { PlacedBuilding } from '../state/useGameStore'
 import { dugoutModelLevel, dugoutModelState } from './dugout'
 import { lumberYardModelLevel, lumberYardModelState } from './lumberYard'
 import { townHallModelLevel, townHallModelState } from './townHall'
+import { windleafBedModelLevel, windleafBedModelState } from './windleafBed'
 import { woodHouseModelLevel, woodHouseModelState } from './woodHouse'
 
 import townHallL01Active from '../../assets/buildings/center/town_hall/town_hall_l01_active.glb?url'
@@ -117,22 +118,9 @@ export function buildingModelAsset(building: PlacedBuilding) {
     return `/assets/buildings/industry/lumber_yard/lumber_yard_l${String(level).padStart(2, '0')}_${modelState}.glb`
   }
   if (building.kind === 'field_bed') {
-    const level = Math.max(1, Math.min(3, building.level || 1))
+    const level = windleafBedModelLevel(building.level)
     const modelState = windleafBedModelState(building)
-    return `/assets/buildings/fields/windleaf_bed/windleaf_bed_l${String(level).padStart(2, '0')}_${modelState}.glb`
+    return `/assets/buildings/fields/windleaf_bed/windleaf_bed_l${String(level).padStart(2, '0')}_${modelState === 'ruined' ? 'damaged' : modelState}.glb`
   }
   return null
-}
-
-function windleafBedModelState(building: PlacedBuilding) {
-  if (building.health <= 0 || building.state === 'ruined') {
-    return 'damaged'
-  }
-  if (building.state === 'damaged' || building.health < 50) {
-    return 'damaged'
-  }
-  if (building.status === 'construction' || building.state === 'building') {
-    return 'construction'
-  }
-  return 'active'
 }

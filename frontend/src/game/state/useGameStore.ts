@@ -47,6 +47,15 @@ export type PlacedBuilding = {
   owner: string
   startedAt: number
   completesAt: number | null
+  fieldStage?: number
+  growthStage?: number
+  cropStage?: number
+  superStage?: number
+  fieldStageStartedAt?: number | null
+  fieldStageReadyAt?: number | null
+  fieldStageReady?: boolean
+  isSuperCrop?: boolean
+  superCrop?: boolean
 }
 
 export type ResourceNode = {

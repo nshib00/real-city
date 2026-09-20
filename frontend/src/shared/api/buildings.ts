@@ -9,10 +9,20 @@ export type BuildingResponse = {
   level: number
   state: BuildingState
   health: number
+  max_health?: number
   tile_x: number
   tile_y: number
   started_at: string
   completes_at: string | null
+  field_stage?: number
+  growth_stage?: number
+  crop_stage?: number
+  super_stage?: number
+  field_stage_started_at?: string | null
+  field_stage_ready_at?: string | null
+  field_stage_ready?: boolean
+  is_super_crop?: boolean
+  super_crop?: boolean
 }
 
 export type BuildingCatalogResponse = {
@@ -66,8 +76,18 @@ export function toPlacedBuilding(response: BuildingResponse): PlacedBuilding {
     status: response.state === 'building' || response.state === 'planned' ? 'construction' : 'active',
     state: response.state,
     health: response.health,
+    maxHealth: response.max_health,
     owner: response.owner_id,
     startedAt: Date.parse(response.started_at),
     completesAt: response.completes_at ? Date.parse(response.completes_at) : null,
+    fieldStage: response.field_stage,
+    growthStage: response.growth_stage,
+    cropStage: response.crop_stage,
+    superStage: response.super_stage,
+    fieldStageStartedAt: response.field_stage_started_at ? Date.parse(response.field_stage_started_at) : null,
+    fieldStageReadyAt: response.field_stage_ready_at ? Date.parse(response.field_stage_ready_at) : null,
+    fieldStageReady: response.field_stage_ready,
+    isSuperCrop: response.is_super_crop,
+    superCrop: response.super_crop,
   }
 }
