@@ -18,9 +18,19 @@ from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT_DIR = ROOT / "frontend" / "public" / "assets" / "buildings" / "fields" / "windleaf_bed"
+GRASS_TEXTURE_PATH = ROOT / "frontend" / "public" / "assets" / "terrain" / "tiles" / "grass.png"
 LOG_PATH = Path("/tmp/real-city-windleaf-bed-generation.log")
 PNG_SIZE = (512, 384)
 ANCHOR = (256, 292)
+ISO_SCALE = 278 / (3.6 * 2)
+SUPER_WINDLEAF_GROWTH = {
+    1: {"leaves": 4, "height": 1.05, "width": 0.30, "png_width": 31, "reach": 0.16},
+    2: {"leaves": 5, "height": 1.32, "width": 0.36, "png_width": 38, "reach": 0.18},
+    3: {"leaves": 6, "height": 1.68, "width": 0.43, "png_width": 47, "reach": 0.21},
+    4: {"leaves": 7, "height": 2.05, "width": 0.50, "png_width": 55, "reach": 0.24},
+    5: {"leaves": 8, "height": 2.42, "width": 0.58, "png_width": 64, "reach": 0.27},
+    6: {"leaves": 9, "height": 2.82, "width": 0.66, "png_width": 74, "reach": 0.30},
+}
 
 
 MATERIALS = {
@@ -139,10 +149,7 @@ def add_leaf(meshes, name, material, base, height, width, yaw, bend=0.0, vein=Tr
 
 
 def add_soil_rows(meshes, prefix, level):
-    add_box(meshes, prefix + "_tile_base", "earth", (0, 0, -0.08), (3.6, 3.6, 0.16))
-    add_box(meshes, prefix + "_grass_tile", "grass", (0, 0, 0.02), (3.50, 3.50, 0.07))
-    add_box(meshes, prefix + "_north_grass_highlight", "grass_light", (-0.72, 1.38, 0.075), (1.35, 0.18, 0.045), yaw=0.06)
-    add_box(meshes, prefix + "_path_worn_edge", "earth", (0.75, -1.32, 0.075), (1.36, 0.28, 0.045), yaw=-0.12)
+    add_box(meshes, prefix + "_terrain_grass_tile", "grass", (0, 0, -0.015), (3.6, 3.6, 0.03))
     add_box(meshes, prefix + "_soil_bed", "soil", (0, 0, 0.11), (2.38, 1.88, 0.16))
     add_box(meshes, prefix + "_soil_center_lift", "soil_light", (-0.10, -0.02, 0.205), (1.88, 1.28, 0.055))
     for y in (-0.48, 0.0, 0.48):
@@ -150,30 +157,32 @@ def add_soil_rows(meshes, prefix, level):
         add_box(meshes, prefix + "_furrow_lip", "soil_light", (-0.10, y + 0.10, 0.265), (1.72, 0.055, 0.034))
     plank = "plank" if level >= 3 else "wood"
     rail_h = 0.24 + level * 0.025
-    add_box(meshes, prefix + "_front_rail", plank, (0, -1.06, 0.25), (2.60, 0.22, rail_h), yaw=0.01)
-    add_box(meshes, prefix + "_back_rail", plank, (0, 1.06, 0.25), (2.60, 0.22, rail_h), yaw=-0.015)
-    add_box(meshes, prefix + "_left_rail", plank, (-1.40, 0, 0.25), (0.22, 1.92, rail_h), yaw=-0.02)
-    add_box(meshes, prefix + "_right_rail", plank, (1.40, 0, 0.25), (0.22, 1.92, rail_h), yaw=0.02)
-    add_box(meshes, prefix + "_front_highlight", "wood_cut" if level < 3 else "plank_light", (0.0, -1.18, 0.42), (2.38, 0.045, 0.055))
-    add_box(meshes, prefix + "_back_highlight", "wood_cut" if level < 3 else "plank_light", (-0.08, 1.18, 0.42), (2.20, 0.045, 0.055))
+    rail_z = rail_h / 2
+    add_box(meshes, prefix + "_front_rail", plank, (0, -1.06, rail_z), (2.88, 0.22, rail_h), yaw=0.01)
+    add_box(meshes, prefix + "_back_rail", plank, (0, 1.06, rail_z), (2.88, 0.22, rail_h), yaw=-0.015)
+    add_box(meshes, prefix + "_left_rail", plank, (-1.40, 0, rail_z), (0.22, 2.30, rail_h), yaw=-0.02)
+    add_box(meshes, prefix + "_right_rail", plank, (1.40, 0, rail_z), (0.22, 2.30, rail_h), yaw=0.02)
+    add_box(meshes, prefix + "_front_highlight", "wood_cut" if level < 3 else "plank_light", (0.0, -1.18, rail_h + 0.035), (2.66, 0.045, 0.055))
+    add_box(meshes, prefix + "_back_highlight", "wood_cut" if level < 3 else "plank_light", (-0.08, 1.18, rail_h + 0.035), (2.48, 0.045, 0.055))
     for x in (-1.36, 1.36):
         for y in (-1.03, 1.03):
-            add_box(meshes, prefix + "_corner_post", "wood_dark", (x, y, 0.44), (0.24, 0.24, 0.66 + level * 0.035), yaw=0.08 * (1 if x * y > 0 else -1))
-            add_box(meshes, prefix + "_post_cap", "wood_cut", (x, y, 0.80 + level * 0.02), (0.31, 0.31, 0.08), yaw=0.18)
+            post_h = 0.66 + level * 0.035
+            add_box(meshes, prefix + "_corner_post", "wood_dark", (x, y, post_h / 2), (0.24, 0.24, post_h), yaw=0.08 * (1 if x * y > 0 else -1))
+            add_box(meshes, prefix + "_post_cap", "wood_cut", (x, y, post_h + 0.04), (0.31, 0.31, 0.08), yaw=0.18)
     for i, (x, y) in enumerate(((-1.56, -0.05), (1.56, 0.38), (-0.42, 1.34), (0.70, -1.38))):
         add_stone(meshes, f"{prefix}_field_stone_{i}", "stone", (x, y, 0.14), (0.28, 0.20, 0.13), yaw=0.35 * i)
     if level >= 2:
         for x in (-0.74, 0.74):
             add_rope(meshes, prefix + "_flax_front_tie", (x - 0.24, -1.18, 0.53), (x + 0.24, -1.18, 0.47))
             add_rope(meshes, prefix + "_flax_back_tie", (x - 0.24, 1.18, 0.51), (x + 0.24, 1.18, 0.55))
-        add_box(meshes, prefix + "_plant_label_post", "wood_dark", (-1.63, -0.58, 0.56), (0.08, 0.08, 0.72), yaw=0.12)
+        add_box(meshes, prefix + "_plant_label_post", "wood_dark", (-1.63, -0.58, 0.36), (0.08, 0.08, 0.72), yaw=0.12)
         add_box(meshes, prefix + "_plant_label_board", "plank_light", (-1.67, -0.58, 0.86), (0.08, 0.45, 0.30), yaw=0.05)
         add_box(meshes, prefix + "_label_leaf_mark", "leaf_light", (-1.72, -0.58, 0.91), (0.045, 0.26, 0.12), yaw=0.08)
     if level >= 3:
         for x in (-0.95, 0, 0.95):
             add_box(meshes, prefix + "_plank_cap", "plank_light", (x, 0, 0.48), (0.18, 2.16, 0.09), yaw=0.01)
         for x in (-0.88, 0.88):
-            add_box(meshes, prefix + "_leaf_support_post", "wood_dark", (x, 0.0, 0.72), (0.08, 0.08, 0.95), yaw=0.04)
+            add_box(meshes, prefix + "_leaf_support_post", "wood_dark", (x, 0.0, 0.475), (0.08, 0.08, 0.95), yaw=0.04)
         add_rope(meshes, prefix + "_leaf_support_rope", (-0.90, 0.02, 1.08), (0.90, 0.02, 1.04), thickness=0.050)
         add_box(meshes, prefix + "_teal_wind_ribbon", "cloth_teal", (1.55, -0.72, 0.75), (0.06, 0.46, 0.13), yaw=-0.44)
 
@@ -181,9 +190,10 @@ def add_soil_rows(meshes, prefix, level):
 def crop_cluster(meshes, prefix, stage, level, super_crop=False):
     if super_crop:
         centers = [(0, -0.05)]
-        count = min(7, stage + 2)
-        base_height = 0.50 + stage * 0.21
-        base_width = 0.17 + stage * 0.040
+        growth = SUPER_WINDLEAF_GROWTH[stage]
+        count = growth["leaves"]
+        base_height = growth["height"]
+        base_width = growth["width"]
         mat = "super_leaf" if stage < 5 else "super_leaf_light"
     else:
         centers = [(-0.70, -0.42), (-0.20, 0.32), (0.36, -0.20), (0.78, 0.38 if level >= 2 else 0.18)]
@@ -195,7 +205,7 @@ def crop_cluster(meshes, prefix, stage, level, super_crop=False):
         leaves = count if not super_crop else count + c_index
         for i in range(leaves):
             angle = (i / max(1, leaves)) * math.tau + c_index * 0.6
-            radius = 0.10 if super_crop else 0.055
+            radius = growth["reach"] * 0.55 if super_crop else 0.055
             base = (cx + math.cos(angle) * radius, cy + math.sin(angle) * radius, 0.21)
             height = base_height * (0.86 + 0.10 * ((i + c_index) % 3))
             width = base_width * (1.0 + 0.13 * (i % 2))
@@ -206,8 +216,9 @@ def crop_cluster(meshes, prefix, stage, level, super_crop=False):
             add_box(meshes, f"{prefix}_stem_{c_index}", "leaf_deep", (cx, cy, 0.32 + base_height * 0.24), (0.075, 0.075, base_height * 0.62))
     if super_crop and stage >= 4:
         for x in (-0.78, 0.78):
-            add_box(meshes, prefix + "_support_post", "wood", (x, -0.02, 0.72), (0.06, 0.06, 1.0))
-            add_rope(meshes, prefix + "_support_tie", (-0.82, -0.02, 1.02), (0.82, -0.02, 1.02), thickness=0.055)
+            support_h = 0.90 + stage * 0.16
+            add_box(meshes, prefix + "_support_post", "wood", (x, -0.02, support_h / 2), (0.06, 0.06, support_h))
+            add_rope(meshes, prefix + "_support_tie", (-0.82, -0.02, support_h * 0.88), (0.82, -0.02, support_h * 0.88), thickness=0.055)
     if super_crop and stage >= 3:
         add_box(meshes, prefix + "_soft_super_glow", "super_vein", (0, -0.04, 0.34 + base_height * 0.44), (0.10, 0.10, base_height * 0.88))
 
@@ -317,7 +328,7 @@ def write_glb(name, meshes):
     (OUT_DIR / f"{name}.glb").write_bytes(glb)
 
 
-def iso(x, y, z, scale=64):
+def iso(x, y, z, scale=ISO_SCALE):
     return (ANCHOR[0] + (x - y) * scale, ANCHOR[1] + (x + y) * scale * 0.46 - z * scale)
 
 
@@ -346,6 +357,20 @@ def material_rgba(name, alpha=255):
     return tuple(int(v * 255) for v in color[:3]) + (alpha,)
 
 
+def paste_terrain_grass(image):
+    if not GRASS_TEXTURE_PATH.exists():
+        return
+    with Image.open(GRASS_TEXTURE_PATH) as grass:
+        grass = grass.convert("RGBA")
+        bbox = grass.getchannel("A").getbbox()
+        if bbox:
+            grass = grass.crop(bbox)
+        target_w = 278
+        target_h = max(1, round(grass.height * target_w / grass.width))
+        grass = grass.resize((target_w, target_h), Image.Resampling.LANCZOS)
+        image.alpha_composite(grass, (ANCHOR[0] - target_w // 2, ANCHOR[1] + 60 - target_h))
+
+
 def draw_leaf_shape(draw, root, tip, width, angle, fill, vein=None, vein_width=2):
     left = (tip[0] - math.sin(angle) * width, tip[1] + math.cos(angle) * width * 0.58)
     right = (tip[0] + math.sin(angle) * width, tip[1] - math.cos(angle) * width * 0.58)
@@ -361,10 +386,6 @@ def draw_leaf_shape(draw, root, tip, width, angle, fill, vein=None, vein_width=2
 
 
 def draw_bed_base(draw, level):
-    draw_iso_box(draw, (0, 0, -0.08), (3.6, 3.6, 0.16), MATERIALS["earth"], (226, 255, 190, 100))
-    draw_iso_box(draw, (0, 0, 0.02), (3.50, 3.50, 0.07), MATERIALS["grass"], (222, 255, 183, 90))
-    draw_iso_box(draw, (-0.72, 1.38, 0.075), (1.35, 0.18, 0.045), MATERIALS["grass_light"])
-    draw_iso_box(draw, (0.75, -1.32, 0.075), (1.36, 0.28, 0.045), MATERIALS["earth"])
     draw_iso_box(draw, (0, 0, 0.11), (2.38, 1.88, 0.16), MATERIALS["soil"])
     draw_iso_box(draw, (-0.10, -0.02, 0.205), (1.88, 1.28, 0.055), MATERIALS["soil_light"])
     for y in (-0.48, 0.0, 0.48):
@@ -372,27 +393,29 @@ def draw_bed_base(draw, level):
         draw_iso_box(draw, (-0.10, y + 0.10, 0.265), (1.72, 0.055, 0.034), MATERIALS["soil_light"])
     rail_mat = MATERIALS["plank" if level >= 3 else "wood"]
     rail_h = 0.24 + level * 0.025
+    rail_z = rail_h / 2
     for center, size, yaw in (
-        ((0, -1.06, 0.25), (2.60, 0.22, rail_h), 0.01),
-        ((0, 1.06, 0.25), (2.60, 0.22, rail_h), -0.015),
-        ((-1.40, 0, 0.25), (0.22, 1.92, rail_h), -0.02),
-        ((1.40, 0, 0.25), (0.22, 1.92, rail_h), 0.02),
+        ((0, -1.06, rail_z), (2.88, 0.22, rail_h), 0.01),
+        ((0, 1.06, rail_z), (2.88, 0.22, rail_h), -0.015),
+        ((-1.40, 0, rail_z), (0.22, 2.30, rail_h), -0.02),
+        ((1.40, 0, rail_z), (0.22, 2.30, rail_h), 0.02),
     ):
         draw_iso_box(draw, center, size, rail_mat, yaw=yaw)
     highlight = MATERIALS["plank_light" if level >= 3 else "wood_cut"]
-    draw_iso_box(draw, (0.0, -1.18, 0.42), (2.38, 0.045, 0.055), highlight)
-    draw_iso_box(draw, (-0.08, 1.18, 0.42), (2.20, 0.045, 0.055), highlight)
+    draw_iso_box(draw, (0.0, -1.18, rail_h + 0.035), (2.66, 0.045, 0.055), highlight)
+    draw_iso_box(draw, (-0.08, 1.18, rail_h + 0.035), (2.48, 0.045, 0.055), highlight)
     for x in (-1.36, 1.36):
         for y in (-1.03, 1.03):
-            draw_iso_box(draw, (x, y, 0.44), (0.24, 0.24, 0.66 + level * 0.035), MATERIALS["wood_dark"])
-            draw_iso_box(draw, (x, y, 0.80 + level * 0.02), (0.31, 0.31, 0.08), MATERIALS["wood_cut"], yaw=0.18)
+            post_h = 0.66 + level * 0.035
+            draw_iso_box(draw, (x, y, post_h / 2), (0.24, 0.24, post_h), MATERIALS["wood_dark"])
+            draw_iso_box(draw, (x, y, post_h + 0.04), (0.31, 0.31, 0.08), MATERIALS["wood_cut"], yaw=0.18)
     for i, (x, y) in enumerate(((-1.56, -0.05), (1.56, 0.38), (-0.42, 1.34), (0.70, -1.38))):
         draw_iso_box(draw, (x, y, 0.14), (0.28, 0.20, 0.13), MATERIALS["stone"], yaw=0.35 * i)
     if level >= 2:
         for x in (-0.74, 0.74):
             draw_iso_box(draw, (x, -1.18, 0.50), (0.52, 0.045, 0.045), MATERIALS["flax"], yaw=-0.12)
             draw_iso_box(draw, (x, 1.18, 0.53), (0.52, 0.045, 0.045), MATERIALS["flax"], yaw=0.12)
-        draw_iso_box(draw, (-1.63, -0.58, 0.56), (0.08, 0.08, 0.72), MATERIALS["wood_dark"], yaw=0.12)
+        draw_iso_box(draw, (-1.63, -0.58, 0.36), (0.08, 0.08, 0.72), MATERIALS["wood_dark"], yaw=0.12)
         draw_iso_box(draw, (-1.67, -0.58, 0.86), (0.08, 0.45, 0.30), MATERIALS["plank_light"], yaw=0.05)
         mark = iso(-1.74, -0.58, 0.94)
         draw.ellipse((mark[0] - 5, mark[1] - 4, mark[0] + 7, mark[1] + 5), fill=material_rgba("leaf_light"))
@@ -400,7 +423,7 @@ def draw_bed_base(draw, level):
         for x in (-0.95, 0, 0.95):
             draw_iso_box(draw, (x, 0, 0.48), (0.18, 2.16, 0.09), MATERIALS["plank_light"])
         for x in (-0.88, 0.88):
-            draw_iso_box(draw, (x, 0.0, 0.72), (0.08, 0.08, 0.95), MATERIALS["wood_dark"])
+            draw_iso_box(draw, (x, 0.0, 0.475), (0.08, 0.08, 0.95), MATERIALS["wood_dark"])
         draw_iso_box(draw, (0, 0.02, 1.06), (1.82, 0.045, 0.045), MATERIALS["flax"])
         draw_iso_box(draw, (1.55, -0.72, 0.75), (0.06, 0.46, 0.13), MATERIALS["cloth_teal"], yaw=-0.44)
 
@@ -408,9 +431,17 @@ def draw_bed_base(draw, level):
 def draw_crop(draw, level, stage, super_crop=False, damaged=False):
     centers = [(0, -0.05)] if super_crop else [(-0.70, -0.42), (-0.20, 0.32), (0.36, -0.20), (0.78, 0.38 if level >= 2 else 0.18)]
     for c, (cx, cy) in enumerate(centers):
-        leaves = min(7, stage + 2) if super_crop else max(2, stage + (1 if level >= 3 else 0))
-        height = (0.50 + stage * 0.21) if super_crop else (0.18 + stage * 0.16 + level * 0.045)
-        width = (18 + stage * 5) if super_crop else (8 + stage * 3 + level)
+        if super_crop:
+            growth = SUPER_WINDLEAF_GROWTH[stage]
+            leaves = growth["leaves"]
+            height = growth["height"]
+            width = growth["png_width"]
+            reach = growth["reach"]
+        else:
+            leaves = max(2, stage + (1 if level >= 3 else 0))
+            height = 0.18 + stage * 0.16 + level * 0.045
+            width = 8 + stage * 3 + level
+            reach = 0.09
         leaf_color = material_rgba("super_leaf_light" if super_crop and stage >= 5 else ("super_leaf" if super_crop else ("leaf_light" if stage >= 3 else "leaf")))
         vein = material_rgba("super_vein" if super_crop else "leaf_vein", 235)
         for i in range(leaves):
@@ -418,21 +449,23 @@ def draw_crop(draw, level, stage, super_crop=False, damaged=False):
             if damaged and i == leaves - 1:
                 angle -= 0.85
             root = iso(cx + math.cos(angle) * 0.05, cy + math.sin(angle) * 0.05, 0.30)
-            tip = iso(cx + math.cos(angle) * (0.13 if super_crop else 0.09), cy + math.sin(angle) * (0.13 if super_crop else 0.09), 0.30 + height * (0.85 + 0.08 * (i % 3)))
+            tip = iso(cx + math.cos(angle) * reach, cy + math.sin(angle) * reach, 0.30 + height * (0.85 + 0.08 * (i % 3)))
             draw_leaf_shape(draw, root, tip, width * (1.0 + 0.12 * (i % 2)), angle, leaf_color, vein if stage >= 2 or super_crop else None, 3 if super_crop else 2)
         if stage >= 2 or super_crop:
             stem = iso(cx, cy, 0.36 + height * 0.28)
             draw.ellipse((stem[0] - 5, stem[1] - 4, stem[0] + 5, stem[1] + 5), fill=material_rgba("leaf_deep"))
     if super_crop and stage >= 4:
         for x in (-0.78, 0.78):
-            draw_iso_box(draw, (x, -0.02, 0.72), (0.06, 0.06, 1.0), MATERIALS["wood"])
-        draw_iso_box(draw, (0, -0.02, 1.02), (1.62, 0.05, 0.05), MATERIALS["flax"])
+            support_h = 0.90 + stage * 0.16
+            draw_iso_box(draw, (x, -0.02, support_h / 2), (0.06, 0.06, support_h), MATERIALS["wood"])
+        draw_iso_box(draw, (0, -0.02, (0.90 + stage * 0.16) * 0.88), (1.62, 0.05, 0.05), MATERIALS["flax"])
     if super_crop and stage >= 3:
         glow = Image.new("RGBA", PNG_SIZE, (0, 0, 0, 0))
         gd = ImageDraw.Draw(glow)
-        p = iso(0, -0.04, 1.0)
-        gd.ellipse((p[0] - 42, p[1] - 32, p[0] + 42, p[1] + 36), fill=(90, 255, 116, 42))
-        return glow.filter(ImageFilter.GaussianBlur(9))
+        p = iso(0, -0.04, 0.64 + SUPER_WINDLEAF_GROWTH[stage]["height"] * 0.40)
+        radius = 32 + stage * 9
+        gd.ellipse((p[0] - radius, p[1] - radius * 0.78, p[0] + radius, p[1] + radius * 0.86), fill=(90, 255, 116, 42))
+        return glow.filter(ImageFilter.GaussianBlur(10))
     return None
 
 
@@ -440,8 +473,9 @@ def draw_png(name, level, state):
     image = Image.new("RGBA", PNG_SIZE, (0, 0, 0, 0))
     shadow = Image.new("RGBA", PNG_SIZE, (0, 0, 0, 0))
     sd = ImageDraw.Draw(shadow)
-    sd.ellipse((118, 270, 398, 358), fill=(0, 0, 0, 82))
+    sd.ellipse((162, 262, 350, 326), fill=(0, 0, 0, 70))
     image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(11)))
+    paste_terrain_grass(image)
     draw = ImageDraw.Draw(image)
     draw_bed_base(draw, level)
     if state == "construction":
@@ -488,8 +522,9 @@ def asset_names():
         names.append((f"windleaf_bed_l{level:02d}_active", level, "active"))
         names.append((f"windleaf_bed_l{level:02d}_construction", level, "construction"))
         names.append((f"windleaf_bed_l{level:02d}_damaged", level, "damaged"))
-    for stage in range(1, 7):
-        names.append((f"windleaf_bed_l03_super_stage{stage:02d}", 3, f"super_stage{stage:02d}"))
+    for level in (1, 2, 3):
+        for stage in range(1, 7):
+            names.append((f"windleaf_bed_l{level:02d}_super_stage{stage:02d}", level, f"super_stage{stage:02d}"))
     return names
 
 
@@ -545,10 +580,20 @@ def main():
         "asset": "windleaf_bed",
         "display_name": "Грядка ветролиста",
         "style": "Aeolian bright fantasy stylized mid-poly",
-        "scope": "levels 1-3, stages, construction, damaged, level 3 super stages",
+        "scope": "levels 1-3, stages, construction, damaged, super stages",
         "png_size": list(PNG_SIZE),
         "anchor": list(ANCHOR),
-        "files": [item["name"] for item in report["assets"]],
+        "assets": [
+            {
+                "id": item["name"],
+                "level": item["level"],
+                "state": item["state"],
+                "model": f"{item['name']}.glb",
+                "sprite": f"{item['name']}.png",
+                "anchor": list(ANCHOR),
+            }
+            for item in report["assets"]
+        ],
     }
     (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
     LOG_PATH.write_text("\n".join(lines) + f"\nWINDLEAF_BED_COMPLETE {len(items)}\n")
