@@ -56,20 +56,24 @@ type Cost struct {
 }
 
 type Building struct {
-	ID          ID
-	MapID       string
-	OwnerID     string
-	Type        Type
-	Name        string
-	Level       int
-	State       State
-	Health      int
-	Tile        world.Coord
-	Footprint   Footprint
-	StartedAt   time.Time
-	CompletesAt *time.Time
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	ID                  ID
+	MapID               string
+	OwnerID             string
+	Type                Type
+	Name                string
+	Level               int
+	State               State
+	Health              int
+	Tile                world.Coord
+	Footprint           Footprint
+	StartedAt           time.Time
+	CompletesAt         *time.Time
+	FieldStage          int
+	FieldStageStartedAt *time.Time
+	FieldStageReadyAt   *time.Time
+	FieldSuperCrop      bool
+	CreatedAt           time.Time
+	UpdatedAt           time.Time
 }
 
 func (b Building) IsRoad() bool {

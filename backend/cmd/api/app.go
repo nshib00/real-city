@@ -51,7 +51,7 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	actionRepo := buildActionStore(cfg, log)
 	outboxRepo := buildOutboxStore(cfg, log)
 	uow := buildUnitOfWork(cfg, log)
-	fieldService := service.NewFieldService(economyService)
+	fieldService := service.NewFieldService(economyService, buildingRepo)
 	populationService := service.NewPopulationService(economyService)
 	forestService := service.NewForestService(worldRepo, economyService, log)
 	eventBus := service.NewEventBus(128)

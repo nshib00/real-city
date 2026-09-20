@@ -51,6 +51,13 @@ func WindleafCropForLevel(level int) FieldCrop {
 	}
 }
 
+func WindleafStage(crop FieldCrop, stage int) (FieldStage, bool) {
+	if stage < 1 || stage > len(crop.Growth) {
+		return FieldStage{}, false
+	}
+	return crop.Growth[stage-1], true
+}
+
 type windleafCropLevel struct {
 	Coins          int
 	Windleaf       int

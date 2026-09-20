@@ -74,7 +74,11 @@ type PatchResourceNodeRequest struct {
 }
 
 type HarvestFieldRequest struct {
-	Super bool `json:"super"`
+	BuildingID string `json:"building_id"`
+}
+
+type AdvanceFieldRequest struct {
+	BuildingID string `json:"building_id"`
 }
 
 type PopulationResponse struct {

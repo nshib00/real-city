@@ -5,6 +5,7 @@ import (
 
 	"real-city/backend/internal/adapter/http/dto"
 	"real-city/backend/internal/adapter/http/middleware"
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/service"
 	"real-city/backend/pkg/apperror"
@@ -190,10 +191,29 @@ func (h *EconomyHandler) HarvestField(w http.ResponseWriter, r *http.Request) {
 		writeError(w, err)
 		return
 	}
-	inventory, err := h.fields.HarvestWindleaf(r.Context(), playerID, req.Super)
+	item, inventory, err := h.fields.HarvestWindleaf(r.Context(), playerID, building.ID(req.BuildingID))
 	if err != nil {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusOK, envelope{"inventory": dto.Inventory(inventory)})
+	writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item), "inventory": dto.Inventory(inventory)})
+}
+
+func (h *EconomyHandler) AdvanceField(w http.ResponseWriter, r *http.Request) {
+	playerID, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
+		return
+	}
+	var req dto.AdvanceFieldRequest
+	if err := decodeJSON(r, &req); err != nil {
+		writeError(w, err)
+		return
+	}
+	item, err := h.fields.AdvanceWindleaf(r.Context(), playerID, building.ID(req.BuildingID))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item)})
 }

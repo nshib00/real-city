@@ -24,17 +24,19 @@ func (r *BuildingRepo) Create(ctx context.Context, b building.Building) error {
 	_, err := execer(ctx, r.db).ExecContext(ctx, `
 		INSERT INTO buildings (
 			id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
-			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
+			field_stage_ready_at, field_super_crop, created_at, updated_at
 		)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-	`, b.ID, b.MapID, b.OwnerID, b.Type, b.Name, b.Level, b.State, b.Health, b.Tile.X, b.Tile.Y, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.CreatedAt, b.UpdatedAt)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+	`, b.ID, b.MapID, b.OwnerID, b.Type, b.Name, b.Level, b.State, b.Health, b.Tile.X, b.Tile.Y, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.CreatedAt, b.UpdatedAt)
 	return err
 }
 
 func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.Building, error) {
 	row := execer(ctx, r.db).QueryRowContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
-			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
+			field_stage_ready_at, field_super_crop, created_at, updated_at
 		FROM buildings
 		WHERE id = $1
 	`, id)
@@ -44,7 +46,8 @@ func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.B
 func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error) {
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
-			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
+			field_stage_ready_at, field_super_crop, created_at, updated_at
 		FROM buildings
 		WHERE owner_id = $1
 		ORDER BY created_at, id
@@ -59,7 +62,8 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.Building, error) {
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
-			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
+			field_stage_ready_at, field_super_crop, created_at, updated_at
 		FROM buildings
 		WHERE map_id = $1
 		ORDER BY created_at, id
@@ -75,7 +79,8 @@ func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord worl
 	origin := world.ChunkOrigin(coord)
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
-			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
+			field_stage_ready_at, field_super_crop, created_at, updated_at
 		FROM buildings
 		WHERE map_id = $1
 		  AND tile_x >= $2 AND tile_x < $3
@@ -95,7 +100,8 @@ func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([
 	}
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
-			footprint_w, footprint_h, started_at, completes_at, created_at, updated_at
+			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
+			field_stage_ready_at, field_super_crop, created_at, updated_at
 		FROM buildings
 		WHERE state = $1 AND completes_at IS NOT NULL AND completes_at <= $2
 		ORDER BY completes_at, id
@@ -112,9 +118,11 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 	result, err := execer(ctx, r.db).ExecContext(ctx, `
 		UPDATE buildings
 		SET type = $2, name = $3, level = $4, state = $5, health = $6,
-			footprint_w = $7, footprint_h = $8, started_at = $9, completes_at = $10, updated_at = $11
+			footprint_w = $7, footprint_h = $8, started_at = $9, completes_at = $10,
+			field_stage = $11, field_stage_started_at = $12, field_stage_ready_at = $13,
+			field_super_crop = $14, updated_at = $15
 		WHERE id = $1
-	`, b.ID, b.Type, b.Name, b.Level, b.State, b.Health, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.UpdatedAt)
+	`, b.ID, b.Type, b.Name, b.Level, b.State, b.Health, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.UpdatedAt)
 	if err != nil {
 		return err
 	}
@@ -164,6 +172,10 @@ func scanBuilding(row scanner) (building.Building, error) {
 		&item.Footprint.Height,
 		&item.StartedAt,
 		&item.CompletesAt,
+		&item.FieldStage,
+		&item.FieldStageStartedAt,
+		&item.FieldStageReadyAt,
+		&item.FieldSuperCrop,
 		&item.CreatedAt,
 		&item.UpdatedAt,
 	)

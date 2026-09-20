@@ -248,11 +248,13 @@ export const useGameStore = create<GameState>((set) => ({
   tickConstructions: (now) =>
     set((state) => ({
       constructionNow: now,
-      buildings: state.buildings.map((building) =>
-        building.status === 'construction' && building.completesAt && building.completesAt <= now
-          ? { ...building, status: 'active', completesAt: null }
-          : building,
-      ),
+      buildings: state.buildings.map((building) => {
+        const completed =
+          building.status === 'construction' && building.completesAt && building.completesAt <= now
+            ? { ...building, status: 'active' as const, completesAt: null }
+            : building
+        return completed.fieldStageReadyAt && completed.fieldStageReadyAt <= now ? { ...completed, fieldStageReady: true } : completed
+      }),
     })),
   deleteBuilding: (buildingId) =>
     set((state) => ({

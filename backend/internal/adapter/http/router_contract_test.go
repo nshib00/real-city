@@ -96,7 +96,7 @@ func testRouter() http.Handler {
 		Economy:    economyService,
 		Resources:  service.NewResourceService(economyRepo, economyService, slog.Default()),
 		Production: service.NewProductionService(economyRepo, economyService, slog.Default()),
-		Fields:     service.NewFieldService(economyService),
+		Fields:     service.NewFieldService(economyService, buildingRepo),
 		Population: service.NewPopulationService(economyService),
 		Monsters:   service.NewMonsterService(monsterRepo, slog.Default()),
 		Combat:     service.NewCombatService(service.NewMonsterService(monsterRepo, slog.Default()), slog.Default()),

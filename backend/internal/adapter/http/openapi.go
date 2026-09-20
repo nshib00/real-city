@@ -30,6 +30,7 @@ func OpenAPISpec() map[string]any {
 			"/production/recipes":           path("get", "Production recipes"),
 			"/production/jobs":              map[string]any{"get": operation("List production jobs"), "post": operation("Start production")},
 			"/production/jobs/{id}":         path("patch", "Patch production job"),
+			"/fields/windleaf/advance":      path("post", "Advance windleaf field stage"),
 			"/fields/windleaf/harvest":      path("post", "Harvest windleaf field"),
 			"/monsters/catalog":             path("get", "Monster catalog"),
 			"/monsters":                     path("get", "List monsters"),

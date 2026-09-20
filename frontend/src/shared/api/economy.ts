@@ -1,4 +1,5 @@
 import { request } from './client'
+import type { BuildingResponse } from './buildings'
 
 export type InventoryItem = {
   resource: string
@@ -81,9 +82,16 @@ export function patchProductionJob(id: string, action: 'complete' | 'cancel') {
   })
 }
 
-export function harvestWindleafField(superCrop = false) {
-  return request<{ inventory: InventoryResponse }>('/fields/windleaf/harvest', {
+export function advanceWindleafField(buildingId: string) {
+  return request<{ building: BuildingResponse }>('/fields/windleaf/advance', {
     method: 'POST',
-    body: JSON.stringify({ super: superCrop }),
+    body: JSON.stringify({ building_id: buildingId }),
+  })
+}
+
+export function harvestWindleafField(buildingId: string) {
+  return request<{ building: BuildingResponse; inventory: InventoryResponse }>('/fields/windleaf/harvest', {
+    method: 'POST',
+    body: JSON.stringify({ building_id: buildingId }),
   })
 }
