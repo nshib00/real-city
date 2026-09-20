@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from pathlib import Path
 
 import bmesh
@@ -13,9 +14,18 @@ ROOT = Path("/home/nshib/projects/real-city")
 OUT_DIR = ROOT / "frontend/public/assets/buildings/fields/windleaf_bed"
 BLEND_PATH = OUT_DIR / "windleaf_bed_l01_l03.blend"
 REPORT_PATH = OUT_DIR / "generation-report.json"
+GRASS_TEXTURE_PATH = ROOT / "frontend/public/assets/terrain/tiles/grass.png"
 ANCHOR = [256, 292]
 BLENDER_ROOT = r"\\wsl.localhost\Debian\home\nshib\projects\real-city"
 BED_MODEL_SCALE = 1.28
+SUPER_WINDLEAF_GROWTH = {
+    1: {"leaves": 4, "length": 1.12, "width": 0.32, "z": 0.54, "stem": 0.94},
+    2: {"leaves": 5, "length": 1.38, "width": 0.38, "z": 0.62, "stem": 1.14},
+    3: {"leaves": 6, "length": 1.72, "width": 0.46, "z": 0.72, "stem": 1.38},
+    4: {"leaves": 7, "length": 2.08, "width": 0.54, "z": 0.82, "stem": 1.62},
+    5: {"leaves": 8, "length": 2.44, "width": 0.62, "z": 0.92, "stem": 1.88},
+    6: {"leaves": 9, "length": 2.84, "width": 0.70, "z": 1.02, "stem": 2.16},
+}
 
 
 def blender_path(path: Path) -> str:
@@ -26,6 +36,10 @@ def blender_path(path: Path) -> str:
         relative = raw[len(root) :].lstrip("\\")
         return BLENDER_ROOT + "\\" + relative
     return raw
+
+
+def blender_exists(path: Path) -> bool:
+    return os.path.exists(blender_path(path))
 
 
 MATERIALS = {
@@ -54,7 +68,7 @@ MATERIALS = {
 
 
 def ensure_dir() -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    os.makedirs(blender_path(OUT_DIR), exist_ok=True)
 
 
 def mat(name: str, color: tuple[float, float, float, float]) -> bpy.types.Material:
@@ -69,6 +83,13 @@ def mat(name: str, color: tuple[float, float, float, float]) -> bpy.types.Materi
             bsdf.inputs["Roughness"].default_value = 0.78
         if "Alpha" in bsdf.inputs:
             bsdf.inputs["Alpha"].default_value = color[3]
+        if name == "grass" and blender_exists(GRASS_TEXTURE_PATH):
+            image = bpy.data.images.load(blender_path(GRASS_TEXTURE_PATH), check_existing=True)
+            image.source = "FILE"
+            tex = material.node_tree.nodes.new(type="ShaderNodeTexImage")
+            tex.image = image
+            material.node_tree.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+            material["terrain_source"] = "frontend/public/assets/terrain/tiles/grass.png"
     material.use_screen_refraction = False
     material.blend_method = "BLEND" if color[3] < 1 else "OPAQUE"
     return material
@@ -84,6 +105,10 @@ def reset_scene() -> dict[str, bpy.types.Material]:
         if material.name.startswith("MAT_windleaf_bed_"):
             bpy.data.materials.remove(material)
     return {name: mat(name, color) for name, color in MATERIALS.items()}
+
+
+def make_materials(prefix: str = "") -> dict[str, bpy.types.Material]:
+    return {name: mat(prefix + name, color) for name, color in MATERIALS.items()}
 
 
 def link_obj(coll: bpy.types.Collection, obj: bpy.types.Object) -> bpy.types.Object:
@@ -214,21 +239,22 @@ def add_log_wall(coll, name, level, mats):
     y_front, y_back = -0.70, 0.70
     x_left, x_right = -0.98, 0.98
     for row in range(rows):
-        z = 0.05 + radius + row * radius * 1.75
+        z = radius + row * radius * 1.75
         material = mats["wood"] if row % 2 else mats["wood_dark"]
-        beam_between(coll, name + "_front_log", (x_left + 0.10, y_front, z), (x_right - 0.10, y_front, z), radius, material, 10)
-        beam_between(coll, name + "_back_log", (x_left + 0.10, y_back, z), (x_right - 0.10, y_back, z), radius, material, 10)
-        beam_between(coll, name + "_left_log", (x_left, y_front + 0.10, z), (x_left, y_back - 0.10, z), radius, material, 10)
-        beam_between(coll, name + "_right_log", (x_right, y_front + 0.10, z), (x_right, y_back - 0.10, z), radius, material, 10)
+        beam_between(coll, name + "_front_log", (x_left, y_front, z), (x_right, y_front, z), radius, material, 10)
+        beam_between(coll, name + "_back_log", (x_left, y_back, z), (x_right, y_back, z), radius, material, 10)
+        beam_between(coll, name + "_left_log", (x_left, y_front, z), (x_left, y_back, z), radius, material, 10)
+        beam_between(coll, name + "_right_log", (x_right, y_front, z), (x_right, y_back, z), radius, material, 10)
     for x in (x_left, x_right):
         for y in (y_front, y_back):
             post_h = 0.44 + level * 0.04
-            add_cube(coll, "grounded_corner_post", (x, y, 0.05 + post_h / 2), (0.22, 0.22, post_h), mats["wood_dark"], bevel=0.04, ground=True)
-            add_cube(coll, "supported_post_cap", (x, y, 0.05 + post_h + 0.04), (0.27, 0.27, 0.08), mats["wood_cut"], (0, 0, 0.2), 0.03, True)
+            add_cube(coll, "grounded_corner_post", (x, y, post_h / 2), (0.22, 0.22, post_h), mats["wood_dark"], bevel=0.04, ground=True)
+            add_cube(coll, "supported_post_cap", (x, y, post_h + 0.04), (0.27, 0.27, 0.08), mats["wood_cut"], (0, 0, 0.2), 0.03, True)
 
 
 def add_ground(coll, level, mats):
     add_cube(coll, "windleaf_bed_tile_base", (0, 0, -0.04), (3.60, 3.60, 0.08), mats["grass"], bevel=0.012, ground=True)
+    coll["ground_source"] = "frontend/public/assets/terrain/tiles/grass.png"
     for x, y in ((-1.25, 0.85), (1.18, 1.12), (1.24, -0.92), (-1.16, -1.12)):
         add_grass_tuft(coll, x, y, mats, 0.78)
     add_cube(coll, "warm_earth_bed", (0, 0, 0.075), (1.72, 1.52, 0.16), mats["earth"], bevel=0.06, ground=True)
@@ -239,18 +265,18 @@ def add_ground(coll, level, mats):
         add_log_wall(coll, "bed_log_wall", level, mats)
     else:
         for y in (-0.69, 0.69):
-            add_cube(coll, "grounded_plank_rail", (0, y, 0.16), (1.92, 0.16, 0.22), mats["plank"], bevel=0.035, ground=True)
+            add_cube(coll, "grounded_plank_rail", (0, y, 0.11), (2.20, 0.16, 0.22), mats["plank"], bevel=0.035, ground=True)
         for x in (-0.98, 0.98):
-            add_cube(coll, "grounded_plank_side_rail", (x, 0, 0.16), (0.16, 1.50, 0.22), mats["plank"], bevel=0.035, ground=True)
+            add_cube(coll, "grounded_plank_side_rail", (x, 0, 0.11), (0.16, 1.66, 0.22), mats["plank"], bevel=0.035, ground=True)
         for x in (-0.99, 0.99):
             for y in (-0.71, 0.71):
                 post_h = 0.54
-                add_cube(coll, "grounded_corner_post", (x, y, 0.05 + post_h / 2), (0.22, 0.22, post_h), mats["wood_dark"], bevel=0.04, ground=True)
-                add_cube(coll, "supported_post_cap", (x, y, 0.05 + post_h + 0.04), (0.27, 0.27, 0.08), mats["wood_cut"], (0, 0, 0.2), 0.03, True)
+                add_cube(coll, "grounded_corner_post", (x, y, post_h / 2), (0.22, 0.22, post_h), mats["wood_dark"], bevel=0.04, ground=True)
+                add_cube(coll, "supported_post_cap", (x, y, post_h + 0.04), (0.27, 0.27, 0.08), mats["wood_cut"], (0, 0, 0.2), 0.03, True)
     if level >= 2:
         for y in (-0.52, 0.52):
             beam_between(coll, "flax_tie_front", (-0.88, y, 0.49), (0.88, y, 0.49), 0.025, mats["flax"], 8)
-        add_cube(coll, "grounded_field_sign_post", (-1.08, -0.20, 0.35), (0.08, 0.08, 0.60), mats["wood_dark"], bevel=0.014)
+        add_cube(coll, "grounded_field_sign_post", (-1.08, -0.20, 0.30), (0.08, 0.08, 0.60), mats["wood_dark"], bevel=0.014)
         add_cube(coll, "supported_field_sign_board", (-1.10, -0.24, 0.62), (0.42, 0.07, 0.24), mats["wood_cut"], (0, 0, -0.08), 0.018)
     if level >= 3:
         for y in (-0.80, 0.80):
@@ -258,8 +284,8 @@ def add_ground(coll, level, mats):
         for x in (-1.09, 1.09):
             add_cube(coll, "supported_plank_cap_side", (x, 0, 0.43), (0.11, 1.64, 0.11), mats["plank"], bevel=0.025, ground=True)
         for x in (-0.62, 0.62):
-            beam_between(coll, "grounded_leaf_support_post", (x, -0.60, 0.03), (x, -0.60, 0.92), 0.045, mats["wood_dark"], 8)
-            beam_between(coll, "grounded_leaf_support_post", (x, 0.60, 0.03), (x, 0.60, 0.92), 0.045, mats["wood_dark"], 8)
+            beam_between(coll, "grounded_leaf_support_post", (x, -0.60, 0.00), (x, -0.60, 0.92), 0.045, mats["wood_dark"], 8)
+            beam_between(coll, "grounded_leaf_support_post", (x, 0.60, 0.00), (x, 0.60, 0.92), 0.045, mats["wood_dark"], 8)
             beam_between(coll, "upper_support_rope", (x, -0.60, 0.84), (x, 0.60, 0.84), 0.025, mats["rope"], 8)
         add_cube(coll, "aeolian_cloth_ribbon", (0.0, 0.88, 0.70), (0.58, 0.035, 0.16), mats["cloth"], (0.04, 0.0, 0.18), 0.018)
     for i, (x, y) in enumerate([(-0.82, 0.88), (0.68, -0.88), (1.10, 0.18), (-1.12, -0.18)]):
@@ -268,18 +294,19 @@ def add_ground(coll, level, mats):
 
 def add_crop(coll, level, stage, mats, super_crop=False, damaged=False):
     if super_crop:
-        centers = [(0, 0)]
-        count = min(6, max(2, stage + 1))
-        base_len = 0.74 + stage * 0.15
+        growth = SUPER_WINDLEAF_GROWTH[stage]
+        count = growth["leaves"]
         for i in range(count):
             yaw = i * math.tau / count + 0.14
-            length = base_len * (0.90 + (i % 2) * 0.14)
-            width = 0.24 + stage * 0.035
-            add_leaf(coll, "super_windleaf_blade", (0.0, 0.0, 0.46 + stage * 0.08), length, width, mats["super_leaf"], mats["leaf_vein"], yaw, 0.46 + 0.04 * (i % 2), (i - count / 2) * 0.05)
-        beam_between(coll, "super_windleaf_stem", (0, 0, 0.30), (0, 0, 0.72 + stage * 0.08), 0.055 + stage * 0.008, mats["leaf_dark"], 9)
-        if stage >= 5:
+            length = growth["length"] * (0.90 + (i % 2) * 0.14)
+            width = growth["width"] * (1.0 + (i % 3) * 0.05)
+            add_leaf(coll, "super_windleaf_blade", (0.0, 0.0, growth["z"]), length, width, mats["super_leaf"], mats["leaf_vein"], yaw, 0.48 + 0.035 * (i % 2), (i - count / 2) * 0.05)
+        beam_between(coll, "super_windleaf_stem", (0, 0, 0.30), (0, 0, growth["stem"]), 0.070 + stage * 0.010, mats["leaf_dark"], 9)
+        if stage >= 4:
+            support_z = 0.78 + stage * 0.16
             for x in (-0.45, 0.45):
-                beam_between(coll, "super_support_rope", (x, -0.54, 0.82), (0, 0, 1.10), 0.018, mats["rope"], 6)
+                beam_between(coll, "super_support_post", (x, -0.54, 0.00), (x, -0.54, support_z), 0.026, mats["wood_dark"], 8)
+                beam_between(coll, "super_support_rope", (x, -0.54, support_z), (0, 0, growth["stem"] * 0.82), 0.018, mats["rope"], 6)
         return
     clusters = [(-0.46, -0.32), (0.0, 0.12), (0.48, -0.18)]
     if level >= 2:
@@ -351,7 +378,7 @@ def scale_model_to_building_tile(coll):
         obj.scale.y *= BED_MODEL_SCALE
 
 
-def collect_assets(mats, root_coll):
+def asset_variants():
     variants = []
     for level in range(1, 4):
         for stage in range(1, 5):
@@ -362,6 +389,11 @@ def collect_assets(mats, root_coll):
     for level in range(1, 4):
         for stage in range(1, 7):
             variants.append((f"windleaf_bed_l{level:02d}_super_stage{stage:02d}", level, f"super_stage{stage:02d}"))
+    return variants
+
+
+def collect_assets(mats, root_coll):
+    variants = asset_variants()
     return [make_variant(name, level, state, mats, root_coll) for name, level, state in variants]
 
 
@@ -370,22 +402,29 @@ def look_at(obj, target):
     obj.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
 
 
-def setup_camera():
-    bpy.ops.object.light_add(type="AREA", location=(-3.4, -4.0, 6.2))
-    light = bpy.context.object
+def setup_camera(scene=None):
+    scene = scene or bpy.context.scene
+    light_data = bpy.data.lights.new("windleaf_preview_key_light", "AREA")
+    light = bpy.data.objects.new("windleaf_preview_key_light", light_data)
+    scene.collection.objects.link(light)
+    light.location = (-3.4, -4.0, 6.2)
     light.name = "windleaf_preview_key_light"
     light.data.energy = 520
     light.data.size = 4.5
-    bpy.ops.object.camera_add(location=(3.8, -4.4, 3.4))
-    camera = bpy.context.object
+    camera_data = bpy.data.cameras.new("windleaf_iso_camera")
+    camera = bpy.data.objects.new("windleaf_iso_camera", camera_data)
+    scene.collection.objects.link(camera)
     camera.name = "windleaf_iso_camera"
     camera.data.type = "ORTHO"
-    camera.data.ortho_scale = 3.85
-    look_at(camera, (0, 0, 0.35))
-    bpy.context.scene.camera = camera
-    scene = bpy.context.scene
+    camera.location = (8, -8, math.sqrt(128) / math.sqrt(3))
+    camera.data.ortho_scale = 512 * 3.6 * math.sqrt(2) / 278
+    look_at(camera, (0, 0, 0))
+    camera.data.shift_x = 0
+    camera.data.shift_y = 0
+    scene.camera = camera
     scene.render.resolution_x = 512
     scene.render.resolution_y = 384
+    scene.render.resolution_percentage = 100
     scene.render.film_transparent = True
     valid_formats = [i.identifier for i in scene.render.image_settings.bl_rna.properties["file_format"].enum_items]
     if "PNG" in valid_formats:
@@ -393,9 +432,11 @@ def setup_camera():
     if hasattr(scene.render.image_settings, "color_mode"):
         scene.render.image_settings.color_mode = "RGBA"
     try:
-        scene.render.engine = "BLENDER_EEVEE_NEXT"
+        scene.render.engine = "BLENDER_WORKBENCH"
+        scene.display.shading.light = "STUDIO"
+        scene.display.shading.color_type = "MATERIAL"
     except TypeError:
-        pass
+        scene.render.engine = scene.render.engine
     return camera
 
 
@@ -416,7 +457,25 @@ def export_collection(coll):
 def render_collection(coll, collections):
     set_collection_visible(collections, {coll.name: True})
     bpy.context.scene.render.filepath = blender_path(OUT_DIR / f"{coll.name}.png")
-    bpy.ops.render.render(write_still=True)
+    bpy.context.view_layer.update()
+    bpy.ops.render.opengl(write_still=True, view_context=False)
+
+
+def create_asset_scene(name: str, level: int, state: str, mats):
+    scene = bpy.data.scenes.new("Real_City_Windleaf_Render_" + name)
+    root = bpy.data.collections.new(name + "_root")
+    scene.collection.children.link(root)
+    coll = make_variant(name, level, state, mats, root)
+    setup_camera(scene)
+    return scene, coll
+
+
+def render_scene(scene: bpy.types.Scene, name: str):
+    if bpy.context.window:
+        bpy.context.window.scene = scene
+    scene.render.filepath = blender_path(OUT_DIR / f"{name}.png")
+    bpy.context.view_layer.update()
+    bpy.ops.render.opengl(write_still=True, view_context=False)
 
 
 def arrange_review_layout(collections):
@@ -478,6 +537,7 @@ def save_manifest(collections):
             f"bed footprint is scaled by {BED_MODEL_SCALE} on the standard 3.6 tile",
             "L1/L2 walls are log-built; supports are grounded",
             "all levels include six super-windleaf stages",
+            "runtime PNGs render from isolated per-asset Blender scenes via OpenGL camera render",
         ],
     }
     with open(blender_path(OUT_DIR / "manifest.json"), "w", encoding="utf-8") as handle:
@@ -488,18 +548,19 @@ def save_manifest(collections):
 
 def main():
     ensure_dir()
-    mats = reset_scene()
-    scene = bpy.context.scene
-    scene.name = "Real_City_Windleaf_Beds"
-    root = bpy.data.collections.new("windleaf_bed")
-    scene.collection.children.link(root)
-    collections = collect_assets(mats, root)
-    setup_camera()
-    for coll in collections:
+    mats = make_materials()
+    collections = []
+    for name, level, state in asset_variants():
+        scene, coll = create_asset_scene(name, level, state, mats)
+        collections.append(coll)
+        if bpy.context.window:
+            bpy.context.window.scene = scene
         export_collection(coll)
-    for coll in collections:
-        render_collection(coll, collections)
-    arrange_review_layout(collections)
+        render_scene(scene, name)
+    if collections and bpy.context.window:
+        scene = bpy.data.scenes.get("Real_City_Windleaf_Render_" + collections[-1].name)
+        if scene:
+            bpy.context.window.scene = scene
     bpy.ops.wm.save_as_mainfile(filepath=blender_path(BLEND_PATH))
     save_manifest(collections)
     print("WINDLEAF_BED_BLENDER_COMPLETE", len(collections), str(BLEND_PATH))
