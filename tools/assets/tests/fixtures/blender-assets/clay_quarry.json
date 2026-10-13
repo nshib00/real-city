@@ -1,0 +1,703 @@
+{
+  "asset_id": "clay_quarry",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "triangle_range": {
+    "min": 4156,
+    "max": 16940
+  },
+  "triangle_ranges_by_state": {
+    "active": {
+      "min": 4156,
+      "max": 14104
+    },
+    "construction": {
+      "min": 5468,
+      "max": 16940
+    },
+    "damaged": {
+      "min": 4896,
+      "max": 14276
+    }
+  },
+  "bounds": {
+    "clay_quarry_l01_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        0.47532960772514343
+      ]
+    ],
+    "clay_quarry_l01_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        0.8600000143051147
+      ]
+    ],
+    "clay_quarry_l01_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        0.5400000214576721
+      ]
+    ],
+    "clay_quarry_l02_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        0.9973561763763428
+      ]
+    ],
+    "clay_quarry_l02_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        0.9973561763763428
+      ]
+    ],
+    "clay_quarry_l02_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        0.9199999570846558
+      ]
+    ],
+    "clay_quarry_l03_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5225000381469727
+      ]
+    ],
+    "clay_quarry_l03_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5225000381469727
+      ]
+    ],
+    "clay_quarry_l03_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l04_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5225000381469727
+      ]
+    ],
+    "clay_quarry_l04_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5225000381469727
+      ]
+    ],
+    "clay_quarry_l04_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l05_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5225000381469727
+      ]
+    ],
+    "clay_quarry_l05_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5225000381469727
+      ]
+    ],
+    "clay_quarry_l05_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l06_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5266876220703125
+      ]
+    ],
+    "clay_quarry_l06_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5266876220703125
+      ]
+    ],
+    "clay_quarry_l06_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l07_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5716876983642578
+      ]
+    ],
+    "clay_quarry_l07_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5716876983642578
+      ]
+    ],
+    "clay_quarry_l07_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l08_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6166876554489136
+      ]
+    ],
+    "clay_quarry_l08_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6166876554489136
+      ]
+    ],
+    "clay_quarry_l08_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l09_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l09_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l09_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l10_active": [
+      [
+        -1.8615975379943848,
+        1.8615975379943848
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l10_construction": [
+      [
+        -1.8615975379943848,
+        1.8615975379943848
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l10_damaged": [
+      [
+        -1.8615975379943848,
+        1.8615975379943848
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l11_active": [
+      [
+        -1.9420989751815796,
+        1.9420989751815796
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l11_construction": [
+      [
+        -1.9420989751815796,
+        1.9420989751815796
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l11_damaged": [
+      [
+        -1.9420989751815796,
+        1.9420989751815796
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ],
+    "clay_quarry_l12_active": [
+      [
+        -2.0226004123687744,
+        2.0226004123687744
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l12_construction": [
+      [
+        -2.0226004123687744,
+        2.0226004123687744
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6616876125335693
+      ]
+    ],
+    "clay_quarry_l12_damaged": [
+      [
+        -2.0226004123687744,
+        2.0226004123687744
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.0399999618530273
+      ]
+    ]
+  },
+  "expected_files": {
+    "clay_quarry_l01_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_active.png"
+    },
+    "clay_quarry_l01_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_construction.png"
+    },
+    "clay_quarry_l01_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_damaged.png"
+    },
+    "clay_quarry_l02_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_active.png"
+    },
+    "clay_quarry_l02_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_construction.png"
+    },
+    "clay_quarry_l02_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_damaged.png"
+    },
+    "clay_quarry_l03_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_active.png"
+    },
+    "clay_quarry_l03_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_construction.png"
+    },
+    "clay_quarry_l03_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_damaged.png"
+    },
+    "clay_quarry_l04_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_active.png"
+    },
+    "clay_quarry_l04_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_construction.png"
+    },
+    "clay_quarry_l04_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_damaged.png"
+    },
+    "clay_quarry_l05_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_active.png"
+    },
+    "clay_quarry_l05_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_construction.png"
+    },
+    "clay_quarry_l05_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_damaged.png"
+    },
+    "clay_quarry_l06_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_active.png"
+    },
+    "clay_quarry_l06_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_construction.png"
+    },
+    "clay_quarry_l06_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_damaged.png"
+    },
+    "clay_quarry_l07_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_active.png"
+    },
+    "clay_quarry_l07_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_construction.png"
+    },
+    "clay_quarry_l07_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_damaged.png"
+    },
+    "clay_quarry_l08_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_active.png"
+    },
+    "clay_quarry_l08_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_construction.png"
+    },
+    "clay_quarry_l08_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_damaged.png"
+    },
+    "clay_quarry_l09_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_active.png"
+    },
+    "clay_quarry_l09_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_construction.png"
+    },
+    "clay_quarry_l09_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_damaged.png"
+    },
+    "clay_quarry_l10_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_active.png"
+    },
+    "clay_quarry_l10_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_construction.png"
+    },
+    "clay_quarry_l10_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_damaged.png"
+    },
+    "clay_quarry_l11_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_active.png"
+    },
+    "clay_quarry_l11_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_construction.png"
+    },
+    "clay_quarry_l11_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_damaged.png"
+    },
+    "clay_quarry_l12_active": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_active.png"
+    },
+    "clay_quarry_l12_construction": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_construction.png"
+    },
+    "clay_quarry_l12_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_damaged.png"
+    }
+  }
+}

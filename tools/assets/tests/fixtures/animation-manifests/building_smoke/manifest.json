@@ -1,0 +1,28 @@
+{
+  "asset_id": "smoke_lumber_yard",
+  "kind": "building",
+  "category": "industry",
+  "anchor": [256, 292],
+  "atlas": {
+    "image": "smoke_lumber_yard.webp",
+    "json": "smoke_lumber_yard.atlas.json",
+    "revision": "smoke-2026-10-12"
+  },
+  "animations": {
+    "working": {
+      "type": "overlay",
+      "fps": 8,
+      "frames": 3,
+      "loop": true,
+      "anchor": [256, 292],
+      "framePrefix": "smoke_lumber_yard_l01_working_"
+    },
+    "damaged_smoke": {
+      "type": "shared_overlay",
+      "id": "smoke_small",
+      "fps": 6,
+      "frames": 4,
+      "loop": true
+    }
+  }
+}

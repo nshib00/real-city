@@ -1,0 +1,13 @@
+{
+  "frames": {
+    "smoke_lumber_yard_l01_working_0000.png": { "frame": { "x": 0, "y": 0, "w": 512, "h": 384 } },
+    "smoke_lumber_yard_l01_working_0001.png": { "frame": { "x": 512, "y": 0, "w": 512, "h": 384 } },
+    "smoke_lumber_yard_l01_working_0002.png": { "frame": { "x": 1024, "y": 0, "w": 512, "h": 384 } }
+  },
+  "meta": {
+    "image": "smoke_lumber_yard.webp",
+    "format": "RGBA8888",
+    "size": { "w": 1536, "h": 384 },
+    "scale": "1"
+  }
+}

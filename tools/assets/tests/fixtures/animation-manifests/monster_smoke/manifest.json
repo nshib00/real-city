@@ -1,0 +1,42 @@
+{
+  "monster_id": "smoke_raider",
+  "kind": "monster",
+  "display_name": "Smoke Raider",
+  "anchor": [128, 190],
+  "directions": ["ne", "nw", "se", "sw"],
+  "atlas": {
+    "image": "smoke_raider.webp",
+    "json": "smoke_raider.atlas.json",
+    "revision": "smoke-2026-10-12"
+  },
+  "animations": {
+    "idle": {
+      "type": "sprite",
+      "fps": 6,
+      "frames": 2,
+      "loop": true,
+      "framePrefix": "smoke_raider_{direction}_idle_"
+    },
+    "walk": {
+      "type": "sprite",
+      "fps": 10,
+      "frames": 2,
+      "loop": true,
+      "framePrefix": "smoke_raider_{direction}_walk_"
+    },
+    "attack": {
+      "type": "sprite",
+      "fps": 12,
+      "frames": 2,
+      "loop": false,
+      "framePrefix": "smoke_raider_{direction}_attack_"
+    },
+    "death": {
+      "type": "sprite",
+      "fps": 10,
+      "frames": 2,
+      "loop": false,
+      "framePrefix": "smoke_raider_{direction}_death_"
+    }
+  }
+}

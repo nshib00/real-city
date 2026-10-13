@@ -1,0 +1,703 @@
+{
+  "asset_id": "mine",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "triangle_range": {
+    "min": 4868,
+    "max": 11876
+  },
+  "triangle_ranges_by_state": {
+    "active": {
+      "min": 4868,
+      "max": 11608
+    },
+    "construction": {
+      "min": 5012,
+      "max": 11824
+    },
+    "damaged": {
+      "min": 5324,
+      "max": 11876
+    }
+  },
+  "bounds": {
+    "mine_l01_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.3674119710922241
+      ]
+    ],
+    "mine_l01_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.3674119710922241
+      ]
+    ],
+    "mine_l01_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.3674119710922241
+      ]
+    ],
+    "mine_l02_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.3977916240692139
+      ]
+    ],
+    "mine_l02_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.3977916240692139
+      ]
+    ],
+    "mine_l02_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.3977916240692139
+      ]
+    ],
+    "mine_l03_active": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.4281712770462036
+      ]
+    ],
+    "mine_l03_construction": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.4281712770462036
+      ]
+    ],
+    "mine_l03_damaged": [
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.4281712770462036
+      ]
+    ],
+    "mine_l04_active": [
+      [
+        -1.8299376964569092,
+        1.8299376964569092
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6217999458312988
+      ]
+    ],
+    "mine_l04_construction": [
+      [
+        -1.8299376964569092,
+        1.8299376964569092
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.458551049232483
+      ]
+    ],
+    "mine_l04_damaged": [
+      [
+        -1.8299376964569092,
+        1.8299376964569092
+      ],
+      [
+        -1.7999999523162842,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6217999458312988
+      ]
+    ],
+    "mine_l05_active": [
+      [
+        -1.8697190284729004,
+        1.8697190284729004
+      ],
+      [
+        -2.018911361694336,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.667699933052063
+      ]
+    ],
+    "mine_l05_construction": [
+      [
+        -1.8697190284729004,
+        1.8697190284729004
+      ],
+      [
+        -2.018911361694336,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.4889307022094727
+      ]
+    ],
+    "mine_l05_damaged": [
+      [
+        -1.8697190284729004,
+        1.8697190284729004
+      ],
+      [
+        -2.0183818340301514,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.667699933052063
+      ]
+    ],
+    "mine_l06_active": [
+      [
+        -1.9095003604888916,
+        1.9095003604888916
+      ],
+      [
+        -2.051891326904297,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.8214000463485718
+      ]
+    ],
+    "mine_l06_construction": [
+      [
+        -1.9095003604888916,
+        1.9095003604888916
+      ],
+      [
+        -2.051891326904297,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5193103551864624
+      ]
+    ],
+    "mine_l06_damaged": [
+      [
+        -1.9095003604888916,
+        1.9095003604888916
+      ],
+      [
+        -2.0512561798095703,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.8214000463485718
+      ]
+    ],
+    "mine_l07_active": [
+      [
+        -1.9492815732955933,
+        1.9492815732955933
+      ],
+      [
+        -2.0848710536956787,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.877500057220459
+      ]
+    ],
+    "mine_l07_construction": [
+      [
+        -1.9492815732955933,
+        1.9492815732955933
+      ],
+      [
+        -2.0848710536956787,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5496901273727417
+      ]
+    ],
+    "mine_l07_damaged": [
+      [
+        -1.9492815732955933,
+        1.9492815732955933
+      ],
+      [
+        -2.08413028717041,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.877500057220459
+      ]
+    ],
+    "mine_l08_active": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.1178507804870605,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.9335999488830566
+      ]
+    ],
+    "mine_l08_construction": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.1178507804870605,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5800697803497314
+      ]
+    ],
+    "mine_l08_damaged": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.117004632949829,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.9335999488830566
+      ]
+    ],
+    "mine_l09_active": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.1508307456970215,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.9897000789642334
+      ]
+    ],
+    "mine_l09_construction": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.1508307456970215,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.5951493978500366
+      ]
+    ],
+    "mine_l09_damaged": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.149878978729248,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.9897000789642334
+      ]
+    ],
+    "mine_l10_active": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.183810234069824,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        2.045799970626831
+      ]
+    ],
+    "mine_l10_construction": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.183810234069824,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6345500946044922
+      ]
+    ],
+    "mine_l10_damaged": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.182753324508667,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        2.045799970626831
+      ]
+    ],
+    "mine_l11_active": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.183810234069824,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        2.045799970626831
+      ]
+    ],
+    "mine_l11_construction": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.183810234069824,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.6702500581741333
+      ]
+    ],
+    "mine_l11_damaged": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.182753324508667,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        2.045799970626831
+      ]
+    ],
+    "mine_l12_active": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.183810234069824,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        2.045799970626831
+      ]
+    ],
+    "mine_l12_construction": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.183810234069824,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        1.7059500217437744
+      ]
+    ],
+    "mine_l12_damaged": [
+      [
+        -1.989062786102295,
+        1.989062786102295
+      ],
+      [
+        -2.182753324508667,
+        1.7999999523162842
+      ],
+      [
+        -0.15000000596046448,
+        2.045799970626831
+      ]
+    ]
+  },
+  "expected_files": {
+    "mine_l01_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_active.png"
+    },
+    "mine_l01_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.png"
+    },
+    "mine_l01_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.png"
+    },
+    "mine_l02_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_active.png"
+    },
+    "mine_l02_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_construction.png"
+    },
+    "mine_l02_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_damaged.png"
+    },
+    "mine_l03_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_active.png"
+    },
+    "mine_l03_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_construction.png"
+    },
+    "mine_l03_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_damaged.png"
+    },
+    "mine_l04_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_active.png"
+    },
+    "mine_l04_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_construction.png"
+    },
+    "mine_l04_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_damaged.png"
+    },
+    "mine_l05_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_active.png"
+    },
+    "mine_l05_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_construction.png"
+    },
+    "mine_l05_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_damaged.png"
+    },
+    "mine_l06_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_active.png"
+    },
+    "mine_l06_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_construction.png"
+    },
+    "mine_l06_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_damaged.png"
+    },
+    "mine_l07_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_active.png"
+    },
+    "mine_l07_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_construction.png"
+    },
+    "mine_l07_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_damaged.png"
+    },
+    "mine_l08_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_active.png"
+    },
+    "mine_l08_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_construction.png"
+    },
+    "mine_l08_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_damaged.png"
+    },
+    "mine_l09_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_active.png"
+    },
+    "mine_l09_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_construction.png"
+    },
+    "mine_l09_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_damaged.png"
+    },
+    "mine_l10_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_active.png"
+    },
+    "mine_l10_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_construction.png"
+    },
+    "mine_l10_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_damaged.png"
+    },
+    "mine_l11_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_active.png"
+    },
+    "mine_l11_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_construction.png"
+    },
+    "mine_l11_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_damaged.png"
+    },
+    "mine_l12_active": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_active.png"
+    },
+    "mine_l12_construction": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_construction.png"
+    },
+    "mine_l12_damaged": {
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_damaged.png"
+    }
+  }
+}

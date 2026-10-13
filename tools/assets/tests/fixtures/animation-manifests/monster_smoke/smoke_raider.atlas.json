@@ -1,0 +1,42 @@
+{
+  "frames": {
+    "smoke_raider_ne_idle_0000.png": { "frame": { "x": 0, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_ne_idle_0001.png": { "frame": { "x": 256, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_nw_idle_0000.png": { "frame": { "x": 512, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_nw_idle_0001.png": { "frame": { "x": 768, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_se_idle_0000.png": { "frame": { "x": 1024, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_se_idle_0001.png": { "frame": { "x": 1280, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_sw_idle_0000.png": { "frame": { "x": 1536, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_sw_idle_0001.png": { "frame": { "x": 1792, "y": 0, "w": 256, "h": 256 } },
+    "smoke_raider_ne_walk_0000.png": { "frame": { "x": 0, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_ne_walk_0001.png": { "frame": { "x": 256, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_nw_walk_0000.png": { "frame": { "x": 512, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_nw_walk_0001.png": { "frame": { "x": 768, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_se_walk_0000.png": { "frame": { "x": 1024, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_se_walk_0001.png": { "frame": { "x": 1280, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_sw_walk_0000.png": { "frame": { "x": 1536, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_sw_walk_0001.png": { "frame": { "x": 1792, "y": 256, "w": 256, "h": 256 } },
+    "smoke_raider_ne_attack_0000.png": { "frame": { "x": 0, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_ne_attack_0001.png": { "frame": { "x": 256, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_nw_attack_0000.png": { "frame": { "x": 512, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_nw_attack_0001.png": { "frame": { "x": 768, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_se_attack_0000.png": { "frame": { "x": 1024, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_se_attack_0001.png": { "frame": { "x": 1280, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_sw_attack_0000.png": { "frame": { "x": 1536, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_sw_attack_0001.png": { "frame": { "x": 1792, "y": 512, "w": 256, "h": 256 } },
+    "smoke_raider_ne_death_0000.png": { "frame": { "x": 0, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_ne_death_0001.png": { "frame": { "x": 256, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_nw_death_0000.png": { "frame": { "x": 512, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_nw_death_0001.png": { "frame": { "x": 768, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_se_death_0000.png": { "frame": { "x": 1024, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_se_death_0001.png": { "frame": { "x": 1280, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_sw_death_0000.png": { "frame": { "x": 1536, "y": 768, "w": 256, "h": 256 } },
+    "smoke_raider_sw_death_0001.png": { "frame": { "x": 1792, "y": 768, "w": 256, "h": 256 } }
+  },
+  "meta": {
+    "image": "smoke_raider.webp",
+    "format": "RGBA8888",
+    "size": { "w": 2048, "h": 1024 },
+    "scale": "1"
+  }
+}
