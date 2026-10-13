@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import type { ReactElement } from 'react'
 
 import { useGameStore } from '../../game/state/useGameStore'
+import { useAuthStore } from '../auth/useAuthStore'
+import type { Player } from '../auth/types'
 import { Inspector } from './Inspector'
 
 describe('Inspector', () => {
@@ -18,6 +20,7 @@ describe('Inspector', () => {
       worldTiles: [],
       tool: 'select',
     })
+    useAuthStore.setState({ player: testPlayer('player-1'), isAuthenticated: true })
   })
 
   it('shows selected tile details and object/player tabs', () => {
@@ -49,7 +52,7 @@ describe('Inspector', () => {
           tile: { x: 2, y: 3 },
           status: 'active',
           health: 100,
-          owner: 'Северный двор',
+          owner: 'player-1',
           startedAt: 1000,
           completesAt: null,
         },
@@ -75,7 +78,7 @@ describe('Inspector', () => {
           tile: { x: 2, y: 3 },
           status: 'active',
           health: 35,
-          owner: 'Северный двор',
+          owner: 'player-1',
           startedAt: 1000,
           completesAt: null,
         },
@@ -87,6 +90,7 @@ describe('Inspector', () => {
     fireEvent.click(screen.getByLabelText('Улучшить'))
 
     expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
+    expect(screen.getByAltText('Модель: Землянка, уровень 2').getAttribute('src')).toBe('/assets/buildings/housing/dugout/dugout_l02_active.png')
     expect(screen.getByText('Уровень 1 -> 2')).toBeTruthy()
     expect(screen.getByText('45 сек')).toBeTruthy()
     expect(screen.getByText('400')).toBeTruthy()
@@ -113,7 +117,7 @@ describe('Inspector', () => {
           tile: { x: 2, y: 3 },
           status: 'active',
           health: 100,
-          owner: 'Северный двор',
+          owner: 'player-1',
           startedAt: 1000,
           completesAt: null,
         },
@@ -125,6 +129,7 @@ describe('Inspector', () => {
     fireEvent.click(screen.getByLabelText('Улучшить'))
 
     expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
+    expect(screen.getByAltText('Модель: Ратуша, уровень 2').getAttribute('src')).toBe('/assets/buildings/center/town_hall/town_hall_l02_active.png')
     expect(screen.getByText('Уровень 1 -> 2')).toBeTruthy()
     expect(screen.getByText('1 мин 30 сек')).toBeTruthy()
     expect(screen.getByText('1500')).toBeTruthy()
@@ -142,7 +147,7 @@ describe('Inspector', () => {
           tile: { x: 2, y: 3 },
           status: 'construction',
           health: 35,
-          owner: 'Северный двор',
+          owner: 'player-1',
           startedAt: 1000,
           completesAt: 1000 + 2 * 60 * 1000,
         },
@@ -155,9 +160,60 @@ describe('Inspector', () => {
     expect(screen.getByText('Мгновенно: 1 крист.')).toBeTruthy()
     expect(screen.getByLabelText('Завершить за 1 крист.')).toBeTruthy()
   })
+
+  it('does not expose management actions for another player building', () => {
+    useGameStore.setState({
+      buildings: [
+        {
+          id: 'foreign-town-hall',
+          kind: 'town_hall',
+          name: 'Ратуша',
+          level: 1,
+          tile: { x: 2, y: 3 },
+          status: 'active',
+          health: 100,
+          owner: 'player-2',
+          startedAt: 1000,
+          completesAt: null,
+        },
+      ],
+      selectedBuildingId: 'foreign-town-hall',
+    })
+
+    renderWithClient(<Inspector />)
+
+    expect(screen.getByText('Чужая постройка: управление недоступно')).toBeTruthy()
+    expect(screen.queryByLabelText('Улучшить')).toBeNull()
+    expect(screen.queryByLabelText('Удалить')).toBeNull()
+  })
 })
 
 function renderWithClient(ui: ReactElement) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
   return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>)
+}
+
+function testPlayer(id: string): Player {
+  return {
+    id,
+    email: `${id}@test.local`,
+    name: id,
+    status: 'active',
+    role: 'user',
+    profile: {
+      display_name: id,
+      city_name: 'Тестовый двор',
+      avatar_url: '',
+      level: 1,
+      xp: 0,
+      next_level_xp: 100,
+      settings: {
+        notifications: { raid_alerts: true, production_ready: true, market_updates: true },
+        render_quality: 'medium',
+      },
+      updated_at: '2026-09-20T00:00:00Z',
+    },
+    created_at: '2026-09-20T00:00:00Z',
+    updated_at: '2026-09-20T00:00:00Z',
+  }
 }

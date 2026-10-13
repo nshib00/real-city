@@ -1,23 +1,33 @@
 :root {
   color-scheme: dark;
-  --color-bg: #17212b;
-  --color-panel: rgba(28, 39, 48, 0.92);
-  --color-panel-border: rgba(255, 255, 255, 0.16);
-  --color-text: #f4f7f1;
-  --color-muted: #a8b8bd;
-  --color-accent: #42c477;
-  --color-warning: #f2c14e;
-  --color-danger: #e75f5f;
+  --color-bg: #14242a;
+  --color-panel: rgba(31, 47, 47, 0.9);
+  --color-panel-strong: rgba(41, 62, 56, 0.96);
+  --color-panel-soft: rgba(255, 255, 255, 0.085);
+  --color-panel-border: rgba(225, 239, 212, 0.22);
+  --color-text: #f9f4df;
+  --color-muted: #c0ccb9;
+  --color-accent: #78d088;
+  --color-accent-ink: #132618;
+  --color-warning: #f2bf55;
+  --color-danger: #ec6b6b;
+  --color-crystal: #b483f2;
+  --color-sky: #69c7d9;
   --color-water: #67c7f0;
   --color-grass: #83d96f;
   --color-forest: #1f6f43;
-  --shadow-panel: 0 14px 40px rgba(0, 0, 0, 0.28);
-  --top-bar-height: 56px;
+  --shadow-panel: 0 18px 44px rgba(10, 18, 18, 0.34);
+  --shadow-panel-soft: 0 8px 22px rgba(10, 18, 18, 0.22);
+  --top-bar-height: 58px;
   --left-bar-width: 60px;
   --right-panel-width: 300px;
   --bottom-log-height: 112px;
+  --ui-radius: 8px;
+  --ui-radius-sm: 6px;
+  --font-ui: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    var(--font-ui);
 }
 
 * {
@@ -35,7 +45,10 @@ body,
 body {
   overflow: hidden;
   color: var(--color-text);
-  background: var(--color-bg);
+  background:
+    linear-gradient(135deg, rgba(105, 199, 217, 0.16), transparent 34%),
+    linear-gradient(45deg, rgba(242, 191, 85, 0.13), transparent 42%),
+    var(--color-bg);
 }
 
 button {
@@ -56,13 +69,124 @@ button {
 .event-log,
 .profile-panel,
 .notification-stack,
-.drawer {
+.drawer,
+.asset-debug-panel {
   position: absolute;
   z-index: 10;
   background: var(--color-panel);
   border: 1px solid var(--color-panel-border);
   box-shadow: var(--shadow-panel);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px) saturate(1.08);
+}
+
+.asset-debug-panel {
+  left: 72px;
+  bottom: 134px;
+  width: min(720px, calc(100vw - 396px));
+  max-height: min(520px, calc(100vh - 230px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: var(--ui-radius);
+}
+
+.asset-debug-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(225, 239, 212, 0.12);
+}
+
+.asset-debug-panel header span {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.asset-debug-list {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+}
+
+.asset-debug-row {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 10px;
+  min-height: 88px;
+  padding: 8px;
+  border: 1px solid rgba(225, 239, 212, 0.12);
+  border-radius: var(--ui-radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.asset-debug-preview {
+  width: 104px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--ui-radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.asset-debug-preview img {
+  width: 104px;
+  height: 78px;
+  object-fit: contain;
+}
+
+.asset-debug-meta {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  font-size: 12px;
+}
+
+.asset-debug-meta strong,
+.asset-debug-meta span,
+.asset-debug-meta small,
+.asset-debug-meta em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asset-debug-meta span,
+.asset-debug-meta small {
+  color: var(--color-muted);
+}
+
+.asset-debug-meta a {
+  width: max-content;
+  color: var(--color-sky);
+}
+
+.asset-debug-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.asset-debug-actions button {
+  width: max-content;
+  padding: 0;
+  color: var(--color-sky);
+  background: transparent;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.asset-debug-meta em {
+  color: var(--color-warning);
+  font-style: normal;
 }
 
 .resource-bar {
@@ -74,7 +198,7 @@ button {
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
   overflow-x: auto;
 }
 
@@ -92,7 +216,7 @@ button {
   align-items: center;
   gap: 8px;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
   color: var(--color-text);
   text-align: left;
   cursor: pointer;
@@ -188,10 +312,12 @@ button {
   min-width: max-content;
   height: 36px;
   padding: 0 10px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(225, 239, 212, 0.12);
+  border-radius: var(--ui-radius-sm);
+  background: rgba(255, 255, 255, 0.075);
   color: var(--color-muted);
   font-size: 13px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .resource-chip strong {
@@ -233,7 +359,7 @@ button {
 }
 
 .resource-dot-aeolian-crystal {
-  background: #9b5de5;
+  background: var(--color-crystal);
 }
 
 .resource-dot-wood {
@@ -319,7 +445,7 @@ button {
   display: grid;
   gap: 8px;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
 }
 
 .map-widget {
@@ -493,14 +619,14 @@ button {
 
 .build-menu {
   width: min(1120px, calc(100vw - 48px));
-  max-height: min(720px, calc(100vh - 48px));
+  height: min(720px, calc(100vh - 48px));
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   padding: 14px;
   overflow: hidden;
-  background: var(--color-panel);
+  background: var(--color-panel-strong);
   border: 1px solid var(--color-panel-border);
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-panel);
   backdrop-filter: blur(10px);
 }
@@ -528,18 +654,19 @@ button {
   color: var(--color-muted);
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid var(--color-panel-border);
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
   cursor: pointer;
 }
 
 .build-category-tab-active {
   color: var(--color-text);
-  background: rgba(66, 196, 119, 0.22);
-  border-color: rgba(66, 196, 119, 0.52);
+  background: rgba(120, 208, 136, 0.22);
+  border-color: rgba(120, 208, 136, 0.55);
 }
 
 .build-menu h2 {
   margin: 0;
+  font-family: var(--font-display);
   font-size: 18px;
 }
 
@@ -554,7 +681,7 @@ button {
 
 .build-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   align-content: start;
   gap: 10px;
   max-height: 100%;
@@ -572,14 +699,14 @@ button {
 
 .build-card {
   display: grid;
-  grid-template-rows: 108px minmax(0, 1fr) 44px;
+  grid-template-rows: 180px minmax(0, 1fr) 44px;
   gap: 8px;
   align-items: stretch;
-  min-height: 268px;
+  min-height: 340px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--color-panel-soft);
   border: 1px solid var(--color-panel-border);
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
 }
 
 .build-card > .icon-button {
@@ -633,10 +760,12 @@ button {
 }
 
 .build-image {
+  position: relative;
   width: 100%;
-  height: 108px;
+  height: 180px;
   display: grid;
   place-items: center;
+  overflow: hidden;
   color: #17212b;
   background: #d8c28d;
   border-radius: 6px;
@@ -645,6 +774,24 @@ button {
 .build-image svg {
   width: 34px;
   height: 34px;
+}
+
+.build-image img {
+  display: block;
+  width: 250px;
+  height: 188px;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  transform: translateY(-18px) scale(1.2);
+  transform-origin: center;
+  user-select: none;
+}
+
+.build-image.build-icon-road img {
+  width: 188px;
+  height: 188px;
+  transform: translateY(-16px) scale(1.04);
 }
 
 .build-cost {
@@ -709,9 +856,26 @@ button {
   background: #7fa56d;
 }
 
+.build-icon-brick_kiln,
+.build-icon-glass_workshop,
+.build-icon-forge,
+.build-icon-weaving_yard,
+.build-icon-dye_works,
+.build-icon-mechanical_workshop,
+.build-icon-optical_workshop,
+.build-icon-mint {
+  background: #9fb3ba;
+}
+
 .build-icon-stone_cutters,
 .build-icon-oil_refinery {
   background: #a9b2b8;
+}
+
+.build-icon-road,
+.build-icon-standard_road,
+.build-icon-paved_road {
+  background: #c9b27c;
 }
 
 .icon-button {
@@ -722,7 +886,7 @@ button {
   color: var(--color-text);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
   cursor: pointer;
 }
 
@@ -737,7 +901,7 @@ button {
 
 .icon-button-active,
 .icon-button-active:hover {
-  color: #14231a;
+  color: var(--color-accent-ink);
   background: var(--color-accent);
   border-color: rgba(255, 255, 255, 0.42);
 }
@@ -748,12 +912,13 @@ button {
   width: var(--right-panel-width);
   bottom: 132px;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
   overflow-y: auto;
 }
 
 .inspector h2 {
   margin: 0 0 14px;
+  font-family: var(--font-display);
   font-size: 18px;
 }
 
@@ -806,8 +971,8 @@ button {
 .tab-button-active,
 .segment-button-active {
   color: var(--color-text);
-  background: rgba(66, 196, 119, 0.22);
-  border-color: rgba(66, 196, 119, 0.52);
+  background: rgba(120, 208, 136, 0.22);
+  border-color: rgba(120, 208, 136, 0.55);
 }
 
 .tab-panel {
@@ -849,9 +1014,9 @@ button {
   display: grid;
   gap: 8px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--color-panel-soft);
   border: 1px solid var(--color-panel-border);
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
 }
 
 .inspector-card span,
@@ -864,13 +1029,102 @@ button {
   width: 100%;
 }
 
+.building-model-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  min-height: 132px;
+  border: 1px solid rgba(225, 239, 212, 0.12);
+  border-radius: var(--ui-radius-sm);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.inspector-model-preview {
+  width: 100%;
+  height: 150px;
+}
+
+.asset-debug-model-preview {
+  width: 104px;
+  height: 78px;
+  min-height: 78px;
+  border: 0;
+  background: transparent;
+}
+
+.building-model-preview .building-glb-model {
+  position: static;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  transform: none;
+}
+
+.building-model-preview-status {
+  position: absolute;
+  inset: auto 8px 8px;
+  display: block;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: 11px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .event-log {
   left: 72px;
   right: 316px;
   bottom: 12px;
   min-height: var(--bottom-log-height);
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
+  transition: min-height 160ms ease, width 160ms ease;
+}
+
+.event-log-collapsed {
+  min-height: 48px;
+  width: min(320px, calc(100vw - 96px));
+  right: auto;
+}
+
+.event-log-header,
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-log-header {
+  margin-bottom: 8px;
+}
+
+.event-log-collapsed .event-log-header {
+  margin-bottom: 0;
+}
+
+.event-log-header span,
+.notification-header span {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-log-header .icon-button,
+.notification-header .icon-button {
+  width: 32px;
+  height: 32px;
 }
 
 .event-log p {
@@ -887,6 +1141,7 @@ button {
 .chat-panel {
   display: grid;
   gap: 8px;
+  min-width: 0;
 }
 
 .chat-channels,
@@ -903,12 +1158,12 @@ button {
   color: var(--color-text);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--color-panel-border);
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
 }
 
 .chat-channels button[aria-pressed="true"] {
-  background: rgba(242, 193, 78, 0.18);
-  border-color: rgba(242, 193, 78, 0.52);
+  background: rgba(242, 191, 85, 0.18);
+  border-color: rgba(242, 191, 85, 0.52);
 }
 
 .chat-messages {
@@ -961,16 +1216,37 @@ button {
   display: grid;
   gap: 8px;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
+  transition: width 160ms ease;
+}
+
+.notification-stack-collapsed {
+  width: 208px;
+}
+
+.notification-header strong {
+  min-width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  color: var(--color-accent-ink);
+  background: var(--color-warning);
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+.notification-list {
+  display: grid;
+  gap: 8px;
 }
 
 .notification {
   display: grid;
   gap: 2px;
   padding: 8px;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--color-panel-soft);
   border-left: 3px solid var(--color-accent);
-  border-radius: 6px;
+  border-radius: var(--ui-radius-sm);
 }
 
 .notification span {
@@ -993,7 +1269,7 @@ button {
   background:
     linear-gradient(135deg, rgba(61, 141, 194, 0.22), transparent 36%),
     linear-gradient(45deg, rgba(242, 193, 78, 0.16), transparent 40%),
-    #243848;
+    #243b3b;
 }
 
 .pixi-stage {
@@ -1091,6 +1367,32 @@ button {
   border-radius: 6px;
 }
 
+.map-performance-hud {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: repeat(5, max-content);
+  gap: 8px;
+  align-items: center;
+  max-width: calc(100% - 24px);
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--ui-radius-sm);
+  background: rgba(12, 20, 24, 0.82);
+  color: #f2f5f2;
+  font-size: 11px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .map-performance-hud {
+    grid-template-columns: repeat(2, max-content);
+  }
+}
+
 .map-building,
 .map-resource,
 .map-resource-node,
@@ -1185,15 +1487,42 @@ button {
   padding: 0;
 }
 
+.map-building-overlay-anchor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 .map-building-town_hall,
 .map-building-dugout,
 .map-building-wood_house,
 .map-building-lumber_yard,
-.map-building-field_bed {
-  width: 441px;
-  height: 331px;
-  margin-left: -220.5px;
-  margin-top: -224px;
+.map-building-coin_storage,
+.map-building-field_bed,
+.map-building-seed_garden,
+.map-building-herb_bed,
+.map-building-mushroom_grove,
+.map-building-flax_field,
+.map-building-reed_bed,
+.map-building-oilseed_field,
+.map-building-road,
+.map-building-standard_road,
+.map-building-paved_road,
+.map-building-wooden_wall,
+.map-building-stone_wall,
+.map-building-concrete_wall,
+.map-building-modern_wall {
+  width: 240px;
+  height: 120px;
+  margin-left: -120px;
+  margin-top: -30px;
   overflow: visible;
   background: transparent;
   border-color: transparent;
@@ -1201,16 +1530,45 @@ button {
   box-shadow: none;
 }
 
+.map-building-field_bed,
+.map-building-seed_garden,
+.map-building-herb_bed,
+.map-building-mushroom_grove,
+.map-building-flax_field,
+.map-building-reed_bed,
+.map-building-oilseed_field {
+  margin-top: -30px;
+  --building-sprite-top: -194px;
+}
+
+.map-building-road,
+.map-building-standard_road,
+.map-building-paved_road,
+.map-building-wooden_wall,
+.map-building-stone_wall,
+.map-building-concrete_wall,
+.map-building-modern_wall {
+  margin-top: -30px;
+  --building-sprite-top: -100px;
+}
+
 .building-glb-model,
 .building-sprite-image {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: var(--building-sprite-top, -194px);
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 441px;
+  height: 331px;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
+  transform: translateX(-50%);
+}
+
+.modular-path-sprite-image {
+  width: 256px;
+  height: 256px;
 }
 
 .map-building-warehouse {
@@ -1220,13 +1578,16 @@ button {
 }
 
 .map-building-coin_storage {
-  width: 52px;
-  height: 52px;
-  background: linear-gradient(#f2c14e 0 28%, #8a6748 28% 76%, #4f3829 76%);
-  border-radius: 8px;
+  --building-sprite-top: -194px;
 }
 
-.map-building-field_bed:not(:has(.building-glb-model)):not(:has(.building-sprite-image)) {
+.map-building-field_bed:not(:has(.building-glb-model)):not(:has(.building-sprite-image)),
+.map-building-seed_garden:not(:has(.building-glb-model)):not(:has(.building-sprite-image)),
+.map-building-herb_bed:not(:has(.building-glb-model)):not(:has(.building-sprite-image)),
+.map-building-mushroom_grove:not(:has(.building-glb-model)):not(:has(.building-sprite-image)),
+.map-building-flax_field:not(:has(.building-glb-model)):not(:has(.building-sprite-image)),
+.map-building-reed_bed:not(:has(.building-glb-model)):not(:has(.building-sprite-image)),
+.map-building-oilseed_field:not(:has(.building-glb-model)):not(:has(.building-sprite-image)) {
   height: 38px;
   margin-top: -12px;
   background: repeating-linear-gradient(90deg, #4f8f4e 0 9px, #7bb45f 9px 18px);
@@ -1249,36 +1610,36 @@ button {
   border-radius: 6px;
 }
 
-.map-building-wooden_wall {
-  width: 50px;
-  height: 34px;
-  margin-top: -10px;
-  background: repeating-linear-gradient(90deg, #7a5738 0 8px, #a06a3c 8px 16px);
-  border-radius: 4px;
+.map-building-brick_kiln {
+  background: linear-gradient(#8f4f3f 0 28%, #c06f45 28% 72%, #4b3b35 72%);
+  border-radius: 10px 10px 5px 5px;
 }
 
-.map-building-stone_wall {
-  width: 54px;
-  height: 36px;
-  margin-top: -12px;
-  background: repeating-linear-gradient(90deg, #737d81 0 12px, #9da6a8 12px 24px);
-  border-radius: 4px;
+.map-building-glass_workshop {
+  background: linear-gradient(#8ed6df 0 28%, #d8e8e6 28% 70%, #6f8f96 70%);
+  border-radius: 7px;
 }
 
-.map-building-concrete_wall {
-  width: 58px;
-  height: 38px;
-  margin-top: -12px;
-  background: linear-gradient(#c4c1b6, #858b8f);
-  border-radius: 4px;
+.map-building-forge {
+  background: linear-gradient(#39424a 0 28%, #a64d38 28% 54%, #626b70 54%);
+  border-radius: 7px 7px 5px 5px;
 }
 
-.map-building-modern_wall {
-  width: 62px;
-  height: 42px;
-  margin-top: -14px;
-  background: linear-gradient(90deg, #6fd0dc 0 18%, #b9c0be 18% 82%, #6fd0dc 82%);
+.map-building-weaving_yard,
+.map-building-dye_works {
+  background: linear-gradient(#c6b66d 0 24%, #8a6748 24% 68%, #5e4536 68%);
   border-radius: 6px;
+}
+
+.map-building-mechanical_workshop,
+.map-building-optical_workshop {
+  background: linear-gradient(#b9c0be 0 24%, #6d8a8d 24% 68%, #4b5559 68%);
+  border-radius: 6px;
+}
+
+.map-building-mint {
+  background: linear-gradient(#f2c14e 0 24%, #8da59e 24% 68%, #4f5c56 68%);
+  border-radius: 8px 8px 5px 5px;
 }
 
 .map-building-alliance_house {
@@ -1288,19 +1649,8 @@ button {
 }
 
 .map-building-selected {
-  outline: 3px solid rgba(242, 193, 78, 0.96);
-  outline-offset: 2px;
-}
-
-.map-building-dugout.map-building-selected {
-  outline-offset: -28px;
-  border-radius: 10px;
-}
-
-.map-building-town_hall.map-building-selected,
-.map-building-wood_house.map-building-selected {
-  outline-offset: -28px;
-  border-radius: 12px;
+  border-color: rgba(242, 193, 78, 0.96);
+  box-shadow: 0 0 0 3px rgba(242, 193, 78, 0.28);
 }
 
 .map-building-construction::after {
@@ -2355,7 +2705,7 @@ button {
 .construction-timer {
   position: absolute;
   left: 50%;
-  bottom: -24px;
+  top: -28px;
   z-index: 2;
   min-width: 54px;
   padding: 3px 6px;
@@ -2367,7 +2717,57 @@ button {
   font-size: 12px;
   font-weight: 800;
   transform: translateX(-50%);
-  pointer-events: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.building-work-badge {
+  position: absolute;
+  left: 50%;
+  top: -28px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 48px;
+  min-height: 24px;
+  padding: 3px 7px;
+  color: #17212b;
+  background: rgba(244, 247, 241, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+  font-size: 12px;
+  font-weight: 800;
+  transform: translateX(-50%);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.building-work-badge svg {
+  width: 15px;
+  height: 15px;
+}
+
+.building-work-badge-ready {
+  color: #f4f7f1;
+  background: rgba(62, 103, 75, 0.96);
+}
+
+.building-work-badge-ready span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.building-work-badge-timer {
+  background: var(--color-warning);
+}
+
+.building-work-badge-workers {
+  color: #f4f7f1;
+  background: rgba(23, 33, 43, 0.88);
 }
 
 @keyframes construction-pulse {
@@ -2399,7 +2799,7 @@ button {
   padding: 12px;
   background: var(--color-panel);
   border: 1px solid var(--color-panel-border);
-  border-radius: 8px;
+  border-radius: var(--ui-radius);
   box-shadow: var(--shadow-panel);
 }
 
@@ -2798,6 +3198,18 @@ button {
   color: #17212b;
   background: #d8c28d;
   border-radius: 6px;
+}
+
+.upgrade-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  transform: translateY(-16px) scale(1.2);
+  transform-origin: center;
+  user-select: none;
 }
 
 .upgrade-summary span,

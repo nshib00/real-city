@@ -9,9 +9,26 @@ export type BuildingKind =
   | 'town_hall'
   | 'dugout'
   | 'field_bed'
+  | 'seed_garden'
+  | 'herb_bed'
+  | 'mushroom_grove'
+  | 'flax_field'
+  | 'reed_bed'
+  | 'dye_garden'
+  | 'oilseed_field'
+  | 'sugar_bed'
+  | 'crystal_greenhouse'
   | 'warehouse'
   | 'coin_storage'
   | 'workshop'
+  | 'brick_kiln'
+  | 'glass_workshop'
+  | 'forge'
+  | 'weaving_yard'
+  | 'dye_works'
+  | 'mechanical_workshop'
+  | 'optical_workshop'
+  | 'mint'
   | 'market'
   | 'tower'
   | 'wooden_wall'
@@ -19,10 +36,33 @@ export type BuildingKind =
   | 'concrete_wall'
   | 'modern_wall'
   | 'road'
+  | 'standard_road'
+  | 'paved_road'
   | 'alliance_house'
   | 'lumber_yard'
+  | 'sand_quarry'
+  | 'mine'
+  | 'clay_quarry'
+  | 'iron_mine'
+  | 'copper_mine'
+  | 'resin_kiln'
+  | 'sulfur_spring'
+  | 'oil_well'
   | 'stone_cutters'
+  | 'tile_factory'
+  | 'cement_workshop'
+  | 'concrete_plant'
+  | 'rope_yard'
+  | 'paper_workshop'
+  | 'paint_workshop'
+  | 'oil_press'
+  | 'foundry'
+  | 'steelworks'
+  | 'electronics_workshop'
   | 'oil_refinery'
+  | 'chemical_workshop'
+  | 'military_factory'
+  | 'precision_workshop'
   | 'wood_house'
   | 'stone_house'
   | 'apartment_house'
@@ -44,6 +84,7 @@ export type PlacedBuilding = {
   status: 'active' | 'construction'
   state?: BuildingState
   health: number
+  maxHealth?: number
   owner: string
   startedAt: number
   completesAt: number | null
@@ -72,7 +113,7 @@ export type ResourceNode = {
 
 export type MonsterEntity = {
   id: string
-  type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian'
+  type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
   state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
   tile: TileCoord
   targetId: string
@@ -82,6 +123,50 @@ export type MonsterEntity = {
   damage: number
   aggroRadius: number
   updatedAt: number
+}
+
+export type UIPreferences = {
+  compactPanels: boolean
+  resourceRegistryOpen: boolean
+  alliancePanelOpen: boolean
+  buildMenuOpen: boolean
+  isChatCollapsed: boolean
+  areNotificationsCollapsed: boolean
+}
+
+const defaultUIPreferences: UIPreferences = {
+  compactPanels: false,
+  resourceRegistryOpen: false,
+  alliancePanelOpen: false,
+  buildMenuOpen: false,
+  isChatCollapsed: false,
+  areNotificationsCollapsed: false,
+}
+
+const uiPreferencesStorageKey = 'real-city.ui-preferences'
+
+function readUIPreferences(): UIPreferences {
+  if (typeof localStorage === 'undefined') {
+    return defaultUIPreferences
+  }
+
+  try {
+    const stored = localStorage.getItem(uiPreferencesStorageKey)
+    if (!stored) {
+      return defaultUIPreferences
+    }
+    return { ...defaultUIPreferences, ...JSON.parse(stored) }
+  } catch {
+    return defaultUIPreferences
+  }
+}
+
+function writeUIPreferences(preferences: UIPreferences) {
+  if (typeof localStorage === 'undefined') {
+    return
+  }
+
+  localStorage.setItem(uiPreferencesStorageKey, JSON.stringify(preferences))
 }
 
 type GameState = {
@@ -97,19 +182,14 @@ type GameState = {
   constructionNow: number
   camera: { x: number; y: number; zoom: number }
   viewport: { center: TileCoord; radius: number }
-  uiPreferences: {
-    compactPanels: boolean
-    resourceRegistryOpen: boolean
-    alliancePanelOpen: boolean
-    buildMenuOpen: boolean
-  }
+  uiPreferences: UIPreferences
   realtimeStatus: RealtimeStatus
   setTool: (tool: ToolMode) => void
   selectTile: (tile: TileCoord) => void
   selectBuilding: (buildingId: string) => void
   selectMonster: (monsterId: string) => void
   hoverTile: (tile: TileCoord | null) => void
-  placeBuilding: (input: { kind: BuildingKind; name: string; tile: TileCoord; durationSeconds: number; free?: boolean }) => { ok: true; building: PlacedBuilding } | { ok: false; reason: string }
+  placeBuilding: (input: { kind: BuildingKind; name: string; tile: TileCoord; durationSeconds: number; free?: boolean; owner?: string }) => { ok: true; building: PlacedBuilding } | { ok: false; reason: string }
   addBuilding: (building: PlacedBuilding) => void
   setResourceNodes: (nodes: ResourceNode[]) => void
   upsertResourceNode: (node: ResourceNode) => void
@@ -128,6 +208,8 @@ type GameState = {
   toggleResourceRegistry: () => void
   setBuildMenuOpen: (buildMenuOpen: boolean) => void
   setAlliancePanelOpen: (alliancePanelOpen: boolean) => void
+  setChatCollapsed: (isChatCollapsed: boolean) => void
+  setNotificationsCollapsed: (areNotificationsCollapsed: boolean) => void
   setRealtimeStatus: (realtimeStatus: RealtimeStatus) => void
 }
 
@@ -144,17 +226,12 @@ export const useGameStore = create<GameState>((set) => ({
   constructionNow: Date.now(),
   camera: { x: 0, y: 0, zoom: 1 },
   viewport: { center: { x: 0, y: 0 }, radius: 1 },
-  uiPreferences: {
-    compactPanels: false,
-    resourceRegistryOpen: false,
-    alliancePanelOpen: false,
-    buildMenuOpen: false,
-  },
+  uiPreferences: readUIPreferences(),
   realtimeStatus: 'connected',
   setTool: (tool) =>
     set((state) => ({
       tool,
-      uiPreferences: { ...state.uiPreferences, buildMenuOpen: tool === 'build' ? state.uiPreferences.buildMenuOpen : false },
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: tool === 'build' ? state.uiPreferences.buildMenuOpen : false }),
     })),
   selectTile: (selectedTile) => {
     const wrappedTile = wrapGridCoord(selectedTile)
@@ -184,7 +261,8 @@ export const useGameStore = create<GameState>((set) => ({
   placeBuilding: (input) => {
     let result: { ok: true; building: PlacedBuilding } | { ok: false; reason: string } = { ok: false, reason: 'Не удалось разместить постройку' }
     set((state) => {
-      const hasTownHall = state.buildings.some((building) => building.kind === 'town_hall')
+      const owner = input.owner ?? 'local-player'
+      const hasTownHall = state.buildings.some((building) => building.kind === 'town_hall' && building.owner === owner)
       if (input.kind !== 'town_hall' && !hasTownHall) {
         result = { ok: false, reason: 'Сначала нужна ратуша' }
         return state
@@ -208,7 +286,7 @@ export const useGameStore = create<GameState>((set) => ({
         tile,
         status: input.free ? 'active' : 'construction',
         health: 100,
-        owner: 'Северный двор',
+        owner,
         startedAt: now,
         completesAt: durationMs > 0 ? now + durationMs : null,
       }
@@ -217,7 +295,7 @@ export const useGameStore = create<GameState>((set) => ({
         buildings: [...state.buildings, building],
         selectedBuildingId: building.id,
         selectedTile: tile,
-        uiPreferences: { ...state.uiPreferences, buildMenuOpen: false },
+        uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: false }),
       }
     })
     return result
@@ -227,7 +305,7 @@ export const useGameStore = create<GameState>((set) => ({
       buildings: [...state.buildings.filter((item) => item.id !== building.id), building],
       selectedBuildingId: building.id,
       selectedTile: building.tile,
-      uiPreferences: { ...state.uiPreferences, buildMenuOpen: false },
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: false }),
     })),
   setResourceNodes: (nodes) => set({ resourceNodes: nodes }),
   upsertResourceNode: (node) =>
@@ -251,7 +329,7 @@ export const useGameStore = create<GameState>((set) => ({
       buildings: state.buildings.map((building) => {
         const completed =
           building.status === 'construction' && building.completesAt && building.completesAt <= now
-            ? { ...building, status: 'active' as const, completesAt: null }
+            ? { ...building, status: 'active' as const, state: 'active' as const, completesAt: null }
             : building
         return completed.fieldStageReadyAt && completed.fieldStageReadyAt <= now ? { ...completed, fieldStageReady: true } : completed
       }),
@@ -294,23 +372,36 @@ export const useGameStore = create<GameState>((set) => ({
     })),
   setCompactPanels: (compactPanels) =>
     set((state) => ({
-      uiPreferences: { ...state.uiPreferences, compactPanels },
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, compactPanels }),
     })),
   toggleResourceRegistry: () =>
     set((state) => ({
-      uiPreferences: {
+      uiPreferences: persistUIPreferences({
         ...state.uiPreferences,
         resourceRegistryOpen: !state.uiPreferences.resourceRegistryOpen,
-      },
+      }),
     })),
   setBuildMenuOpen: (buildMenuOpen) =>
     set((state) => ({
       tool: buildMenuOpen ? 'build' : state.tool,
-      uiPreferences: { ...state.uiPreferences, buildMenuOpen },
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen }),
     })),
   setAlliancePanelOpen: (alliancePanelOpen) =>
     set((state) => ({
-      uiPreferences: { ...state.uiPreferences, alliancePanelOpen },
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, alliancePanelOpen }),
+    })),
+  setChatCollapsed: (isChatCollapsed) =>
+    set((state) => ({
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, isChatCollapsed }),
+    })),
+  setNotificationsCollapsed: (areNotificationsCollapsed) =>
+    set((state) => ({
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, areNotificationsCollapsed }),
     })),
   setRealtimeStatus: (realtimeStatus) => set({ realtimeStatus }),
 }))
+
+function persistUIPreferences(preferences: UIPreferences) {
+  writeUIPreferences(preferences)
+  return preferences
+}

@@ -1,21 +1,26 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { ReactNode } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { MouseEvent, PointerEvent, ReactNode } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import type { QueryClient } from '@tanstack/react-query'
 
 import { flattenChunkTiles, useVisibleChunks } from '../features/world/useVisibleChunks'
 import { canChopForestTile } from '../features/world/forestActions'
 import { gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, tileToChunk, wrapGridCoord } from './coordinates/iso'
+import { resolvePerformanceScenarioFromSearch, type PerformanceScenario } from './dev/performanceScenarios'
 import { PixiStage } from './renderer/PixiStage'
-import { filterVisibleMapObjects, isMapObjectVisible, occupiedTileKeys } from './renderer/visibleObjects'
-import { DugoutModel } from './renderers/DugoutModel'
-import { LumberYardModel } from './renderers/LumberYardModel'
-import { TownHallModel } from './renderers/TownHallModel'
-import { WindleafBedModel } from './renderers/WindleafBedModel'
-import { WoodHouseModel } from './renderers/WoodHouseModel'
-import { monsterClassName, monsterLabel } from './renderers/monsters'
-import { resourceNodeClassName, resourceNodeLabel } from './renderers/resources'
+import { renderPerformanceSnapshot, type RenderPerformanceSnapshot } from './renderer/renderPerformanceMetrics'
+import { filterVisibleMapObjects, occupiedTileKeys } from './renderer/visibleObjects'
 import { useGameStore } from './state/useGameStore'
-import { chopForest } from '../shared/api/world'
+import type { PlacedBuilding } from './state/useGameStore'
+import type { WorldTile } from '../shared/contracts'
+import { chopForest, type ChunksResponse } from '../shared/api/world'
+import { toPlacedBuilding } from '../shared/api/buildings'
+import { advanceField, harvestField, listProductionJobs, listProductionRecipes, patchProductionJob, startProduction } from '../shared/api/economy'
+import type { InventoryItem, ProductionJobResponse, ProductionRecipeResponse } from '../shared/api/economy'
+import { useAuthStore } from '../features/auth/useAuthStore'
+import { fieldCropSpec } from '../features/fields/fieldGrowth'
+import { ResourceIcon } from '../features/resources/ResourceIcon'
+import { mapObjectZIndex } from './renderer/depth'
 
 export function IsoMap() {
   const selectedTile = useGameStore((state) => state.selectedTile)
@@ -35,46 +40,161 @@ export function IsoMap() {
   const worldTiles = useGameStore((state) => state.worldTiles)
   const setWorldTiles = useGameStore((state) => state.setWorldTiles)
   const updateWorldTile = useGameStore((state) => state.updateWorldTile)
+  const addBuilding = useGameStore((state) => state.addBuilding)
   const panCamera = useGameStore((state) => state.panCamera)
   const setZoom = useGameStore((state) => state.setZoom)
   const setViewportCenter = useGameStore((state) => state.setViewportCenter)
   const queryClient = useQueryClient()
+  const player = useAuthStore((state) => state.player)
   const mapStageRef = useRef<HTMLElement | null>(null)
   const dragStart = useRef<{ x: number; y: number } | null>(null)
   const pendingDragRef = useRef<{ screen: { x: number; y: number }; grid: { x: number; y: number } } | null>(null)
   const dragFrameRef = useRef<number | null>(null)
+  const pendingChopTilesRef = useRef(new Set<string>())
+  const optimisticChopTilesRef = useRef(new Map<string, WorldTile>())
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
+  const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
   const centerChunk = useMemo(() => tileToChunk(wrapGridCoord(viewport.center)), [viewport.center])
   const chunksQuery = useVisibleChunks(centerChunk, 1)
   const tiles = useMemo(() => flattenChunkTiles(chunksQuery.data?.chunks), [chunksQuery.data?.chunks])
-  const mapTiles = worldTiles.length > 0 ? worldTiles : tiles
+  const renderBuildings = performanceScenario?.buildings ?? buildings
+  const renderResourceNodes = performanceScenario?.resources ?? resourceNodes
+  const renderMonsters = performanceScenario?.monsters ?? monsters
+  const mapTiles = performanceScenario?.tiles ?? (worldTiles.length > 0 ? worldTiles : tiles)
   const visibilityOptions = useMemo(
     () => ({ camera, viewportCenter: viewport.center, viewportSize: stageSize }),
     [camera, stageSize, viewport.center],
   )
-  const visibleBuildings = useMemo(() => filterVisibleMapObjects(buildings, visibilityOptions), [buildings, visibilityOptions])
-  const buildingOccupiedTiles = useMemo(() => occupiedTileKeys(buildings.filter(hasFullCellSprite)), [buildings])
-  const visibleResourceNodes = useMemo(() => filterVisibleMapObjects(resourceNodes, visibilityOptions), [resourceNodes, visibilityOptions])
-  const visibleMonsters = useMemo(() => filterVisibleMapObjects(monsters, visibilityOptions), [monsters, visibilityOptions])
-  const showDebugResource = isMapObjectVisible({ x: -5, y: 6 }, visibilityOptions)
+  const visibleBuildings = useMemo(() => filterVisibleMapObjects(renderBuildings, visibilityOptions), [renderBuildings, visibilityOptions])
+  const buildingOccupiedTiles = useMemo(() => occupiedTileKeys(renderBuildings), [renderBuildings])
+  const visibleResourceNodes = useMemo(() => filterVisibleMapObjects(renderResourceNodes, visibilityOptions), [renderResourceNodes, visibilityOptions])
+  const visibleMonsters = useMemo(() => filterVisibleMapObjects(renderMonsters, visibilityOptions), [renderMonsters, visibilityOptions])
+  const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes })
+  const jobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, refetchInterval: 5000 })
+  const recipes = recipesQuery.data?.recipes ?? []
+  const productionJobs = jobsQuery.data?.jobs ?? []
+  const activeProductionByBuilding = useMemo(() => {
+    const result = new Map<string, ProductionJobResponse>()
+    for (const job of productionJobs) {
+      if (job.state === 'running' || job.state === 'ready') {
+        result.set(job.building_id, job)
+      }
+    }
+    return result
+  }, [productionJobs])
+  const recipeById = useMemo(() => new Map(recipes.map((recipe) => [recipe.id, recipe])), [recipes])
   const chopMutation = useMutation({
     mutationFn: chopForest,
     onSuccess: (result) => {
       updateWorldTile(result.tile)
+      patchWorldTileInQueryCache(queryClient, result.tile)
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
       void queryClient.invalidateQueries({ queryKey: ['world'] })
+    },
+    onError: (_error, variables) => {
+      const key = tileActionKey(variables)
+      const previous = optimisticChopTilesRef.current.get(key)
+      if (previous) {
+        updateWorldTile(previous)
+        patchWorldTileInQueryCache(queryClient, previous)
+      }
+    },
+    onSettled: (_data, _error, variables) => {
+      const key = tileActionKey(variables)
+      pendingChopTilesRef.current.delete(key)
+      optimisticChopTilesRef.current.delete(key)
+    },
+  })
+  const advanceFieldMutation = useMutation({
+    mutationFn: advanceField,
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+  })
+  const harvestFieldMutation = useMutation({
+    mutationFn: harvestField,
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+  })
+  const startProductionMutation = useMutation({
+    mutationFn: startProduction,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['production', 'jobs'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+  })
+  const collectProductionMutation = useMutation({
+    mutationFn: (id: string) => patchProductionJob(id, 'complete'),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['production', 'jobs'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
     },
   })
 
   function handleSelectTile(tile: { x: number; y: number }) {
     const worldTile = mapTiles.find((item) => item.x === tile.x && item.y === tile.y)
-    if (canChopForestTile(worldTile) && !chopMutation.isPending) {
+    if (worldTile && canChopForestTile(worldTile)) {
+      const key = tileActionKey(tile)
       selectTile(tile)
+      if (pendingChopTilesRef.current.has(key)) {
+        return
+      }
+      pendingChopTilesRef.current.add(key)
+      const optimisticTile: WorldTile = {
+        ...worldTile,
+        forest_density: Math.max(0, worldTile.forest_density - 1),
+        terrain: worldTile.forest_density <= 1 ? 'grass' as const : worldTile.terrain,
+      }
+      optimisticChopTilesRef.current.set(key, worldTile)
+      updateWorldTile(optimisticTile)
+      patchWorldTileInQueryCache(queryClient, optimisticTile)
       chopMutation.mutate({ x: tile.x, y: tile.y })
       return
     }
     selectTile(tile)
+  }
+
+  function handleBuildingClick(building: PlacedBuilding) {
+    const canManage = Boolean(player && building.owner === player.id && building.status === 'active')
+    if (!canManage) {
+      selectBuilding(building.id)
+      return
+    }
+    const fieldSpec = fieldCropSpec(building.kind)
+    if (fieldSpec) {
+      const stage = building.fieldStage ?? building.growthStage ?? building.cropStage ?? 0
+      const ready = isFieldStageReady(building, constructionNow)
+      const maxStage = building.isSuperCrop || building.superCrop ? fieldSpec.superStages : fieldSpec.stages
+      if (ready && stage >= maxStage && !harvestFieldMutation.isPending) {
+        harvestFieldMutation.mutate(building.id)
+        selectBuilding(building.id)
+        return
+      }
+      if ((stage <= 0 || (ready && stage < maxStage)) && !advanceFieldMutation.isPending) {
+        advanceFieldMutation.mutate(building.id)
+        selectBuilding(building.id)
+        return
+      }
+    }
+    const job = activeProductionByBuilding.get(building.id)
+    const recipe = job ? recipeById.get(job.recipe_id) : findRecipeForBuilding(recipes, building)
+    if (job && recipe && isProductionReady(job, constructionNow) && !collectProductionMutation.isPending) {
+      collectProductionMutation.mutate(job.id)
+      selectBuilding(building.id)
+      return
+    }
+    if (!job && recipe && !startProductionMutation.isPending) {
+      startProductionMutation.mutate({ building_id: building.id, recipe_id: recipe.id })
+      selectBuilding(building.id)
+      return
+    }
+    selectBuilding(building.id)
   }
 
   function flushDragFrame() {
@@ -181,11 +301,19 @@ export function IsoMap() {
       <PixiStage
         tiles={mapTiles}
         occupiedTiles={buildingOccupiedTiles}
+        buildings={visibleBuildings}
+        allBuildings={renderBuildings}
+        resources={visibleResourceNodes}
+        monsters={visibleMonsters}
         camera={camera}
         selectedTile={selectedTile}
         hoveredTile={hoveredTile}
+        selectedBuildingId={selectedBuildingId}
+        selectedMonsterId={selectedMonsterId}
         onSelectTile={handleSelectTile}
         onHoverTile={hoverTile}
+        onSelectBuilding={handleBuildingClick}
+        onSelectMonster={(monster) => selectMonster(monster.id)}
       />
       <div
         className="map-origin"
@@ -193,59 +321,99 @@ export function IsoMap() {
           transform: `translate(${camera.x}px, ${camera.y}px) scale(${camera.zoom})`,
         }}
       >
-        {visibleBuildings.map((building) => (
-          <MapObject
-            key={building.id}
-            id={building.id}
-            x={building.tile.x}
-            y={building.tile.y}
-            viewportCenter={viewport.center}
-            className={`map-building map-building-${building.kind} ${building.status === 'construction' ? 'map-building-construction' : ''} ${selectedBuildingId === building.id ? 'map-building-selected' : ''}`}
-            label={building.name}
-            onSelect={() => selectBuilding(building.id)}
-          >
-            {building.kind === 'town_hall' ? <TownHallModel building={building} /> : null}
-            {building.kind === 'dugout' ? <DugoutModel building={building} /> : null}
-            {building.kind === 'wood_house' ? <WoodHouseModel building={building} /> : null}
-            {building.kind === 'lumber_yard' ? <LumberYardModel building={building} /> : null}
-            {building.kind === 'field_bed' ? <WindleafBedModel building={building} /> : null}
-            {building.status === 'construction' && building.completesAt ? <span className="construction-timer">{formatRemaining(building.completesAt - constructionNow)}</span> : null}
-          </MapObject>
-        ))}
-        {visibleResourceNodes.map((node) => (
-          <MapObject
-            key={node.id}
-            id={node.id}
-            x={node.tile.x}
-            y={node.tile.y}
-            viewportCenter={viewport.center}
-            className={resourceNodeClassName(node)}
-            label={resourceNodeLabel(node)}
-          />
-        ))}
-        {visibleMonsters.map((monster) => (
-          <MapObject
-            key={monster.id}
-            id={monster.id}
-            x={monster.tile.x}
-            y={monster.tile.y}
-            viewportCenter={viewport.center}
-            className={`${monsterClassName(monster)} ${selectedMonsterId === monster.id ? 'map-monster-selected' : ''}`}
-            label={monsterLabel(monster)}
-            onSelect={() => selectMonster(monster.id)}
-          >
-            <span className="monster-health" style={{ transform: `scaleX(${Math.max(0, Math.min(1, monster.health / monster.maxHealth))})` }} />
-          </MapObject>
-        ))}
-        {showDebugResource ? <MapObject id="resource-wood" x={-5} y={6} viewportCenter={viewport.center} className="map-resource" /> : null}
+        {visibleBuildings.map((building) => {
+          const job = activeProductionByBuilding.get(building.id)
+          const recipe = job ? recipeById.get(job.recipe_id) : findRecipeForBuilding(recipes, building)
+          const overlay = building.status === 'construction'
+            ? null
+            : buildingOverlay(building, recipe, job, constructionNow)
+          if (!overlay && !(building.status === 'construction' && building.completesAt)) {
+            return null
+          }
+          return (
+            <MapObject
+              key={`${building.id}:overlay`}
+              id={`${building.id}:overlay`}
+              x={building.tile.x}
+              y={building.tile.y}
+              viewportCenter={viewport.center}
+              className="map-building-overlay-anchor"
+              label={building.name}
+              onSelect={() => handleBuildingClick(building)}
+            >
+              {building.status === 'construction' && building.completesAt ? <span className="construction-timer">{formatRemaining(building.completesAt - constructionNow)}</span> : null}
+              {overlay ? <BuildingWorkBadge overlay={overlay} onActivate={() => handleBuildingClick(building)} /> : null}
+            </MapObject>
+          )
+        })}
       </div>
       <div className="map-debug" aria-live="polite">
+        {performanceScenario ? <span>{performanceScenarioLabel(performanceScenario)}</span> : null}
         <span>chunk {centerChunk.x}:{centerChunk.y}</span>
         <span>zoom {camera.zoom.toFixed(2)}</span>
         <span>{chunksQuery.isFetching ? 'loading' : `${tiles.length} tiles`}</span>
       </div>
+      {performanceScenario ? (
+        <MapPerformanceHud
+          scenario={performanceScenario}
+          visible={{ buildings: visibleBuildings.length, resources: visibleResourceNodes.length, monsters: visibleMonsters.length }}
+        />
+      ) : null}
     </section>
   )
+}
+
+function MapPerformanceHud({
+  scenario,
+  visible,
+}: {
+  scenario: PerformanceScenario
+  visible: { buildings: number; resources: number; monsters: number }
+}) {
+  const [snapshot, setSnapshot] = useState<RenderPerformanceSnapshot>(() => renderPerformanceSnapshot())
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setSnapshot(renderPerformanceSnapshot()), 1000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="map-performance-hud" aria-label="Performance HUD">
+      <span>{scenario.name}</span>
+      <span>fps {snapshot.fps.toFixed(1)}</span>
+      <span>obj {visible.buildings}/{visible.resources}/{visible.monsters}</span>
+      <span>heap {snapshot.usedHeapMb === null ? 'n/a' : `${snapshot.usedHeapMb} MB`}</span>
+      <span>gl {snapshot.activePixiContexts}+{snapshot.activeThreePreviews}</span>
+    </div>
+  )
+}
+
+function performanceScenarioLabel(scenario: PerformanceScenario) {
+  return `perf ${scenario.name}: ${scenario.buildings.length}b/${scenario.resources.length}r/${scenario.monsters.length}m`
+}
+
+function patchWorldTileInQueryCache(queryClient: QueryClient, tile: WorldTile) {
+  queryClient.setQueriesData<ChunksResponse>({ queryKey: ['world', 'chunks'] }, (current) => patchTileInChunks(current, tile))
+}
+
+function patchTileInChunks(current: ChunksResponse | undefined, tile: WorldTile) {
+  if (!current) {
+    return current
+  }
+  let changed = false
+  const chunks = current.chunks.map((chunk) => {
+    let chunkChanged = false
+    const tiles = chunk.tiles.map((item) => {
+      if (item.x !== tile.x || item.y !== tile.y) {
+        return item
+      }
+      chunkChanged = true
+      changed = true
+      return { ...item, ...tile }
+    })
+    return chunkChanged ? { ...chunk, tiles } : chunk
+  })
+  return changed ? { ...current, chunks } : current
 }
 
 function MapObject({
@@ -275,7 +443,7 @@ function MapObject({
       type="button"
       title={label}
       aria-label={label ?? id}
-      style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)` }}
+      style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)`, zIndex: mapObjectZIndex(pos.y) }}
       onClick={(event) => {
         event.stopPropagation()
         onSelect?.()
@@ -293,6 +461,111 @@ function formatRemaining(ms: number) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }
 
-function hasFullCellSprite(building: { kind: string }) {
-  return building.kind === 'town_hall' || building.kind === 'dugout' || building.kind === 'wood_house' || building.kind === 'lumber_yard'
+type BuildingOverlay =
+  | { type: 'timer'; text: string }
+  | { type: 'ready'; label: string; rewards?: InventoryItem[] }
+  | { type: 'workers'; workers: number }
+
+function BuildingWorkBadge({ overlay, onActivate }: { overlay: BuildingOverlay; onActivate?: () => void }) {
+  const handleActivate = (event: MouseEvent<HTMLSpanElement>) => {
+    event.stopPropagation()
+    onActivate?.()
+  }
+  const stopMapDrag = (event: PointerEvent<HTMLSpanElement>) => {
+    event.stopPropagation()
+  }
+
+  if (overlay.type === 'timer') {
+    return (
+      <span className="building-work-badge building-work-badge-timer" onClick={handleActivate} onPointerDown={stopMapDrag}>
+        {overlay.text}
+      </span>
+    )
+  }
+  if (overlay.type === 'workers') {
+    return (
+      <span className="building-work-badge building-work-badge-workers" onClick={handleActivate} onPointerDown={stopMapDrag}>
+        <ResourceIcon id="population" label="Жители" />
+        {overlay.workers}
+      </span>
+    )
+  }
+  return (
+    <span className="building-work-badge building-work-badge-ready" onClick={handleActivate} onPointerDown={stopMapDrag}>
+      {overlay.rewards?.length ? overlay.rewards.map((reward) => (
+        <span key={`${reward.resource}:${reward.amount}`}>
+          <ResourceIcon id={reward.resource} label={reward.resource} />
+          {reward.amount}
+        </span>
+      )) : overlay.label}
+    </span>
+  )
+}
+
+function buildingOverlay(building: PlacedBuilding, recipe: ProductionRecipeResponse | undefined, job: ProductionJobResponse | undefined, now: number): BuildingOverlay | null {
+  const fieldSpec = fieldCropSpec(building.kind)
+  if (fieldSpec) {
+    const stage = building.fieldStage ?? building.growthStage ?? building.cropStage ?? 0
+    const ready = isFieldStageReady(building, now)
+    const maxStage = building.isSuperCrop || building.superCrop ? fieldSpec.superStages : fieldSpec.stages
+    if (stage > 0 && !ready && building.fieldStageReadyAt) {
+      return { type: 'timer', text: formatRemaining(building.fieldStageReadyAt - now) }
+    }
+    if (stage >= maxStage && ready) {
+      return { type: 'ready', label: 'Урожай', rewards: fieldRewards(building) }
+    }
+    if (stage > 0 && ready) {
+      return { type: 'ready', label: `Фаза ${stage}/${maxStage}` }
+    }
+    return { type: 'workers', workers: fieldWorkers(building) }
+  }
+  if (job && recipe) {
+    if (isProductionReady(job, now)) {
+      return { type: 'ready', label: 'Готово', rewards: recipe.output }
+    }
+    return { type: 'timer', text: formatRemaining(Date.parse(job.completes_at) - now) }
+  }
+  if (recipe) {
+    return { type: 'workers', workers: recipe.workers }
+  }
+  return null
+}
+
+function isFieldStageReady(building: PlacedBuilding, now: number) {
+  if (building.fieldStageReadyAt) {
+    return building.fieldStageReadyAt <= now
+  }
+  return Boolean(building.fieldStageReady)
+}
+
+function isProductionReady(job: ProductionJobResponse, now: number) {
+  return job.state === 'ready' || (job.state === 'running' && Date.parse(job.completes_at) <= now)
+}
+
+function tileActionKey(tile: { x: number; y: number }) {
+  return `${tile.x}:${tile.y}`
+}
+
+function findRecipeForBuilding(recipes: ProductionRecipeResponse[], building: PlacedBuilding) {
+  return recipes.find((recipe) => recipe.building_type === building.kind && (!recipe.workers || building.level >= 1))
+}
+
+function fieldWorkers(building: PlacedBuilding) {
+  const spec = fieldCropSpec(building.kind)
+  if (!spec) {
+    return 0
+  }
+  return spec.workersByLevel[Math.max(0, Math.min(spec.workersByLevel.length - 1, building.level - 1))] ?? 1
+}
+
+function fieldRewards(building: PlacedBuilding): InventoryItem[] {
+  const spec = fieldCropSpec(building.kind)
+  if (!spec) {
+    return []
+  }
+  const rewards = spec.rewardsByLevel[Math.max(0, Math.min(spec.rewardsByLevel.length - 1, building.level - 1))]
+  if (building.isSuperCrop || building.superCrop) {
+    return [{ resource: 'coins', amount: rewards.superCoins ?? rewards.coins }, ...(rewards.superRewards ?? rewards.rewards)]
+  }
+  return [{ resource: 'coins', amount: rewards.coins }, ...rewards.rewards]
 }

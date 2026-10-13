@@ -1,16 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Gem, Hammer, Route, Sprout, Swords, Trash2, TrendingUp } from 'lucide-react'
+import { Box, Gem, Hammer, Route, Sprout, Swords, Trash2, TrendingUp } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { tileToChunk } from '../../game/coordinates/iso'
+import { BuildingModelPreview } from '../../game/renderers/BuildingModelPreview'
+import { canResolveBuildingModelAsset } from '../../game/renderers/buildingRegistry'
+import { buildingSpriteAsset } from '../../game/renderers/buildingSpriteAssets'
 import { useGameStore, type BuildingKind, type PlacedBuilding } from '../../game/state/useGameStore'
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
 import { deleteBuilding as deleteBuildingRequest, patchBuilding, toPlacedBuilding } from '../../shared/api/buildings'
 import { ApiClientError } from '../../shared/api/client'
-import { harvestWindleafField } from '../../shared/api/economy'
+import { advanceField, harvestField } from '../../shared/api/economy'
 import { attackMonster, toMonster } from '../../shared/api/monsters'
 import { IconButton, Modal, SegmentedControl, Tabs } from '../../shared/ui'
+import { useAuthStore } from '../auth/useAuthStore'
 import { inventoryAmount, useInventory } from '../economy/useInventory'
+import { fieldCropSpec } from '../fields/fieldGrowth'
 import { ResourceIcon } from '../resources/ResourceIcon'
 import { useThreatLevel } from '../threat/ThreatPanel'
 
@@ -30,6 +35,7 @@ const claimModes = [
 export function Inspector() {
   const [activeTab, setActiveTab] = useState<InspectorTab>('tile')
   const [upgradeOpen, setUpgradeOpen] = useState(false)
+  const [modelPreviewOpen, setModelPreviewOpen] = useState(false)
   const [upgradeError, setUpgradeError] = useState('')
   const [constructionError, setConstructionError] = useState('')
   const selectedTile = useGameStore((state) => state.selectedTile)
@@ -51,14 +57,25 @@ export function Inspector() {
   const activeTile = selectedTile ?? hoveredTile
   const chunk = activeTile ? tileToChunk(activeTile) : null
   const selectedBuilding = buildings.find((building) => building.id === selectedBuildingId) ?? null
+  const player = useAuthStore((state) => state.player)
+  const canManageSelectedBuilding = Boolean(selectedBuilding && player && selectedBuilding.owner === player.id)
   const selectedMonster = useGameStore((state) => state.monsters.find((monster) => monster.id === selectedMonsterId) ?? null)
   const threat = useThreatLevel()
-  const nextUpgrade = selectedBuilding ? getNextUpgrade(selectedBuilding) : null
+  const nextUpgrade = selectedBuilding && canManageSelectedBuilding ? getNextUpgrade(selectedBuilding) : null
+  const selectedBuildingHasModel = selectedBuilding ? canResolveBuildingModelAsset(selectedBuilding) : false
+  const selectedBuildingMaxHealth = selectedBuilding ? maxHealthForBuilding(selectedBuilding) : 100
   const rushCost = selectedBuilding?.status === 'construction' && selectedBuilding.completesAt ? rushCompletionCrystalCost(selectedBuilding.completesAt - constructionNow) : 0
   const crystals = inventoryAmount(inventoryQuery.data?.inventory.items, 'aeolian-crystal')
   const selectedWorldTile = activeTile ? worldTiles.find((tile) => tile.x === activeTile.x && tile.y === activeTile.y) ?? null : null
   const terrainLabel = selectedWorldTile ? terrainLabels[selectedWorldTile.terrain] : activeTile ? getTerrainLabel(activeTile.x, activeTile.y) : 'Не выбран'
   const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y) ?? null : null
+  const selectedFieldSpec = selectedBuilding ? fieldCropSpec(selectedBuilding.kind) : null
+  const selectedFieldMaxStage = selectedFieldSpec && selectedBuilding?.isSuperCrop ? selectedFieldSpec.superStages : selectedFieldSpec?.stages ?? 0
+  const selectedFieldStageReady = selectedFieldSpec && selectedBuilding?.fieldStageReadyAt ? selectedBuilding.fieldStageReadyAt <= constructionNow : Boolean(selectedBuilding?.fieldStageReady)
+  const selectedFieldStage = selectedBuilding?.fieldStage ?? selectedBuilding?.growthStage ?? selectedBuilding?.cropStage ?? 0
+  const selectedFieldReadyToHarvest = Boolean(selectedFieldSpec && selectedFieldMaxStage > 0 && selectedFieldStage >= selectedFieldMaxStage && selectedFieldStageReady)
+  const selectedFieldReadyToAdvance = Boolean(selectedFieldSpec && selectedFieldStage > 0 && selectedFieldStage < selectedFieldMaxStage && selectedFieldStageReady)
+  const selectedFieldNextAt = selectedFieldSpec ? selectedBuilding?.fieldStageReadyAt : null
   const upgradeMutation = useMutation({
     mutationFn: (buildingId: string) => patchBuilding(buildingId, 'upgrade'),
     onSuccess: (result) => {
@@ -74,9 +91,19 @@ export function Inspector() {
       setUpgradeError(error instanceof Error ? error.message : 'Не удалось улучшить постройку')
     },
   })
+  const advanceFieldMutation = useMutation({
+    mutationFn: (buildingId: string) => advanceField(buildingId),
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+  })
   const harvestFieldMutation = useMutation({
-    mutationFn: () => harvestWindleafField(false),
-    onSuccess: () => {
+    mutationFn: (buildingId: string) => harvestField(buildingId),
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
     },
   })
@@ -107,6 +134,7 @@ export function Inspector() {
     if (selectedBuildingId) {
       setActiveTab('object')
     }
+    setModelPreviewOpen(false)
   }, [selectedBuildingId])
 
   return (
@@ -166,14 +194,24 @@ export function Inspector() {
               <strong>
                 {selectedBuilding.name}, уровень {selectedBuilding.level}
               </strong>
-              <span>Здоровье {selectedBuilding.health}/100</span>
+              <span>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}</span>
               <span>Владелец: {selectedBuilding.owner}</span>
+              {!canManageSelectedBuilding ? <span>Чужая постройка: управление недоступно</span> : null}
               <span>Состояние: {selectedBuilding.status === 'active' ? 'работает' : 'строится'}</span>
               {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>До завершения: {formatRemaining(selectedBuilding.completesAt - constructionNow)}</span> : null}
+              {selectedFieldSpec && selectedBuilding.status === 'active' && selectedFieldStage > 0 ? (
+                <>
+                  <span>Фаза роста: {selectedFieldStage}/{selectedFieldMaxStage}{selectedBuilding.isSuperCrop ? ' · супер-цикл' : ''}</span>
+                  {selectedFieldReadyToHarvest ? <span>Урожай готов к сбору</span> : null}
+                  {selectedFieldReadyToAdvance ? <span>Фаза завершена, нужна команда на рост</span> : null}
+                  {!selectedFieldStageReady && selectedFieldNextAt ? <span>До конца фазы: {formatRemaining(selectedFieldNextAt - constructionNow)}</span> : null}
+                </>
+              ) : null}
               {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
               {selectedBuilding.status === 'construction' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
               <span>Улучшение выполняется из меню этой постройки.</span>
-              <meter min={0} max={100} value={selectedBuilding.health} />
+              <meter min={0} max={selectedBuildingMaxHealth} value={selectedBuilding.health} />
+              {modelPreviewOpen ? <BuildingModelPreview building={selectedBuilding} className="inspector-model-preview" /> : null}
               {constructionError ? <small className="upgrade-error" role="alert">{constructionError}</small> : null}
             </div>
           ) : (
@@ -194,8 +232,8 @@ export function Inspector() {
       <div className="inspector-actions">
         {selectedBuilding ? (
           <>
-            <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || !nextUpgrade} onClick={() => setUpgradeOpen(true)} />
-            {selectedBuilding.status === 'construction' ? (
+            {canManageSelectedBuilding ? <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || !nextUpgrade} onClick={() => setUpgradeOpen(true)} /> : null}
+            {canManageSelectedBuilding && selectedBuilding.status === 'construction' ? (
               <IconButton
                 label={`Завершить за ${rushCost} крист.`}
                 icon={Gem}
@@ -206,15 +244,40 @@ export function Inspector() {
                 }}
               />
             ) : null}
-            {selectedBuilding.kind === 'field_bed' ? <IconButton label="Собрать урожай" icon={Sprout} disabled={selectedBuilding.status !== 'active' || harvestFieldMutation.isPending} onClick={() => harvestFieldMutation.mutate()} /> : null}
-            <IconButton
-              label="Удалить"
-              icon={Trash2}
-              onClick={() => {
-                deleteBuilding(selectedBuilding.id)
-                void deleteBuildingRequest(selectedBuilding.id).catch(() => undefined)
-              }}
-            />
+            {canManageSelectedBuilding && selectedFieldSpec && selectedFieldStage < selectedFieldMaxStage ? (
+              <IconButton
+                label={selectedFieldStage <= 0 ? 'Запустить' : 'Следующая фаза'}
+                icon={Sprout}
+                disabled={selectedBuilding.status !== 'active' || (selectedFieldStage > 0 && !selectedFieldReadyToAdvance) || advanceFieldMutation.isPending}
+                onClick={() => advanceFieldMutation.mutate(selectedBuilding.id)}
+              />
+            ) : null}
+            {canManageSelectedBuilding && selectedFieldSpec ? (
+              <IconButton
+                label="Собрать урожай"
+                icon={Sprout}
+                disabled={selectedBuilding.status !== 'active' || !selectedFieldReadyToHarvest || harvestFieldMutation.isPending}
+                onClick={() => harvestFieldMutation.mutate(selectedBuilding.id)}
+              />
+            ) : null}
+            {canManageSelectedBuilding ? (
+              <IconButton
+                label="Удалить"
+                icon={Trash2}
+                onClick={() => {
+                  deleteBuilding(selectedBuilding.id)
+                  void deleteBuildingRequest(selectedBuilding.id).catch(() => undefined)
+                }}
+              />
+            ) : null}
+            {selectedBuildingHasModel ? (
+              <IconButton
+                label={modelPreviewOpen ? 'Скрыть 3D' : '3D preview'}
+                icon={Box}
+                active={modelPreviewOpen}
+                onClick={() => setModelPreviewOpen((current) => !current)}
+              />
+            ) : null}
           </>
         ) : null}
         <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} onClick={() => setBuildMenuOpen(true)} />
@@ -265,12 +328,17 @@ function UpgradeModal({
   if (!building || !nextUpgrade) {
     return null
   }
+  const previewAsset = upgradePreviewAsset(building, nextUpgrade)
   return (
     <Modal title="Улучшение постройки" open={open} onClose={onClose}>
       <div className="upgrade-dialog">
         <div className="upgrade-summary">
-          <div className={`upgrade-preview build-icon-${nextUpgrade.type}`} aria-hidden="true">
-            <TrendingUp size={34} />
+          <div className={`upgrade-preview build-icon-${nextUpgrade.type}`}>
+            {previewAsset ? (
+              <img src={previewAsset} alt={`Модель: ${nextUpgrade.name}, уровень ${nextUpgrade.level}`} draggable={false} />
+            ) : (
+              <TrendingUp size={34} aria-hidden="true" />
+            )}
           </div>
           <strong>{building.name}</strong>
           <span>
@@ -316,6 +384,21 @@ function UpgradeModal({
   )
 }
 
+function upgradePreviewAsset(building: PlacedBuilding, nextUpgrade: UpgradeInfo) {
+  return buildingSpriteAsset({
+    ...building,
+    id: `${building.id}:upgrade-preview`,
+    kind: nextUpgrade.type,
+    name: nextUpgrade.name,
+    level: nextUpgrade.level,
+    status: 'active',
+    state: 'active',
+    health: nextUpgrade.health,
+    maxHealth: nextUpgrade.health,
+    completesAt: null,
+  })
+}
+
 function formatRemaining(ms: number) {
 	const totalSeconds = Math.max(0, Math.ceil(ms / 1000))
 	const minutes = Math.floor(totalSeconds / 60)
@@ -357,8 +440,15 @@ function resourceLabel(resource: string) {
     stone: 'Камень',
     coins: 'Монеты',
     flax: 'Лен',
+    seeds: 'Семена',
     windleaf: 'Ветролист',
     mushrooms: 'Грибы',
+    herbs: 'Травы',
+    reed: 'Тростник',
+    dyes: 'Красители',
+    oil_plants: 'Масличные растения',
+    sugar_cane: 'Сахарный тростник',
+    crystal_fruit: 'Кристальные плоды',
     planks: 'Доски',
     stone_block: 'Каменный блок',
     brick: 'Кирпич',
@@ -369,6 +459,8 @@ function resourceLabel(resource: string) {
     gold_ingot: 'Золотой слиток',
     'super-mushrooms': 'Супер-грибы',
     'super-windleaf': 'Супер-ветролист',
+    'super-seeds': 'Супер-семена',
+    'super-fiber': 'Супер-волокно',
     emerald_dust: 'Изумрудная пыль',
     oil: 'Нефть',
   }
@@ -428,6 +520,15 @@ function getNextUpgrade(building: PlacedBuilding): UpgradeInfo | null {
   }
 }
 
+function maxHealthForBuilding(building: PlacedBuilding) {
+  if (building.maxHealth && building.maxHealth > 0) {
+    return building.maxHealth
+  }
+  const spec = buildingCatalog.find((item) => item.type === building.kind)
+  const levelHealth = spec?.upgradeLevels?.find((level) => level.level === building.level)?.health
+  return levelHealth ?? spec?.health ?? 100
+}
+
 function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo): UpgradeComparison[] {
   const current = getCurrentStats(building)
   const comparisons: UpgradeComparison[] = [
@@ -448,7 +549,7 @@ function getCurrentStats(building: PlacedBuilding) {
   const level = spec?.upgradeLevels?.find((item) => item.level === building.level)
   return {
     health: level?.health ?? spec?.health ?? building.health,
-    population: building.kind === 'town_hall' ? 0 : (level?.population ?? spec?.population ?? 0),
+    population: level?.population ?? spec?.population ?? 0,
     footprint: spec?.footprint ?? { width: 1, height: 1 },
   }
 }
@@ -494,6 +595,11 @@ function monsterName(type: string) {
     roaming_melee: 'Бродячий налетчик',
     resource_guardian: 'Страж залежи',
     ruins_guardian: 'Сторож руин',
+    forest_stalker: 'Лесной следопыт',
+    spore_beast: 'Споровый зверь',
+    ironback_brute: 'Железоспин',
+    ember_wisp: 'Тлеющий огонек',
+    ancient_colossus: 'Древний колосс',
   }
   return names[type] ?? type
 }

@@ -1,5 +1,6 @@
 import { ErrorBoundary } from './ErrorBoundary'
 import { AlliancePanel } from '../features/alliance/AlliancePanel'
+import { AssetDebugPanel, shouldShowAssetDebugPanel } from '../features/assets/AssetDebugPanel'
 import { AuthGate } from '../features/auth/AuthGate'
 import { BuildingSync } from '../features/buildings/BuildingSync'
 import { BuildMenu } from '../features/buildings/BuildMenu'
@@ -19,6 +20,7 @@ import { WorldRealtime } from '../features/world/WorldRealtime'
 import { IsoMap } from '../game/IsoMap'
 
 export function App() {
+  const showAssetDebugPanel = shouldShowAssetDebugPanel()
   return (
     <ErrorBoundary>
       <AuthGate>
@@ -40,6 +42,7 @@ export function App() {
           <NotificationCenter />
           <ResourceRegistry />
           <AlliancePanel />
+          {showAssetDebugPanel ? <AssetDebugPanel /> : null}
         </main>
       </AuthGate>
     </ErrorBoundary>

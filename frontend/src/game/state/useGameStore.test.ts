@@ -17,6 +17,20 @@ describe('useGameStore', () => {
     expect(useGameStore.getState().viewport.radius).toBe(4)
   })
 
+  it('persists collapsed chat and notification preferences', () => {
+    localStorage.clear()
+
+    useGameStore.getState().setChatCollapsed(true)
+    useGameStore.getState().setNotificationsCollapsed(true)
+
+    expect(useGameStore.getState().uiPreferences.isChatCollapsed).toBe(true)
+    expect(useGameStore.getState().uiPreferences.areNotificationsCollapsed).toBe(true)
+    expect(JSON.parse(localStorage.getItem('real-city.ui-preferences') ?? '{}')).toMatchObject({
+      isChatCollapsed: true,
+      areNotificationsCollapsed: true,
+    })
+  })
+
   it('focuses map camera on a selected world tile', () => {
     useGameStore.getState().focusTile({ tile: { x: 40, y: 80 }, viewportWidth: 1200, viewportHeight: 800 })
 
@@ -35,6 +49,7 @@ describe('useGameStore', () => {
           level: 1,
           tile: { x: 1, y: 1 },
           status: 'construction',
+          state: 'building',
           health: 100,
           owner: 'Северный двор',
           startedAt: 1000,
@@ -46,6 +61,7 @@ describe('useGameStore', () => {
     useGameStore.getState().tickConstructions(now)
 
     expect(useGameStore.getState().buildings[0].status).toBe('active')
+    expect(useGameStore.getState().buildings[0].state).toBe('active')
     expect(useGameStore.getState().buildings[0].completesAt).toBeNull()
     expect(useGameStore.getState().constructionNow).toBe(now)
   })

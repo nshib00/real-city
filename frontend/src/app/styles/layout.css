@@ -9,7 +9,14 @@
   }
 
   .notification-stack {
-    display: none;
+    top: 84px;
+    right: 12px;
+    width: 228px;
+  }
+
+  .notification-stack:not(.notification-stack-collapsed) {
+    max-height: 188px;
+    overflow: hidden;
   }
 }
 
@@ -71,7 +78,7 @@
 
   .build-menu {
     width: 100%;
-    max-height: calc(100vh - 24px);
+    height: calc(100vh - 24px);
   }
 
   .build-list {
@@ -95,7 +102,32 @@
 
   .event-log,
   .notification-stack {
-    display: none;
+    display: block;
+  }
+
+  .event-log {
+    left: 12px;
+    right: 12px;
+    bottom: 126px;
+    min-height: 48px;
+    max-height: 168px;
+    overflow: hidden;
+  }
+
+  .event-log:not(.event-log-collapsed) {
+    overflow-y: auto;
+  }
+
+  .notification-stack {
+    top: 132px;
+    right: 12px;
+    width: 208px;
+    max-height: 48px;
+    overflow: hidden;
+  }
+
+  .notification-stack:not(.notification-stack-collapsed) {
+    max-height: 188px;
   }
 
   .drawer {
