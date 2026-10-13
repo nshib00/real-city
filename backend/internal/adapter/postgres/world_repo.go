@@ -53,9 +53,23 @@ func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord wo
 }
 
 func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	if len(coords) == 0 {
+		return []world.Chunk{}, nil
+	}
+	if err := r.ensureMap(ctx); err != nil {
+		return nil, err
+	}
+	existing, err := r.findChunks(ctx, mapID, coords)
+	if err != nil {
+		return nil, err
+	}
 	chunks := make([]world.Chunk, 0, len(coords))
 	for _, coord := range coords {
-		chunk, _, err := r.GetOrCreateChunk(ctx, mapID, coord)
+		if chunk, ok := existing[coord]; ok {
+			chunks = append(chunks, chunk)
+			continue
+		}
+		chunk, err := r.createChunk(ctx, mapID, coord)
 		if err != nil {
 			return nil, err
 		}
@@ -109,6 +123,84 @@ func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.Chu
 		chunk.Tiles = append(chunk.Tiles, tile)
 	}
 	return chunk, rows.Err()
+}
+
+func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) (map[world.ChunkCoord]world.Chunk, error) {
+	minX, maxX, minY, maxY := coords[0].X, coords[0].X, coords[0].Y, coords[0].Y
+	wanted := make(map[world.ChunkCoord]bool, len(coords))
+	for _, coord := range coords {
+		wanted[coord] = true
+		if coord.X < minX {
+			minX = coord.X
+		}
+		if coord.X > maxX {
+			maxX = coord.X
+		}
+		if coord.Y < minY {
+			minY = coord.Y
+		}
+		if coord.Y > maxY {
+			maxY = coord.Y
+		}
+	}
+	rows, err := r.db.QueryContext(ctx, `
+		SELECT chunk_x, chunk_y, version
+		FROM world_chunks
+		WHERE map_id = $1
+		  AND chunk_x BETWEEN $2 AND $3
+		  AND chunk_y BETWEEN $4 AND $5
+	`, mapID, minX, maxX, minY, maxY)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	chunks := make(map[world.ChunkCoord]world.Chunk, len(coords))
+	for rows.Next() {
+		var coord world.ChunkCoord
+		var version int64
+		if err := rows.Scan(&coord.X, &coord.Y, &version); err != nil {
+			return nil, err
+		}
+		if !wanted[coord] {
+			continue
+		}
+		chunks[coord] = world.Chunk{MapID: mapID, Coord: coord, Version: version}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	if len(chunks) == 0 {
+		return chunks, nil
+	}
+
+	tileRows, err := r.db.QueryContext(ctx, `
+		SELECT chunk_x, chunk_y, tile_x, tile_y, terrain, elevation, safe_zone, forest_density
+		FROM world_tiles
+		WHERE map_id = $1
+		  AND chunk_x BETWEEN $2 AND $3
+		  AND chunk_y BETWEEN $4 AND $5
+		ORDER BY chunk_y, chunk_x, tile_y, tile_x
+	`, mapID, minX, maxX, minY, maxY)
+	if err != nil {
+		return nil, err
+	}
+	defer tileRows.Close()
+
+	for tileRows.Next() {
+		var tile world.Tile
+		if err := tileRows.Scan(&tile.Chunk.X, &tile.Chunk.Y, &tile.Coord.X, &tile.Coord.Y, &tile.Terrain, &tile.Elevation, &tile.SafeZone, &tile.ForestDensity); err != nil {
+			return nil, err
+		}
+		chunk, ok := chunks[tile.Chunk]
+		if !ok {
+			continue
+		}
+		tile.MapID = mapID
+		chunk.Tiles = append(chunk.Tiles, tile)
+		chunks[tile.Chunk] = chunk
+	}
+	return chunks, tileRows.Err()
 }
 
 func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, error) {

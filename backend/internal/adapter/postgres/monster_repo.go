@@ -49,10 +49,10 @@ func (r *MonsterRepo) ListActiveForTick(ctx context.Context, mapID string, limit
 		limit = 100
 	}
 	rows, err := execer(ctx, r.db).QueryContext(ctx, monsterSelect()+`
-		WHERE map_id = $1 AND state <> $2
+		WHERE map_id = $1 AND state <> 'dead'
 		ORDER BY updated_at, id
-		LIMIT $3
-	`, mapID, monster.StateDead, limit)
+		LIMIT $2
+	`, mapID, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -80,9 +80,9 @@ func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (map[
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT spawn_id, COUNT(*)
 		FROM monsters
-		WHERE map_id = $1 AND state <> $2 AND spawn_id <> ''
+		WHERE map_id = $1 AND state <> 'dead' AND spawn_id <> ''
 		GROUP BY spawn_id
-	`, mapID, monster.StateDead)
+	`, mapID)
 	if err != nil {
 		return nil, err
 	}

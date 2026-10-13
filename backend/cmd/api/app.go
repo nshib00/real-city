@@ -170,6 +170,9 @@ func buildUnitOfWork(db *postgresadapter.DB) service.UnitOfWork {
 }
 
 func (a *app) run(ctx context.Context) error {
+	if a.db != nil {
+		defer a.db.Close()
+	}
 	runCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 	errCh := make(chan error, 3)
@@ -195,9 +198,6 @@ func (a *app) run(ctx context.Context) error {
 		cancel()
 		if a.realtime != nil {
 			a.realtime.Shutdown()
-		}
-		if a.db != nil {
-			defer a.db.Close()
 		}
 		shutdownCtx, cancel := context.WithTimeout(context.Background(), a.cfg.Server.ShutdownTimeout)
 		defer cancel()
