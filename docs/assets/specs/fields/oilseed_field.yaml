@@ -1,0 +1,168 @@
+asset_id: oilseed_field
+category: fields
+kind: building
+display_name: Масличное поле
+style_profile: aeolian_fantasy_midpoly
+
+footprint:
+  width: 1
+  height: 1
+
+levels:
+  - level: 1
+    visual_goal: Низкая сухая восьмиугольная грядка с теплыми деревянными бортами, редкими зелеными ростками, первыми желтыми головками и корзиной семян.
+    cost_resources: [seeds, planks, fabric, stone_block, iron_ingot]
+    triangle_budget: { min: 2400, max: 5600 }
+  - level: 2
+    visual_goal: Борт выше и аккуратнее, появляются железные кольца на толстых стойках, тканевые сушильные полосы и больше круглых семенных головок.
+    cost_resources: [seeds, planks, fabric, stone_block, iron_ingot, premium_planks]
+    triangle_budget: { min: 2700, max: 6400 }
+  - level: 3
+    visual_goal: Плотные ряды масличных кустов, резные семенные диски на стенках, угловые корзины и первая низкая сушильная рамка.
+    cost_resources: [seeds, planks, fabric, stone_block, iron_ingot, premium_planks]
+    triangle_budget: { min: 3100, max: 7400 }
+  - level: 4
+    visual_goal: Каменно-деревянный восьмиугольный борт с поперечинами, ручной винтовой стойкой пресса и маленьким желобом для масла.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, mechanism]
+    triangle_budget: { min: 3500, max: 8400 }
+  - level: 5
+    visual_goal: Высокие борта, каменные башмачки, две сушильные рейки, плотные золотистые пятна урожая и видимый прессовый рычаг.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, mechanism, gold_ingot]
+    triangle_budget: { min: 3900, max: 9300 }
+  - level: 6
+    visual_goal: Поздняя mid-game конструкция с темными премиум-досками, железными обручами, механизмами пресса, золотыми мерками и большими корзинами головок.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, mechanism, gold_ingot]
+    triangle_budget: { min: 4300, max: 10300 }
+  - level: 7
+    visual_goal: Финальное дорогое поле с самым высоким восьмиугольным краем, усиленным мини-прессом, зрелыми желтыми головками, золотыми метками качества и super-seed футляром.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, mechanism, gold_ingot, super-seeds]
+    triangle_budget: { min: 4700, max: 11200 }
+
+states: [active, construction, damaged]
+
+material_map:
+  seeds:
+    visible_as: круглые желтые семенные головки, россыпь семян в корзинах и seed-диски на бортах
+    priority: primary
+    levels: [1, 2, 3, 4, 5, 6, 7]
+  planks:
+    visible_as: ранние восьмиугольные борта, поперечины сушилки и рабочая сортировочная планка
+    priority: primary
+    levels: [1, 2, 3]
+  premium_planks:
+    visible_as: поздние темные верхние рейки, рама ручного пресса и защищенный футляр образцов
+    priority: primary
+    levels: [2, 3, 4, 5, 6, 7]
+  fabric:
+    visible_as: желто-охристые сушильные полосы, маленькие тканевые метки рядов и мягкие подвязки головок
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6, 7]
+  stone_block:
+    visible_as: каменные башмачки восьмиугольных углов, сухой цоколь и опора мини-пресса
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6, 7]
+  iron_ingot:
+    visible_as: железные кольца на стойках, уголки, прессовая винтовая стойка и стяжки поздних бортов
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6, 7]
+  mechanism:
+    visible_as: ручная прессовая стойка, рычаг и небольшой зубчатый узел без индустриальной нефтяной темы
+    priority: accent
+    levels: [4, 5, 6, 7]
+  gold_ingot:
+    visible_as: золотые мерные чашки, метки качества и теплые вставки на финальном футляре
+    priority: accent
+    levels: [5, 6, 7]
+  super-seeds:
+    visible_as: редкие крупные золотистые super-головки и защищенный seed/sample футляр
+    priority: accent
+    levels: [7]
+
+level_progression:
+  mass:
+    rule: "Каждый уровень усложняет восьмиугольную сухую грядку: борт выше, больше стоек, сушильных рамок, корзин и прессовых деталей."
+  height:
+    rule: Стенки растут постепенно от низкой деревянной рамки до прочного каменно-деревянного края, но культура остается ниже тростника и сахарных стеблей.
+  materials:
+    rule: Семена, доски, ткань, камень, железо, механизмы, золото и супер-семена должны читаться как части конструкции и урожая.
+  props:
+    rule: "Props связаны только с масличной культурой: корзины головок, сушильные рейки, seed-диски, мерные чашки, прессовый рычаг и мини-желоб масла."
+  late_elements:
+    rule: На 4-7 уровнях появляются механика ручного пресса и золотые quality-метки, но без нефтяных бочек, труб и индустриального топлива.
+  constraints:
+    - Не использовать водные каналы тростника, грибной влажный субстрат, аптекарские бирки травяной грядки или сахарные срезы.
+    - Сохранять теплую желто-зеленую палитру и сухой восьмиугольный силуэт.
+    - Основание active, construction и damaged одного уровня должно совпадать по земле, камере и anchor.
+
+state_policy:
+  active:
+    rule: Готовая сухая восьмиугольная грядка с масличными головками, корзинами, сушильными рейками и уровневым декором.
+  construction:
+    rule: Та же ground-клетка, но 30-60% борта и прессовых деталей отсутствует; видны пустая сухая земля, лежащие доски, ткань и корзины.
+  damaged:
+    rule: Сломанные стойки, примятые растения, рассыпанные семена, разрушенные сушильные рейки и упавший прессовый рычаг без разрушения ground-клетки.
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, vegetation-artist, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - name: LOD0
+      ratio: 1.0
+      triangle_budget: { min: 2400, max: 11200 }
+      export: true
+    - name: LOD1
+      ratio: 0.45
+      triangle_budget: { min: 1000, max: 5000 }
+      export: true
+    - name: LOD2
+      ratio: 0.22
+      triangle_budget: { min: 400, max: 2500 }
+      export: true
+  preserve: [footprint, octagonal dry bed, seed-head crop silhouette, drying rails, mini press, ground tile]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet:
+    enabled: true
+    columns: 4
+    include_states: [active, construction, damaged, ruined]
+  alpha_bounds:
+    min_opaque_pixels: 1200
+    max_crop_margin_px: 10
+    bottom_anchor_tolerance_px: 10
+
+output:
+  runtime_dir: frontend/public/assets/buildings/fields/oilseed_field
+  source_dir: frontend/src/assets/buildings/fields/oilseed_field
+  use_public_glb: true
+
+references:
+  docs:
+    - docs/buildings/fields/oilseed-field.md
+    - docs/buildings/fields/fields-and-beds.md
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators:
+    - tools/assets/blender/regenerate_seed_garden_blender.py
+    - tools/assets/blender/regenerate_flax_field_blender.py
+    - tools/assets/blender/regenerate_reed_bed_blender.py
+  existing_assets:
+    - frontend/public/assets/buildings/fields/seed_garden
+    - frontend/public/assets/buildings/fields/flax_field
+    - frontend/public/assets/buildings/fields/reed_bed
+
+notes:
+  - Генератор выпускает расширенный runtime-набор: stage01-stage03, active, construction, damaged, ruined, super_stage01-super_stage06.
+  - Текущий игровой каталог пока содержит только 1 уровень oilseed_field со старой стоимостью; модельная задача готовит 7 уровней по обновленной документации постройки.

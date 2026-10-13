@@ -1,0 +1,174 @@
+asset_id: town_hall
+category: center
+kind: building
+display_name: Ратуша
+style_profile: aeolian_fantasy_midpoly
+
+footprint: { width: 1, height: 1 }
+states: [active, construction, damaged]
+
+levels:
+  - level: 1
+    visual_goal: Маленькая деревянная башенка на земляной площадке с листовой крышей, дверью, флагом и ящиками чертежей.
+    cost_resources: []
+    triangle_budget: { min: 2200, max: 4500 }
+    adds: [wooden_tower, leaf_roof, small_flag, plan_crates]
+  - level: 2
+    visual_goal: Башенка шире, с деревянным крыльцом, укрепленными стойками, ветролистом и доской объявлений.
+    cost_resources: [coins, wood, windleaf]
+    triangle_budget: { min: 2600, max: 5200 }
+    adds: [porch, reinforced_posts, notice_board]
+  - level: 3
+    visual_goal: Боковая деревянная пристройка, первое стеклянное окно, лестница и навес для писарей.
+    cost_resources: [coins, wood, windleaf, glass]
+    triangle_budget: { min: 3200, max: 6200 }
+    adds: [side_office, glass_window, clerk_awning]
+  - level: 4
+    visual_goal: Второй ярус башни, дощатая обшивка, камни у входа, лесные детали и рабочая лавка.
+    cost_resources: [coins, wood, mushrooms, planks, glass]
+    triangle_budget: { min: 3800, max: 7200 }
+    adds: [second_tier, plank_cladding, stone_entry, workbench]
+  - level: 5
+    visual_goal: Цельное деревянное здание с каменным цоколем, двумя крыльями, большим флагом и несколькими окнами.
+    cost_resources: [coins, wood, mushrooms, planks, glass]
+    triangle_budget: { min: 4500, max: 8200 }
+    adds: [two_wings, stone_plinth, larger_flag, window_group]
+  - level: 6
+    visual_goal: Выраженный каменный цоколь, досчатые панели, архивная пристройка и более высокий флюгер или труба.
+    cost_resources: [coins, wood, mushrooms, planks, stone]
+    triangle_budget: { min: 5200, max: 9000 }
+    adds: [archive_annex, stronger_plinth, tall_weathervane]
+  - level: 7
+    visual_goal: Каменное укрепление центральной башни, угловые блоки, малая боковая башенка и мощеная площадка.
+    cost_resources: [coins, planks, stone, stone_block]
+    triangle_budget: { min: 6000, max: 10000 }
+    adds: [stone_tower_base, corner_blocks, side_turret, paved_square]
+  - level: 8
+    visual_goal: Больше камня, черепичная крыша, выровненные боковые объемы и часы или круглый знак города.
+    cost_resources: [coins, planks, stone_block, brick]
+    triangle_budget: { min: 6800, max: 11000 }
+    adds: [tile_roof, city_clock, balanced_side_volumes]
+  - level: 9
+    visual_goal: Почти полностью каменная ратуша с кирпичными вставками, крупными окнами, боковыми башенками и площадью.
+    cost_resources: [coins, stone_block, brick, glass]
+    triangle_budget: { min: 7600, max: 12000 }
+    adds: [brick_inlays, large_windows, twin_side_turrets, plaza]
+  - level: 10
+    visual_goal: Высокая каменно-кирпичная ратуша с центральной башней, малыми башенками, стеклом, флагами и балконом.
+    cost_resources: [coins, brick, premium_planks, super-mushrooms, glass]
+    triangle_budget: { min: 8500, max: 13000 }
+    adds: [central_tower, balcony, flags, premium_wood_accents]
+
+material_map:
+  wood:
+    visible_as: ранняя башня, стойки, крыльцо и деревянный каркас
+    priority: primary
+    levels: [1, 2, 3, 4, 5, 6]
+  windleaf:
+    visible_as: листовая крыша и мягкие зеленые детали ранней ратуши
+    priority: secondary
+    levels: [1, 2, 3]
+  glass:
+    visible_as: теплые административные окна, крупнее и чаще на поздних уровнях
+    priority: accent
+    levels: [3, 4, 5, 9, 10]
+  mushrooms:
+    visible_as: небольшие лесные/городские декоративные детали у основания, без превращения в грибной дом
+    priority: accent
+    levels: [4, 5, 6]
+  planks:
+    visible_as: дощатая обшивка, крылья здания, архивные панели, премиальные деревянные акценты
+    priority: primary
+    levels: [4, 5, 6, 7, 8, 10]
+  stone:
+    visible_as: цоколь, камни у входа, укрепление башни, мощеная площадка
+    priority: secondary
+    levels: [6, 7]
+  stone_block:
+    visible_as: крупные угловые блоки, каменные стены и башенное основание
+    priority: primary
+    levels: [7, 8, 9]
+  brick:
+    visible_as: кирпичные вставки, черепичная крыша, поздний фасад
+    priority: primary
+    levels: [8, 9, 10]
+  premium_planks:
+    visible_as: аккуратные темные балки, балкон и декоративные элементы финального уровня
+    priority: accent
+    levels: [10]
+  super-mushrooms:
+    visible_as: редкие яркие декоративные элементы площади, не основной материал
+    priority: accent
+    levels: [10]
+  coins:
+    visible_as: порядок площади, ящики чертежей, доска объявлений, флаги и городские props
+    priority: accent
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+level_progression:
+  mass:
+    rule: Каждый уровень добавляет объем, крыло, ярус или площадь; нельзя делать апгрейд только цветом.
+  height:
+    rule: Центральная башня растет постепенно и остается главным ориентиром.
+  materials:
+    rule: Ранние уровни деревянно-листовые, средние деревянно-каменные, поздние каменно-кирпичные.
+  props:
+    rule: "Props подчеркивают управление и строительство: чертежи, доска объявлений, флаги, часы, площадь."
+  late_elements:
+    rule: Часы, кирпич, боковые башенки и балкон появляются только на 8-10 уровнях.
+  constraints:
+    - Не превращать ратушу в замок, храм или дворец.
+    - Сохранять вход и маленькую площадь на одной стороне.
+    - Кристаллы допускаются только как редкие маленькие акценты.
+
+state_policy:
+  active:
+    rule: Готовый административный центр с чистым силуэтом башни и материалами текущего уровня.
+  construction:
+    rule: Незавершенный целевой уровень с лесами, открытым каркасом, запасами материалов и частичной кровлей.
+    required_elements: [scaffolding, unfinished_walls, material_stacks]
+  damaged:
+    rule: Проломы, сломанные опоры, поврежденная кровля и обломки, но центральная башня узнаваема.
+    required_elements: [broken_roof, cracked_walls, debris, damaged_tower]
+    forbidden_elements: [castle_ruin, total_collapse]
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, hard-surface, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 2200, max: 13000 }, export: true }
+    - { name: LOD1, ratio: 0.45, triangle_budget: { min: 1000, max: 6000 }, export: true }
+    - { name: LOD2, ratio: 0.22, triangle_budget: { min: 450, max: 2500 }, export: true }
+  preserve: [central tower silhouette, entrance orientation, roof color blocks, flags, plaza footprint]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet: { enabled: true, columns: 5, include_states: [active, construction, damaged] }
+  alpha_bounds: { min_opaque_pixels: 1800, max_crop_margin_px: 10, bottom_anchor_tolerance_px: 10 }
+
+output:
+  runtime_dir: frontend/public/assets/buildings/center/town_hall
+  source_dir: frontend/src/assets/buildings/center/town_hall
+  use_public_glb: true
+
+references:
+  docs: [docs/buildings/center/town-hall.md]
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators: [tools/assets/blender/generate_town_hall_models.py, tools/assets/blender/regenerate_town_halls.py]
+  existing_assets: []
+
+notes:
+  - Ратуша остается civic/building-limit объектом, а не замком или храмом.

@@ -2,10 +2,11 @@
 
 ## Общая схема карты
 
-Карта состоит из двух слоев:
+Карта состоит из трех логических слоев:
 
 1. Pixi.js canvas для тайлов мира.
-2. React/DOM-слой поверх canvas для зданий, ресурсных узлов, монстров, таймеров и кнопок выбора объектов.
+2. Pixi object layer для построек, ресурсных узлов и монстров.
+3. React/DOM-слой поверх canvas только для UI-оверлеев: таймеров, бейджей производства, HUD и панелей.
 
 Главный компонент карты: `frontend/src/game/IsoMap.tsx`.
 
@@ -13,9 +14,9 @@
 
 - получает состояние камеры, viewport, выбранных объектов и объектов мира из `useGameStore`;
 - загружает видимые чанки через `useVisibleChunks`;
-- передает тайлы в `PixiStage`;
+- передает тайлы, постройки, ресурсные узлы и монстров в `PixiStage`;
 - обрабатывает drag-pan, wheel-zoom, выбор тайла;
-- показывает здания, ресурсные узлы и монстров поверх карты;
+- показывает интерактивные UI-оверлеи построек поверх карты;
 - запускает рубку леса при клике на подходящий лесной тайл;
 - фильтрует видимые объекты через `filterVisibleMapObjects`.
 
@@ -42,7 +43,7 @@
 | `wrapCameraOffset` | Оборачивание смещения камеры |
 | `nearestWrappedScreenCoord` | Поиск ближайшей экранной позиции с учетом wrap мира |
 
-## Pixi-слой тайлов
+## Pixi-Слой Карты
 
 Файл: `frontend/src/game/renderer/PixiStage.tsx`.
 
@@ -50,6 +51,10 @@
 
 - PNG-спрайтов тайлов;
 - fallback-графики тайлов;
+- построек;
+- ресурсных узлов;
+- монстров;
+- анимационных оверлеев построек;
 - overlay выбранного/hover-тайла.
 
 Тайлы сортируются по `y`, затем `x`, чтобы изометрический порядок выглядел корректнее. Если для типа terrain есть PNG-текстура, рисуется спрайт. Если текстуры нет, рисуется цветной ромб через `Graphics`.
@@ -67,8 +72,11 @@
 События мыши:
 
 - `onClick` переводит позицию указателя в tile через `eventToTile`;
+- перед выбором тайла проверяет hit areas построек, ресурсных узлов и монстров;
 - `onPointerMove` обновляет hover-тайл, если пользователь не тащит карту;
 - `onPointerLeave` сбрасывает hover.
+
+Постройки, ресурсы и монстры больше не имеют массового DOM fallback. Если для постройки нет зарегистрированного PNG в manifest registry, Pixi рисует процедурный fallback, чтобы объект не исчезал с карты.
 
 ## Текстуры terrain
 
@@ -84,38 +92,33 @@
 
 `preloadTerrainPngTextures()` прогружает все основные terrain-спрайты через Pixi `Assets.load`.
 
-## DOM-объекты карты
+## DOM-Оверлеи Карты
 
-DOM-слой находится в `IsoMap.tsx` внутри `.map-origin`.
+DOM-слой находится в `IsoMap.tsx` внутри `.map-origin`, но не рисует массовые игровые объекты. Он оставлен для UI-элементов, которым полезна обычная React-интерактивность:
 
-Для каждого видимого здания рендерится `MapObject` с классами:
+- `construction-timer`;
+- `BuildingWorkBadge`;
+- кликабельные бейджи производства и сбора;
+- dev `Performance HUD`.
 
-- `map-building`;
-- `map-building-<kind>`;
-- `map-building-construction`, если здание строится;
-- `map-building-selected`, если выбрано.
-
-Для зданий подключены модели:
-
-- `TownHallModel`;
-- `DugoutModel`;
-- `WoodHouseModel`;
-- `LumberYardModel`.
-
-Если здание строится, поверх объекта показывается `construction-timer`.
-
-Ресурсные узлы получают CSS-класс и подпись из `frontend/src/game/renderers/resources.ts`.
-
-Монстры получают CSS-класс и подпись из `frontend/src/game/renderers/monsters.ts`, а здоровье показывается полосой `monster-health`.
+Сами постройки, ресурсы и монстры выбираются через Pixi hit areas. Это убирает дублирование DOM/Pixi путей и не требует отдельного подключения React-компонента для каждого нового типа объекта.
 
 ## Рендер зданий
 
-Есть две параллельные схемы ассетов зданий:
+Основной runtime-путь построек на карте:
 
-1. PNG-спрайты через `BuildingSpriteImage`.
-2. GLB-модели через `BuildingGlbModel`.
+1. `buildingAssetManifests.ts` описывает доступные PNG/atlas/GLB источники.
+2. `buildingRegistry.ts` выбирает состояние и URL ассета.
+3. `objectLayer/objectDrawData.ts` превращает постройки в команды Pixi.
+4. `PixiStage.tsx` рисует PNG-спрайт или процедурный fallback.
 
-### PNG-спрайты
+Выбор конкретного файла теперь идет через manifest-driven registry:
+
+- `frontend/src/game/renderers/buildingAssetManifests.ts` хранит компактные данные из manifests: `building.kind`, `assetId`, категорию, уровни, состояния, источник PNG/GLB и ревизию cache-busting;
+- `frontend/src/game/renderers/buildingRegistry.ts` применяет правила уровня/состояния, clamped levels, damaged threshold и fallback `ruined -> damaged`, если в manifest нет отдельного ruined-ассета;
+- `buildingSpriteAssets.ts`, `buildingModelAssets.ts`, roads/walls lookup и build-menu preview используют registry, а не отдельные ручные таблицы путей.
+
+### PNG-Спрайты
 
 Файлы:
 
@@ -128,12 +131,9 @@ DOM-слой находится в `IsoMap.tsx` внутри `.map-origin`.
 /assets/buildings/<category>/<building>/<building>_l<level>_<state>.png
 ```
 
-Сейчас PNG-подбор явно поддерживает:
+PNG-подбор поддерживает все семьи, зарегистрированные в `buildingAssetManifests.ts`, включая modular roads/walls через shape-aware URL.
 
-- `town_hall`;
-- `dugout`;
-- `wood_house`;
-- `lumber_yard`.
+`BuildingSpriteImage` сохраняется для preview/debug UI, но карта не использует его как массовый слой.
 
 ### GLB-модели
 
@@ -144,19 +144,21 @@ DOM-слой находится в `IsoMap.tsx` внутри `.map-origin`.
 
 `BuildingGlbModel` создает Three.js renderer на canvas, грузит GLB через `GLTFLoader`, ставит ортографическую камеру и освещение, затем подгоняет модель под ячейку функцией `fitModelToCell`.
 
-Для `town_hall`, `dugout`, `wood_house` GLB импортируются из `frontend/src/assets/buildings/...` через `?url`, чтобы сборщик Vite обработал их как ассеты.
+GLB не используется как runtime-рендер карты. Он доступен только в preview/debug интерфейсах через `BuildingModelPreview`, чтобы карта не создавала сотни Three/WebGL contexts.
 
-Для `lumber_yard` GLB берется публичным URL:
+Для `town_hall`, `dugout`, `wood_house` GLB остаются в `frontend/src/assets/buildings/...` и подключаются через `import.meta.glob(..., { query: '?url' })`, чтобы сборщик Vite обработал их как ассеты.
+
+Для новых партий GLB берется публичным URL:
 
 ```text
-/assets/buildings/industry/lumber_yard/lumber_yard_l<level>_<state>.glb
+/assets/buildings/<category>/<building>/<building>_l<level>_<state>.glb
 ```
 
-Это важное отличие при добавлении новых зданий: нужно заранее выбрать, ассет импортируется сборщиком из `src/assets` или лежит публично в `public/assets`.
+Стандарт для новых моделей: `frontend/public/assets/buildings/<category>/<asset_id>/`. `src/assets` сохраняется только для legacy GLB, которые уже импортируются сборщиком.
 
 ## Уровни и состояния моделей
 
-Для каждой поддержанной визуальной ветки есть отдельный файл с правилами уровня и состояния:
+Для legacy и специализированных веток остаются отдельные файлы с правилами уровня и состояния:
 
 | Постройка | Файл |
 | --- | --- |
@@ -165,7 +167,18 @@ DOM-слой находится в `IsoMap.tsx` внутри `.map-origin`.
 | Деревянный дом | `frontend/src/game/renderers/woodHouse.ts` |
 | Лесопильный двор | `frontend/src/game/renderers/lumberYard.ts` |
 
-Эти файлы решают, какой уровень ассета и какое состояние (`active`, `construction`, `damaged`, `ruined`) показывать для `PlacedBuilding`.
+`buildingRegistry.ts` вызывает эти правила через registry policy и затем сверяет результат с states из manifest.
+После завершения строительства или апгрейда здание без критического урона всегда должно использовать `active`-ассет. `damaged`-ассет применяется только при `health <= 20% max_health`; один лишь backend-state `damaged` не должен переключать модель, если HP выше этого порога.
+
+## Debug экран ассетов
+
+В dev-сборке можно открыть runtime-проверку registry через query flag:
+
+```text
+http://localhost:5173/?assets=1
+```
+
+Панель `frontend/src/features/assets/AssetDebugPanel.tsx` показывает зарегистрированные семьи, уровни, состояния, PNG preview, GLB ссылку и локальные ошибки lookup. В обычном режиме игры панель не рендерится.
 
 ## Ассеты ресурсов
 
@@ -195,15 +208,13 @@ PNG-иконки ресурсов лежат в `frontend/public/assets/resource
 
 1. Добавить тип постройки в общий каталог `shared/catalog/buildings.ts` и в `BuildingKind` в `frontend/src/game/state/useGameStore.ts`, если типа еще нет.
 2. Добавить описание в `frontend/src/features/buildings/catalog.ts`, если постройка должна быть в меню строительства.
-3. Добавить ассеты в выбранную схему: `public/assets` или `src/assets`.
-4. Добавить правила уровня/состояния в `frontend/src/game/renderers/<building>.ts`.
-5. Подключить новый тип в `buildingSpriteAssets.ts` или `buildingModelAssets.ts`.
-6. Создать компонент модели по аналогии с `TownHallModel`, `DugoutModel`, `WoodHouseModel`, `LumberYardModel`.
-7. Подключить компонент в `IsoMap.tsx` при рендере `visibleBuildings`.
-8. Добавить тесты для правил выбора ассета.
+3. Положить новые ассеты в `frontend/public/assets/buildings/<category>/<asset_id>/` вместе с `manifest.json`.
+4. Добавить compact manifest entry в `buildingAssetManifests.ts`: `kind`, `assetId`, `category`, `levels`, `states`, source и revision при необходимости.
+5. Если нужны особые правила уровня/состояния, добавить policy в `buildingRegistry.ts`; иначе будет использован общий active/construction/damaged/ruined policy.
+6. Добавить тесты registry lookup: clamped levels, construction, damaged threshold, fallback для отсутствующих states.
+7. Если PNG еще не готов, убедиться, что procedural fallback в Pixi приемлем как временный placeholder.
 
 ## Текущие ограничения
 
-- В `IsoMap.tsx` визуальные компоненты подключены явно по `building.kind`; для многих типов из каталога пока нет индивидуального рендера.
-- PNG и GLB схемы ассетов смешаны, поэтому при добавлении здания нужно проверить оба слоя.
+- PNG и GLB схемы ассетов смешаны только для legacy `src/assets`; новые модели должны идти через `public/assets`.
 - `NotificationCenter` и часть `EventLog` пока используют статические данные и не отражают realtime-события напрямую.

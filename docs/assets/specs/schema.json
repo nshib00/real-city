@@ -1,0 +1,436 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://real-city.local/assets/specs/schema.json",
+  "title": "Real City Blender Asset Spec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_id",
+    "category",
+    "kind",
+    "footprint",
+    "levels",
+    "states",
+    "output",
+    "references",
+    "material_map",
+    "level_progression",
+    "state_policy",
+    "style_profile",
+    "skill_profile",
+    "lod_policy",
+    "png_policy"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "center",
+        "defense",
+        "fields",
+        "housing",
+        "industry",
+        "roads",
+        "social",
+        "storage",
+        "trade",
+        "resources",
+        "terrain",
+        "monsters",
+        "props"
+      ]
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["building", "resource_node", "terrain", "monster", "prop"]
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "style_profile": {
+      "type": "string",
+      "default": "aeolian_fantasy_midpoly"
+    },
+    "footprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["level", "visual_goal", "triangle_budget"],
+        "properties": {
+          "level": { "type": "integer", "minimum": 1 },
+          "visual_goal": { "type": "string" },
+          "cost_resources": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "triangle_budget": { "$ref": "#/$defs/triangleBudget" },
+          "adds": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "constraints": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "states": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/stateName"
+      },
+      "uniqueItems": true
+    },
+    "material_map": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["visible_as"],
+        "properties": {
+          "visible_as": { "type": "string" },
+          "levels": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 }
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["primary", "secondary", "accent"]
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "level_progression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mass", "height", "materials", "props", "late_elements", "constraints"],
+      "properties": {
+        "mass": { "$ref": "#/$defs/progressionRule" },
+        "height": { "$ref": "#/$defs/progressionRule" },
+        "materials": { "$ref": "#/$defs/progressionRule" },
+        "props": { "$ref": "#/$defs/progressionRule" },
+        "late_elements": { "$ref": "#/$defs/progressionRule" },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "state_policy": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/stateRule" },
+      "required": ["active", "construction", "damaged"],
+      "properties": {
+        "active": { "$ref": "#/$defs/stateRule" },
+        "construction": { "$ref": "#/$defs/stateRule" },
+        "damaged": { "$ref": "#/$defs/stateRule" },
+        "ruined": { "$ref": "#/$defs/stateRule" }
+      }
+    },
+    "skill_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "asset_type", "production", "validation"],
+      "properties": {
+        "base": { "$ref": "#/$defs/skillList" },
+        "asset_type": { "$ref": "#/$defs/skillList" },
+        "production": { "$ref": "#/$defs/skillList" },
+        "validation": { "$ref": "#/$defs/skillList" }
+      }
+    },
+    "lod_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chain", "preserve", "exports"],
+      "properties": {
+        "chain": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "ratio", "triangle_budget"],
+            "properties": {
+              "name": { "type": "string", "pattern": "^LOD[0-2]$" },
+              "ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+              "triangle_budget": { "$ref": "#/$defs/triangleBudget" },
+              "export": { "type": "boolean", "default": true }
+            }
+          }
+        },
+        "preserve": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "exports": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["naming", "include_lod0", "include_lod1", "include_lod2"],
+          "properties": {
+            "naming": { "type": "string" },
+            "include_lod0": { "type": "boolean" },
+            "include_lod1": { "type": "boolean" },
+            "include_lod2": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "png_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sprite_size",
+        "camera_profile",
+        "transparent_background",
+        "anchor",
+        "contact_sheet",
+        "alpha_bounds"
+      ],
+      "properties": {
+        "sprite_size": { "$ref": "#/$defs/intPair" },
+        "camera_profile": { "type": "string" },
+        "transparent_background": { "type": "boolean" },
+        "anchor": { "$ref": "#/$defs/intPair" },
+        "render_lod": { "type": "string", "default": "LOD0" },
+        "contact_sheet": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "columns"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "columns": { "type": "integer", "minimum": 1 },
+            "include_states": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "alpha_bounds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["min_opaque_pixels", "max_crop_margin_px", "bottom_anchor_tolerance_px"],
+          "properties": {
+            "min_opaque_pixels": { "type": "integer", "minimum": 1 },
+            "max_crop_margin_px": { "type": "integer", "minimum": 0 },
+            "bottom_anchor_tolerance_px": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "atlas_policy": { "$ref": "#/$defs/atlasPolicy" },
+    "animation_policy": { "$ref": "#/$defs/animationPolicy" },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runtime_dir", "source_dir", "use_public_glb"],
+      "properties": {
+        "runtime_dir": { "type": "string" },
+        "source_dir": { "type": "string" },
+        "use_public_glb": { "type": "boolean" }
+      }
+    },
+    "references": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["docs", "art_guide"],
+      "properties": {
+        "docs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "art_guide": { "type": "string" },
+        "existing_generators": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "existing_assets": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "stateName": {
+      "type": "string",
+      "pattern": "^(active|construction|damaged|ruined|upgrading|stage[0-9]{2}|super_stage[0-9]{2})$"
+    },
+    "intPair": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "integer" },
+        { "type": "integer" }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "skillList": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "triangleBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "progressionRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule"],
+      "properties": {
+        "rule": { "type": "string" },
+        "by_level": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "stateRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule"],
+      "properties": {
+        "rule": { "type": "string" },
+        "required_elements": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "forbidden_elements": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "atlasPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "image_format", "json_naming", "image_naming", "padding_px", "max_texture_size"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "image_format": { "type": "string", "enum": ["png", "webp", "avif"] },
+        "json_naming": { "type": "string" },
+        "image_naming": { "type": "string" },
+        "padding_px": { "type": "integer", "minimum": 0 },
+        "max_texture_size": { "type": "integer", "minimum": 512 },
+        "include_static_sprites": { "type": "boolean", "default": true },
+        "include_animation_frames": { "type": "boolean", "default": true }
+      }
+    },
+    "animationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "frame_size": { "$ref": "#/$defs/intPair" },
+        "anchor": { "$ref": "#/$defs/intPair" },
+        "frame_naming": { "type": "string" },
+        "contact_sheet": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "columns", "output_name"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "columns": { "type": "integer", "minimum": 1 },
+            "output_name": { "type": "string" }
+          }
+        },
+        "building_overlays": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/buildingOverlayAnimation" }
+        },
+        "monster_actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/monsterActionAnimation" }
+        }
+      },
+      "anyOf": [
+        { "required": ["building_overlays"] },
+        { "required": ["monster_actions"] }
+      ]
+    },
+    "baseAnimation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "fps", "frames", "loop", "frame_prefix"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "fps": { "type": "number", "exclusiveMinimum": 0 },
+        "frames": { "type": "integer", "minimum": 1 },
+        "loop": { "type": "boolean" },
+        "frame_prefix": { "type": "string" },
+        "anchor": { "$ref": "#/$defs/intPair" },
+        "notes": { "type": "string" }
+      }
+    },
+    "buildingOverlayAnimation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "fps", "frames", "loop", "frame_prefix"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "type": { "type": "string", "enum": ["overlay", "shared_overlay"] },
+        "fps": { "type": "number", "exclusiveMinimum": 0 },
+        "frames": { "type": "integer", "minimum": 1 },
+        "loop": { "type": "boolean" },
+        "frame_prefix": { "type": "string" },
+        "anchor": { "$ref": "#/$defs/intPair" },
+        "states": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/stateName" },
+          "uniqueItems": true
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "monsterActionAnimation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "fps", "frames", "loop", "frame_prefix", "directions"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "fps": { "type": "number", "exclusiveMinimum": 0 },
+        "frames": { "type": "integer", "minimum": 1 },
+        "loop": { "type": "boolean" },
+        "frame_prefix": { "type": "string" },
+        "anchor": { "$ref": "#/$defs/intPair" },
+        "directions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "enum": ["n", "ne", "e", "se", "s", "sw", "w", "nw"] },
+          "uniqueItems": true
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

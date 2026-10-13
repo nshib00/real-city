@@ -1,0 +1,225 @@
+asset_id: clay_quarry
+category: industry
+kind: building
+display_name: Глиняный карьер
+style_profile: aeolian_fantasy_midpoly
+
+footprint:
+  width: 1
+  height: 1
+
+levels:
+  - level: 1
+    visual_goal: Маленькая влажная терракотовая выемка с лопатой, тачкой, формами и веревочной разметкой.
+    cost_resources: [coins, wood, planks, rope]
+    triangle_budget: { min: 1800, max: 3600 }
+    adds: [wet_clay_pit, rope_markers, hand_tools, wheelbarrow]
+  - level: 2
+    visual_goal: Расширенная яма с дощатыми настилами, кучами сырой глины и постоянной рабочей площадкой.
+    cost_resources: [coins, wood, planks, rope]
+    triangle_budget: { min: 2000, max: 3900 }
+    adds: [plank_walkway, clay_piles, timber_retainers]
+  - level: 3
+    visual_goal: Каменные подпорки, простой желоб и маленький кремово-белый ящик каолина.
+    cost_resources: [coins, planks, stone, stone_block]
+    triangle_budget: { min: 2300, max: 4300 }
+    adds: [stone_retainers, sorting_chute, kaolin_crate]
+  - level: 4
+    visual_goal: Укрепленные борта, ворот с подъемной корзиной, навес и аккуратные проходы.
+    cost_resources: [coins, planks, stone_block, brick, rope]
+    triangle_budget: { min: 2600, max: 4700 }
+    adds: [hoist, brick_courses, drying_canopy]
+  - level: 5
+    visual_goal: Кирпичные борта, медные крепления, насосная труба и больше рабочих форм.
+    cost_resources: [coins, brick, copper_parts, iron_ingot, planks]
+    triangle_budget: { min: 2900, max: 5200 }
+    adds: [copper_clamps, pump_pipe, brick_reinforcement]
+  - level: 6
+    visual_goal: Железные стойки, сортировочный стол, длинный желоб и защищенный проход.
+    cost_resources: [coins, brick, copper_parts, iron_ingot, mechanism]
+    triangle_budget: { min: 3200, max: 5600 }
+    adds: [iron_frame, sifter, longer_chute]
+  - level: 7
+    visual_goal: Бензиновый мотор, топливная бочка, рельсовая тележка и механический скребок.
+    cost_resources: [coins, copper_parts, iron_ingot, mechanism, steel]
+    triangle_budget: { min: 3500, max: 6100 }
+    adds: [fuel_barrel, gasoline_motor, rail_cart, scraper]
+  - level: 8
+    visual_goal: Металлическая ферма, компактный транспортер и тяжелые укрепленные борта.
+    cost_resources: [coins, mechanism, steel, reinforced_concrete, premium_planks]
+    triangle_budget: { min: 3900, max: 6600 }
+    adds: [steel_truss, conveyor, reinforced_edges]
+  - level: 9
+    visual_goal: Железобетонные укрепления, операторский пост, насос и закрытая емкость каолина.
+    cost_resources: [coins, mechanism, steel, reinforced_concrete, blue_salt]
+    triangle_budget: { min: 4300, max: 7200 }
+    adds: [operator_post, kaolin_tank, wash_line]
+  - level: 10
+    visual_goal: Стальные балки, защищенный привод, две зоны складирования и руническая защитная кровля.
+    cost_resources: [coins, mechanism, reinforced_concrete, rune_tile, premium_planks]
+    triangle_budget: { min: 4700, max: 7800 }
+    adds: [protected_drive, rune_tile_roof, clean_walkways]
+  - level: 11
+    visual_goal: Мощный скребок, отдельная линия промывки и золотистые калибровочные детали.
+    cost_resources: [coins, super_mechanism, reinforced_concrete, blue_salt, rune_tile]
+    triangle_budget: { min: 5200, max: 8600 }
+    adds: [super_mechanism, wash_line, gold_calibration]
+  - level: 12
+    visual_goal: Максимальный карьер с железобетонным периметром, закрытым топливным узлом и читаемыми запасами глины/каолина.
+    cost_resources: [coins, super_mechanism, reinforced_concrete, gold_ingot, premium_planks]
+    triangle_budget: { min: 5600, max: 9400 }
+    adds: [sealed_fuel_unit, heavy_perimeter, kaolin_storage, final_drive]
+
+states: [active, construction, damaged]
+
+material_map:
+  wood:
+    visible_as: колышки, ручки инструментов, ранние подпорки
+    priority: primary
+    levels: [1, 2]
+  planks:
+    visible_as: настилы, формы для сырой глины, мостки и строительные штабели
+    priority: primary
+    levels: [1, 2, 3, 4, 5]
+  rope:
+    visible_as: веревочная разметка, поручни, трос ворота
+    priority: secondary
+    levels: [1, 2, 4]
+  stone:
+    visible_as: каменные подпорки и отдельные блоки укрепления борта
+    priority: secondary
+    levels: [3]
+  stone_block:
+    visible_as: крупная кладка вокруг выемки
+    priority: primary
+    levels: [3, 4]
+  brick:
+    visible_as: кирпичные курсы удерживающего борта
+    priority: primary
+    levels: [4, 5, 6]
+  copper_parts:
+    visible_as: медные зажимы, шестерни и ранняя насосная арматура
+    priority: secondary
+    levels: [5, 6, 7]
+  iron_ingot:
+    visible_as: железные стойки, рамы, зубчатые колеса
+    priority: secondary
+    levels: [5, 6, 7]
+  mechanism:
+    visible_as: сортировщик, привод скребка, транспортер
+    priority: primary
+    levels: [6, 7, 8, 9, 10]
+  steel:
+    visible_as: стальные балки, ферма и защитные кожухи
+    priority: primary
+    levels: [7, 8, 9]
+  reinforced_concrete:
+    visible_as: светло-серый железобетонный периметр котлована
+    priority: primary
+    levels: [8, 9, 10, 11, 12]
+  premium_planks:
+    visible_as: прочный настил операторской площадки и поздних проходов
+    priority: secondary
+    levels: [8, 10, 12]
+  rune_tile:
+    visible_as: небольшой защитный навес над приводом
+    priority: tertiary
+    levels: [10, 11]
+  blue_salt:
+    visible_as: умеренные сине-бирюзовые метки промывочной линии
+    priority: tertiary
+    levels: [9, 11]
+  gold_ingot:
+    visible_as: маленькие золотистые калибровочные диски и крышки
+    priority: tertiary
+    levels: [12]
+  super_mechanism:
+    visible_as: компактный поздний приводной узел со стальными колесами и золотистой настройкой
+    priority: primary
+    levels: [11, 12]
+
+level_progression:
+  mass:
+    rule: Котлован и рабочая зона постепенно насыщаются укреплениями, но остаются в 1x1 footprint.
+  height:
+    rule: Высота растет через ворот, ферму, операторский пост и привод; центр остается открытым.
+  materials:
+    rule: Терракотовая влажная глина остается главным материалом, новые ресурсы читаются как реальные детали апгрейда.
+  props:
+    rule: "Каждый prop крупный и функциональный: формы, тачка, желоб, насос, бочка, скребок, каолиновая тара."
+  constraints:
+    - Не добавлять шахтный портал.
+    - Не превращать карьер в закрытый завод.
+    - Отличать палитру от песчаного карьера: красно-коричневая влажная глина, не сухой желтый песок.
+
+state_policy:
+  active:
+    rule: Рабочий открытый карьер без лесов и без разрушений.
+  construction:
+    rule: Недостроенный целевой уровень с отсутствующими участками бортов, частично собранной механикой и материалами на площадке.
+    required_elements: [scaffolding, unfinished_frame, stacked_materials]
+  damaged:
+    rule: Обвалившиеся борта, сломанные настилы, поврежденные трубы/моторы и отдельные обломки поверх неизменной ground-клетки.
+    required_elements: [caved_edge, broken_walkway, debris, bent_mechanism]
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, prop-artist, hard-surface]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - name: LOD0
+      ratio: 1.0
+      triangle_budget: { min: 1800, max: 9400 }
+      export: true
+    - name: LOD1
+      ratio: 0.55
+      triangle_budget: { min: 800, max: 5200 }
+      export: true
+    - name: LOD2
+      ratio: 0.28
+      triangle_budget: { min: 350, max: 2400 }
+      export: true
+  preserve: [footprint, open clay pit, hoist or mechanism silhouette, largest props]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet:
+    enabled: true
+    columns: 3
+    include_states: [active, construction, damaged]
+  alpha_bounds:
+    min_opaque_pixels: 1200
+    max_crop_margin_px: 10
+    bottom_anchor_tolerance_px: 10
+
+output:
+  runtime_dir: frontend/public/assets/buildings/industry/clay_quarry
+  source_dir: frontend/src/assets/buildings/industry/clay_quarry
+  use_public_glb: true
+
+references:
+  docs:
+    - docs/buildings/industry/clay-quarry.md
+    - docs/art/visual-style-guide.md
+  existing_generators:
+    - tools/assets/blender/generate_sand_quarry_models.py
+    - tools/assets/blender/generate_mine_models.py
+  existing_assets:
+    - frontend/public/assets/buildings/industry/sand_quarry/
+    - frontend/public/assets/buildings/industry/mine/
+
+notes:
+  - Уровни 7-12 должны визуально показывать бензиновую механику через бочку, мотор, закрытый топливный узел или привод.
+  - Каолин показывать как редкий кремово-белый акцент начиная с 3 уровня.

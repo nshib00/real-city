@@ -1,0 +1,190 @@
+asset_id: reed_bed
+category: fields
+kind: building
+display_name: Тростниковая грядка
+style_profile: aeolian_fantasy_midpoly
+
+footprint:
+  width: 1
+  height: 1
+
+levels:
+  - level: 1
+    visual_goal: Низкая лодкообразная влажная грядка с деревянными кольями, глиняной ванночкой, первыми канавками воды и редкими короткими стеблями.
+    cost_resources: [planks, clay, rope]
+    triangle_budget: { min: 2400, max: 5600 }
+  - level: 2
+    visual_goal: Борта чуть выше, больше плетеных перемычек, веревочных стяжек и первых кирпичных вставок на углах.
+    cost_resources: [planks, clay, rope, brick]
+    triangle_budget: { min: 2600, max: 6200 }
+  - level: 3
+    visual_goal: Появляются тканевые метки уровня воды, плотнее тростник и маленький мостик-доска над канавкой.
+    cost_resources: [planks, clay, rope, brick, fabric]
+    triangle_budget: { min: 2900, max: 7000 }
+  - level: 4
+    visual_goal: Укрепленная глиняно-кирпичная ванна с видимыми каменными подпятниками и угловым сливом.
+    cost_resources: [planks, clay, rope, brick, stone_block]
+    triangle_budget: { min: 3200, max: 7800 }
+  - level: 5
+    visual_goal: Высокие глиняные борта, плотные вертикальные пучки, мокрые связки срезанного тростника и вторичный желобок.
+    cost_resources: [planks, clay, rope, brick, stone_block]
+    triangle_budget: { min: 3500, max: 8400 }
+  - level: 6
+    visual_goal: Премиальные верхние рейки, синяя соль как холодные водные маркеры и аккуратная сетка каналов.
+    cost_resources: [premium_planks, clay, rope, brick, stone_block, blue_salt]
+    triangle_budget: { min: 3800, max: 9000 }
+  - level: 7
+    visual_goal: Часть кольев заменена каменно-глиняными ребрами, добавлены железные скобы и более высокий контур удержания воды.
+    cost_resources: [premium_planks, clay, rope, stone_block, iron_ingot, blue_salt]
+    triangle_budget: { min: 4100, max: 9600 }
+  - level: 8
+    visual_goal: Поздняя береговая ванна с каменной кромкой, железными лентами и редким светокристальным маркером у водного желоба.
+    cost_resources: [premium_planks, clay, rope, stone_block, iron_ingot, light_crystal]
+    triangle_budget: { min: 4400, max: 10300 }
+  - level: 9
+    visual_goal: Высокие узкие борта, густой зрелый тростник, двойные мерные планки и несколько холодных световых акцентов.
+    cost_resources: [premium_planks, clay, rope, stone_block, iron_ingot, light_crystal]
+    triangle_budget: { min: 4700, max: 11000 }
+  - level: 10
+    visual_goal: Финальная инженерная тростниковая грядка с самой высокой лодкообразной ванной, усиленным сливом, плотными связками и super-seed/sample декором.
+    cost_resources: [premium_planks, clay, rope, stone_block, iron_ingot, blue_salt, light_crystal]
+    triangle_budget: { min: 5000, max: 11800 }
+
+states: [active, construction, damaged]
+
+material_map:
+  wood:
+    visible_as: legacy-совместимость с текущим каталогом; в модели читается как ранние темные колья до полной замены каталога на planks/clay/rope
+    priority: secondary
+    levels: [1]
+  planks:
+    visible_as: ранние мостки, верхние рейки и тонкие ребристые колья
+    priority: primary
+    levels: [1, 2, 3, 4, 5]
+  premium_planks:
+    visible_as: поздние гладкие верхние рейки, мостки и защитные крышки образцов
+    priority: primary
+    levels: [6, 7, 8, 9, 10]
+  clay:
+    visible_as: лодкообразная влажная ванна, глиняные заплатки и угловой слив-носик
+    priority: primary
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  rope:
+    visible_as: мокрые стяжки на кольях, перевязанные пучки тростника и канатные перемычки
+    priority: primary
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  brick:
+    visible_as: кирпичные вставки в глиняном борту и ранние укрепленные углы
+    priority: secondary
+    levels: [2, 3, 4, 5, 6]
+  fabric:
+    visible_as: тканевые метки уровня воды и маленькие холодные флажки
+    priority: secondary
+    levels: [3, 4, 5, 6, 7, 8, 9, 10]
+  stone_block:
+    visible_as: каменные подпятники, кромка береговой ванны и защитные углы
+    priority: secondary
+    levels: [4, 5, 6, 7, 8, 9, 10]
+  iron_ingot:
+    visible_as: тонкие скобы, железные ленты на позднем борту и крепеж сливного узла
+    priority: accent
+    levels: [7, 8, 9, 10]
+  blue_salt:
+    visible_as: холодные капли-маркеры влажности в канавках без общего магического свечения
+    priority: accent
+    levels: [6, 7, 10]
+  light_crystal:
+    visible_as: редкие тонкие голубовато-аметистовые маркеры на позднем водном желобе
+    priority: accent
+    levels: [8, 9, 10]
+
+level_progression:
+  mass:
+    rule: Каждый уровень повышает и усложняет лодкообразную ванну, добавляет новые ребра, мостки, желоба или связки.
+  height:
+    rule: Борта растут постепенно от низких кольев до высокой узкой влажной ванны, но остаются легче сахарной грядки.
+  materials:
+    rule: Глина, доски, веревки, кирпичи, камень, железо и редкие водные акценты представлены как видимые части конструкции.
+  props:
+    rule: "Props только береговые и тростниковые: мерные планки, слив-носик, мокрые связки, мини-мостик, желобки и холодные маркеры воды."
+  late_elements:
+    rule: Синяя соль и светокристаллы появляются умеренно на поздних уровнях как маркеры влажности, а не как магическая оранжерея.
+  constraints:
+    - Не использовать толстые сахарные стебли, аптекарские бирки, грибные коряги или цветочные красильные ванночки.
+    - Сохранять вертикальный тонкий силуэт тростника и холодную влажную палитру.
+    - Основание active, construction и damaged одного уровня должно совпадать по земле, камере и anchor.
+
+state_policy:
+  active:
+    rule: Готовая влажная лодкообразная грядка с тростником, водными канавками, мерными планками, стяжками и уровневым декором.
+  construction:
+    rule: Та же земляная форма, но 30-60% борта не собрано; видны пустая влажная площадка, открытые канавки, лежащие колья, глина и веревки.
+  damaged:
+    rule: Сломанные стебли, размытые канавки, провалившиеся секции борта, упавшие колья и мокрые обломки без разрушения ground-клетки.
+  ruined:
+    rule: Низкая грязная площадка с остатками кольев, редкими сухими стеблями, разорванными стяжками и разрушенным сливом.
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, vegetation-artist, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - name: LOD0
+      ratio: 1.0
+      triangle_budget: { min: 2400, max: 11800 }
+      export: true
+    - name: LOD1
+      ratio: 0.45
+      triangle_budget: { min: 1000, max: 5300 }
+      export: true
+    - name: LOD2
+      ratio: 0.22
+      triangle_budget: { min: 400, max: 2600 }
+      export: true
+  preserve: [footprint, boat-shaped wet basin, reed stalk silhouette, water grooves, measuring boards, ground tile]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet:
+    enabled: true
+    columns: 4
+    include_states: [active, construction, damaged, ruined]
+  alpha_bounds:
+    min_opaque_pixels: 1200
+    max_crop_margin_px: 10
+    bottom_anchor_tolerance_px: 10
+
+output:
+  runtime_dir: frontend/public/assets/buildings/fields/reed_bed
+  source_dir: frontend/src/assets/buildings/fields/reed_bed
+  use_public_glb: true
+
+references:
+  docs:
+    - docs/buildings/fields/reed-bed.md
+    - docs/buildings/fields/fields-and-beds.md
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators:
+    - tools/assets/blender/regenerate_seed_garden_blender.py
+    - tools/assets/blender/regenerate_flax_field_blender.py
+    - tools/assets/blender/regenerate_herb_bed_blender.py
+  existing_assets:
+    - frontend/public/assets/buildings/fields/seed_garden
+    - frontend/public/assets/buildings/fields/flax_field
+    - frontend/public/assets/buildings/fields/windleaf_bed
+
+notes:
+  - Генератор выпускает расширенный runtime-набор состояний сверх базовой factory-схемы: stage01-stage03, active, construction, damaged, ruined, super_stage01-super_stage06.
+  - Текущий игровой каталог еще содержит только 1 уровень reed_bed со старой стоимостью; модельная задача намеренно готовит 10 уровней по обновленной документации постройки.

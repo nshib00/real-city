@@ -1,0 +1,180 @@
+asset_id: herb_bed
+category: fields
+kind: building
+display_name: Травяная грядка
+style_profile: aeolian_fantasy_midpoly
+
+footprint:
+  width: 1
+  height: 1
+
+levels:
+  - level: 1
+    visual_goal: Низкая аптекарская грядка со скругленным плетнем, рыхлой почвой, редкими пучками трав и несколькими бирками.
+    cost_resources: [seeds, planks, fabric, rope, windleaf]
+    triangle_budget: { min: 2400, max: 5600 }
+  - level: 2
+    visual_goal: Плетень чуть выше, больше веревочных узлов, тканевых полос и отдельных травяных кустов.
+    cost_resources: [seeds, planks, fabric, rope, windleaf, brick]
+    triangle_budget: { min: 2600, max: 6100 }
+  - level: 3
+    visual_goal: Появляются раздвоенные Y-стойки, лечебные бирки и первые сушильные перекладины.
+    cost_resources: [seeds, planks, fabric, rope, windleaf, stone_block]
+    triangle_budget: { min: 2900, max: 6800 }
+  - level: 4
+    visual_goal: Борт становится выше, добавлены каменные подпятники, аккуратные подвязки и плотные разные оттенки зелени.
+    cost_resources: [seeds, planks, fabric, rope, stone_block, iron_ingot]
+    triangle_budget: { min: 3200, max: 7400 }
+  - level: 5
+    visual_goal: Появляются премиум-доски, маленькая сушильная рамка, лейка и первые синие солевые акценты.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, blue_salt]
+    triangle_budget: { min: 3500, max: 8000 }
+  - level: 6
+    visual_goal: Укрепленный аптекарский контур с верхними резными планками, тканевыми лентами и полкой для бирок.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, blue_salt]
+    triangle_budget: { min: 3800, max: 8600 }
+  - level: 7
+    visual_goal: Поздняя грядка с каменным цоколем, плотными рядами трав, редкими цветочными акцентами и защитными колпачками.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, emerald_dust]
+    triangle_budget: { min: 4100, max: 9200 }
+  - level: 8
+    visual_goal: Богатая аптекарская грядка с несколькими стеклянными колпаками, изумрудной пылью и редкими цветками.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, emerald_dust, rare_flowers]
+    triangle_budget: { min: 4400, max: 9800 }
+  - level: 9
+    visual_goal: Финальная травяная грядка с высоким плетеным бортом, резными листовыми узорами, центральным редким цветком и супер-семенным акцентом.
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, emerald_dust, super_seeds]
+    triangle_budget: { min: 4700, max: 10500 }
+
+states: [active, construction, damaged]
+
+material_map:
+  seeds:
+    visible_as: лотки и метки посадки, ранние ростки и защищенный супер-семенной контейнер
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  planks:
+    visible_as: плетеные панели, верхние планки и Y-стойки
+    priority: primary
+    levels: [1, 2, 3, 4]
+  premium_planks:
+    visible_as: резные верхние планки, сушильные рамки и поздние полки для бирок
+    priority: primary
+    levels: [5, 6, 7, 8, 9]
+  fabric:
+    visible_as: приглушенные teal/cream тканевые полосы, сушильные ленты и мягкие подвязки
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  rope:
+    visible_as: веревочные узлы на Y-стойках, подвязки и сушильные перекладины
+    priority: primary
+    levels: [1, 2, 3, 4]
+  windleaf:
+    visible_as: крупные зеленые листовые акценты на раннем плетне и мягкие аптекарские орнаменты
+    priority: accent
+    levels: [1, 2, 3]
+  stone_block:
+    visible_as: каменные подпятники, низкий цоколь и поздние защитные углы
+    priority: secondary
+    levels: [3, 4, 5, 6, 7, 8, 9]
+  iron_ingot:
+    visible_as: тонкие скобы сушильных рамок и крепеж на поздних верхних планках
+    priority: accent
+    levels: [4, 5, 6, 7, 8, 9]
+  blue_salt:
+    visible_as: маленькие холодные метки влажности у редких трав, без общего свечения грядки
+    priority: accent
+    levels: [5, 6]
+  emerald_dust:
+    visible_as: редкие изумрудные точки на колпаках и вокруг поздних цветков
+    priority: accent
+    levels: [7, 8, 9]
+
+level_progression:
+  mass:
+    rule: Каждый уровень добавляет реальную высоту плетня, новые секции борта и больше аптекарских props, а не только меняет цвет травы.
+  height:
+    rule: Борта растут постепенно от низкого плетня до укрепленной, но все еще низкой полевой грядки.
+  materials:
+    rule: Доски, ткань, веревки, каменные блоки, железо и редкие порошки представлены как видимые конструктивные детали.
+  props:
+    rule: "Props аптекарские: бирки, лотки, пучки трав, мини-лейка, сушильные рамки, полки и стеклянные колпаки."
+  late_elements:
+    rule: Стеклянные колпаки и редкие цветы появляются только на 7-9 уровнях и не делают грядку похожей на оранжерею.
+  constraints:
+    - Не использовать прямые прямоугольные plank walls Семенного огорода.
+    - Не использовать водные маркеры Тростниковой грядки, грибные шляпки Грибницы или яркие красильные ванночки Красильного сада.
+    - Основание active, construction и damaged одного уровня должно совпадать по земле, камере и anchor.
+
+state_policy:
+  active:
+    rule: Полная аптекарская грядка со скругленным плетнем, рядами трав, бирками, сушильными пучками и уровневым декором.
+  construction:
+    rule: Та же земляная форма, но 30-60% борта не собрано; видны лежащие прутья, ткань, веревки и незаконченные Y-стойки.
+  damaged:
+    rule: Сломанные секции плетня, примятая зелень, упавшие Y-стойки, разорванные тканевые ленты и сухие пучки.
+  ruined:
+    rule: Почти пустая скругленная площадка с остатками лозы, сухими травами, сломанными бирками и несколькими обломками.
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, vegetation-artist, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - name: LOD0
+      ratio: 1.0
+      triangle_budget: { min: 2400, max: 10500 }
+      export: true
+    - name: LOD1
+      ratio: 0.45
+      triangle_budget: { min: 1000, max: 4800 }
+      export: true
+    - name: LOD2
+      ratio: 0.22
+      triangle_budget: { min: 400, max: 2100 }
+      export: true
+  preserve: [footprint, rounded wicker wall, Y-posts, herb rows, drying bundles, ground tile]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet:
+    enabled: true
+    columns: 4
+    include_states: [active, construction, damaged, ruined]
+  alpha_bounds:
+    min_opaque_pixels: 1200
+    max_crop_margin_px: 10
+    bottom_anchor_tolerance_px: 10
+
+output:
+  runtime_dir: frontend/public/assets/buildings/fields/herb_bed
+  source_dir: frontend/src/assets/buildings/fields/herb_bed
+  use_public_glb: true
+
+references:
+  docs:
+    - docs/buildings/fields/herb-bed.md
+    - docs/buildings/fields/fields-and-beds.md
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators:
+    - tools/assets/blender/regenerate_seed_garden_blender.py
+    - tools/assets/blender/regenerate_mushroom_grove_blender.py
+  existing_assets:
+    - frontend/public/assets/buildings/fields/seed_garden
+    - frontend/public/assets/buildings/fields/windleaf_bed
+
+notes:
+  - Генератор выпускает расширенный runtime-набор состояний сверх базовой factory-схемы: stage01-stage03, active, construction, damaged, ruined, super_stage01-super_stage06.
+  - Текущий игровой каталог еще содержит только 1 уровень herb_bed; модельная задача намеренно готовит 9 уровней по обновленной документации постройки.

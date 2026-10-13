@@ -1,0 +1,120 @@
+asset_id: dugout
+category: housing
+kind: building
+display_name: Землянка
+style_profile: aeolian_fantasy_midpoly
+
+footprint: { width: 1, height: 1 }
+states: [active, construction, damaged]
+
+levels:
+  - level: 1
+    visual_goal: Низкий земляной бугор с грубой дверью, трубой, бревнами и вытоптанным входом.
+    cost_resources: [coins, wood]
+    triangle_budget: { min: 1500, max: 3000 }
+    adds: [earth_mound, log_door_frame, small_chimney]
+  - level: 2
+    visual_goal: Шире укрепленный холм с боковыми бревнами, тяжелой перемычкой и поленницей.
+    cost_resources: [coins, wood]
+    triangle_budget: { min: 1700, max: 3400 }
+    adds: [side_log_reinforcement, woodpile]
+  - level: 3
+    visual_goal: Появляются листья ветролиста, боковые подпорки, ограда и более высокая труба.
+    cost_resources: [coins, wood, windleaf]
+    triangle_budget: { min: 2000, max: 3900 }
+    adds: [windleaf_roof_patches, side_fence, taller_chimney]
+  - level: 4
+    visual_goal: Плотная лиственная крыша, дощатый навес, ступени, обшивка фасада и маленькое окно.
+    cost_resources: [coins, wood, windleaf, planks]
+    triangle_budget: { min: 2400, max: 4700 }
+    adds: [leaf_roof, plank_awning, steps, small_window]
+  - level: 5
+    visual_goal: Развитое крыльцо, дощатый фасад и деревянная обвязка вокруг основания.
+    cost_resources: [coins, wood, windleaf, planks]
+    triangle_budget: { min: 2800, max: 5500 }
+    adds: [porch, plank_facade, wooden_foundation_ring]
+
+material_map:
+  wood:
+    visible_as: бревна, подпорки, рамка двери, поленница
+    priority: primary
+    levels: [1, 2, 3, 4, 5]
+  windleaf:
+    visible_as: крупные зеленые листья на дерновой крыше
+    priority: secondary
+    levels: [3, 4, 5]
+  planks:
+    visible_as: дощатый навес, крыльцо, фасадная обшивка, деревянная обвязка
+    priority: secondary
+    levels: [4, 5]
+  coins:
+    visible_as: бытовые props без прямого материала - ящик, простая утварь, аккуратность двора
+    priority: accent
+    levels: [1, 2, 3, 4, 5]
+
+level_progression:
+  mass:
+    rule: Холм постепенно расширяется, но остается низким и ранним по статусу.
+  height:
+    rule: Высота растет только за счет трубы, навеса и плотности крыши; не превращать в дом.
+  materials:
+    rule: Земля и бревна доминируют на ранних уровнях, ветролист и доски читаются с 3-5 уровней.
+  props:
+    rule: "Добавлять крупные props у входа: поленница, ящик, ступени, простая ограда."
+  late_elements:
+    rule: На 5 уровне показать подготовку к переходу в деревянный дом через обвязку и фасад.
+  constraints:
+    - Сохранять низкий полуземляной силуэт.
+    - Не делать магический дом и не использовать кристаллы как основной материал.
+
+state_policy:
+  active:
+    rule: Обжитая полуземлянка с чистым входом, дымоходом и читаемыми материалами уровня.
+  construction:
+    rule: Незавершенный склон с открытым каркасом входа, насыпью земли, бревнами и стопками материалов.
+    required_elements: [unfinished_mound, log_frame, stacked_materials]
+  damaged:
+    rule: Просевшая крыша, трещины у входа, сломанные подпорки и обломки, но дверь и холм узнаваемы.
+    required_elements: [sunken_roof, broken_supports, debris]
+    forbidden_elements: [full_collapse]
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 1500, max: 5500 }, export: true }
+    - { name: LOD1, ratio: 0.45, triangle_budget: { min: 700, max: 2400 }, export: true }
+    - { name: LOD2, ratio: 0.22, triangle_budget: { min: 300, max: 1000 }, export: true }
+  preserve: [low mound silhouette, entrance orientation, chimney, roof material patches]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet: { enabled: true, columns: 5, include_states: [active, construction, damaged] }
+  alpha_bounds: { min_opaque_pixels: 1200, max_crop_margin_px: 10, bottom_anchor_tolerance_px: 10 }
+
+output:
+  runtime_dir: frontend/public/assets/buildings/housing/dugout
+  source_dir: frontend/src/assets/buildings/housing/dugout
+  use_public_glb: true
+
+references:
+  docs: [docs/buildings/houses/dugout.md]
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators: [tools/assets/blender/generate_dugout_models.py]
+  existing_assets: []
+
+notes:
+  - PNG рендерить из LOD0, GLB сохранять с LOD-цепочкой для будущего 3D-preview.

@@ -1,0 +1,129 @@
+asset_id: wood_house
+category: housing
+kind: building
+display_name: Деревянный дом
+style_profile: aeolian_fantasy_midpoly
+
+footprint: { width: 1, height: 1 }
+states: [active, construction, damaged]
+
+levels:
+  - level: 1
+    visual_goal: Небольшой аккуратный деревянный дом на старом основании, простая крыша, крыльцо и теплые окна.
+    cost_resources: [coins, planks, stone, glass]
+    triangle_budget: { min: 2200, max: 4200 }
+    adds: [plank_walls, stone_base, porch, warm_windows]
+  - level: 2
+    visual_goal: Дом шире и выше, с цветным кантом крыши, низким забором и поленницей.
+    cost_resources: [coins, planks, stone, glass]
+    triangle_budget: { min: 2500, max: 4700 }
+    adds: [roof_trim, low_fence, woodpile]
+  - level: 3
+    visual_goal: Мансардное окно или малый второй ярус, больше стекла и аккуратнее крыльцо.
+    cost_resources: [coins, planks, stone, glass]
+    triangle_budget: { min: 3000, max: 5200 }
+    adds: [dormer_window, second_tier_hint, larger_porch]
+  - level: 4
+    visual_goal: Боковая пристройка, прочный цоколь, декоративные балки, расширенная крыша и заметная труба.
+    cost_resources: [coins, planks, stone, glass]
+    triangle_budget: { min: 3400, max: 5800 }
+    adds: [side_extension, stronger_plinth, decorative_beams]
+  - level: 5
+    visual_goal: Двухъярусный силуэт, улучшенная крыша, богатый двор, фонарь или знак квартала.
+    cost_resources: [coins, planks, stone, glass]
+    triangle_budget: { min: 3800, max: 6400 }
+    adds: [two_tier_silhouette, yard_props, warm_lantern]
+  - level: 6
+    visual_goal: Максимально укрепленный деревянный дом с каменным цоколем, каменными вставками и сложной крышей.
+    cost_resources: [coins, planks, stone, glass, stone_block]
+    triangle_budget: { min: 4200, max: 7000 }
+    adds: [stone_block_accents, complex_roof, ordered_yard]
+
+material_map:
+  planks:
+    visible_as: светлые доски стен, фасадная обшивка, крыльцо, декоративные балки
+    priority: primary
+    levels: [1, 2, 3, 4, 5, 6]
+  stone:
+    visible_as: низкий цоколь, камни старого основания, ступени и подпорки
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6]
+  glass:
+    visible_as: маленькие теплые окна с простыми рамами
+    priority: accent
+    levels: [1, 2, 3, 4, 5, 6]
+  stone_block:
+    visible_as: крупные каменные вставки в цоколе и усиленных углах
+    priority: secondary
+    levels: [6]
+  coins:
+    visible_as: аккуратность двора, фонарь, бочка, лавка и бытовые props
+    priority: accent
+    levels: [1, 2, 3, 4, 5, 6]
+
+level_progression:
+  mass:
+    rule: Дом растет от компактного объема к более широкому и двухъярусному силуэту.
+  height:
+    rule: Высота выше землянки, но ниже каменных и городских зданий.
+  materials:
+    rule: Доски доминируют всегда, камень усиливает основание, стекло остается маленькими теплыми окнами.
+  props:
+    rule: "Дворовые props крупные и редкие: забор, поленница, бочка, фонарь."
+  late_elements:
+    rule: Уровень 6 показывает мост к каменному дому через каменные блоки и усиленный цоколь.
+  constraints:
+    - Сохранять 1x1 footprint и ориентацию входа.
+    - Не делать современный фасад или поздне-технологичное стекло.
+
+state_policy:
+  active:
+    rule: Готовый теплый дом с читаемой крышей, окнами, крыльцом и дворовыми деталями.
+  construction:
+    rule: Открытый деревянный каркас, частичная крыша, стопки досок и временные балки.
+    required_elements: [open_frame, partial_roof, plank_stacks]
+  damaged:
+    rule: Обугленные доски, трещины, выбитые окна и просевшая крыша без потери силуэта.
+    required_elements: [charred_planks, broken_windows, sagging_roof]
+    forbidden_elements: [unrecognizable_ruin]
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, hard-surface, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 2200, max: 7000 }, export: true }
+    - { name: LOD1, ratio: 0.45, triangle_budget: { min: 1000, max: 3200 }, export: true }
+    - { name: LOD2, ratio: 0.22, triangle_budget: { min: 450, max: 1500 }, export: true }
+  preserve: [house silhouette, entrance orientation, roof shape, warm window grouping, largest yard props]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet: { enabled: true, columns: 6, include_states: [active, construction, damaged] }
+  alpha_bounds: { min_opaque_pixels: 1500, max_crop_margin_px: 10, bottom_anchor_tolerance_px: 10 }
+
+output:
+  runtime_dir: frontend/public/assets/buildings/housing/wood_house
+  source_dir: frontend/src/assets/buildings/housing/wood_house
+  use_public_glb: true
+
+references:
+  docs: [docs/buildings/houses/wood-house.md]
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators: [tools/assets/blender/generate_wood_house_models.py]
+  existing_assets: []
+
+notes:
+  - Уровень 6 должен визуально связывать объект с будущим каменным домом.

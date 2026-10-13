@@ -1,0 +1,192 @@
+asset_id: mushroom_grove
+category: fields
+kind: building
+display_name: Грибница
+style_profile: aeolian_fantasy_midpoly
+
+footprint:
+  width: 1
+  height: 1
+
+levels:
+  - level: 1
+    visual_goal: "Круглая влажная грибница без забора: низкая темная почва, мох, коряга и несколько мелких грибов."
+    cost_resources: [wood, stone, resin]
+    triangle_budget: { min: 2500, max: 6000 }
+  - level: 2
+    visual_goal: Круглый контур получает низкие деревянные бортики-ограждение, больше субстрата, мешок и влажные камни.
+    cost_resources: [wood, stone, resin, brick]
+    triangle_budget: { min: 2800, max: 6500 }
+  - level: 3
+    visual_goal: Деревянный бортик становится выше и читается как маленький заборчик с рейками, полками для грибов и первыми тонкими прутьями навеса.
+    cost_resources: [wood, stone, resin, brick, windleaf]
+    triangle_budget: { min: 3000, max: 7000 }
+  - level: 4
+    visual_goal: Заборчик получает глиняный фундамент, глиняные круглые вставки на стенах, смоляные распорки и больше грибных групп.
+    cost_resources: [wood, stone, resin, brick, fabric]
+    triangle_budget: { min: 3200, max: 7400 }
+  - level: 5
+    visual_goal: Грибница расширяется по площади; низ забора становится каменным, верх остается деревянным; высокий полупрозрачный тонкий тканевый навес на прутьях покрывает весь овал, но не перекрывает грибы сверху.
+    cost_resources: [premium_planks, stone, resin, stone_blocks, fabric]
+    triangle_budget: { min: 3500, max: 7800 }
+  - level: 6
+    visual_goal: Расширенная грибница с полностью каменным забором, каменными пластинами и первой калиткой под цвет стен; высокий полупрозрачный толстый навес на премиум-балках покрывает всю грядку, оставляя грибы видимыми сверху.
+    cost_resources: [premium_planks, stone, resin, stone_blocks, iron_ingot, blue_salt]
+    triangle_budget: { min: 3800, max: 8200 }
+  - level: 7
+    visual_goal: Забор становится ниже прежнего варианта для читаемости грибов, получает больше декора, каменные столбики и нижние 15% фундамента из каменных блоков; калитка остается каменной.
+    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, blue_salt]
+    triangle_budget: { min: 4000, max: 8600 }
+  - level: 8
+    visual_goal: Низкий богато украшенный забор делится на 40% кирпича и 60% камня, есть кирпично-каменная калитка; высокий скатный навес закрывает весь овал, но поднят над грибами.
+    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, blue_salt, emerald_dust]
+    triangle_budget: { min: 4200, max: 9000 }
+  - level: 9
+    visual_goal: Почти весь низкий забор из каменных блоков, больше премиум-досок, настенного декора и металла; калитка заменяется металлической дверью с декоративными накладками.
+    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, emerald_dust, super_mushrooms]
+    triangle_budget: { min: 4500, max: 9500 }
+  - level: 10
+    visual_goal: Низкий забор на 100% из каменных блоков, столбы металлические, металлическая дверь с декором; высокий плотный сложный навес покрывает всю площадь и оставляет вид сверху на грибы, в дизайне участвуют премиум-доски, шляпки супер-грибов и изумрудная пыль.
+    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, emerald_dust, super_mushrooms, super_seeds]
+    triangle_budget: { min: 4800, max: 10000 }
+
+states: [active, construction, damaged]
+
+material_map:
+  wood:
+    visible_as: ранние деревянные бортики, рейки заборчика, коряги, лежащие бревна и временные балки стройки
+    priority: primary
+    levels: [1, 2, 3, 4]
+  resin:
+    visible_as: смоляные потеки, крепления корневых стоек и янтарные распорки
+    priority: primary
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  brick:
+    visible_as: кирпичный нижний курс круглого забора на 8 уровне и теплые кирпичные вставки ранних апгрейдов
+    priority: secondary
+    levels: [2, 3, 4, 8]
+  stone:
+    visible_as: влажные камни, каменные курсы забора, каменные столбики и поздний цоколь круглого контура
+    priority: secondary
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  stone_blocks:
+    visible_as: блочная кладка фундамента, поздние курсы стен и весь забор 10 уровня
+    priority: primary
+    levels: [5, 6, 7, 8, 9, 10]
+  premium_planks:
+    visible_as: полированные доски, балки навеса, ребра скатной крыши и декоративные накладки
+    priority: primary
+    levels: [5, 6, 7, 8, 9, 10]
+  fabric:
+    visible_as: тонкий плоский навес, затем толстая тканевая крыша и моховые тканевые полосы
+    priority: secondary
+    levels: [4, 5, 6, 7, 8, 9, 10]
+  iron_ingot:
+    visible_as: металлические шпильки, конек крыши, крепления и металлические столбы 10 уровня
+    priority: secondary
+    levels: [6, 7, 8, 9, 10]
+  blue_salt:
+    visible_as: холодные сине-зеленые влажные акценты в субстрате
+    priority: accent
+    levels: [6, 7, 8, 9, 10]
+  emerald_dust:
+    visible_as: поздние споровые узлы, редкие светлые грибы и изумрудные вкрапления в фундаменте 10 уровня
+    priority: accent
+    levels: [8, 9, 10]
+  super_mushrooms:
+    visible_as: светящиеся шляпки супер-грибов, крупная центральная группа и детали плотного навеса 10 уровня
+    priority: accent
+    levels: [9, 10]
+
+level_progression:
+  mass:
+    rule: Каждый уровень увеличивает высоту, материал и насыщенность круглого бортика/забора, а не только число грибов.
+  height:
+    rule: Стены растут до 6 уровня, затем 7-10 уровни специально ниже и декоративнее, чтобы грибы оставались видимыми сверху.
+  silhouette:
+    rule: Основной силуэт всегда круглый или мягко овальный, ниже теплиц, темнее обычных грядок и не похож на прямоугольные поля.
+  materials:
+    rule: Смола, камень, ткань и редкие стабилизаторы появляются как крупные видимые элементы.
+  props:
+    rule: "Props низкие и влажные: коряги, мешки субстрата, моховые камни, смоляные распорки, настенные грибные полки, прутья, балки навеса, калитки и поздние металлические двери."
+  canopy_visibility:
+    rule: С 5 уровня навес покрывает всю расширенную грядку, но расположен достаточно высоко, имеет полупрозрачную ткань и наклон, чтобы шляпки грибов были видны в изометрическом виде.
+  late_elements:
+    rule: Синеватые споровые узлы появляются только на поздних уровнях и не заменяют грибной силуэт.
+  constraints:
+    - Не использовать прямоугольные plank walls как у семенной или льняной грядки.
+    - Не возвращаться к корневой стенке как главной конструкции: новая грибница строится вокруг круглого бортика/забора.
+    - Не делать модель похожей на кристальную оранжерею; синее свечение локальное и слабое.
+
+state_policy:
+  active:
+    rule: "Полная влажная грибница с читаемым овальным корневым бортом и грибными группами."
+  construction:
+    rule: "Незакрытый овал с недостроенным корневым бортом, рыхлым субстратом и разложенными корнями."
+  damaged:
+    rule: "Сломанные корни, обрушенный теневой навес, примятые и поваленные грибы."
+  ruined:
+    rule: Почти пустой влажный овал, остатки коряг, сухой мох и несколько сломанных шляпок.
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, vegetation-artist, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - name: LOD0
+      ratio: 1.0
+      triangle_budget: { min: 2500, max: 10000 }
+      export: true
+    - name: LOD1
+      ratio: 0.45
+      triangle_budget: { min: 1000, max: 4500 }
+      export: true
+    - name: LOD2
+      ratio: 0.22
+      triangle_budget: { min: 400, max: 1800 }
+      export: true
+  preserve: [footprint, round wall, mushroom groups, shade canopy, ground tile]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet:
+    enabled: true
+    columns: 4
+    include_states: [active, construction, damaged, ruined]
+  alpha_bounds:
+    min_opaque_pixels: 1200
+    max_crop_margin_px: 10
+    bottom_anchor_tolerance_px: 10
+
+output:
+  runtime_dir: frontend/public/assets/buildings/fields/mushroom_grove
+  source_dir: frontend/src/assets/buildings/fields/mushroom_grove
+  use_public_glb: true
+
+references:
+  docs:
+    - docs/buildings/fields/mushroom-grove.md
+    - docs/buildings/fields/fields-and-beds.md
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators:
+    - tools/assets/blender/regenerate_seed_garden_blender.py
+    - tools/assets/blender/regenerate_flax_field_blender.py
+  existing_assets:
+    - frontend/public/assets/buildings/fields/seed_garden
+    - frontend/public/assets/buildings/fields/flax_field
+
+notes:
+  - Генератор выпускает расширенный runtime-набор состояний сверх базовой factory-схемы: stage01-stage03, active, construction, damaged, ruined, super_stage01-super_stage06.
+  - Текущий игровой каталог еще содержит только 1 уровень mushroom_grove; модельная задача намеренно готовит 10 уровней по обновленной документации постройки.

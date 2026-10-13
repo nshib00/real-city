@@ -1,0 +1,500 @@
+{
+  "component_library_version": "2026.10.phase3.v5",
+  "png": "docs/assets/component-library-showcase.png",
+  "blend": "docs/assets/component-library-showcase.blend",
+  "sample_count": 123,
+  "samples": [
+    {
+      "title": "housing.dugout",
+      "object_count": 21
+    },
+    {
+      "title": "housing.wood_house",
+      "object_count": 77
+    },
+    {
+      "title": "housing.stone_house",
+      "object_count": 83
+    },
+    {
+      "title": "housing.yard",
+      "object_count": 57
+    },
+    {
+      "title": "civic.tower",
+      "object_count": 15
+    },
+    {
+      "title": "civic.notice",
+      "object_count": 14
+    },
+    {
+      "title": "civic.balcony",
+      "object_count": 8
+    },
+    {
+      "title": "civic.plaza",
+      "object_count": 7
+    },
+    {
+      "title": "civic.town_hall",
+      "object_count": 33
+    },
+    {
+      "title": "roof.gable",
+      "object_count": 6
+    },
+    {
+      "title": "roof.wood_gable",
+      "object_count": 13
+    },
+    {
+      "title": "roof.hipped",
+      "object_count": 7
+    },
+    {
+      "title": "roof.shed",
+      "object_count": 4
+    },
+    {
+      "title": "roof.flat",
+      "object_count": 6
+    },
+    {
+      "title": "roof.trapezoid",
+      "object_count": 7
+    },
+    {
+      "title": "roof.pyramid",
+      "object_count": 4
+    },
+    {
+      "title": "roof.mansard",
+      "object_count": 7
+    },
+    {
+      "title": "roof.barrel",
+      "object_count": 9
+    },
+    {
+      "title": "roof.dome",
+      "object_count": 6
+    },
+    {
+      "title": "roof.stepped",
+      "object_count": 6
+    },
+    {
+      "title": "roof.asymmetric",
+      "object_count": 8
+    },
+    {
+      "title": "roof.tiles",
+      "object_count": 8
+    },
+    {
+      "title": "roof.rune_tile",
+      "object_count": 13
+    },
+    {
+      "title": "roof.plates",
+      "object_count": 8
+    },
+    {
+      "title": "roof.spikes",
+      "object_count": 9
+    },
+    {
+      "title": "foundation.wood_low",
+      "object_count": 5
+    },
+    {
+      "title": "foundation.stone_high",
+      "object_count": 22
+    },
+    {
+      "title": "foundation.metal",
+      "object_count": 15
+    },
+    {
+      "title": "foundation.round_stone",
+      "object_count": 16
+    },
+    {
+      "title": "foundation.round_metal",
+      "object_count": 26
+    },
+    {
+      "title": "wall.plank",
+      "object_count": 12
+    },
+    {
+      "title": "wall.board_clad",
+      "object_count": 13
+    },
+    {
+      "title": "wall.elite_board",
+      "object_count": 16
+    },
+    {
+      "title": "wall.stone",
+      "object_count": 44
+    },
+    {
+      "title": "wall.readable_stone",
+      "object_count": 22
+    },
+    {
+      "title": "wall.wood_set",
+      "object_count": 31
+    },
+    {
+      "title": "wall.metal",
+      "object_count": 10
+    },
+    {
+      "title": "wall.storage",
+      "object_count": 26
+    },
+    {
+      "title": "wall.spikes",
+      "object_count": 10
+    },
+    {
+      "title": "wall.piers",
+      "object_count": 11
+    },
+    {
+      "title": "wall.scroll_gold",
+      "object_count": 8
+    },
+    {
+      "title": "wall.carving",
+      "object_count": 13
+    },
+    {
+      "title": "wall.rune_pattern",
+      "object_count": 11
+    },
+    {
+      "title": "wall.window_trim",
+      "object_count": 20
+    },
+    {
+      "title": "wall.medallion",
+      "object_count": 9
+    },
+    {
+      "title": "path.earth",
+      "object_count": 4
+    },
+    {
+      "title": "path.pebbles",
+      "object_count": 13
+    },
+    {
+      "title": "path.blocks",
+      "object_count": 10
+    },
+    {
+      "title": "prop.crate",
+      "object_count": 7
+    },
+    {
+      "title": "prop.sack",
+      "object_count": 5
+    },
+    {
+      "title": "prop.planks",
+      "object_count": 23
+    },
+    {
+      "title": "prop.logs",
+      "object_count": 13
+    },
+    {
+      "title": "prop.flowers",
+      "object_count": 8
+    },
+    {
+      "title": "prop.flag",
+      "object_count": 5
+    },
+    {
+      "title": "prop.decor_cluster",
+      "object_count": 18
+    },
+    {
+      "title": "prop.tools",
+      "object_count": 10
+    },
+    {
+      "title": "prop.workbench",
+      "object_count": 9
+    },
+    {
+      "title": "prop.debris",
+      "object_count": 11
+    },
+    {
+      "title": "prop.scaffold",
+      "object_count": 13
+    },
+    {
+      "title": "prop.market",
+      "object_count": 13
+    },
+    {
+      "title": "land.grass",
+      "object_count": 28
+    },
+    {
+      "title": "land.flower_bed",
+      "object_count": 18
+    },
+    {
+      "title": "land.flowers",
+      "object_count": 11
+    },
+    {
+      "title": "land.pebbles",
+      "object_count": 12
+    },
+    {
+      "title": "field.leaf",
+      "object_count": 15
+    },
+    {
+      "title": "field.log_wall",
+      "object_count": 19
+    },
+    {
+      "title": "field.plank_wall",
+      "object_count": 11
+    },
+    {
+      "title": "field.soil_rows",
+      "object_count": 12
+    },
+    {
+      "title": "field.windleaf",
+      "object_count": 58
+    },
+    {
+      "title": "field.trellis",
+      "object_count": 9
+    },
+    {
+      "title": "field.bed",
+      "object_count": 97
+    },
+    {
+      "title": "field.base_windleaf",
+      "object_count": 31
+    },
+    {
+      "title": "field.base_flax",
+      "object_count": 46
+    },
+    {
+      "title": "field.base_mushroom",
+      "object_count": 27
+    },
+    {
+      "title": "field.base_reed",
+      "object_count": 24
+    },
+    {
+      "title": "industry.shed",
+      "object_count": 8
+    },
+    {
+      "title": "industry.furnace",
+      "object_count": 11
+    },
+    {
+      "title": "industry.portal",
+      "object_count": 48
+    },
+    {
+      "title": "mine.arch_wood",
+      "object_count": 13
+    },
+    {
+      "title": "mine.arch_stone",
+      "object_count": 20
+    },
+    {
+      "title": "mine.arch_brick",
+      "object_count": 20
+    },
+    {
+      "title": "mine.arch_metal",
+      "object_count": 13
+    },
+    {
+      "title": "mine.tunnel",
+      "object_count": 8
+    },
+    {
+      "title": "mine.rocks",
+      "object_count": 14
+    },
+    {
+      "title": "mine.rails",
+      "object_count": 9
+    },
+    {
+      "title": "mine.lamps",
+      "object_count": 9
+    },
+    {
+      "title": "mine.ore",
+      "object_count": 10
+    },
+    {
+      "title": "mine.hoist",
+      "object_count": 9
+    },
+    {
+      "title": "mine.vent_pipe",
+      "object_count": 6
+    },
+    {
+      "title": "mine.explosive_crate",
+      "object_count": 5
+    },
+    {
+      "title": "mine.detail_cluster",
+      "object_count": 40
+    },
+    {
+      "title": "industry.cart",
+      "object_count": 9
+    },
+    {
+      "title": "industry.conveyor",
+      "object_count": 7
+    },
+    {
+      "title": "industry.crane",
+      "object_count": 7
+    },
+    {
+      "title": "industry.glass",
+      "object_count": 5
+    },
+    {
+      "title": "industry.line",
+      "object_count": 18
+    },
+    {
+      "title": "storage.vault",
+      "object_count": 61
+    },
+    {
+      "title": "storage.roof",
+      "object_count": 16
+    },
+    {
+      "title": "storage.coins",
+      "object_count": 11
+    },
+    {
+      "title": "storage.cells",
+      "object_count": 27
+    },
+    {
+      "title": "storage.yard",
+      "object_count": 16
+    },
+    {
+      "title": "tower.wood",
+      "object_count": 15
+    },
+    {
+      "title": "tower.stone",
+      "object_count": 22
+    },
+    {
+      "title": "tower.brick",
+      "object_count": 25
+    },
+    {
+      "title": "tower.square",
+      "object_count": 22
+    },
+    {
+      "title": "tower.turret_flag",
+      "object_count": 25
+    },
+    {
+      "title": "tower.turret_thick",
+      "object_count": 31
+    },
+    {
+      "title": "aeolian.wind",
+      "object_count": 5
+    },
+    {
+      "title": "aeolian.ribbon",
+      "object_count": 4
+    },
+    {
+      "title": "aeolian.crystal",
+      "object_count": 5
+    },
+    {
+      "title": "aeolian.canopy",
+      "object_count": 6
+    },
+    {
+      "title": "aeolian.lens",
+      "object_count": 5
+    },
+    {
+      "title": "aeolian.seal",
+      "object_count": 6
+    },
+    {
+      "title": "detail.facade",
+      "object_count": 8
+    },
+    {
+      "title": "detail.bevels",
+      "object_count": 7
+    },
+    {
+      "title": "detail.damage",
+      "object_count": 10
+    },
+    {
+      "title": "detail.bake",
+      "object_count": 8
+    },
+    {
+      "title": "detail.props",
+      "object_count": 16
+    },
+    {
+      "title": "common.window",
+      "object_count": 7
+    },
+    {
+      "title": "common.door",
+      "object_count": 11
+    },
+    {
+      "title": "common.chimney",
+      "object_count": 5
+    },
+    {
+      "title": "common.wood_chimney",
+      "object_count": 8
+    },
+    {
+      "title": "common.scaffold",
+      "object_count": 9
+    }
+  ]
+}
