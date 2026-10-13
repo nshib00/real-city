@@ -21,6 +21,8 @@ type Runner struct {
 	buildings  *service.BuildingService
 	production *service.ProductionService
 	resources  *service.ResourceService
+	forests    *service.ForestService
+	spawner    *MonsterSpawner
 	monsters   *MonsterAI
 	log        *slog.Logger
 	cfg        config.SimulationConfig
@@ -32,6 +34,7 @@ type TickResult struct {
 	BuildingsCompleted  int
 	ProductionCompleted int
 	ResourcesRespawned  int
+	MonstersSpawned     int
 	MonstersProcessed   int
 	Failures            int
 }
@@ -51,6 +54,14 @@ func NewRunner(actions service.ActionRepository, uow service.UnitOfWork, buildin
 
 func (r *Runner) SetMonsterAI(monsters *MonsterAI) {
 	r.monsters = monsters
+}
+
+func (r *Runner) SetMonsterSpawner(spawner *MonsterSpawner) {
+	r.spawner = spawner
+}
+
+func (r *Runner) SetForestService(forests *service.ForestService) {
+	r.forests = forests
 }
 
 func (r *Runner) Run(ctx context.Context) error {
@@ -80,7 +91,7 @@ func (r *Runner) Tick(ctx context.Context) (result TickResult, err error) {
 		if duration > r.cfg.TickInterval {
 			level = slog.LevelWarn
 		}
-		r.log.Log(ctx, level, "simulation.tick.finish", "event", "simulation.tick.finish", "duration_ms", duration.Milliseconds(), "actions", result.ActionsProcessed, "buildings", result.BuildingsCompleted, "production", result.ProductionCompleted, "resources", result.ResourcesRespawned, "monsters", result.MonstersProcessed, "failures", result.Failures)
+		r.log.Log(ctx, level, "simulation.tick.finish", "event", "simulation.tick.finish", "duration_ms", duration.Milliseconds(), "actions", result.ActionsProcessed, "buildings", result.BuildingsCompleted, "production", result.ProductionCompleted, "resources", result.ResourcesRespawned, "monster_spawns", result.MonstersSpawned, "monsters", result.MonstersProcessed, "failures", result.Failures)
 	}()
 
 	now := r.now()
@@ -108,6 +119,13 @@ func (r *Runner) Tick(ctx context.Context) (result TickResult, err error) {
 	}
 	if r.resources != nil {
 		result.ResourcesRespawned, err = r.resources.Tick(ctx, now, r.cfg.BatchSize)
+		if err != nil {
+			result.Failures++
+			return result, err
+		}
+	}
+	if r.spawner != nil {
+		result.MonstersSpawned, err = r.spawner.Tick(ctx, now, r.cfg.BatchSize)
 		if err != nil {
 			result.Failures++
 			return result, err
@@ -173,7 +191,7 @@ func (r *Runner) handleAction(ctx context.Context, item action.GameAction, now t
 			if r.production == nil {
 				return nil
 			}
-			_, _, err := r.production.CompleteAt(ctx, player.ID(item.Actor.ID), economy.ProductionJobID(item.Target.ID), now)
+			_, err := r.production.ReadyAt(ctx, player.ID(item.Actor.ID), economy.ProductionJobID(item.Target.ID), now)
 			return err
 		case action.TypeRespawnResource:
 			if r.resources == nil {
@@ -181,6 +199,11 @@ func (r *Runner) handleAction(ctx context.Context, item action.GameAction, now t
 			}
 			_, err := r.resources.Tick(ctx, now, 1)
 			return err
+		case action.TypeRegrowForest:
+			if r.forests == nil {
+				return nil
+			}
+			return r.forests.HandleRegrowthAction(ctx, item, now)
 		default:
 			return nil
 		}

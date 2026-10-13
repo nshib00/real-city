@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"math/rand"
 	"time"
 
 	"real-city/backend/internal/domain/action"
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
@@ -14,16 +16,18 @@ import (
 )
 
 type ProductionService struct {
-	repo    EconomyRepository
-	economy *EconomyService
-	log     *slog.Logger
-	now     func() time.Time
-	events  *EventBus
-	actions ActionRepository
+	repo      EconomyRepository
+	economy   *EconomyService
+	log       *slog.Logger
+	now       func() time.Time
+	events    *EventBus
+	actions   ActionRepository
+	buildings BuildingRepository
+	randFloat func() float64
 }
 
 func NewProductionService(repo EconomyRepository, economyService *EconomyService, log *slog.Logger) *ProductionService {
-	return &ProductionService{repo: repo, economy: economyService, log: log, now: func() time.Time { return time.Now().UTC() }}
+	return &ProductionService{repo: repo, economy: economyService, log: log, now: func() time.Time { return time.Now().UTC() }, randFloat: rand.Float64}
 }
 
 func (s *ProductionService) SetEventBus(events *EventBus) {
@@ -32,6 +36,10 @@ func (s *ProductionService) SetEventBus(events *EventBus) {
 
 func (s *ProductionService) SetActionQueue(actions ActionRepository) {
 	s.actions = actions
+}
+
+func (s *ProductionService) SetBuildings(buildings BuildingRepository) {
+	s.buildings = buildings
 }
 
 func (s *ProductionService) Recipes(ctx context.Context) ([]economy.ProductionRecipe, error) {
@@ -48,8 +56,40 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 	if !ok {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.NotFound, "production recipe not found")
 	}
+	if s.buildings != nil {
+		item, err := s.buildings.FindByID(ctx, building.ID(buildingID))
+		if err != nil {
+			return economy.ProductionJob{}, economy.Inventory{}, err
+		}
+		if item.OwnerID != string(playerID) {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Forbidden, "building belongs to another player")
+		}
+		if item.State != building.StateActive {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "building is not active")
+		}
+		if string(item.Type) != recipe.BuildingType {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Validation, "recipe does not match building type")
+		}
+		recipe, _ = catalog.RecipeForBuildingLevel(recipeID, item.Level)
+		if item.Level < recipe.RequiredLevel {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "building level is too low for recipe")
+		}
+	}
+	jobs, err := s.repo.ListProductionJobs(ctx, playerID)
+	if err != nil {
+		return economy.ProductionJob{}, economy.Inventory{}, err
+	}
+	for _, job := range jobs {
+		if job.BuildingID == buildingID && (job.State == economy.ProductionRunning || job.State == economy.ProductionReady) {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "building already has active production")
+		}
+	}
+	if err := s.reservePopulation(ctx, playerID, recipe.Workers, "production:workers:"+recipe.ID); err != nil {
+		return economy.ProductionJob{}, economy.Inventory{}, err
+	}
 	inventory, err := s.economy.Spend(ctx, playerID, economy.WithFuelCost(recipe.Input, recipe), "production:"+recipe.ID)
 	if err != nil {
+		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:refund:"+recipe.ID)
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
 	now := s.now()
@@ -65,6 +105,8 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 		UpdatedAt:   now,
 	}
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
+		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:refund:"+recipe.ID)
+		_, _, _ = s.economy.Add(ctx, playerID, economy.WithFuelCost(recipe.Input, recipe), "production:refund:"+recipe.ID)
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
 	_ = s.scheduleCompletion(ctx, job)
@@ -104,28 +146,94 @@ func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, 
 		inventory, err := s.economy.Inventory(ctx, playerID)
 		return job, inventory, err
 	}
-	if job.State != economy.ProductionRunning {
+	if job.State != economy.ProductionRunning && job.State != economy.ProductionReady {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "production job is not running")
 	}
-	if job.CompletesAt.After(now) {
+	if job.State == economy.ProductionRunning && job.CompletesAt.After(now) {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "production job is not complete yet")
 	}
 	recipe, ok := catalog.RecipeByID(job.RecipeID)
 	if !ok {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.NotFound, "production recipe not found")
 	}
+	if s.buildings != nil {
+		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+		if err == nil && string(item.Type) == recipe.BuildingType {
+			recipe, _ = catalog.RecipeForBuildingLevel(job.RecipeID, item.Level)
+		}
+	}
+	previousState := job.State
 	job.State = economy.ProductionCompleted
 	job.UpdatedAt = now
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
-	inventory, _, err := s.economy.Add(ctx, playerID, recipe.Output, "production:"+recipe.ID)
+	if previousState == economy.ProductionRunning {
+		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:complete:"+recipe.ID)
+	}
+	output := append([]economy.ResourceAmount(nil), recipe.Output...)
+	output = append(output, s.rollRareOutput(recipe)...)
+	inventory, _, err := s.economy.Add(ctx, playerID, output, "production:"+recipe.ID)
 	if err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
 	s.publish(job, inventory)
 	s.log.Info("economy.production.completed", "event", "economy.production.completed", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID)
 	return job, inventory, nil
+}
+
+func (s *ProductionService) rollRareOutput(recipe economy.ProductionRecipe) []economy.ResourceAmount {
+	if len(recipe.RareOutput) == 0 {
+		return nil
+	}
+	roll := s.randFloat
+	if roll == nil {
+		roll = rand.Float64
+	}
+	output := make([]economy.ResourceAmount, 0, len(recipe.RareOutput))
+	for _, item := range recipe.RareOutput {
+		if item.Amount > 0 && item.Chance > 0 && roll() < item.Chance {
+			output = append(output, economy.ResourceAmount{Resource: item.Resource, Amount: item.Amount})
+		}
+	}
+	return output
+}
+
+func (s *ProductionService) ReadyAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, error) {
+	job, err := s.repo.FindProductionJob(ctx, id)
+	if err != nil {
+		return economy.ProductionJob{}, err
+	}
+	if job.PlayerID != string(playerID) {
+		return economy.ProductionJob{}, apperror.New(apperror.Forbidden, "production job belongs to another player")
+	}
+	if job.State == economy.ProductionReady || job.State == economy.ProductionCompleted {
+		return job, nil
+	}
+	if job.State != economy.ProductionRunning {
+		return economy.ProductionJob{}, apperror.New(apperror.Conflict, "production job is not running")
+	}
+	if job.CompletesAt.After(now) {
+		return economy.ProductionJob{}, apperror.New(apperror.Conflict, "production job is not complete yet")
+	}
+	recipe, ok := catalog.RecipeByID(job.RecipeID)
+	if !ok {
+		return economy.ProductionJob{}, apperror.New(apperror.NotFound, "production recipe not found")
+	}
+	if s.buildings != nil {
+		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+		if err == nil && string(item.Type) == recipe.BuildingType {
+			recipe, _ = catalog.RecipeForBuildingLevel(job.RecipeID, item.Level)
+		}
+	}
+	job.State = economy.ProductionReady
+	job.UpdatedAt = now
+	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
+		return economy.ProductionJob{}, err
+	}
+	s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:ready:"+recipe.ID)
+	s.log.Info("economy.production.ready", "event", "economy.production.ready", "player_id", playerID, "job_id", job.ID, "recipe_id", job.RecipeID)
+	return job, nil
 }
 
 func (s *ProductionService) CompleteDue(ctx context.Context, now time.Time, limit int) (int, error) {
@@ -142,7 +250,7 @@ func (s *ProductionService) CompleteDue(ctx context.Context, now time.Time, limi
 		if job.State != economy.ProductionRunning || job.CompletesAt.After(now) {
 			continue
 		}
-		if _, _, err := s.CompleteAt(ctx, player.ID(job.PlayerID), job.ID, now); err != nil {
+		if _, err := s.ReadyAt(ctx, player.ID(job.PlayerID), job.ID, now); err != nil {
 			return completed, err
 		}
 		completed++
@@ -166,8 +274,43 @@ func (s *ProductionService) Cancel(ctx context.Context, playerID player.ID, id e
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
 		return economy.ProductionJob{}, err
 	}
+	if recipe, ok := s.recipeForJob(ctx, job); ok {
+		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:cancel:"+recipe.ID)
+	}
 	s.log.Info("economy.production.cancelled", "event", "economy.production.cancelled", "player_id", playerID, "job_id", job.ID)
 	return job, nil
+}
+
+func (s *ProductionService) reservePopulation(ctx context.Context, playerID player.ID, amount int, reason string) error {
+	if amount <= 0 || s.economy == nil {
+		return nil
+	}
+	_, err := s.economy.Spend(ctx, playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	if err != nil {
+		return apperror.WithFields(apperror.Conflict, "не хватает свободного населения", map[string]string{"population": fmt.Sprintf("need %d", amount)})
+	}
+	return nil
+}
+
+func (s *ProductionService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) {
+	if amount <= 0 || s.economy == nil {
+		return
+	}
+	_, _, _ = s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+}
+
+func (s *ProductionService) recipeForJob(ctx context.Context, job economy.ProductionJob) (economy.ProductionRecipe, bool) {
+	recipe, ok := catalog.RecipeByID(job.RecipeID)
+	if !ok {
+		return economy.ProductionRecipe{}, false
+	}
+	if s.buildings != nil {
+		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+		if err == nil && string(item.Type) == recipe.BuildingType {
+			recipe, _ = catalog.RecipeForBuildingLevel(job.RecipeID, item.Level)
+		}
+	}
+	return recipe, true
 }
 
 func (s *ProductionService) publish(job economy.ProductionJob, inventory economy.Inventory) {

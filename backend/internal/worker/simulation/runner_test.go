@@ -36,6 +36,12 @@ func TestRunnerCompletesQueuedBuildingAction(t *testing.T) {
 	if _, err := buildings.Place(ctx, service.PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeTownHall, Tile: world.Coord{X: 0, Y: 0}}); err != nil {
 		t.Fatalf("place town hall: %v", err)
 	}
+	if _, _, err := economyService.Add(ctx, player.ID("p1"), []economy.ResourceAmount{
+		{Resource: economy.ResourceCoins, Amount: 500},
+		{Resource: economy.ResourceWood, Amount: 3},
+	}, "test:funds"); err != nil {
+		t.Fatalf("add test funds: %v", err)
+	}
 	dugout, err := buildings.Place(ctx, service.PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeDugout, Tile: world.Coord{X: 4, Y: 4}})
 	if err != nil {
 		t.Fatalf("place dugout: %v", err)
@@ -98,7 +104,7 @@ func TestRunnerCompletesDueProduction(t *testing.T) {
 	if err != nil {
 		t.Fatalf("find job: %v", err)
 	}
-	if updated.State != economy.ProductionCompleted {
-		t.Fatalf("job was not completed: %#v", updated)
+	if updated.State != economy.ProductionReady {
+		t.Fatalf("job was not marked ready: %#v", updated)
 	}
 }

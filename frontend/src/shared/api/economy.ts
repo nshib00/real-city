@@ -34,13 +34,14 @@ export type ProductionRecipeResponse = {
   workers: number
   input: InventoryItem[]
   output: InventoryItem[]
+  rare_output: (InventoryItem & { chance: number })[]
 }
 
 export type ProductionJobResponse = {
   id: string
   building_id: string
   recipe_id: string
-  state: 'running' | 'completed' | 'cancelled'
+  state: 'running' | 'ready' | 'completed' | 'cancelled'
   started_at: string
   completes_at: string
 }
@@ -83,7 +84,7 @@ export function patchProductionJob(id: string, action: 'complete' | 'cancel') {
 }
 
 export function advanceWindleafField(buildingId: string) {
-  return request<{ building: BuildingResponse }>('/fields/windleaf/advance', {
+  return request<{ building: BuildingResponse; inventory: InventoryResponse }>('/fields/windleaf/advance', {
     method: 'POST',
     body: JSON.stringify({ building_id: buildingId }),
   })
@@ -91,6 +92,20 @@ export function advanceWindleafField(buildingId: string) {
 
 export function harvestWindleafField(buildingId: string) {
   return request<{ building: BuildingResponse; inventory: InventoryResponse }>('/fields/windleaf/harvest', {
+    method: 'POST',
+    body: JSON.stringify({ building_id: buildingId }),
+  })
+}
+
+export function advanceField(buildingId: string) {
+  return request<{ building: BuildingResponse; inventory: InventoryResponse }>('/fields/advance', {
+    method: 'POST',
+    body: JSON.stringify({ building_id: buildingId }),
+  })
+}
+
+export function harvestField(buildingId: string) {
+  return request<{ building: BuildingResponse; inventory: InventoryResponse }>('/fields/harvest', {
     method: 'POST',
     body: JSON.stringify({ building_id: buildingId }),
   })
