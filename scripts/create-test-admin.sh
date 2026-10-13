@@ -43,14 +43,42 @@ case "$status" in
 esac
 
 promote_sql="UPDATE players SET role = 'admin', updated_at = now() WHERE email = :'admin_email';"
+inventory_sql="
+WITH admin_player AS (
+  SELECT id FROM players WHERE email = :'admin_email'
+),
+resources(resource) AS (
+  VALUES
+    ('coins'), ('population'), ('aeolian-crystal'), ('wood'), ('stone'),
+    ('clay'), ('sand'), ('coal'), ('iron_ore'), ('copper'), ('resin'),
+    ('flax'), ('windleaf'), ('herbs'), ('mushrooms'), ('seeds'), ('brick'),
+    ('stone_block'), ('metal'), ('iron'), ('steel'), ('glass'), ('planks'),
+    ('premium_planks'), ('rope'), ('copper_parts'), ('iron_ingot'),
+    ('gold_ingot'), ('cement'), ('concrete'), ('reinforced_concrete'),
+    ('fabric'), ('mechanism'), ('super_mechanism'), ('electronics'),
+    ('sulfur'), ('explosives'), ('oil'), ('fuel'), ('super-seeds'),
+    ('super-fiber'), ('super-mushrooms'), ('super-windleaf'),
+    ('emerald_dust'), ('elderwood-heart'), ('rune_tile')
+)
+INSERT INTO player_inventories (player_id, resource, amount, updated_at)
+SELECT admin_player.id, resources.resource, 2000000000, now()
+FROM admin_player
+CROSS JOIN resources
+ON CONFLICT (player_id, resource)
+DO UPDATE SET amount = GREATEST(player_inventories.amount, EXCLUDED.amount),
+              updated_at = EXCLUDED.updated_at;"
 
 if [ -n "${POSTGRES_DSN:-}" ] && command -v psql >/dev/null 2>&1; then
   psql "$POSTGRES_DSN" -v ON_ERROR_STOP=1 -v admin_email="$ADMIN_EMAIL" \
     -c "$promote_sql" >/dev/null
+  psql "$POSTGRES_DSN" -v ON_ERROR_STOP=1 -v admin_email="$ADMIN_EMAIL" \
+    -c "$inventory_sql" >/dev/null
   echo "Promoted test user to admin in Postgres: $ADMIN_EMAIL"
 elif command -v docker >/dev/null 2>&1; then
   docker compose exec -T postgres psql -U real_city -d real_city -v ON_ERROR_STOP=1 -v admin_email="$ADMIN_EMAIL" \
     -c "$promote_sql" >/dev/null
+  docker compose exec -T postgres psql -U real_city -d real_city -v ON_ERROR_STOP=1 -v admin_email="$ADMIN_EMAIL" \
+    -c "$inventory_sql" >/dev/null
   echo "Promoted test user to admin in Docker Postgres: $ADMIN_EMAIL"
 else
   echo "Admin promotion skipped: set POSTGRES_DSN and install psql, or run Docker Postgres."
