@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import importlib.util
 from pathlib import Path
 
 import bmesh
@@ -43,8 +44,8 @@ def blender_exists(path: Path) -> bool:
 
 
 MATERIALS = {
-    "grass": (0.48, 0.78, 0.34, 1),
-    "grass_light": (0.58, 0.84, 0.39, 1),
+    "grass": (0.26, 0.48, 0.08, 1),
+    "grass_light": (0.37, 0.59, 0.13, 1),
     "earth": (0.46, 0.27, 0.15, 1),
     "earth_dark": (0.30, 0.18, 0.10, 1),
     "soil": (0.38, 0.22, 0.12, 1),
@@ -83,12 +84,7 @@ def mat(name: str, color: tuple[float, float, float, float]) -> bpy.types.Materi
             bsdf.inputs["Roughness"].default_value = 0.78
         if "Alpha" in bsdf.inputs:
             bsdf.inputs["Alpha"].default_value = color[3]
-        if name == "grass" and blender_exists(GRASS_TEXTURE_PATH):
-            image = bpy.data.images.load(blender_path(GRASS_TEXTURE_PATH), check_existing=True)
-            image.source = "FILE"
-            tex = material.node_tree.nodes.new(type="ShaderNodeTexImage")
-            tex.image = image
-            material.node_tree.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+        if name in {"grass", "grass_light"}:
             material["terrain_source"] = "frontend/public/assets/terrain/tiles/grass.png"
     material.use_screen_refraction = False
     material.blend_method = "BLEND" if color[3] < 1 else "OPAQUE"
@@ -348,6 +344,9 @@ def add_damage(coll, level, mats):
 
 
 def make_variant(name: str, level: int, state: str, mats, root_coll):
+    existing = bpy.data.collections.get(name)
+    if existing:
+        bpy.data.collections.remove(existing)
     coll = bpy.data.collections.new(name)
     root_coll.children.link(coll)
     coll["asset_id"] = "windleaf_bed"
@@ -404,40 +403,14 @@ def look_at(obj, target):
 
 def setup_camera(scene=None):
     scene = scene or bpy.context.scene
-    light_data = bpy.data.lights.new("windleaf_preview_key_light", "AREA")
-    light = bpy.data.objects.new("windleaf_preview_key_light", light_data)
-    scene.collection.objects.link(light)
-    light.location = (-3.4, -4.0, 6.2)
-    light.name = "windleaf_preview_key_light"
-    light.data.energy = 520
-    light.data.size = 4.5
-    camera_data = bpy.data.cameras.new("windleaf_iso_camera")
-    camera = bpy.data.objects.new("windleaf_iso_camera", camera_data)
-    scene.collection.objects.link(camera)
-    camera.name = "windleaf_iso_camera"
-    camera.data.type = "ORTHO"
-    camera.location = (8, -8, math.sqrt(128) / math.sqrt(3))
-    camera.data.ortho_scale = 512 * 3.6 * math.sqrt(2) / 278
-    look_at(camera, (0, 0, 0))
-    camera.data.shift_x = 0
-    camera.data.shift_y = 0
-    scene.camera = camera
+    spec = importlib.util.spec_from_file_location("terrain_camera", Path(__file__).with_name("regenerate_early_housing.py"))
+    terrain_camera = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(terrain_camera)
+    terrain_camera.setup_camera(scene)
     scene.render.resolution_x = 512
     scene.render.resolution_y = 384
     scene.render.resolution_percentage = 100
-    scene.render.film_transparent = True
-    valid_formats = [i.identifier for i in scene.render.image_settings.bl_rna.properties["file_format"].enum_items]
-    if "PNG" in valid_formats:
-        scene.render.image_settings.file_format = "PNG"
-    if hasattr(scene.render.image_settings, "color_mode"):
-        scene.render.image_settings.color_mode = "RGBA"
-    try:
-        scene.render.engine = "BLENDER_WORKBENCH"
-        scene.display.shading.light = "STUDIO"
-        scene.display.shading.color_type = "MATERIAL"
-    except TypeError:
-        scene.render.engine = scene.render.engine
-    return camera
+    return scene.camera
 
 
 def set_collection_visible(collections, visible):
@@ -447,18 +420,19 @@ def set_collection_visible(collections, visible):
 
 
 def export_collection(coll):
-    bpy.ops.object.select_all(action="DESELECT")
-    for obj in coll.objects:
+    for obj in bpy.data.objects:
+        obj.select_set(False)
+    for obj in coll.all_objects:
         obj.select_set(True)
-    bpy.context.view_layer.objects.active = next(iter(coll.objects), None)
-    bpy.ops.export_scene.gltf(filepath=blender_path(OUT_DIR / f"{coll.name}.glb"), export_format="GLB", use_selection=True)
+    bpy.context.view_layer.objects.active = next(iter(coll.all_objects), None)
+    bpy.ops.export_scene.gltf(filepath=blender_path(OUT_DIR / f"{coll.name}.glb"), export_format="GLB", use_selection=True, use_active_scene=True)
 
 
 def render_collection(coll, collections):
     set_collection_visible(collections, {coll.name: True})
     bpy.context.scene.render.filepath = blender_path(OUT_DIR / f"{coll.name}.png")
     bpy.context.view_layer.update()
-    bpy.ops.render.opengl(write_still=True, view_context=False)
+    bpy.ops.render.render(write_still=True)
 
 
 def create_asset_scene(name: str, level: int, state: str, mats):
@@ -475,7 +449,7 @@ def render_scene(scene: bpy.types.Scene, name: str):
         bpy.context.window.scene = scene
     scene.render.filepath = blender_path(OUT_DIR / f"{name}.png")
     bpy.context.view_layer.update()
-    bpy.ops.render.opengl(write_still=True, view_context=False)
+    bpy.ops.render.render(write_still=True)
 
 
 def arrange_review_layout(collections):
@@ -533,7 +507,7 @@ def save_manifest(collections):
         "anchor": ANCHOR,
         "style": "Aeolian bright fantasy mid-poly",
         "notes": [
-            "ground tile matches earlier building tile scale and palette",
+            "ground tile uses the terrain/grass palette and the same daylight setup as terrain tile renders",
             f"bed footprint is scaled by {BED_MODEL_SCALE} on the standard 3.6 tile",
             "L1/L2 walls are log-built; supports are grounded",
             "all levels include six super-windleaf stages",
@@ -544,6 +518,91 @@ def save_manifest(collections):
         json.dump(manifest_payload, handle, ensure_ascii=False, indent=2)
     with open(blender_path(REPORT_PATH), "w", encoding="utf-8") as handle:
         json.dump(report_payload, handle, ensure_ascii=False, indent=2)
+
+
+def save_manifest_from_variants():
+    assets = []
+    for name, level, state in asset_variants():
+        assets.append(
+            {
+                "id": name,
+                "level": level,
+                "state": state,
+                "model": f"{name}.glb",
+                "sprite": f"{name}.png",
+                "anchor": ANCHOR,
+            }
+        )
+    manifest_payload = {"asset": "windleaf_bed", "assets": assets}
+    report_payload = {
+        "asset": "windleaf_bed",
+        "pipeline": "blender_mcp_midpoly",
+        "blend": BLEND_PATH.name,
+        "count": len(assets),
+        "levels": [1, 2, 3],
+        "states": [
+            "stage01",
+            "stage02",
+            "stage03",
+            "stage04",
+            "active",
+            "construction",
+            "damaged",
+            "super_stage01",
+            "super_stage02",
+            "super_stage03",
+            "super_stage04",
+            "super_stage05",
+            "super_stage06",
+        ],
+        "png_size": [512, 384],
+        "anchor": ANCHOR,
+        "style": "Aeolian bright fantasy mid-poly",
+        "notes": [
+            "ground tile uses the terrain/grass palette and the same daylight setup as terrain tile renders",
+            f"bed footprint is scaled by {BED_MODEL_SCALE} on the standard 3.6 tile",
+            "L1/L2 walls are log-built; supports are grounded",
+            "all levels include six super-windleaf stages",
+            "runtime PNGs render from isolated per-asset Blender scenes via the terrain daylight render pipeline",
+        ],
+    }
+    with open(blender_path(OUT_DIR / "manifest.json"), "w", encoding="utf-8") as handle:
+        json.dump(manifest_payload, handle, ensure_ascii=False, indent=2)
+    with open(blender_path(REPORT_PATH), "w", encoding="utf-8") as handle:
+        json.dump(report_payload, handle, ensure_ascii=False, indent=2)
+
+
+def cleanup_generated_collections():
+    prefixes = ("ground_road_", "windleaf_bed_")
+    for coll in list(bpy.data.collections):
+        if not coll.name.startswith(prefixes):
+            continue
+        for obj in list(coll.all_objects):
+            bpy.data.objects.remove(obj, do_unlink=True)
+        bpy.data.collections.remove(coll)
+
+
+def generate_range(start=0, end=None, save_blend=False):
+    ensure_dir()
+    cleanup_generated_collections()
+    variants = asset_variants()[start:end]
+    mats = make_materials()
+    collections = []
+    for name, level, state in variants:
+        scene, coll = create_asset_scene(name, level, state, mats)
+        collections.append(coll)
+        if bpy.context.window:
+            bpy.context.window.scene = scene
+        export_collection(coll)
+        render_scene(scene, name)
+    if save_blend and collections:
+        if bpy.context.window:
+            scene = bpy.data.scenes.get("Real_City_Windleaf_Render_" + collections[-1].name)
+            if scene:
+                bpy.context.window.scene = scene
+        bpy.ops.wm.save_as_mainfile(filepath=blender_path(BLEND_PATH))
+    print("WINDLEAF_BED_RANGE_COMPLETE", start, end, len(collections))
+    return [coll.name for coll in collections]
 
 
 def main():
@@ -562,7 +621,7 @@ def main():
         if scene:
             bpy.context.window.scene = scene
     bpy.ops.wm.save_as_mainfile(filepath=blender_path(BLEND_PATH))
-    save_manifest(collections)
+    save_manifest_from_variants()
     print("WINDLEAF_BED_BLENDER_COMPLETE", len(collections), str(BLEND_PATH))
 
 

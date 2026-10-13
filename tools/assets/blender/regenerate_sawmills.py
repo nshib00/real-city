@@ -10,6 +10,8 @@ import bmesh
 import bpy
 from mathutils import Vector
 
+from real_city.migration import LegacyAssetMigration, finalize_legacy_asset_generation
+
 spec=importlib.util.spec_from_file_location('sawmill_states',Path(__file__).with_name('revise_building_states.py'))
 S=importlib.util.module_from_spec(spec);spec.loader.exec_module(S)
 H=S.H
@@ -265,6 +267,11 @@ def main(output=None,levels=range(1,14)):
     directory.mkdir(parents=True,exist_ok=True)
     scene=bpy.data.scenes.new('Real_City_Sawmills_Housing_Style');bpy.context.window.scene=scene
     H.palette()
+    # Match terrain/grass exactly so building bases do not drift from map tiles.
+    grass=H.MATS['grass']
+    grass.diffuse_color=(.26,.48,.08,1)
+    shader=grass.node_tree.nodes.get('Principled BSDF')
+    shader.inputs['Base Color'].default_value=(.26,.48,.08,1)
     for role,color in {'metal':(.30,.36,.37),'copper':(.55,.25,.075),'brick':(.47,.14,.075),
                        'concrete':(.41,.43,.38),'yard':(.34,.25,.12),'fuel':(.48,.15,.055),
                        'premium':(.76,.49,.19),'gold':(.76,.48,.08),'rune_roof':(.26,.14,.37)}.items():
@@ -299,6 +306,20 @@ def main(output=None,levels=range(1,14)):
             print('SAWMILL_DONE '+collection.name,flush=True)
     S.STATE={'kind':'lumber_yard','model_dir':directory,'active':active,'report':report}
     S.finish()
+    finalize_legacy_asset_generation(
+        LegacyAssetMigration(
+            asset_id='lumber_yard',
+            display_name='Лесопилка',
+            category='industry',
+            output_dir=directory,
+            levels=levels,
+            states=STATES,
+            source_blend=directory/'lumber_yard_levels.blend',
+            combined_glb=directory/'lumber_yard_levels.glb',
+            generator='tools/assets/blender/regenerate_sawmills.py',
+            style_reference='Real City industry sawmill/lumber yard migrated to shared report contract',
+        )
+    )
     qa=bpy.data.scenes.new('Sawmill_Roundtrip_QA');bpy.context.window.scene=qa
     for name,entry in report.items():
         bpy.ops.import_scene.gltf(filepath=str(directory/(name+'.glb')))

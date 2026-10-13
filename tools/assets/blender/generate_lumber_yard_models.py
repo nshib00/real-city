@@ -56,7 +56,7 @@ def mat(name, color, roughness=0.68, metallic=0.0, alpha=1.0, emission=None, emi
 def make_materials():
     global MATS
     MATS = {
-        "tile_grass": mat("MAT_tile_grass", (0.48, 0.78, 0.34, 1)),
+        "tile_grass": mat("MAT_tile_grass", (0.26, 0.48, 0.08, 1)),
         "yard_dirt": mat("MAT_yard_dirt", (0.68, 0.48, 0.27, 1)),
         "sawdust": mat("MAT_sawdust", (0.94, 0.73, 0.42, 1)),
         "stone_base": mat("MAT_stone_warm", (0.64, 0.63, 0.56, 1)),

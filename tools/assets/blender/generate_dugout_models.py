@@ -3,6 +3,8 @@ from pathlib import Path
 
 import bpy
 
+from real_city.migration import LegacyAssetMigration, finalize_legacy_asset_generation
+
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT_DIR = ROOT / "frontend" / "src" / "assets" / "buildings" / "housing" / "dugout"
@@ -496,6 +498,20 @@ def main():
     export_glb()
     for path in export_state_glbs():
         print(f"Exported {path}")
+    finalize_legacy_asset_generation(
+        LegacyAssetMigration(
+            asset_id="dugout",
+            display_name="Землянка",
+            category="housing",
+            output_dir=OUT_DIR,
+            levels=range(1, 6),
+            states=STATES,
+            source_blend=BLEND_PATH,
+            combined_glb=GLB_PATH,
+            generator="tools/assets/blender/generate_dugout_models.py",
+            style_reference="Real City early housing earth-and-turf mid-poly",
+        )
+    )
     print(f"Saved {BLEND_PATH}")
     print(f"Exported {GLB_PATH}")
 

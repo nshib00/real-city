@@ -7,6 +7,8 @@ from pathlib import Path
 import bmesh
 import bpy
 
+from real_city.migration import LegacyAssetMigration, finalize_legacy_asset_generation
+
 spec=importlib.util.spec_from_file_location('civic_states',Path(__file__).with_name('revise_building_states.py'))
 S=importlib.util.module_from_spec(spec);spec.loader.exec_module(S)
 H=S.H
@@ -222,7 +224,22 @@ def finish():
     S.ROUNDTRIP=[e for e in json.loads(previous.read_text()) if not e['name'].startswith('town_hall_')] if previous.exists() else []
     S.validate_roundtrip('town_hall')
     result=[e for e in S.ROUNDTRIP if e['name'].startswith('town_hall_')]
-    (S.ROOT/'frontend/public/assets/buildings/center/town_hall/roundtrip-validation.json').write_text(json.dumps(result,indent=2))
+    out_dir=S.ROOT/'frontend/public/assets/buildings/center/town_hall'
+    (out_dir/'roundtrip-validation.json').write_text(json.dumps(result,indent=2))
+    finalize_legacy_asset_generation(
+        LegacyAssetMigration(
+            asset_id='town_hall',
+            display_name='Ратуша',
+            category='center',
+            output_dir=out_dir,
+            levels=range(1,11),
+            states=('active','construction','damaged'),
+            source_blend=out_dir/'town_hall_levels.blend',
+            combined_glb=out_dir/'town_hall_levels.glb',
+            generator='tools/assets/blender/regenerate_town_halls.py',
+            style_reference='Real City 2x2 civic chain, migrated without changing silhouette',
+        )
+    )
 
 
 if __name__=='__main__':
