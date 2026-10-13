@@ -10,6 +10,8 @@
 | [features.md](features.md) | Где реализованы пользовательские и игровые функции |
 | [api-and-realtime.md](api-and-realtime.md) | REST API, авторизация, React Query, WebSocket-синхронизация |
 | [rendering-and-assets.md](rendering-and-assets.md) | Изометрическая карта, Pixi, Three.js/GLB, PNG-ассеты |
+| [animated-map-assets-architecture.md](animated-map-assets-architecture.md) | Целевая архитектура анимированных построек, монстров, Blender-пайплайна и Pixi object layer |
+| [rendering-performance-notes.md](rendering-performance-notes.md) | Dev-сценарии нагрузки карты, HUD, baseline FPS/памяти/WebGL-контекстов |
 | [testing.md](testing.md) | Тесты, команды проверки, что покрыто |
 
 ## Главное за одну минуту

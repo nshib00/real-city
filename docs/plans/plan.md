@@ -1,6 +1,6 @@
 # Real City — План реализации
 
-Пунктов плана выполнено: 154/285 (54.0%)
+Пунктов плана выполнено: 154/286 (53.8%)
 
 ## Подход к логированию
 
@@ -118,6 +118,7 @@
 | 3.13 | UI полного списка ресурсов: раскрываемый реестр ресурсов, категории, лимит только для монет, редкие супер-ресурсы, топливо и фильтры | `frontend/src/features/resources/`, `frontend/src/features/hud/ResourceBar.tsx` | ✅ |
 | 3.14 | UI союзов: экран Союзного дома, роли, участники, казна, пожертвования, расходы и общие баффы | `frontend/src/features/alliance/` | ✅ |
 | 3.15 | Виджет карты: кнопка мини-карты открывает квадрат 5x5 районов как мини-модель мира; клик по ячейке переносит камеру на конкретный тайл выбранного района | `frontend/src/features/minimap/`, `frontend/src/game/state/useGameStore.ts`, `frontend/src/game/coordinates/` | ⏳ |
+| 3.16 | Поиск и установка скилла/скиллов для дизайна игр, подходящих под сказочную браузерную стратегию; затем полный редизайн UI под стиль Эолии: сказочная визуальная система, подходящий шрифт, обновленные панели HUD/inspector/resource bar, отсутствие наложений блоков, сворачиваемые чат и уведомления, сохранение UI preferences | `frontend/src/app/styles/`, `frontend/src/features/hud/`, `frontend/src/features/chat/`, `frontend/src/features/notifications/`, `frontend/src/shared/store/`, `docs/art/visual-style-guide.md` | ⏳ |
 
 ---
 
