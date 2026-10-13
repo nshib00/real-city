@@ -42,13 +42,20 @@ type ResourceNodeResponse struct {
 }
 
 type ProductionRecipeResponse struct {
-	ID           string           `json:"id"`
-	Name         string           `json:"name"`
-	BuildingType string           `json:"building_type"`
-	DurationSec  int              `json:"duration_sec"`
-	Workers      int              `json:"workers"`
-	Input        []ResourceAmount `json:"input"`
-	Output       []ResourceAmount `json:"output"`
+	ID           string               `json:"id"`
+	Name         string               `json:"name"`
+	BuildingType string               `json:"building_type"`
+	DurationSec  int                  `json:"duration_sec"`
+	Workers      int                  `json:"workers"`
+	Input        []ResourceAmount     `json:"input"`
+	Output       []ResourceAmount     `json:"output"`
+	RareOutput   []RareResourceAmount `json:"rare_output"`
+}
+
+type RareResourceAmount struct {
+	Resource string  `json:"resource"`
+	Amount   int     `json:"amount"`
+	Chance   float64 `json:"chance"`
 }
 
 type ProductionJobResponse struct {
@@ -146,6 +153,7 @@ func ProductionRecipe(item economy.ProductionRecipe) ProductionRecipeResponse {
 		Workers:      item.Workers,
 		Input:        resourceAmounts(item.Input),
 		Output:       resourceAmounts(item.Output),
+		RareOutput:   rareResourceAmounts(item.RareOutput),
 	}
 }
 
@@ -192,6 +200,14 @@ func resourceAmounts(items []economy.ResourceAmount) []ResourceAmount {
 	result := make([]ResourceAmount, 0, len(items))
 	for _, item := range items {
 		result = append(result, ResourceAmount{Resource: string(item.Resource), Amount: item.Amount})
+	}
+	return result
+}
+
+func rareResourceAmounts(items []economy.RareProductionOutput) []RareResourceAmount {
+	result := make([]RareResourceAmount, 0, len(items))
+	for _, item := range items {
+		result = append(result, RareResourceAmount{Resource: string(item.Resource), Amount: item.Amount, Chance: item.Chance})
 	}
 	return result
 }

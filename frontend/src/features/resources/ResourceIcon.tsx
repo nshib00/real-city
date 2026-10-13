@@ -6,8 +6,10 @@ type ResourceIconProps = {
   label: string
 }
 
+export const RESOURCE_ICON_ASSET_REVISION = 'midpoly-regen-2026-09-27'
+
 export function resourceIconUrl(id: string) {
-  return `/assets/resources/icons/${id}.png`
+  return `/assets/resources/icons/${id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`
 }
 
 export function ResourceIcon({ id, label }: ResourceIconProps) {

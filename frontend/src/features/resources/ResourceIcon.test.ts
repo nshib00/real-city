@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { resourceIconUrl } from './ResourceIcon'
+import { RESOURCE_ICON_ASSET_REVISION, resourceIconUrl } from './ResourceIcon'
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import manifest from '../../../public/assets/resources/icons/manifest.json'
 
 describe('resource icons', () => {
   it('uses generated png assets from the public resource icon folder', () => {
-    expect(resourceIconUrl('wood')).toBe('/assets/resources/icons/wood.png')
-    expect(resourceIconUrl('aeolian-crystal')).toBe('/assets/resources/icons/aeolian-crystal.png')
+    expect(resourceIconUrl('wood')).toBe(`/assets/resources/icons/wood.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
+    expect(resourceIconUrl('aeolian-crystal')).toBe(`/assets/resources/icons/aeolian-crystal.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
   })
 
   it('includes an icon for every catalog resource', () => {
@@ -18,6 +18,7 @@ describe('resource icons', () => {
         name: item.name,
         category: item.category,
         file: `${item.id}.png`,
+        model: `${item.id}.glb`,
       }))
     }
   })

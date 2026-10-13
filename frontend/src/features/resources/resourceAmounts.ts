@@ -55,7 +55,7 @@ export function populationLimit(buildings: PlacedBuilding[]) {
       return total
     }
     const spec = catalogByKind.get(building.kind)
-    if (spec?.category !== 'housing') {
+    if (spec?.category !== 'housing' && building.kind !== 'town_hall') {
       return total
     }
     return total + populationForLevel(building.kind, building.level)
@@ -74,5 +74,9 @@ export function buildingLimit(buildings: PlacedBuilding[]) {
 }
 
 export function usedBuildingLimit(buildings: PlacedBuilding[]) {
-  return buildings.filter((building) => building.kind !== 'road').length
+  return buildings.filter((building) => building.state !== 'ruined' && !isLimitFreeKind(building.kind)).length
+}
+
+function isLimitFreeKind(kind: BuildingKind) {
+  return kind === 'road' || kind === 'standard_road' || kind === 'paved_road' || kind === 'wooden_wall' || kind === 'stone_wall' || kind === 'concrete_wall' || kind === 'modern_wall'
 }

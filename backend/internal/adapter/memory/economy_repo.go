@@ -27,6 +27,10 @@ func NewEconomyRepo() *EconomyRepo {
 		"node_stone_1": {ID: "node_stone_1", MapID: "dev-world", Type: "stone_vein", Resource: economy.ResourceStone, Amount: 55, MaxAmount: 55, Tile: world.Coord{X: 14, Y: 5}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
 		"node_oil_1":   {ID: "node_oil_1", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 36, MaxAmount: 36, Tile: world.Coord{X: 24, Y: 18}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
 		"node_oil_2":   {ID: "node_oil_2", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 28, MaxAmount: 28, Tile: world.Coord{X: 91, Y: 73}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_3":   {ID: "node_oil_3", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 32, MaxAmount: 32, Tile: world.Coord{X: 126, Y: 35}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_4":   {ID: "node_oil_4", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 30, MaxAmount: 30, Tile: world.Coord{X: 38, Y: 124}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_5":   {ID: "node_oil_5", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 34, MaxAmount: 34, Tile: world.Coord{X: 142, Y: 116}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_6":   {ID: "node_oil_6", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 26, MaxAmount: 26, Tile: world.Coord{X: 76, Y: 139}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
 	}
 	return &EconomyRepo{
 		inventories:  make(map[player.ID]economy.Inventory),
@@ -43,9 +47,14 @@ func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coin
 	inventory, ok := r.inventories[playerID]
 	if !ok {
 		inventory = economy.NewInventory(string(playerID), time.Now().UTC(), coinCapacity)
-		r.inventories[playerID] = inventory
+	}
+	for _, resource := range economy.AllResourceTypes() {
+		if _, ok := inventory.Items[resource]; !ok {
+			inventory.Items[resource] = 0
+		}
 	}
 	inventory.CoinCapacity = coinCapacity
+	r.inventories[playerID] = inventory
 	return cloneInventory(inventory), nil
 }
 

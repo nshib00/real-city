@@ -27,25 +27,35 @@ const (
 	ResourceCopper         ResourceType = "copper"
 	ResourceResin          ResourceType = "resin"
 	ResourceFlax           ResourceType = "flax"
+	ResourceReed           ResourceType = "reed"
 	ResourceWindleaf       ResourceType = "windleaf"
 	ResourceHerbs          ResourceType = "herbs"
 	ResourceMushrooms      ResourceType = "mushrooms"
 	ResourceSeeds          ResourceType = "seeds"
+	ResourceDyes           ResourceType = "dyes"
+	ResourceOilPlants      ResourceType = "oil_plants"
+	ResourceSugarCane      ResourceType = "sugar_cane"
+	ResourceCrystalFruit   ResourceType = "crystal_fruit"
 	ResourceBrick          ResourceType = "brick"
 	ResourceStoneBlock     ResourceType = "stone_block"
 	ResourceMetal          ResourceType = "metal"
 	ResourceIron           ResourceType = "iron"
 	ResourceSteel          ResourceType = "steel"
 	ResourceGlass          ResourceType = "glass"
+	ResourceStarGlass      ResourceType = "star_glass"
+	ResourceLightCrystal   ResourceType = "light_crystal"
 	ResourcePlanks         ResourceType = "planks"
 	ResourcePremiumPlanks  ResourceType = "premium_planks"
 	ResourceRope           ResourceType = "rope"
 	ResourceCopperParts    ResourceType = "copper_parts"
+	ResourceTools          ResourceType = "tools"
 	ResourceIronIngot      ResourceType = "iron_ingot"
 	ResourceGoldIngot      ResourceType = "gold_ingot"
 	ResourceCement         ResourceType = "cement"
 	ResourceConcrete       ResourceType = "concrete"
 	ResourceReinforcedConc ResourceType = "reinforced_concrete"
+	ResourceReinforcedBeam ResourceType = "reinforced_beams"
+	ResourceArmorPlates    ResourceType = "armor_plates"
 	ResourceFabric         ResourceType = "fabric"
 	ResourceMechanism      ResourceType = "mechanism"
 	ResourceSuperMechanism ResourceType = "super_mechanism"
@@ -59,8 +69,10 @@ const (
 	ResourceSuperMushrooms ResourceType = "super-mushrooms"
 	ResourceSuperWindleaf  ResourceType = "super-windleaf"
 	ResourceEmeraldDust    ResourceType = "emerald_dust"
+	ResourceRareFlowers    ResourceType = "rare_flowers"
 	ResourceElderwoodHeart ResourceType = "elderwood-heart"
 	ResourceRuneTile       ResourceType = "rune_tile"
+	ResourceBlueSalt       ResourceType = "blue_salt"
 )
 
 const (
@@ -69,6 +81,7 @@ const (
 	NodeDepleted NodeState = "depleted"
 
 	ProductionRunning   ProductionState = "running"
+	ProductionReady     ProductionState = "ready"
 	ProductionCompleted ProductionState = "completed"
 	ProductionCancelled ProductionState = "cancelled"
 
@@ -84,10 +97,11 @@ type ResourceAmount struct {
 }
 
 type Inventory struct {
-	PlayerID     string
-	Items        map[ResourceType]int
-	CoinCapacity int
-	UpdatedAt    time.Time
+	PlayerID           string
+	Items              map[ResourceType]int
+	CoinCapacity       int
+	BypassCoinCapacity bool
+	UpdatedAt          time.Time
 }
 
 type StorageLimit struct {
@@ -103,9 +117,16 @@ type ProductionRecipe struct {
 	Workers         int
 	Input           []ResourceAmount
 	Output          []ResourceAmount
+	RareOutput      []RareProductionOutput
 	FuelPerRun      int
 	RequiredLevel   int
 	AutoCollectable bool
+}
+
+type RareProductionOutput struct {
+	Resource ResourceType
+	Amount   int
+	Chance   float64
 }
 
 type ProductionJob struct {
@@ -165,52 +186,70 @@ func EmptyInventory(playerID string, now time.Time, coinCapacity int) Inventory 
 
 func StartingItems() map[ResourceType]int {
 	return map[ResourceType]int{
-		ResourceCoins:          1250,
-		ResourcePopulation:     18,
-		ResourceAeolianCrystal: 18,
-		ResourceWood:           420,
-		ResourceStone:          260,
-		ResourceClay:           120,
-		ResourceSand:           90,
-		ResourceCoal:           44,
-		ResourceIronOre:        38,
-		ResourceCopper:         22,
-		ResourceResin:          16,
-		ResourceFlax:           3,
-		ResourceWindleaf:       27,
-		ResourceHerbs:          31,
-		ResourceMushrooms:      9,
-		ResourceSeeds:          64,
-		ResourceBrick:          160,
-		ResourceStoneBlock:     11,
-		ResourceMetal:          58,
-		ResourceIron:           34,
-		ResourceSteel:          12,
-		ResourceGlass:          32,
-		ResourcePlanks:         88,
-		ResourcePremiumPlanks:  0,
-		ResourceRope:           0,
-		ResourceCopperParts:    0,
-		ResourceIronIngot:      0,
-		ResourceGoldIngot:      0,
-		ResourceCement:         26,
-		ResourceConcrete:       14,
-		ResourceReinforcedConc: 0,
-		ResourceFabric:         18,
-		ResourceMechanism:      0,
-		ResourceSuperMechanism: 0,
-		ResourceElectronics:    3,
-		ResourceSulfur:         7,
-		ResourceExplosives:     0,
-		ResourceOil:            36,
-		ResourceFuel:           12,
-		ResourceSuperSeeds:     3,
-		ResourceSuperFiber:     0,
-		ResourceSuperMushrooms: 1,
-		ResourceSuperWindleaf:  0,
-		ResourceEmeraldDust:    0,
-		ResourceElderwoodHeart: 0,
-		ResourceRuneTile:       0,
+		ResourceCoins: 50,
+	}
+}
+
+func AllResourceTypes() []ResourceType {
+	return []ResourceType{
+		ResourceCoins,
+		ResourcePopulation,
+		ResourceAeolianCrystal,
+		ResourceWood,
+		ResourceStone,
+		ResourceClay,
+		ResourceSand,
+		ResourceCoal,
+		ResourceIronOre,
+		ResourceCopper,
+		ResourceResin,
+		ResourceFlax,
+		ResourceReed,
+		ResourceWindleaf,
+		ResourceHerbs,
+		ResourceMushrooms,
+		ResourceSeeds,
+		ResourceDyes,
+		ResourceOilPlants,
+		ResourceSugarCane,
+		ResourceCrystalFruit,
+		ResourceBrick,
+		ResourceStoneBlock,
+		ResourceMetal,
+		ResourceIron,
+		ResourceSteel,
+		ResourceGlass,
+		ResourceStarGlass,
+		ResourceLightCrystal,
+		ResourcePlanks,
+		ResourcePremiumPlanks,
+		ResourceRope,
+		ResourceCopperParts,
+		ResourceTools,
+		ResourceIronIngot,
+		ResourceGoldIngot,
+		ResourceCement,
+		ResourceConcrete,
+		ResourceReinforcedConc,
+		ResourceReinforcedBeam,
+		ResourceArmorPlates,
+		ResourceFabric,
+		ResourceMechanism,
+		ResourceSuperMechanism,
+		ResourceElectronics,
+		ResourceSulfur,
+		ResourceExplosives,
+		ResourceOil,
+		ResourceFuel,
+		ResourceSuperSeeds,
+		ResourceSuperFiber,
+		ResourceSuperMushrooms,
+		ResourceSuperWindleaf,
+		ResourceEmeraldDust,
+		ResourceRareFlowers,
+		ResourceElderwoodHeart,
+		ResourceRuneTile,
+		ResourceBlueSalt,
 	}
 }
 
@@ -240,7 +279,7 @@ func (i *Inventory) Add(items []ResourceAmount, now time.Time) []ResourceAmount 
 		if item.Amount <= 0 {
 			continue
 		}
-		if item.Resource == ResourceCoins && i.CoinCapacity > 0 {
+		if item.Resource == ResourceCoins && i.CoinCapacity > 0 && !i.BypassCoinCapacity {
 			next := i.Items[item.Resource] + item.Amount
 			if next > i.CoinCapacity {
 				overflow = append(overflow, ResourceAmount{Resource: item.Resource, Amount: next - i.CoinCapacity})

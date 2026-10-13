@@ -30,12 +30,12 @@ func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coin
 	rowCount := 0
 	for rows.Next() {
 		var resource string
-		var amount int
+		var amount int64
 		var updatedAt time.Time
 		if err := rows.Scan(&resource, &amount, &updatedAt); err != nil {
 			return economy.Inventory{}, err
 		}
-		inventory.Items[economy.ResourceType(resource)] = amount
+		inventory.Items[economy.ResourceType(resource)] = int(amount)
 		if rowCount == 0 || updatedAt.After(inventory.UpdatedAt) {
 			inventory.UpdatedAt = updatedAt
 		}
@@ -50,6 +50,11 @@ func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coin
 			return economy.Inventory{}, err
 		}
 		return inventory, nil
+	}
+	for _, resource := range economy.AllResourceTypes() {
+		if _, ok := inventory.Items[resource]; !ok {
+			inventory.Items[resource] = 0
+		}
 	}
 	return inventory, nil
 }

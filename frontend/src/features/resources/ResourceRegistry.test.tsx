@@ -9,7 +9,7 @@ describe('ResourceRegistry', () => {
   beforeEach(() => {
     useGameStore.setState({
       buildings: [],
-      uiPreferences: { compactPanels: false, resourceRegistryOpen: true, alliancePanelOpen: false, buildMenuOpen: false },
+      uiPreferences: { compactPanels: false, resourceRegistryOpen: true, alliancePanelOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
     })
   })
 
@@ -24,14 +24,14 @@ describe('ResourceRegistry', () => {
     )
 
     expect(screen.getByText('1500/2500')).toBeTruthy()
-    expect(screen.getByText('20/24')).toBeTruthy()
+    expect(screen.getByText('20')).toBeTruthy()
 
     act(() => {
       queryClient.setQueryData(['economy', 'inventory'], inventoryPayload(1800, 21, 3000))
     })
 
     await waitFor(() => expect(screen.getByText('1800/3000')).toBeTruthy())
-    expect(screen.getByText('21/24')).toBeTruthy()
+    expect(screen.getByText('21')).toBeTruthy()
   })
 
   it('shows elderwood heart from live inventory in rare resources', () => {
@@ -56,6 +56,23 @@ describe('ResourceRegistry', () => {
     const row = screen.getByText('Сердцевина древня').closest('.resource-registry-row')
     expect(row).toBeTruthy()
     expect(row?.textContent).toContain('1')
+  })
+
+  it('keeps zero resources visible in the full registry', () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    queryClient.setQueryData(['economy', 'inventory'], inventoryPayload(1500, 20, 2500))
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ResourceRegistry />
+      </QueryClientProvider>,
+    )
+
+    fireEvent.click(screen.getByText('Сырье'))
+
+    const row = screen.getByText('Древесина').closest('.resource-registry-row')
+    expect(row).toBeTruthy()
+    expect(row?.textContent).toContain('0')
   })
 })
 
