@@ -7,6 +7,17 @@ import (
 	"real-city/backend/internal/domain/world"
 )
 
+const worldSizeTiles = 160
+
+var oilWellTiles = []world.Coord{
+	{X: 24, Y: 18},
+	{X: 91, Y: 73},
+	{X: 126, Y: 35},
+	{X: 38, Y: 124},
+	{X: 142, Y: 116},
+	{X: 76, Y: 139},
+}
+
 type Generator struct {
 	mapID       string
 	seed        int64
@@ -67,12 +78,11 @@ func (g Generator) terrain(coord world.Coord, distance float64, safeZone bool) w
 	}
 	value := g.noise(coord, 0)
 	ridge := g.noise(coord, 17)
-	oil := g.noise(coord, 89)
 	ruins := g.noiseModulo(coord, 131, 10000)
 	switch {
 	case !safeZone && distance > 32 && ruins < 3:
 		return world.TerrainRuins
-	case !safeZone && distance > 20 && oil == 0 && ridge < 35:
+	case !safeZone && g.isOilWellTile(coord):
 		return world.TerrainOilWell
 	case !safeZone && value < 2:
 		return world.TerrainWater
@@ -83,6 +93,16 @@ func (g Generator) terrain(coord world.Coord, distance float64, safeZone bool) w
 	default:
 		return world.TerrainGrass
 	}
+}
+
+func (g Generator) isOilWellTile(coord world.Coord) bool {
+	wrapped := world.Coord{X: positiveModulo(coord.X, worldSizeTiles), Y: positiveModulo(coord.Y, worldSizeTiles)}
+	for _, tile := range oilWellTiles {
+		if wrapped == tile {
+			return true
+		}
+	}
+	return false
 }
 
 func (g Generator) elevation(coord world.Coord) int {
@@ -106,4 +126,12 @@ func (g Generator) noiseModulo(coord world.Coord, salt int64, modulo uint32) uin
 		byte(salt), byte(salt >> 8),
 	})
 	return h.Sum32() % modulo
+}
+
+func positiveModulo(value int, size int) int {
+	result := value % size
+	if result < 0 {
+		result += size
+	}
+	return result
 }
