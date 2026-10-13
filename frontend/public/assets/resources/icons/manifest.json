@@ -1,5 +1,5 @@
 {
-  "style": "transparent close-up bright fantasy stylized mid-poly isometric resource icons without bottom backplates, following docs/visual-style-guide.md; png fallback additions generated without Blender",
+  "style": "transparent close-up bright fantasy stylized mid-poly isometric resource icons without bottom backplates, following docs/visual-style-guide.md",
   "size": 256,
   "resources": [
     {
@@ -8,12 +8,12 @@
       "category": "basic",
       "file": "coins.png",
       "model": "coins.glb",
-      "triangles": 3216,
+      "triangles": 16272,
       "ortho_scale": 1.296134114265442,
       "camera_location": [
-        2.896956205368042,
-        -4.075738430023193,
-        3.3175973892211914
+        2.8844449520111084,
+        -4.05822229385376,
+        3.351264238357544
       ]
     },
     {
@@ -22,12 +22,12 @@
       "category": "basic",
       "file": "population.png",
       "model": "population.glb",
-      "triangles": 1956,
-      "ortho_scale": 1.0597219467163086,
+      "triangles": 3540,
+      "ortho_scale": 1.0469179153442383,
       "camera_location": [
-        2.8096132278442383,
-        -4.04638147354126,
-        3.43436336517334
+        2.8104209899902344,
+        -4.04401159286499,
+        3.436645030975342
       ]
     },
     {
@@ -36,14 +36,13 @@
       "category": "basic",
       "file": "aeolian-crystal.png",
       "model": "aeolian-crystal.glb",
-      "triangles": 66,
-      "ortho_scale": 1.3929073810577393,
+      "triangles": 5348,
+      "ortho_scale": 1.6262543201446533,
       "camera_location": [
-        2.7687788009643555,
-        -3.936547040939331,
-        3.6112749576568604
-      ],
-      "generator": "png-fallback"
+        2.7412326335906982,
+        -3.8556406497955322,
+        3.739288330078125
+      ]
     },
     {
       "id": "wood",
@@ -51,12 +50,12 @@
       "category": "raw",
       "file": "wood.png",
       "model": "wood.glb",
-      "triangles": 2888,
-      "ortho_scale": 1.7247936725616455,
+      "triangles": 6844,
+      "ortho_scale": 1.7222559452056885,
       "camera_location": [
-        2.893969774246216,
-        -4.051557540893555,
-        3.351087808609009
+        2.885253667831421,
+        -4.039445400238037,
+        3.374427556991577
       ]
     },
     {
@@ -65,12 +64,12 @@
       "category": "raw",
       "file": "stone.png",
       "model": "stone.glb",
-      "triangles": 240,
-      "ortho_scale": 1.4213484525680542,
+      "triangles": 3840,
+      "ortho_scale": 1.4051400423049927,
       "camera_location": [
-        2.8552439212799072,
-        -4.04759407043457,
-        3.3913378715515137
+        2.860633611679077,
+        -4.049925804138184,
+        3.3834705352783203
       ]
     },
     {
@@ -79,12 +78,12 @@
       "category": "raw",
       "file": "clay.png",
       "model": "clay.glb",
-      "triangles": 828,
-      "ortho_scale": 1.5329763889312744,
+      "triangles": 2324,
+      "ortho_scale": 1.4747061729431152,
       "camera_location": [
-        2.8914411067962646,
-        -3.977395534515381,
-        3.447774648666382
+        2.89461612701416,
+        -3.9824419021606445,
+        3.4384655952453613
       ]
     },
     {
@@ -93,12 +92,12 @@
       "category": "raw",
       "file": "sand.png",
       "model": "sand.glb",
-      "triangles": 1676,
-      "ortho_scale": 1.2363563776016235,
+      "triangles": 3580,
+      "ortho_scale": 1.1862858533859253,
       "camera_location": [
-        2.8860437870025635,
-        -4.04046106338501,
-        3.3724160194396973
+        2.893916130065918,
+        -4.0395188331604,
+        3.3664586544036865
       ]
     },
     {
@@ -107,12 +106,12 @@
       "category": "raw",
       "file": "coal.png",
       "model": "coal.glb",
-      "triangles": 240,
-      "ortho_scale": 1.4213484525680542,
+      "triangles": 3840,
+      "ortho_scale": 1.4051400423049927,
       "camera_location": [
-        2.8552439212799072,
-        -4.04759407043457,
-        3.3913378715515137
+        2.860633611679077,
+        -4.049925804138184,
+        3.3834705352783203
       ]
     },
     {
@@ -121,12 +120,12 @@
       "category": "raw",
       "file": "iron_ore.png",
       "model": "iron_ore.glb",
-      "triangles": 1212,
-      "ortho_scale": 1.4213484525680542,
+      "triangles": 7692,
+      "ortho_scale": 1.4051400423049927,
       "camera_location": [
-        2.8562633991241455,
-        -4.045984745025635,
-        3.3924591541290283
+        2.8630056381225586,
+        -4.0461812019348145,
+        3.386079788208008
       ]
     },
     {
@@ -135,12 +134,12 @@
       "category": "raw",
       "file": "copper.png",
       "model": "copper.glb",
-      "triangles": 648,
-      "ortho_scale": 1.2920677661895752,
+      "triangles": 2568,
+      "ortho_scale": 1.2629965543746948,
       "camera_location": [
-        2.9015586376190186,
-        -4.080290794372559,
-        3.307619571685791
+        2.9007246494293213,
+        -4.080943584442139,
+        3.307546854019165
       ]
     },
     {
@@ -149,12 +148,12 @@
       "category": "raw",
       "file": "resin.png",
       "model": "resin.glb",
-      "triangles": 1284,
-      "ortho_scale": 1.1444454193115234,
+      "triangles": 3150,
+      "ortho_scale": 1.117910385131836,
       "camera_location": [
-        2.888552188873291,
-        -4.082035064697266,
-        3.317223310470581
+        2.8939192295074463,
+        -4.088108062744141,
+        3.304614782333374
       ]
     },
     {
@@ -163,12 +162,12 @@
       "category": "raw",
       "file": "windleaf.png",
       "model": "windleaf.glb",
-      "triangles": 528,
-      "ortho_scale": 1.2297924757003784,
+      "triangles": 1750,
+      "ortho_scale": 1.2308311462402344,
       "camera_location": [
-        2.810776710510254,
-        -4.049081802368164,
-        3.429868698120117
+        2.8206276893615723,
+        -4.033214569091797,
+        3.441107988357544
       ]
     },
     {
@@ -177,12 +176,12 @@
       "category": "raw",
       "file": "herbs.png",
       "model": "herbs.glb",
-      "triangles": 864,
-      "ortho_scale": 1.0790919065475464,
+      "triangles": 2202,
+      "ortho_scale": 1.0796706676483154,
       "camera_location": [
-        2.8145878314971924,
-        -3.909618377685547,
-        3.603903293609619
+        2.8178367614746094,
+        -3.90791654586792,
+        3.6031155586242676
       ]
     },
     {
@@ -191,12 +190,12 @@
       "category": "raw",
       "file": "mushrooms.png",
       "model": "mushrooms.glb",
-      "triangles": 1892,
-      "ortho_scale": 1.0147086381912231,
+      "triangles": 4732,
+      "ortho_scale": 0.9754398465156555,
       "camera_location": [
-        2.860826015472412,
-        -4.071012496948242,
-        3.3564577102661133
+        2.860666036605835,
+        -4.072926044464111,
+        3.354167938232422
       ]
     },
     {
@@ -205,12 +204,12 @@
       "category": "raw",
       "file": "seeds.png",
       "model": "seeds.glb",
-      "triangles": 1176,
-      "ortho_scale": 0.7944079041481018,
+      "triangles": 4210,
+      "ortho_scale": 0.7637420892715454,
       "camera_location": [
-        2.9223854541778564,
-        -4.091339588165283,
-        3.2746238708496094
+        2.9239907264709473,
+        -4.093499660491943,
+        3.2704150676727295
       ]
     },
     {
@@ -219,11 +218,11 @@
       "category": "crafted",
       "file": "brick.png",
       "model": "brick.glb",
-      "triangles": 1296,
-      "ortho_scale": 1.4242569208145142,
+      "triangles": 3600,
+      "ortho_scale": 1.413476824760437,
       "camera_location": [
-        2.8889083862304688,
-        -4.055126667022705,
+        2.8868391513824463,
+        -4.056604862213135,
         3.351146697998047
       ]
     },
@@ -233,12 +232,12 @@
       "category": "crafted",
       "file": "stone_block.png",
       "model": "stone_block.glb",
-      "triangles": 324,
-      "ortho_scale": 1.034649133682251,
+      "triangles": 3708,
+      "ortho_scale": 1.0026448965072632,
       "camera_location": [
-        2.882817268371582,
-        -4.035943984985352,
-        3.381098747253418
+        2.8716378211975098,
+        -4.030796527862549,
+        3.397812604904175
       ]
     },
     {
@@ -247,12 +246,12 @@
       "category": "crafted",
       "file": "metal.png",
       "model": "metal.glb",
-      "triangles": 1376,
-      "ortho_scale": 1.2540243864059448,
+      "triangles": 5088,
+      "ortho_scale": 1.2430005073547363,
       "camera_location": [
-        2.9154534339904785,
-        -4.055006980895996,
-        3.32716703414917
+        2.9160475730895996,
+        -4.053716659545898,
+        3.3282694816589355
       ]
     },
     {
@@ -261,12 +260,12 @@
       "category": "crafted",
       "file": "iron.png",
       "model": "iron.glb",
-      "triangles": 648,
-      "ortho_scale": 1.2920677661895752,
+      "triangles": 2568,
+      "ortho_scale": 1.2629965543746948,
       "camera_location": [
-        2.9015586376190186,
-        -4.080290794372559,
-        3.307619571685791
+        2.9007246494293213,
+        -4.080943584442139,
+        3.307546854019165
       ]
     },
     {
@@ -275,12 +274,12 @@
       "category": "crafted",
       "file": "steel.png",
       "model": "steel.glb",
-      "triangles": 648,
-      "ortho_scale": 1.3887706995010376,
+      "triangles": 2568,
+      "ortho_scale": 1.3783079385757446,
       "camera_location": [
-        2.8854551315307617,
-        -4.039636611938477,
-        3.374000310897827
+        2.8854546546936035,
+        -4.039636135101318,
+        3.3740015029907227
       ]
     },
     {
@@ -289,12 +288,12 @@
       "category": "crafted",
       "file": "glass.png",
       "model": "glass.glb",
-      "triangles": 648,
-      "ortho_scale": 1.067597508430481,
+      "triangles": 2568,
+      "ortho_scale": 1.0575577020645142,
       "camera_location": [
-        2.8229544162750244,
-        -3.9428858757019043,
-        3.5539567470550537
+        2.823251962661743,
+        -3.9433023929595947,
+        3.5531561374664307
       ]
     },
     {
@@ -303,12 +302,12 @@
       "category": "crafted",
       "file": "planks.png",
       "model": "planks.glb",
-      "triangles": 756,
-      "ortho_scale": 1.2039844989776611,
+      "triangles": 3284,
+      "ortho_scale": 1.1781748533248901,
       "camera_location": [
-        2.9131529331207275,
-        -4.078413963317871,
-        3.2994680404663086
+        2.898029327392578,
+        -4.069080829620361,
+        3.3250949382781982
       ]
     },
     {
@@ -317,12 +316,12 @@
       "category": "crafted",
       "file": "cement.png",
       "model": "cement.glb",
-      "triangles": 472,
-      "ortho_scale": 1.0279278755187988,
+      "triangles": 5040,
+      "ortho_scale": 0.9911306500434875,
       "camera_location": [
-        2.8403637409210205,
-        -3.976508855819702,
-        3.4953370094299316
+        2.8430089950561523,
+        -3.97939395904541,
+        3.489260196685791
       ]
     },
     {
@@ -331,12 +330,12 @@
       "category": "crafted",
       "file": "concrete.png",
       "model": "concrete.glb",
-      "triangles": 324,
-      "ortho_scale": 1.0617319345474243,
+      "triangles": 3836,
+      "ortho_scale": 1.0380933284759521,
       "camera_location": [
-        2.866927146911621,
-        -4.037642478942871,
-        3.3933820724487305
+        2.865427255630493,
+        -4.038193225860596,
+        3.394044876098633
       ]
     },
     {
@@ -345,12 +344,12 @@
       "category": "crafted",
       "file": "fabric.png",
       "model": "fabric.glb",
-      "triangles": 676,
-      "ortho_scale": 1.1581292152404785,
+      "triangles": 2152,
+      "ortho_scale": 1.1312013864517212,
       "camera_location": [
-        2.857414484024048,
-        -4.015627861022949,
-        3.4300484657287598
+        2.869690179824829,
+        -4.001780033111572,
+        3.4365134239196777
       ]
     },
     {
@@ -359,12 +358,12 @@
       "category": "crafted",
       "file": "electronics.png",
       "model": "electronics.glb",
-      "triangles": 976,
-      "ortho_scale": 1.071315050125122,
+      "triangles": 4028,
+      "ortho_scale": 1.0622199773788452,
       "camera_location": [
-        2.9290354251861572,
-        -4.084400653839111,
-        3.277409791946411
+        2.912757635116577,
+        -4.05591344833374,
+        3.3284640312194824
       ]
     },
     {
@@ -373,12 +372,12 @@
       "category": "crafted",
       "file": "sulfur.png",
       "model": "sulfur.glb",
-      "triangles": 390,
-      "ortho_scale": 1.2398321628570557,
+      "triangles": 2694,
+      "ortho_scale": 1.2072412967681885,
       "camera_location": [
-        2.7937660217285156,
-        -3.9456677436828613,
-        3.576951026916504
+        2.7962875366210938,
+        -3.949361562728882,
+        3.5699574947357178
       ]
     },
     {
@@ -387,12 +386,12 @@
       "category": "crafted",
       "file": "explosives.png",
       "model": "explosives.glb",
-      "triangles": 1428,
-      "ortho_scale": 1.008046269416809,
+      "triangles": 3024,
+      "ortho_scale": 0.9796403050422668,
       "camera_location": [
-        2.856350898742676,
-        -3.9988911151885986,
-        3.4523167610168457
+        2.8561902046203613,
+        -3.9986658096313477,
+        3.452749729156494
       ]
     },
     {
@@ -401,12 +400,12 @@
       "category": "fuel",
       "file": "oil.png",
       "model": "oil.glb",
-      "triangles": 1216,
-      "ortho_scale": 1.1503314971923828,
+      "triangles": 2432,
+      "ortho_scale": 1.1432229280471802,
       "camera_location": [
-        2.787224531173706,
-        -4.046313762664795,
-        3.4548027515411377
+        2.789463520050049,
+        -4.047005653381348,
+        3.4518868923187256
       ]
     },
     {
@@ -415,12 +414,12 @@
       "category": "fuel",
       "file": "fuel.png",
       "model": "fuel.glb",
-      "triangles": 568,
-      "ortho_scale": 1.0539851188659668,
+      "triangles": 2520,
+      "ortho_scale": 1.0479422807693481,
       "camera_location": [
-        2.8529129028320312,
-        -3.993421792984009,
-        3.4624032974243164
+        2.8543241024017334,
+        -3.991623640060425,
+        3.463409185409546
       ]
     },
     {
@@ -429,8 +428,8 @@
       "category": "rare",
       "file": "super-seeds.png",
       "model": "super-seeds.glb",
-      "triangles": 1176,
-      "ortho_scale": 0.7944079041481018,
+      "triangles": 4508,
+      "ortho_scale": 0.7796492576599121,
       "camera_location": [
         2.9223854541778564,
         -4.091339588165283,
@@ -443,12 +442,12 @@
       "category": "rare",
       "file": "super-fiber.png",
       "model": "super-fiber.glb",
-      "triangles": 2148,
-      "ortho_scale": 1.079666018486023,
+      "triangles": 7034,
+      "ortho_scale": 1.0595901012420654,
       "camera_location": [
-        2.8206024169921875,
-        -3.9627764225006104,
-        3.5307796001434326
+        2.8103301525115967,
+        -3.932770013809204,
+        3.57830810546875
       ]
     },
     {
@@ -457,12 +456,12 @@
       "category": "rare",
       "file": "super-mushrooms.png",
       "model": "super-mushrooms.glb",
-      "triangles": 1892,
-      "ortho_scale": 1.0147086381912231,
+      "triangles": 4900,
+      "ortho_scale": 1.001656413078308,
       "camera_location": [
-        2.860826015472412,
-        -4.071012496948242,
-        3.3564577102661133
+        2.8596651554107666,
+        -4.070211410522461,
+        3.358532428741455
       ]
     },
     {
@@ -471,12 +470,12 @@
       "category": "rare",
       "file": "elderwood-heart.png",
       "model": "elderwood-heart.glb",
-      "triangles": 616,
-      "ortho_scale": 0.9748862981796265,
+      "triangles": 2120,
+      "ortho_scale": 0.9500811100006104,
       "camera_location": [
-        2.852440595626831,
-        -3.9934165477752686,
-        3.462839126586914
+        2.832772731781006,
+        -4.021132946014404,
+        3.445443630218506
       ]
     },
     {
@@ -484,280 +483,602 @@
       "name": "Лен",
       "category": "raw",
       "file": "flax.png",
-      "generator": "png-fallback"
+      "model": "flax.glb",
+      "triangles": 6880,
+      "ortho_scale": 0.9592429399490356,
+      "camera_location": [
+        2.860898017883301,
+        -3.899707555770874,
+        3.5744166374206543
+      ]
     },
     {
       "id": "reed",
       "name": "Тростник",
       "category": "raw",
       "file": "reed.png",
-      "generator": "png-fallback"
+      "model": "reed.glb",
+      "triangles": 7406,
+      "ortho_scale": 1.1764192581176758,
+      "camera_location": [
+        2.8087027072906494,
+        -3.875248908996582,
+        3.652996301651001
+      ]
     },
     {
       "id": "fiber",
       "name": "Волокно",
       "category": "raw",
       "file": "fiber.png",
-      "generator": "png-fallback"
+      "model": "fiber.glb",
+      "triangles": 6134,
+      "ortho_scale": 1.0595901012420654,
+      "camera_location": [
+        2.819924831390381,
+        -3.966099977493286,
+        3.527165412902832
+      ]
     },
     {
       "id": "dyes",
       "name": "Красители",
       "category": "raw",
       "file": "dyes.png",
-      "generator": "png-fallback"
+      "model": "dyes.glb",
+      "triangles": 4152,
+      "ortho_scale": 0.7890908122062683,
+      "camera_location": [
+        2.9250662326812744,
+        -4.003781318664551,
+        3.383624315261841
+      ]
     },
     {
       "id": "oil_plants",
       "name": "Масличные растения",
       "category": "raw",
       "file": "oil_plants.png",
-      "generator": "png-fallback"
+      "model": "oil_plants.glb",
+      "triangles": 2312,
+      "ortho_scale": 0.8550005555152893,
+      "camera_location": [
+        2.7954442501068115,
+        -4.033263683319092,
+        3.463939666748047
+      ]
     },
     {
       "id": "sugar_cane",
       "name": "Сахарный стебель",
       "category": "raw",
       "file": "sugar_cane.png",
-      "generator": "png-fallback"
+      "model": "sugar_cane.glb",
+      "triangles": 9162,
+      "ortho_scale": 1.2011926174163818,
+      "camera_location": [
+        2.781256675720215,
+        -3.9160871505737305,
+        3.6259713172912598
+      ]
     },
     {
       "id": "rare_flowers",
       "name": "Редкие цветы",
       "category": "rare",
       "file": "rare_flowers.png",
-      "generator": "png-fallback"
+      "model": "rare_flowers.glb",
+      "triangles": 16284,
+      "ortho_scale": 0.8437679409980774,
+      "camera_location": [
+        2.8304402828216553,
+        -4.026904106140137,
+        3.4402194023132324
+      ]
     },
     {
       "id": "crystal_fruit",
       "name": "Кристальные плоды",
       "category": "rare",
       "file": "crystal_fruit.png",
-      "generator": "png-fallback"
+      "model": "crystal_fruit.glb",
+      "triangles": 1438,
+      "ortho_scale": 0.8393649458885193,
+      "camera_location": [
+        2.860883951187134,
+        -4.073544502258301,
+        3.353182315826416
+      ]
     },
     {
       "id": "sap",
       "name": "Живица",
       "category": "raw",
       "file": "sap.png",
-      "generator": "png-fallback"
+      "model": "sap.glb",
+      "triangles": 4298,
+      "ortho_scale": 1.117910385131836,
+      "camera_location": [
+        2.8939192295074463,
+        -4.088108062744141,
+        3.304614782333374
+      ]
     },
     {
       "id": "premium_planks",
       "name": "Премиум-доски",
       "category": "crafted",
       "file": "premium_planks.png",
-      "generator": "png-fallback"
+      "model": "premium_planks.glb",
+      "triangles": 4996,
+      "ortho_scale": 1.1860668659210205,
+      "camera_location": [
+        2.900662422180176,
+        -4.067200183868408,
+        3.3250949382781982
+      ]
     },
     {
       "id": "rope",
       "name": "Веревка",
       "category": "crafted",
       "file": "rope.png",
-      "generator": "png-fallback"
+      "model": "rope.glb",
+      "triangles": 9360,
+      "ortho_scale": 0.8967023491859436,
+      "camera_location": [
+        2.889430284500122,
+        -4.0671515464782715,
+        3.3353676795959473
+      ]
     },
     {
       "id": "iron_ingot",
       "name": "Железный слиток",
       "category": "crafted",
       "file": "iron_ingot.png",
-      "generator": "png-fallback"
+      "model": "iron_ingot.glb",
+      "triangles": 2568,
+      "ortho_scale": 1.2629965543746948,
+      "camera_location": [
+        2.9007246494293213,
+        -4.080943584442139,
+        3.307546854019165
+      ]
     },
     {
       "id": "gold_ingot",
       "name": "Золотой слиток",
       "category": "crafted",
       "file": "gold_ingot.png",
-      "generator": "png-fallback"
+      "model": "gold_ingot.glb",
+      "triangles": 2568,
+      "ortho_scale": 1.2629965543746948,
+      "camera_location": [
+        2.9007246494293213,
+        -4.080943584442139,
+        3.307546854019165
+      ]
     },
     {
       "id": "reinforced_concrete",
       "name": "Железобетон",
       "category": "crafted",
       "file": "reinforced_concrete.png",
-      "generator": "png-fallback"
+      "model": "reinforced_concrete.glb",
+      "triangles": 6944,
+      "ortho_scale": 1.1266316175460815,
+      "camera_location": [
+        2.8731300830841064,
+        -4.026737689971924,
+        3.4016220569610596
+      ]
     },
     {
       "id": "copper_parts",
       "name": "Медные детали",
       "category": "crafted",
       "file": "copper_parts.png",
-      "generator": "png-fallback"
+      "model": "copper_parts.glb",
+      "triangles": 6084,
+      "ortho_scale": 1.2430005073547363,
+      "camera_location": [
+        2.88736629486084,
+        -4.0135626792907715,
+        3.4054484367370605
+      ]
     },
     {
       "id": "tools",
       "name": "Инструменты",
       "category": "crafted",
       "file": "tools.png",
-      "generator": "png-fallback"
+      "model": "tools.glb",
+      "triangles": 2362,
+      "ortho_scale": 0.9732109308242798,
+      "camera_location": [
+        2.973456621170044,
+        -4.0063276290893555,
+        3.336392402648926
+      ]
     },
     {
       "id": "paper",
       "name": "Бумага",
       "category": "crafted",
       "file": "paper.png",
-      "generator": "png-fallback"
+      "model": "paper.glb",
+      "triangles": 2144,
+      "ortho_scale": 1.2468010187149048,
+      "camera_location": [
+        2.9721806049346924,
+        -4.011870384216309,
+        3.330498218536377
+      ]
     },
     {
       "id": "paints",
       "name": "Краски",
       "category": "crafted",
       "file": "paints.png",
-      "generator": "png-fallback"
+      "model": "paints.glb",
+      "triangles": 4152,
+      "ortho_scale": 0.7890908122062683,
+      "camera_location": [
+        2.9250662326812744,
+        -4.003781318664551,
+        3.383624315261841
+      ]
     },
     {
       "id": "vegetable_oil",
       "name": "Масло",
       "category": "crafted",
       "file": "vegetable_oil.png",
-      "generator": "png-fallback"
+      "model": "vegetable_oil.glb",
+      "triangles": 2044,
+      "ortho_scale": 1.102673888206482,
+      "camera_location": [
+        2.81463360786438,
+        -3.9404866695404053,
+        3.564574718475342
+      ]
     },
     {
       "id": "mechanisms",
       "name": "Механизмы",
       "category": "crafted",
       "file": "mechanisms.png",
-      "generator": "png-fallback"
+      "model": "mechanisms.glb",
+      "triangles": 11412,
+      "ortho_scale": 0.9836952090263367,
+      "camera_location": [
+        2.9125685691833496,
+        -4.05216646194458,
+        3.333404779434204
+      ]
     },
     {
       "id": "super-mechanisms",
       "name": "Супер-механизмы",
       "category": "rare",
       "file": "super-mechanisms.png",
-      "generator": "png-fallback"
+      "model": "super-mechanisms.glb",
+      "triangles": 12200,
+      "ortho_scale": 0.9836952090263367,
+      "camera_location": [
+        2.8962626457214355,
+        -4.0293378829956055,
+        3.3772828578948975
+      ]
     },
     {
       "id": "lenses",
       "name": "Линзы",
       "category": "crafted",
       "file": "lenses.png",
-      "generator": "png-fallback"
+      "model": "lenses.glb",
+      "triangles": 2788,
+      "ortho_scale": 0.7818324565887451,
+      "camera_location": [
+        2.9497385025024414,
+        -4.034096717834473,
+        3.3226118087768555
+      ]
     },
     {
       "id": "reinforced_beams",
       "name": "Усиленные балки",
       "category": "crafted",
       "file": "reinforced_beams.png",
-      "generator": "png-fallback"
+      "model": "reinforced_beams.glb",
+      "triangles": 2312,
+      "ortho_scale": 1.1235709190368652,
+      "camera_location": [
+        2.8986144065856934,
+        -4.058098316192627,
+        3.338540554046631
+      ]
     },
     {
       "id": "armor_plates",
       "name": "Защитные пластины",
       "category": "crafted",
       "file": "armor_plates.png",
-      "generator": "png-fallback"
+      "model": "armor_plates.glb",
+      "triangles": 7740,
+      "ortho_scale": 1.1295808553695679,
+      "camera_location": [
+        2.8840901851654053,
+        -4.07571268081665,
+        3.329326629638672
+      ]
     },
     {
       "id": "light_crystal",
-      "name": "Светокристаллы",
+      "name": "Светокристалл",
       "category": "rare",
       "file": "light_crystal.png",
-      "generator": "png-fallback"
+      "model": "light_crystal.glb",
+      "triangles": 3504,
+      "ortho_scale": 1.2646414041519165,
+      "camera_location": [
+        2.7843775749206543,
+        -3.951066255569458,
+        3.578615188598633
+      ]
     },
     {
       "id": "amber_essence",
       "name": "Янтарная эссенция",
       "category": "rare",
       "file": "amber_essence.png",
-      "generator": "png-fallback"
+      "model": "amber_essence.glb",
+      "triangles": 2044,
+      "ortho_scale": 1.102673888206482,
+      "camera_location": [
+        2.81463360786438,
+        -3.9404866695404053,
+        3.564574718475342
+      ]
     },
     {
       "id": "emerald_dust",
       "name": "Изумрудная пыль",
       "category": "rare",
       "file": "emerald_dust.png",
-      "generator": "png-fallback"
+      "model": "emerald_dust.glb",
+      "triangles": 6720,
+      "ortho_scale": 1.0877782106399536,
+      "camera_location": [
+        2.934997081756592,
+        -4.0238823890686035,
+        3.349013090133667
+      ]
     },
     {
       "id": "blue_salt",
       "name": "Синяя соль",
       "category": "rare",
       "file": "blue_salt.png",
-      "generator": "png-fallback"
+      "model": "blue_salt.glb",
+      "triangles": 7036,
+      "ortho_scale": 1.1039073467254639,
+      "camera_location": [
+        2.932947874069214,
+        -4.023983478546143,
+        3.350747585296631
+      ]
     },
     {
       "id": "star_glass",
       "name": "Звездное стекло",
       "category": "rare",
       "file": "star_glass.png",
-      "generator": "png-fallback"
+      "model": "star_glass.glb",
+      "triangles": 5484,
+      "ortho_scale": 1.0575577020645142,
+      "camera_location": [
+        2.8391647338867188,
+        -3.918182849884033,
+        3.57066011428833
+      ]
     },
     {
       "id": "stone_heart",
       "name": "Каменное сердце",
       "category": "rare",
       "file": "stone_heart.png",
-      "generator": "png-fallback"
+      "model": "stone_heart.glb",
+      "triangles": 4824,
+      "ortho_scale": 1.4051400423049927,
+      "camera_location": [
+        2.860633611679077,
+        -4.049925804138184,
+        3.3834705352783203
+      ]
     },
     {
       "id": "aeolian_alloy",
       "name": "Эолиевый сплав",
       "category": "rare",
       "file": "aeolian_alloy.png",
-      "generator": "png-fallback"
+      "model": "aeolian_alloy.glb",
+      "triangles": 1712,
+      "ortho_scale": 1.0747326612472534,
+      "camera_location": [
+        2.9279367923736572,
+        -4.040686130523682,
+        3.334045171737671
+      ]
     },
     {
       "id": "printing_plate",
       "name": "Печатная пластина",
       "category": "crafted",
       "file": "printing_plate.png",
-      "generator": "png-fallback"
+      "model": "printing_plate.glb",
+      "triangles": 2140,
+      "ortho_scale": 1.0554617643356323,
+      "camera_location": [
+        2.9250223636627197,
+        -4.095031261444092,
+        3.2675282955169678
+      ]
     },
     {
       "id": "runic_tile",
       "name": "Руническая черепица",
       "category": "rare",
       "file": "runic_tile.png",
-      "generator": "png-fallback"
+      "model": "runic_tile.glb",
+      "triangles": 2184,
+      "ortho_scale": 0.9020648002624512,
+      "camera_location": [
+        2.8456969261169434,
+        -4.155580043792725,
+        3.262579917907715
+      ]
     },
     {
       "id": "silent_powder",
       "name": "Тихий порошок",
       "category": "rare",
       "file": "silent_powder.png",
-      "generator": "png-fallback"
+      "model": "silent_powder.glb",
+      "triangles": 6720,
+      "ortho_scale": 1.0877782106399536,
+      "camera_location": [
+        2.934997081756592,
+        -4.0238823890686035,
+        3.349013090133667
+      ]
     },
     {
       "id": "memory_shard",
       "name": "Осколки памяти",
       "category": "rare",
       "file": "memory_shard.png",
-      "generator": "png-fallback"
+      "model": "memory_shard.glb",
+      "triangles": 3372,
+      "ortho_scale": 0.8768842220306396,
+      "camera_location": [
+        2.8558058738708496,
+        -3.989863157272339,
+        3.4643025398254395
+      ]
     },
     {
       "id": "super-windleaf",
       "name": "Супер-ветролист",
       "category": "rare",
       "file": "super-windleaf.png",
-      "generator": "png-fallback"
+      "model": "super-windleaf.glb",
+      "triangles": 1750,
+      "ortho_scale": 1.2308311462402344,
+      "camera_location": [
+        2.8206276893615723,
+        -4.033214569091797,
+        3.441107988357544
+      ]
     },
     {
       "id": "influence_seal",
-      "name": "Знаки влияния",
+      "name": "Печать влияния",
       "category": "rare",
       "file": "influence_seal.png",
-      "generator": "png-fallback"
+      "model": "influence_seal.glb",
+      "triangles": 10352,
+      "ortho_scale": 0.9714974164962769,
+      "camera_location": [
+        2.9101479053497314,
+        -4.067214488983154,
+        3.316453456878662
+      ]
     },
     {
       "id": "monster_trophy",
       "name": "Трофеи монстров",
       "category": "rare",
       "file": "monster_trophy.png",
-      "generator": "png-fallback"
+      "model": "monster_trophy.glb",
+      "triangles": 1392,
+      "ortho_scale": 0.6882976293563843,
+      "camera_location": [
+        2.898566246032715,
+        -3.9877405166625977,
+        3.428130865097046
+      ]
     },
     {
       "id": "relic_fragment",
       "name": "Реликтовые фрагменты",
       "category": "rare",
       "file": "relic_fragment.png",
-      "generator": "png-fallback"
+      "model": "relic_fragment.glb",
+      "triangles": 3468,
+      "ortho_scale": 0.9365112781524658,
+      "camera_location": [
+        2.8719499111175537,
+        -4.067728042602539,
+        3.350525140762329
+      ]
     },
     {
       "id": "festival_token",
       "name": "Праздничные жетоны",
       "category": "rare",
       "file": "festival_token.png",
-      "generator": "png-fallback"
+      "model": "festival_token.glb",
+      "triangles": 11680,
+      "ortho_scale": 0.8288646936416626,
+      "camera_location": [
+        2.9106130599975586,
+        -4.07485818862915,
+        3.306302309036255
+      ]
+    },
+    {
+      "id": "mechanism",
+      "name": "Механизм",
+      "category": "crafted",
+      "file": "mechanism.png",
+      "model": "mechanism.glb",
+      "triangles": 11412,
+      "ortho_scale": 0.9836952090263367,
+      "camera_location": [
+        2.9125685691833496,
+        -4.05216646194458,
+        3.333404779434204
+      ]
+    },
+    {
+      "id": "super_mechanism",
+      "name": "Супер-механизм",
+      "category": "rare",
+      "file": "super_mechanism.png",
+      "model": "super_mechanism.glb",
+      "triangles": 12200,
+      "ortho_scale": 0.9836952090263367,
+      "camera_location": [
+        2.8962626457214355,
+        -4.0293378829956055,
+        3.3772828578948975
+      ]
+    },
+    {
+      "id": "rune_tile",
+      "name": "Руническая черепица",
+      "category": "rare",
+      "file": "rune_tile.png",
+      "model": "rune_tile.glb",
+      "triangles": 2184,
+      "ortho_scale": 0.9020648002624512,
+      "camera_location": [
+        2.8456969261169434,
+        -4.155580043792725,
+        3.262579917907715
+      ]
     }
   ]
 }

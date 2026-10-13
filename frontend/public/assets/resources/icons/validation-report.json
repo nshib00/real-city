@@ -1,890 +1,926 @@
 [
   {
     "id": "coins",
-    "triangles": 3216,
+    "triangles": 16272,
     "alpha_bounds": [
       22,
-      71,
+      63,
       234,
-      185
+      192
     ],
-    "bytes": 104388,
+    "bytes": 368460,
     "mode": "glb+png"
   },
   {
     "id": "population",
-    "triangles": 1956,
+    "triangles": 3540,
     "alpha_bounds": [
-      36,
+      35,
       22,
-      220,
+      221,
       234
     ],
-    "bytes": 87028,
+    "bytes": 92468,
     "mode": "glb+png"
   },
   {
     "id": "aeolian-crystal",
-    "triangles": 66,
+    "triangles": 5348,
     "alpha_bounds": [
-      20,
-      20,
-      237,
-      237
+      42,
+      22,
+      214,
+      234
     ],
-    "bytes": 6444,
+    "bytes": 316964,
     "mode": "glb+png"
   },
   {
     "id": "wood",
-    "triangles": 2888,
+    "triangles": 6844,
     "alpha_bounds": [
       22,
-      68,
+      64,
       234,
-      188
+      193
     ],
-    "bytes": 89200,
+    "bytes": 162160,
     "mode": "glb+png"
   },
   {
     "id": "stone",
-    "triangles": 240,
-    "alpha_bounds": [
-      22,
-      49,
-      234,
-      208
-    ],
-    "bytes": 26168,
-    "mode": "glb+png"
-  },
-  {
-    "id": "clay",
-    "triangles": 828,
-    "alpha_bounds": [
-      22,
-      60,
-      234,
-      196
-    ],
-    "bytes": 40028,
-    "mode": "glb+png"
-  },
-  {
-    "id": "sand",
-    "triangles": 1676,
-    "alpha_bounds": [
-      22,
-      65,
-      234,
-      191
-    ],
-    "bytes": 59180,
-    "mode": "glb+png"
-  },
-  {
-    "id": "coal",
-    "triangles": 240,
-    "alpha_bounds": [
-      22,
-      49,
-      234,
-      208
-    ],
-    "bytes": 26168,
-    "mode": "glb+png"
-  },
-  {
-    "id": "iron_ore",
-    "triangles": 1212,
-    "alpha_bounds": [
-      22,
-      49,
-      234,
-      208
-    ],
-    "bytes": 95668,
-    "mode": "glb+png"
-  },
-  {
-    "id": "copper",
-    "triangles": 648,
-    "alpha_bounds": [
-      22,
-      64,
-      234,
-      192
-    ],
-    "bytes": 48644,
-    "mode": "glb+png"
-  },
-  {
-    "id": "resin",
-    "triangles": 1284,
-    "alpha_bounds": [
-      22,
-      59,
-      234,
-      196
-    ],
-    "bytes": 46848,
-    "mode": "glb+png"
-  },
-  {
-    "id": "windleaf",
-    "triangles": 528,
-    "alpha_bounds": [
-      22,
-      41,
-      234,
-      215
-    ],
-    "bytes": 43000,
-    "mode": "glb+png"
-  },
-  {
-    "id": "herbs",
-    "triangles": 864,
-    "alpha_bounds": [
-      56,
-      22,
-      200,
-      234
-    ],
-    "bytes": 36832,
-    "mode": "glb+png"
-  },
-  {
-    "id": "mushrooms",
-    "triangles": 1892,
-    "alpha_bounds": [
-      22,
-      36,
-      234,
-      220
-    ],
-    "bytes": 58344,
-    "mode": "glb+png"
-  },
-  {
-    "id": "seeds",
-    "triangles": 1176,
-    "alpha_bounds": [
-      22,
-      69,
-      234,
-      187
-    ],
-    "bytes": 37724,
-    "mode": "glb+png"
-  },
-  {
-    "id": "brick",
-    "triangles": 1296,
-    "alpha_bounds": [
-      22,
-      60,
-      234,
-      196
-    ],
-    "bytes": 94392,
-    "mode": "glb+png"
-  },
-  {
-    "id": "stone_block",
-    "triangles": 324,
-    "alpha_bounds": [
-      22,
-      34,
-      234,
-      222
-    ],
-    "bytes": 25232,
-    "mode": "glb+png"
-  },
-  {
-    "id": "metal",
-    "triangles": 1376,
-    "alpha_bounds": [
-      22,
-      74,
-      234,
-      182
-    ],
-    "bytes": 97496,
-    "mode": "glb+png"
-  },
-  {
-    "id": "iron",
-    "triangles": 648,
-    "alpha_bounds": [
-      22,
-      64,
-      234,
-      192
-    ],
-    "bytes": 48608,
-    "mode": "glb+png"
-  },
-  {
-    "id": "steel",
-    "triangles": 648,
-    "alpha_bounds": [
-      22,
-      53,
-      234,
-      203
-    ],
-    "bytes": 47676,
-    "mode": "glb+png"
-  },
-  {
-    "id": "glass",
-    "triangles": 648,
-    "alpha_bounds": [
-      22,
-      32,
-      234,
-      224
-    ],
-    "bytes": 47188,
-    "mode": "glb+png"
-  },
-  {
-    "id": "planks",
-    "triangles": 756,
+    "triangles": 3840,
     "alpha_bounds": [
       22,
       49,
       234,
       207
     ],
-    "bytes": 54812,
+    "bytes": 80344,
     "mode": "glb+png"
   },
   {
-    "id": "cement",
-    "triangles": 472,
+    "id": "clay",
+    "triangles": 2324,
     "alpha_bounds": [
       22,
-      34,
+      60,
       234,
-      222
+      196
     ],
-    "bytes": 21072,
+    "bytes": 64568,
     "mode": "glb+png"
   },
   {
-    "id": "concrete",
-    "triangles": 324,
+    "id": "sand",
+    "triangles": 3580,
     "alpha_bounds": [
       22,
-      31,
+      65,
       234,
-      225
+      191
     ],
-    "bytes": 25220,
+    "bytes": 106724,
     "mode": "glb+png"
   },
   {
-    "id": "fabric",
-    "triangles": 676,
+    "id": "coal",
+    "triangles": 3840,
     "alpha_bounds": [
       22,
-      39,
+      49,
       234,
-      217
+      207
     ],
-    "bytes": 24772,
+    "bytes": 80340,
     "mode": "glb+png"
   },
   {
-    "id": "electronics",
-    "triangles": 976,
+    "id": "iron_ore",
+    "triangles": 7692,
     "alpha_bounds": [
       22,
-      64,
+      49,
       234,
-      192
+      207
     ],
-    "bytes": 55436,
+    "bytes": 160188,
     "mode": "glb+png"
   },
   {
-    "id": "sulfur",
-    "triangles": 390,
+    "id": "copper",
+    "triangles": 2568,
     "alpha_bounds": [
-      23,
       22,
-      233,
+      66,
+      234,
+      190
+    ],
+    "bytes": 57416,
+    "mode": "glb+png"
+  },
+  {
+    "id": "resin",
+    "triangles": 3150,
+    "alpha_bounds": [
+      22,
+      61,
+      234,
+      195
+    ],
+    "bytes": 87224,
+    "mode": "glb+png"
+  },
+  {
+    "id": "windleaf",
+    "triangles": 1750,
+    "alpha_bounds": [
+      22,
+      41,
+      234,
+      215
+    ],
+    "bytes": 46220,
+    "mode": "glb+png"
+  },
+  {
+    "id": "herbs",
+    "triangles": 2202,
+    "alpha_bounds": [
+      56,
+      22,
+      200,
       234
     ],
-    "bytes": 31540,
+    "bytes": 59448,
     "mode": "glb+png"
   },
   {
-    "id": "explosives",
-    "triangles": 1428,
+    "id": "mushrooms",
+    "triangles": 4732,
     "alpha_bounds": [
-      48,
       22,
-      208,
-      234
+      36,
+      234,
+      221
     ],
-    "bytes": 42252,
+    "bytes": 134992,
     "mode": "glb+png"
   },
   {
-    "id": "oil",
-    "triangles": 1216,
-    "alpha_bounds": [
-      55,
-      22,
-      201,
-      234
-    ],
-    "bytes": 35448,
-    "mode": "glb+png"
-  },
-  {
-    "id": "fuel",
-    "triangles": 568,
-    "alpha_bounds": [
-      43,
-      22,
-      213,
-      234
-    ],
-    "bytes": 28592,
-    "mode": "glb+png"
-  },
-  {
-    "id": "super-seeds",
-    "triangles": 1176,
+    "id": "seeds",
+    "triangles": 4210,
     "alpha_bounds": [
       22,
       69,
       234,
       187
     ],
-    "bytes": 38952,
+    "bytes": 114104,
+    "mode": "glb+png"
+  },
+  {
+    "id": "brick",
+    "triangles": 3600,
+    "alpha_bounds": [
+      22,
+      61,
+      234,
+      195
+    ],
+    "bytes": 83344,
+    "mode": "glb+png"
+  },
+  {
+    "id": "stone_block",
+    "triangles": 3708,
+    "alpha_bounds": [
+      22,
+      27,
+      234,
+      229
+    ],
+    "bytes": 99544,
+    "mode": "glb+png"
+  },
+  {
+    "id": "metal",
+    "triangles": 5088,
+    "alpha_bounds": [
+      22,
+      74,
+      234,
+      182
+    ],
+    "bytes": 110448,
+    "mode": "glb+png"
+  },
+  {
+    "id": "iron",
+    "triangles": 2568,
+    "alpha_bounds": [
+      22,
+      66,
+      234,
+      190
+    ],
+    "bytes": 57288,
+    "mode": "glb+png"
+  },
+  {
+    "id": "steel",
+    "triangles": 2568,
+    "alpha_bounds": [
+      22,
+      53,
+      234,
+      203
+    ],
+    "bytes": 57312,
+    "mode": "glb+png"
+  },
+  {
+    "id": "glass",
+    "triangles": 2568,
+    "alpha_bounds": [
+      22,
+      32,
+      234,
+      224
+    ],
+    "bytes": 57612,
+    "mode": "glb+png"
+  },
+  {
+    "id": "planks",
+    "triangles": 3284,
+    "alpha_bounds": [
+      22,
+      42,
+      234,
+      215
+    ],
+    "bytes": 78928,
+    "mode": "glb+png"
+  },
+  {
+    "id": "cement",
+    "triangles": 5040,
+    "alpha_bounds": [
+      22,
+      33,
+      234,
+      223
+    ],
+    "bytes": 126592,
+    "mode": "glb+png"
+  },
+  {
+    "id": "concrete",
+    "triangles": 3836,
+    "alpha_bounds": [
+      22,
+      30,
+      234,
+      226
+    ],
+    "bytes": 100672,
+    "mode": "glb+png"
+  },
+  {
+    "id": "fabric",
+    "triangles": 2152,
+    "alpha_bounds": [
+      22,
+      41,
+      234,
+      215
+    ],
+    "bytes": 53316,
+    "mode": "glb+png"
+  },
+  {
+    "id": "electronics",
+    "triangles": 4028,
+    "alpha_bounds": [
+      22,
+      52,
+      234,
+      204
+    ],
+    "bytes": 97320,
+    "mode": "glb+png"
+  },
+  {
+    "id": "sulfur",
+    "triangles": 2694,
+    "alpha_bounds": [
+      22,
+      25,
+      234,
+      231
+    ],
+    "bytes": 52564,
+    "mode": "glb+png"
+  },
+  {
+    "id": "explosives",
+    "triangles": 3024,
+    "alpha_bounds": [
+      46,
+      22,
+      210,
+      234
+    ],
+    "bytes": 77604,
+    "mode": "glb+png"
+  },
+  {
+    "id": "oil",
+    "triangles": 2432,
+    "alpha_bounds": [
+      55,
+      22,
+      201,
+      234
+    ],
+    "bytes": 63756,
+    "mode": "glb+png"
+  },
+  {
+    "id": "fuel",
+    "triangles": 2520,
+    "alpha_bounds": [
+      44,
+      22,
+      212,
+      234
+    ],
+    "bytes": 72016,
+    "mode": "glb+png"
+  },
+  {
+    "id": "super-seeds",
+    "triangles": 4508,
+    "alpha_bounds": [
+      22,
+      68,
+      234,
+      188
+    ],
+    "bytes": 124112,
     "mode": "glb+png"
   },
   {
     "id": "super-fiber",
-    "triangles": 2148,
+    "triangles": 7034,
     "alpha_bounds": [
-      69,
+      55,
       22,
-      187,
+      202,
       234
     ],
-    "bytes": 69868,
+    "bytes": 174144,
     "mode": "glb+png"
   },
   {
     "id": "super-mushrooms",
-    "triangles": 1892,
+    "triangles": 4900,
     "alpha_bounds": [
       22,
       36,
       234,
       220
     ],
-    "bytes": 59940,
+    "bytes": 139088,
     "mode": "glb+png"
   },
   {
     "id": "elderwood-heart",
-    "triangles": 616,
+    "triangles": 2120,
     "alpha_bounds": [
-      31,
+      34,
       22,
-      225,
+      222,
       234
     ],
-    "bytes": 31192,
+    "bytes": 58688,
     "mode": "glb+png"
   },
   {
     "id": "flax",
-    "triangles": null,
+    "triangles": 6880,
     "alpha_bounds": [
-      20,
-      39,
-      237,
-      223
+      38,
+      22,
+      219,
+      234
     ],
-    "bytes": 12547,
-    "mode": "png"
+    "bytes": 166476,
+    "mode": "glb+png"
   },
   {
     "id": "reed",
-    "triangles": null,
+    "triangles": 7406,
     "alpha_bounds": [
-      20,
-      39,
-      237,
-      223
+      44,
+      22,
+      212,
+      234
     ],
-    "bytes": 12515,
-    "mode": "png"
+    "bytes": 186748,
+    "mode": "glb+png"
   },
   {
     "id": "fiber",
-    "triangles": null,
+    "triangles": 6134,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      69,
+      22,
+      187,
+      234
     ],
-    "bytes": 9765,
-    "mode": "png"
+    "bytes": 152896,
+    "mode": "glb+png"
   },
   {
     "id": "dyes",
-    "triangles": null,
+    "triangles": 4152,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      43,
+      234,
+      213
     ],
-    "bytes": 9387,
-    "mode": "png"
+    "bytes": 102560,
+    "mode": "glb+png"
   },
   {
     "id": "oil_plants",
-    "triangles": null,
+    "triangles": 2312,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      35,
+      23,
+      221,
+      234
     ],
-    "bytes": 9987,
-    "mode": "png"
+    "bytes": 72132,
+    "mode": "glb+png"
   },
   {
     "id": "sugar_cane",
-    "triangles": null,
+    "triangles": 9162,
     "alpha_bounds": [
-      20,
-      39,
-      237,
-      223
+      77,
+      22,
+      180,
+      234
     ],
-    "bytes": 12537,
-    "mode": "png"
+    "bytes": 208636,
+    "mode": "glb+png"
   },
   {
     "id": "rare_flowers",
-    "triangles": null,
+    "triangles": 16284,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      35,
+      22,
+      220,
+      234
     ],
-    "bytes": 9987,
-    "mode": "png"
+    "bytes": 408224,
+    "mode": "glb+png"
   },
   {
     "id": "crystal_fruit",
-    "triangles": null,
+    "triangles": 1438,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      224
+      22,
+      37,
+      234,
+      219
     ],
-    "bytes": 14292,
-    "mode": "png"
+    "bytes": 43980,
+    "mode": "glb+png"
   },
   {
     "id": "sap",
-    "triangles": null,
+    "triangles": 4298,
     "alpha_bounds": [
-      20,
-      47,
-      237,
-      227
+      22,
+      61,
+      234,
+      195
     ],
-    "bytes": 12079,
-    "mode": "png"
+    "bytes": 117932,
+    "mode": "glb+png"
   },
   {
     "id": "premium_planks",
-    "triangles": null,
+    "triangles": 4996,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      42,
+      234,
+      214
     ],
-    "bytes": 8847,
-    "mode": "png"
+    "bytes": 120804,
+    "mode": "glb+png"
   },
   {
     "id": "rope",
-    "triangles": null,
+    "triangles": 9360,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      44,
+      234,
+      212
     ],
-    "bytes": 9787,
-    "mode": "png"
+    "bytes": 186632,
+    "mode": "glb+png"
   },
   {
     "id": "iron_ingot",
-    "triangles": null,
+    "triangles": 2568,
     "alpha_bounds": [
-      20,
-      50,
-      243,
-      223
+      22,
+      66,
+      234,
+      190
     ],
-    "bytes": 8668,
-    "mode": "png"
+    "bytes": 57324,
+    "mode": "glb+png"
   },
   {
     "id": "gold_ingot",
-    "triangles": null,
+    "triangles": 2568,
     "alpha_bounds": [
-      20,
-      50,
-      243,
-      223
+      22,
+      66,
+      234,
+      190
     ],
-    "bytes": 8672,
-    "mode": "png"
+    "bytes": 57324,
+    "mode": "glb+png"
   },
   {
     "id": "reinforced_concrete",
-    "triangles": null,
+    "triangles": 6944,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      37,
+      234,
+      219
     ],
-    "bytes": 7114,
-    "mode": "png"
+    "bytes": 179384,
+    "mode": "glb+png"
   },
   {
     "id": "copper_parts",
-    "triangles": null,
+    "triangles": 6084,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      56,
+      234,
+      200
     ],
-    "bytes": 10789,
-    "mode": "png"
+    "bytes": 134424,
+    "mode": "glb+png"
   },
   {
     "id": "tools",
-    "triangles": null,
+    "triangles": 2362,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      42,
+      234,
+      213
     ],
-    "bytes": 6886,
-    "mode": "png"
+    "bytes": 65320,
+    "mode": "glb+png"
   },
   {
     "id": "paper",
-    "triangles": null,
+    "triangles": 2144,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      57,
+      234,
+      198
     ],
-    "bytes": 6733,
-    "mode": "png"
+    "bytes": 54848,
+    "mode": "glb+png"
   },
   {
     "id": "paints",
-    "triangles": null,
+    "triangles": 4152,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      43,
+      234,
+      213
     ],
-    "bytes": 9407,
-    "mode": "png"
+    "bytes": 102580,
+    "mode": "glb+png"
   },
   {
     "id": "vegetable_oil",
-    "triangles": null,
+    "triangles": 2044,
     "alpha_bounds": [
-      20,
-      47,
-      237,
-      227
+      48,
+      22,
+      208,
+      234
     ],
-    "bytes": 12105,
-    "mode": "png"
+    "bytes": 57148,
+    "mode": "glb+png"
   },
   {
     "id": "mechanisms",
-    "triangles": null,
+    "triangles": 11412,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      63,
+      234,
+      193
     ],
-    "bytes": 10954,
-    "mode": "png"
+    "bytes": 240592,
+    "mode": "glb+png"
   },
   {
     "id": "super-mechanisms",
-    "triangles": null,
+    "triangles": 12200,
     "alpha_bounds": [
-      20,
-      47,
-      237,
-      223
+      22,
+      50,
+      234,
+      206
     ],
-    "bytes": 12758,
-    "mode": "png"
+    "bytes": 256216,
+    "mode": "glb+png"
   },
   {
     "id": "lenses",
-    "triangles": null,
+    "triangles": 2788,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      46,
+      234,
+      210
     ],
-    "bytes": 11150,
-    "mode": "png"
+    "bytes": 71500,
+    "mode": "glb+png"
   },
   {
     "id": "reinforced_beams",
-    "triangles": null,
+    "triangles": 2312,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      42,
+      234,
+      214
     ],
-    "bytes": 7364,
-    "mode": "png"
+    "bytes": 52304,
+    "mode": "glb+png"
   },
   {
     "id": "armor_plates",
-    "triangles": null,
+    "triangles": 7740,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      74,
+      234,
+      182
     ],
-    "bytes": 8032,
-    "mode": "png"
+    "bytes": 167740,
+    "mode": "glb+png"
   },
   {
     "id": "light_crystal",
-    "triangles": null,
+    "triangles": 3504,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      224
+      51,
+      22,
+      205,
+      234
     ],
-    "bytes": 14292,
-    "mode": "png"
+    "bytes": 66180,
+    "mode": "glb+png"
   },
   {
     "id": "amber_essence",
-    "triangles": null,
+    "triangles": 2044,
     "alpha_bounds": [
-      20,
-      47,
-      237,
-      227
+      48,
+      22,
+      208,
+      234
     ],
-    "bytes": 12032,
-    "mode": "png"
+    "bytes": 57164,
+    "mode": "glb+png"
   },
   {
     "id": "emerald_dust",
-    "triangles": null,
+    "triangles": 6720,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      72,
+      234,
+      184
     ],
-    "bytes": 10181,
-    "mode": "png"
+    "bytes": 177660,
+    "mode": "glb+png"
   },
   {
     "id": "blue_salt",
-    "triangles": null,
+    "triangles": 7036,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      71,
+      234,
+      185
     ],
-    "bytes": 7884,
-    "mode": "png"
+    "bytes": 184716,
+    "mode": "glb+png"
   },
   {
     "id": "star_glass",
-    "triangles": null,
+    "triangles": 5484,
     "alpha_bounds": [
-      20,
-      50,
-      237,
+      22,
+      32,
+      234,
       224
     ],
-    "bytes": 14234,
-    "mode": "png"
+    "bytes": 132432,
+    "mode": "glb+png"
   },
   {
     "id": "stone_heart",
-    "triangles": null,
+    "triangles": 4824,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      49,
+      234,
+      207
     ],
-    "bytes": 7563,
-    "mode": "png"
+    "bytes": 102032,
+    "mode": "glb+png"
   },
   {
     "id": "aeolian_alloy",
-    "triangles": null,
+    "triangles": 1712,
     "alpha_bounds": [
-      20,
-      50,
-      243,
-      223
+      22,
+      84,
+      234,
+      172
     ],
-    "bytes": 10692,
-    "mode": "png"
+    "bytes": 40820,
+    "mode": "glb+png"
   },
   {
     "id": "printing_plate",
-    "triangles": null,
+    "triangles": 2140,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      67,
+      234,
+      189
     ],
-    "bytes": 8712,
-    "mode": "png"
+    "bytes": 52264,
+    "mode": "glb+png"
   },
   {
     "id": "runic_tile",
-    "triangles": null,
+    "triangles": 2184,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      65,
+      234,
+      191
     ],
-    "bytes": 6954,
-    "mode": "png"
+    "bytes": 50252,
+    "mode": "glb+png"
   },
   {
     "id": "silent_powder",
-    "triangles": null,
+    "triangles": 6720,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      72,
+      234,
+      184
     ],
-    "bytes": 7840,
-    "mode": "png"
+    "bytes": 177696,
+    "mode": "glb+png"
   },
   {
     "id": "memory_shard",
-    "triangles": null,
+    "triangles": 3372,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      27,
+      22,
+      229,
+      234
     ],
-    "bytes": 9318,
-    "mode": "png"
+    "bytes": 68824,
+    "mode": "glb+png"
   },
   {
     "id": "super-windleaf",
-    "triangles": null,
+    "triangles": 1750,
     "alpha_bounds": [
-      20,
-      40,
-      237,
-      230
+      22,
+      41,
+      234,
+      215
     ],
-    "bytes": 12377,
-    "mode": "png"
+    "bytes": 46264,
+    "mode": "glb+png"
   },
   {
     "id": "influence_seal",
-    "triangles": null,
+    "triangles": 10352,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      37,
+      234,
+      219
     ],
-    "bytes": 9798,
-    "mode": "png"
+    "bytes": 254612,
+    "mode": "glb+png"
   },
   {
     "id": "monster_trophy",
-    "triangles": null,
+    "triangles": 1392,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      37,
+      22,
+      219,
+      234
     ],
-    "bytes": 6774,
-    "mode": "png"
+    "bytes": 32436,
+    "mode": "glb+png"
   },
   {
     "id": "relic_fragment",
-    "triangles": null,
+    "triangles": 3468,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      52,
+      234,
+      204
     ],
-    "bytes": 8897,
-    "mode": "png"
+    "bytes": 79060,
+    "mode": "glb+png"
   },
   {
     "id": "festival_token",
-    "triangles": null,
+    "triangles": 11680,
     "alpha_bounds": [
-      20,
-      50,
-      237,
-      223
+      22,
+      46,
+      234,
+      210
     ],
-    "bytes": 9821,
-    "mode": "png"
+    "bytes": 285756,
+    "mode": "glb+png"
+  },
+  {
+    "id": "mechanism",
+    "triangles": 11412,
+    "alpha_bounds": [
+      22,
+      63,
+      234,
+      193
+    ],
+    "bytes": 240564,
+    "mode": "glb+png"
+  },
+  {
+    "id": "super_mechanism",
+    "triangles": 12200,
+    "alpha_bounds": [
+      22,
+      50,
+      234,
+      206
+    ],
+    "bytes": 256184,
+    "mode": "glb+png"
+  },
+  {
+    "id": "rune_tile",
+    "triangles": 2184,
+    "alpha_bounds": [
+      22,
+      65,
+      234,
+      191
+    ],
+    "bytes": 50244,
+    "mode": "glb+png"
   }
 ]

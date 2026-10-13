@@ -55,8 +55,8 @@
       "glb": "road.glb"
     },
     "oil_well": {
-      "triangles": 1116,
-      "objects": 22,
+      "triangles": 3388,
+      "objects": 53,
       "png": "oil_well.png",
       "glb": "oil_well.glb"
     },

@@ -1,0 +1,456 @@
+{
+  "icons": [
+    {
+      "id": "aeolian-crystal",
+      "file": "aeolian-crystal.png",
+      "alpha_bounds": [
+        20,
+        20,
+        237,
+        237
+      ],
+      "bytes": 31483
+    },
+    {
+      "id": "flax",
+      "file": "flax.png",
+      "alpha_bounds": [
+        20,
+        39,
+        237,
+        223
+      ],
+      "bytes": 12547
+    },
+    {
+      "id": "reed",
+      "file": "reed.png",
+      "alpha_bounds": [
+        20,
+        39,
+        237,
+        223
+      ],
+      "bytes": 12515
+    },
+    {
+      "id": "fiber",
+      "file": "fiber.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9765
+    },
+    {
+      "id": "dyes",
+      "file": "dyes.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9387
+    },
+    {
+      "id": "oil_plants",
+      "file": "oil_plants.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9987
+    },
+    {
+      "id": "sugar_cane",
+      "file": "sugar_cane.png",
+      "alpha_bounds": [
+        20,
+        39,
+        237,
+        223
+      ],
+      "bytes": 12537
+    },
+    {
+      "id": "rare_flowers",
+      "file": "rare_flowers.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9987
+    },
+    {
+      "id": "crystal_fruit",
+      "file": "crystal_fruit.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        224
+      ],
+      "bytes": 14292
+    },
+    {
+      "id": "sap",
+      "file": "sap.png",
+      "alpha_bounds": [
+        20,
+        47,
+        237,
+        227
+      ],
+      "bytes": 12079
+    },
+    {
+      "id": "premium_planks",
+      "file": "premium_planks.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 8847
+    },
+    {
+      "id": "rope",
+      "file": "rope.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9787
+    },
+    {
+      "id": "iron_ingot",
+      "file": "iron_ingot.png",
+      "alpha_bounds": [
+        20,
+        50,
+        243,
+        223
+      ],
+      "bytes": 8668
+    },
+    {
+      "id": "gold_ingot",
+      "file": "gold_ingot.png",
+      "alpha_bounds": [
+        20,
+        50,
+        243,
+        223
+      ],
+      "bytes": 8672
+    },
+    {
+      "id": "reinforced_concrete",
+      "file": "reinforced_concrete.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 7114
+    },
+    {
+      "id": "copper_parts",
+      "file": "copper_parts.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 10789
+    },
+    {
+      "id": "tools",
+      "file": "tools.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 6886
+    },
+    {
+      "id": "paper",
+      "file": "paper.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 6733
+    },
+    {
+      "id": "paints",
+      "file": "paints.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9407
+    },
+    {
+      "id": "vegetable_oil",
+      "file": "vegetable_oil.png",
+      "alpha_bounds": [
+        20,
+        47,
+        237,
+        227
+      ],
+      "bytes": 12105
+    },
+    {
+      "id": "mechanisms",
+      "file": "mechanisms.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 10954
+    },
+    {
+      "id": "super-mechanisms",
+      "file": "super-mechanisms.png",
+      "alpha_bounds": [
+        20,
+        47,
+        237,
+        223
+      ],
+      "bytes": 12758
+    },
+    {
+      "id": "lenses",
+      "file": "lenses.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 11150
+    },
+    {
+      "id": "reinforced_beams",
+      "file": "reinforced_beams.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 7364
+    },
+    {
+      "id": "armor_plates",
+      "file": "armor_plates.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 8032
+    },
+    {
+      "id": "light_crystal",
+      "file": "light_crystal.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        224
+      ],
+      "bytes": 14292
+    },
+    {
+      "id": "amber_essence",
+      "file": "amber_essence.png",
+      "alpha_bounds": [
+        20,
+        47,
+        237,
+        227
+      ],
+      "bytes": 12032
+    },
+    {
+      "id": "emerald_dust",
+      "file": "emerald_dust.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 10181
+    },
+    {
+      "id": "blue_salt",
+      "file": "blue_salt.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 7884
+    },
+    {
+      "id": "star_glass",
+      "file": "star_glass.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        224
+      ],
+      "bytes": 14234
+    },
+    {
+      "id": "stone_heart",
+      "file": "stone_heart.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 7563
+    },
+    {
+      "id": "aeolian_alloy",
+      "file": "aeolian_alloy.png",
+      "alpha_bounds": [
+        20,
+        50,
+        243,
+        223
+      ],
+      "bytes": 10692
+    },
+    {
+      "id": "printing_plate",
+      "file": "printing_plate.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 8712
+    },
+    {
+      "id": "runic_tile",
+      "file": "runic_tile.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 6954
+    },
+    {
+      "id": "silent_powder",
+      "file": "silent_powder.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 7840
+    },
+    {
+      "id": "memory_shard",
+      "file": "memory_shard.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9318
+    },
+    {
+      "id": "super-windleaf",
+      "file": "super-windleaf.png",
+      "alpha_bounds": [
+        20,
+        40,
+        237,
+        230
+      ],
+      "bytes": 12377
+    },
+    {
+      "id": "influence_seal",
+      "file": "influence_seal.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9798
+    },
+    {
+      "id": "monster_trophy",
+      "file": "monster_trophy.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 6774
+    },
+    {
+      "id": "relic_fragment",
+      "file": "relic_fragment.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 8897
+    },
+    {
+      "id": "festival_token",
+      "file": "festival_token.png",
+      "alpha_bounds": [
+        20,
+        50,
+        237,
+        223
+      ],
+      "bytes": 9821
+    }
+  ],
+  "manifest_resources": 74
+}

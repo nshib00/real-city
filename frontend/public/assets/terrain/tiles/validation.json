@@ -71,10 +71,10 @@
   },
   {
     "terrain": "oil_well",
-    "triangles": 1116,
+    "triangles": 3388,
     "alpha_bounds": [
       15,
-      146,
+      180,
       497,
       443
     ]

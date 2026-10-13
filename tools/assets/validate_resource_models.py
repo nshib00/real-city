@@ -50,7 +50,7 @@ def validate(directory, before=None):
             path=directory/record['model'];doc,_=read_glb(path)
             validate_topology(path,doc)
             triangles=sum(doc['accessors'][p['indices']]['count']//3 for m in doc['meshes'] for p in m['primitives'])
-            assert triangles==record['triangles'] and 50<triangles<6000,(rid,triangles)
+            assert triangles==record['triangles'] and 300<triangles<24000,(rid,triangles)
             assert len(doc['scenes'])==1 and doc.get('materials'),rid
             for node in doc['nodes']:
                 assert node.get('translation',[0,0,0])==[0,0,0],rid

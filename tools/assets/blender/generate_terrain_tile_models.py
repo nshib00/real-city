@@ -136,22 +136,41 @@ def road():
 
 def oil_well():
     base()
-    H.box('service_pad',(0,0,.05),(2.55,2.45,.1),'stone',.035)
-    rock('oil_seep',(.70,.53,.12),(.52,.47,.027),'oil')
-    for y in (-.42,.42):
-        for x in (-.6,.5):
-            H.beam('pump_trestle',(x,y,.12),(-.1,y,1.22),.13,'iron')
-        H.beam('pump_crossbrace',(-.6,y,.15),(.33,y,.69),.07,'copper')
-    H.beam('walking_beam',(-1.13,0,1.42),(.83,0,1.15),.18,'copper')
-    H.box('horsehead',(-1.10,0,1.27),(.29,.38,.63),'iron',.08,rotation=(0,-.18,0))
-    H.beam('pump_rod',(-1.18,0,.16),(-1.18,0,1.25),.045,'iron')
-    cylinder('wellhead',(-1.18,0,.20),.16,.22,'iron')
-    H.box('motor',(.68,0,.36),(.54,.60,.46),'iron',.065)
-    for x in (.3,.85):
-        cylinder('oil_drum',(x,-.91,.33),.22,.55,'oil')
-        for z in (.12,.48): cylinder('drum_band',(x,-.91,z),.228,.04,'copper')
-    H.beam('outlet_pipe',(-1.1,0,.17),(-1.1,-.8,.17),.085,'iron')
-    H.beam('outlet_pipe',(-1.1,-.8,.17),(.3,-.8,.17),.085,'iron')
+    rock('broken_earth_lip',(-.18,-.03,.035),(1.02,.76,.045),'earth',8)
+    rock('dark_oil_seep',(-.18,-.04,.081),(.66,.48,.018),'oil',9)
+    rock('oil_inner_shine',(-.35,-.12,.095),(.24,.12,.006),'oil',10)
+    for i,(x,y,sx,sy) in enumerate(((-.97,.15,.19,.14),(-.66,-.45,.14,.11),(.54,-.42,.18,.12),(.58,.24,.14,.10),(-.24,.52,.15,.09))):
+        rock('cracked_rim_stone',(x,y,.105),(sx,sy,.085),'stone',i)
+
+    # Terrain point marker: compact pump gear, not a buildable production building.
+    cylinder('wellhead',(-.18,-.04,.19),.15,.22,'iron')
+    cylinder('wellhead_cap',(-.18,-.04,.325),.11,.05,'copper')
+    H.beam('pump_rod',(-.18,-.04,.31),(-.18,-.04,1.08),.035,'iron')
+    for x in (-.72,.36):
+        H.beam('pump_trestle_front',(x,-.36,.10),(-.22,-.04,1.20),.070,'iron')
+        H.beam('pump_trestle_back',(x,.30,.10),(-.22,-.04,1.20),.070,'iron')
+    H.beam('pump_crossbrace_front',(-.72,-.36,.30),(.36,-.36,.50),.035,'copper')
+    H.beam('pump_crossbrace_back',(-.72,.30,.30),(.36,.30,.50),.035,'copper')
+    H.beam('walking_beam',(-.82,-.03,1.23),(.58,-.03,1.05),.105,'copper')
+    H.box('counterweight',(.58,-.03,.96),(.22,.28,.30),'iron',.045,rotation=(0,-.18,0))
+    H.box('horsehead',(-.86,-.03,1.10),(.18,.31,.42),'iron',.060,rotation=(0,.16,0))
+    H.box('small_motor',(.72,.36,.22),(.38,.34,.28),'iron',.045)
+    H.beam('belt_guard',(.42,.18,.42),(.78,.34,.36),.045,'copper')
+    H.beam('outlet_pipe',(-.12,-.05,.18),(-.12,-.86,.18),.055,'iron')
+    H.beam('outlet_pipe_elbow',(-.12,-.86,.18),(.54,-.86,.18),.055,'iron')
+    for i,x in enumerate((.72,1.02)):
+        cylinder('oil_drum',(x,-.86,.28),.17,.48,'oil')
+        for z in (.08,.46):
+            cylinder('drum_band',(x,-.86,z),.174,.035,'copper')
+        H.box('drum_highlight',(x-.06,-.99,.36),(.035,.018,.18),'stone_light',.006)
+
+    for i,(x,y,r) in enumerate(((-.36,.13,.032),(.06,-.24,.027),(.28,.03,.021),(-.20,-.31,.018))):
+        cylinder('oil_bubble',(x,y,.112),r,r*.7,'oil')
+    for i,(x,y) in enumerate(((-1.28,.42),(1.24,-.25),(.52,1.06),(-.55,-1.12))):
+        tuft(x,y,1.15 if i%2 else .9)
+    for x,y in ((-1.16,.82),(1.02,.82)):
+        H.beam('survey_stake',(x,y,.025),(x+.03,y+.02,.32),.030,'wood')
+        H.beam('oil_warning_ribbon',(x-.13,y,.26),(x+.13,y,.28),.018,'amber')
 
 
 def ruins():
