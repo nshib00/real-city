@@ -24,6 +24,14 @@ describe('visible map objects', () => {
     expect(isMapObjectVisible({ x: 159, y: 159 }, { camera, viewportCenter, viewportSize })).toBe(true)
   })
 
+  it('keeps edge objects mounted at high zoom while large sprites can overlap the viewport', () => {
+    expect(isMapObjectVisible({ x: 6, y: 0 }, { camera: { ...camera, zoom: 1.6 }, viewportCenter, viewportSize })).toBe(true)
+  })
+
+  it('still filters distant objects at high zoom', () => {
+    expect(isMapObjectVisible({ x: 20, y: 0 }, { camera: { ...camera, zoom: 1.6 }, viewportCenter, viewportSize })).toBe(false)
+  })
+
   it('does not filter before the stage is measured', () => {
     const objects = [
       { id: 'near', tile: { x: 0, y: 0 } },

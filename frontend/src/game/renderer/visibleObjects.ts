@@ -28,6 +28,7 @@ type VisibilityOptions = {
 }
 
 const DEFAULT_VISIBILITY_MARGIN = 320
+const MAX_MAP_OBJECT_SCREEN_EXTENT = 720
 
 export function tileOccupancyKey(tile: TileCoord) {
   return `${tile.x}:${tile.y}`
@@ -60,6 +61,10 @@ export function isMapObjectVisible(tile: TileCoord, options: VisibilityOptions) 
   const pos = nearestWrappedScreenCoord(tile, screenTarget)
   const x = origin.x + pos.x * camera.zoom
   const y = origin.y + (pos.y - 30) * camera.zoom
+  const effectiveMargin = Math.max(margin, MAX_MAP_OBJECT_SCREEN_EXTENT * camera.zoom)
 
-  return x >= -margin && x <= viewportSize.width + margin && y >= -margin && y <= viewportSize.height + margin
+  return x >= -effectiveMargin
+    && x <= viewportSize.width + effectiveMargin
+    && y >= -effectiveMargin
+    && y <= viewportSize.height + effectiveMargin
 }
