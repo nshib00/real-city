@@ -1,0 +1,1445 @@
+{
+  "asset_id": "clay_quarry",
+  "display_name": "Глиняный карьер",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_levels.glb",
+  "material_map": {
+    "wood": {
+      "visible_as": "stakes, handles and early supports"
+    },
+    "planks": {
+      "visible_as": "walkways, clay forms, bridge planks and construction stacks"
+    },
+    "rope": {
+      "visible_as": "site ropes, rails and hoist cable"
+    },
+    "stone": {
+      "visible_as": "stone retaining supports"
+    },
+    "stone_block": {
+      "visible_as": "large pit retaining blocks"
+    },
+    "brick": {
+      "visible_as": "brick retaining courses"
+    },
+    "copper_parts": {
+      "visible_as": "copper clamps, gears and pump fittings"
+    },
+    "iron_ingot": {
+      "visible_as": "iron posts, frames and gears"
+    },
+    "mechanism": {
+      "visible_as": "sifter, scraper drive and conveyor"
+    },
+    "steel": {
+      "visible_as": "steel beams, truss and protective housings"
+    },
+    "reinforced_concrete": {
+      "visible_as": "late reinforced pit perimeter"
+    },
+    "premium_planks": {
+      "visible_as": "operator platform and late walkways"
+    },
+    "rune_tile": {
+      "visible_as": "small protective drive roof"
+    },
+    "blue_salt": {
+      "visible_as": "blue-green wash-line markers"
+    },
+    "gold_ingot": {
+      "visible_as": "gold calibration dials and covers"
+    },
+    "super_mechanism": {
+      "visible_as": "compact late sorting core"
+    }
+  },
+  "items": [
+    {
+      "id": "clay_quarry_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_active.png",
+      "triangles": 4156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.47532960772514343
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_construction.png",
+      "triangles": 5468,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8600000143051147
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l01_damaged.png",
+      "triangles": 4896,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5400000214576721
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_active.png",
+      "triangles": 6180,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9973561763763428
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_construction.png",
+      "triangles": 7492,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9973561763763428
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l02_damaged.png",
+      "triangles": 6216,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9199999570846558
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_active.png",
+      "triangles": 7348,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5225000381469727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_construction.png",
+      "triangles": 8880,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5225000381469727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l03_damaged.png",
+      "triangles": 7192,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_active.png",
+      "triangles": 7988,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5225000381469727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_construction.png",
+      "triangles": 9784,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5225000381469727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l04_damaged.png",
+      "triangles": 7896,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_active.png",
+      "triangles": 8720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5225000381469727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_construction.png",
+      "triangles": 10516,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5225000381469727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l05_damaged.png",
+      "triangles": 8072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_active.png",
+      "triangles": 10052,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5266876220703125
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_construction.png",
+      "triangles": 12448,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5266876220703125
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l06_damaged.png",
+      "triangles": 10048,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_active.png",
+      "triangles": 10252,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5716876983642578
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_construction.png",
+      "triangles": 12648,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5716876983642578
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l07_damaged.png",
+      "triangles": 10292,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_active.png",
+      "triangles": 10944,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6166876554489136
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_construction.png",
+      "triangles": 13516,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6166876554489136
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l08_damaged.png",
+      "triangles": 11072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_active.png",
+      "triangles": 11252,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_construction.png",
+      "triangles": 13824,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l09_damaged.png",
+      "triangles": 11292,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l10_active",
+      "level": 10,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_active.png",
+      "triangles": 11392,
+      "bounds": [
+        [
+          -1.8615975379943848,
+          1.8615975379943848
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_construction.png",
+      "triangles": 14140,
+      "bounds": [
+        [
+          -1.8615975379943848,
+          1.8615975379943848
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l10_damaged.png",
+      "triangles": 11476,
+      "bounds": [
+        [
+          -1.8615975379943848,
+          1.8615975379943848
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l11_active",
+      "level": 11,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_active.png",
+      "triangles": 13328,
+      "bounds": [
+        [
+          -1.9420989751815796,
+          1.9420989751815796
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l11_construction",
+      "level": 11,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_construction.png",
+      "triangles": 16164,
+      "bounds": [
+        [
+          -1.9420989751815796,
+          1.9420989751815796
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l11_damaged",
+      "level": 11,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l11_damaged.png",
+      "triangles": 13500,
+      "bounds": [
+        [
+          -1.9420989751815796,
+          1.9420989751815796
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l12_active",
+      "level": 12,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_active.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_active.png",
+      "triangles": 14104,
+      "bounds": [
+        [
+          -2.0226004123687744,
+          2.0226004123687744
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l12_construction",
+      "level": 12,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_construction.png",
+      "triangles": 16940,
+      "bounds": [
+        [
+          -2.0226004123687744,
+          2.0226004123687744
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6616876125335693
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "clay_quarry_l12_damaged",
+      "level": 12,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/clay_quarry/clay_quarry_l12_damaged.png",
+      "triangles": 14276,
+      "bounds": [
+        [
+          -2.0226004123687744,
+          2.0226004123687744
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-12",
+  "generator": "tools/assets/blender/generate_clay_quarry_models.py",
+  "style_reference": "Real City clay quarry migrated to shared scene/export/report layer",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28
+      }
+    ],
+    "status": "planned_for_phase_4_orchestrator_exports; legacy files keep historical filenames"
+  },
+  "migration": {
+    "phase": 5,
+    "visual_geometry_source": "legacy_generator",
+    "contract": "shared scene/export/report/fixture metadata"
+  }
+}

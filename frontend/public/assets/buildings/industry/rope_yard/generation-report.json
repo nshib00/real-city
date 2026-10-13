@@ -1,0 +1,1005 @@
+{
+  "asset": "rope_yard",
+  "pipeline": "blender_mcp_midpoly",
+  "blend": "rope_yard_l01_l08.blend",
+  "count": 56,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "states": [
+    "active",
+    "ready",
+    "idle_no_input",
+    "idle_no_workers",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "png_size": [
+    512,
+    384
+  ],
+  "anchor": [
+    256,
+    292
+  ],
+  "style": "Aeolian bright fantasy mid-poly",
+  "material_mapping": {
+    "wood/planks": "yard frame, canopy, loose construction boards",
+    "flax": "input bundles near the work lane",
+    "windleaf": "level 1 natural binder bundle",
+    "stone/stone_block": "post pads and late stable corner blocks",
+    "rope": "twist lanes, coils, lashings and ready output",
+    "fabric": "tension bands from level 5",
+    "iron/mechanism": "hooks, drums and gear box from levels 5-6",
+    "copper/gold": "late bushings and quality calibrator"
+  },
+  "notes": [
+    "MCP/Blender generation route; legacy pure-Python fallback is not used",
+    "open 1x1 craft yard remains readable from isometric camera",
+    "levels add real material/shape progression from manual wood frame to mechanized rope station",
+    "production states change input, workers, ready coils, construction and destruction geometry",
+    "construction/damaged/ruined keep the same ground tile and alter only overlay geometry"
+  ],
+  "assets": [
+    {
+      "name": "rope_yard_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 3960,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 105900
+    },
+    {
+      "name": "rope_yard_l01_ready",
+      "level": 1,
+      "state": "ready",
+      "triangles": 4788,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 148488
+    },
+    {
+      "name": "rope_yard_l01_idle_no_input",
+      "level": 1,
+      "state": "idle_no_input",
+      "triangles": 2608,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 50652
+    },
+    {
+      "name": "rope_yard_l01_idle_no_workers",
+      "level": 1,
+      "state": "idle_no_workers",
+      "triangles": 4068,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 107476
+    },
+    {
+      "name": "rope_yard_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 4516,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 111472
+    },
+    {
+      "name": "rope_yard_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 4340,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 114104
+    },
+    {
+      "name": "rope_yard_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 4556,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 113620
+    },
+    {
+      "name": "rope_yard_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 4700,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 119328
+    },
+    {
+      "name": "rope_yard_l02_ready",
+      "level": 2,
+      "state": "ready",
+      "triangles": 6356,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 204420
+    },
+    {
+      "name": "rope_yard_l02_idle_no_input",
+      "level": 2,
+      "state": "idle_no_input",
+      "triangles": 3148,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 60308
+    },
+    {
+      "name": "rope_yard_l02_idle_no_workers",
+      "level": 2,
+      "state": "idle_no_workers",
+      "triangles": 4808,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 120640
+    },
+    {
+      "name": "rope_yard_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 4948,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 119484
+    },
+    {
+      "name": "rope_yard_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 4996,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 125672
+    },
+    {
+      "name": "rope_yard_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 4672,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 115792
+    },
+    {
+      "name": "rope_yard_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 6760,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 184152
+    },
+    {
+      "name": "rope_yard_l03_ready",
+      "level": 3,
+      "state": "ready",
+      "triangles": 8416,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 269288
+    },
+    {
+      "name": "rope_yard_l03_idle_no_input",
+      "level": 3,
+      "state": "idle_no_input",
+      "triangles": 5068,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 128504
+    },
+    {
+      "name": "rope_yard_l03_idle_no_workers",
+      "level": 3,
+      "state": "idle_no_workers",
+      "triangles": 6868,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 185492
+    },
+    {
+      "name": "rope_yard_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 6976,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 184324
+    },
+    {
+      "name": "rope_yard_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 7056,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 190312
+    },
+    {
+      "name": "rope_yard_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 6700,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 180428
+    },
+    {
+      "name": "rope_yard_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 7452,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 195692
+    },
+    {
+      "name": "rope_yard_l04_ready",
+      "level": 4,
+      "state": "ready",
+      "triangles": 9936,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 323308
+    },
+    {
+      "name": "rope_yard_l04_idle_no_input",
+      "level": 4,
+      "state": "idle_no_input",
+      "triangles": 5700,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 137576
+    },
+    {
+      "name": "rope_yard_l04_idle_no_workers",
+      "level": 4,
+      "state": "idle_no_workers",
+      "triangles": 7560,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 197004
+    },
+    {
+      "name": "rope_yard_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 7608,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 193392
+    },
+    {
+      "name": "rope_yard_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 7748,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 201800
+    },
+    {
+      "name": "rope_yard_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 7332,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 189468
+    },
+    {
+      "name": "rope_yard_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 7968,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 199504
+    },
+    {
+      "name": "rope_yard_l05_ready",
+      "level": 5,
+      "state": "ready",
+      "triangles": 10452,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 327132
+    },
+    {
+      "name": "rope_yard_l05_idle_no_input",
+      "level": 5,
+      "state": "idle_no_input",
+      "triangles": 6216,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 141388
+    },
+    {
+      "name": "rope_yard_l05_idle_no_workers",
+      "level": 5,
+      "state": "idle_no_workers",
+      "triangles": 8076,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 200812
+    },
+    {
+      "name": "rope_yard_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 8124,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 197420
+    },
+    {
+      "name": "rope_yard_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 8168,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 205608
+    },
+    {
+      "name": "rope_yard_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 7752,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 193488
+    },
+    {
+      "name": "rope_yard_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 8284,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 210412
+    },
+    {
+      "name": "rope_yard_l06_ready",
+      "level": 6,
+      "state": "ready",
+      "triangles": 11596,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 380532
+    },
+    {
+      "name": "rope_yard_l06_idle_no_input",
+      "level": 6,
+      "state": "idle_no_input",
+      "triangles": 6440,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 149848
+    },
+    {
+      "name": "rope_yard_l06_idle_no_workers",
+      "level": 6,
+      "state": "idle_no_workers",
+      "triangles": 8392,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 211732
+    },
+    {
+      "name": "rope_yard_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 8348,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 205892
+    },
+    {
+      "name": "rope_yard_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 8496,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 215056
+    },
+    {
+      "name": "rope_yard_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 7988,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 200268
+    },
+    {
+      "name": "rope_yard_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 9028,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 227952
+    },
+    {
+      "name": "rope_yard_l07_ready",
+      "level": 7,
+      "state": "ready",
+      "triangles": 12340,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 398048
+    },
+    {
+      "name": "rope_yard_l07_idle_no_input",
+      "level": 7,
+      "state": "idle_no_input",
+      "triangles": 7184,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 167380
+    },
+    {
+      "name": "rope_yard_l07_idle_no_workers",
+      "level": 7,
+      "state": "idle_no_workers",
+      "triangles": 9136,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 229276
+    },
+    {
+      "name": "rope_yard_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 9092,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 223436
+    },
+    {
+      "name": "rope_yard_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 9240,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 232668
+    },
+    {
+      "name": "rope_yard_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "triangles": 8732,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 217876
+    },
+    {
+      "name": "rope_yard_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 9216,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 229532
+    },
+    {
+      "name": "rope_yard_l08_ready",
+      "level": 8,
+      "state": "ready",
+      "triangles": 13356,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 442080
+    },
+    {
+      "name": "rope_yard_l08_idle_no_input",
+      "level": 8,
+      "state": "idle_no_input",
+      "triangles": 7372,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 168964
+    },
+    {
+      "name": "rope_yard_l08_idle_no_workers",
+      "level": 8,
+      "state": "idle_no_workers",
+      "triangles": 9324,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 230840
+    },
+    {
+      "name": "rope_yard_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 9280,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        211,
+        407,
+        368
+      ],
+      "glb_bytes": 225020
+    },
+    {
+      "name": "rope_yard_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 9380,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        198,
+        407,
+        368
+      ],
+      "glb_bytes": 234176
+    },
+    {
+      "name": "rope_yard_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "triangles": 8872,
+      "png_size": [
+        512,
+        384
+      ],
+      "alpha_bounds": [
+        104,
+        212,
+        407,
+        368
+      ],
+      "glb_bytes": 219408
+    }
+  ]
+}

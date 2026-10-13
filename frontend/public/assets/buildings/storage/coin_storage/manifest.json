@@ -1,0 +1,500 @@
+{
+  "asset_id": "coin_storage",
+  "display_name": "Хранилище монет",
+  "category": "storage",
+  "generated_at": "2026-09-30",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "material_mapping": {
+    "wood": "сундук, дощатые стены, навес, каркас стройки",
+    "stone": "камни по углам и цоколь",
+    "planks": "дощатая кладовая и ранние стены",
+    "iron": "полосы сейфовой двери, замок, решетки и ранние механизмы",
+    "brick": "корпус городской казны уровней 5-6 и основа под металлическую обшивку позднее",
+    "glass": "кассовые окна средних уровней",
+    "reinforced_concrete": "основание уровней 7-12 и усиленный фундамент с 9 уровня",
+    "steel": "механический счетчик, толстые темно-серые балки, силовые полосы, козырьки уровней 7-8 и защита фундамента с 10 уровня",
+    "armor_plates": "бронеплиты крыши с 9 уровня, полная крыша и козырьки с 10 уровня, стены и шипы с 11 уровня",
+    "gold_ingot": "золотая печать, лимитный диск и постепенная позолота с 10 уровня, усиленная на 11-12 уровнях",
+    "crystal": "видимый встроенный светокристалл только на уровнях 11-12",
+    "coins": "не моделируются как нематериальная стоимость; золото используется только как небольшой акцент"
+  },
+  "files": [
+    {
+      "id": "coin_storage_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "coin_storage_l01_active.glb",
+      "png": "coin_storage_l01_active.png",
+      "objects": 41,
+      "triangles": 2088
+    },
+    {
+      "id": "coin_storage_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "coin_storage_l01_construction.glb",
+      "png": "coin_storage_l01_construction.png",
+      "objects": 36,
+      "triangles": 1844
+    },
+    {
+      "id": "coin_storage_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "coin_storage_l01_damaged.glb",
+      "png": "coin_storage_l01_damaged.png",
+      "objects": 49,
+      "triangles": 2376
+    },
+    {
+      "id": "coin_storage_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "glb": "coin_storage_l01_ruined.glb",
+      "png": "coin_storage_l01_ruined.png",
+      "objects": 43,
+      "triangles": 2080
+    },
+    {
+      "id": "coin_storage_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "coin_storage_l02_active.glb",
+      "png": "coin_storage_l02_active.png",
+      "objects": 50,
+      "triangles": 2720
+    },
+    {
+      "id": "coin_storage_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "coin_storage_l02_construction.glb",
+      "png": "coin_storage_l02_construction.png",
+      "objects": 39,
+      "triangles": 2180
+    },
+    {
+      "id": "coin_storage_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "coin_storage_l02_damaged.glb",
+      "png": "coin_storage_l02_damaged.png",
+      "objects": 60,
+      "triangles": 3032
+    },
+    {
+      "id": "coin_storage_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "glb": "coin_storage_l02_ruined.glb",
+      "png": "coin_storage_l02_ruined.png",
+      "objects": 61,
+      "triangles": 2828
+    },
+    {
+      "id": "coin_storage_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "coin_storage_l03_active.glb",
+      "png": "coin_storage_l03_active.png",
+      "objects": 48,
+      "triangles": 2756
+    },
+    {
+      "id": "coin_storage_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "coin_storage_l03_construction.glb",
+      "png": "coin_storage_l03_construction.png",
+      "objects": 41,
+      "triangles": 2376
+    },
+    {
+      "id": "coin_storage_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "coin_storage_l03_damaged.glb",
+      "png": "coin_storage_l03_damaged.png",
+      "objects": 58,
+      "triangles": 3100
+    },
+    {
+      "id": "coin_storage_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "glb": "coin_storage_l03_ruined.glb",
+      "png": "coin_storage_l03_ruined.png",
+      "objects": 53,
+      "triangles": 2688
+    },
+    {
+      "id": "coin_storage_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "coin_storage_l04_active.glb",
+      "png": "coin_storage_l04_active.png",
+      "objects": 80,
+      "triangles": 4152
+    },
+    {
+      "id": "coin_storage_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "coin_storage_l04_construction.glb",
+      "png": "coin_storage_l04_construction.png",
+      "objects": 58,
+      "triangles": 3136
+    },
+    {
+      "id": "coin_storage_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "coin_storage_l04_damaged.glb",
+      "png": "coin_storage_l04_damaged.png",
+      "objects": 94,
+      "triangles": 4608
+    },
+    {
+      "id": "coin_storage_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "glb": "coin_storage_l04_ruined.glb",
+      "png": "coin_storage_l04_ruined.png",
+      "objects": 100,
+      "triangles": 4616
+    },
+    {
+      "id": "coin_storage_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "coin_storage_l05_active.glb",
+      "png": "coin_storage_l05_active.png",
+      "objects": 86,
+      "triangles": 4440
+    },
+    {
+      "id": "coin_storage_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "coin_storage_l05_construction.glb",
+      "png": "coin_storage_l05_construction.png",
+      "objects": 58,
+      "triangles": 3136
+    },
+    {
+      "id": "coin_storage_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "coin_storage_l05_damaged.glb",
+      "png": "coin_storage_l05_damaged.png",
+      "objects": 98,
+      "triangles": 4808
+    },
+    {
+      "id": "coin_storage_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "glb": "coin_storage_l05_ruined.glb",
+      "png": "coin_storage_l05_ruined.png",
+      "objects": 105,
+      "triangles": 4860
+    },
+    {
+      "id": "coin_storage_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "coin_storage_l06_active.glb",
+      "png": "coin_storage_l06_active.png",
+      "objects": 98,
+      "triangles": 4992
+    },
+    {
+      "id": "coin_storage_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "coin_storage_l06_construction.glb",
+      "png": "coin_storage_l06_construction.png",
+      "objects": 67,
+      "triangles": 3532
+    },
+    {
+      "id": "coin_storage_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "coin_storage_l06_damaged.glb",
+      "png": "coin_storage_l06_damaged.png",
+      "objects": 110,
+      "triangles": 5360
+    },
+    {
+      "id": "coin_storage_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "glb": "coin_storage_l06_ruined.glb",
+      "png": "coin_storage_l06_ruined.png",
+      "objects": 115,
+      "triangles": 5324
+    },
+    {
+      "id": "coin_storage_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "coin_storage_l07_active.glb",
+      "png": "coin_storage_l07_active.png",
+      "objects": 130,
+      "triangles": 6348
+    },
+    {
+      "id": "coin_storage_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "coin_storage_l07_construction.glb",
+      "png": "coin_storage_l07_construction.png",
+      "objects": 71,
+      "triangles": 3676
+    },
+    {
+      "id": "coin_storage_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "coin_storage_l07_damaged.glb",
+      "png": "coin_storage_l07_damaged.png",
+      "objects": 143,
+      "triangles": 6720
+    },
+    {
+      "id": "coin_storage_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "glb": "coin_storage_l07_ruined.glb",
+      "png": "coin_storage_l07_ruined.png",
+      "objects": 143,
+      "triangles": 6468
+    },
+    {
+      "id": "coin_storage_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "coin_storage_l08_active.glb",
+      "png": "coin_storage_l08_active.png",
+      "objects": 135,
+      "triangles": 6568
+    },
+    {
+      "id": "coin_storage_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "coin_storage_l08_construction.glb",
+      "png": "coin_storage_l08_construction.png",
+      "objects": 75,
+      "triangles": 3868
+    },
+    {
+      "id": "coin_storage_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "coin_storage_l08_damaged.glb",
+      "png": "coin_storage_l08_damaged.png",
+      "objects": 149,
+      "triangles": 6984
+    },
+    {
+      "id": "coin_storage_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "glb": "coin_storage_l08_ruined.glb",
+      "png": "coin_storage_l08_ruined.png",
+      "objects": 150,
+      "triangles": 6776
+    },
+    {
+      "id": "coin_storage_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "coin_storage_l09_active.glb",
+      "png": "coin_storage_l09_active.png",
+      "objects": 166,
+      "triangles": 7916
+    },
+    {
+      "id": "coin_storage_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "coin_storage_l09_construction.glb",
+      "png": "coin_storage_l09_construction.png",
+      "objects": 93,
+      "triangles": 4644
+    },
+    {
+      "id": "coin_storage_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "coin_storage_l09_damaged.glb",
+      "png": "coin_storage_l09_damaged.png",
+      "objects": 178,
+      "triangles": 8244
+    },
+    {
+      "id": "coin_storage_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "glb": "coin_storage_l09_ruined.glb",
+      "png": "coin_storage_l09_ruined.png",
+      "objects": 177,
+      "triangles": 7948
+    },
+    {
+      "id": "coin_storage_l10_active",
+      "level": 10,
+      "state": "active",
+      "glb": "coin_storage_l10_active.glb",
+      "png": "coin_storage_l10_active.png",
+      "objects": 195,
+      "triangles": 9248
+    },
+    {
+      "id": "coin_storage_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "glb": "coin_storage_l10_construction.glb",
+      "png": "coin_storage_l10_construction.png",
+      "objects": 104,
+      "triangles": 5176
+    },
+    {
+      "id": "coin_storage_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "glb": "coin_storage_l10_damaged.glb",
+      "png": "coin_storage_l10_damaged.png",
+      "objects": 203,
+      "triangles": 9408
+    },
+    {
+      "id": "coin_storage_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "glb": "coin_storage_l10_ruined.glb",
+      "png": "coin_storage_l10_ruined.png",
+      "objects": 194,
+      "triangles": 8776
+    },
+    {
+      "id": "coin_storage_l11_active",
+      "level": 11,
+      "state": "active",
+      "glb": "coin_storage_l11_active.glb",
+      "png": "coin_storage_l11_active.png",
+      "objects": 234,
+      "triangles": 10678
+    },
+    {
+      "id": "coin_storage_l11_construction",
+      "level": 11,
+      "state": "construction",
+      "glb": "coin_storage_l11_construction.glb",
+      "png": "coin_storage_l11_construction.png",
+      "objects": 114,
+      "triangles": 5664
+    },
+    {
+      "id": "coin_storage_l11_damaged",
+      "level": 11,
+      "state": "damaged",
+      "glb": "coin_storage_l11_damaged.glb",
+      "png": "coin_storage_l11_damaged.png",
+      "objects": 230,
+      "triangles": 10342
+    },
+    {
+      "id": "coin_storage_l11_ruined",
+      "level": 11,
+      "state": "ruined",
+      "glb": "coin_storage_l11_ruined.glb",
+      "png": "coin_storage_l11_ruined.png",
+      "objects": 217,
+      "triangles": 9684
+    },
+    {
+      "id": "coin_storage_l12_active",
+      "level": 12,
+      "state": "active",
+      "glb": "coin_storage_l12_active.glb",
+      "png": "coin_storage_l12_active.png",
+      "objects": 252,
+      "triangles": 11486
+    },
+    {
+      "id": "coin_storage_l12_construction",
+      "level": 12,
+      "state": "construction",
+      "glb": "coin_storage_l12_construction.glb",
+      "png": "coin_storage_l12_construction.png",
+      "objects": 117,
+      "triangles": 5796
+    },
+    {
+      "id": "coin_storage_l12_damaged",
+      "level": 12,
+      "state": "damaged",
+      "glb": "coin_storage_l12_damaged.glb",
+      "png": "coin_storage_l12_damaged.png",
+      "objects": 237,
+      "triangles": 10666
+    },
+    {
+      "id": "coin_storage_l12_ruined",
+      "level": 12,
+      "state": "ruined",
+      "glb": "coin_storage_l12_ruined.glb",
+      "png": "coin_storage_l12_ruined.png",
+      "objects": 225,
+      "triangles": 10052
+    }
+  ],
+  "source_blend": "coin_storage_levels.blend",
+  "notes": [
+    "Цепочка развивается от сундука под навесом к каменной казне, кирпичному корпусу, железобетонному сейфу и поздней бронированной казне.",
+    "Сохранены основные признаки: сундук/закрытая кладовая, тяжелая сейфовая дверь, решетки, счетчик лимита, мешки и малые золотые акценты.",
+    "Construction варианты имеют незавершенную геометрию, а не готовую модель с лесами.",
+    "Damaged/ruined варианты используют крупные проломы стен и крыши, трещины и отдельные обломки без висящих в воздухе частей.",
+    "Уровни 7-8 используют треугольную каменную крышу и стальные козырьки на кровельных штырьках.",
+    "Уровень 9 переводит крышные козырьки и фундамент в железобетон; уровень 10 усиливает фундамент сталью и добавляет бронеплиты.",
+    "Позолота начинается с 10 уровня, заметно растет на 11 и становится самой выраженной на 12, но железобетонный фундамент остается читаемым.",
+    "Супер-механизмы на уровнях 11-12 вынесены на фасад и дополнительно видны в construction-вариантах.",
+    "Освещение пересобрано под мягкий дневной изометрический стиль Real City: key sun, area fill, warm rim и нечерные тени."
+  ]
+}

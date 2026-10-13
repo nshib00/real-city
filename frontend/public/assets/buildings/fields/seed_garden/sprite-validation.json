@@ -1,0 +1,2212 @@
+[
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22654,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22654,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22661,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22661,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22458,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      208,
+      396,
+      366
+    ],
+    "opaque_pixels": 22085,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22244,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22654,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22768,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 23062,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23437,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      192,
+      396,
+      366
+    ],
+    "opaque_pixels": 23780,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l01_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l01_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      192,
+      396,
+      366
+    ],
+    "opaque_pixels": 23800,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23064,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23064,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23069,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23069,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 22868,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      396,
+      366
+    ],
+    "opaque_pixels": 22487,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 22534,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23064,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23180,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      199,
+      396,
+      366
+    ],
+    "opaque_pixels": 23590,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      197,
+      396,
+      366
+    ],
+    "opaque_pixels": 23959,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      190,
+      396,
+      366
+    ],
+    "opaque_pixels": 24367,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l02_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l02_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      190,
+      396,
+      366
+    ],
+    "opaque_pixels": 24400,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23611,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23611,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23614,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23614,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23379,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      200,
+      396,
+      366
+    ],
+    "opaque_pixels": 23016,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 22851,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23611,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 23707,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 24149,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      195,
+      396,
+      366
+    ],
+    "opaque_pixels": 24561,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      188,
+      396,
+      366
+    ],
+    "opaque_pixels": 25007,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l03_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l03_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      188,
+      396,
+      366
+    ],
+    "opaque_pixels": 25046,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24112,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24112,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24112,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24112,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 23902,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      196,
+      396,
+      366
+    ],
+    "opaque_pixels": 23560,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 23164,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24112,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24256,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24744,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 25199,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      185,
+      396,
+      366
+    ],
+    "opaque_pixels": 25622,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l04_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l04_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      185,
+      396,
+      366
+    ],
+    "opaque_pixels": 25629,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24686,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24686,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24687,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24687,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24497,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      191,
+      396,
+      366
+    ],
+    "opaque_pixels": 24181,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 23532,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24686,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 24889,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 25423,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      396,
+      366
+    ],
+    "opaque_pixels": 25934,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      396,
+      366
+    ],
+    "opaque_pixels": 26394,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l05_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l05_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      396,
+      366
+    ],
+    "opaque_pixels": 26374,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 25647,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 25647,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 25647,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 25647,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 24983,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      187,
+      396,
+      366
+    ],
+    "opaque_pixels": 25187,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 24083,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 25647,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 25837,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 26298,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      396,
+      366
+    ],
+    "opaque_pixels": 26749,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      181,
+      396,
+      366
+    ],
+    "opaque_pixels": 27224,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l06_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l06_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      181,
+      396,
+      366
+    ],
+    "opaque_pixels": 27215,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26196,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26196,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26196,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26196,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 25461,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      396,
+      366
+    ],
+    "opaque_pixels": 25769,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 24638,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26196,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26395,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 26895,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 27348,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 27852,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l07_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l07_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      396,
+      366
+    ],
+    "opaque_pixels": 27860,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 26735,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 26735,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 26735,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 26735,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 25900,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      179,
+      396,
+      366
+    ],
+    "opaque_pixels": 26350,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 25188,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 26735,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 26939,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 27470,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 27928,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 28431,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l08_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l08_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      174,
+      396,
+      366
+    ],
+    "opaque_pixels": 28469,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27260,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27260,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27260,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27260,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 26363,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      175,
+      396,
+      366
+    ],
+    "opaque_pixels": 26900,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 25684,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27260,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27490,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 28022,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 28494,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 29018,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l09_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l09_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 29046,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 27803,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 27803,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 27803,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_active",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_active.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 27803,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_construction",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_construction.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 26816,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_damaged",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_damaged.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      170,
+      396,
+      366
+    ],
+    "opaque_pixels": 27445,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_ruined",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_ruined.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 26204,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_super_stage01",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_super_stage01.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 27803,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_super_stage02",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_super_stage02.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 28046,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_super_stage03",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_super_stage03.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 28605,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_super_stage04",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_super_stage04.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 29051,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_super_stage05",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_super_stage05.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 29617,
+    "errors": []
+  },
+  {
+    "manifest": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/manifest.json",
+    "id": "seed_garden_l10_super_stage06",
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/seed_garden/seed_garden_l10_super_stage06.png",
+    "size": [
+      512,
+      384
+    ],
+    "alpha_bounds": [
+      117,
+      165,
+      396,
+      366
+    ],
+    "opaque_pixels": 29624,
+    "errors": []
+  }
+]

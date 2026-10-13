@@ -1,0 +1,1607 @@
+{
+  "asset_id": "flax_field",
+  "category": "fields",
+  "display_name": "Льняное поле",
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "pipeline": "blender_mcp_midpoly",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "flax_field_l01_l10.blend",
+  "items": [
+    {
+      "id": "flax_field_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "glb": "flax_field_l01_stage01.glb",
+      "png": "flax_field_l01_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6308
+    },
+    {
+      "id": "flax_field_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "glb": "flax_field_l01_stage02.glb",
+      "png": "flax_field_l01_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9668
+    },
+    {
+      "id": "flax_field_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "glb": "flax_field_l01_stage03.glb",
+      "png": "flax_field_l01_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9836
+    },
+    {
+      "id": "flax_field_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "flax_field_l01_active.glb",
+      "png": "flax_field_l01_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9836
+    },
+    {
+      "id": "flax_field_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "flax_field_l01_construction.glb",
+      "png": "flax_field_l01_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5884
+    },
+    {
+      "id": "flax_field_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "flax_field_l01_damaged.glb",
+      "png": "flax_field_l01_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6900
+    },
+    {
+      "id": "flax_field_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "glb": "flax_field_l01_ruined.glb",
+      "png": "flax_field_l01_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4812
+    },
+    {
+      "id": "flax_field_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "glb": "flax_field_l01_super_stage01.glb",
+      "png": "flax_field_l01_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10308
+    },
+    {
+      "id": "flax_field_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "glb": "flax_field_l01_super_stage02.glb",
+      "png": "flax_field_l01_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10308
+    },
+    {
+      "id": "flax_field_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "glb": "flax_field_l01_super_stage03.glb",
+      "png": "flax_field_l01_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10392
+    },
+    {
+      "id": "flax_field_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "glb": "flax_field_l01_super_stage04.glb",
+      "png": "flax_field_l01_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10560
+    },
+    {
+      "id": "flax_field_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "glb": "flax_field_l01_super_stage05.glb",
+      "png": "flax_field_l01_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10560
+    },
+    {
+      "id": "flax_field_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "glb": "flax_field_l01_super_stage06.glb",
+      "png": "flax_field_l01_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10560
+    },
+    {
+      "id": "flax_field_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "glb": "flax_field_l02_stage01.glb",
+      "png": "flax_field_l02_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10328
+    },
+    {
+      "id": "flax_field_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "glb": "flax_field_l02_stage02.glb",
+      "png": "flax_field_l02_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14248
+    },
+    {
+      "id": "flax_field_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "glb": "flax_field_l02_stage03.glb",
+      "png": "flax_field_l02_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14584
+    },
+    {
+      "id": "flax_field_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "flax_field_l02_active.glb",
+      "png": "flax_field_l02_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14584
+    },
+    {
+      "id": "flax_field_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "flax_field_l02_construction.glb",
+      "png": "flax_field_l02_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8124
+    },
+    {
+      "id": "flax_field_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "flax_field_l02_damaged.glb",
+      "png": "flax_field_l02_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8352
+    },
+    {
+      "id": "flax_field_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "glb": "flax_field_l02_ruined.glb",
+      "png": "flax_field_l02_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6168
+    },
+    {
+      "id": "flax_field_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "glb": "flax_field_l02_super_stage01.glb",
+      "png": "flax_field_l02_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14888
+    },
+    {
+      "id": "flax_field_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "glb": "flax_field_l02_super_stage02.glb",
+      "png": "flax_field_l02_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14888
+    },
+    {
+      "id": "flax_field_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "glb": "flax_field_l02_super_stage03.glb",
+      "png": "flax_field_l02_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14972
+    },
+    {
+      "id": "flax_field_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "glb": "flax_field_l02_super_stage04.glb",
+      "png": "flax_field_l02_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15140
+    },
+    {
+      "id": "flax_field_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "glb": "flax_field_l02_super_stage05.glb",
+      "png": "flax_field_l02_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15140
+    },
+    {
+      "id": "flax_field_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "glb": "flax_field_l02_super_stage06.glb",
+      "png": "flax_field_l02_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15140
+    },
+    {
+      "id": "flax_field_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "glb": "flax_field_l03_stage01.glb",
+      "png": "flax_field_l03_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 19536
+    },
+    {
+      "id": "flax_field_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "glb": "flax_field_l03_stage02.glb",
+      "png": "flax_field_l03_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24016
+    },
+    {
+      "id": "flax_field_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "glb": "flax_field_l03_stage03.glb",
+      "png": "flax_field_l03_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24352
+    },
+    {
+      "id": "flax_field_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "flax_field_l03_active.glb",
+      "png": "flax_field_l03_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24352
+    },
+    {
+      "id": "flax_field_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "flax_field_l03_construction.glb",
+      "png": "flax_field_l03_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15668
+    },
+    {
+      "id": "flax_field_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "flax_field_l03_damaged.glb",
+      "png": "flax_field_l03_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8832
+    },
+    {
+      "id": "flax_field_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "glb": "flax_field_l03_ruined.glb",
+      "png": "flax_field_l03_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8928
+    },
+    {
+      "id": "flax_field_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "glb": "flax_field_l03_super_stage01.glb",
+      "png": "flax_field_l03_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24872
+    },
+    {
+      "id": "flax_field_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "glb": "flax_field_l03_super_stage02.glb",
+      "png": "flax_field_l03_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24872
+    },
+    {
+      "id": "flax_field_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "glb": "flax_field_l03_super_stage03.glb",
+      "png": "flax_field_l03_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24956
+    },
+    {
+      "id": "flax_field_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "glb": "flax_field_l03_super_stage04.glb",
+      "png": "flax_field_l03_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25124
+    },
+    {
+      "id": "flax_field_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "glb": "flax_field_l03_super_stage05.glb",
+      "png": "flax_field_l03_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25124
+    },
+    {
+      "id": "flax_field_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "glb": "flax_field_l03_super_stage06.glb",
+      "png": "flax_field_l03_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25124
+    },
+    {
+      "id": "flax_field_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "glb": "flax_field_l04_stage01.glb",
+      "png": "flax_field_l04_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 19784
+    },
+    {
+      "id": "flax_field_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "glb": "flax_field_l04_stage02.glb",
+      "png": "flax_field_l04_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24824
+    },
+    {
+      "id": "flax_field_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "glb": "flax_field_l04_stage03.glb",
+      "png": "flax_field_l04_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25160
+    },
+    {
+      "id": "flax_field_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "flax_field_l04_active.glb",
+      "png": "flax_field_l04_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25160
+    },
+    {
+      "id": "flax_field_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "flax_field_l04_construction.glb",
+      "png": "flax_field_l04_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15748
+    },
+    {
+      "id": "flax_field_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "flax_field_l04_damaged.glb",
+      "png": "flax_field_l04_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9312
+    },
+    {
+      "id": "flax_field_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "glb": "flax_field_l04_ruined.glb",
+      "png": "flax_field_l04_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8988
+    },
+    {
+      "id": "flax_field_l04_super_stage01",
+      "level": 4,
+      "state": "super_stage01",
+      "glb": "flax_field_l04_super_stage01.glb",
+      "png": "flax_field_l04_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25680
+    },
+    {
+      "id": "flax_field_l04_super_stage02",
+      "level": 4,
+      "state": "super_stage02",
+      "glb": "flax_field_l04_super_stage02.glb",
+      "png": "flax_field_l04_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25680
+    },
+    {
+      "id": "flax_field_l04_super_stage03",
+      "level": 4,
+      "state": "super_stage03",
+      "glb": "flax_field_l04_super_stage03.glb",
+      "png": "flax_field_l04_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25764
+    },
+    {
+      "id": "flax_field_l04_super_stage04",
+      "level": 4,
+      "state": "super_stage04",
+      "glb": "flax_field_l04_super_stage04.glb",
+      "png": "flax_field_l04_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25932
+    },
+    {
+      "id": "flax_field_l04_super_stage05",
+      "level": 4,
+      "state": "super_stage05",
+      "glb": "flax_field_l04_super_stage05.glb",
+      "png": "flax_field_l04_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25932
+    },
+    {
+      "id": "flax_field_l04_super_stage06",
+      "level": 4,
+      "state": "super_stage06",
+      "glb": "flax_field_l04_super_stage06.glb",
+      "png": "flax_field_l04_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 25932
+    },
+    {
+      "id": "flax_field_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "glb": "flax_field_l05_stage01.glb",
+      "png": "flax_field_l05_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20512
+    },
+    {
+      "id": "flax_field_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "glb": "flax_field_l05_stage02.glb",
+      "png": "flax_field_l05_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26112
+    },
+    {
+      "id": "flax_field_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "glb": "flax_field_l05_stage03.glb",
+      "png": "flax_field_l05_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26448
+    },
+    {
+      "id": "flax_field_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "flax_field_l05_active.glb",
+      "png": "flax_field_l05_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26448
+    },
+    {
+      "id": "flax_field_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "flax_field_l05_construction.glb",
+      "png": "flax_field_l05_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16260
+    },
+    {
+      "id": "flax_field_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "flax_field_l05_damaged.glb",
+      "png": "flax_field_l05_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9792
+    },
+    {
+      "id": "flax_field_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "glb": "flax_field_l05_ruined.glb",
+      "png": "flax_field_l05_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9048
+    },
+    {
+      "id": "flax_field_l05_super_stage01",
+      "level": 5,
+      "state": "super_stage01",
+      "glb": "flax_field_l05_super_stage01.glb",
+      "png": "flax_field_l05_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26968
+    },
+    {
+      "id": "flax_field_l05_super_stage02",
+      "level": 5,
+      "state": "super_stage02",
+      "glb": "flax_field_l05_super_stage02.glb",
+      "png": "flax_field_l05_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26968
+    },
+    {
+      "id": "flax_field_l05_super_stage03",
+      "level": 5,
+      "state": "super_stage03",
+      "glb": "flax_field_l05_super_stage03.glb",
+      "png": "flax_field_l05_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27052
+    },
+    {
+      "id": "flax_field_l05_super_stage04",
+      "level": 5,
+      "state": "super_stage04",
+      "glb": "flax_field_l05_super_stage04.glb",
+      "png": "flax_field_l05_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27220
+    },
+    {
+      "id": "flax_field_l05_super_stage05",
+      "level": 5,
+      "state": "super_stage05",
+      "glb": "flax_field_l05_super_stage05.glb",
+      "png": "flax_field_l05_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27220
+    },
+    {
+      "id": "flax_field_l05_super_stage06",
+      "level": 5,
+      "state": "super_stage06",
+      "glb": "flax_field_l05_super_stage06.glb",
+      "png": "flax_field_l05_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27220
+    },
+    {
+      "id": "flax_field_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "glb": "flax_field_l06_stage01.glb",
+      "png": "flax_field_l06_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 21672
+    },
+    {
+      "id": "flax_field_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "glb": "flax_field_l06_stage02.glb",
+      "png": "flax_field_l06_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27832
+    },
+    {
+      "id": "flax_field_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "glb": "flax_field_l06_stage03.glb",
+      "png": "flax_field_l06_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28168
+    },
+    {
+      "id": "flax_field_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "flax_field_l06_active.glb",
+      "png": "flax_field_l06_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28168
+    },
+    {
+      "id": "flax_field_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "flax_field_l06_construction.glb",
+      "png": "flax_field_l06_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17204
+    },
+    {
+      "id": "flax_field_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "flax_field_l06_damaged.glb",
+      "png": "flax_field_l06_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10272
+    },
+    {
+      "id": "flax_field_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "glb": "flax_field_l06_ruined.glb",
+      "png": "flax_field_l06_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9108
+    },
+    {
+      "id": "flax_field_l06_super_stage01",
+      "level": 6,
+      "state": "super_stage01",
+      "glb": "flax_field_l06_super_stage01.glb",
+      "png": "flax_field_l06_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28688
+    },
+    {
+      "id": "flax_field_l06_super_stage02",
+      "level": 6,
+      "state": "super_stage02",
+      "glb": "flax_field_l06_super_stage02.glb",
+      "png": "flax_field_l06_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28688
+    },
+    {
+      "id": "flax_field_l06_super_stage03",
+      "level": 6,
+      "state": "super_stage03",
+      "glb": "flax_field_l06_super_stage03.glb",
+      "png": "flax_field_l06_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28772
+    },
+    {
+      "id": "flax_field_l06_super_stage04",
+      "level": 6,
+      "state": "super_stage04",
+      "glb": "flax_field_l06_super_stage04.glb",
+      "png": "flax_field_l06_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28940
+    },
+    {
+      "id": "flax_field_l06_super_stage05",
+      "level": 6,
+      "state": "super_stage05",
+      "glb": "flax_field_l06_super_stage05.glb",
+      "png": "flax_field_l06_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28940
+    },
+    {
+      "id": "flax_field_l06_super_stage06",
+      "level": 6,
+      "state": "super_stage06",
+      "glb": "flax_field_l06_super_stage06.glb",
+      "png": "flax_field_l06_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 28940
+    },
+    {
+      "id": "flax_field_l07_stage01",
+      "level": 7,
+      "state": "stage01",
+      "glb": "flax_field_l07_stage01.glb",
+      "png": "flax_field_l07_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22640
+    },
+    {
+      "id": "flax_field_l07_stage02",
+      "level": 7,
+      "state": "stage02",
+      "glb": "flax_field_l07_stage02.glb",
+      "png": "flax_field_l07_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 29360
+    },
+    {
+      "id": "flax_field_l07_stage03",
+      "level": 7,
+      "state": "stage03",
+      "glb": "flax_field_l07_stage03.glb",
+      "png": "flax_field_l07_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 29696
+    },
+    {
+      "id": "flax_field_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "flax_field_l07_active.glb",
+      "png": "flax_field_l07_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 29696
+    },
+    {
+      "id": "flax_field_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "flax_field_l07_construction.glb",
+      "png": "flax_field_l07_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17476
+    },
+    {
+      "id": "flax_field_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "flax_field_l07_damaged.glb",
+      "png": "flax_field_l07_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10752
+    },
+    {
+      "id": "flax_field_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "glb": "flax_field_l07_ruined.glb",
+      "png": "flax_field_l07_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9168
+    },
+    {
+      "id": "flax_field_l07_super_stage01",
+      "level": 7,
+      "state": "super_stage01",
+      "glb": "flax_field_l07_super_stage01.glb",
+      "png": "flax_field_l07_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30216
+    },
+    {
+      "id": "flax_field_l07_super_stage02",
+      "level": 7,
+      "state": "super_stage02",
+      "glb": "flax_field_l07_super_stage02.glb",
+      "png": "flax_field_l07_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30216
+    },
+    {
+      "id": "flax_field_l07_super_stage03",
+      "level": 7,
+      "state": "super_stage03",
+      "glb": "flax_field_l07_super_stage03.glb",
+      "png": "flax_field_l07_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30300
+    },
+    {
+      "id": "flax_field_l07_super_stage04",
+      "level": 7,
+      "state": "super_stage04",
+      "glb": "flax_field_l07_super_stage04.glb",
+      "png": "flax_field_l07_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30468
+    },
+    {
+      "id": "flax_field_l07_super_stage05",
+      "level": 7,
+      "state": "super_stage05",
+      "glb": "flax_field_l07_super_stage05.glb",
+      "png": "flax_field_l07_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30468
+    },
+    {
+      "id": "flax_field_l07_super_stage06",
+      "level": 7,
+      "state": "super_stage06",
+      "glb": "flax_field_l07_super_stage06.glb",
+      "png": "flax_field_l07_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30468
+    },
+    {
+      "id": "flax_field_l08_stage01",
+      "level": 8,
+      "state": "stage01",
+      "glb": "flax_field_l08_stage01.glb",
+      "png": "flax_field_l08_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 23368
+    },
+    {
+      "id": "flax_field_l08_stage02",
+      "level": 8,
+      "state": "stage02",
+      "glb": "flax_field_l08_stage02.glb",
+      "png": "flax_field_l08_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30648
+    },
+    {
+      "id": "flax_field_l08_stage03",
+      "level": 8,
+      "state": "stage03",
+      "glb": "flax_field_l08_stage03.glb",
+      "png": "flax_field_l08_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30984
+    },
+    {
+      "id": "flax_field_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "flax_field_l08_active.glb",
+      "png": "flax_field_l08_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 30984
+    },
+    {
+      "id": "flax_field_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "flax_field_l08_construction.glb",
+      "png": "flax_field_l08_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17988
+    },
+    {
+      "id": "flax_field_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "flax_field_l08_damaged.glb",
+      "png": "flax_field_l08_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11232
+    },
+    {
+      "id": "flax_field_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "glb": "flax_field_l08_ruined.glb",
+      "png": "flax_field_l08_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9228
+    },
+    {
+      "id": "flax_field_l08_super_stage01",
+      "level": 8,
+      "state": "super_stage01",
+      "glb": "flax_field_l08_super_stage01.glb",
+      "png": "flax_field_l08_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 31504
+    },
+    {
+      "id": "flax_field_l08_super_stage02",
+      "level": 8,
+      "state": "super_stage02",
+      "glb": "flax_field_l08_super_stage02.glb",
+      "png": "flax_field_l08_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 31504
+    },
+    {
+      "id": "flax_field_l08_super_stage03",
+      "level": 8,
+      "state": "super_stage03",
+      "glb": "flax_field_l08_super_stage03.glb",
+      "png": "flax_field_l08_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 31588
+    },
+    {
+      "id": "flax_field_l08_super_stage04",
+      "level": 8,
+      "state": "super_stage04",
+      "glb": "flax_field_l08_super_stage04.glb",
+      "png": "flax_field_l08_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 31756
+    },
+    {
+      "id": "flax_field_l08_super_stage05",
+      "level": 8,
+      "state": "super_stage05",
+      "glb": "flax_field_l08_super_stage05.glb",
+      "png": "flax_field_l08_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 31756
+    },
+    {
+      "id": "flax_field_l08_super_stage06",
+      "level": 8,
+      "state": "super_stage06",
+      "glb": "flax_field_l08_super_stage06.glb",
+      "png": "flax_field_l08_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 31756
+    },
+    {
+      "id": "flax_field_l09_stage01",
+      "level": 9,
+      "state": "stage01",
+      "glb": "flax_field_l09_stage01.glb",
+      "png": "flax_field_l09_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24312
+    },
+    {
+      "id": "flax_field_l09_stage02",
+      "level": 9,
+      "state": "stage02",
+      "glb": "flax_field_l09_stage02.glb",
+      "png": "flax_field_l09_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 32152
+    },
+    {
+      "id": "flax_field_l09_stage03",
+      "level": 9,
+      "state": "stage03",
+      "glb": "flax_field_l09_stage03.glb",
+      "png": "flax_field_l09_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 32488
+    },
+    {
+      "id": "flax_field_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "flax_field_l09_active.glb",
+      "png": "flax_field_l09_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 32488
+    },
+    {
+      "id": "flax_field_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "flax_field_l09_construction.glb",
+      "png": "flax_field_l09_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18716
+    },
+    {
+      "id": "flax_field_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "flax_field_l09_damaged.glb",
+      "png": "flax_field_l09_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11712
+    },
+    {
+      "id": "flax_field_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "glb": "flax_field_l09_ruined.glb",
+      "png": "flax_field_l09_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9288
+    },
+    {
+      "id": "flax_field_l09_super_stage01",
+      "level": 9,
+      "state": "super_stage01",
+      "glb": "flax_field_l09_super_stage01.glb",
+      "png": "flax_field_l09_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33008
+    },
+    {
+      "id": "flax_field_l09_super_stage02",
+      "level": 9,
+      "state": "super_stage02",
+      "glb": "flax_field_l09_super_stage02.glb",
+      "png": "flax_field_l09_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33008
+    },
+    {
+      "id": "flax_field_l09_super_stage03",
+      "level": 9,
+      "state": "super_stage03",
+      "glb": "flax_field_l09_super_stage03.glb",
+      "png": "flax_field_l09_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33092
+    },
+    {
+      "id": "flax_field_l09_super_stage04",
+      "level": 9,
+      "state": "super_stage04",
+      "glb": "flax_field_l09_super_stage04.glb",
+      "png": "flax_field_l09_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33260
+    },
+    {
+      "id": "flax_field_l09_super_stage05",
+      "level": 9,
+      "state": "super_stage05",
+      "glb": "flax_field_l09_super_stage05.glb",
+      "png": "flax_field_l09_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33260
+    },
+    {
+      "id": "flax_field_l09_super_stage06",
+      "level": 9,
+      "state": "super_stage06",
+      "glb": "flax_field_l09_super_stage06.glb",
+      "png": "flax_field_l09_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33260
+    },
+    {
+      "id": "flax_field_l10_stage01",
+      "level": 10,
+      "state": "stage01",
+      "glb": "flax_field_l10_stage01.glb",
+      "png": "flax_field_l10_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24932
+    },
+    {
+      "id": "flax_field_l10_stage02",
+      "level": 10,
+      "state": "stage02",
+      "glb": "flax_field_l10_stage02.glb",
+      "png": "flax_field_l10_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33332
+    },
+    {
+      "id": "flax_field_l10_stage03",
+      "level": 10,
+      "state": "stage03",
+      "glb": "flax_field_l10_stage03.glb",
+      "png": "flax_field_l10_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33668
+    },
+    {
+      "id": "flax_field_l10_active",
+      "level": 10,
+      "state": "active",
+      "glb": "flax_field_l10_active.glb",
+      "png": "flax_field_l10_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 33668
+    },
+    {
+      "id": "flax_field_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "glb": "flax_field_l10_construction.glb",
+      "png": "flax_field_l10_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 19012
+    },
+    {
+      "id": "flax_field_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "glb": "flax_field_l10_damaged.glb",
+      "png": "flax_field_l10_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12192
+    },
+    {
+      "id": "flax_field_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "glb": "flax_field_l10_ruined.glb",
+      "png": "flax_field_l10_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9348
+    },
+    {
+      "id": "flax_field_l10_super_stage01",
+      "level": 10,
+      "state": "super_stage01",
+      "glb": "flax_field_l10_super_stage01.glb",
+      "png": "flax_field_l10_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 34188
+    },
+    {
+      "id": "flax_field_l10_super_stage02",
+      "level": 10,
+      "state": "super_stage02",
+      "glb": "flax_field_l10_super_stage02.glb",
+      "png": "flax_field_l10_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 34188
+    },
+    {
+      "id": "flax_field_l10_super_stage03",
+      "level": 10,
+      "state": "super_stage03",
+      "glb": "flax_field_l10_super_stage03.glb",
+      "png": "flax_field_l10_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 34272
+    },
+    {
+      "id": "flax_field_l10_super_stage04",
+      "level": 10,
+      "state": "super_stage04",
+      "glb": "flax_field_l10_super_stage04.glb",
+      "png": "flax_field_l10_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 34440
+    },
+    {
+      "id": "flax_field_l10_super_stage05",
+      "level": 10,
+      "state": "super_stage05",
+      "glb": "flax_field_l10_super_stage05.glb",
+      "png": "flax_field_l10_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 34440
+    },
+    {
+      "id": "flax_field_l10_super_stage06",
+      "level": 10,
+      "state": "super_stage06",
+      "glb": "flax_field_l10_super_stage06.glb",
+      "png": "flax_field_l10_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 34440
+    }
+  ]
+}

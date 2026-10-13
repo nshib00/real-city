@@ -1,0 +1,3037 @@
+{
+  "asset_id": "seed_garden",
+  "category": "fields",
+  "display_name": "Семенной огород",
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "pipeline": "blender_mcp_midpoly",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "seed_garden_l01_l10.blend",
+  "items": [
+    {
+      "id": "seed_garden_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "glb": "seed_garden_l01_stage01.glb",
+      "png": "seed_garden_l01_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4896,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "glb": "seed_garden_l01_stage02.glb",
+      "png": "seed_garden_l01_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7856,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "glb": "seed_garden_l01_stage03.glb",
+      "png": "seed_garden_l01_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10016,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "seed_garden_l01_active.glb",
+      "png": "seed_garden_l01_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10016,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "seed_garden_l01_construction.glb",
+      "png": "seed_garden_l01_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4364,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "seed_garden_l01_damaged.glb",
+      "png": "seed_garden_l01_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6180,
+      "alpha_bounds": [
+        117,
+        208,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "glb": "seed_garden_l01_ruined.glb",
+      "png": "seed_garden_l01_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3744,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "glb": "seed_garden_l01_super_stage01.glb",
+      "png": "seed_garden_l01_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7496,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "glb": "seed_garden_l01_super_stage02.glb",
+      "png": "seed_garden_l01_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9440,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "glb": "seed_garden_l01_super_stage03.glb",
+      "png": "seed_garden_l01_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9524,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "glb": "seed_garden_l01_super_stage04.glb",
+      "png": "seed_garden_l01_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9524,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "glb": "seed_garden_l01_super_stage05.glb",
+      "png": "seed_garden_l01_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9524,
+      "alpha_bounds": [
+        117,
+        192,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "glb": "seed_garden_l01_super_stage06.glb",
+      "png": "seed_garden_l01_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9524,
+      "alpha_bounds": [
+        117,
+        192,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "glb": "seed_garden_l02_stage01.glb",
+      "png": "seed_garden_l02_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6376,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "glb": "seed_garden_l02_stage02.glb",
+      "png": "seed_garden_l02_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9928,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "glb": "seed_garden_l02_stage03.glb",
+      "png": "seed_garden_l02_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12520,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "seed_garden_l02_active.glb",
+      "png": "seed_garden_l02_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12520,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "seed_garden_l02_construction.glb",
+      "png": "seed_garden_l02_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5356,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "seed_garden_l02_damaged.glb",
+      "png": "seed_garden_l02_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6720,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "glb": "seed_garden_l02_ruined.glb",
+      "png": "seed_garden_l02_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3840,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "glb": "seed_garden_l02_super_stage01.glb",
+      "png": "seed_garden_l02_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9388,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "glb": "seed_garden_l02_super_stage02.glb",
+      "png": "seed_garden_l02_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11656,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "glb": "seed_garden_l02_super_stage03.glb",
+      "png": "seed_garden_l02_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11740,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "glb": "seed_garden_l02_super_stage04.glb",
+      "png": "seed_garden_l02_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11740,
+      "alpha_bounds": [
+        117,
+        197,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "glb": "seed_garden_l02_super_stage05.glb",
+      "png": "seed_garden_l02_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11740,
+      "alpha_bounds": [
+        117,
+        190,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "glb": "seed_garden_l02_super_stage06.glb",
+      "png": "seed_garden_l02_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11740,
+      "alpha_bounds": [
+        117,
+        190,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "glb": "seed_garden_l03_stage01.glb",
+      "png": "seed_garden_l03_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7148,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "glb": "seed_garden_l03_stage02.glb",
+      "png": "seed_garden_l03_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11292,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "glb": "seed_garden_l03_stage03.glb",
+      "png": "seed_garden_l03_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14316,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "seed_garden_l03_active.glb",
+      "png": "seed_garden_l03_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14316,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "seed_garden_l03_construction.glb",
+      "png": "seed_garden_l03_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5484,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "seed_garden_l03_damaged.glb",
+      "png": "seed_garden_l03_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7260,
+      "alpha_bounds": [
+        117,
+        200,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "glb": "seed_garden_l03_ruined.glb",
+      "png": "seed_garden_l03_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3936,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "glb": "seed_garden_l03_super_stage01.glb",
+      "png": "seed_garden_l03_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10788,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "glb": "seed_garden_l03_super_stage02.glb",
+      "png": "seed_garden_l03_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13380,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "glb": "seed_garden_l03_super_stage03.glb",
+      "png": "seed_garden_l03_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13464,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "glb": "seed_garden_l03_super_stage04.glb",
+      "png": "seed_garden_l03_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13464,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "glb": "seed_garden_l03_super_stage05.glb",
+      "png": "seed_garden_l03_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13464,
+      "alpha_bounds": [
+        117,
+        188,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "glb": "seed_garden_l03_super_stage06.glb",
+      "png": "seed_garden_l03_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13464,
+      "alpha_bounds": [
+        117,
+        188,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "glb": "seed_garden_l04_stage01.glb",
+      "png": "seed_garden_l04_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8572,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "glb": "seed_garden_l04_stage02.glb",
+      "png": "seed_garden_l04_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13308,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "glb": "seed_garden_l04_stage03.glb",
+      "png": "seed_garden_l04_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16764,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "seed_garden_l04_active.glb",
+      "png": "seed_garden_l04_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16764,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "seed_garden_l04_construction.glb",
+      "png": "seed_garden_l04_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5936,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "seed_garden_l04_damaged.glb",
+      "png": "seed_garden_l04_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8448,
+      "alpha_bounds": [
+        117,
+        196,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "glb": "seed_garden_l04_ruined.glb",
+      "png": "seed_garden_l04_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4032,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_super_stage01",
+      "level": 4,
+      "state": "super_stage01",
+      "glb": "seed_garden_l04_super_stage01.glb",
+      "png": "seed_garden_l04_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12624,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_super_stage02",
+      "level": 4,
+      "state": "super_stage02",
+      "glb": "seed_garden_l04_super_stage02.glb",
+      "png": "seed_garden_l04_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15540,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_super_stage03",
+      "level": 4,
+      "state": "super_stage03",
+      "glb": "seed_garden_l04_super_stage03.glb",
+      "png": "seed_garden_l04_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15624,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_super_stage04",
+      "level": 4,
+      "state": "super_stage04",
+      "glb": "seed_garden_l04_super_stage04.glb",
+      "png": "seed_garden_l04_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15624,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_super_stage05",
+      "level": 4,
+      "state": "super_stage05",
+      "glb": "seed_garden_l04_super_stage05.glb",
+      "png": "seed_garden_l04_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15624,
+      "alpha_bounds": [
+        117,
+        185,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l04_super_stage06",
+      "level": 4,
+      "state": "super_stage06",
+      "glb": "seed_garden_l04_super_stage06.glb",
+      "png": "seed_garden_l04_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15624,
+      "alpha_bounds": [
+        117,
+        185,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "glb": "seed_garden_l05_stage01.glb",
+      "png": "seed_garden_l05_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9216,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "glb": "seed_garden_l05_stage02.glb",
+      "png": "seed_garden_l05_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14544,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "glb": "seed_garden_l05_stage03.glb",
+      "png": "seed_garden_l05_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18432,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "seed_garden_l05_active.glb",
+      "png": "seed_garden_l05_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18432,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "seed_garden_l05_construction.glb",
+      "png": "seed_garden_l05_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6496,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "seed_garden_l05_damaged.glb",
+      "png": "seed_garden_l05_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9420,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "glb": "seed_garden_l05_ruined.glb",
+      "png": "seed_garden_l05_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4128,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_super_stage01",
+      "level": 5,
+      "state": "super_stage01",
+      "glb": "seed_garden_l05_super_stage01.glb",
+      "png": "seed_garden_l05_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13680,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_super_stage02",
+      "level": 5,
+      "state": "super_stage02",
+      "glb": "seed_garden_l05_super_stage02.glb",
+      "png": "seed_garden_l05_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16920,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_super_stage03",
+      "level": 5,
+      "state": "super_stage03",
+      "glb": "seed_garden_l05_super_stage03.glb",
+      "png": "seed_garden_l05_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17004,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_super_stage04",
+      "level": 5,
+      "state": "super_stage04",
+      "glb": "seed_garden_l05_super_stage04.glb",
+      "png": "seed_garden_l05_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17004,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_super_stage05",
+      "level": 5,
+      "state": "super_stage05",
+      "glb": "seed_garden_l05_super_stage05.glb",
+      "png": "seed_garden_l05_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17004,
+      "alpha_bounds": [
+        117,
+        183,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l05_super_stage06",
+      "level": 5,
+      "state": "super_stage06",
+      "glb": "seed_garden_l05_super_stage06.glb",
+      "png": "seed_garden_l05_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17004,
+      "alpha_bounds": [
+        117,
+        183,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "glb": "seed_garden_l06_stage01.glb",
+      "png": "seed_garden_l06_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9992,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "glb": "seed_garden_l06_stage02.glb",
+      "png": "seed_garden_l06_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15912,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "glb": "seed_garden_l06_stage03.glb",
+      "png": "seed_garden_l06_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20232,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "seed_garden_l06_active.glb",
+      "png": "seed_garden_l06_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20232,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "seed_garden_l06_construction.glb",
+      "png": "seed_garden_l06_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6624,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "seed_garden_l06_damaged.glb",
+      "png": "seed_garden_l06_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10176,
+      "alpha_bounds": [
+        117,
+        187,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "glb": "seed_garden_l06_ruined.glb",
+      "png": "seed_garden_l06_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4224,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_super_stage01",
+      "level": 6,
+      "state": "super_stage01",
+      "glb": "seed_garden_l06_super_stage01.glb",
+      "png": "seed_garden_l06_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14868,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_super_stage02",
+      "level": 6,
+      "state": "super_stage02",
+      "glb": "seed_garden_l06_super_stage02.glb",
+      "png": "seed_garden_l06_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18432,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_super_stage03",
+      "level": 6,
+      "state": "super_stage03",
+      "glb": "seed_garden_l06_super_stage03.glb",
+      "png": "seed_garden_l06_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18516,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_super_stage04",
+      "level": 6,
+      "state": "super_stage04",
+      "glb": "seed_garden_l06_super_stage04.glb",
+      "png": "seed_garden_l06_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18516,
+      "alpha_bounds": [
+        117,
+        182,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_super_stage05",
+      "level": 6,
+      "state": "super_stage05",
+      "glb": "seed_garden_l06_super_stage05.glb",
+      "png": "seed_garden_l06_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18516,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l06_super_stage06",
+      "level": 6,
+      "state": "super_stage06",
+      "glb": "seed_garden_l06_super_stage06.glb",
+      "png": "seed_garden_l06_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18516,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_stage01",
+      "level": 7,
+      "state": "stage01",
+      "glb": "seed_garden_l07_stage01.glb",
+      "png": "seed_garden_l07_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11524,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_stage02",
+      "level": 7,
+      "state": "stage02",
+      "glb": "seed_garden_l07_stage02.glb",
+      "png": "seed_garden_l07_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18036,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_stage03",
+      "level": 7,
+      "state": "stage03",
+      "glb": "seed_garden_l07_stage03.glb",
+      "png": "seed_garden_l07_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22788,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "seed_garden_l07_active.glb",
+      "png": "seed_garden_l07_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22788,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "seed_garden_l07_construction.glb",
+      "png": "seed_garden_l07_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7724,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "seed_garden_l07_damaged.glb",
+      "png": "seed_garden_l07_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11688,
+      "alpha_bounds": [
+        117,
+        183,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "glb": "seed_garden_l07_ruined.glb",
+      "png": "seed_garden_l07_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4320,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_super_stage01",
+      "level": 7,
+      "state": "super_stage01",
+      "glb": "seed_garden_l07_super_stage01.glb",
+      "png": "seed_garden_l07_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16812,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_super_stage02",
+      "level": 7,
+      "state": "super_stage02",
+      "glb": "seed_garden_l07_super_stage02.glb",
+      "png": "seed_garden_l07_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20700,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_super_stage03",
+      "level": 7,
+      "state": "super_stage03",
+      "glb": "seed_garden_l07_super_stage03.glb",
+      "png": "seed_garden_l07_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20784,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_super_stage04",
+      "level": 7,
+      "state": "super_stage04",
+      "glb": "seed_garden_l07_super_stage04.glb",
+      "png": "seed_garden_l07_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20784,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_super_stage05",
+      "level": 7,
+      "state": "super_stage05",
+      "glb": "seed_garden_l07_super_stage05.glb",
+      "png": "seed_garden_l07_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20784,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l07_super_stage06",
+      "level": 7,
+      "state": "super_stage06",
+      "glb": "seed_garden_l07_super_stage06.glb",
+      "png": "seed_garden_l07_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20784,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_stage01",
+      "level": 8,
+      "state": "stage01",
+      "glb": "seed_garden_l08_stage01.glb",
+      "png": "seed_garden_l08_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12408,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_stage02",
+      "level": 8,
+      "state": "stage02",
+      "glb": "seed_garden_l08_stage02.glb",
+      "png": "seed_garden_l08_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 19512,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_stage03",
+      "level": 8,
+      "state": "stage03",
+      "glb": "seed_garden_l08_stage03.glb",
+      "png": "seed_garden_l08_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24696,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "seed_garden_l08_active.glb",
+      "png": "seed_garden_l08_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24696,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "seed_garden_l08_construction.glb",
+      "png": "seed_garden_l08_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8392,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "seed_garden_l08_damaged.glb",
+      "png": "seed_garden_l08_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12768,
+      "alpha_bounds": [
+        117,
+        179,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "glb": "seed_garden_l08_ruined.glb",
+      "png": "seed_garden_l08_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4416,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_super_stage01",
+      "level": 8,
+      "state": "super_stage01",
+      "glb": "seed_garden_l08_super_stage01.glb",
+      "png": "seed_garden_l08_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18108,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_super_stage02",
+      "level": 8,
+      "state": "super_stage02",
+      "glb": "seed_garden_l08_super_stage02.glb",
+      "png": "seed_garden_l08_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22320,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_super_stage03",
+      "level": 8,
+      "state": "super_stage03",
+      "glb": "seed_garden_l08_super_stage03.glb",
+      "png": "seed_garden_l08_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22404,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_super_stage04",
+      "level": 8,
+      "state": "super_stage04",
+      "glb": "seed_garden_l08_super_stage04.glb",
+      "png": "seed_garden_l08_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22404,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_super_stage05",
+      "level": 8,
+      "state": "super_stage05",
+      "glb": "seed_garden_l08_super_stage05.glb",
+      "png": "seed_garden_l08_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22404,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l08_super_stage06",
+      "level": 8,
+      "state": "super_stage06",
+      "glb": "seed_garden_l08_super_stage06.glb",
+      "png": "seed_garden_l08_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 22404,
+      "alpha_bounds": [
+        117,
+        174,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_stage01",
+      "level": 9,
+      "state": "stage01",
+      "glb": "seed_garden_l09_stage01.glb",
+      "png": "seed_garden_l09_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12752,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_stage02",
+      "level": 9,
+      "state": "stage02",
+      "glb": "seed_garden_l09_stage02.glb",
+      "png": "seed_garden_l09_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20448,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_stage03",
+      "level": 9,
+      "state": "stage03",
+      "glb": "seed_garden_l09_stage03.glb",
+      "png": "seed_garden_l09_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26064,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "seed_garden_l09_active.glb",
+      "png": "seed_garden_l09_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 26064,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "seed_garden_l09_construction.glb",
+      "png": "seed_garden_l09_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8520,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "seed_garden_l09_damaged.glb",
+      "png": "seed_garden_l09_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13308,
+      "alpha_bounds": [
+        117,
+        175,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "glb": "seed_garden_l09_ruined.glb",
+      "png": "seed_garden_l09_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4512,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_super_stage01",
+      "level": 9,
+      "state": "super_stage01",
+      "glb": "seed_garden_l09_super_stage01.glb",
+      "png": "seed_garden_l09_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 18864,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_super_stage02",
+      "level": 9,
+      "state": "super_stage02",
+      "glb": "seed_garden_l09_super_stage02.glb",
+      "png": "seed_garden_l09_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 23400,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_super_stage03",
+      "level": 9,
+      "state": "super_stage03",
+      "glb": "seed_garden_l09_super_stage03.glb",
+      "png": "seed_garden_l09_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 23484,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_super_stage04",
+      "level": 9,
+      "state": "super_stage04",
+      "glb": "seed_garden_l09_super_stage04.glb",
+      "png": "seed_garden_l09_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 23484,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_super_stage05",
+      "level": 9,
+      "state": "super_stage05",
+      "glb": "seed_garden_l09_super_stage05.glb",
+      "png": "seed_garden_l09_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 23484,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l09_super_stage06",
+      "level": 9,
+      "state": "super_stage06",
+      "glb": "seed_garden_l09_super_stage06.glb",
+      "png": "seed_garden_l09_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 23484,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_stage01",
+      "level": 10,
+      "state": "stage01",
+      "glb": "seed_garden_l10_stage01.glb",
+      "png": "seed_garden_l10_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13504,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_stage02",
+      "level": 10,
+      "state": "stage02",
+      "glb": "seed_garden_l10_stage02.glb",
+      "png": "seed_garden_l10_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 21792,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_stage03",
+      "level": 10,
+      "state": "stage03",
+      "glb": "seed_garden_l10_stage03.glb",
+      "png": "seed_garden_l10_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27840,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_active",
+      "level": 10,
+      "state": "active",
+      "glb": "seed_garden_l10_active.glb",
+      "png": "seed_garden_l10_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 27840,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "glb": "seed_garden_l10_construction.glb",
+      "png": "seed_garden_l10_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8864,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "glb": "seed_garden_l10_damaged.glb",
+      "png": "seed_garden_l10_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13848,
+      "alpha_bounds": [
+        117,
+        170,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "glb": "seed_garden_l10_ruined.glb",
+      "png": "seed_garden_l10_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4608,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_super_stage01",
+      "level": 10,
+      "state": "super_stage01",
+      "glb": "seed_garden_l10_super_stage01.glb",
+      "png": "seed_garden_l10_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 20028,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_super_stage02",
+      "level": 10,
+      "state": "super_stage02",
+      "glb": "seed_garden_l10_super_stage02.glb",
+      "png": "seed_garden_l10_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24888,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_super_stage03",
+      "level": 10,
+      "state": "super_stage03",
+      "glb": "seed_garden_l10_super_stage03.glb",
+      "png": "seed_garden_l10_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24972,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_super_stage04",
+      "level": 10,
+      "state": "super_stage04",
+      "glb": "seed_garden_l10_super_stage04.glb",
+      "png": "seed_garden_l10_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24972,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_super_stage05",
+      "level": 10,
+      "state": "super_stage05",
+      "glb": "seed_garden_l10_super_stage05.glb",
+      "png": "seed_garden_l10_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24972,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    },
+    {
+      "id": "seed_garden_l10_super_stage06",
+      "level": 10,
+      "state": "super_stage06",
+      "glb": "seed_garden_l10_super_stage06.glb",
+      "png": "seed_garden_l10_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 24972,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 0
+    }
+  ]
+}

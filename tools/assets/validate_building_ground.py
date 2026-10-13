@@ -1,19 +1,16 @@
-"""Compare exported terrain geometry/materials between all building states."""
+"""Compare exported terrain geometry/materials between building states."""
 import hashlib
 import json
 import re
 import struct
+import argparse
 from pathlib import Path
 
 from PIL import Image
 
+from asset_validation_common import load_manifests, resolve_asset_path
+
 ROOT = Path(__file__).resolve().parents[2]
-FAMILIES = {
-    'dugout': ('housing/dugout', 5, False),
-    'wood_house': ('housing/wood_house', 6, False),
-    'town_hall': ('center/town_hall', 10, False),
-    'lumber_yard': ('industry/lumber_yard', 13, True),
-}
 GROUND = re.compile(r'earth_tile|grass_tile|tile_base|work_yard|path_stone|sawdust_lane|scorched_ground')
 
 
@@ -81,28 +78,64 @@ def sprite_alignment(active_path, state_path):
         return True
 
 
-def audit(root=ROOT):
+def audit(paths=None, root=ROOT):
     results = []
-    for kind, (folder, levels, public) in FAMILIES.items():
-        directory = root / ('frontend/public/assets/buildings' if public else 'frontend/src/assets/buildings') / folder
-        for level in range(1, levels + 1):
-            prefix = f'{kind}_l{level:02d}'
-            active = directory / (prefix + '_active.glb')
-            signature, count = ground_signature(active)
-            for state in ('construction', 'damaged'):
-                path = directory / (prefix + '_' + state + '.glb')
-                other, other_count = ground_signature(path)
-                png = root / 'frontend/public/assets/buildings' / folder
-                results.append({'name': path.stem, 'matches_active': signature == other,
+    for manifest in load_manifests(paths):
+        items = {}
+        for item in manifest.items:
+            level = item.get('level')
+            state = item.get('state')
+            if level is not None and state:
+                items[(int(level), str(state))] = item
+        for level in manifest.levels:
+            active_item = items.get((level, 'active'))
+            if not active_item:
+                continue
+            active = resolve_asset_path(manifest.directory, active_item.get('glb'))
+            if not active or not active.exists():
+                continue
+            try:
+                signature, count = ground_signature(active)
+            except AssertionError as exc:
+                results.append({'name': active.stem, 'asset_id': manifest.asset_id, 'level': level, 'ground_found': False, 'error': str(exc)})
+                continue
+            for state in manifest.states:
+                if state == 'active':
+                    continue
+                item = items.get((level, state))
+                if not item:
+                    continue
+                path = resolve_asset_path(manifest.directory, item.get('glb'))
+                if not path or not path.exists():
+                    continue
+                try:
+                    other, other_count = ground_signature(path)
+                    matches_active = signature == other
+                    ground_found = True
+                    error = None
+                except AssertionError as exc:
+                    other_count = 0
+                    matches_active = False
+                    ground_found = False
+                    error = str(exc)
+                active_png = resolve_asset_path(manifest.directory, active_item.get('png'))
+                state_png = resolve_asset_path(manifest.directory, item.get('png'))
+                aligned = bool(active_png and state_png and active_png.exists() and state_png.exists() and sprite_alignment(active_png, state_png))
+                results.append({'name': path.stem, 'asset_id': manifest.asset_id, 'level': level, 'state': state,
+                                'ground_found': ground_found, 'matches_active': matches_active,
                                 'active_parts': count, 'state_parts': other_count,
-                                'sprite_aligned': sprite_alignment(png / (active.stem + '.png'), png / (path.stem + '.png'))})
+                                'sprite_aligned': aligned, 'error': error})
     return results
 
 
 if __name__ == '__main__':
-    results = audit()
-    failures = [r for r in results if not r['matches_active'] or not r['sprite_aligned']]
-    print(json.dumps({'active_levels': sum(f[1] for f in FAMILIES.values()), 'states': len(results), 'mismatches': failures}, indent=2))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('paths', nargs='*', help='Manifest files or asset directories. Defaults to all building manifests.')
+    parser.add_argument('--report', default=str(ROOT / 'frontend/public/assets/buildings/ground-validation.json'))
+    args = parser.parse_args()
+    results = audit(args.paths)
+    failures = [r for r in results if not r.get('ground_found') or not r.get('matches_active') or not r.get('sprite_aligned')]
+    print(json.dumps({'states': len(results), 'mismatches': failures}, indent=2))
     if failures:
         raise SystemExit(1)
-    (ROOT / 'frontend/public/assets/buildings/ground-validation.json').write_text(json.dumps(results, indent=2) + '\n')
+    Path(args.report).write_text(json.dumps(results, indent=2) + '\n')

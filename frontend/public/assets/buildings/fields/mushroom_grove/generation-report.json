@@ -1,0 +1,1742 @@
+{
+  "asset": "mushroom_grove",
+  "pipeline": "blender_mcp_midpoly",
+  "blend": "mushroom_grove_l01_l10.blend",
+  "count": 130,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "png_size": [
+    512,
+    384
+  ],
+  "anchor": [
+    256,
+    292
+  ],
+  "style": "Aeolian bright fantasy mid-poly",
+  "notes": [
+    "round mushroom grove, distinct from rectangular crop beds",
+    "level upgrades: l02 low wooden border, l03 taller picket fence, l04 clay foundation, l05 stone lower course plus thin cloth canopy, l06 taller full-stone fence with premium beams, l07 higher posts and stone-block foundation, l08 brick/stone wall with sloped canopy, l09 thicker block fence with metal details, l10 metal posts, complex roof, super-mushroom cap parts and emerald dust inlays",
+    "visibility revision: levels 5-10 use a wider mushroom bed; canopies cover the whole oval but sit higher and use translucent cloth so mushroom caps remain visible from the game camera; levels 7-10 use lower decorated walls; levels 6-8 add wall-colored gates and levels 9-10 add decorated metal doors",
+    "resource visibility by ids: wood/premium_planks in boards, rails, beams and canopy ribs; clay/brick/stone/stone_blocks in wall courses and foundations; resin in amber brace blocks; fabric in cloth canopy panels and moss cloth; blue_salt in cold blue spore lamps; iron_ingot in metal studs, ridge and posts; emerald_dust in foundation inlays; super_mushrooms in glowing cap roof pieces",
+    "construction/damaged/ruined keep the same ground tile and alter only fence sections, canopy, mushrooms and debris",
+    "super stages add pale glowing central mushrooms, blue mycelium nodes and late super-cap roof accents"
+  ],
+  "assets": [
+    {
+      "name": "mushroom_grove_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "triangles": 2152,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 98980
+    },
+    {
+      "name": "mushroom_grove_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "triangles": 3212,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 150640
+    },
+    {
+      "name": "mushroom_grove_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "triangles": 4352,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 210864
+    },
+    {
+      "name": "mushroom_grove_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 4352,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 210864
+    },
+    {
+      "name": "mushroom_grove_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 2388,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 103888
+    },
+    {
+      "name": "mushroom_grove_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 3036,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 144656
+    },
+    {
+      "name": "mushroom_grove_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1976,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 93116
+    },
+    {
+      "name": "mushroom_grove_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "triangles": 2528,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 127120
+    },
+    {
+      "name": "mushroom_grove_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "triangles": 3668,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 187092
+    },
+    {
+      "name": "mushroom_grove_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "triangles": 4928,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 259880
+    },
+    {
+      "name": "mushroom_grove_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "triangles": 5400,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 285516
+    },
+    {
+      "name": "mushroom_grove_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "triangles": 5400,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 285516
+    },
+    {
+      "name": "mushroom_grove_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "triangles": 5400,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 285508
+    },
+    {
+      "name": "mushroom_grove_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "triangles": 5176,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 146452
+    },
+    {
+      "name": "mushroom_grove_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "triangles": 6276,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 202232
+    },
+    {
+      "name": "mushroom_grove_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "triangles": 7416,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 262460
+    },
+    {
+      "name": "mushroom_grove_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 7416,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 262460
+    },
+    {
+      "name": "mushroom_grove_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 4312,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 135132
+    },
+    {
+      "name": "mushroom_grove_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 4876,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 177664
+    },
+    {
+      "name": "mushroom_grove_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 2972,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 107500
+    },
+    {
+      "name": "mushroom_grove_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "triangles": 5552,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 174408
+    },
+    {
+      "name": "mushroom_grove_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "triangles": 6732,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 238688
+    },
+    {
+      "name": "mushroom_grove_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "triangles": 7912,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 303008
+    },
+    {
+      "name": "mushroom_grove_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "triangles": 8384,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 328688
+    },
+    {
+      "name": "mushroom_grove_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "triangles": 8384,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 328668
+    },
+    {
+      "name": "mushroom_grove_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "triangles": 8384,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 328660
+    },
+    {
+      "name": "mushroom_grove_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "triangles": 9316,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 207724
+    },
+    {
+      "name": "mushroom_grove_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "triangles": 10612,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 272180
+    },
+    {
+      "name": "mushroom_grove_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "triangles": 11752,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 332496
+    },
+    {
+      "name": "mushroom_grove_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 11752,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 332496
+    },
+    {
+      "name": "mushroom_grove_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 7100,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 175916
+    },
+    {
+      "name": "mushroom_grove_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 7340,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 214744
+    },
+    {
+      "name": "mushroom_grove_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 4268,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 123572
+    },
+    {
+      "name": "mushroom_grove_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "triangles": 9692,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 236024
+    },
+    {
+      "name": "mushroom_grove_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "triangles": 11148,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 317456
+    },
+    {
+      "name": "mushroom_grove_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "triangles": 12328,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 381708
+    },
+    {
+      "name": "mushroom_grove_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "triangles": 12328,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 381684
+    },
+    {
+      "name": "mushroom_grove_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "triangles": 12328,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 381664
+    },
+    {
+      "name": "mushroom_grove_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "triangles": 12328,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 381656
+    },
+    {
+      "name": "mushroom_grove_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "triangles": 10868,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 241624
+    },
+    {
+      "name": "mushroom_grove_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "triangles": 12164,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 306044
+    },
+    {
+      "name": "mushroom_grove_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "triangles": 13384,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 374804
+    },
+    {
+      "name": "mushroom_grove_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 13384,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 374804
+    },
+    {
+      "name": "mushroom_grove_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 8396,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 202472
+    },
+    {
+      "name": "mushroom_grove_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 8636,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 241268
+    },
+    {
+      "name": "mushroom_grove_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 5524,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 145792
+    },
+    {
+      "name": "mushroom_grove_l04_super_stage01",
+      "level": 4,
+      "state": "super_stage01",
+      "triangles": 11244,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 269820
+    },
+    {
+      "name": "mushroom_grove_l04_super_stage02",
+      "level": 4,
+      "state": "super_stage02",
+      "triangles": 12700,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 351228
+    },
+    {
+      "name": "mushroom_grove_l04_super_stage03",
+      "level": 4,
+      "state": "super_stage03",
+      "triangles": 13880,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 415456
+    },
+    {
+      "name": "mushroom_grove_l04_super_stage04",
+      "level": 4,
+      "state": "super_stage04",
+      "triangles": 13880,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 415464
+    },
+    {
+      "name": "mushroom_grove_l04_super_stage05",
+      "level": 4,
+      "state": "super_stage05",
+      "triangles": 13880,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 415448
+    },
+    {
+      "name": "mushroom_grove_l04_super_stage06",
+      "level": 4,
+      "state": "super_stage06",
+      "triangles": 13880,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 415444
+    },
+    {
+      "name": "mushroom_grove_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "triangles": 11292,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 270692
+    },
+    {
+      "name": "mushroom_grove_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "triangles": 12628,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 339412
+    },
+    {
+      "name": "mushroom_grove_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "triangles": 13888,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 412428
+    },
+    {
+      "name": "mushroom_grove_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 13888,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 412428
+    },
+    {
+      "name": "mushroom_grove_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 8712,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "glb_bytes": 230896
+    },
+    {
+      "name": "mushroom_grove_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 9020,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 266808
+    },
+    {
+      "name": "mushroom_grove_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 5948,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 175756
+    },
+    {
+      "name": "mushroom_grove_l05_super_stage01",
+      "level": 5,
+      "state": "super_stage01",
+      "triangles": 11668,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 298896
+    },
+    {
+      "name": "mushroom_grove_l05_super_stage02",
+      "level": 5,
+      "state": "super_stage02",
+      "triangles": 13084,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 376032
+    },
+    {
+      "name": "mushroom_grove_l05_super_stage03",
+      "level": 5,
+      "state": "super_stage03",
+      "triangles": 14264,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 440284
+    },
+    {
+      "name": "mushroom_grove_l05_super_stage04",
+      "level": 5,
+      "state": "super_stage04",
+      "triangles": 14264,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 440256
+    },
+    {
+      "name": "mushroom_grove_l05_super_stage05",
+      "level": 5,
+      "state": "super_stage05",
+      "triangles": 14264,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 440228
+    },
+    {
+      "name": "mushroom_grove_l05_super_stage06",
+      "level": 5,
+      "state": "super_stage06",
+      "triangles": 14264,
+      "alpha_bounds": [
+        117,
+        181,
+        396,
+        366
+      ],
+      "glb_bytes": 440252
+    },
+    {
+      "name": "mushroom_grove_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "triangles": 14932,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 339632
+    },
+    {
+      "name": "mushroom_grove_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "triangles": 16464,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 416964
+    },
+    {
+      "name": "mushroom_grove_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "triangles": 17332,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 472908
+    },
+    {
+      "name": "mushroom_grove_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 17332,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 472920
+    },
+    {
+      "name": "mushroom_grove_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 12296,
+      "alpha_bounds": [
+        117,
+        183,
+        396,
+        366
+      ],
+      "glb_bytes": 295964
+    },
+    {
+      "name": "mushroom_grove_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 12800,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 340852
+    },
+    {
+      "name": "mushroom_grove_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 8864,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 222788
+    },
+    {
+      "name": "mushroom_grove_l06_super_stage01",
+      "level": 6,
+      "state": "super_stage01",
+      "triangles": 15348,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 372152
+    },
+    {
+      "name": "mushroom_grove_l06_super_stage02",
+      "level": 6,
+      "state": "super_stage02",
+      "triangles": 17000,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 462168
+    },
+    {
+      "name": "mushroom_grove_l06_super_stage03",
+      "level": 6,
+      "state": "super_stage03",
+      "triangles": 17708,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 500724
+    },
+    {
+      "name": "mushroom_grove_l06_super_stage04",
+      "level": 6,
+      "state": "super_stage04",
+      "triangles": 17708,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 500720
+    },
+    {
+      "name": "mushroom_grove_l06_super_stage05",
+      "level": 6,
+      "state": "super_stage05",
+      "triangles": 17708,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 500672
+    },
+    {
+      "name": "mushroom_grove_l06_super_stage06",
+      "level": 6,
+      "state": "super_stage06",
+      "triangles": 17708,
+      "alpha_bounds": [
+        117,
+        165,
+        396,
+        366
+      ],
+      "glb_bytes": 500664
+    },
+    {
+      "name": "mushroom_grove_l07_stage01",
+      "level": 7,
+      "state": "stage01",
+      "triangles": 17364,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 374420
+    },
+    {
+      "name": "mushroom_grove_l07_stage02",
+      "level": 7,
+      "state": "stage02",
+      "triangles": 18976,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 460220
+    },
+    {
+      "name": "mushroom_grove_l07_stage03",
+      "level": 7,
+      "state": "stage03",
+      "triangles": 19844,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 516100
+    },
+    {
+      "name": "mushroom_grove_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 19844,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 516100
+    },
+    {
+      "name": "mushroom_grove_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 14952,
+      "alpha_bounds": [
+        117,
+        178,
+        396,
+        366
+      ],
+      "glb_bytes": 334088
+    },
+    {
+      "name": "mushroom_grove_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 15096,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 381400
+    },
+    {
+      "name": "mushroom_grove_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "triangles": 10524,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 246584
+    },
+    {
+      "name": "mushroom_grove_l07_super_stage01",
+      "level": 7,
+      "state": "super_stage01",
+      "triangles": 17908,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 410272
+    },
+    {
+      "name": "mushroom_grove_l07_super_stage02",
+      "level": 7,
+      "state": "super_stage02",
+      "triangles": 19560,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 500256
+    },
+    {
+      "name": "mushroom_grove_l07_super_stage03",
+      "level": 7,
+      "state": "super_stage03",
+      "triangles": 20268,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 538808
+    },
+    {
+      "name": "mushroom_grove_l07_super_stage04",
+      "level": 7,
+      "state": "super_stage04",
+      "triangles": 20268,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 538816
+    },
+    {
+      "name": "mushroom_grove_l07_super_stage05",
+      "level": 7,
+      "state": "super_stage05",
+      "triangles": 20268,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 538764
+    },
+    {
+      "name": "mushroom_grove_l07_super_stage06",
+      "level": 7,
+      "state": "super_stage06",
+      "triangles": 20268,
+      "alpha_bounds": [
+        117,
+        160,
+        396,
+        366
+      ],
+      "glb_bytes": 538800
+    },
+    {
+      "name": "mushroom_grove_l08_stage01",
+      "level": 8,
+      "state": "stage01",
+      "triangles": 20064,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 432532
+    },
+    {
+      "name": "mushroom_grove_l08_stage02",
+      "level": 8,
+      "state": "stage02",
+      "triangles": 21716,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 522644
+    },
+    {
+      "name": "mushroom_grove_l08_stage03",
+      "level": 8,
+      "state": "stage03",
+      "triangles": 22504,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 570272
+    },
+    {
+      "name": "mushroom_grove_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 22504,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 570328
+    },
+    {
+      "name": "mushroom_grove_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 17484,
+      "alpha_bounds": [
+        117,
+        177,
+        396,
+        366
+      ],
+      "glb_bytes": 383960
+    },
+    {
+      "name": "mushroom_grove_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 17372,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 424300
+    },
+    {
+      "name": "mushroom_grove_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "triangles": 12692,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 288156
+    },
+    {
+      "name": "mushroom_grove_l08_super_stage01",
+      "level": 8,
+      "state": "super_stage01",
+      "triangles": 20568,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 463908
+    },
+    {
+      "name": "mushroom_grove_l08_super_stage02",
+      "level": 8,
+      "state": "super_stage02",
+      "triangles": 22220,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 553864
+    },
+    {
+      "name": "mushroom_grove_l08_super_stage03",
+      "level": 8,
+      "state": "super_stage03",
+      "triangles": 22928,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 592456
+    },
+    {
+      "name": "mushroom_grove_l08_super_stage04",
+      "level": 8,
+      "state": "super_stage04",
+      "triangles": 22928,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 592432
+    },
+    {
+      "name": "mushroom_grove_l08_super_stage05",
+      "level": 8,
+      "state": "super_stage05",
+      "triangles": 22928,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 592452
+    },
+    {
+      "name": "mushroom_grove_l08_super_stage06",
+      "level": 8,
+      "state": "super_stage06",
+      "triangles": 22928,
+      "alpha_bounds": [
+        117,
+        166,
+        396,
+        366
+      ],
+      "glb_bytes": 592488
+    },
+    {
+      "name": "mushroom_grove_l09_stage01",
+      "level": 9,
+      "state": "stage01",
+      "triangles": 21520,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 474368
+    },
+    {
+      "name": "mushroom_grove_l09_stage02",
+      "level": 9,
+      "state": "stage02",
+      "triangles": 23056,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 564420
+    },
+    {
+      "name": "mushroom_grove_l09_stage03",
+      "level": 9,
+      "state": "stage03",
+      "triangles": 23764,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 603320
+    },
+    {
+      "name": "mushroom_grove_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 23764,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 603316
+    },
+    {
+      "name": "mushroom_grove_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 18576,
+      "alpha_bounds": [
+        117,
+        172,
+        396,
+        366
+      ],
+      "glb_bytes": 417228
+    },
+    {
+      "name": "mushroom_grove_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 18328,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 455276
+    },
+    {
+      "name": "mushroom_grove_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "triangles": 13440,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 307116
+    },
+    {
+      "name": "mushroom_grove_l09_super_stage01",
+      "level": 9,
+      "state": "super_stage01",
+      "triangles": 22064,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 509936
+    },
+    {
+      "name": "mushroom_grove_l09_super_stage02",
+      "level": 9,
+      "state": "super_stage02",
+      "triangles": 23480,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 587080
+    },
+    {
+      "name": "mushroom_grove_l09_super_stage03",
+      "level": 9,
+      "state": "super_stage03",
+      "triangles": 24188,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 625656
+    },
+    {
+      "name": "mushroom_grove_l09_super_stage04",
+      "level": 9,
+      "state": "super_stage04",
+      "triangles": 24188,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 625612
+    },
+    {
+      "name": "mushroom_grove_l09_super_stage05",
+      "level": 9,
+      "state": "super_stage05",
+      "triangles": 24188,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 625656
+    },
+    {
+      "name": "mushroom_grove_l09_super_stage06",
+      "level": 9,
+      "state": "super_stage06",
+      "triangles": 24188,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 625672
+    },
+    {
+      "name": "mushroom_grove_l10_stage01",
+      "level": 10,
+      "state": "stage01",
+      "triangles": 24520,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 574524
+    },
+    {
+      "name": "mushroom_grove_l10_stage02",
+      "level": 10,
+      "state": "stage02",
+      "triangles": 26016,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 660296
+    },
+    {
+      "name": "mushroom_grove_l10_stage03",
+      "level": 10,
+      "state": "stage03",
+      "triangles": 26724,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 699152
+    },
+    {
+      "name": "mushroom_grove_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 26724,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 699152
+    },
+    {
+      "name": "mushroom_grove_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 21076,
+      "alpha_bounds": [
+        117,
+        161,
+        396,
+        366
+      ],
+      "glb_bytes": 475952
+    },
+    {
+      "name": "mushroom_grove_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 20920,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 528060
+    },
+    {
+      "name": "mushroom_grove_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "triangles": 15992,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 375500
+    },
+    {
+      "name": "mushroom_grove_l10_super_stage01",
+      "level": 10,
+      "state": "super_stage01",
+      "triangles": 25024,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 605592
+    },
+    {
+      "name": "mushroom_grove_l10_super_stage02",
+      "level": 10,
+      "state": "super_stage02",
+      "triangles": 26440,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 682736
+    },
+    {
+      "name": "mushroom_grove_l10_super_stage03",
+      "level": 10,
+      "state": "super_stage03",
+      "triangles": 27148,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 721276
+    },
+    {
+      "name": "mushroom_grove_l10_super_stage04",
+      "level": 10,
+      "state": "super_stage04",
+      "triangles": 27148,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 721260
+    },
+    {
+      "name": "mushroom_grove_l10_super_stage05",
+      "level": 10,
+      "state": "super_stage05",
+      "triangles": 27148,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 721256
+    },
+    {
+      "name": "mushroom_grove_l10_super_stage06",
+      "level": 10,
+      "state": "super_stage06",
+      "triangles": 27148,
+      "alpha_bounds": [
+        117,
+        149,
+        396,
+        366
+      ],
+      "glb_bytes": 721272
+    }
+  ]
+}

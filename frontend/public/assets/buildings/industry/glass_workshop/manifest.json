@@ -1,0 +1,1224 @@
+{
+  "asset_id": "glass_workshop",
+  "display_name": "Стекольная мастерская",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "idle_no_input",
+    "idle_no_fuel",
+    "ready",
+    "ruined"
+  ],
+  "source_blend": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_levels.glb",
+  "style_reference": "dugout, mine, sand_quarry, town_hall Real City bright stylized mid-poly",
+  "material_map": {
+    "доски": "навес, стойки, верстак, ящики и строительные леса",
+    "камень": "основание, плашки рабочей площадки и ранний фундамент печи",
+    "песок": "мешки, песчаный бункер и россыпь на земле",
+    "глина": "тело ранней печи и недостроенный огнеупорный блок",
+    "каменные блоки": "усиленный фундамент и контрольная полка уровня 3",
+    "инструменты": "щипцы, выдувная труба и инструментальная рейка",
+    "кирпичи": "кирпичный корпус печи уровней 4-7",
+    "медные детали": "тепловые трубы, вентиль и датчик температуры",
+    "механизмы": "механическая подача песка и шестерни",
+    "железные слитки": "стойки, корпус подачи, крепеж и защитные ручки",
+    "железобетон": "позднее основание и закрытый корпус печи",
+    "усиленные балки": "стальные стропила и крышные усиления",
+    "звездное стекло": "оптические линзы и калибровочные образцы"
+  },
+  "items": [
+    {
+      "id": "glass_workshop_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_active.png",
+      "triangles": 2860,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_construction.png",
+      "triangles": 2108,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_damaged.png",
+      "triangles": 3344,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l01_idle_no_input",
+      "level": 1,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_idle_no_input.png",
+      "triangles": 2252,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l01_idle_no_fuel",
+      "level": 1,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_idle_no_fuel.png",
+      "triangles": 2784,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l01_ready",
+      "level": 1,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_ready.png",
+      "triangles": 3300,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l01_ruined.png",
+      "triangles": 2836,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_active.png",
+      "triangles": 3528,
+      "alpha_bounds": [
+        117,
+        192,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_construction.png",
+      "triangles": 2480,
+      "alpha_bounds": [
+        117,
+        200,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_damaged.png",
+      "triangles": 4100,
+      "alpha_bounds": [
+        117,
+        210,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_idle_no_input",
+      "level": 2,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_idle_no_input.png",
+      "triangles": 2768,
+      "alpha_bounds": [
+        117,
+        192,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_idle_no_fuel",
+      "level": 2,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_idle_no_fuel.png",
+      "triangles": 3452,
+      "alpha_bounds": [
+        117,
+        192,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_ready",
+      "level": 2,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_ready.png",
+      "triangles": 4100,
+      "alpha_bounds": [
+        117,
+        192,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l02_ruined.png",
+      "triangles": 3056,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_active.png",
+      "triangles": 4472,
+      "alpha_bounds": [
+        117,
+        188,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_construction.png",
+      "triangles": 2632,
+      "alpha_bounds": [
+        117,
+        200,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_damaged.png",
+      "triangles": 5088,
+      "alpha_bounds": [
+        117,
+        208,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_idle_no_input",
+      "level": 3,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_idle_no_input.png",
+      "triangles": 3560,
+      "alpha_bounds": [
+        117,
+        188,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_idle_no_fuel",
+      "level": 3,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_idle_no_fuel.png",
+      "triangles": 4396,
+      "alpha_bounds": [
+        117,
+        188,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_ready",
+      "level": 3,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_ready.png",
+      "triangles": 5176,
+      "alpha_bounds": [
+        117,
+        188,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l03_ruined.png",
+      "triangles": 3584,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_active.png",
+      "triangles": 4844,
+      "alpha_bounds": [
+        117,
+        187,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_construction.png",
+      "triangles": 2784,
+      "alpha_bounds": [
+        117,
+        198,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_damaged.png",
+      "triangles": 5548,
+      "alpha_bounds": [
+        117,
+        205,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_idle_no_input",
+      "level": 4,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_idle_no_input.png",
+      "triangles": 3780,
+      "alpha_bounds": [
+        117,
+        187,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_idle_no_fuel",
+      "level": 4,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_idle_no_fuel.png",
+      "triangles": 4768,
+      "alpha_bounds": [
+        117,
+        187,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_ready",
+      "level": 4,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_ready.png",
+      "triangles": 5680,
+      "alpha_bounds": [
+        117,
+        187,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l04_ruined.png",
+      "triangles": 3804,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_active.png",
+      "triangles": 5128,
+      "alpha_bounds": [
+        117,
+        186,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_construction.png",
+      "triangles": 2980,
+      "alpha_bounds": [
+        117,
+        194,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_damaged.png",
+      "triangles": 5920,
+      "alpha_bounds": [
+        117,
+        204,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_idle_no_input",
+      "level": 5,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_idle_no_input.png",
+      "triangles": 3912,
+      "alpha_bounds": [
+        117,
+        186,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_idle_no_fuel",
+      "level": 5,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_idle_no_fuel.png",
+      "triangles": 5052,
+      "alpha_bounds": [
+        117,
+        186,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_ready",
+      "level": 5,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_ready.png",
+      "triangles": 6096,
+      "alpha_bounds": [
+        117,
+        186,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l05_ruined.png",
+      "triangles": 4024,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_active.png",
+      "triangles": 5444,
+      "alpha_bounds": [
+        117,
+        184,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_construction.png",
+      "triangles": 2980,
+      "alpha_bounds": [
+        117,
+        190,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_damaged.png",
+      "triangles": 6236,
+      "alpha_bounds": [
+        117,
+        200,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_idle_no_input",
+      "level": 6,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_idle_no_input.png",
+      "triangles": 4184,
+      "alpha_bounds": [
+        117,
+        184,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_idle_no_fuel",
+      "level": 6,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_idle_no_fuel.png",
+      "triangles": 5192,
+      "alpha_bounds": [
+        117,
+        184,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_ready",
+      "level": 6,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_ready.png",
+      "triangles": 6412,
+      "alpha_bounds": [
+        117,
+        184,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l06_ruined.png",
+      "triangles": 4024,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_active.png",
+      "triangles": 5532,
+      "alpha_bounds": [
+        117,
+        183,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_construction.png",
+      "triangles": 2980,
+      "alpha_bounds": [
+        117,
+        187,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_damaged.png",
+      "triangles": 6324,
+      "alpha_bounds": [
+        117,
+        197,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_idle_no_input",
+      "level": 7,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_idle_no_input.png",
+      "triangles": 4272,
+      "alpha_bounds": [
+        117,
+        183,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_idle_no_fuel",
+      "level": 7,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_idle_no_fuel.png",
+      "triangles": 5280,
+      "alpha_bounds": [
+        117,
+        183,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_ready",
+      "level": 7,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_ready.png",
+      "triangles": 6500,
+      "alpha_bounds": [
+        117,
+        183,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l07_ruined.png",
+      "triangles": 4112,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_active.png",
+      "triangles": 5708,
+      "alpha_bounds": [
+        117,
+        181,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_construction.png",
+      "triangles": 3024,
+      "alpha_bounds": [
+        117,
+        183,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_damaged.png",
+      "triangles": 6456,
+      "alpha_bounds": [
+        117,
+        193,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_idle_no_input",
+      "level": 8,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_idle_no_input.png",
+      "triangles": 4448,
+      "alpha_bounds": [
+        117,
+        181,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_idle_no_fuel",
+      "level": 8,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_idle_no_fuel.png",
+      "triangles": 5456,
+      "alpha_bounds": [
+        117,
+        181,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_ready",
+      "level": 8,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_ready.png",
+      "triangles": 6676,
+      "alpha_bounds": [
+        117,
+        181,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l08_ruined.png",
+      "triangles": 4112,
+      "alpha_bounds": [
+        117,
+        220,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_active.png",
+      "triangles": 5884,
+      "alpha_bounds": [
+        117,
+        179,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_construction.png",
+      "triangles": 3024,
+      "alpha_bounds": [
+        117,
+        179,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_damaged.png",
+      "triangles": 6632,
+      "alpha_bounds": [
+        117,
+        189,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_idle_no_input",
+      "level": 9,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_idle_no_input.png",
+      "triangles": 4624,
+      "alpha_bounds": [
+        117,
+        179,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_idle_no_fuel",
+      "level": 9,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_idle_no_fuel.png",
+      "triangles": 5632,
+      "alpha_bounds": [
+        117,
+        179,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_ready",
+      "level": 9,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_ready.png",
+      "triangles": 6984,
+      "alpha_bounds": [
+        117,
+        179,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l09_ruined.png",
+      "triangles": 4288,
+      "alpha_bounds": [
+        117,
+        219,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_active",
+      "level": 10,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_active.png",
+      "triangles": 6076,
+      "alpha_bounds": [
+        117,
+        175,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_construction.png",
+      "triangles": 3024,
+      "alpha_bounds": [
+        117,
+        175,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_damaged.png",
+      "triangles": 6824,
+      "alpha_bounds": [
+        117,
+        186,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_idle_no_input",
+      "level": 10,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_idle_no_input.png",
+      "triangles": 4816,
+      "alpha_bounds": [
+        117,
+        175,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_idle_no_fuel",
+      "level": 10,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_idle_no_fuel.png",
+      "triangles": 5824,
+      "alpha_bounds": [
+        117,
+        175,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_ready",
+      "level": 10,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_ready.png",
+      "triangles": 7176,
+      "alpha_bounds": [
+        117,
+        175,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l10_ruined.png",
+      "triangles": 4288,
+      "alpha_bounds": [
+        117,
+        219,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_active",
+      "level": 11,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_active.png",
+      "triangles": 6208,
+      "alpha_bounds": [
+        117,
+        171,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_construction",
+      "level": 11,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_construction.png",
+      "triangles": 3024,
+      "alpha_bounds": [
+        117,
+        171,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_damaged",
+      "level": 11,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_damaged.png",
+      "triangles": 6956,
+      "alpha_bounds": [
+        117,
+        182,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_idle_no_input",
+      "level": 11,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_idle_no_input.png",
+      "triangles": 4948,
+      "alpha_bounds": [
+        117,
+        171,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_idle_no_fuel",
+      "level": 11,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_idle_no_fuel.png",
+      "triangles": 5956,
+      "alpha_bounds": [
+        117,
+        171,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_ready",
+      "level": 11,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_ready.png",
+      "triangles": 7440,
+      "alpha_bounds": [
+        117,
+        171,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l11_ruined",
+      "level": 11,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l11_ruined.png",
+      "triangles": 4288,
+      "alpha_bounds": [
+        117,
+        219,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_active",
+      "level": 12,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_active.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_active.png",
+      "triangles": 6208,
+      "alpha_bounds": [
+        117,
+        168,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_construction",
+      "level": 12,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_construction.png",
+      "triangles": 3024,
+      "alpha_bounds": [
+        117,
+        168,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_damaged",
+      "level": 12,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_damaged.png",
+      "triangles": 6956,
+      "alpha_bounds": [
+        117,
+        178,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_idle_no_input",
+      "level": 12,
+      "state": "idle_no_input",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_idle_no_input.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_idle_no_input.png",
+      "triangles": 4948,
+      "alpha_bounds": [
+        117,
+        168,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_idle_no_fuel",
+      "level": 12,
+      "state": "idle_no_fuel",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_idle_no_fuel.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_idle_no_fuel.png",
+      "triangles": 5956,
+      "alpha_bounds": [
+        117,
+        168,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_ready",
+      "level": 12,
+      "state": "ready",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_ready.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_ready.png",
+      "triangles": 7440,
+      "alpha_bounds": [
+        117,
+        168,
+        395,
+        368
+      ]
+    },
+    {
+      "id": "glass_workshop_l12_ruined",
+      "level": 12,
+      "state": "ruined",
+      "glb": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_ruined.glb",
+      "png": "frontend/public/assets/buildings/industry/glass_workshop/glass_workshop_l12_ruined.png",
+      "triangles": 4288,
+      "alpha_bounds": [
+        117,
+        219,
+        395,
+        368
+      ]
+    }
+  ]
+}

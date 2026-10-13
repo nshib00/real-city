@@ -1,0 +1,3973 @@
+{
+  "glass_workshop_l01_active": {
+    "level": 1,
+    "state": "active",
+    "triangles": 2860,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.158
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l01_construction": {
+    "level": 1,
+    "state": "construction",
+    "triangles": 2108,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.169
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l01_damaged": {
+    "level": 1,
+    "state": "damaged",
+    "triangles": 3344,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.158
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l01_idle_no_input": {
+    "level": 1,
+    "state": "idle_no_input",
+    "triangles": 2252,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.158
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l01_idle_no_fuel": {
+    "level": 1,
+    "state": "idle_no_fuel",
+    "triangles": 2784,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.158
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l01_ready": {
+    "level": 1,
+    "state": "ready",
+    "triangles": 3300,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.158
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l01_ruined": {
+    "level": 1,
+    "state": "ruined",
+    "triangles": 2836,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.712
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_active": {
+    "level": 2,
+    "state": "active",
+    "triangles": 3528,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.625
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      192,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_construction": {
+    "level": 2,
+    "state": "construction",
+    "triangles": 2480,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.3378
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      200,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_damaged": {
+    "level": 2,
+    "state": "damaged",
+    "triangles": 4100,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.625
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      210,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_idle_no_input": {
+    "level": 2,
+    "state": "idle_no_input",
+    "triangles": 2768,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.625
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      192,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_idle_no_fuel": {
+    "level": 2,
+    "state": "idle_no_fuel",
+    "triangles": 3452,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.625
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      192,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_ready": {
+    "level": 2,
+    "state": "ready",
+    "triangles": 4100,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.625
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      192,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l02_ruined": {
+    "level": 2,
+    "state": "ruined",
+    "triangles": 3056,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.834
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_active": {
+    "level": 3,
+    "state": "active",
+    "triangles": 4472,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.6775
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      188,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_construction": {
+    "level": 3,
+    "state": "construction",
+    "triangles": 2632,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.34
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_clay",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      200,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_damaged": {
+    "level": 3,
+    "state": "damaged",
+    "triangles": 5088,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.665
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      208,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_idle_no_input": {
+    "level": 3,
+    "state": "idle_no_input",
+    "triangles": 3560,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.6775
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      188,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_idle_no_fuel": {
+    "level": 3,
+    "state": "idle_no_fuel",
+    "triangles": 4396,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.6775
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      188,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_ready": {
+    "level": 3,
+    "state": "ready",
+    "triangles": 5176,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.6775
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      188,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l03_ruined": {
+    "level": 3,
+    "state": "ruined",
+    "triangles": 3584,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.834
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_active": {
+    "level": 4,
+    "state": "active",
+    "triangles": 4844,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.705
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      187,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_construction": {
+    "level": 4,
+    "state": "construction",
+    "triangles": 2784,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.42
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      198,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_damaged": {
+    "level": 4,
+    "state": "damaged",
+    "triangles": 5548,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.705
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      205,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_idle_no_input": {
+    "level": 4,
+    "state": "idle_no_input",
+    "triangles": 3780,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.705
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      187,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_idle_no_fuel": {
+    "level": 4,
+    "state": "idle_no_fuel",
+    "triangles": 4768,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.705
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      187,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_ready": {
+    "level": 4,
+    "state": "ready",
+    "triangles": 5680,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.705
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      187,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l04_ruined": {
+    "level": 4,
+    "state": "ruined",
+    "triangles": 3804,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.869
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_active": {
+    "level": 5,
+    "state": "active",
+    "triangles": 5128,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.745
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_construction": {
+    "level": 5,
+    "state": "construction",
+    "triangles": 2980,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.5
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      194,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_damaged": {
+    "level": 5,
+    "state": "damaged",
+    "triangles": 5920,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.745
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      204,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_idle_no_input": {
+    "level": 5,
+    "state": "idle_no_input",
+    "triangles": 3912,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.745
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_idle_no_fuel": {
+    "level": 5,
+    "state": "idle_no_fuel",
+    "triangles": 5052,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.745
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_ready": {
+    "level": 5,
+    "state": "ready",
+    "triangles": 6096,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.745
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l05_ruined": {
+    "level": 5,
+    "state": "ruined",
+    "triangles": 4024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.904
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_active": {
+    "level": 6,
+    "state": "active",
+    "triangles": 5444,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.785
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      184,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_construction": {
+    "level": 6,
+    "state": "construction",
+    "triangles": 2980,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.58
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      190,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_damaged": {
+    "level": 6,
+    "state": "damaged",
+    "triangles": 6236,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.785
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      200,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_idle_no_input": {
+    "level": 6,
+    "state": "idle_no_input",
+    "triangles": 4184,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.785
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      184,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_idle_no_fuel": {
+    "level": 6,
+    "state": "idle_no_fuel",
+    "triangles": 5192,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.785
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      184,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_ready": {
+    "level": 6,
+    "state": "ready",
+    "triangles": 6412,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.785
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      184,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l06_ruined": {
+    "level": 6,
+    "state": "ruined",
+    "triangles": 4024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.939
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_active": {
+    "level": 7,
+    "state": "active",
+    "triangles": 5532,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.825
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_construction": {
+    "level": 7,
+    "state": "construction",
+    "triangles": 2980,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.66
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      187,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_damaged": {
+    "level": 7,
+    "state": "damaged",
+    "triangles": 6324,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.825
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      197,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_idle_no_input": {
+    "level": 7,
+    "state": "idle_no_input",
+    "triangles": 4272,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.825
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_idle_no_fuel": {
+    "level": 7,
+    "state": "idle_no_fuel",
+    "triangles": 5280,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.825
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_ready": {
+    "level": 7,
+    "state": "ready",
+    "triangles": 6500,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.825
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l07_ruined": {
+    "level": 7,
+    "state": "ruined",
+    "triangles": 4112,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        0.974
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_active": {
+    "level": 8,
+    "state": "active",
+    "triangles": 5708,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      181,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_construction": {
+    "level": 8,
+    "state": "construction",
+    "triangles": 3024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.74
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      183,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_damaged": {
+    "level": 8,
+    "state": "damaged",
+    "triangles": 6456,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      193,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_idle_no_input": {
+    "level": 8,
+    "state": "idle_no_input",
+    "triangles": 4448,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      181,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_idle_no_fuel": {
+    "level": 8,
+    "state": "idle_no_fuel",
+    "triangles": 5456,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      181,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_ready": {
+    "level": 8,
+    "state": "ready",
+    "triangles": 6676,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      181,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l08_ruined": {
+    "level": 8,
+    "state": "ruined",
+    "triangles": 4112,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.009
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      220,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_active": {
+    "level": 9,
+    "state": "active",
+    "triangles": 5884,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      179,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_construction": {
+    "level": 9,
+    "state": "construction",
+    "triangles": 3024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.82
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      179,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_damaged": {
+    "level": 9,
+    "state": "damaged",
+    "triangles": 6632,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      189,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_idle_no_input": {
+    "level": 9,
+    "state": "idle_no_input",
+    "triangles": 4624,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      179,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_idle_no_fuel": {
+    "level": 9,
+    "state": "idle_no_fuel",
+    "triangles": 5632,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      179,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_ready": {
+    "level": 9,
+    "state": "ready",
+    "triangles": 6984,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.865
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      179,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l09_ruined": {
+    "level": 9,
+    "state": "ruined",
+    "triangles": 4288,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.044
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      219,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_active": {
+    "level": 10,
+    "state": "active",
+    "triangles": 6076,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.9
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      175,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_construction": {
+    "level": 10,
+    "state": "construction",
+    "triangles": 3024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.9
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      175,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_damaged": {
+    "level": 10,
+    "state": "damaged",
+    "triangles": 6824,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.9
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      186,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_idle_no_input": {
+    "level": 10,
+    "state": "idle_no_input",
+    "triangles": 4816,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.9
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      175,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_idle_no_fuel": {
+    "level": 10,
+    "state": "idle_no_fuel",
+    "triangles": 5824,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.9
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      175,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_ready": {
+    "level": 10,
+    "state": "ready",
+    "triangles": 7176,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.9
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      175,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l10_ruined": {
+    "level": 10,
+    "state": "ruined",
+    "triangles": 4288,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.044
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      219,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_active": {
+    "level": 11,
+    "state": "active",
+    "triangles": 6208,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.98
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      171,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_construction": {
+    "level": 11,
+    "state": "construction",
+    "triangles": 3024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.98
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      171,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_damaged": {
+    "level": 11,
+    "state": "damaged",
+    "triangles": 6956,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.98
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      182,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_idle_no_input": {
+    "level": 11,
+    "state": "idle_no_input",
+    "triangles": 4948,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.98
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      171,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_idle_no_fuel": {
+    "level": 11,
+    "state": "idle_no_fuel",
+    "triangles": 5956,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.98
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      171,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_ready": {
+    "level": 11,
+    "state": "ready",
+    "triangles": 7440,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.98
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      171,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l11_ruined": {
+    "level": 11,
+    "state": "ruined",
+    "triangles": 4288,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.044
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      219,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_active": {
+    "level": 12,
+    "state": "active",
+    "triangles": 6208,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        2.06
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      168,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_construction": {
+    "level": 12,
+    "state": "construction",
+    "triangles": 3024,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        2.06
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brick",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      168,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_damaged": {
+    "level": 12,
+    "state": "damaged",
+    "triangles": 6956,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        2.06
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_canvas",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      178,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_idle_no_input": {
+    "level": 12,
+    "state": "idle_no_input",
+    "triangles": 4948,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        2.06
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      168,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_idle_no_fuel": {
+    "level": 12,
+    "state": "idle_no_fuel",
+    "triangles": 5956,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        2.06
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat_dim",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      168,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_ready": {
+    "level": 12,
+    "state": "ready",
+    "triangles": 7440,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        2.06
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_brass",
+      "MAT_glass_workshop_coal",
+      "MAT_glass_workshop_concrete",
+      "MAT_glass_workshop_copper",
+      "MAT_glass_workshop_glass_cyan",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_heat",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_premium_wood",
+      "MAT_glass_workshop_reinforced_concrete",
+      "MAT_glass_workshop_rope",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_sand_light",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_steel",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark",
+      "MAT_glass_workshop_wood_pale"
+    ],
+    "alpha_bounds": [
+      117,
+      168,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  },
+  "glass_workshop_l12_ruined": {
+    "level": 12,
+    "state": "ruined",
+    "triangles": 4288,
+    "bounds": [
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -1.8,
+        1.8
+      ],
+      [
+        -0.15,
+        1.044
+      ]
+    ],
+    "materials": [
+      "MAT_glass_base_earth",
+      "MAT_glass_base_grass",
+      "MAT_glass_base_stone",
+      "MAT_glass_workshop_char",
+      "MAT_glass_workshop_glass_broken",
+      "MAT_glass_workshop_glass_edge",
+      "MAT_glass_workshop_iron",
+      "MAT_glass_workshop_iron_dark",
+      "MAT_glass_workshop_packed_dust",
+      "MAT_glass_workshop_sand",
+      "MAT_glass_workshop_star_glass",
+      "MAT_glass_workshop_stone_light",
+      "MAT_glass_workshop_stone_shadow",
+      "MAT_glass_workshop_wood_dark"
+    ],
+    "alpha_bounds": [
+      117,
+      219,
+      395,
+      368
+    ],
+    "style": "bright fantasy stylized mid-poly Blender"
+  }
+}

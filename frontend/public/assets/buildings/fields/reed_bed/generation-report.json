@@ -1,0 +1,1741 @@
+{
+  "asset": "reed_bed",
+  "pipeline": "blender_mcp_midpoly",
+  "blend": "reed_bed_l01_l10.blend",
+  "count": 130,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "png_size": [
+    512,
+    384
+  ],
+  "anchor": [
+    256,
+    292
+  ],
+  "style": "Aeolian bright fantasy mid-poly",
+  "notes": [
+    "boat-shaped wet clay reed basin, distinct from rectangular seed/flax beds and thick sugar cane bed",
+    "level upgrades raise the narrow clay walls and add ribbed posts, water gauges, plank bridges, brick patches, stone feet, iron bands, blue salt and light-crystal markers",
+    "construction/damaged/ruined keep the same terrain ground and change only basin/decor/crop geometry",
+    "super stages add colder reed highlights, blue salt dew nodes and protected sample tray",
+    "resource visibility by ids: wood legacy early stakes; planks and premium_planks bridges/rails; clay basin; rope ties; brick patches; fabric water marks; stone_block feet; iron_ingot bands; blue_salt dew; light_crystal water markers"
+  ],
+  "assets": [
+    {
+      "name": "reed_bed_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "triangles": 3520,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 160716
+    },
+    {
+      "name": "reed_bed_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "triangles": 4416,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 201540
+    },
+    {
+      "name": "reed_bed_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "triangles": 5688,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "glb_bytes": 263044
+    },
+    {
+      "name": "reed_bed_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 5688,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "glb_bytes": 263052
+    },
+    {
+      "name": "reed_bed_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 3228,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 138836
+    },
+    {
+      "name": "reed_bed_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 4420,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 163796
+    },
+    {
+      "name": "reed_bed_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 3436,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 116528
+    },
+    {
+      "name": "reed_bed_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "triangles": 4200,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 192816
+    },
+    {
+      "name": "reed_bed_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "triangles": 5248,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 241256
+    },
+    {
+      "name": "reed_bed_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "triangles": 6648,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "glb_bytes": 308624
+    },
+    {
+      "name": "reed_bed_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "triangles": 8208,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 380152
+    },
+    {
+      "name": "reed_bed_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "triangles": 10024,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "glb_bytes": 464084
+    },
+    {
+      "name": "reed_bed_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "triangles": 10920,
+      "alpha_bounds": [
+        117,
+        198,
+        396,
+        366
+      ],
+      "glb_bytes": 504716
+    },
+    {
+      "name": "reed_bed_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "triangles": 5240,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 208400
+    },
+    {
+      "name": "reed_bed_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "triangles": 6264,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 254680
+    },
+    {
+      "name": "reed_bed_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "triangles": 7688,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "glb_bytes": 324192
+    },
+    {
+      "name": "reed_bed_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 7688,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "glb_bytes": 324192
+    },
+    {
+      "name": "reed_bed_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 4312,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 173328
+    },
+    {
+      "name": "reed_bed_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 5736,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 186800
+    },
+    {
+      "name": "reed_bed_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 3900,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 124280
+    },
+    {
+      "name": "reed_bed_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "triangles": 6048,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 246340
+    },
+    {
+      "name": "reed_bed_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "triangles": 7224,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 300344
+    },
+    {
+      "name": "reed_bed_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "triangles": 8776,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "glb_bytes": 375656
+    },
+    {
+      "name": "reed_bed_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "triangles": 10464,
+      "alpha_bounds": [
+        117,
+        210,
+        396,
+        366
+      ],
+      "glb_bytes": 452992
+    },
+    {
+      "name": "reed_bed_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "triangles": 11360,
+      "alpha_bounds": [
+        117,
+        202,
+        396,
+        366
+      ],
+      "glb_bytes": 493788
+    },
+    {
+      "name": "reed_bed_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "triangles": 12256,
+      "alpha_bounds": [
+        117,
+        196,
+        396,
+        366
+      ],
+      "glb_bytes": 535080
+    },
+    {
+      "name": "reed_bed_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "triangles": 5480,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 212996
+    },
+    {
+      "name": "reed_bed_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "triangles": 6504,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 259644
+    },
+    {
+      "name": "reed_bed_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "triangles": 7928,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "glb_bytes": 328964
+    },
+    {
+      "name": "reed_bed_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 7928,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "glb_bytes": 328964
+    },
+    {
+      "name": "reed_bed_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 4312,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 173468
+    },
+    {
+      "name": "reed_bed_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 5976,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 191560
+    },
+    {
+      "name": "reed_bed_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 4140,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 128956
+    },
+    {
+      "name": "reed_bed_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "triangles": 6288,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 250928
+    },
+    {
+      "name": "reed_bed_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "triangles": 7464,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 305220
+    },
+    {
+      "name": "reed_bed_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "triangles": 9016,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "glb_bytes": 380340
+    },
+    {
+      "name": "reed_bed_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "triangles": 10704,
+      "alpha_bounds": [
+        117,
+        208,
+        396,
+        366
+      ],
+      "glb_bytes": 457756
+    },
+    {
+      "name": "reed_bed_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "triangles": 11600,
+      "alpha_bounds": [
+        117,
+        201,
+        396,
+        366
+      ],
+      "glb_bytes": 498732
+    },
+    {
+      "name": "reed_bed_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "triangles": 12496,
+      "alpha_bounds": [
+        117,
+        195,
+        396,
+        366
+      ],
+      "glb_bytes": 539888
+    },
+    {
+      "name": "reed_bed_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "triangles": 8448,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 283792
+    },
+    {
+      "name": "reed_bed_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "triangles": 9728,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 342508
+    },
+    {
+      "name": "reed_bed_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "triangles": 11432,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 425008
+    },
+    {
+      "name": "reed_bed_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 11432,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 425008
+    },
+    {
+      "name": "reed_bed_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 6416,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 233560
+    },
+    {
+      "name": "reed_bed_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 8416,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 240368
+    },
+    {
+      "name": "reed_bed_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 4688,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 137920
+    },
+    {
+      "name": "reed_bed_l04_super_stage01",
+      "level": 4,
+      "state": "super_stage01",
+      "triangles": 9256,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 321788
+    },
+    {
+      "name": "reed_bed_l04_super_stage02",
+      "level": 4,
+      "state": "super_stage02",
+      "triangles": 10688,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 388096
+    },
+    {
+      "name": "reed_bed_l04_super_stage03",
+      "level": 4,
+      "state": "super_stage03",
+      "triangles": 12520,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 476448
+    },
+    {
+      "name": "reed_bed_l04_super_stage04",
+      "level": 4,
+      "state": "super_stage04",
+      "triangles": 13544,
+      "alpha_bounds": [
+        117,
+        207,
+        396,
+        366
+      ],
+      "glb_bytes": 523120
+    },
+    {
+      "name": "reed_bed_l04_super_stage05",
+      "level": 4,
+      "state": "super_stage05",
+      "triangles": 14440,
+      "alpha_bounds": [
+        117,
+        199,
+        396,
+        366
+      ],
+      "glb_bytes": 563656
+    },
+    {
+      "name": "reed_bed_l04_super_stage06",
+      "level": 4,
+      "state": "super_stage06",
+      "triangles": 14440,
+      "alpha_bounds": [
+        117,
+        193,
+        396,
+        366
+      ],
+      "glb_bytes": 563972
+    },
+    {
+      "name": "reed_bed_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "triangles": 8696,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 296948
+    },
+    {
+      "name": "reed_bed_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "triangles": 9976,
+      "alpha_bounds": [
+        117,
+        220,
+        396,
+        366
+      ],
+      "glb_bytes": 355604
+    },
+    {
+      "name": "reed_bed_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "triangles": 11680,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "glb_bytes": 437496
+    },
+    {
+      "name": "reed_bed_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 11680,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "glb_bytes": 437492
+    },
+    {
+      "name": "reed_bed_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 6416,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 233620
+    },
+    {
+      "name": "reed_bed_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 8664,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 253532
+    },
+    {
+      "name": "reed_bed_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 4936,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 150984
+    },
+    {
+      "name": "reed_bed_l05_super_stage01",
+      "level": 5,
+      "state": "super_stage01",
+      "triangles": 9504,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 334952
+    },
+    {
+      "name": "reed_bed_l05_super_stage02",
+      "level": 5,
+      "state": "super_stage02",
+      "triangles": 10936,
+      "alpha_bounds": [
+        117,
+        220,
+        396,
+        366
+      ],
+      "glb_bytes": 401156
+    },
+    {
+      "name": "reed_bed_l05_super_stage03",
+      "level": 5,
+      "state": "super_stage03",
+      "triangles": 12768,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "glb_bytes": 489044
+    },
+    {
+      "name": "reed_bed_l05_super_stage04",
+      "level": 5,
+      "state": "super_stage04",
+      "triangles": 13792,
+      "alpha_bounds": [
+        117,
+        205,
+        396,
+        366
+      ],
+      "glb_bytes": 536532
+    },
+    {
+      "name": "reed_bed_l05_super_stage05",
+      "level": 5,
+      "state": "super_stage05",
+      "triangles": 14688,
+      "alpha_bounds": [
+        117,
+        197,
+        396,
+        366
+      ],
+      "glb_bytes": 577224
+    },
+    {
+      "name": "reed_bed_l05_super_stage06",
+      "level": 5,
+      "state": "super_stage06",
+      "triangles": 14688,
+      "alpha_bounds": [
+        117,
+        192,
+        396,
+        366
+      ],
+      "glb_bytes": 577008
+    },
+    {
+      "name": "reed_bed_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "triangles": 10112,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 335368
+    },
+    {
+      "name": "reed_bed_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "triangles": 11520,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "glb_bytes": 399876
+    },
+    {
+      "name": "reed_bed_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "triangles": 12584,
+      "alpha_bounds": [
+        117,
+        211,
+        396,
+        366
+      ],
+      "glb_bytes": 453404
+    },
+    {
+      "name": "reed_bed_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 12584,
+      "alpha_bounds": [
+        117,
+        211,
+        396,
+        366
+      ],
+      "glb_bytes": 453400
+    },
+    {
+      "name": "reed_bed_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 7468,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 263400
+    },
+    {
+      "name": "reed_bed_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 10148,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 287304
+    },
+    {
+      "name": "reed_bed_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 5192,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 158180
+    },
+    {
+      "name": "reed_bed_l06_super_stage01",
+      "level": 6,
+      "state": "super_stage01",
+      "triangles": 11048,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "glb_bytes": 378468
+    },
+    {
+      "name": "reed_bed_l06_super_stage02",
+      "level": 6,
+      "state": "super_stage02",
+      "triangles": 12608,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "glb_bytes": 450564
+    },
+    {
+      "name": "reed_bed_l06_super_stage03",
+      "level": 6,
+      "state": "super_stage03",
+      "triangles": 13800,
+      "alpha_bounds": [
+        117,
+        211,
+        396,
+        366
+      ],
+      "glb_bytes": 509924
+    },
+    {
+      "name": "reed_bed_l06_super_stage04",
+      "level": 6,
+      "state": "super_stage04",
+      "triangles": 14696,
+      "alpha_bounds": [
+        117,
+        204,
+        396,
+        366
+      ],
+      "glb_bytes": 551024
+    },
+    {
+      "name": "reed_bed_l06_super_stage05",
+      "level": 6,
+      "state": "super_stage05",
+      "triangles": 15592,
+      "alpha_bounds": [
+        117,
+        196,
+        396,
+        366
+      ],
+      "glb_bytes": 591792
+    },
+    {
+      "name": "reed_bed_l06_super_stage06",
+      "level": 6,
+      "state": "super_stage06",
+      "triangles": 15592,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "glb_bytes": 591820
+    },
+    {
+      "name": "reed_bed_l07_stage01",
+      "level": 7,
+      "state": "stage01",
+      "triangles": 10424,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "glb_bytes": 345664
+    },
+    {
+      "name": "reed_bed_l07_stage02",
+      "level": 7,
+      "state": "stage02",
+      "triangles": 11832,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "glb_bytes": 409916
+    },
+    {
+      "name": "reed_bed_l07_stage03",
+      "level": 7,
+      "state": "stage03",
+      "triangles": 12896,
+      "alpha_bounds": [
+        117,
+        210,
+        396,
+        366
+      ],
+      "glb_bytes": 463548
+    },
+    {
+      "name": "reed_bed_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 12896,
+      "alpha_bounds": [
+        117,
+        210,
+        396,
+        366
+      ],
+      "glb_bytes": 463548
+    },
+    {
+      "name": "reed_bed_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 7468,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "glb_bytes": 263696
+    },
+    {
+      "name": "reed_bed_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 10196,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "glb_bytes": 291096
+    },
+    {
+      "name": "reed_bed_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "triangles": 5192,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "glb_bytes": 158236
+    },
+    {
+      "name": "reed_bed_l07_super_stage01",
+      "level": 7,
+      "state": "super_stage01",
+      "triangles": 11360,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "glb_bytes": 388804
+    },
+    {
+      "name": "reed_bed_l07_super_stage02",
+      "level": 7,
+      "state": "super_stage02",
+      "triangles": 12920,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "glb_bytes": 460748
+    },
+    {
+      "name": "reed_bed_l07_super_stage03",
+      "level": 7,
+      "state": "super_stage03",
+      "triangles": 14112,
+      "alpha_bounds": [
+        117,
+        209,
+        396,
+        366
+      ],
+      "glb_bytes": 520136
+    },
+    {
+      "name": "reed_bed_l07_super_stage04",
+      "level": 7,
+      "state": "super_stage04",
+      "triangles": 15008,
+      "alpha_bounds": [
+        117,
+        202,
+        396,
+        366
+      ],
+      "glb_bytes": 560968
+    },
+    {
+      "name": "reed_bed_l07_super_stage05",
+      "level": 7,
+      "state": "super_stage05",
+      "triangles": 15904,
+      "alpha_bounds": [
+        117,
+        194,
+        396,
+        366
+      ],
+      "glb_bytes": 601936
+    },
+    {
+      "name": "reed_bed_l07_super_stage06",
+      "level": 7,
+      "state": "super_stage06",
+      "triangles": 15904,
+      "alpha_bounds": [
+        117,
+        189,
+        396,
+        366
+      ],
+      "glb_bytes": 601760
+    },
+    {
+      "name": "reed_bed_l08_stage01",
+      "level": 8,
+      "state": "stage01",
+      "triangles": 11900,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 411948
+    },
+    {
+      "name": "reed_bed_l08_stage02",
+      "level": 8,
+      "state": "stage02",
+      "triangles": 12796,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 452792
+    },
+    {
+      "name": "reed_bed_l08_stage03",
+      "level": 8,
+      "state": "stage03",
+      "triangles": 13860,
+      "alpha_bounds": [
+        117,
+        208,
+        396,
+        366
+      ],
+      "glb_bytes": 506460
+    },
+    {
+      "name": "reed_bed_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 13860,
+      "alpha_bounds": [
+        117,
+        208,
+        396,
+        366
+      ],
+      "glb_bytes": 506460
+    },
+    {
+      "name": "reed_bed_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 8876,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 328012
+    },
+    {
+      "name": "reed_bed_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 10776,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 309824
+    },
+    {
+      "name": "reed_bed_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "triangles": 5308,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 161980
+    },
+    {
+      "name": "reed_bed_l08_super_stage01",
+      "level": 8,
+      "state": "super_stage01",
+      "triangles": 12836,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 454704
+    },
+    {
+      "name": "reed_bed_l08_super_stage02",
+      "level": 8,
+      "state": "super_stage02",
+      "triangles": 13884,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "glb_bytes": 503204
+    },
+    {
+      "name": "reed_bed_l08_super_stage03",
+      "level": 8,
+      "state": "super_stage03",
+      "triangles": 15076,
+      "alpha_bounds": [
+        117,
+        208,
+        396,
+        366
+      ],
+      "glb_bytes": 562772
+    },
+    {
+      "name": "reed_bed_l08_super_stage04",
+      "level": 8,
+      "state": "super_stage04",
+      "triangles": 15972,
+      "alpha_bounds": [
+        117,
+        200,
+        396,
+        366
+      ],
+      "glb_bytes": 603660
+    },
+    {
+      "name": "reed_bed_l08_super_stage05",
+      "level": 8,
+      "state": "super_stage05",
+      "triangles": 15972,
+      "alpha_bounds": [
+        117,
+        192,
+        396,
+        366
+      ],
+      "glb_bytes": 603712
+    },
+    {
+      "name": "reed_bed_l08_super_stage06",
+      "level": 8,
+      "state": "super_stage06",
+      "triangles": 15972,
+      "alpha_bounds": [
+        117,
+        188,
+        396,
+        366
+      ],
+      "glb_bytes": 603392
+    },
+    {
+      "name": "reed_bed_l09_stage01",
+      "level": 9,
+      "state": "stage01",
+      "triangles": 11900,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 411900
+    },
+    {
+      "name": "reed_bed_l09_stage02",
+      "level": 9,
+      "state": "stage02",
+      "triangles": 12796,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 452920
+    },
+    {
+      "name": "reed_bed_l09_stage03",
+      "level": 9,
+      "state": "stage03",
+      "triangles": 13860,
+      "alpha_bounds": [
+        117,
+        207,
+        396,
+        366
+      ],
+      "glb_bytes": 506360
+    },
+    {
+      "name": "reed_bed_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 13860,
+      "alpha_bounds": [
+        117,
+        207,
+        396,
+        366
+      ],
+      "glb_bytes": 506360
+    },
+    {
+      "name": "reed_bed_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 8876,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 327952
+    },
+    {
+      "name": "reed_bed_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 10776,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 309836
+    },
+    {
+      "name": "reed_bed_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "triangles": 5308,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 161972
+    },
+    {
+      "name": "reed_bed_l09_super_stage01",
+      "level": 9,
+      "state": "super_stage01",
+      "triangles": 12836,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 454728
+    },
+    {
+      "name": "reed_bed_l09_super_stage02",
+      "level": 9,
+      "state": "super_stage02",
+      "triangles": 13884,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "glb_bytes": 503316
+    },
+    {
+      "name": "reed_bed_l09_super_stage03",
+      "level": 9,
+      "state": "super_stage03",
+      "triangles": 15076,
+      "alpha_bounds": [
+        117,
+        206,
+        396,
+        366
+      ],
+      "glb_bytes": 562664
+    },
+    {
+      "name": "reed_bed_l09_super_stage04",
+      "level": 9,
+      "state": "super_stage04",
+      "triangles": 15972,
+      "alpha_bounds": [
+        117,
+        198,
+        396,
+        366
+      ],
+      "glb_bytes": 603616
+    },
+    {
+      "name": "reed_bed_l09_super_stage05",
+      "level": 9,
+      "state": "super_stage05",
+      "triangles": 15972,
+      "alpha_bounds": [
+        117,
+        191,
+        396,
+        366
+      ],
+      "glb_bytes": 603608
+    },
+    {
+      "name": "reed_bed_l09_super_stage06",
+      "level": 9,
+      "state": "super_stage06",
+      "triangles": 15972,
+      "alpha_bounds": [
+        117,
+        186,
+        396,
+        366
+      ],
+      "glb_bytes": 603056
+    },
+    {
+      "name": "reed_bed_l10_stage01",
+      "level": 10,
+      "state": "stage01",
+      "triangles": 12028,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 415524
+    },
+    {
+      "name": "reed_bed_l10_stage02",
+      "level": 10,
+      "state": "stage02",
+      "triangles": 12924,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 456240
+    },
+    {
+      "name": "reed_bed_l10_stage03",
+      "level": 10,
+      "state": "stage03",
+      "triangles": 13988,
+      "alpha_bounds": [
+        117,
+        205,
+        396,
+        366
+      ],
+      "glb_bytes": 509872
+    },
+    {
+      "name": "reed_bed_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 13988,
+      "alpha_bounds": [
+        117,
+        205,
+        396,
+        366
+      ],
+      "glb_bytes": 509868
+    },
+    {
+      "name": "reed_bed_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 8876,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 328136
+    },
+    {
+      "name": "reed_bed_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 10776,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 309836
+    },
+    {
+      "name": "reed_bed_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "triangles": 5308,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 161968
+    },
+    {
+      "name": "reed_bed_l10_super_stage01",
+      "level": 10,
+      "state": "super_stage01",
+      "triangles": 13092,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 464164
+    },
+    {
+      "name": "reed_bed_l10_super_stage02",
+      "level": 10,
+      "state": "super_stage02",
+      "triangles": 14140,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "glb_bytes": 512696
+    },
+    {
+      "name": "reed_bed_l10_super_stage03",
+      "level": 10,
+      "state": "super_stage03",
+      "triangles": 15204,
+      "alpha_bounds": [
+        117,
+        205,
+        396,
+        366
+      ],
+      "glb_bytes": 566164
+    },
+    {
+      "name": "reed_bed_l10_super_stage04",
+      "level": 10,
+      "state": "super_stage04",
+      "triangles": 16100,
+      "alpha_bounds": [
+        117,
+        197,
+        396,
+        366
+      ],
+      "glb_bytes": 607136
+    },
+    {
+      "name": "reed_bed_l10_super_stage05",
+      "level": 10,
+      "state": "super_stage05",
+      "triangles": 16100,
+      "alpha_bounds": [
+        117,
+        189,
+        396,
+        366
+      ],
+      "glb_bytes": 606968
+    },
+    {
+      "name": "reed_bed_l10_super_stage06",
+      "level": 10,
+      "state": "super_stage06",
+      "triangles": 16100,
+      "alpha_bounds": [
+        117,
+        185,
+        396,
+        366
+      ],
+      "glb_bytes": 606828
+    }
+  ]
+}

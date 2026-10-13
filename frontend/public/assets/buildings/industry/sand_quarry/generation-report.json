@@ -1,0 +1,662 @@
+{
+  "sand_quarry_l01_active": {
+    "level": 1,
+    "state": "active",
+    "triangles": 4004,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        0.475
+      ]
+    ],
+    "ground_source": "sand_quarry_l01_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l01_construction": {
+    "level": 1,
+    "state": "construction",
+    "triangles": 5316,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        0.86
+      ]
+    ],
+    "ground_source": "sand_quarry_l01_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l01_damaged": {
+    "level": 1,
+    "state": "damaged",
+    "triangles": 4744,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        0.54
+      ]
+    ],
+    "ground_source": "sand_quarry_l01_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l02_active": {
+    "level": 2,
+    "state": "active",
+    "triangles": 6028,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        0.997
+      ]
+    ],
+    "ground_source": "sand_quarry_l02_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l02_construction": {
+    "level": 2,
+    "state": "construction",
+    "triangles": 7340,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        0.997
+      ]
+    ],
+    "ground_source": "sand_quarry_l02_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l02_damaged": {
+    "level": 2,
+    "state": "damaged",
+    "triangles": 6064,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        0.92
+      ]
+    ],
+    "ground_source": "sand_quarry_l02_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l03_active": {
+    "level": 3,
+    "state": "active",
+    "triangles": 7196,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.523
+      ]
+    ],
+    "ground_source": "sand_quarry_l03_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l03_construction": {
+    "level": 3,
+    "state": "construction",
+    "triangles": 8728,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.523
+      ]
+    ],
+    "ground_source": "sand_quarry_l03_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l03_damaged": {
+    "level": 3,
+    "state": "damaged",
+    "triangles": 7040,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l03_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l04_active": {
+    "level": 4,
+    "state": "active",
+    "triangles": 7836,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.523
+      ]
+    ],
+    "ground_source": "sand_quarry_l04_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l04_construction": {
+    "level": 4,
+    "state": "construction",
+    "triangles": 9632,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.523
+      ]
+    ],
+    "ground_source": "sand_quarry_l04_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l04_damaged": {
+    "level": 4,
+    "state": "damaged",
+    "triangles": 7744,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l04_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l05_active": {
+    "level": 5,
+    "state": "active",
+    "triangles": 8568,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.523
+      ]
+    ],
+    "ground_source": "sand_quarry_l05_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l05_construction": {
+    "level": 5,
+    "state": "construction",
+    "triangles": 10364,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.523
+      ]
+    ],
+    "ground_source": "sand_quarry_l05_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l05_damaged": {
+    "level": 5,
+    "state": "damaged",
+    "triangles": 7920,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l05_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l06_active": {
+    "level": 6,
+    "state": "active",
+    "triangles": 9900,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.527
+      ]
+    ],
+    "ground_source": "sand_quarry_l06_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l06_construction": {
+    "level": 6,
+    "state": "construction",
+    "triangles": 12296,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.527
+      ]
+    ],
+    "ground_source": "sand_quarry_l06_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l06_damaged": {
+    "level": 6,
+    "state": "damaged",
+    "triangles": 9896,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l06_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l07_active": {
+    "level": 7,
+    "state": "active",
+    "triangles": 9900,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.572
+      ]
+    ],
+    "ground_source": "sand_quarry_l07_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l07_construction": {
+    "level": 7,
+    "state": "construction",
+    "triangles": 12296,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.572
+      ]
+    ],
+    "ground_source": "sand_quarry_l07_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l07_damaged": {
+    "level": 7,
+    "state": "damaged",
+    "triangles": 9896,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l07_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l08_active": {
+    "level": 8,
+    "state": "active",
+    "triangles": 10592,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.617
+      ]
+    ],
+    "ground_source": "sand_quarry_l08_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l08_construction": {
+    "level": 8,
+    "state": "construction",
+    "triangles": 13164,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.617
+      ]
+    ],
+    "ground_source": "sand_quarry_l08_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l08_damaged": {
+    "level": 8,
+    "state": "damaged",
+    "triangles": 10676,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l08_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l09_active": {
+    "level": 9,
+    "state": "active",
+    "triangles": 10900,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.662
+      ]
+    ],
+    "ground_source": "sand_quarry_l09_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l09_construction": {
+    "level": 9,
+    "state": "construction",
+    "triangles": 13472,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.662
+      ]
+    ],
+    "ground_source": "sand_quarry_l09_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l09_damaged": {
+    "level": 9,
+    "state": "damaged",
+    "triangles": 10896,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.8,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l09_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l10_active": {
+    "level": 10,
+    "state": "active",
+    "triangles": 11040,
+    "bounds": [
+      [
+        -1.862,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.862,
+        1.8,
+        1.662
+      ]
+    ],
+    "ground_source": "sand_quarry_l10_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l10_construction": {
+    "level": 10,
+    "state": "construction",
+    "triangles": 13788,
+    "bounds": [
+      [
+        -1.862,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.862,
+        1.8,
+        1.662
+      ]
+    ],
+    "ground_source": "sand_quarry_l10_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l10_damaged": {
+    "level": 10,
+    "state": "damaged",
+    "triangles": 11080,
+    "bounds": [
+      [
+        -1.862,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.862,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l10_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l11_active": {
+    "level": 11,
+    "state": "active",
+    "triangles": 12976,
+    "bounds": [
+      [
+        -1.942,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.942,
+        1.8,
+        1.662
+      ]
+    ],
+    "ground_source": "sand_quarry_l11_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l11_construction": {
+    "level": 11,
+    "state": "construction",
+    "triangles": 15812,
+    "bounds": [
+      [
+        -1.942,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.942,
+        1.8,
+        1.662
+      ]
+    ],
+    "ground_source": "sand_quarry_l11_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  },
+  "sand_quarry_l11_damaged": {
+    "level": 11,
+    "state": "damaged",
+    "triangles": 13104,
+    "bounds": [
+      [
+        -1.942,
+        -1.8,
+        -0.15
+      ],
+      [
+        1.942,
+        1.8,
+        1.04
+      ]
+    ],
+    "ground_source": "sand_quarry_l11_active",
+    "style": "bright fantasy stylized mid-poly Blender",
+    "alpha_bounds": null
+  }
+}

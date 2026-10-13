@@ -1,0 +1,1172 @@
+[
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_active.glb",
+    "objects": 190,
+    "meshes": 190,
+    "triangles": 2624,
+    "materials": 17,
+    "collection": "roundtrip_001",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_construction.glb",
+    "objects": 105,
+    "meshes": 105,
+    "triangles": 1292,
+    "materials": 13,
+    "collection": "roundtrip_002",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_damaged.glb",
+    "objects": 132,
+    "meshes": 132,
+    "triangles": 1860,
+    "materials": 14,
+    "collection": "roundtrip_003",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_ruined.glb",
+    "objects": 85,
+    "meshes": 85,
+    "triangles": 1056,
+    "materials": 13,
+    "collection": "roundtrip_004",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_stage01.glb",
+    "objects": 110,
+    "meshes": 110,
+    "triangles": 1344,
+    "materials": 15,
+    "collection": "roundtrip_005",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_stage02.glb",
+    "objects": 170,
+    "meshes": 170,
+    "triangles": 2384,
+    "materials": 17,
+    "collection": "roundtrip_006",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_stage03.glb",
+    "objects": 190,
+    "meshes": 190,
+    "triangles": 2624,
+    "materials": 17,
+    "collection": "roundtrip_007",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_super_stage01.glb",
+    "objects": 158,
+    "meshes": 158,
+    "triangles": 2216,
+    "materials": 15,
+    "collection": "roundtrip_008",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_super_stage02.glb",
+    "objects": 176,
+    "meshes": 176,
+    "triangles": 2432,
+    "materials": 16,
+    "collection": "roundtrip_009",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_super_stage03.glb",
+    "objects": 179,
+    "meshes": 179,
+    "triangles": 2516,
+    "materials": 17,
+    "collection": "roundtrip_010",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_super_stage04.glb",
+    "objects": 179,
+    "meshes": 179,
+    "triangles": 2516,
+    "materials": 17,
+    "collection": "roundtrip_011",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_super_stage05.glb",
+    "objects": 179,
+    "meshes": 179,
+    "triangles": 2516,
+    "materials": 17,
+    "collection": "roundtrip_012",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l01_super_stage06.glb",
+    "objects": 179,
+    "meshes": 179,
+    "triangles": 2516,
+    "materials": 17,
+    "collection": "roundtrip_013",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_active.glb",
+    "objects": 232,
+    "meshes": 232,
+    "triangles": 3208,
+    "materials": 20,
+    "collection": "roundtrip_014",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_construction.glb",
+    "objects": 125,
+    "meshes": 125,
+    "triangles": 1516,
+    "materials": 16,
+    "collection": "roundtrip_015",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_damaged.glb",
+    "objects": 150,
+    "meshes": 150,
+    "triangles": 2112,
+    "materials": 14,
+    "collection": "roundtrip_016",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_ruined.glb",
+    "objects": 94,
+    "meshes": 94,
+    "triangles": 1152,
+    "materials": 13,
+    "collection": "roundtrip_017",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_stage01.glb",
+    "objects": 136,
+    "meshes": 136,
+    "triangles": 1672,
+    "materials": 19,
+    "collection": "roundtrip_018",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_stage02.glb",
+    "objects": 208,
+    "meshes": 208,
+    "triangles": 2920,
+    "materials": 20,
+    "collection": "roundtrip_019",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_stage03.glb",
+    "objects": 232,
+    "meshes": 232,
+    "triangles": 3208,
+    "materials": 20,
+    "collection": "roundtrip_020",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_super_stage01.glb",
+    "objects": 190,
+    "meshes": 190,
+    "triangles": 2668,
+    "materials": 19,
+    "collection": "roundtrip_021",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_super_stage02.glb",
+    "objects": 211,
+    "meshes": 211,
+    "triangles": 2920,
+    "materials": 20,
+    "collection": "roundtrip_022",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_super_stage03.glb",
+    "objects": 214,
+    "meshes": 214,
+    "triangles": 3004,
+    "materials": 21,
+    "collection": "roundtrip_023",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_super_stage04.glb",
+    "objects": 214,
+    "meshes": 214,
+    "triangles": 3004,
+    "materials": 21,
+    "collection": "roundtrip_024",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_super_stage05.glb",
+    "objects": 214,
+    "meshes": 214,
+    "triangles": 3004,
+    "materials": 21,
+    "collection": "roundtrip_025",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l02_super_stage06.glb",
+    "objects": 214,
+    "meshes": 214,
+    "triangles": 3004,
+    "materials": 21,
+    "collection": "roundtrip_026",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_active.glb",
+    "objects": 269,
+    "meshes": 269,
+    "triangles": 3756,
+    "materials": 22,
+    "collection": "roundtrip_027",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_construction.glb",
+    "objects": 137,
+    "meshes": 137,
+    "triangles": 1644,
+    "materials": 16,
+    "collection": "roundtrip_028",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_damaged.glb",
+    "objects": 168,
+    "meshes": 168,
+    "triangles": 2364,
+    "materials": 14,
+    "collection": "roundtrip_029",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_ruined.glb",
+    "objects": 103,
+    "meshes": 103,
+    "triangles": 1248,
+    "materials": 13,
+    "collection": "roundtrip_030",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_stage01.glb",
+    "objects": 157,
+    "meshes": 157,
+    "triangles": 1964,
+    "materials": 22,
+    "collection": "roundtrip_031",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_stage02.glb",
+    "objects": 241,
+    "meshes": 241,
+    "triangles": 3420,
+    "materials": 23,
+    "collection": "roundtrip_032",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_stage03.glb",
+    "objects": 269,
+    "meshes": 269,
+    "triangles": 3756,
+    "materials": 22,
+    "collection": "roundtrip_033",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_super_stage01.glb",
+    "objects": 219,
+    "meshes": 219,
+    "triangles": 3108,
+    "materials": 21,
+    "collection": "roundtrip_034",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_super_stage02.glb",
+    "objects": 243,
+    "meshes": 243,
+    "triangles": 3396,
+    "materials": 21,
+    "collection": "roundtrip_035",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_super_stage03.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 3480,
+    "materials": 22,
+    "collection": "roundtrip_036",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_super_stage04.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 3480,
+    "materials": 22,
+    "collection": "roundtrip_037",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_super_stage05.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 3480,
+    "materials": 23,
+    "collection": "roundtrip_038",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l03_super_stage06.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 3480,
+    "materials": 23,
+    "collection": "roundtrip_039",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_active.glb",
+    "objects": 309,
+    "meshes": 309,
+    "triangles": 4284,
+    "materials": 25,
+    "collection": "roundtrip_040",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_construction.glb",
+    "objects": 152,
+    "meshes": 152,
+    "triangles": 1808,
+    "materials": 17,
+    "collection": "roundtrip_041",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_damaged.glb",
+    "objects": 192,
+    "meshes": 192,
+    "triangles": 2688,
+    "materials": 17,
+    "collection": "roundtrip_042",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_ruined.glb",
+    "objects": 112,
+    "meshes": 112,
+    "triangles": 1344,
+    "materials": 13,
+    "collection": "roundtrip_043",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_stage01.glb",
+    "objects": 181,
+    "meshes": 181,
+    "triangles": 2236,
+    "materials": 25,
+    "collection": "roundtrip_044",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_stage02.glb",
+    "objects": 277,
+    "meshes": 277,
+    "triangles": 3900,
+    "materials": 26,
+    "collection": "roundtrip_045",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_stage03.glb",
+    "objects": 309,
+    "meshes": 309,
+    "triangles": 4284,
+    "materials": 25,
+    "collection": "roundtrip_046",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_super_stage01.glb",
+    "objects": 249,
+    "meshes": 249,
+    "triangles": 3504,
+    "materials": 24,
+    "collection": "roundtrip_047",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_super_stage02.glb",
+    "objects": 276,
+    "meshes": 276,
+    "triangles": 3828,
+    "materials": 24,
+    "collection": "roundtrip_048",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_super_stage03.glb",
+    "objects": 279,
+    "meshes": 279,
+    "triangles": 3912,
+    "materials": 25,
+    "collection": "roundtrip_049",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_super_stage04.glb",
+    "objects": 279,
+    "meshes": 279,
+    "triangles": 3912,
+    "materials": 25,
+    "collection": "roundtrip_050",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_super_stage05.glb",
+    "objects": 279,
+    "meshes": 279,
+    "triangles": 3912,
+    "materials": 25,
+    "collection": "roundtrip_051",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l04_super_stage06.glb",
+    "objects": 279,
+    "meshes": 279,
+    "triangles": 3912,
+    "materials": 25,
+    "collection": "roundtrip_052",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_active.glb",
+    "objects": 344,
+    "meshes": 344,
+    "triangles": 4800,
+    "materials": 26,
+    "collection": "roundtrip_053",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_construction.glb",
+    "objects": 168,
+    "meshes": 168,
+    "triangles": 1984,
+    "materials": 18,
+    "collection": "roundtrip_054",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_damaged.glb",
+    "objects": 214,
+    "meshes": 214,
+    "triangles": 2988,
+    "materials": 18,
+    "collection": "roundtrip_055",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_ruined.glb",
+    "objects": 121,
+    "meshes": 121,
+    "triangles": 1440,
+    "materials": 13,
+    "collection": "roundtrip_056",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_stage01.glb",
+    "objects": 200,
+    "meshes": 200,
+    "triangles": 2496,
+    "materials": 26,
+    "collection": "roundtrip_057",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_stage02.glb",
+    "objects": 308,
+    "meshes": 308,
+    "triangles": 4368,
+    "materials": 27,
+    "collection": "roundtrip_058",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_stage03.glb",
+    "objects": 344,
+    "meshes": 344,
+    "triangles": 4800,
+    "materials": 26,
+    "collection": "roundtrip_059",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_super_stage01.glb",
+    "objects": 274,
+    "meshes": 274,
+    "triangles": 3888,
+    "materials": 25,
+    "collection": "roundtrip_060",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_super_stage02.glb",
+    "objects": 304,
+    "meshes": 304,
+    "triangles": 4248,
+    "materials": 25,
+    "collection": "roundtrip_061",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_super_stage03.glb",
+    "objects": 307,
+    "meshes": 307,
+    "triangles": 4332,
+    "materials": 26,
+    "collection": "roundtrip_062",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_super_stage04.glb",
+    "objects": 307,
+    "meshes": 307,
+    "triangles": 4332,
+    "materials": 26,
+    "collection": "roundtrip_063",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_super_stage05.glb",
+    "objects": 307,
+    "meshes": 307,
+    "triangles": 4332,
+    "materials": 26,
+    "collection": "roundtrip_064",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l05_super_stage06.glb",
+    "objects": 307,
+    "meshes": 307,
+    "triangles": 4332,
+    "materials": 26,
+    "collection": "roundtrip_065",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_active.glb",
+    "objects": 378,
+    "meshes": 378,
+    "triangles": 5256,
+    "materials": 27,
+    "collection": "roundtrip_066",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_construction.glb",
+    "objects": 180,
+    "meshes": 180,
+    "triangles": 2112,
+    "materials": 18,
+    "collection": "roundtrip_067",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_damaged.glb",
+    "objects": 234,
+    "meshes": 234,
+    "triangles": 3264,
+    "materials": 18,
+    "collection": "roundtrip_068",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_ruined.glb",
+    "objects": 130,
+    "meshes": 130,
+    "triangles": 1536,
+    "materials": 13,
+    "collection": "roundtrip_069",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_stage01.glb",
+    "objects": 218,
+    "meshes": 218,
+    "triangles": 2696,
+    "materials": 27,
+    "collection": "roundtrip_070",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_stage02.glb",
+    "objects": 338,
+    "meshes": 338,
+    "triangles": 4776,
+    "materials": 28,
+    "collection": "roundtrip_071",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_stage03.glb",
+    "objects": 378,
+    "meshes": 378,
+    "triangles": 5256,
+    "materials": 27,
+    "collection": "roundtrip_072",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_super_stage01.glb",
+    "objects": 298,
+    "meshes": 298,
+    "triangles": 4212,
+    "materials": 26,
+    "collection": "roundtrip_073",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_super_stage02.glb",
+    "objects": 331,
+    "meshes": 331,
+    "triangles": 4608,
+    "materials": 26,
+    "collection": "roundtrip_074",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_super_stage03.glb",
+    "objects": 334,
+    "meshes": 334,
+    "triangles": 4692,
+    "materials": 27,
+    "collection": "roundtrip_075",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_super_stage04.glb",
+    "objects": 334,
+    "meshes": 334,
+    "triangles": 4692,
+    "materials": 27,
+    "collection": "roundtrip_076",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_super_stage05.glb",
+    "objects": 334,
+    "meshes": 334,
+    "triangles": 4692,
+    "materials": 27,
+    "collection": "roundtrip_077",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l06_super_stage06.glb",
+    "objects": 334,
+    "meshes": 334,
+    "triangles": 4692,
+    "materials": 27,
+    "collection": "roundtrip_078",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_active.glb",
+    "objects": 419,
+    "meshes": 419,
+    "triangles": 5796,
+    "materials": 28,
+    "collection": "roundtrip_079",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_construction.glb",
+    "objects": 201,
+    "meshes": 201,
+    "triangles": 2348,
+    "materials": 19,
+    "collection": "roundtrip_080",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_damaged.glb",
+    "objects": 261,
+    "meshes": 261,
+    "triangles": 3624,
+    "materials": 19,
+    "collection": "roundtrip_081",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_ruined.glb",
+    "objects": 139,
+    "meshes": 139,
+    "triangles": 1632,
+    "materials": 13,
+    "collection": "roundtrip_082",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_stage01.glb",
+    "objects": 243,
+    "meshes": 243,
+    "triangles": 2980,
+    "materials": 28,
+    "collection": "roundtrip_083",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_stage02.glb",
+    "objects": 375,
+    "meshes": 375,
+    "triangles": 5268,
+    "materials": 29,
+    "collection": "roundtrip_084",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_stage03.glb",
+    "objects": 419,
+    "meshes": 419,
+    "triangles": 5796,
+    "materials": 28,
+    "collection": "roundtrip_085",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_super_stage01.glb",
+    "objects": 329,
+    "meshes": 329,
+    "triangles": 4620,
+    "materials": 27,
+    "collection": "roundtrip_086",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_super_stage02.glb",
+    "objects": 365,
+    "meshes": 365,
+    "triangles": 5052,
+    "materials": 27,
+    "collection": "roundtrip_087",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_super_stage03.glb",
+    "objects": 368,
+    "meshes": 368,
+    "triangles": 5136,
+    "materials": 28,
+    "collection": "roundtrip_088",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_super_stage04.glb",
+    "objects": 368,
+    "meshes": 368,
+    "triangles": 5136,
+    "materials": 28,
+    "collection": "roundtrip_089",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_super_stage05.glb",
+    "objects": 368,
+    "meshes": 368,
+    "triangles": 5136,
+    "materials": 28,
+    "collection": "roundtrip_090",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l07_super_stage06.glb",
+    "objects": 368,
+    "meshes": 368,
+    "triangles": 5136,
+    "materials": 28,
+    "collection": "roundtrip_091",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_active.glb",
+    "objects": 454,
+    "meshes": 454,
+    "triangles": 6264,
+    "materials": 28,
+    "collection": "roundtrip_092",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_construction.glb",
+    "objects": 218,
+    "meshes": 218,
+    "triangles": 2536,
+    "materials": 20,
+    "collection": "roundtrip_093",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_damaged.glb",
+    "objects": 284,
+    "meshes": 284,
+    "triangles": 3936,
+    "materials": 20,
+    "collection": "roundtrip_094",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_ruined.glb",
+    "objects": 148,
+    "meshes": 148,
+    "triangles": 1728,
+    "materials": 13,
+    "collection": "roundtrip_095",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_stage01.glb",
+    "objects": 262,
+    "meshes": 262,
+    "triangles": 3192,
+    "materials": 28,
+    "collection": "roundtrip_096",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_stage02.glb",
+    "objects": 406,
+    "meshes": 406,
+    "triangles": 5688,
+    "materials": 29,
+    "collection": "roundtrip_097",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_stage03.glb",
+    "objects": 454,
+    "meshes": 454,
+    "triangles": 6264,
+    "materials": 28,
+    "collection": "roundtrip_098",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_super_stage01.glb",
+    "objects": 354,
+    "meshes": 354,
+    "triangles": 4956,
+    "materials": 27,
+    "collection": "roundtrip_099",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_super_stage02.glb",
+    "objects": 393,
+    "meshes": 393,
+    "triangles": 5424,
+    "materials": 27,
+    "collection": "roundtrip_100",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_super_stage03.glb",
+    "objects": 396,
+    "meshes": 396,
+    "triangles": 5508,
+    "materials": 28,
+    "collection": "roundtrip_101",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_super_stage04.glb",
+    "objects": 396,
+    "meshes": 396,
+    "triangles": 5508,
+    "materials": 28,
+    "collection": "roundtrip_102",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_super_stage05.glb",
+    "objects": 396,
+    "meshes": 396,
+    "triangles": 5508,
+    "materials": 28,
+    "collection": "roundtrip_103",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l08_super_stage06.glb",
+    "objects": 396,
+    "meshes": 396,
+    "triangles": 5508,
+    "materials": 28,
+    "collection": "roundtrip_104",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_active.glb",
+    "objects": 484,
+    "meshes": 484,
+    "triangles": 6672,
+    "materials": 28,
+    "collection": "roundtrip_105",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_construction.glb",
+    "objects": 230,
+    "meshes": 230,
+    "triangles": 2664,
+    "materials": 20,
+    "collection": "roundtrip_106",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_damaged.glb",
+    "objects": 302,
+    "meshes": 302,
+    "triangles": 4188,
+    "materials": 20,
+    "collection": "roundtrip_107",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_ruined.glb",
+    "objects": 157,
+    "meshes": 157,
+    "triangles": 1824,
+    "materials": 13,
+    "collection": "roundtrip_108",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_stage01.glb",
+    "objects": 276,
+    "meshes": 276,
+    "triangles": 3344,
+    "materials": 28,
+    "collection": "roundtrip_109",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_stage02.glb",
+    "objects": 432,
+    "meshes": 432,
+    "triangles": 6048,
+    "materials": 29,
+    "collection": "roundtrip_110",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_stage03.glb",
+    "objects": 484,
+    "meshes": 484,
+    "triangles": 6672,
+    "materials": 28,
+    "collection": "roundtrip_111",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_super_stage01.glb",
+    "objects": 374,
+    "meshes": 374,
+    "triangles": 5232,
+    "materials": 27,
+    "collection": "roundtrip_112",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_super_stage02.glb",
+    "objects": 416,
+    "meshes": 416,
+    "triangles": 5736,
+    "materials": 27,
+    "collection": "roundtrip_113",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_super_stage03.glb",
+    "objects": 419,
+    "meshes": 419,
+    "triangles": 5820,
+    "materials": 28,
+    "collection": "roundtrip_114",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_super_stage04.glb",
+    "objects": 419,
+    "meshes": 419,
+    "triangles": 5820,
+    "materials": 28,
+    "collection": "roundtrip_115",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_super_stage05.glb",
+    "objects": 419,
+    "meshes": 419,
+    "triangles": 5820,
+    "materials": 28,
+    "collection": "roundtrip_116",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l09_super_stage06.glb",
+    "objects": 419,
+    "meshes": 419,
+    "triangles": 5820,
+    "materials": 28,
+    "collection": "roundtrip_117",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_active.glb",
+    "objects": 520,
+    "meshes": 520,
+    "triangles": 7200,
+    "materials": 28,
+    "collection": "roundtrip_118",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_construction.glb",
+    "objects": 244,
+    "meshes": 244,
+    "triangles": 2816,
+    "materials": 20,
+    "collection": "roundtrip_119",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_damaged.glb",
+    "objects": 320,
+    "meshes": 320,
+    "triangles": 4440,
+    "materials": 20,
+    "collection": "roundtrip_120",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_ruined.glb",
+    "objects": 166,
+    "meshes": 166,
+    "triangles": 1920,
+    "materials": 13,
+    "collection": "roundtrip_121",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_stage01.glb",
+    "objects": 296,
+    "meshes": 296,
+    "triangles": 3616,
+    "materials": 28,
+    "collection": "roundtrip_122",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_stage02.glb",
+    "objects": 464,
+    "meshes": 464,
+    "triangles": 6528,
+    "materials": 29,
+    "collection": "roundtrip_123",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_stage03.glb",
+    "objects": 520,
+    "meshes": 520,
+    "triangles": 7200,
+    "materials": 28,
+    "collection": "roundtrip_124",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_super_stage01.glb",
+    "objects": 400,
+    "meshes": 400,
+    "triangles": 5628,
+    "materials": 27,
+    "collection": "roundtrip_125",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_super_stage02.glb",
+    "objects": 445,
+    "meshes": 445,
+    "triangles": 6168,
+    "materials": 27,
+    "collection": "roundtrip_126",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_super_stage03.glb",
+    "objects": 448,
+    "meshes": 448,
+    "triangles": 6252,
+    "materials": 28,
+    "collection": "roundtrip_127",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_super_stage04.glb",
+    "objects": 448,
+    "meshes": 448,
+    "triangles": 6252,
+    "materials": 28,
+    "collection": "roundtrip_128",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_super_stage05.glb",
+    "objects": 448,
+    "meshes": 448,
+    "triangles": 6252,
+    "materials": 28,
+    "collection": "roundtrip_129",
+    "ok": true
+  },
+  {
+    "path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\frontend\\public\\assets\\buildings\\fields\\seed_garden\\seed_garden_l10_super_stage06.glb",
+    "objects": 448,
+    "meshes": 448,
+    "triangles": 6252,
+    "materials": 28,
+    "collection": "roundtrip_130",
+    "ok": true
+  }
+]

@@ -1,478 +1,290 @@
 [
   {
-    "name": "dugout_l01_construction",
+    "name": "clay_quarry_l01_construction",
+    "asset_id": "clay_quarry",
+    "level": 1,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l01_damaged",
+    "name": "clay_quarry_l01_damaged",
+    "asset_id": "clay_quarry",
+    "level": 1,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l02_construction",
+    "name": "clay_quarry_l02_construction",
+    "asset_id": "clay_quarry",
+    "level": 2,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l02_damaged",
+    "name": "clay_quarry_l02_damaged",
+    "asset_id": "clay_quarry",
+    "level": 2,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l03_construction",
+    "name": "clay_quarry_l03_construction",
+    "asset_id": "clay_quarry",
+    "level": 3,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l03_damaged",
+    "name": "clay_quarry_l03_damaged",
+    "asset_id": "clay_quarry",
+    "level": 3,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l04_construction",
+    "name": "clay_quarry_l04_construction",
+    "asset_id": "clay_quarry",
+    "level": 4,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l04_damaged",
+    "name": "clay_quarry_l04_damaged",
+    "asset_id": "clay_quarry",
+    "level": 4,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l05_construction",
+    "name": "clay_quarry_l05_construction",
+    "asset_id": "clay_quarry",
+    "level": 5,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "dugout_l05_damaged",
+    "name": "clay_quarry_l05_damaged",
+    "asset_id": "clay_quarry",
+    "level": 5,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l01_construction",
+    "name": "clay_quarry_l06_construction",
+    "asset_id": "clay_quarry",
+    "level": 6,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l01_damaged",
+    "name": "clay_quarry_l06_damaged",
+    "asset_id": "clay_quarry",
+    "level": 6,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l02_construction",
+    "name": "clay_quarry_l07_construction",
+    "asset_id": "clay_quarry",
+    "level": 7,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l02_damaged",
+    "name": "clay_quarry_l07_damaged",
+    "asset_id": "clay_quarry",
+    "level": 7,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l03_construction",
+    "name": "clay_quarry_l08_construction",
+    "asset_id": "clay_quarry",
+    "level": 8,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l03_damaged",
+    "name": "clay_quarry_l08_damaged",
+    "asset_id": "clay_quarry",
+    "level": 8,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l04_construction",
+    "name": "clay_quarry_l09_construction",
+    "asset_id": "clay_quarry",
+    "level": 9,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l04_damaged",
+    "name": "clay_quarry_l09_damaged",
+    "asset_id": "clay_quarry",
+    "level": 9,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l05_construction",
+    "name": "clay_quarry_l10_construction",
+    "asset_id": "clay_quarry",
+    "level": 10,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l05_damaged",
+    "name": "clay_quarry_l10_damaged",
+    "asset_id": "clay_quarry",
+    "level": 10,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l06_construction",
+    "name": "clay_quarry_l11_construction",
+    "asset_id": "clay_quarry",
+    "level": 11,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "wood_house_l06_damaged",
+    "name": "clay_quarry_l11_damaged",
+    "asset_id": "clay_quarry",
+    "level": 11,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "town_hall_l01_construction",
+    "name": "clay_quarry_l12_construction",
+    "asset_id": "clay_quarry",
+    "level": 12,
+    "state": "construction",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   },
   {
-    "name": "town_hall_l01_damaged",
+    "name": "clay_quarry_l12_damaged",
+    "asset_id": "clay_quarry",
+    "level": 12,
+    "state": "damaged",
+    "ground_found": true,
     "matches_active": true,
     "active_parts": 5,
     "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l02_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l02_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l03_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l03_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l04_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l04_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l05_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l05_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l06_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l06_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l07_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l07_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l08_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l08_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l09_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l09_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l10_construction",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "town_hall_l10_damaged",
-    "matches_active": true,
-    "active_parts": 5,
-    "state_parts": 5,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l01_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l01_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l02_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l02_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l03_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l03_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l04_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l04_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l05_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l05_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l06_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l06_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l07_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l07_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l08_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l08_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l09_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l09_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l10_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l10_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l11_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l11_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l12_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l12_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l13_construction",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
-  },
-  {
-    "name": "lumber_yard_l13_damaged",
-    "matches_active": true,
-    "active_parts": 3,
-    "state_parts": 3,
-    "sprite_aligned": true
+    "sprite_aligned": true,
+    "error": null
   }
 ]

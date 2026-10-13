@@ -1,0 +1,2737 @@
+{
+  "asset_id": "herb_bed",
+  "category": "fields",
+  "display_name": "Травяная грядка",
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "pipeline": "blender_mcp_midpoly",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "herb_bed_l01_l09.blend",
+  "items": [
+    {
+      "id": "herb_bed_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "glb": "herb_bed_l01_stage01.glb",
+      "png": "herb_bed_l01_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 2970,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 146176
+    },
+    {
+      "id": "herb_bed_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "glb": "herb_bed_l01_stage02.glb",
+      "png": "herb_bed_l01_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3332,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 180304
+    },
+    {
+      "id": "herb_bed_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "glb": "herb_bed_l01_stage03.glb",
+      "png": "herb_bed_l01_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3666,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 215944
+    },
+    {
+      "id": "herb_bed_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "herb_bed_l01_active.glb",
+      "png": "herb_bed_l01_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3666,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 215952
+    },
+    {
+      "id": "herb_bed_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "herb_bed_l01_construction.glb",
+      "png": "herb_bed_l01_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 2438,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 104424
+    },
+    {
+      "id": "herb_bed_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "herb_bed_l01_damaged.glb",
+      "png": "herb_bed_l01_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3764,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 181952
+    },
+    {
+      "id": "herb_bed_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "glb": "herb_bed_l01_ruined.glb",
+      "png": "herb_bed_l01_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3266,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 117404
+    },
+    {
+      "id": "herb_bed_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "glb": "herb_bed_l01_super_stage01.glb",
+      "png": "herb_bed_l01_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3242,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 165800
+    },
+    {
+      "id": "herb_bed_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "glb": "herb_bed_l01_super_stage02.glb",
+      "png": "herb_bed_l01_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3650,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 204996
+    },
+    {
+      "id": "herb_bed_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "glb": "herb_bed_l01_super_stage03.glb",
+      "png": "herb_bed_l01_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4010,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 242264
+    },
+    {
+      "id": "herb_bed_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "glb": "herb_bed_l01_super_stage04.glb",
+      "png": "herb_bed_l01_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4342,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 276916
+    },
+    {
+      "id": "herb_bed_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "glb": "herb_bed_l01_super_stage05.glb",
+      "png": "herb_bed_l01_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4700,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 313916
+    },
+    {
+      "id": "herb_bed_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "glb": "herb_bed_l01_super_stage06.glb",
+      "png": "herb_bed_l01_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4700,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 313900
+    },
+    {
+      "id": "herb_bed_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "glb": "herb_bed_l02_stage01.glb",
+      "png": "herb_bed_l02_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3512,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 173824
+    },
+    {
+      "id": "herb_bed_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "glb": "herb_bed_l02_stage02.glb",
+      "png": "herb_bed_l02_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3960,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 215560
+    },
+    {
+      "id": "herb_bed_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "glb": "herb_bed_l02_stage03.glb",
+      "png": "herb_bed_l02_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4340,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 256056
+    },
+    {
+      "id": "herb_bed_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "herb_bed_l02_active.glb",
+      "png": "herb_bed_l02_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4340,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 256052
+    },
+    {
+      "id": "herb_bed_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "herb_bed_l02_construction.glb",
+      "png": "herb_bed_l02_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 2680,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 123108
+    },
+    {
+      "id": "herb_bed_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "herb_bed_l02_damaged.glb",
+      "png": "herb_bed_l02_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4196,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 200600
+    },
+    {
+      "id": "herb_bed_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "glb": "herb_bed_l02_ruined.glb",
+      "png": "herb_bed_l02_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3566,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 126092
+    },
+    {
+      "id": "herb_bed_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "glb": "herb_bed_l02_super_stage01.glb",
+      "png": "herb_bed_l02_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3784,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 193376
+    },
+    {
+      "id": "herb_bed_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "glb": "herb_bed_l02_super_stage02.glb",
+      "png": "herb_bed_l02_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4278,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 240264
+    },
+    {
+      "id": "herb_bed_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "glb": "herb_bed_l02_super_stage03.glb",
+      "png": "herb_bed_l02_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4684,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 282284
+    },
+    {
+      "id": "herb_bed_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "glb": "herb_bed_l02_super_stage04.glb",
+      "png": "herb_bed_l02_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5042,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 319676
+    },
+    {
+      "id": "herb_bed_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "glb": "herb_bed_l02_super_stage05.glb",
+      "png": "herb_bed_l02_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5224,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 338376
+    },
+    {
+      "id": "herb_bed_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "glb": "herb_bed_l02_super_stage06.glb",
+      "png": "herb_bed_l02_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5224,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 338332
+    },
+    {
+      "id": "herb_bed_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "glb": "herb_bed_l03_stage01.glb",
+      "png": "herb_bed_l03_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4264,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 233040
+    },
+    {
+      "id": "herb_bed_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "glb": "herb_bed_l03_stage02.glb",
+      "png": "herb_bed_l03_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4712,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 274816
+    },
+    {
+      "id": "herb_bed_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "glb": "herb_bed_l03_stage03.glb",
+      "png": "herb_bed_l03_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5092,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 314952
+    },
+    {
+      "id": "herb_bed_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "herb_bed_l03_active.glb",
+      "png": "herb_bed_l03_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5092,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 314952
+    },
+    {
+      "id": "herb_bed_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "herb_bed_l03_construction.glb",
+      "png": "herb_bed_l03_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 2680,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 123152
+    },
+    {
+      "id": "herb_bed_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "herb_bed_l03_damaged.glb",
+      "png": "herb_bed_l03_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4948,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 259096
+    },
+    {
+      "id": "herb_bed_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "glb": "herb_bed_l03_ruined.glb",
+      "png": "herb_bed_l03_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4318,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 184452
+    },
+    {
+      "id": "herb_bed_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "glb": "herb_bed_l03_super_stage01.glb",
+      "png": "herb_bed_l03_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4536,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 252360
+    },
+    {
+      "id": "herb_bed_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "glb": "herb_bed_l03_super_stage02.glb",
+      "png": "herb_bed_l03_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5030,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 298880
+    },
+    {
+      "id": "herb_bed_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "glb": "herb_bed_l03_super_stage03.glb",
+      "png": "herb_bed_l03_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5436,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 340992
+    },
+    {
+      "id": "herb_bed_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "glb": "herb_bed_l03_super_stage04.glb",
+      "png": "herb_bed_l03_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5794,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 378512
+    },
+    {
+      "id": "herb_bed_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "glb": "herb_bed_l03_super_stage05.glb",
+      "png": "herb_bed_l03_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5976,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 397240
+    },
+    {
+      "id": "herb_bed_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "glb": "herb_bed_l03_super_stage06.glb",
+      "png": "herb_bed_l03_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5976,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 397344
+    },
+    {
+      "id": "herb_bed_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "glb": "herb_bed_l04_stage01.glb",
+      "png": "herb_bed_l04_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4934,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 251120
+    },
+    {
+      "id": "herb_bed_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "glb": "herb_bed_l04_stage02.glb",
+      "png": "herb_bed_l04_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5468,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 300564
+    },
+    {
+      "id": "herb_bed_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "glb": "herb_bed_l04_stage03.glb",
+      "png": "herb_bed_l04_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5894,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 345552
+    },
+    {
+      "id": "herb_bed_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "herb_bed_l04_active.glb",
+      "png": "herb_bed_l04_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5894,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 345592
+    },
+    {
+      "id": "herb_bed_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "herb_bed_l04_construction.glb",
+      "png": "herb_bed_l04_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 2698,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 126348
+    },
+    {
+      "id": "herb_bed_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "herb_bed_l04_damaged.glb",
+      "png": "herb_bed_l04_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5704,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 284844
+    },
+    {
+      "id": "herb_bed_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "glb": "herb_bed_l04_ruined.glb",
+      "png": "herb_bed_l04_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4970,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 199328
+    },
+    {
+      "id": "herb_bed_l04_super_stage01",
+      "level": 4,
+      "state": "super_stage01",
+      "glb": "herb_bed_l04_super_stage01.glb",
+      "png": "herb_bed_l04_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5206,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 270400
+    },
+    {
+      "id": "herb_bed_l04_super_stage02",
+      "level": 4,
+      "state": "super_stage02",
+      "glb": "herb_bed_l04_super_stage02.glb",
+      "png": "herb_bed_l04_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5786,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 324692
+    },
+    {
+      "id": "herb_bed_l04_super_stage03",
+      "level": 4,
+      "state": "super_stage03",
+      "glb": "herb_bed_l04_super_stage03.glb",
+      "png": "herb_bed_l04_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6238,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 371652
+    },
+    {
+      "id": "herb_bed_l04_super_stage04",
+      "level": 4,
+      "state": "super_stage04",
+      "glb": "herb_bed_l04_super_stage04.glb",
+      "png": "herb_bed_l04_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6446,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 393632
+    },
+    {
+      "id": "herb_bed_l04_super_stage05",
+      "level": 4,
+      "state": "super_stage05",
+      "glb": "herb_bed_l04_super_stage05.glb",
+      "png": "herb_bed_l04_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6628,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 412408
+    },
+    {
+      "id": "herb_bed_l04_super_stage06",
+      "level": 4,
+      "state": "super_stage06",
+      "glb": "herb_bed_l04_super_stage06.glb",
+      "png": "herb_bed_l04_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6628,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 412416
+    },
+    {
+      "id": "herb_bed_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "glb": "herb_bed_l05_stage01.glb",
+      "png": "herb_bed_l05_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6294,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 273744
+    },
+    {
+      "id": "herb_bed_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "glb": "herb_bed_l05_stage02.glb",
+      "png": "herb_bed_l05_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6828,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 323252
+    },
+    {
+      "id": "herb_bed_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "glb": "herb_bed_l05_stage03.glb",
+      "png": "herb_bed_l05_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7254,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 368284
+    },
+    {
+      "id": "herb_bed_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "herb_bed_l05_active.glb",
+      "png": "herb_bed_l05_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7254,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 368284
+    },
+    {
+      "id": "herb_bed_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "herb_bed_l05_construction.glb",
+      "png": "herb_bed_l05_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3562,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 137056
+    },
+    {
+      "id": "herb_bed_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "herb_bed_l05_damaged.glb",
+      "png": "herb_bed_l05_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6632,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 302220
+    },
+    {
+      "id": "herb_bed_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "glb": "herb_bed_l05_ruined.glb",
+      "png": "herb_bed_l05_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5142,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 207396
+    },
+    {
+      "id": "herb_bed_l05_super_stage01",
+      "level": 5,
+      "state": "super_stage01",
+      "glb": "herb_bed_l05_super_stage01.glb",
+      "png": "herb_bed_l05_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6566,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 292808
+    },
+    {
+      "id": "herb_bed_l05_super_stage02",
+      "level": 5,
+      "state": "super_stage02",
+      "glb": "herb_bed_l05_super_stage02.glb",
+      "png": "herb_bed_l05_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7146,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 347132
+    },
+    {
+      "id": "herb_bed_l05_super_stage03",
+      "level": 5,
+      "state": "super_stage03",
+      "glb": "herb_bed_l05_super_stage03.glb",
+      "png": "herb_bed_l05_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7598,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 393984
+    },
+    {
+      "id": "herb_bed_l05_super_stage04",
+      "level": 5,
+      "state": "super_stage04",
+      "glb": "herb_bed_l05_super_stage04.glb",
+      "png": "herb_bed_l05_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7806,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 416048
+    },
+    {
+      "id": "herb_bed_l05_super_stage05",
+      "level": 5,
+      "state": "super_stage05",
+      "glb": "herb_bed_l05_super_stage05.glb",
+      "png": "herb_bed_l05_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7988,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 434808
+    },
+    {
+      "id": "herb_bed_l05_super_stage06",
+      "level": 5,
+      "state": "super_stage06",
+      "glb": "herb_bed_l05_super_stage06.glb",
+      "png": "herb_bed_l05_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7988,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 434800
+    },
+    {
+      "id": "herb_bed_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "glb": "herb_bed_l06_stage01.glb",
+      "png": "herb_bed_l06_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6768,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 286972
+    },
+    {
+      "id": "herb_bed_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "glb": "herb_bed_l06_stage02.glb",
+      "png": "herb_bed_l06_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7388,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 344200
+    },
+    {
+      "id": "herb_bed_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "glb": "herb_bed_l06_stage03.glb",
+      "png": "herb_bed_l06_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7710,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 378320
+    },
+    {
+      "id": "herb_bed_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "herb_bed_l06_active.glb",
+      "png": "herb_bed_l06_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7710,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 378320
+    },
+    {
+      "id": "herb_bed_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "herb_bed_l06_construction.glb",
+      "png": "herb_bed_l06_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3580,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 140220
+    },
+    {
+      "id": "herb_bed_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "herb_bed_l06_damaged.glb",
+      "png": "herb_bed_l06_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6736,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 313280
+    },
+    {
+      "id": "herb_bed_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "glb": "herb_bed_l06_ruined.glb",
+      "png": "herb_bed_l06_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5166,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 211996
+    },
+    {
+      "id": "herb_bed_l06_super_stage01",
+      "level": 6,
+      "state": "super_stage01",
+      "glb": "herb_bed_l06_super_stage01.glb",
+      "png": "herb_bed_l06_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7040,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 306024
+    },
+    {
+      "id": "herb_bed_l06_super_stage02",
+      "level": 6,
+      "state": "super_stage02",
+      "glb": "herb_bed_l06_super_stage02.glb",
+      "png": "herb_bed_l06_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7706,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 368048
+    },
+    {
+      "id": "herb_bed_l06_super_stage03",
+      "level": 6,
+      "state": "super_stage03",
+      "glb": "herb_bed_l06_super_stage03.glb",
+      "png": "herb_bed_l06_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8054,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 404172
+    },
+    {
+      "id": "herb_bed_l06_super_stage04",
+      "level": 6,
+      "state": "super_stage04",
+      "glb": "herb_bed_l06_super_stage04.glb",
+      "png": "herb_bed_l06_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8262,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 425956
+    },
+    {
+      "id": "herb_bed_l06_super_stage05",
+      "level": 6,
+      "state": "super_stage05",
+      "glb": "herb_bed_l06_super_stage05.glb",
+      "png": "herb_bed_l06_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8444,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 444784
+    },
+    {
+      "id": "herb_bed_l06_super_stage06",
+      "level": 6,
+      "state": "super_stage06",
+      "glb": "herb_bed_l06_super_stage06.glb",
+      "png": "herb_bed_l06_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8444,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 444764
+    },
+    {
+      "id": "herb_bed_l07_stage01",
+      "level": 7,
+      "state": "stage01",
+      "glb": "herb_bed_l07_stage01.glb",
+      "png": "herb_bed_l07_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7240,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 317760
+    },
+    {
+      "id": "herb_bed_l07_stage02",
+      "level": 7,
+      "state": "stage02",
+      "glb": "herb_bed_l07_stage02.glb",
+      "png": "herb_bed_l07_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7860,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 374948
+    },
+    {
+      "id": "herb_bed_l07_stage03",
+      "level": 7,
+      "state": "stage03",
+      "glb": "herb_bed_l07_stage03.glb",
+      "png": "herb_bed_l07_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8182,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 408952
+    },
+    {
+      "id": "herb_bed_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "herb_bed_l07_active.glb",
+      "png": "herb_bed_l07_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8182,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 408952
+    },
+    {
+      "id": "herb_bed_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "herb_bed_l07_construction.glb",
+      "png": "herb_bed_l07_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3580,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 140172
+    },
+    {
+      "id": "herb_bed_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "herb_bed_l07_damaged.glb",
+      "png": "herb_bed_l07_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6736,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 313248
+    },
+    {
+      "id": "herb_bed_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "glb": "herb_bed_l07_ruined.glb",
+      "png": "herb_bed_l07_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5166,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 212000
+    },
+    {
+      "id": "herb_bed_l07_super_stage01",
+      "level": 7,
+      "state": "super_stage01",
+      "glb": "herb_bed_l07_super_stage01.glb",
+      "png": "herb_bed_l07_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7512,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 336472
+    },
+    {
+      "id": "herb_bed_l07_super_stage02",
+      "level": 7,
+      "state": "super_stage02",
+      "glb": "herb_bed_l07_super_stage02.glb",
+      "png": "herb_bed_l07_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8178,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 398288
+    },
+    {
+      "id": "herb_bed_l07_super_stage03",
+      "level": 7,
+      "state": "super_stage03",
+      "glb": "herb_bed_l07_super_stage03.glb",
+      "png": "herb_bed_l07_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8526,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 434408
+    },
+    {
+      "id": "herb_bed_l07_super_stage04",
+      "level": 7,
+      "state": "super_stage04",
+      "glb": "herb_bed_l07_super_stage04.glb",
+      "png": "herb_bed_l07_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8734,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 456208
+    },
+    {
+      "id": "herb_bed_l07_super_stage05",
+      "level": 7,
+      "state": "super_stage05",
+      "glb": "herb_bed_l07_super_stage05.glb",
+      "png": "herb_bed_l07_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8916,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 475156
+    },
+    {
+      "id": "herb_bed_l07_super_stage06",
+      "level": 7,
+      "state": "super_stage06",
+      "glb": "herb_bed_l07_super_stage06.glb",
+      "png": "herb_bed_l07_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8916,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 475132
+    },
+    {
+      "id": "herb_bed_l08_stage01",
+      "level": 8,
+      "state": "stage01",
+      "glb": "herb_bed_l08_stage01.glb",
+      "png": "herb_bed_l08_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7574,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 333692
+    },
+    {
+      "id": "herb_bed_l08_stage02",
+      "level": 8,
+      "state": "stage02",
+      "glb": "herb_bed_l08_stage02.glb",
+      "png": "herb_bed_l08_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8176,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 387756
+    },
+    {
+      "id": "herb_bed_l08_stage03",
+      "level": 8,
+      "state": "stage03",
+      "glb": "herb_bed_l08_stage03.glb",
+      "png": "herb_bed_l08_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8498,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 421784
+    },
+    {
+      "id": "herb_bed_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "herb_bed_l08_active.glb",
+      "png": "herb_bed_l08_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8498,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 421816
+    },
+    {
+      "id": "herb_bed_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "herb_bed_l08_construction.glb",
+      "png": "herb_bed_l08_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3598,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 143384
+    },
+    {
+      "id": "herb_bed_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "herb_bed_l08_damaged.glb",
+      "png": "herb_bed_l08_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6736,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 313392
+    },
+    {
+      "id": "herb_bed_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "glb": "herb_bed_l08_ruined.glb",
+      "png": "herb_bed_l08_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5166,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 212096
+    },
+    {
+      "id": "herb_bed_l08_super_stage01",
+      "level": 8,
+      "state": "super_stage01",
+      "glb": "herb_bed_l08_super_stage01.glb",
+      "png": "herb_bed_l08_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7846,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 352448
+    },
+    {
+      "id": "herb_bed_l08_super_stage02",
+      "level": 8,
+      "state": "super_stage02",
+      "glb": "herb_bed_l08_super_stage02.glb",
+      "png": "herb_bed_l08_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8494,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 411124
+    },
+    {
+      "id": "herb_bed_l08_super_stage03",
+      "level": 8,
+      "state": "super_stage03",
+      "glb": "herb_bed_l08_super_stage03.glb",
+      "png": "herb_bed_l08_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8842,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 447212
+    },
+    {
+      "id": "herb_bed_l08_super_stage04",
+      "level": 8,
+      "state": "super_stage04",
+      "glb": "herb_bed_l08_super_stage04.glb",
+      "png": "herb_bed_l08_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9050,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 469092
+    },
+    {
+      "id": "herb_bed_l08_super_stage05",
+      "level": 8,
+      "state": "super_stage05",
+      "glb": "herb_bed_l08_super_stage05.glb",
+      "png": "herb_bed_l08_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9232,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 488020
+    },
+    {
+      "id": "herb_bed_l08_super_stage06",
+      "level": 8,
+      "state": "super_stage06",
+      "glb": "herb_bed_l08_super_stage06.glb",
+      "png": "herb_bed_l08_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9232,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 488012
+    },
+    {
+      "id": "herb_bed_l09_stage01",
+      "level": 9,
+      "state": "stage01",
+      "glb": "herb_bed_l09_stage01.glb",
+      "png": "herb_bed_l09_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7782,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 343660
+    },
+    {
+      "id": "herb_bed_l09_stage02",
+      "level": 9,
+      "state": "stage02",
+      "glb": "herb_bed_l09_stage02.glb",
+      "png": "herb_bed_l09_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8384,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 397716
+    },
+    {
+      "id": "herb_bed_l09_stage03",
+      "level": 9,
+      "state": "stage03",
+      "glb": "herb_bed_l09_stage03.glb",
+      "png": "herb_bed_l09_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8706,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 431692
+    },
+    {
+      "id": "herb_bed_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "herb_bed_l09_active.glb",
+      "png": "herb_bed_l09_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8706,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 431692
+    },
+    {
+      "id": "herb_bed_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "herb_bed_l09_construction.glb",
+      "png": "herb_bed_l09_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3598,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 143384
+    },
+    {
+      "id": "herb_bed_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "herb_bed_l09_damaged.glb",
+      "png": "herb_bed_l09_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6736,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 313352
+    },
+    {
+      "id": "herb_bed_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "glb": "herb_bed_l09_ruined.glb",
+      "png": "herb_bed_l09_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5166,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 212088
+    },
+    {
+      "id": "herb_bed_l09_super_stage01",
+      "level": 9,
+      "state": "super_stage01",
+      "glb": "herb_bed_l09_super_stage01.glb",
+      "png": "herb_bed_l09_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8054,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 362360
+    },
+    {
+      "id": "herb_bed_l09_super_stage02",
+      "level": 9,
+      "state": "super_stage02",
+      "glb": "herb_bed_l09_super_stage02.glb",
+      "png": "herb_bed_l09_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8702,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 421044
+    },
+    {
+      "id": "herb_bed_l09_super_stage03",
+      "level": 9,
+      "state": "super_stage03",
+      "glb": "herb_bed_l09_super_stage03.glb",
+      "png": "herb_bed_l09_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9050,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 457176
+    },
+    {
+      "id": "herb_bed_l09_super_stage04",
+      "level": 9,
+      "state": "super_stage04",
+      "glb": "herb_bed_l09_super_stage04.glb",
+      "png": "herb_bed_l09_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9258,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 478996
+    },
+    {
+      "id": "herb_bed_l09_super_stage05",
+      "level": 9,
+      "state": "super_stage05",
+      "glb": "herb_bed_l09_super_stage05.glb",
+      "png": "herb_bed_l09_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9440,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 497936
+    },
+    {
+      "id": "herb_bed_l09_super_stage06",
+      "level": 9,
+      "state": "super_stage06",
+      "glb": "herb_bed_l09_super_stage06.glb",
+      "png": "herb_bed_l09_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9440,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 497924
+    }
+  ]
+}

@@ -1,0 +1,2137 @@
+{
+  "asset_id": "oilseed_field",
+  "category": "fields",
+  "display_name": "Масличное поле",
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "pipeline": "blender_mcp_midpoly",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "states": [
+    "stage01",
+    "stage02",
+    "stage03",
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "oilseed_field_l01_l07.blend",
+  "items": [
+    {
+      "id": "oilseed_field_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "glb": "oilseed_field_l01_stage01.glb",
+      "png": "oilseed_field_l01_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3524,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 216176
+    },
+    {
+      "id": "oilseed_field_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "glb": "oilseed_field_l01_stage02.glb",
+      "png": "oilseed_field_l01_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4476,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 304132
+    },
+    {
+      "id": "oilseed_field_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "glb": "oilseed_field_l01_stage03.glb",
+      "png": "oilseed_field_l01_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5820,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 426656
+    },
+    {
+      "id": "oilseed_field_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "oilseed_field_l01_active.glb",
+      "png": "oilseed_field_l01_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5820,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 426664
+    },
+    {
+      "id": "oilseed_field_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "oilseed_field_l01_construction.glb",
+      "png": "oilseed_field_l01_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3764,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 211756
+    },
+    {
+      "id": "oilseed_field_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "oilseed_field_l01_damaged.glb",
+      "png": "oilseed_field_l01_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4064,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 219640
+    },
+    {
+      "id": "oilseed_field_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "glb": "oilseed_field_l01_ruined.glb",
+      "png": "oilseed_field_l01_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3136,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 125484
+    },
+    {
+      "id": "oilseed_field_l01_super_stage01",
+      "level": 1,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l01_super_stage01.glb",
+      "png": "oilseed_field_l01_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4256,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 276920
+    },
+    {
+      "id": "oilseed_field_l01_super_stage02",
+      "level": 1,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l01_super_stage02.glb",
+      "png": "oilseed_field_l01_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5368,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 379464
+    },
+    {
+      "id": "oilseed_field_l01_super_stage03",
+      "level": 1,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l01_super_stage03.glb",
+      "png": "oilseed_field_l01_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6848,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 514308
+    },
+    {
+      "id": "oilseed_field_l01_super_stage04",
+      "level": 1,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l01_super_stage04.glb",
+      "png": "oilseed_field_l01_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8504,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 667060
+    },
+    {
+      "id": "oilseed_field_l01_super_stage05",
+      "level": 1,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l01_super_stage05.glb",
+      "png": "oilseed_field_l01_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10432,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 845096
+    },
+    {
+      "id": "oilseed_field_l01_super_stage06",
+      "level": 1,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l01_super_stage06.glb",
+      "png": "oilseed_field_l01_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11384,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 932956
+    },
+    {
+      "id": "oilseed_field_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "glb": "oilseed_field_l02_stage01.glb",
+      "png": "oilseed_field_l02_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5464,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 297608
+    },
+    {
+      "id": "oilseed_field_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "glb": "oilseed_field_l02_stage02.glb",
+      "png": "oilseed_field_l02_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6552,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 398256
+    },
+    {
+      "id": "oilseed_field_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "glb": "oilseed_field_l02_stage03.glb",
+      "png": "oilseed_field_l02_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8056,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 534892
+    },
+    {
+      "id": "oilseed_field_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "oilseed_field_l02_active.glb",
+      "png": "oilseed_field_l02_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8056,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 534892
+    },
+    {
+      "id": "oilseed_field_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "oilseed_field_l02_construction.glb",
+      "png": "oilseed_field_l02_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4932,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 271428
+    },
+    {
+      "id": "oilseed_field_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "oilseed_field_l02_damaged.glb",
+      "png": "oilseed_field_l02_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5560,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 255948
+    },
+    {
+      "id": "oilseed_field_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "glb": "oilseed_field_l02_ruined.glb",
+      "png": "oilseed_field_l02_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 3684,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 138736
+    },
+    {
+      "id": "oilseed_field_l02_super_stage01",
+      "level": 2,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l02_super_stage01.glb",
+      "png": "oilseed_field_l02_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6332,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 371016
+    },
+    {
+      "id": "oilseed_field_l02_super_stage02",
+      "level": 2,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l02_super_stage02.glb",
+      "png": "oilseed_field_l02_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7580,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 486096
+    },
+    {
+      "id": "oilseed_field_l02_super_stage03",
+      "level": 2,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l02_super_stage03.glb",
+      "png": "oilseed_field_l02_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9220,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 635464
+    },
+    {
+      "id": "oilseed_field_l02_super_stage04",
+      "level": 2,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l02_super_stage04.glb",
+      "png": "oilseed_field_l02_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11012,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 800544
+    },
+    {
+      "id": "oilseed_field_l02_super_stage05",
+      "level": 2,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l02_super_stage05.glb",
+      "png": "oilseed_field_l02_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11964,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 888752
+    },
+    {
+      "id": "oilseed_field_l02_super_stage06",
+      "level": 2,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l02_super_stage06.glb",
+      "png": "oilseed_field_l02_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12916,
+      "alpha_bounds": [
+        117,
+        217,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 976532
+    },
+    {
+      "id": "oilseed_field_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "glb": "oilseed_field_l03_stage01.glb",
+      "png": "oilseed_field_l03_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6776,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 373080
+    },
+    {
+      "id": "oilseed_field_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "glb": "oilseed_field_l03_stage02.glb",
+      "png": "oilseed_field_l03_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8000,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 486400
+    },
+    {
+      "id": "oilseed_field_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "glb": "oilseed_field_l03_stage03.glb",
+      "png": "oilseed_field_l03_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9640,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 635632
+    },
+    {
+      "id": "oilseed_field_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "oilseed_field_l03_active.glb",
+      "png": "oilseed_field_l03_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9640,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 635628
+    },
+    {
+      "id": "oilseed_field_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "oilseed_field_l03_construction.glb",
+      "png": "oilseed_field_l03_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5692,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 326608
+    },
+    {
+      "id": "oilseed_field_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "oilseed_field_l03_damaged.glb",
+      "png": "oilseed_field_l03_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6184,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 281668
+    },
+    {
+      "id": "oilseed_field_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "glb": "oilseed_field_l03_ruined.glb",
+      "png": "oilseed_field_l03_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4144,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 164492
+    },
+    {
+      "id": "oilseed_field_l03_super_stage01",
+      "level": 3,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l03_super_stage01.glb",
+      "png": "oilseed_field_l03_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7644,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 446384
+    },
+    {
+      "id": "oilseed_field_l03_super_stage02",
+      "level": 3,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l03_super_stage02.glb",
+      "png": "oilseed_field_l03_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9028,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 574048
+    },
+    {
+      "id": "oilseed_field_l03_super_stage03",
+      "level": 3,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l03_super_stage03.glb",
+      "png": "oilseed_field_l03_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10804,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 735864
+    },
+    {
+      "id": "oilseed_field_l03_super_stage04",
+      "level": 3,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l03_super_stage04.glb",
+      "png": "oilseed_field_l03_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12732,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 913272
+    },
+    {
+      "id": "oilseed_field_l03_super_stage05",
+      "level": 3,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l03_super_stage05.glb",
+      "png": "oilseed_field_l03_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13684,
+      "alpha_bounds": [
+        117,
+        220,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1002020
+    },
+    {
+      "id": "oilseed_field_l03_super_stage06",
+      "level": 3,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l03_super_stage06.glb",
+      "png": "oilseed_field_l03_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13684,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1002252
+    },
+    {
+      "id": "oilseed_field_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "glb": "oilseed_field_l04_stage01.glb",
+      "png": "oilseed_field_l04_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8656,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 452336
+    },
+    {
+      "id": "oilseed_field_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "glb": "oilseed_field_l04_stage02.glb",
+      "png": "oilseed_field_l04_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10016,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 578432
+    },
+    {
+      "id": "oilseed_field_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "glb": "oilseed_field_l04_stage03.glb",
+      "png": "oilseed_field_l04_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11816,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 741912
+    },
+    {
+      "id": "oilseed_field_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "oilseed_field_l04_active.glb",
+      "png": "oilseed_field_l04_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11816,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 741912
+    },
+    {
+      "id": "oilseed_field_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "oilseed_field_l04_construction.glb",
+      "png": "oilseed_field_l04_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6816,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 388020
+    },
+    {
+      "id": "oilseed_field_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "oilseed_field_l04_damaged.glb",
+      "png": "oilseed_field_l04_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 8020,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 344668
+    },
+    {
+      "id": "oilseed_field_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "glb": "oilseed_field_l04_ruined.glb",
+      "png": "oilseed_field_l04_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 4864,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 179296
+    },
+    {
+      "id": "oilseed_field_l04_super_stage01",
+      "level": 4,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l04_super_stage01.glb",
+      "png": "oilseed_field_l04_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9524,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 525544
+    },
+    {
+      "id": "oilseed_field_l04_super_stage02",
+      "level": 4,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l04_super_stage02.glb",
+      "png": "oilseed_field_l04_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11044,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 665856
+    },
+    {
+      "id": "oilseed_field_l04_super_stage03",
+      "level": 4,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l04_super_stage03.glb",
+      "png": "oilseed_field_l04_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12980,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 842040
+    },
+    {
+      "id": "oilseed_field_l04_super_stage04",
+      "level": 4,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l04_super_stage04.glb",
+      "png": "oilseed_field_l04_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14068,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 943072
+    },
+    {
+      "id": "oilseed_field_l04_super_stage05",
+      "level": 4,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l04_super_stage05.glb",
+      "png": "oilseed_field_l04_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15020,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1031036
+    },
+    {
+      "id": "oilseed_field_l04_super_stage06",
+      "level": 4,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l04_super_stage06.glb",
+      "png": "oilseed_field_l04_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15020,
+      "alpha_bounds": [
+        117,
+        214,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1030944
+    },
+    {
+      "id": "oilseed_field_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "glb": "oilseed_field_l05_stage01.glb",
+      "png": "oilseed_field_l05_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9852,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 471516
+    },
+    {
+      "id": "oilseed_field_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "glb": "oilseed_field_l05_stage02.glb",
+      "png": "oilseed_field_l05_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11212,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 597548
+    },
+    {
+      "id": "oilseed_field_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "glb": "oilseed_field_l05_stage03.glb",
+      "png": "oilseed_field_l05_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13012,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 761204
+    },
+    {
+      "id": "oilseed_field_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "oilseed_field_l05_active.glb",
+      "png": "oilseed_field_l05_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13012,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 761204
+    },
+    {
+      "id": "oilseed_field_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "oilseed_field_l05_construction.glb",
+      "png": "oilseed_field_l05_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 7356,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 395180
+    },
+    {
+      "id": "oilseed_field_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "oilseed_field_l05_damaged.glb",
+      "png": "oilseed_field_l05_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9216,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 363772
+    },
+    {
+      "id": "oilseed_field_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "glb": "oilseed_field_l05_ruined.glb",
+      "png": "oilseed_field_l05_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 5412,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 190376
+    },
+    {
+      "id": "oilseed_field_l05_super_stage01",
+      "level": 5,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l05_super_stage01.glb",
+      "png": "oilseed_field_l05_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 10856,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 557448
+    },
+    {
+      "id": "oilseed_field_l05_super_stage02",
+      "level": 5,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l05_super_stage02.glb",
+      "png": "oilseed_field_l05_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12376,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 697976
+    },
+    {
+      "id": "oilseed_field_l05_super_stage03",
+      "level": 5,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l05_super_stage03.glb",
+      "png": "oilseed_field_l05_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14312,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 874068
+    },
+    {
+      "id": "oilseed_field_l05_super_stage04",
+      "level": 5,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l05_super_stage04.glb",
+      "png": "oilseed_field_l05_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15264,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 962064
+    },
+    {
+      "id": "oilseed_field_l05_super_stage05",
+      "level": 5,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l05_super_stage05.glb",
+      "png": "oilseed_field_l05_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16216,
+      "alpha_bounds": [
+        117,
+        218,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1050020
+    },
+    {
+      "id": "oilseed_field_l05_super_stage06",
+      "level": 5,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l05_super_stage06.glb",
+      "png": "oilseed_field_l05_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16216,
+      "alpha_bounds": [
+        117,
+        213,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1050100
+    },
+    {
+      "id": "oilseed_field_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "glb": "oilseed_field_l06_stage01.glb",
+      "png": "oilseed_field_l06_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12732,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 637192
+    },
+    {
+      "id": "oilseed_field_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "glb": "oilseed_field_l06_stage02.glb",
+      "png": "oilseed_field_l06_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14364,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 788236
+    },
+    {
+      "id": "oilseed_field_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "glb": "oilseed_field_l06_stage03.glb",
+      "png": "oilseed_field_l06_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15484,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 889168
+    },
+    {
+      "id": "oilseed_field_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "oilseed_field_l06_active.glb",
+      "png": "oilseed_field_l06_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15484,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 889168
+    },
+    {
+      "id": "oilseed_field_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "oilseed_field_l06_construction.glb",
+      "png": "oilseed_field_l06_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9296,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 532256
+    },
+    {
+      "id": "oilseed_field_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "oilseed_field_l06_damaged.glb",
+      "png": "oilseed_field_l06_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11680,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 483540
+    },
+    {
+      "id": "oilseed_field_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "glb": "oilseed_field_l06_ruined.glb",
+      "png": "oilseed_field_l06_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6068,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 204392
+    },
+    {
+      "id": "oilseed_field_l06_super_stage01",
+      "level": 6,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l06_super_stage01.glb",
+      "png": "oilseed_field_l06_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13736,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 722880
+    },
+    {
+      "id": "oilseed_field_l06_super_stage02",
+      "level": 6,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l06_super_stage02.glb",
+      "png": "oilseed_field_l06_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15528,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 888376
+    },
+    {
+      "id": "oilseed_field_l06_super_stage03",
+      "level": 6,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l06_super_stage03.glb",
+      "png": "oilseed_field_l06_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16784,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1001832
+    },
+    {
+      "id": "oilseed_field_l06_super_stage04",
+      "level": 6,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l06_super_stage04.glb",
+      "png": "oilseed_field_l06_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17736,
+      "alpha_bounds": [
+        117,
+        221,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1089640
+    },
+    {
+      "id": "oilseed_field_l06_super_stage05",
+      "level": 6,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l06_super_stage05.glb",
+      "png": "oilseed_field_l06_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17736,
+      "alpha_bounds": [
+        117,
+        216,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1089660
+    },
+    {
+      "id": "oilseed_field_l06_super_stage06",
+      "level": 6,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l06_super_stage06.glb",
+      "png": "oilseed_field_l06_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17736,
+      "alpha_bounds": [
+        117,
+        212,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1089656
+    },
+    {
+      "id": "oilseed_field_l07_stage01",
+      "level": 7,
+      "state": "stage01",
+      "glb": "oilseed_field_l07_stage01.glb",
+      "png": "oilseed_field_l07_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 12860,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 640780
+    },
+    {
+      "id": "oilseed_field_l07_stage02",
+      "level": 7,
+      "state": "stage02",
+      "glb": "oilseed_field_l07_stage02.glb",
+      "png": "oilseed_field_l07_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 14492,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 792004
+    },
+    {
+      "id": "oilseed_field_l07_stage03",
+      "level": 7,
+      "state": "stage03",
+      "glb": "oilseed_field_l07_stage03.glb",
+      "png": "oilseed_field_l07_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15612,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 892880
+    },
+    {
+      "id": "oilseed_field_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "oilseed_field_l07_active.glb",
+      "png": "oilseed_field_l07_active.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15612,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 892876
+    },
+    {
+      "id": "oilseed_field_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "oilseed_field_l07_construction.glb",
+      "png": "oilseed_field_l07_construction.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 9296,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 532040
+    },
+    {
+      "id": "oilseed_field_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "oilseed_field_l07_damaged.glb",
+      "png": "oilseed_field_l07_damaged.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 11680,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 483492
+    },
+    {
+      "id": "oilseed_field_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "glb": "oilseed_field_l07_ruined.glb",
+      "png": "oilseed_field_l07_ruined.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 6068,
+      "alpha_bounds": [
+        117,
+        222,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 204396
+    },
+    {
+      "id": "oilseed_field_l07_super_stage01",
+      "level": 7,
+      "state": "super_stage01",
+      "glb": "oilseed_field_l07_super_stage01.glb",
+      "png": "oilseed_field_l07_super_stage01.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 13864,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 726212
+    },
+    {
+      "id": "oilseed_field_l07_super_stage02",
+      "level": 7,
+      "state": "super_stage02",
+      "glb": "oilseed_field_l07_super_stage02.glb",
+      "png": "oilseed_field_l07_super_stage02.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 15656,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 891876
+    },
+    {
+      "id": "oilseed_field_l07_super_stage03",
+      "level": 7,
+      "state": "super_stage03",
+      "glb": "oilseed_field_l07_super_stage03.glb",
+      "png": "oilseed_field_l07_super_stage03.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 16912,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1005320
+    },
+    {
+      "id": "oilseed_field_l07_super_stage04",
+      "level": 7,
+      "state": "super_stage04",
+      "glb": "oilseed_field_l07_super_stage04.glb",
+      "png": "oilseed_field_l07_super_stage04.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17864,
+      "alpha_bounds": [
+        117,
+        219,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1093136
+    },
+    {
+      "id": "oilseed_field_l07_super_stage05",
+      "level": 7,
+      "state": "super_stage05",
+      "glb": "oilseed_field_l07_super_stage05.glb",
+      "png": "oilseed_field_l07_super_stage05.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17864,
+      "alpha_bounds": [
+        117,
+        215,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1093096
+    },
+    {
+      "id": "oilseed_field_l07_super_stage06",
+      "level": 7,
+      "state": "super_stage06",
+      "glb": "oilseed_field_l07_super_stage06.glb",
+      "png": "oilseed_field_l07_super_stage06.png",
+      "anchor": [
+        256,
+        292
+      ],
+      "triangles": 17864,
+      "alpha_bounds": [
+        117,
+        211,
+        396,
+        366
+      ],
+      "png_size": [
+        512,
+        384
+      ],
+      "glb_bytes": 1093132
+    }
+  ]
+}

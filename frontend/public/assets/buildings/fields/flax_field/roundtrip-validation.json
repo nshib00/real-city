@@ -1,0 +1,353 @@
+[
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_active.glb",
+    "objects": 150,
+    "meshes": 150,
+    "triangles": 2312,
+    "materials": 17,
+    "collection": "roundtrip_001",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_construction.glb",
+    "objects": 69,
+    "meshes": 69,
+    "triangles": 1132,
+    "materials": 12,
+    "collection": "roundtrip_002",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_damaged.glb",
+    "objects": 118,
+    "meshes": 118,
+    "triangles": 1800,
+    "materials": 15,
+    "collection": "roundtrip_003",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_ruined.glb",
+    "objects": 62,
+    "meshes": 62,
+    "triangles": 984,
+    "materials": 13,
+    "collection": "roundtrip_004",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_stage01.glb",
+    "objects": 74,
+    "meshes": 74,
+    "triangles": 1184,
+    "materials": 14,
+    "collection": "roundtrip_005",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_stage02.glb",
+    "objects": 146,
+    "meshes": 146,
+    "triangles": 2240,
+    "materials": 15,
+    "collection": "roundtrip_006",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_stage03.glb",
+    "objects": 150,
+    "meshes": 150,
+    "triangles": 2312,
+    "materials": 17,
+    "collection": "roundtrip_007",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_super_stage01.glb",
+    "objects": 162,
+    "meshes": 162,
+    "triangles": 2496,
+    "materials": 16,
+    "collection": "roundtrip_008",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_super_stage02.glb",
+    "objects": 162,
+    "meshes": 162,
+    "triangles": 2496,
+    "materials": 16,
+    "collection": "roundtrip_009",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_super_stage03.glb",
+    "objects": 165,
+    "meshes": 165,
+    "triangles": 2580,
+    "materials": 17,
+    "collection": "roundtrip_010",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_super_stage04.glb",
+    "objects": 169,
+    "meshes": 169,
+    "triangles": 2652,
+    "materials": 18,
+    "collection": "roundtrip_011",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_super_stage05.glb",
+    "objects": 169,
+    "meshes": 169,
+    "triangles": 2652,
+    "materials": 17,
+    "collection": "roundtrip_012",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l01_super_stage06.glb",
+    "objects": 169,
+    "meshes": 169,
+    "triangles": 2652,
+    "materials": 17,
+    "collection": "roundtrip_013",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_active.glb",
+    "objects": 189,
+    "meshes": 189,
+    "triangles": 3020,
+    "materials": 17,
+    "collection": "roundtrip_014",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_construction.glb",
+    "objects": 73,
+    "meshes": 73,
+    "triangles": 1212,
+    "materials": 13,
+    "collection": "roundtrip_015",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_damaged.glb",
+    "objects": 130,
+    "meshes": 130,
+    "triangles": 1992,
+    "materials": 15,
+    "collection": "roundtrip_016",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_ruined.glb",
+    "objects": 65,
+    "meshes": 65,
+    "triangles": 1044,
+    "materials": 13,
+    "collection": "roundtrip_017",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_stage01.glb",
+    "objects": 97,
+    "meshes": 97,
+    "triangles": 1644,
+    "materials": 16,
+    "collection": "roundtrip_018",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_stage02.glb",
+    "objects": 181,
+    "meshes": 181,
+    "triangles": 2876,
+    "materials": 17,
+    "collection": "roundtrip_019",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_stage03.glb",
+    "objects": 189,
+    "meshes": 189,
+    "triangles": 3020,
+    "materials": 17,
+    "collection": "roundtrip_020",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_super_stage01.glb",
+    "objects": 197,
+    "meshes": 197,
+    "triangles": 3132,
+    "materials": 18,
+    "collection": "roundtrip_021",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_super_stage02.glb",
+    "objects": 197,
+    "meshes": 197,
+    "triangles": 3132,
+    "materials": 18,
+    "collection": "roundtrip_022",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_super_stage03.glb",
+    "objects": 200,
+    "meshes": 200,
+    "triangles": 3216,
+    "materials": 18,
+    "collection": "roundtrip_023",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_super_stage04.glb",
+    "objects": 204,
+    "meshes": 204,
+    "triangles": 3288,
+    "materials": 19,
+    "collection": "roundtrip_024",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_super_stage05.glb",
+    "objects": 204,
+    "meshes": 204,
+    "triangles": 3288,
+    "materials": 18,
+    "collection": "roundtrip_025",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l02_super_stage06.glb",
+    "objects": 204,
+    "meshes": 204,
+    "triangles": 3288,
+    "materials": 18,
+    "collection": "roundtrip_026",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_active.glb",
+    "objects": 229,
+    "meshes": 229,
+    "triangles": 3740,
+    "materials": 19,
+    "collection": "roundtrip_027",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_construction.glb",
+    "objects": 77,
+    "meshes": 77,
+    "triangles": 1292,
+    "materials": 13,
+    "collection": "roundtrip_028",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_damaged.glb",
+    "objects": 142,
+    "meshes": 142,
+    "triangles": 2184,
+    "materials": 15,
+    "collection": "roundtrip_029",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_ruined.glb",
+    "objects": 68,
+    "meshes": 68,
+    "triangles": 1104,
+    "materials": 13,
+    "collection": "roundtrip_030",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_stage01.glb",
+    "objects": 125,
+    "meshes": 125,
+    "triangles": 2188,
+    "materials": 18,
+    "collection": "roundtrip_031",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_stage02.glb",
+    "objects": 221,
+    "meshes": 221,
+    "triangles": 3596,
+    "materials": 19,
+    "collection": "roundtrip_032",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_stage03.glb",
+    "objects": 229,
+    "meshes": 229,
+    "triangles": 3740,
+    "materials": 19,
+    "collection": "roundtrip_033",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_super_stage01.glb",
+    "objects": 239,
+    "meshes": 239,
+    "triangles": 3876,
+    "materials": 21,
+    "collection": "roundtrip_034",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_super_stage02.glb",
+    "objects": 239,
+    "meshes": 239,
+    "triangles": 3876,
+    "materials": 21,
+    "collection": "roundtrip_035",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_super_stage03.glb",
+    "objects": 242,
+    "meshes": 242,
+    "triangles": 3960,
+    "materials": 21,
+    "collection": "roundtrip_036",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_super_stage04.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 4032,
+    "materials": 22,
+    "collection": "roundtrip_037",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_super_stage05.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 4032,
+    "materials": 21,
+    "collection": "roundtrip_038",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/fields/flax_field/flax_field_l03_super_stage06.glb",
+    "objects": 246,
+    "meshes": 246,
+    "triangles": 4032,
+    "materials": 21,
+    "collection": "roundtrip_039",
+    "ok": true
+  }
+]

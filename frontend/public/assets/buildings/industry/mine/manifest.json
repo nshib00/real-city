@@ -1,0 +1,1396 @@
+{
+  "asset_id": "mine",
+  "display_name": "Шахта",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/mine/mine_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/mine/mine_levels.glb",
+  "material_map": {},
+  "items": [
+    {
+      "id": "mine_l01_active",
+      "level": 1,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_active.png",
+      "triangles": 4868,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3674119710922241
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.png",
+      "triangles": 5012,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3674119710922241
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.png",
+      "triangles": 5324,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3674119710922241
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l02_active",
+      "level": 2,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_active.png",
+      "triangles": 5440,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3977916240692139
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_construction.png",
+      "triangles": 5660,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3977916240692139
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_damaged.png",
+      "triangles": 5720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3977916240692139
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l03_active",
+      "level": 3,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_active.png",
+      "triangles": 6136,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4281712770462036
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_construction.png",
+      "triangles": 6368,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4281712770462036
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_damaged.png",
+      "triangles": 6284,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4281712770462036
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l04_active",
+      "level": 4,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_active.png",
+      "triangles": 6796,
+      "bounds": [
+        [
+          -1.8299376964569092,
+          1.8299376964569092
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6217999458312988
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_construction.png",
+      "triangles": 7016,
+      "bounds": [
+        [
+          -1.8299376964569092,
+          1.8299376964569092
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.458551049232483
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_damaged.png",
+      "triangles": 6944,
+      "bounds": [
+        [
+          -1.8299376964569092,
+          1.8299376964569092
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6217999458312988
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l05_active",
+      "level": 5,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_active.png",
+      "triangles": 7832,
+      "bounds": [
+        [
+          -1.8697190284729004,
+          1.8697190284729004
+        ],
+        [
+          -2.018911361694336,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.667699933052063
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_construction.png",
+      "triangles": 8116,
+      "bounds": [
+        [
+          -1.8697190284729004,
+          1.8697190284729004
+        ],
+        [
+          -2.018911361694336,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4889307022094727
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_damaged.png",
+      "triangles": 7936,
+      "bounds": [
+        [
+          -1.8697190284729004,
+          1.8697190284729004
+        ],
+        [
+          -2.0183818340301514,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.667699933052063
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l06_active",
+      "level": 6,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_active.png",
+      "triangles": 8212,
+      "bounds": [
+        [
+          -1.9095003604888916,
+          1.9095003604888916
+        ],
+        [
+          -2.051891326904297,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8214000463485718
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_construction.png",
+      "triangles": 9020,
+      "bounds": [
+        [
+          -1.9095003604888916,
+          1.9095003604888916
+        ],
+        [
+          -2.051891326904297,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5193103551864624
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_damaged.png",
+      "triangles": 8624,
+      "bounds": [
+        [
+          -1.9095003604888916,
+          1.9095003604888916
+        ],
+        [
+          -2.0512561798095703,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8214000463485718
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l07_active",
+      "level": 7,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_active.png",
+      "triangles": 8520,
+      "bounds": [
+        [
+          -1.9492815732955933,
+          1.9492815732955933
+        ],
+        [
+          -2.0848710536956787,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.877500057220459
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_construction.png",
+      "triangles": 8888,
+      "bounds": [
+        [
+          -1.9492815732955933,
+          1.9492815732955933
+        ],
+        [
+          -2.0848710536956787,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5496901273727417
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_damaged.png",
+      "triangles": 8932,
+      "bounds": [
+        [
+          -1.9492815732955933,
+          1.9492815732955933
+        ],
+        [
+          -2.08413028717041,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.877500057220459
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l08_active",
+      "level": 8,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_active.png",
+      "triangles": 9680,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.1178507804870605,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9335999488830566
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_construction.png",
+      "triangles": 10224,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.1178507804870605,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5800697803497314
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_damaged.png",
+      "triangles": 10092,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.117004632949829,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9335999488830566
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l09_active",
+      "level": 9,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_active.png",
+      "triangles": 10204,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.1508307456970215,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9897000789642334
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_construction.png",
+      "triangles": 10664,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.1508307456970215,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5951493978500366
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_damaged.png",
+      "triangles": 10660,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.149878978729248,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9897000789642334
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l10_active",
+      "level": 10,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_active.png",
+      "triangles": 11136,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.183810234069824,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.045799970626831
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_construction.png",
+      "triangles": 11264,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.183810234069824,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6345500946044922
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_damaged.png",
+      "triangles": 11592,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.182753324508667,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.045799970626831
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l11_active",
+      "level": 11,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_active.png",
+      "triangles": 11388,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.183810234069824,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.045799970626831
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l11_construction",
+      "level": 11,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_construction.png",
+      "triangles": 11676,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.183810234069824,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6702500581741333
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l11_damaged",
+      "level": 11,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_damaged.png",
+      "triangles": 11656,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.182753324508667,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.045799970626831
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l12_active",
+      "level": 12,
+      "state": "active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_active.png",
+      "triangles": 11608,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.183810234069824,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.045799970626831
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l12_construction",
+      "level": 12,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_construction.png",
+      "triangles": 11824,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.183810234069824,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7059500217437744
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    },
+    {
+      "id": "mine_l12_damaged",
+      "level": 12,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_damaged.png",
+      "triangles": 11876,
+      "bounds": [
+        [
+          -1.989062786102295,
+          1.989062786102295
+        ],
+        [
+          -2.182753324508667,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.045799970626831
+        ]
+      ],
+      "sprite": {
+        "size": [
+          512,
+          384
+        ],
+        "anchor": [
+          256,
+          292
+        ]
+      },
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      }
+    }
+  ],
+  "generated_at": "2026-10-10",
+  "generator": "tools/assets/blender/generate_mine_models.py",
+  "style_reference": "Real City mine migrated to shared scene/export/report layer",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28
+      }
+    ],
+    "status": "planned_for_phase_4_orchestrator_exports; legacy files keep historical filenames"
+  },
+  "migration": {
+    "phase": 5,
+    "visual_geometry_source": "legacy_generator",
+    "contract": "shared scene/export/report/fixture metadata"
+  }
+}

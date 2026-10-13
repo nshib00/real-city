@@ -1,0 +1,259 @@
+{
+  "terrain_source": "frontend/public/assets/terrain/tiles/grass.png",
+  "target_material_base_color": [
+    0.26,
+    0.48,
+    0.08,
+    1
+  ],
+  "png_overlay": {
+    "size": [
+      278,
+      141
+    ],
+    "offset": [
+      117,
+      211
+    ]
+  },
+  "assets": {
+    "lumber_yard_l01_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l01_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l01_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l02_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l02_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l02_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l03_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l03_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l03_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l04_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l04_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l04_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l05_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l05_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l05_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l06_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l06_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l06_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l07_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l07_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l07_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l08_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l08_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l08_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l09_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l09_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l09_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l10_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l10_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l10_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l11_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l11_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l11_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l12_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l12_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l12_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l13_active.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l13_construction.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l13_damaged.glb": {
+      "materials_changed": 1
+    },
+    "lumber_yard_l01_active.png": {
+      "pixels_changed": 2031
+    },
+    "lumber_yard_l01_construction.png": {
+      "pixels_changed": 1534
+    },
+    "lumber_yard_l01_damaged.png": {
+      "pixels_changed": 2010
+    },
+    "lumber_yard_l02_active.png": {
+      "pixels_changed": 2208
+    },
+    "lumber_yard_l02_construction.png": {
+      "pixels_changed": 1671
+    },
+    "lumber_yard_l02_damaged.png": {
+      "pixels_changed": 2182
+    },
+    "lumber_yard_l03_active.png": {
+      "pixels_changed": 2056
+    },
+    "lumber_yard_l03_construction.png": {
+      "pixels_changed": 1510
+    },
+    "lumber_yard_l03_damaged.png": {
+      "pixels_changed": 2085
+    },
+    "lumber_yard_l04_active.png": {
+      "pixels_changed": 2072
+    },
+    "lumber_yard_l04_construction.png": {
+      "pixels_changed": 1422
+    },
+    "lumber_yard_l04_damaged.png": {
+      "pixels_changed": 2090
+    },
+    "lumber_yard_l05_active.png": {
+      "pixels_changed": 1914
+    },
+    "lumber_yard_l05_construction.png": {
+      "pixels_changed": 1286
+    },
+    "lumber_yard_l05_damaged.png": {
+      "pixels_changed": 1962
+    },
+    "lumber_yard_l06_active.png": {
+      "pixels_changed": 1861
+    },
+    "lumber_yard_l06_construction.png": {
+      "pixels_changed": 1305
+    },
+    "lumber_yard_l06_damaged.png": {
+      "pixels_changed": 1855
+    },
+    "lumber_yard_l07_active.png": {
+      "pixels_changed": 1769
+    },
+    "lumber_yard_l07_construction.png": {
+      "pixels_changed": 1167
+    },
+    "lumber_yard_l07_damaged.png": {
+      "pixels_changed": 1786
+    },
+    "lumber_yard_l08_active.png": {
+      "pixels_changed": 1666
+    },
+    "lumber_yard_l08_construction.png": {
+      "pixels_changed": 1088
+    },
+    "lumber_yard_l08_damaged.png": {
+      "pixels_changed": 1674
+    },
+    "lumber_yard_l09_active.png": {
+      "pixels_changed": 1658
+    },
+    "lumber_yard_l09_construction.png": {
+      "pixels_changed": 1093
+    },
+    "lumber_yard_l09_damaged.png": {
+      "pixels_changed": 1659
+    },
+    "lumber_yard_l10_active.png": {
+      "pixels_changed": 1540
+    },
+    "lumber_yard_l10_construction.png": {
+      "pixels_changed": 1125
+    },
+    "lumber_yard_l10_damaged.png": {
+      "pixels_changed": 1561
+    },
+    "lumber_yard_l11_active.png": {
+      "pixels_changed": 1397
+    },
+    "lumber_yard_l11_construction.png": {
+      "pixels_changed": 1112
+    },
+    "lumber_yard_l11_damaged.png": {
+      "pixels_changed": 1407
+    },
+    "lumber_yard_l12_active.png": {
+      "pixels_changed": 1433
+    },
+    "lumber_yard_l12_construction.png": {
+      "pixels_changed": 1121
+    },
+    "lumber_yard_l12_damaged.png": {
+      "pixels_changed": 1422
+    },
+    "lumber_yard_l13_active.png": {
+      "pixels_changed": 1455
+    },
+    "lumber_yard_l13_construction.png": {
+      "pixels_changed": 1118
+    },
+    "lumber_yard_l13_damaged.png": {
+      "pixels_changed": 1428
+    }
+  },
+  "summary": {
+    "glb_files_changed": 39,
+    "png_files_changed": 39
+  }
+}

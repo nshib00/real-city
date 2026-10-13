@@ -1,0 +1,111 @@
+{
+  "asset_id": "oil_well",
+  "building_type": "oil_well",
+  "category": "industry",
+  "display_name": "Нефтяная вышка",
+  "levels": [
+    1,
+    2,
+    3
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "anchor": [
+    256,
+    292
+  ],
+  "size": [
+    512,
+    384
+  ],
+  "assets": [
+    {
+      "level": 1,
+      "state": "active",
+      "png": "oil_well_l01_active.png",
+      "glb": "oil_well_l01_active.glb",
+      "triangles": 1148
+    },
+    {
+      "level": 1,
+      "state": "construction",
+      "png": "oil_well_l01_construction.png",
+      "glb": "oil_well_l01_construction.glb",
+      "triangles": 864
+    },
+    {
+      "level": 1,
+      "state": "damaged",
+      "png": "oil_well_l01_damaged.png",
+      "glb": "oil_well_l01_damaged.glb",
+      "triangles": 1194
+    },
+    {
+      "level": 1,
+      "state": "ruined",
+      "png": "oil_well_l01_ruined.png",
+      "glb": "oil_well_l01_ruined.glb",
+      "triangles": 982
+    },
+    {
+      "level": 2,
+      "state": "active",
+      "png": "oil_well_l02_active.png",
+      "glb": "oil_well_l02_active.glb",
+      "triangles": 1528
+    },
+    {
+      "level": 2,
+      "state": "construction",
+      "png": "oil_well_l02_construction.png",
+      "glb": "oil_well_l02_construction.glb",
+      "triangles": 1244
+    },
+    {
+      "level": 2,
+      "state": "damaged",
+      "png": "oil_well_l02_damaged.png",
+      "glb": "oil_well_l02_damaged.glb",
+      "triangles": 1574
+    },
+    {
+      "level": 2,
+      "state": "ruined",
+      "png": "oil_well_l02_ruined.png",
+      "glb": "oil_well_l02_ruined.glb",
+      "triangles": 1186
+    },
+    {
+      "level": 3,
+      "state": "active",
+      "png": "oil_well_l03_active.png",
+      "glb": "oil_well_l03_active.glb",
+      "triangles": 1712
+    },
+    {
+      "level": 3,
+      "state": "construction",
+      "png": "oil_well_l03_construction.png",
+      "glb": "oil_well_l03_construction.glb",
+      "triangles": 1428
+    },
+    {
+      "level": 3,
+      "state": "damaged",
+      "png": "oil_well_l03_damaged.png",
+      "glb": "oil_well_l03_damaged.glb",
+      "triangles": 1758
+    },
+    {
+      "level": 3,
+      "state": "ruined",
+      "png": "oil_well_l03_ruined.png",
+      "glb": "oil_well_l03_ruined.glb",
+      "triangles": 1186
+    }
+  ]
+}

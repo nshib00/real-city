@@ -33,9 +33,10 @@
   ],
   "style": "Aeolian bright fantasy mid-poly",
   "notes": [
-    "ground tile matches earlier building tile scale and palette",
+    "ground tile uses the terrain/grass palette and the same daylight setup as terrain tile renders",
     "bed footprint is scaled by 1.28 on the standard 3.6 tile",
     "L1/L2 walls are log-built; supports are grounded",
-    "all levels include six super-windleaf stages"
+    "all levels include six super-windleaf stages",
+    "runtime PNGs render from isolated per-asset Blender scenes via the terrain daylight render pipeline"
   ]
 }

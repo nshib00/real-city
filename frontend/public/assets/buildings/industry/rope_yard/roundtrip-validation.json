@@ -1,0 +1,506 @@
+[
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_active.glb",
+    "objects": 37,
+    "meshes": 37,
+    "triangles": 1488,
+    "materials": 10,
+    "collection": "roundtrip_001",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_construction.glb",
+    "objects": 42,
+    "meshes": 42,
+    "triangles": 1516,
+    "materials": 11,
+    "collection": "roundtrip_002",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_damaged.glb",
+    "objects": 40,
+    "meshes": 40,
+    "triangles": 1612,
+    "materials": 12,
+    "collection": "roundtrip_003",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_idle_no_input.glb",
+    "objects": 28,
+    "meshes": 28,
+    "triangles": 664,
+    "materials": 7,
+    "collection": "roundtrip_004",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_idle_no_workers.glb",
+    "objects": 38,
+    "meshes": 38,
+    "triangles": 1500,
+    "materials": 11,
+    "collection": "roundtrip_005",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_ready.glb",
+    "objects": 41,
+    "meshes": 41,
+    "triangles": 2220,
+    "materials": 10,
+    "collection": "roundtrip_006",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l01_ruined.glb",
+    "objects": 42,
+    "meshes": 42,
+    "triangles": 1556,
+    "materials": 12,
+    "collection": "roundtrip_007",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_active.glb",
+    "objects": 44,
+    "meshes": 44,
+    "triangles": 1684,
+    "materials": 11,
+    "collection": "roundtrip_008",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_construction.glb",
+    "objects": 46,
+    "meshes": 46,
+    "triangles": 1644,
+    "materials": 10,
+    "collection": "roundtrip_009",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_damaged.glb",
+    "objects": 46,
+    "meshes": 46,
+    "triangles": 1788,
+    "materials": 13,
+    "collection": "roundtrip_010",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_idle_no_input.glb",
+    "objects": 33,
+    "meshes": 33,
+    "triangles": 804,
+    "materials": 8,
+    "collection": "roundtrip_011",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_idle_no_workers.glb",
+    "objects": 45,
+    "meshes": 45,
+    "triangles": 1696,
+    "materials": 11,
+    "collection": "roundtrip_012",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_ready.glb",
+    "objects": 52,
+    "meshes": 52,
+    "triangles": 3148,
+    "materials": 11,
+    "collection": "roundtrip_013",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l02_ruined.glb",
+    "objects": 43,
+    "meshes": 43,
+    "triangles": 1592,
+    "materials": 12,
+    "collection": "roundtrip_014",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_active.glb",
+    "objects": 58,
+    "meshes": 58,
+    "triangles": 2776,
+    "materials": 15,
+    "collection": "roundtrip_015",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_construction.glb",
+    "objects": 60,
+    "meshes": 60,
+    "triangles": 2736,
+    "materials": 14,
+    "collection": "roundtrip_016",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_damaged.glb",
+    "objects": 60,
+    "meshes": 60,
+    "triangles": 2880,
+    "materials": 16,
+    "collection": "roundtrip_017",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_idle_no_input.glb",
+    "objects": 46,
+    "meshes": 46,
+    "triangles": 1884,
+    "materials": 12,
+    "collection": "roundtrip_018",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_idle_no_workers.glb",
+    "objects": 59,
+    "meshes": 59,
+    "triangles": 2788,
+    "materials": 15,
+    "collection": "roundtrip_019",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_ready.glb",
+    "objects": 66,
+    "meshes": 66,
+    "triangles": 4240,
+    "materials": 15,
+    "collection": "roundtrip_020",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l03_ruined.glb",
+    "objects": 57,
+    "meshes": 57,
+    "triangles": 2684,
+    "materials": 15,
+    "collection": "roundtrip_021",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_active.glb",
+    "objects": 65,
+    "meshes": 65,
+    "triangles": 2924,
+    "materials": 16,
+    "collection": "roundtrip_022",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_construction.glb",
+    "objects": 66,
+    "meshes": 66,
+    "triangles": 2840,
+    "materials": 15,
+    "collection": "roundtrip_023",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_damaged.glb",
+    "objects": 67,
+    "meshes": 67,
+    "triangles": 3028,
+    "materials": 17,
+    "collection": "roundtrip_024",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_idle_no_input.glb",
+    "objects": 52,
+    "meshes": 52,
+    "triangles": 1988,
+    "materials": 13,
+    "collection": "roundtrip_025",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_idle_no_workers.glb",
+    "objects": 66,
+    "meshes": 66,
+    "triangles": 2936,
+    "materials": 16,
+    "collection": "roundtrip_026",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_ready.glb",
+    "objects": 77,
+    "meshes": 77,
+    "triangles": 5120,
+    "materials": 16,
+    "collection": "roundtrip_027",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l04_ruined.glb",
+    "objects": 63,
+    "meshes": 63,
+    "triangles": 2788,
+    "materials": 16,
+    "collection": "roundtrip_028",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_active.glb",
+    "objects": 68,
+    "meshes": 68,
+    "triangles": 2960,
+    "materials": 16,
+    "collection": "roundtrip_029",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_construction.glb",
+    "objects": 69,
+    "meshes": 69,
+    "triangles": 2876,
+    "materials": 16,
+    "collection": "roundtrip_030",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_damaged.glb",
+    "objects": 70,
+    "meshes": 70,
+    "triangles": 3064,
+    "materials": 17,
+    "collection": "roundtrip_031",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_idle_no_input.glb",
+    "objects": 55,
+    "meshes": 55,
+    "triangles": 2024,
+    "materials": 13,
+    "collection": "roundtrip_032",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_idle_no_workers.glb",
+    "objects": 69,
+    "meshes": 69,
+    "triangles": 2972,
+    "materials": 16,
+    "collection": "roundtrip_033",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_ready.glb",
+    "objects": 80,
+    "meshes": 80,
+    "triangles": 5156,
+    "materials": 16,
+    "collection": "roundtrip_034",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l05_ruined.glb",
+    "objects": 66,
+    "meshes": 66,
+    "triangles": 2824,
+    "materials": 17,
+    "collection": "roundtrip_035",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_active.glb",
+    "objects": 73,
+    "meshes": 73,
+    "triangles": 3124,
+    "materials": 18,
+    "collection": "roundtrip_036",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_construction.glb",
+    "objects": 73,
+    "meshes": 73,
+    "triangles": 2996,
+    "materials": 18,
+    "collection": "roundtrip_037",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_damaged.glb",
+    "objects": 74,
+    "meshes": 74,
+    "triangles": 3208,
+    "materials": 19,
+    "collection": "roundtrip_038",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_idle_no_input.glb",
+    "objects": 59,
+    "meshes": 59,
+    "triangles": 2144,
+    "materials": 15,
+    "collection": "roundtrip_039",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_idle_no_workers.glb",
+    "objects": 74,
+    "meshes": 74,
+    "triangles": 3136,
+    "materials": 18,
+    "collection": "roundtrip_040",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_ready.glb",
+    "objects": 89,
+    "meshes": 89,
+    "triangles": 6052,
+    "materials": 18,
+    "collection": "roundtrip_041",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l06_ruined.glb",
+    "objects": 69,
+    "meshes": 69,
+    "triangles": 2924,
+    "materials": 18,
+    "collection": "roundtrip_042",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_active.glb",
+    "objects": 79,
+    "meshes": 79,
+    "triangles": 3460,
+    "materials": 19,
+    "collection": "roundtrip_043",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_construction.glb",
+    "objects": 79,
+    "meshes": 79,
+    "triangles": 3332,
+    "materials": 19,
+    "collection": "roundtrip_044",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_damaged.glb",
+    "objects": 80,
+    "meshes": 80,
+    "triangles": 3544,
+    "materials": 20,
+    "collection": "roundtrip_045",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_idle_no_input.glb",
+    "objects": 65,
+    "meshes": 65,
+    "triangles": 2480,
+    "materials": 16,
+    "collection": "roundtrip_046",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_idle_no_workers.glb",
+    "objects": 80,
+    "meshes": 80,
+    "triangles": 3472,
+    "materials": 19,
+    "collection": "roundtrip_047",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_ready.glb",
+    "objects": 95,
+    "meshes": 95,
+    "triangles": 6388,
+    "materials": 19,
+    "collection": "roundtrip_048",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l07_ruined.glb",
+    "objects": 75,
+    "meshes": 75,
+    "triangles": 3260,
+    "materials": 19,
+    "collection": "roundtrip_049",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_active.glb",
+    "objects": 80,
+    "meshes": 80,
+    "triangles": 3472,
+    "materials": 20,
+    "collection": "roundtrip_050",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_construction.glb",
+    "objects": 80,
+    "meshes": 80,
+    "triangles": 3344,
+    "materials": 20,
+    "collection": "roundtrip_051",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_damaged.glb",
+    "objects": 81,
+    "meshes": 81,
+    "triangles": 3556,
+    "materials": 21,
+    "collection": "roundtrip_052",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_idle_no_input.glb",
+    "objects": 66,
+    "meshes": 66,
+    "triangles": 2492,
+    "materials": 17,
+    "collection": "roundtrip_053",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_idle_no_workers.glb",
+    "objects": 81,
+    "meshes": 81,
+    "triangles": 3484,
+    "materials": 20,
+    "collection": "roundtrip_054",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_ready.glb",
+    "objects": 100,
+    "meshes": 100,
+    "triangles": 7132,
+    "materials": 20,
+    "collection": "roundtrip_055",
+    "ok": true
+  },
+  {
+    "path": "/home/nshib/projects/real-city/frontend/public/assets/buildings/industry/rope_yard/rope_yard_l08_ruined.glb",
+    "objects": 76,
+    "meshes": 76,
+    "triangles": 3272,
+    "materials": 20,
+    "collection": "roundtrip_056",
+    "ok": true
+  }
+]

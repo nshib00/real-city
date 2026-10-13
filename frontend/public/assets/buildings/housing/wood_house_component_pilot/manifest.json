@@ -1,0 +1,54 @@
+{
+  "asset_id": "wood_house_component_pilot",
+  "display_name": "Деревянный дом - component pilot",
+  "category": "housing",
+  "levels": [
+    1
+  ],
+  "states": [
+    "active"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/housing/wood_house_component_pilot/wood_house_component_pilot_levels.blend",
+  "combined_glb": null,
+  "material_map": {
+    "planks": "светлые стены, фасадные накладки, двор и дрова",
+    "stone": "низкий фундамент и дорожные камни",
+    "glass": "теплые окна",
+    "wood": "балки, дверь, props и двор"
+  },
+  "items": [
+    {
+      "id": "wood_house_l01_active",
+      "glb": "frontend/public/assets/buildings/housing/wood_house_component_pilot/wood_house_l01_active.glb",
+      "png": "frontend/public/assets/buildings/housing/wood_house_component_pilot/wood_house_l01_active.png",
+      "triangles": 6981,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4371999502182007
+        ]
+      ]
+    }
+  ],
+  "pilot": true,
+  "component_library_version": "2026.10.phase3.v3",
+  "generator": "tools/assets/blender/generate_wood_house_component_pilot.py"
+}
