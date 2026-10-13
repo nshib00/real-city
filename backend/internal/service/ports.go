@@ -46,6 +46,7 @@ type BuildingRepository interface {
 	ListByPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error)
 	ListByMap(ctx context.Context, mapID string) ([]building.Building, error)
 	ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error)
+	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
 	ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error)
 	Update(ctx context.Context, b building.Building) error
 	Delete(ctx context.Context, id building.ID) error
@@ -100,10 +101,16 @@ type MonsterRepository interface {
 	Create(ctx context.Context, item monster.Monster) error
 	FindByID(ctx context.Context, id monster.ID) (monster.Monster, error)
 	ListByMap(ctx context.Context, mapID string) ([]monster.Monster, error)
+	ListActiveForTick(ctx context.Context, mapID string, limit int) ([]monster.Monster, error)
 	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.Monster, error)
 	Update(ctx context.Context, item monster.Monster) error
+	CountAliveBySpawn(ctx context.Context, mapID string) (map[monster.SpawnID]int, error)
 	ListSpawnPoints(ctx context.Context, mapID string) ([]monster.SpawnPoint, error)
 	SaveSpawnPoint(ctx context.Context, item monster.SpawnPoint) error
+	CreateLootDrop(ctx context.Context, item monster.LootDrop) error
+	FindLootDrop(ctx context.Context, id monster.LootDropID) (monster.LootDrop, error)
+	ListLootDropsByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.LootDrop, error)
+	ClaimLootDrop(ctx context.Context, id monster.LootDropID, playerID player.ID, now time.Time) (monster.LootDrop, error)
 	AddEvent(ctx context.Context, item monster.Event) error
 }
 

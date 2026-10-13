@@ -21,6 +21,7 @@ import (
 type app struct {
 	cfg      config.Config
 	log      *slog.Logger
+	db       *postgresadapter.DB
 	server   *http.Server
 	realtime *wsadapter.Gateway
 	sim      *simulation.Runner
@@ -28,11 +29,12 @@ type app struct {
 }
 
 func newApp(cfg config.Config, log *slog.Logger) *app {
-	playerRepo, sessionStore := buildStores(cfg, log)
-	worldRepo := buildWorldStore(cfg, log)
-	buildingRepo := buildBuildingStore(cfg, log)
-	economyRepo := buildEconomyStore(cfg, log)
-	monsterRepo := buildMonsterStore(cfg, log)
+	db := openPostgres(cfg, log)
+	playerRepo, sessionStore := buildStores(db)
+	worldRepo := buildWorldStore(db)
+	buildingRepo := buildBuildingStore(db)
+	economyRepo := buildEconomyStore(db)
+	monsterRepo := buildMonsterStore(db)
 	socialRepo := memory.NewSocialRepo()
 	tokenManager := jwtadapter.NewManager(cfg.Session.Secret, cfg.Session.AccessTTL, cfg.Session.RefreshTTL)
 	authService := service.NewAuthService(playerRepo, sessionStore, tokenManager, log)
@@ -40,17 +42,19 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	worldService := service.NewWorldService(worldRepo, log)
 	buildingService := service.NewBuildingService(buildingRepo, worldRepo, log)
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, log)
+	economyService.SetPlayers(playerRepo)
 	resourceService := service.NewResourceService(economyRepo, economyService, log)
 	productionService := service.NewProductionService(economyRepo, economyService, log)
 	monsterService := service.NewMonsterService(monsterRepo, log)
+	monsterService.SetEconomy(economyService)
 	combatService := service.NewCombatService(monsterService, log)
 	threatService := service.NewThreatService(monsterRepo)
 	allianceService := service.NewAllianceService(socialRepo, economyService, log)
 	chatService := service.NewChatService(socialRepo, socialRepo, log)
 	marketService := service.NewMarketService(socialRepo, economyService, log)
-	actionRepo := buildActionStore(cfg, log)
-	outboxRepo := buildOutboxStore(cfg, log)
-	uow := buildUnitOfWork(cfg, log)
+	actionRepo := buildActionStore(db)
+	outboxRepo := buildOutboxStore(db)
+	uow := buildUnitOfWork(db)
 	fieldService := service.NewFieldService(economyService, buildingRepo)
 	populationService := service.NewPopulationService(economyService)
 	forestService := service.NewForestService(worldRepo, economyService, log)
@@ -63,11 +67,16 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	forestService.SetEventBus(eventBus)
 	resourceService.SetEventBus(eventBus)
 	resourceService.SetActionQueue(actionRepo)
+	forestService.SetActionQueue(actionRepo)
+	forestService.SetBuildingRepository(buildingRepo)
 	productionService.SetEventBus(eventBus)
 	productionService.SetActionQueue(actionRepo)
+	productionService.SetBuildings(buildingRepo)
 	monsterService.SetEventBus(eventBus)
 	simulationRunner := simulation.NewRunner(actionRepo, uow, buildingService, productionService, resourceService, log, cfg.Simulation)
-	simulationRunner.SetMonsterAI(simulation.NewMonsterAI(monsterRepo, buildingRepo, eventBus, log))
+	simulationRunner.SetForestService(forestService)
+	simulationRunner.SetMonsterSpawner(simulation.NewMonsterSpawner(monsterService, monsterRepo, buildingRepo, worldRepo, log))
+	simulationRunner.SetMonsterAI(simulation.NewMonsterAI(monsterRepo, buildingRepo, worldRepo, eventBus, log))
 	economyService.SetCatchUp(func(ctx context.Context, playerID player.ID) error {
 		return simulationRunner.CatchUp(ctx, string(playerID))
 	})
@@ -77,6 +86,7 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	return &app{
 		cfg:      cfg,
 		log:      log,
+		db:       db,
 		realtime: realtimeGateway,
 		sim:      simulationRunner,
 		outbox:   outboxDispatcher,
@@ -89,92 +99,72 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	}
 }
 
-func buildMonsterStore(cfg config.Config, log *slog.Logger) service.MonsterRepository {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewMonsterRepo(db.Pool())
-		}
-		log.Warn("postgres.monsters_unavailable_fallback_memory", "event", "postgres.monsters_unavailable_fallback_memory", logger.ErrorAttr(err))
+func openPostgres(cfg config.Config, log *slog.Logger) *postgresadapter.DB {
+	if cfg.Postgres.DSN == "" {
+		log.Info("storage.memory", "event", "storage.memory")
+		return nil
+	}
+	db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
+	if err != nil {
+		log.Warn("postgres.unavailable_fallback_memory", "event", "postgres.unavailable_fallback_memory", logger.ErrorAttr(err))
+		return nil
+	}
+	log.Info("postgres.connected", "event", "postgres.connected")
+	return db
+}
+
+func buildMonsterStore(db *postgresadapter.DB) service.MonsterRepository {
+	if db != nil {
+		return postgresadapter.NewMonsterRepo(db.Pool())
 	}
 	return memory.NewMonsterRepo()
 }
 
-func buildStores(cfg config.Config, log *slog.Logger) (service.PlayerRepository, service.SessionStore) {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			log.Info("postgres.connected", "event", "postgres.connected")
-			return postgresadapter.NewPlayerRepo(db.Pool()), postgresadapter.NewSessionRepo(db.Pool())
-		}
-		log.Warn("postgres.unavailable_fallback_memory", "event", "postgres.unavailable_fallback_memory", logger.ErrorAttr(err))
+func buildStores(db *postgresadapter.DB) (service.PlayerRepository, service.SessionStore) {
+	if db != nil {
+		return postgresadapter.NewPlayerRepo(db.Pool()), postgresadapter.NewSessionRepo(db.Pool())
 	}
-	log.Info("storage.memory", "event", "storage.memory")
 	return memory.NewPlayerRepo(), memory.NewSessionStore()
 }
 
-func buildWorldStore(cfg config.Config, log *slog.Logger) service.WorldRepository {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewWorldRepo(db.Pool())
-		}
-		log.Warn("postgres.world_unavailable_fallback_memory", "event", "postgres.world_unavailable_fallback_memory", logger.ErrorAttr(err))
+func buildWorldStore(db *postgresadapter.DB) service.WorldRepository {
+	if db != nil {
+		return postgresadapter.NewWorldRepo(db.Pool())
 	}
 	return memory.NewWorldRepo()
 }
 
-func buildBuildingStore(cfg config.Config, log *slog.Logger) service.BuildingRepository {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewBuildingRepo(db.Pool())
-		}
-		log.Warn("postgres.buildings_unavailable_fallback_memory", "event", "postgres.buildings_unavailable_fallback_memory", logger.ErrorAttr(err))
+func buildBuildingStore(db *postgresadapter.DB) service.BuildingRepository {
+	if db != nil {
+		return postgresadapter.NewBuildingRepo(db.Pool())
 	}
 	return memory.NewBuildingRepo()
 }
 
-func buildEconomyStore(cfg config.Config, log *slog.Logger) service.EconomyRepository {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewEconomyRepo(db.Pool())
-		}
-		log.Warn("postgres.economy_unavailable_fallback_memory", "event", "postgres.economy_unavailable_fallback_memory", logger.ErrorAttr(err))
+func buildEconomyStore(db *postgresadapter.DB) service.EconomyRepository {
+	if db != nil {
+		return postgresadapter.NewEconomyRepo(db.Pool())
 	}
 	return memory.NewEconomyRepo()
 }
 
-func buildActionStore(cfg config.Config, log *slog.Logger) service.ActionRepository {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewActionRepo(db.Pool())
-		}
-		log.Warn("postgres.actions_unavailable_fallback_memory", "event", "postgres.actions_unavailable_fallback_memory", logger.ErrorAttr(err))
+func buildActionStore(db *postgresadapter.DB) service.ActionRepository {
+	if db != nil {
+		return postgresadapter.NewActionRepo(db.Pool())
 	}
 	return memory.NewActionRepo()
 }
 
-func buildOutboxStore(cfg config.Config, log *slog.Logger) service.OutboxRepository {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewOutboxRepo(db.Pool())
-		}
-		log.Warn("postgres.outbox_unavailable_fallback_memory", "event", "postgres.outbox_unavailable_fallback_memory", logger.ErrorAttr(err))
+func buildOutboxStore(db *postgresadapter.DB) service.OutboxRepository {
+	if db != nil {
+		return postgresadapter.NewOutboxRepo(db.Pool())
 	}
 	return memory.NewOutboxRepo()
 }
 
-func buildUnitOfWork(cfg config.Config, log *slog.Logger) service.UnitOfWork {
-	if cfg.Postgres.DSN != "" {
-		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
-		if err == nil {
-			return postgresadapter.NewUnitOfWork(db.Pool())
-		}
-		log.Warn("postgres.uow_unavailable", "event", "postgres.uow_unavailable", logger.ErrorAttr(err))
+func buildUnitOfWork(db *postgresadapter.DB) service.UnitOfWork {
+	if db != nil {
+		return postgresadapter.NewUnitOfWork(db.Pool())
 	}
 	return nil
 }
@@ -205,6 +195,9 @@ func (a *app) run(ctx context.Context) error {
 		cancel()
 		if a.realtime != nil {
 			a.realtime.Shutdown()
+		}
+		if a.db != nil {
+			defer a.db.Close()
 		}
 		shutdownCtx, cancel := context.WithTimeout(context.Background(), a.cfg.Server.ShutdownTimeout)
 		defer cancel()

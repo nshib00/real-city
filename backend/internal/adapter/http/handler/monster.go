@@ -74,6 +74,30 @@ func (h *MonsterHandler) Threats(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, envelope{"threats": dto.Threats(items)})
 }
 
+func (h *MonsterHandler) Loot(w http.ResponseWriter, r *http.Request) {
+	center, radius := viewportParams(r)
+	items, err := h.monsters.ListLoot(r.Context(), center, radius)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"loot": dto.LootDrops(items)})
+}
+
+func (h *MonsterHandler) ClaimLoot(w http.ResponseWriter, r *http.Request) {
+	playerID, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
+		return
+	}
+	drop, inventory, err := h.monsters.ClaimLoot(r.Context(), monster.LootDropID(r.PathValue("id")), playerID)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"loot": dto.LootDrop(drop), "inventory": dto.Inventory(inventory)})
+}
+
 func viewportParams(r *http.Request) (world.Coord, int) {
 	x, _ := strconv.Atoi(r.URL.Query().Get("x"))
 	y, _ := strconv.Atoi(r.URL.Query().Get("y"))

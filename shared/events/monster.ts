@@ -1,9 +1,17 @@
-export type MonsterEventType = 'monster.spawned' | 'monster.moved' | 'monster.attacked' | 'monster.damaged' | 'monster.died' | 'monster.despawned'
+export type MonsterEventType =
+  | 'monster.spawned'
+  | 'monster.moved'
+  | 'monster.attacked'
+  | 'monster.damaged'
+  | 'monster.died'
+  | 'monster.despawned'
+  | 'monster.loot.dropped'
+  | 'monster.loot.claimed'
 
 export type MonsterPayload = {
   monster: {
     id: string
-    type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian'
+    type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
     state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
     tile_x?: number
     tile_y?: number

@@ -4,11 +4,13 @@ import (
 	"math"
 	"time"
 
+	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/world"
 )
 
 type ID string
 type SpawnID string
+type LootDropID string
 type Type string
 type State string
 type Intent string
@@ -17,6 +19,11 @@ const (
 	TypeRoamingMelee     Type = "roaming_melee"
 	TypeResourceGuardian Type = "resource_guardian"
 	TypeRuinsGuardian    Type = "ruins_guardian"
+	TypeForestStalker    Type = "forest_stalker"
+	TypeSporeBeast       Type = "spore_beast"
+	TypeIronbackBrute    Type = "ironback_brute"
+	TypeEmberWisp        Type = "ember_wisp"
+	TypeAncientColossus  Type = "ancient_colossus"
 
 	StateIdle      State = "idle"
 	StateWandering State = "wandering"
@@ -33,6 +40,7 @@ const (
 type Monster struct {
 	ID             ID
 	MapID          string
+	SpawnID        SpawnID
 	Type           Type
 	State          State
 	Tile           world.Coord
@@ -75,6 +83,17 @@ type Event struct {
 	CreatedAt time.Time
 }
 
+type LootDrop struct {
+	ID        LootDropID
+	MapID     string
+	MonsterID ID
+	Tile      world.Coord
+	Items     []economy.ResourceAmount
+	ClaimedBy string
+	CreatedAt time.Time
+	ClaimedAt *time.Time
+}
+
 type Spec struct {
 	Type           Type
 	Name           string
@@ -85,6 +104,7 @@ type Spec struct {
 	AttackRange    int
 	AttackCooldown time.Duration
 	LootCoins      int
+	SpawnWeight    int
 }
 
 type Threat struct {

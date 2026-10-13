@@ -24,28 +24,42 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
+	playerRepo := buildPlayerStore(cfg, log)
 	worldRepo := buildWorldStore(cfg, log)
 	buildingRepo := buildBuildingStore(cfg, log)
 	economyRepo := buildEconomyStore(cfg, log)
+	monsterRepo := buildMonsterStore(cfg, log)
 	actionRepo := buildActionStore(cfg, log)
 	outboxRepo := buildOutboxStore(cfg, log)
 	uow := buildUnitOfWork(cfg, log)
 	eventBus := service.NewEventBus(128)
 
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, log)
+	economyService.SetPlayers(playerRepo)
 	buildingService := service.NewBuildingService(buildingRepo, worldRepo, log)
+	buildingService.SetMonsters(monsterRepo)
 	resourceService := service.NewResourceService(economyRepo, economyService, log)
 	productionService := service.NewProductionService(economyRepo, economyService, log)
+	forestService := service.NewForestService(worldRepo, economyService, log)
+	monsterService := service.NewMonsterService(monsterRepo, log)
+	monsterService.SetEconomy(economyService)
 	buildingService.SetEconomy(economyService)
 	buildingService.SetActionQueue(actionRepo)
 	buildingService.SetEventBus(eventBus)
 	resourceService.SetEventBus(eventBus)
 	resourceService.SetActionQueue(actionRepo)
+	forestService.SetEventBus(eventBus)
+	forestService.SetActionQueue(actionRepo)
+	forestService.SetBuildingRepository(buildingRepo)
 	productionService.SetEventBus(eventBus)
 	productionService.SetActionQueue(actionRepo)
+	productionService.SetBuildings(buildingRepo)
 	economyService.SetEventBus(eventBus)
 
 	sim := simulation.NewRunner(actionRepo, uow, buildingService, productionService, resourceService, log, cfg.Simulation)
+	sim.SetForestService(forestService)
+	sim.SetMonsterSpawner(simulation.NewMonsterSpawner(monsterService, monsterRepo, buildingRepo, worldRepo, log))
+	sim.SetMonsterAI(simulation.NewMonsterAI(monsterRepo, buildingRepo, worldRepo, eventBus, log))
 	dispatcher := worker.NewOutboxDispatcher(outboxRepo, eventBus, log, cfg.Simulation)
 
 	errCh := make(chan error, 2)
@@ -56,6 +70,28 @@ func main() {
 		log.Error("worker.failed", "event", "worker.failed", logger.ErrorAttr(err))
 		os.Exit(1)
 	}
+}
+
+func buildPlayerStore(cfg config.Config, log *slog.Logger) service.PlayerRepository {
+	if cfg.Postgres.DSN != "" {
+		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
+		if err == nil {
+			return postgresadapter.NewPlayerRepo(db.Pool())
+		}
+		log.Warn("postgres.players_unavailable_fallback_memory", "event", "postgres.players_unavailable_fallback_memory", logger.ErrorAttr(err))
+	}
+	return memory.NewPlayerRepo()
+}
+
+func buildMonsterStore(cfg config.Config, log *slog.Logger) service.MonsterRepository {
+	if cfg.Postgres.DSN != "" {
+		db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
+		if err == nil {
+			return postgresadapter.NewMonsterRepo(db.Pool())
+		}
+		log.Warn("postgres.monsters_unavailable_fallback_memory", "event", "postgres.monsters_unavailable_fallback_memory", logger.ErrorAttr(err))
+	}
+	return memory.NewMonsterRepo()
 }
 
 func buildWorldStore(cfg config.Config, log *slog.Logger) service.WorldRepository {

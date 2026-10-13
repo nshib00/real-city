@@ -14,6 +14,8 @@ export type WorldEventType =
   | 'monster.damaged'
   | 'monster.died'
   | 'monster.despawned'
+  | 'monster.loot.dropped'
+  | 'monster.loot.claimed'
   | 'alliance.created'
   | 'alliance.invite.created'
   | 'alliance.invite.accepted'

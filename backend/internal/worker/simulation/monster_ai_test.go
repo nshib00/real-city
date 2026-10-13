@@ -34,7 +34,7 @@ func TestMonsterAITickAggrosNearestBuilding(t *testing.T) {
 	}); err != nil {
 		t.Fatal(err)
 	}
-	ai := NewMonsterAI(monsterRepo, buildingRepo, nil, slog.Default())
+	ai := NewMonsterAI(monsterRepo, buildingRepo, nil, nil, slog.Default())
 	processed, err := ai.Tick(ctx, now.Add(time.Second), 10)
 	if err != nil {
 		t.Fatal(err)

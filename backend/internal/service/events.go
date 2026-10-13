@@ -13,21 +13,23 @@ import (
 type EventType string
 
 const (
-	EventTileChanged      EventType = "world.tile.changed"
-	EventBuildingPlaced   EventType = "world.building.placed"
-	EventBuildingUpdated  EventType = "world.building.updated"
-	EventBuildingRemoved  EventType = "world.building.removed"
-	EventResourceChanged  EventType = "world.resource.changed"
-	EventProductionDone   EventType = "economy.production.completed"
-	EventInventoryChanged EventType = "economy.inventory.changed"
-	EventPresenceChanged  EventType = "presence.changed"
-	EventCombatResolved   EventType = "combat.resolved"
-	EventMonsterSpawned   EventType = "monster.spawned"
-	EventMonsterMoved     EventType = "monster.moved"
-	EventMonsterAttacked  EventType = "monster.attacked"
-	EventMonsterDamaged   EventType = "monster.damaged"
-	EventMonsterDied      EventType = "monster.died"
-	EventMonsterDespawned EventType = "monster.despawned"
+	EventTileChanged        EventType = "world.tile.changed"
+	EventBuildingPlaced     EventType = "world.building.placed"
+	EventBuildingUpdated    EventType = "world.building.updated"
+	EventBuildingRemoved    EventType = "world.building.removed"
+	EventResourceChanged    EventType = "world.resource.changed"
+	EventProductionDone     EventType = "economy.production.completed"
+	EventInventoryChanged   EventType = "economy.inventory.changed"
+	EventPresenceChanged    EventType = "presence.changed"
+	EventCombatResolved     EventType = "combat.resolved"
+	EventMonsterSpawned     EventType = "monster.spawned"
+	EventMonsterMoved       EventType = "monster.moved"
+	EventMonsterAttacked    EventType = "monster.attacked"
+	EventMonsterDamaged     EventType = "monster.damaged"
+	EventMonsterDied        EventType = "monster.died"
+	EventMonsterDespawned   EventType = "monster.despawned"
+	EventMonsterLootDropped EventType = "monster.loot.dropped"
+	EventMonsterLootClaimed EventType = "monster.loot.claimed"
 )
 
 type Event struct {
@@ -71,4 +73,8 @@ type PresencePayload struct {
 
 type MonsterPayload struct {
 	Monster monster.Monster `json:"monster"`
+}
+
+type MonsterLootPayload struct {
+	Loot monster.LootDrop `json:"loot"`
 }

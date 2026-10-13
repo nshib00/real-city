@@ -29,7 +29,9 @@ type MonsterSpecResponse struct {
 	Damage      int    `json:"damage"`
 	SpeedTiles  int    `json:"speed_tiles"`
 	AggroRadius int    `json:"aggro_radius"`
+	AttackRange int    `json:"attack_range"`
 	LootCoins   int    `json:"loot_coins"`
+	SpawnWeight int    `json:"spawn_weight"`
 }
 
 type ThreatResponse struct {
@@ -37,6 +39,15 @@ type ThreatResponse struct {
 	TileY      int      `json:"tile_y"`
 	Level      int      `json:"level"`
 	MonsterIDs []string `json:"monster_ids"`
+}
+
+type LootDropResponse struct {
+	ID        string           `json:"id"`
+	MonsterID string           `json:"monster_id"`
+	TileX     int              `json:"tile_x"`
+	TileY     int              `json:"tile_y"`
+	Items     []ResourceAmount `json:"items"`
+	CreatedAt time.Time        `json:"created_at"`
 }
 
 type MonsterAttackResponse struct {
@@ -63,7 +74,7 @@ func Monsters(items []monster.Monster) []MonsterResponse {
 func MonsterSpec(item monster.Spec) MonsterSpecResponse {
 	return MonsterSpecResponse{
 		Type: string(item.Type), Name: item.Name, MaxHealth: item.MaxHealth, Damage: item.Damage,
-		SpeedTiles: item.SpeedTiles, AggroRadius: item.AggroRadius, LootCoins: item.LootCoins,
+		SpeedTiles: item.SpeedTiles, AggroRadius: item.AggroRadius, AttackRange: item.AttackRange, LootCoins: item.LootCoins, SpawnWeight: item.SpawnWeight,
 	}
 }
 
@@ -83,6 +94,25 @@ func Threats(items []monster.Threat) []ThreatResponse {
 			ids = append(ids, string(id))
 		}
 		responses = append(responses, ThreatResponse{TileX: item.Tile.X, TileY: item.Tile.Y, Level: item.Level, MonsterIDs: ids})
+	}
+	return responses
+}
+
+func LootDrop(item monster.LootDrop) LootDropResponse {
+	return LootDropResponse{
+		ID:        string(item.ID),
+		MonsterID: string(item.MonsterID),
+		TileX:     item.Tile.X,
+		TileY:     item.Tile.Y,
+		Items:     resourceAmounts(item.Items),
+		CreatedAt: item.CreatedAt,
+	}
+}
+
+func LootDrops(items []monster.LootDrop) []LootDropResponse {
+	responses := make([]LootDropResponse, 0, len(items))
+	for _, item := range items {
+		responses = append(responses, LootDrop(item))
 	}
 	return responses
 }

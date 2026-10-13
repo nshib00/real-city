@@ -34,6 +34,8 @@
     "/fields/windleaf/harvest": { "post": { "summary": "Harvest windleaf field" } },
     "/monsters/catalog": { "get": { "summary": "Monster catalog" } },
     "/monsters": { "get": { "summary": "List monsters" } },
+    "/monster-loot": { "get": { "summary": "List public monster loot drops" } },
+    "/monster-loot/{id}/claim": { "post": { "summary": "Claim public monster loot drop" } },
     "/monsters/{id}": { "get": { "summary": "Monster details" } },
     "/monsters/{id}/attack": { "post": { "summary": "Attack monster" } },
     "/threats": { "get": { "summary": "Threats" } },
