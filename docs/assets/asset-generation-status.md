@@ -260,37 +260,6 @@
 - Worldgen переведен на фиксированные нефтяные координаты в текущей
   тестовой карте.
 
-## Нефтяная вышка / Runtime-подключение
-
-Рабочие файлы:
-
-- Генератор: `tools/assets/blender/generate_oil_well_models.py`.
-- Runtime-папка: `frontend/public/assets/buildings/industry/oil_well/`.
-- Мастер-сцена: `frontend/public/assets/buildings/industry/oil_well/oil_well_levels.blend`.
-- Manifest: `frontend/public/assets/buildings/industry/oil_well/manifest.json`.
-- MCP QA render: `/tmp/oil_well_building_mcp_review.png`.
-
-Состояние на 2026-10-13:
-
-- Создано и подключено в runtime 12 PNG и 12 GLB: уровни 1-3, состояния
-  `active`, `construction`, `damaged`, `ruined`.
-- Frontend registry обновлен: `oil_well` добавлен в
-  `frontend/src/game/renderers/buildingAssetManifests.ts`, превью добавлено в
-  build menu, каталог переименован в `Нефтяная вышка`.
-- Placement-логика обновлена: обычные здания по-прежнему запрещены на
-  `oil_well` и `ruins`, но постройка `oil_well` разрешена только на terrain
-  `oil_well`.
-- Terrain `oil_well` и `ruins` уже подключены через
-  `frontend/src/game/renderer/terrainTextures.ts` и используют PNG из
-  `frontend/public/assets/terrain/tiles/`; GLB terrain-модели лежат рядом как
-  мастер/runtime-preview ассеты.
-- Проверки прошли: Blender CLI generation, PNG alpha/baseline validation,
-  manifest validation, GLB roundtrip по 12 файлам, targeted frontend tests
-  `placement.test.ts`, `terrainTextures.test.ts`, `buildingRegistry.test.ts`,
-  `npm run build`, Blender MCP `get_addon_status`/`get_scene_info`, live MCP
-  import `oil_well_l03_active.glb`, explicit MCP render review.
-- Ограничения: `mcp.look` снова не смог записать `/tmp/blender_look_*.png`;
-  визуальная проверка выполнена через явный Blender render в `/tmp`.
   160x160 wrap-карте: `(24,18)`, `(91,73)`, `(126,35)`, `(38,124)`,
   `(142,116)`, `(76,139)`. Memory resource nodes `node_oil_1-node_oil_6`
   стоят на тех же координатах.
@@ -322,6 +291,38 @@
   manifest/PNG/GLB validation без before-tar сравнения.
 - Ограничение: MCP `look` не смог записать `/tmp/blender_look_*.png`, поэтому
   screenshot-review выполнен через явный Blender render в `/tmp`.
+
+## Нефтяная вышка / Runtime-подключение
+
+Рабочие файлы:
+
+- Генератор: `tools/assets/blender/generate_oil_well_models.py`.
+- Runtime-папка: `frontend/public/assets/buildings/industry/oil_well/`.
+- Мастер-сцена: `frontend/public/assets/buildings/industry/oil_well/oil_well_levels.blend`.
+- Manifest: `frontend/public/assets/buildings/industry/oil_well/manifest.json`.
+- MCP QA render: `/tmp/oil_well_building_mcp_review.png`.
+
+Состояние на 2026-10-13:
+
+- Создано и подключено в runtime 12 PNG и 12 GLB: уровни 1-3, состояния
+  `active`, `construction`, `damaged`, `ruined`.
+- Frontend registry обновлен: `oil_well` добавлен в
+  `frontend/src/game/renderers/buildingAssetManifests.ts`, превью добавлено в
+  build menu, каталог переименован в `Нефтяная вышка`.
+- Placement-логика обновлена: обычные здания по-прежнему запрещены на
+  `oil_well` и `ruins`, но постройка `oil_well` разрешена только на terrain
+  `oil_well`.
+- Terrain `oil_well` и `ruins` уже подключены через
+  `frontend/src/game/renderer/terrainTextures.ts` и используют PNG из
+  `frontend/public/assets/terrain/tiles/`; GLB terrain-модели лежат рядом как
+  мастер/runtime-preview ассеты.
+- Проверки прошли: Blender CLI generation, PNG alpha/baseline validation,
+  manifest validation, GLB roundtrip по 12 файлам, targeted frontend tests
+  `placement.test.ts`, `terrainTextures.test.ts`, `buildingRegistry.test.ts`,
+  `npm run build`, Blender MCP `get_addon_status`/`get_scene_info`, live MCP
+  import `oil_well_l03_active.glb`, explicit MCP render review.
+- Ограничения: `mcp.look` снова не смог записать `/tmp/blender_look_*.png`;
+  визуальная проверка выполнена через явный Blender render в `/tmp`.
 
 ## Грядки ветролиста
 
