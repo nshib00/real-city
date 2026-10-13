@@ -29,6 +29,14 @@ const (
 	TypePalace         Type = "palace"
 	TypeResidentialSky Type = "residential_skyscraper"
 	TypeWorkshop       Type = "workshop"
+	TypeBrickKiln      Type = "brick_kiln"
+	TypeGlassWorkshop  Type = "glass_workshop"
+	TypeForge          Type = "forge"
+	TypeWeavingYard    Type = "weaving_yard"
+	TypeDyeWorks       Type = "dye_works"
+	TypeMechanicalShop Type = "mechanical_workshop"
+	TypeOpticalShop    Type = "optical_workshop"
+	TypeMint           Type = "mint"
 	TypeWarehouse      Type = "warehouse"
 	TypeCoinStorage    Type = "coin_storage"
 	TypeMarket         Type = "market"
@@ -38,11 +46,43 @@ const (
 	TypeConcreteWall   Type = "concrete_wall"
 	TypeModernWall     Type = "modern_wall"
 	TypeRoad           Type = "road"
+	TypeStandardRoad   Type = "standard_road"
+	TypePavedRoad      Type = "paved_road"
 	TypeAllianceHouse  Type = "alliance_house"
 	TypeFieldBed       Type = "field_bed"
+	TypeSeedGarden     Type = "seed_garden"
+	TypeHerbBed        Type = "herb_bed"
+	TypeMushroomGrove  Type = "mushroom_grove"
+	TypeFlaxField      Type = "flax_field"
+	TypeReedBed        Type = "reed_bed"
+	TypeDyeGarden      Type = "dye_garden"
+	TypeOilseedField   Type = "oilseed_field"
+	TypeSugarBed       Type = "sugar_bed"
+	TypeCrystalGreen   Type = "crystal_greenhouse"
 	TypeLumberYard     Type = "lumber_yard"
+	TypeSandQuarry     Type = "sand_quarry"
+	TypeMine           Type = "mine"
+	TypeClayQuarry     Type = "clay_quarry"
+	TypeIronMine       Type = "iron_mine"
+	TypeCopperMine     Type = "copper_mine"
+	TypeResinKiln      Type = "resin_kiln"
+	TypeSulfurSpring   Type = "sulfur_spring"
+	TypeOilWell        Type = "oil_well"
 	TypeStoneCutters   Type = "stone_cutters"
+	TypeTileFactory    Type = "tile_factory"
+	TypeCementWorkshop Type = "cement_workshop"
+	TypeConcretePlant  Type = "concrete_plant"
+	TypeRopeYard       Type = "rope_yard"
+	TypePaperWorkshop  Type = "paper_workshop"
+	TypePaintWorkshop  Type = "paint_workshop"
+	TypeOilPress       Type = "oil_press"
+	TypeFoundry        Type = "foundry"
+	TypeSteelworks     Type = "steelworks"
+	TypeElectronics    Type = "electronics_workshop"
 	TypeOilRefinery    Type = "oil_refinery"
+	TypeChemicalShop   Type = "chemical_workshop"
+	TypeMilitaryPlant  Type = "military_factory"
+	TypePrecisionShop  Type = "precision_workshop"
 )
 
 type Footprint struct {
@@ -77,7 +117,21 @@ type Building struct {
 }
 
 func (b Building) IsRoad() bool {
-	return b.Type == TypeRoad
+	return b.Type == TypeRoad || b.Type == TypeStandardRoad || b.Type == TypePavedRoad
+}
+
+func (b Building) CountsTowardLimit() bool {
+	return !IsLimitFreeType(b.Type) && b.State != StateRuined
+}
+
+func IsLimitFreeType(t Type) bool {
+	return t == TypeRoad ||
+		t == TypeStandardRoad ||
+		t == TypePavedRoad ||
+		t == TypeWoodenWall ||
+		t == TypeStoneWall ||
+		t == TypeConcreteWall ||
+		t == TypeModernWall
 }
 
 func (b Building) OccupiedTiles() []world.Coord {

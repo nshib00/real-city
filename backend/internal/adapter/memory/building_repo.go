@@ -83,6 +83,31 @@ func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord worl
 	return items, nil
 }
 
+func (r *BuildingRepo) ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
+	_ = ctx
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	items := make([]building.Building, 0)
+	for _, item := range r.buildings {
+		if item.MapID != mapID {
+			continue
+		}
+		right := item.Tile.X + max(1, item.Footprint.Width) - 1
+		bottom := item.Tile.Y + max(1, item.Footprint.Height) - 1
+		if right < minX || item.Tile.X > maxX || bottom < minY || item.Tile.Y > maxY {
+			continue
+		}
+		items = append(items, item)
+	}
+	sort.Slice(items, func(i, j int) bool {
+		if items[i].Tile.Y == items[j].Tile.Y {
+			return items[i].Tile.X < items[j].Tile.X
+		}
+		return items[i].Tile.Y < items[j].Tile.Y
+	})
+	return items, nil
+}
+
 func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error) {
 	_ = ctx
 	r.mu.RLock()

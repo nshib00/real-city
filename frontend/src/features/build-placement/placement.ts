@@ -13,12 +13,14 @@ export function validatePlacementPreview(input: {
   footprint?: { width: number; height: number }
   worldTiles?: WorldTile[]
   buildings: PlacedBuilding[]
+  ownerId?: string | null
   monsters?: MonsterEntity[]
 }): PlacementPreview {
   if (!input.tile) {
     return { valid: false, reason: 'Выберите клетку на карте' }
   }
-  const hasTownHall = input.buildings.some((building) => building.kind === 'town_hall')
+  const ownerBuildings = input.ownerId ? input.buildings.filter((building) => building.owner === input.ownerId) : input.buildings
+  const hasTownHall = ownerBuildings.some((building) => building.kind === 'town_hall')
   if (input.kind !== 'town_hall' && !hasTownHall) {
     return { valid: false, reason: 'Сначала нужна ратуша' }
   }
@@ -39,7 +41,16 @@ export function validatePlacementPreview(input: {
   if (terrainTiles.some((terrain) => terrain === 'water' || terrain === 'mountain')) {
     return { valid: false, reason: 'На реках и горах строить нельзя' }
   }
-  if (terrainTiles.some((terrain) => terrain === 'ruins' || terrain === 'oil_well')) {
+  if (terrainTiles.some((terrain) => terrain === 'ruins')) {
+    return { valid: false, reason: 'На руинах и нефтяных скважинах строить нельзя' }
+  }
+  if (input.kind === 'oil_well') {
+    if (terrainTiles.some((terrain) => terrain !== 'oil_well')) {
+      return { valid: false, reason: 'Нефтяную вышку можно строить только на нефтяной скважине' }
+    }
+    return { valid: true, reason: null }
+  }
+  if (terrainTiles.some((terrain) => terrain === 'oil_well')) {
     return { valid: false, reason: 'На руинах и нефтяных скважинах строить нельзя' }
   }
   return { valid: true, reason: null }

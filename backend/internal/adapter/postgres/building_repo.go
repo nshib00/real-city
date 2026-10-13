@@ -77,16 +77,26 @@ func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.
 
 func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error) {
 	origin := world.ChunkOrigin(coord)
+	return r.listByViewport(ctx, mapID, origin.X, origin.Y, origin.X+world.ChunkSize-1, origin.Y+world.ChunkSize-1)
+}
+
+func (r *BuildingRepo) ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
+	return r.listByViewport(ctx, mapID, minX, minY, maxX, maxY)
+}
+
+func (r *BuildingRepo) listByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
 			field_stage_ready_at, field_super_crop, created_at, updated_at
 		FROM buildings
 		WHERE map_id = $1
-		  AND tile_x >= $2 AND tile_x < $3
-		  AND tile_y >= $4 AND tile_y < $5
+		  AND tile_x <= $4
+		  AND tile_x + GREATEST(footprint_w, 1) - 1 >= $2
+		  AND tile_y <= $5
+		  AND tile_y + GREATEST(footprint_h, 1) - 1 >= $3
 		ORDER BY tile_y, tile_x, created_at
-	`, mapID, origin.X, origin.X+world.ChunkSize, origin.Y, origin.Y+world.ChunkSize)
+	`, mapID, minX, minY, maxX, maxY)
 	if err != nil {
 		return nil, err
 	}

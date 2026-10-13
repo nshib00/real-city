@@ -30,6 +30,7 @@ func TestAllianceCreateDonateAndBuff(t *testing.T) {
 	if profile.Self.Role != alliance.RoleLeader {
 		t.Fatalf("leader role was not assigned")
 	}
+	grantTestResources(t, ctx, economyService, "player-1", economy.ResourceAmount{Resource: economy.ResourceWood, Amount: 25})
 
 	profile, err = allianceService.Donate(ctx, "player-1", economy.ResourceWood, 25)
 	if err != nil {
@@ -77,6 +78,7 @@ func TestMarketReservesResourcesAndRefundsOnCancel(t *testing.T) {
 	if err != nil {
 		t.Fatalf("inventory before: %v", err)
 	}
+	before = grantTestResources(t, ctx, economyService, "player-1", economy.ResourceAmount{Resource: economy.ResourceWood, Amount: 50})
 	order, err := marketService.Create(ctx, "player-1", market.SideSell, economy.ResourceWood, 50, 100)
 	if err != nil {
 		t.Fatalf("create order: %v", err)

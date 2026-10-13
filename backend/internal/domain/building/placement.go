@@ -29,7 +29,7 @@ func ValidatePlacement(input PlacementInput) error {
 	if input.Type == TypeTownHall && input.HasTownHall {
 		return apperror.New(apperror.Conflict, "ратуша уже построена")
 	}
-	if input.Type != TypeRoad && input.UsedLimit >= input.BuildingLimit {
+	if !IsLimitFreeType(input.Type) && input.UsedLimit >= input.BuildingLimit {
 		return apperror.WithFields(apperror.Conflict, "лимит построек уже достигнут", map[string]string{"limit": fmt.Sprintf("%d/%d", input.UsedLimit, input.BuildingLimit)})
 	}
 	terrainTiles := terrainTilesByCoord(input.Tile, input.Tiles)
@@ -63,7 +63,7 @@ func terrainTilesByCoord(origin world.Tile, tiles []world.Tile) map[world.Coord]
 func UsedBuildingLimit(buildings []Building) int {
 	used := 0
 	for _, b := range buildings {
-		if !b.IsRoad() && b.State != StateRuined {
+		if b.CountsTowardLimit() {
 			used++
 		}
 	}

@@ -17,6 +17,36 @@ describe('validatePlacementPreview', () => {
     })
   })
 
+  it('checks town hall ownership separately from shared tile occupancy', () => {
+    const buildings = [
+      {
+        id: 'foreign-town-hall',
+        kind: 'town_hall' as const,
+        name: 'Ратуша',
+        level: 1,
+        tile: { x: 0, y: 0 },
+        status: 'active' as const,
+        health: 100,
+        owner: 'p2',
+        startedAt: 1000,
+        completesAt: null,
+      },
+    ]
+
+    expect(validatePlacementPreview({ kind: 'dugout', tile: { x: 4, y: 4 }, buildings, ownerId: 'p1' })).toEqual({
+      valid: false,
+      reason: 'Сначала нужна ратуша',
+    })
+    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 4, y: 4 }, buildings, ownerId: 'p1' })).toEqual({
+      valid: true,
+      reason: null,
+    })
+    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 0, y: 0 }, buildings, ownerId: 'p1' })).toEqual({
+      valid: false,
+      reason: 'Клетка уже занята',
+    })
+  })
+
   it('blocks building on forest, water and mountain tiles', () => {
     expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 0, y: 0 }, terrain: 'forest', buildings: [] })).toEqual({
       valid: false,
@@ -63,6 +93,32 @@ describe('validatePlacementPreview', () => {
     expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 0, y: 0 }, terrain: 'oil_well', buildings: [] })).toEqual({
       valid: false,
       reason: 'На руинах и нефтяных скважинах строить нельзя',
+    })
+  })
+
+  it('allows oil well building only on oil well terrain', () => {
+    const buildings = [
+      {
+        id: 'town-hall',
+        kind: 'town_hall' as const,
+        name: 'Ратуша',
+        level: 1,
+        tile: { x: 1, y: 1 },
+        status: 'active' as const,
+        health: 100,
+        owner: 'p1',
+        startedAt: 1000,
+        completesAt: null,
+      },
+    ]
+
+    expect(validatePlacementPreview({ kind: 'oil_well', tile: { x: 0, y: 0 }, terrain: 'oil_well', buildings, ownerId: 'p1' })).toEqual({
+      valid: true,
+      reason: null,
+    })
+    expect(validatePlacementPreview({ kind: 'oil_well', tile: { x: 0, y: 0 }, terrain: 'grass', buildings, ownerId: 'p1' })).toEqual({
+      valid: false,
+      reason: 'Нефтяную вышку можно строить только на нефтяной скважине',
     })
   })
 })

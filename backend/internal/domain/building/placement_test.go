@@ -54,17 +54,51 @@ func TestValidatePlacementAllowsSingleTownHall(t *testing.T) {
 }
 
 func TestRoadDoesNotUseBuildingLimit(t *testing.T) {
-	err := ValidatePlacement(PlacementInput{
-		Type:             TypeRoad,
-		Tile:             world.Tile{Coord: world.Coord{X: 4, Y: 4}, Terrain: world.TerrainGrass},
-		Footprint:        Footprint{Width: 1, Height: 1},
-		HasTownHall:      true,
-		RequiresTownHall: true,
-		BuildingLimit:    1,
-		UsedLimit:        1,
-	})
-	if err != nil {
-		t.Fatalf("expected road to ignore building limit: %v", err)
+	for _, buildingType := range []Type{TypeRoad, TypeStandardRoad, TypePavedRoad} {
+		err := ValidatePlacement(PlacementInput{
+			Type:             buildingType,
+			Tile:             world.Tile{Coord: world.Coord{X: 4, Y: 4}, Terrain: world.TerrainGrass},
+			Footprint:        Footprint{Width: 1, Height: 1},
+			HasTownHall:      true,
+			RequiresTownHall: true,
+			BuildingLimit:    1,
+			UsedLimit:        1,
+		})
+		if err != nil {
+			t.Fatalf("expected road %s to ignore building limit: %v", buildingType, err)
+		}
+	}
+}
+
+func TestWallsDoNotUseBuildingLimit(t *testing.T) {
+	for _, buildingType := range []Type{TypeWoodenWall, TypeStoneWall, TypeConcreteWall, TypeModernWall} {
+		err := ValidatePlacement(PlacementInput{
+			Type:             buildingType,
+			Tile:             world.Tile{Coord: world.Coord{X: 4, Y: 4}, Terrain: world.TerrainGrass},
+			Footprint:        Footprint{Width: 1, Height: 1},
+			HasTownHall:      true,
+			RequiresTownHall: true,
+			BuildingLimit:    1,
+			UsedLimit:        1,
+		})
+		if err != nil {
+			t.Fatalf("expected wall %s to ignore building limit: %v", buildingType, err)
+		}
+	}
+}
+
+func TestUsedBuildingLimitIgnoresRoadsWallsAndRuins(t *testing.T) {
+	buildings := []Building{
+		{Type: TypeDugout, State: StateActive},
+		{Type: TypeTower, State: StateBuilding},
+		{Type: TypeRoad, State: StateActive},
+		{Type: TypeWoodenWall, State: StateActive},
+		{Type: TypeModernWall, State: StateBuilding},
+		{Type: TypeMarket, State: StateRuined},
+	}
+
+	if got := UsedBuildingLimit(buildings); got != 2 {
+		t.Fatalf("expected only ordinary non-ruined buildings to use limit, got %d", got)
 	}
 }
 
@@ -84,9 +118,9 @@ func TestValidatePlacementBlocksForestWaterAndMountain(t *testing.T) {
 
 func TestValidatePlacementBlocksRestrictedTerrainOnTargetTile(t *testing.T) {
 	err := ValidatePlacement(PlacementInput{
-		Type:      TypeTownHall,
-		Tile:      world.Tile{Coord: world.Coord{X: 10, Y: 10}, Terrain: world.TerrainRuins},
-		Footprint: Footprint{Width: 1, Height: 1},
+		Type:          TypeTownHall,
+		Tile:          world.Tile{Coord: world.Coord{X: 10, Y: 10}, Terrain: world.TerrainRuins},
+		Footprint:     Footprint{Width: 1, Height: 1},
 		BuildingLimit: 8,
 	})
 	if err == nil {

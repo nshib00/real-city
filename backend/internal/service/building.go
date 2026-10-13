@@ -139,7 +139,6 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 		CreatedAt:   now,
 		UpdatedAt:   now,
 	}
-	item = startWindleafCycle(item, now, false)
 	if err := s.buildings.Create(ctx, item); err != nil {
 		s.refundCost(ctx, input.PlayerID, spec.Cost, "building:place:refund:"+string(input.Type))
 		if populationReserved {
@@ -180,7 +179,6 @@ func (s *BuildingService) CompleteDue(ctx context.Context, now time.Time, limit 
 		item.State = building.StateActive
 		item.CompletesAt = nil
 		item.UpdatedAt = now
-		item = startWindleafCycle(item, now, item.FieldSuperCrop)
 		if err := s.buildings.Update(ctx, item); err != nil {
 			return completed, err
 		}
@@ -226,7 +224,6 @@ func (s *BuildingService) RushComplete(ctx context.Context, id building.ID, play
 	item.State = building.StateActive
 	item.CompletesAt = nil
 	item.UpdatedAt = now
-	item = startWindleafCycle(item, now, item.FieldSuperCrop)
 	if err := s.buildings.Update(ctx, item); err != nil {
 		if cost > 0 {
 			s.releasePopulation(ctx, playerID, 0, "")
@@ -255,7 +252,6 @@ func (s *BuildingService) CompleteAt(ctx context.Context, id building.ID, player
 	item.State = building.StateActive
 	item.CompletesAt = nil
 	item.UpdatedAt = now
-	item = startWindleafCycle(item, now, item.FieldSuperCrop)
 	if err := s.buildings.Update(ctx, item); err != nil {
 		return building.Building{}, err
 	}
@@ -311,10 +307,8 @@ func (s *BuildingService) Upgrade(ctx context.Context, id building.ID, playerID 
 	item.StartedAt = now
 	item.CompletesAt = completesAt
 	item.UpdatedAt = now
-	if item.Type != building.TypeFieldBed || item.State != building.StateActive {
+	if economy.IsFieldCropBuildingType(string(item.Type)) {
 		clearWindleafCycle(&item)
-	} else {
-		item = startWindleafCycle(item, now, false)
 	}
 	if err := s.buildings.Update(ctx, item); err != nil {
 		s.refundCost(ctx, playerID, next.Cost, "building:upgrade:refund:"+string(item.Type))
@@ -361,7 +355,7 @@ func (s *BuildingService) releasePopulation(ctx context.Context, playerID player
 	if amount <= 0 || s.economy == nil {
 		return
 	}
-	_, _, _ = s.economy.Add(ctx, playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	_, _, _ = s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
 }
 
 func (s *BuildingService) releaseConstructionPopulation(ctx context.Context, item building.Building, reason string) {
@@ -378,21 +372,22 @@ func toEconomyCost(cost []building.Cost) []economy.ResourceAmount {
 
 func (s *BuildingService) existingBuildingsForFootprint(ctx context.Context, origin world.Coord, footprint building.Footprint) ([]building.Building, error) {
 	coords := placementFootprint(origin, footprint)
-	seenChunks := make(map[world.ChunkCoord]bool)
-	items := make([]building.Building, 0)
+	minX, minY, maxX, maxY := coords[0].X, coords[0].Y, coords[0].X, coords[0].Y
 	for _, coord := range coords {
-		chunk := world.ChunkForTile(coord)
-		if seenChunks[chunk] {
-			continue
+		if coord.X < minX {
+			minX = coord.X
 		}
-		seenChunks[chunk] = true
-		chunkBuildings, err := s.buildings.ListByChunk(ctx, DefaultWorldID, chunk)
-		if err != nil {
-			return nil, err
+		if coord.Y < minY {
+			minY = coord.Y
 		}
-		items = append(items, chunkBuildings...)
+		if coord.X > maxX {
+			maxX = coord.X
+		}
+		if coord.Y > maxY {
+			maxY = coord.Y
+		}
 	}
-	return items, nil
+	return s.buildings.ListByViewport(ctx, DefaultWorldID, minX, minY, maxX, maxY)
 }
 
 func (s *BuildingService) validateMonsterFree(ctx context.Context, origin world.Coord, footprint building.Footprint) error {
@@ -538,23 +533,6 @@ func buildingHealth(spec catalog.BuildingType) int {
 		return spec.Health
 	}
 	return 100
-}
-
-func startWindleafCycle(item building.Building, now time.Time, super bool) building.Building {
-	if item.Type != building.TypeFieldBed || item.State != building.StateActive {
-		return item
-	}
-	crop := economy.WindleafCropForLevel(item.Level)
-	stage, ok := economy.WindleafStage(crop, 1)
-	if !ok {
-		return item
-	}
-	readyAt := now.Add(stage.Duration)
-	item.FieldStage = stage.Index
-	item.FieldStageStartedAt = &now
-	item.FieldStageReadyAt = &readyAt
-	item.FieldSuperCrop = super
-	return item
 }
 
 func clearWindleafCycle(item *building.Building) {

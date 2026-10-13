@@ -6,8 +6,9 @@ import { useGameStore } from '../../game/state/useGameStore'
 import { placeBuilding as placeBuildingRequest, toPlacedBuilding } from '../../shared/api/buildings'
 import { ApiClientError } from '../../shared/api/client'
 import { IconButton } from '../../shared/ui'
+import { useAuthStore } from '../auth/useAuthStore'
 import { validatePlacementPreview } from '../build-placement/placement'
-import { inventoryAmount, useInventory } from '../economy/useInventory'
+import { availablePopulation, inventoryAmount, useInventory } from '../economy/useInventory'
 import { ResourceIcon } from '../resources/ResourceIcon'
 import { buildCatalog } from './catalog'
 
@@ -37,12 +38,15 @@ export function BuildMenu() {
   const worldTiles = useGameStore((state) => state.worldTiles)
   const addBuilding = useGameStore((state) => state.addBuilding)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
+  const player = useAuthStore((state) => state.player)
   const queryClient = useQueryClient()
   const inventoryQuery = useInventory()
   const inventory = inventoryQuery.data?.inventory.items
-  const hasTownHall = buildings.some((building) => building.kind === 'town_hall')
+  const ownerBuildings = player ? buildings.filter((building) => building.owner === player.id) : buildings
+  const freePopulation = availablePopulation(inventory, buildings, player?.id)
+  const hasTownHall = ownerBuildings.some((building) => building.kind === 'town_hall')
   const selectedWorldTile = selectedTile ? worldTiles.find((tile) => tile.x === selectedTile.x && tile.y === selectedTile.y) ?? null : null
-  const visibleCatalog = category === 'all' ? buildCatalog : buildCatalog.filter((item) => item.category === category)
+  const visibleCatalog = sortBuildCatalogByCoinCost(category === 'all' ? buildCatalog : buildCatalog.filter((item) => item.category === category))
 
   if (!open) {
     return null
@@ -69,13 +73,13 @@ export function BuildMenu() {
           {visibleCatalog.map((item) => {
             const lockedByTownHall = item.kind !== 'town_hall' && !hasTownHall
             const lockedTownHall = item.kind === 'town_hall' && hasTownHall
-            const placement = validatePlacementPreview({ kind: item.kind, tile: selectedTile, terrain: selectedWorldTile?.terrain, footprint: item.footprint, worldTiles, buildings, monsters })
-            const shortage = getShortage(item, inventory)
+            const placement = validatePlacementPreview({ kind: item.kind, tile: selectedTile, terrain: selectedWorldTile?.terrain, footprint: item.footprint, worldTiles, buildings, ownerId: player?.id, monsters })
+            const shortage = getShortage(item, inventory, freePopulation)
             const disabled = !placement.valid || lockedByTownHall || lockedTownHall || shortage !== null
             return (
               <article className={disabled ? 'build-card build-card-disabled' : 'build-card'} key={item.kind}>
                 <div className={`build-image build-icon-${item.kind}`} aria-hidden="true">
-                  <Building2 size={22} />
+                  {item.previewImage ? <img src={item.previewImage} alt="" draggable={false} /> : <Building2 size={22} />}
                 </div>
                 <div className="build-card-body">
                   <strong>{item.name}</strong>
@@ -144,12 +148,29 @@ function getBuildHint(input: { placementReason: string | null; lockedByTownHall:
   return input.fallback
 }
 
-function getShortage(item: (typeof buildCatalog)[number], inventory: { resource: string; amount: number }[] | undefined) {
+function sortBuildCatalogByCoinCost(items: readonly (typeof buildCatalog)[number][]) {
+  return [...items].sort((left, right) => {
+    const costDiff = coinCost(left) - coinCost(right)
+    if (costDiff !== 0) {
+      return costDiff
+    }
+    return left.name.localeCompare(right.name, 'ru')
+  })
+}
+
+function coinCost(item: (typeof buildCatalog)[number]) {
+  if (item.free) {
+    return 0
+  }
+  return item.cost.find((cost) => cost.resource === 'coins')?.amount ?? Number.POSITIVE_INFINITY
+}
+
+function getShortage(item: (typeof buildCatalog)[number], inventory: { resource: string; amount: number }[] | undefined, freePopulation: number) {
   if (!inventory) {
     return null
   }
-  if (item.population > 0 && item.time !== 'мгновенно' && inventoryAmount(inventory, 'population') < item.population) {
-    return `Не хватает свободного населения: нужно ${item.population}, доступно ${inventoryAmount(inventory, 'population')}`
+  if (item.population > 0 && item.time !== 'мгновенно' && freePopulation < item.population) {
+    return `Не хватает свободного населения: нужно ${item.population}, доступно ${freePopulation}`
   }
   const missing = item.cost.find((cost) => inventoryAmount(inventory, cost.resource) < cost.amount)
   if (missing) {
@@ -191,6 +212,7 @@ function resourceLabel(resource: string) {
     flax: 'лен',
     planks: 'доски',
     premium_planks: 'премиум-доски',
+    copper_parts: 'медные детали',
     rope: 'веревки',
     iron_ingot: 'железные слитки',
     gold_ingot: 'золотые слитки',
@@ -204,6 +226,22 @@ function resourceLabel(resource: string) {
     steel: 'сталь',
     electronics: 'электроника',
     windleaf: 'ветролист',
+    clay: 'глина',
+    coal: 'уголь',
+    sand: 'песок',
+    iron_ore: 'железная руда',
+    copper: 'медь',
+    mechanism: 'механизмы',
+    super_mechanism: 'супер-механизмы',
+    reinforced_concrete: 'железобетон',
+    reinforced_beams: 'усиленные балки',
+    armor_plates: 'защитные пластины',
+    fabric: 'ткань',
+    herbs: 'травы',
+    tools: 'инструменты',
+    star_glass: 'звездное стекло',
+    light_crystal: 'светокристалл',
+    influence_seal: 'печать влияния',
   }
   return labels[resource] ?? resource
 }

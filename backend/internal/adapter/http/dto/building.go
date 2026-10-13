@@ -5,6 +5,7 @@ import (
 
 	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/catalog"
+	"real-city/backend/internal/domain/economy"
 )
 
 type PlaceBuildingRequest struct {
@@ -90,7 +91,7 @@ func Building(b building.Building) BuildingResponse {
 		CreatedAt:   b.CreatedAt,
 		UpdatedAt:   b.UpdatedAt,
 	}
-	if b.Type == building.TypeFieldBed && b.FieldStage > 0 {
+	if economy.IsFieldCropBuildingType(string(b.Type)) && b.FieldStage > 0 {
 		ready := b.FieldStageReadyAt != nil && !b.FieldStageReadyAt.After(time.Now().UTC())
 		response.FieldStage = b.FieldStage
 		response.GrowthStage = b.FieldStage
