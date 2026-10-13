@@ -18,7 +18,8 @@ describe('windleaf bed renderer', () => {
 
   it('keeps structural building states ahead of crop stages', () => {
     expect(windleafBedModelState({ status: 'construction', state: 'building', health: 100, fieldStage: 3 })).toBe('construction')
-    expect(windleafBedModelState({ status: 'active', state: 'damaged', health: 100, superStage: 4 })).toBe('damaged')
+    expect(windleafBedModelState({ status: 'active', state: 'damaged', health: 100, maxHealth: 100, superStage: 4 })).toBe('super_stage04')
+    expect(windleafBedModelState({ status: 'active', state: 'active', health: 20, maxHealth: 100, superStage: 4 })).toBe('damaged')
     expect(windleafBedModelState({ status: 'active', state: 'ruined', health: 100, fieldStage: 4 })).toBe('ruined')
   })
 })

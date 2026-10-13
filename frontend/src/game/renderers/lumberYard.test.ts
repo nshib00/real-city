@@ -11,10 +11,10 @@ describe('lumber yard renderer', () => {
     expect(lumberYardModelLevel(99)).toBe(13)
   })
 
-  it('chooses construction, damaged and ruined states from building state', () => {
+  it('chooses construction, damaged and ruined states from health threshold', () => {
     expect(lumberYardModelState({ status: 'construction', state: 'building', health: 100 })).toBe('construction')
-    expect(lumberYardModelState({ status: 'active', state: 'damaged', health: 100 })).toBe('damaged')
-    expect(lumberYardModelState({ status: 'active', state: 'active', health: 20 })).toBe('damaged')
+    expect(lumberYardModelState({ status: 'active', state: 'damaged', health: 100, maxHealth: 100 })).toBe('active')
+    expect(lumberYardModelState({ status: 'active', state: 'active', health: 20, maxHealth: 100 })).toBe('damaged')
     expect(lumberYardModelState({ status: 'active', state: 'ruined', health: 100 })).toBe('ruined')
   })
 })

@@ -9,10 +9,10 @@ describe('dugout renderer', () => {
     expect(dugoutModelLevel(9)).toBe(5)
   })
 
-  it('chooses construction, damaged and ruined states from building state', () => {
+  it('chooses construction, damaged and ruined states from health threshold', () => {
     expect(dugoutModelState({ status: 'construction', state: 'building', health: 100 })).toBe('construction')
-    expect(dugoutModelState({ status: 'active', state: 'damaged', health: 100 })).toBe('damaged')
-    expect(dugoutModelState({ status: 'active', state: 'active', health: 20 })).toBe('damaged')
+    expect(dugoutModelState({ status: 'active', state: 'damaged', health: 100, maxHealth: 100 })).toBe('active')
+    expect(dugoutModelState({ status: 'active', state: 'active', health: 20, maxHealth: 100 })).toBe('damaged')
     expect(dugoutModelState({ status: 'active', state: 'ruined', health: 100 })).toBe('ruined')
   })
 })
