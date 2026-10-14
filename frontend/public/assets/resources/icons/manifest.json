@@ -550,7 +550,7 @@
     },
     {
       "id": "sugar_cane",
-      "name": "Сахарный стебель",
+      "name": "Сахарный тростник",
       "category": "raw",
       "file": "sugar_cane.png",
       "model": "sugar_cane.glb",
