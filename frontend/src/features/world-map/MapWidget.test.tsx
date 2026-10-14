@@ -62,6 +62,34 @@ describe('MapWidget', () => {
     expect(fieldMarker.getAttribute('title')).toBe('Грядка ветролиста')
   })
 
+  it('names world districts with public letters while keeping tile coordinates numeric', () => {
+    useGameStore.setState({
+      selectedTile: { x: 34, y: 70 },
+      viewport: { center: { x: 0, y: 0 }, radius: 1 },
+    })
+    render(<MapWidget />)
+
+    fireEvent.click(screen.getByLabelText('Карта мира'))
+
+    expect(screen.getByLabelText('Район A')).toBeTruthy()
+    expect(screen.getByLabelText('Район Y')).toBeTruthy()
+    expect(screen.getByText('Район L · 34:70')).toBeTruthy()
+  })
+
+  it('places the current position marker at the tile location inside its district', () => {
+    useGameStore.setState({
+      selectedTile: { x: 34, y: 70 },
+      viewport: { center: { x: 0, y: 0 }, radius: 1 },
+    })
+    render(<MapWidget />)
+
+    fireEvent.click(screen.getByLabelText('Карта мира'))
+
+    const marker = screen.getByLabelText('Текущая позиция: район L, тайл 34:70')
+    expect(marker.style.left).toBe('21.5625%')
+    expect(marker.style.top).toBe('44.0625%')
+  })
+
   it('focuses and selects a building from its world map marker', () => {
     useGameStore.setState({
       buildings: [building('warehouse', 'Склад материалов', { x: 48, y: 96 })],

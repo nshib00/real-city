@@ -11,6 +11,7 @@ import { IconButton } from '../../shared/ui'
 
 const DISTRICT_COUNT = 5
 const DISTRICT_SIZE = WORLD_WRAP_TILES / DISTRICT_COUNT
+const DISTRICT_LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXY'.split('')
 const buildingCategoryByKind = new Map(buildingCatalog.map((item) => [item.type, item.category]))
 
 type BuildingCategory = BuildingCatalogItem['category']
@@ -35,6 +36,9 @@ export function MapWidget() {
   const focusTile = useGameStore((state) => state.focusTile)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
   const townHall = buildings.find((building) => building.kind === 'town_hall' && building.status === 'active')
+  const activeTile = selectedTile ?? viewport.center
+  const activeDistrict = districtFromTile(activeTile)
+  const activeDistrictLabel = districtLabel(activeDistrict.x, activeDistrict.y)
 
   return (
     <aside className="map-widget" aria-label="Мини-карта мира">
@@ -62,10 +66,11 @@ export function MapWidget() {
               {Array.from({ length: DISTRICT_COUNT * DISTRICT_COUNT }, (_, index) => {
                 const districtX = index % DISTRICT_COUNT
                 const districtY = Math.floor(index / DISTRICT_COUNT)
-                const active = selectedTile ? tileInDistrict(selectedTile, districtX, districtY) : tileInDistrict(viewport.center, districtX, districtY)
+                const label = districtLabel(districtX, districtY)
+                const active = activeDistrict.x === districtX && activeDistrict.y === districtY
                 return (
                   <button
-                    aria-label={`Район ${districtX + 1}:${districtY + 1}`}
+                    aria-label={`Район ${label}`}
                     className={active ? 'world-district world-district-active' : 'world-district'}
                     key={`${districtX}:${districtY}`}
                     type="button"
@@ -74,10 +79,19 @@ export function MapWidget() {
                       focusTile({ tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight })
                       setOpen(false)
                     }}
-                  />
+                  >
+                    <span aria-hidden="true" className="world-district-label">
+                      {label}
+                    </span>
+                  </button>
                 )
               })}
             </div>
+            <div
+              aria-label={`Текущая позиция: район ${activeDistrictLabel}, тайл ${activeTile.x}:${activeTile.y}`}
+              className="world-position-marker"
+              style={tileMarkerStyle(activeTile)}
+            />
             <div className="world-building-markers" aria-label="Постройки игрока на карте мира">
               {buildings.map((building, index) => (
                 <button
@@ -97,7 +111,7 @@ export function MapWidget() {
             </div>
           </div>
           <footer>
-            <span>{selectedTile ? `${selectedTile.x}:${selectedTile.y}` : `${viewport.center.x}:${viewport.center.y}`}</span>
+            <span>{`Район ${activeDistrictLabel} · ${activeTile.x}:${activeTile.y}`}</span>
           </footer>
         </section>
       ) : null}
@@ -111,10 +125,19 @@ function buildingCategory(kind: BuildingKind) {
 
 function buildingMarkerStyle(building: PlacedBuilding, index: number) {
   const offset = markerOffset(building, index)
+  const tile = wrappedTile(building.tile)
   return {
-    left: `${(building.tile.x / WORLD_WRAP_TILES) * 100}%`,
-    top: `${(building.tile.y / WORLD_WRAP_TILES) * 100}%`,
+    left: `${(tile.x / WORLD_WRAP_TILES) * 100}%`,
+    top: `${(tile.y / WORLD_WRAP_TILES) * 100}%`,
     transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px))`,
+  }
+}
+
+function tileMarkerStyle(tile: { x: number; y: number }) {
+  const wrapped = wrappedTile(tile)
+  return {
+    left: `${((wrapped.x + 0.5) / WORLD_WRAP_TILES) * 100}%`,
+    top: `${((wrapped.y + 0.5) / WORLD_WRAP_TILES) * 100}%`,
   }
 }
 
@@ -135,8 +158,23 @@ function hashString(value: string) {
   return hash
 }
 
-function tileInDistrict(tile: { x: number; y: number }, districtX: number, districtY: number) {
-  return Math.floor(tile.x / DISTRICT_SIZE) === districtX && Math.floor(tile.y / DISTRICT_SIZE) === districtY
+function districtFromTile(tile: { x: number; y: number }) {
+  const wrapped = wrappedTile(tile)
+  return {
+    x: Math.min(DISTRICT_COUNT - 1, Math.floor(wrapped.x / DISTRICT_SIZE)),
+    y: Math.min(DISTRICT_COUNT - 1, Math.floor(wrapped.y / DISTRICT_SIZE)),
+  }
+}
+
+function districtLabel(districtX: number, districtY: number) {
+  return DISTRICT_LABELS[districtY * DISTRICT_COUNT + districtX] ?? '?'
+}
+
+function wrappedTile(tile: { x: number; y: number }) {
+  return {
+    x: wrapNumber(tile.x, WORLD_WRAP_TILES),
+    y: wrapNumber(tile.y, WORLD_WRAP_TILES),
+  }
 }
 
 function tileFromDistrictClick(event: PointerEvent<HTMLButtonElement>, districtX: number, districtY: number) {
@@ -151,4 +189,8 @@ function tileFromDistrictClick(event: PointerEvent<HTMLButtonElement>, districtX
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value))
+}
+
+function wrapNumber(value: number, size: number) {
+  return ((value % size) + size) % size
 }

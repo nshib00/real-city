@@ -532,15 +532,27 @@ button {
   outline-offset: -3px;
 }
 
-.world-district-active::after {
+.world-district-label {
   position: absolute;
-  inset: 50% auto auto 50%;
-  width: 8px;
-  height: 8px;
-  content: "";
+  top: 5px;
+  left: 6px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(5, 10, 10, 0.65);
+}
+
+.world-position-marker {
+  position: absolute;
+  z-index: 4;
+  width: 10px;
+  height: 10px;
   background: #f2c14e;
   border: 2px solid #17212b;
   border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.38), 0 0 10px rgba(242, 193, 78, 0.72);
+  pointer-events: none;
   transform: translate(-50%, -50%);
 }
 
