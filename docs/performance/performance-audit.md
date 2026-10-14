@@ -1,338 +1,394 @@
 # Аудит Производительности И Оптимизации
 
-Дата анализа: 2026-10-13.
+Дата повторного анализа: 2026-10-14.
 
-Документ фиксирует текущее состояние производительности Real City, фактические узкие места, потенциальные риски роста и предложения по оптимизации. Анализ основан на чтении кода бэкенда, фронтенда, миграций, рендерера карты и текущих ассетов. Нагрузочные замеры в браузере и профилирование БД в рамках этого аудита не запускались, поэтому численные оценки являются инженерной оценкой по архитектуре и реализации.
+Документ обновлен после очередных исправлений производительности на фронтенде. Анализ основан на повторном чтении рендерера, realtime-слоя, состояния клиента, Vite-конфига, asset budget и production build. Полное браузерное профилирование с Chrome Performance, WebGL frame capture и `EXPLAIN ANALYZE` для Postgres в рамках этого повторного аудита не запускались, поэтому численные оценки ниже являются инженерной оценкой по архитектуре, коду и сборочным метрикам.
 
 ## Краткая Оценка
 
 | Часть | Оценка | Состояние |
 | --- | ---: | --- |
-| Бэкенд | 5/10 | Есть правильная доменная структура, индексы, очереди, `FOR UPDATE SKIP LOCKED`, chunk-модель и realtime-события. Основные риски: глобальные выборки в симуляции, последовательная генерация/загрузка чанков, несколько независимых пулов Postgres в одном процессе, in-memory лимитеры/идемпотентность по умолчанию, мало метрик производительности. |
-| Фронтенд | 6/10 | Самый важный шаг уже сделан: массовые объекты карты вынесены в Pixi, есть viewport-фильтрация, dev performance-сценарии и HUD. Основные риски: Pixi-слои пересоздают и уничтожают sprites/graphics слишком часто, Zustand хранит массивы без индексов и делает O(n) upsert, realtime-события вызывают полную инвалидацию query-cache, публичные ассеты уже занимают около 1.1 GB. |
+| Бэкенд | 7/10 | Стало заметно лучше: API использует один общий Postgres pool, чанки загружаются batch-запросами, создание tiles переведено на `COPY`, MonsterAI больше не читает всех монстров карты, MonsterSpawner считает живых монстров агрегатом и проверяет постройки через viewport. Главные оставшиеся риски: линейная WebSocket-фильтрация по всем соединениям, слабые метрики, in-memory rate limit/idempotency, последовательное создание отсутствующих чанков, не полностью атомарные игровые действия. |
+| Фронтенд | 8/10 | Основные прототипные bottleneck-и карты закрыты: realtime-события патчат query-cache, радиус чанков синхронизирован с viewport/zoom, tile lookup при клике стал `Map`, массовые объекты рисуются через Pixi, terrain/building/resource/overlay слои стали retained по ключам, GLB исключены из production runtime, runtime asset budget снизился до `206.7 MB`, а основной app chunk уменьшен до `216.5 kB`. Главные оставшиеся риски: Zustand хранит большие коллекции массивами, часть DOM-оверлеев может стать узким местом при сотнях производств, Pixi `vendor` chunk остается крупным, нет браузерного профилирования на реальном stress-сценарии. |
 
-Текущий проект выглядит достаточно здоровым для прототипа и раннего вертикального среза. Для большого общего мира с сотнями игроков и тысячами объектов главные ограничения сейчас не в языке или библиотеках, а в алгоритмах выборки, батчинге, жизненном цикле рендер-объектов и управлении ассетами.
+Проект уже выглядит достаточно крепко для ранней playable alpha и локального stress-тестирования. До масштабирования на большой общий мир нужно нормализовать клиентское состояние, добавить наблюдаемость и подтвердить гипотезы браузерным профилированием на stress-сценариях.
 
-## Сильные Стороны
+## Что Уже Улучшено
 
-- Бэкенд разделен на domain/service/adapter/worker, что упрощает точечную оптимизацию без переписывания всей системы.
-- Мир уже разбит на чанки, а API ограничивает радиус загрузки (`MaxChunkRadius`, `MaxViewportRadius`).
-- В Postgres есть индексы для координат мира, построек, ресурсных узлов, монстров, очередей действий и outbox.
-- Очередь `game_actions` использует `FOR UPDATE SKIP LOCKED`, что является хорошей базой для горизонтального масштабирования воркеров.
-- Realtime уже фильтрует события по chunk/private/alliance-подпискам.
-- Фронтенд использует Pixi для карты и оставляет DOM только для оверлеев.
-- Есть dev-сценарии `?perf=...`, FPS/heap/GL HUD и тесты для части рендер-логики.
+### Бэкенд
 
-## Критичные И Приоритетные Проблемы
+- `backend/cmd/api/app.go`: API теперь открывает один `postgresadapter.DB` и передает общий `*sql.DB` во все Postgres-репозитории и UnitOfWork. Риск множества независимых пулов в одном API-процессе снят.
+- `backend/internal/adapter/postgres/world_repo.go`: `GetOrCreateChunks` теперь сначала делает batch-загрузку существующих чанков и tiles через `findChunks`, а создание tiles в `createChunk` использует `pq.CopyIn`.
+- `backend/internal/worker/simulation/monster_ai.go`: MonsterAI использует `ListActiveForTick` вместо чтения всех монстров карты и держит cache чанков в рамках tick.
+- `backend/internal/adapter/postgres/monster_repo.go`: добавлены `ListActiveForTick` и `CountAliveBySpawn`.
+- `backend/internal/worker/simulation/monster_spawner.go`: Spawner больше не читает все постройки карты для каждой spawn-точки; используется `ListByViewport` вокруг кандидата и агрегированный `CountAliveBySpawn`.
+- `backend/db/migrations/000018_performance_indexes.sql`: добавлены индексы для tick монстров, живых монстров по spawn и viewport построек.
 
-### P0/P1. Бэкенд: несколько независимых Postgres-pool в одном API-процессе
+### Фронтенд
 
-Файл: `backend/cmd/api/app.go`.
+- `frontend/src/features/world/realtime.ts`: realtime-события теперь точечно патчат React Query cache через `setQueryData`/`setQueriesData`, а не делают массовую инвалидацию `world/buildings/resources/monsters/inventory` на каждое событие.
+- `frontend/src/game/state/useGameStore.ts`: `addBuilding`, `upsertResourceNode`, `upsertMonster`, `updateWorldTile` больше не делают лишние побочные действия; upsert стал индексным вместо `filter/map + append`.
+- `frontend/src/game/IsoMap.tsx`: радиус видимых чанков вычисляется от размера stage и zoom; realtime viewport radius синхронизируется с тем же значением; поиск tile при клике идет через `Map`.
+- `frontend/src/game/renderer/PixiStage.tsx`: монстры вынесены в отдельный слой; terrain sprites, building sprites/fallbacks, resource containers и building animation overlays сохраняются между redraw по ключам и удаляются только когда объект исчез из видимой области.
+- `frontend/src/game/renderers/buildingRegistry.ts`: production build больше не glob-ит `frontend/src/assets/buildings/**/*.glb`; GLB остаются dev/test preview-путем, но не тянут тяжелые модели в production runtime.
+- `frontend/vite.config.ts`: production build удаляет non-runtime ассеты из `dist/assets`: `.blend`, `.blend1`, `.glb`, backup, review, preview, contact sheets; настроены vendor chunks для React, Query, Pixi, Three preview.
+- `frontend/scripts/check-asset-budget.mjs`: runtime asset budget исключает source/preview/GLB ассеты.
+- Текущий `npm run assets:budget` проходит с результатом `206.7 MB` runtime assets across `1990` files.
+- Текущий production build проходит; фактический `frontend/dist/assets` после pruning не содержит `.glb`. Крупнейшие JS chunks: `vendor-pixi` `516.8 kB`, lazy `vendor-three-preview` `777.8 kB`, основной `index` `216.5 kB`, `vendor-react` `193.8 kB`.
 
-Сейчас `newApp` вызывает отдельные функции `buildStores`, `buildWorldStore`, `buildBuildingStore`, `buildEconomyStore`, `buildMonsterStore`, `buildActionStore`, `buildOutboxStore`, `buildUnitOfWork`. Каждая из них при наличии DSN вызывает `postgresadapter.Open(...)`, а `Open` создает `sql.DB` с `SetMaxOpenConns(20)`.
+## Оставшиеся P0/P1 Риски
 
-Последствие: один процесс может открыть до 7 независимых пулов по 20 соединений, то есть до 140 соединений к одной БД без учета других процессов. Это легко упрется в `max_connections`, усложнит наблюдаемость и создаст лишнюю конкуренцию за соединения.
-
-Рекомендация:
-
-- Открывать один `postgres.DB` в `newApp`.
-- Передавать общий `*sql.DB` во все Postgres-репозитории и UnitOfWork.
-- Закрывать pool при shutdown.
-- Сделать настройки pool конфигурируемыми: `max_open_conns`, `max_idle_conns`, `conn_max_lifetime`.
-
-Ожидаемый эффект: меньше соединений, стабильнее latency под нагрузкой, проще транзакции и диагностика БД.
-
-### P0/P1. Бэкенд: MonsterAI читает всех монстров и делает N+1 запросы каждый tick
-
-Файл: `backend/internal/worker/simulation/monster_ai.go`.
-
-Фактический путь:
-
-- `Tick` вызывает `ListByMap` и получает всех живых монстров карты.
-- Затем для каждого монстра до `limit` делает `FindByID`.
-- Внутри шага дополнительно вызывает `ListByChunk`, `ListByViewport`, `GetOrCreateChunk` для проверки проходимости.
-- Движение может делать до 5 проверок проходимости на шаг.
-
-Это нормально для десятков монстров, но плохо масштабируется на сотни и тысячи. При росте мира воркер будет регулярно читать глобальный набор, хотя обрабатывает только batch.
-
-Рекомендация:
-
-- Добавить репозиторный метод `ListActiveForTick(ctx, mapID, now, limit)` с индексом по `(map_id, state, updated_at)` или отдельным `next_tick_at`.
-- Убрать `FindByID` на каждого монстра либо заменить на атомарный `UPDATE ... WHERE id = ... AND updated_at = ... RETURNING`, если нужна защита от гонок.
-- Для проходимости кэшировать чанки на время одного tick: `map[ChunkCoord]Chunk`.
-- Для поиска целей использовать spatial-запрос по окрестности, а не только текущий chunk и не полный набор.
-- События монстров писать батчем либо только при реально изменившемся состоянии.
-
-Ожидаемый эффект: tick монстров станет зависеть от `limit` и активной зоны, а не от размера всей карты.
-
-### P0/P1. Бэкенд: MonsterSpawner многократно читает все постройки карты
-
-Файл: `backend/internal/worker/simulation/monster_spawner.go`.
-
-`Tick` получает всех живых монстров через `ListByMap`, а проверка безопасности spawn-точки в `spawnUnsafe` вызывает `buildings.ListByMap` для каждой проверяемой клетки. При релокации spawn-точки код может проходить кольца кандидатов и для каждого кандидата заново читать все постройки.
-
-Последствие: сложность может стать `spawn_points * candidates * all_buildings`. Это один из самых опасных участков при росте числа построек.
-
-Рекомендация:
-
-- Заменить `ListByMap` на `ListByViewport/ListNearTile` для радиуса `monsterSpawnSafeRange`.
-- В рамках одного tick один раз построить spatial-index занятых клеток вокруг проверяемых spawn-зон.
-- Хранить `alive_count` по `spawn_id` в запросе или отдельном агрегате, а не читать всех монстров.
-- Добавить SQL-метод `CountAliveBySpawn(mapID)` с `GROUP BY spawn_id`.
-
-### P1. Фронтенд: PixiStage уничтожает и пересоздает объекты при каждом redraw
-
-Файл: `frontend/src/game/renderer/PixiStage.tsx`.
-
-В `drawStage` удаляются и уничтожаются все дети `terrainSprites`, `objectSprites`, `buildingAnimationOverlays`, затем они создаются заново. Отдельно `drawMonsterLayer` на каждом Pixi ticker удаляет все monster-children и снова создает контейнеры/graphics.
-
-Это дает:
-
-- постоянные allocations;
-- давление на GC;
-- скачки frame time;
-- лишнюю работу GPU/renderer;
-- особенно плохое поведение на сценариях с сотнями анимированных монстров.
-
-Рекомендация:
-
-- Ввести retained object layer: `Map<id, Sprite/Container>` для построек, ресурсов, монстров.
-- При изменениях делать diff: add/update/remove, а не full rebuild.
-- Для монстров обновлять `position`, `zIndex`, `alpha`, `texture/frame`, health-bar, но не уничтожать контейнер каждый кадр.
-- Отдельно разделить статичный terrain-layer, object-layer и animated-overlay-layer.
-- Terrain перерисовывать только при смене загруженных чанков, tile mutation или zoom threshold, а не при hover/selection/camera.
-- Для часто повторяемых fallback Graphics рассмотреть `RenderTexture` или atlas/sprite frames.
-
-Ожидаемый эффект: меньше GC, стабильнее FPS, возможность держать больше объектов без просадок.
-
-### P1. Фронтенд: ассеты уже занимают около 1.1 GB
-
-Факты на момент аудита:
-
-- `frontend/public/assets`: около 1.1 GB.
-- Файлов в `frontend/public/assets`: 3484.
-- Пример крупных файлов: `glass_workshop_levels.glb` около 22 MB, `clay_quarry_levels.glb` около 19 MB, `mine_levels.glb` около 18 MB, `sand_quarry_levels.glb` около 16 MB.
-- В `frontend/dist` также около 1.1 GB, то есть публичные ассеты копируются в сборку.
-
-Это критично для веб-игры: деплой, CDN, cold start, кеширование, локальная разработка и браузерная загрузка будут тяжелыми. Даже если карта сейчас использует PNG-спрайты, наличие большого массива GLB в public ухудшает размер сборки.
-
-Рекомендация:
-
-- Разделить runtime-ассеты и source/review/dev-ассеты.
-- Убрать contact sheets, review PNG, исходные/уровневые GLB из `public`, если они не загружаются клиентом в игре.
-- Ввести manifest runtime-ассетов с LOD и lazy-loading.
-- Для GLB: Draco/Meshopt compression, texture compression, decimation, split по уровням и состояниям.
-- Для 2D карты: собирать PNG в texture atlases, лучше с WebP/AVIF вариантами там, где допустимо.
-- Добавить CI-проверку asset budget: общий размер runtime-assets, максимальный размер файла, количество файлов.
-
-## Бэкенд: Подробные Наблюдения
-
-### Чанки мира загружаются и создаются последовательно
-
-Файл: `backend/internal/adapter/postgres/world_repo.go`.
-
-`GetOrCreateChunks` просто проходит координаты циклом и вызывает `GetOrCreateChunk`. На радиусе 3 это до 49 чанков, каждый chunk делает отдельный `SELECT world_chunks`, затем отдельный `SELECT world_tiles`, а при miss еще 100 отдельных `INSERT` для тайлов, потому что размер чанка сейчас 10.
-
-Рекомендация:
-
-- Для чтения пачки чанков сделать batch-query по `(chunk_x, chunk_y)` и одним запросом загрузить все tiles.
-- Для генерации использовать bulk insert: `COPY`, multi-row `INSERT` или `pq.CopyIn`.
-- Убрать повторный `ensureMap` из каждого chunk-вызова, выполнять один раз при bootstrap или на первом запросе.
-- При race на создание чанка после `ON CONFLICT DO NOTHING` перечитывать уже созданный чанк без ошибки.
-
-### Проверка размещения построек делает несколько последовательных запросов
-
-Файл: `backend/internal/service/building.go`.
-
-Размещение вызывает:
-
-- загрузку чанка для origin tile;
-- загрузку чанков для footprint;
-- `ListByPlayer`;
-- `existingBuildingsForFootprint`, который читает buildings по chunk;
-- проверку монстров по viewport;
-- расход ресурсов;
-- создание building;
-- иногда добавление action.
-
-Это приемлемо для одиночного действия, но при активной стройке будет чувствительно к latency БД.
-
-Рекомендация:
-
-- Добавить специализированный запрос `ListBuildingsIntersectingFootprint(mapID, minX, minY, maxX, maxY)`.
-- Проверку лимита построек делать агрегатом или cached player city stats, а не полным списком построек игрока.
-- Вынести размещение в UnitOfWork, чтобы списание ресурсов и создание постройки были атомарны.
-- Добавить уникальные/исключающие ограничения на занятые клетки. Для footprint больше 1x1 можно хранить `building_occupied_tiles(map_id, tile_x, tile_y, building_id)` с PK `(map_id, tile_x, tile_y)`.
-
-### Симуляция производств и действий имеет хорошую базу, но дублирует механизмы
-
-Есть `game_actions`, `ListDue` для построек и `ListDueProductionJobs`. При этом completion может идти и через action queue, и через отдельные due-сканеры.
-
-Рекомендация:
-
-- Определить единый источник правды: либо все таймеры идут через `game_actions`, либо due-сканеры являются fallback/repair.
-- Если оставлять оба механизма, добавить защиту от двойной обработки через идемпотентные state transitions.
-- Собирать метрики по каждому типу tick отдельно: fetched, processed, failed, duration, lag oldest_due.
-
-### EventBus и WebSocket фильтрация линейны по числу клиентов
-
-Файлы: `backend/internal/service/eventbus.go`, `backend/internal/adapter/ws/gateway.go`.
-
-`EventBus.Publish` отправляет событие всем подписчикам event bus, а gateway затем проходит по всем соединениям и проверяет `Matches`. Это нормально для десятков/сотен клиентов, но при большом онлайне лучше индексировать подписки.
-
-Рекомендация:
-
-- В gateway хранить индексы `chunkID -> connections`, `playerID -> connections`, `alliance -> connections`.
-- При подписке/отписке обновлять индексы.
-- На publish отправлять только целевым наборам соединений.
-- Добавить счетчики dropped messages, queue full disconnects, active connections, subscribed chunks.
-
-### In-memory idempotency и rate limit по умолчанию не подходят для нескольких API-инстансов
-
-Файлы: `backend/internal/adapter/http/middleware/idempotency.go`, `backend/internal/adapter/http/middleware/ratelimit.go`.
-
-В коде есть Redis-адаптеры, но router создается с `nil`, значит используются in-memory реализации. При нескольких API-инстансах idempotency и rate limit будут локальными для процесса.
-
-Рекомендация:
-
-- Подключить Redis idempotency/rate-limit store из конфигурации.
-- Сделать in-memory только dev fallback.
-- Добавить периодическую очистку expired records в memory-store, чтобы dev-сервер не копил ключи бесконечно.
-
-### Метрики пока слишком бедные
-
-`/metrics` сейчас возвращает только `real_city_http_ready 1`. Для оптимизации общего мира нужны рабочие метрики.
-
-Рекомендация добавить:
-
-- latency HTTP по route/method/status;
-- DB query duration хотя бы вокруг репозиториев hot path;
-- simulation tick duration по подсистемам;
-- action/outbox lag и retries;
-- active websocket connections и dropped messages;
-- chunk load/create counters;
-- размер batches и количество объектов в ответах.
-
-## Фронтенд: Подробные Наблюдения
-
-### Zustand-store использует массивы и O(n) upsert
+### P1. Фронтенд: состояние карты остается массивным, без нормализованных индексов
 
 Файл: `frontend/src/game/state/useGameStore.ts`.
 
-`addBuilding`, `upsertResourceNode`, `upsertMonster`, `updateWorldTile` фильтруют или map-ят массивы. Для небольшого числа объектов это просто и удобно. Для тысяч объектов realtime-события будут часто копировать большие массивы и триггерить пересчеты memo.
+Текущие upsert/remove стали дешевле, но все еще используют `findIndex`, `slice` и массивы. Для сотен объектов это нормально; для тысяч realtime-событий в минуту цена станет заметной, а каждый upsert меняет ссылку на весь массив и может запускать пересчеты `useMemo` в `IsoMap`.
 
-Рекомендация:
+Рекомендации:
 
-- Хранить normalized state: `buildingsById`, `resourcesById`, `monstersById`, `tilesByKey`.
-- Для рендера иметь memoized selectors, возвращающие массив только для видимой зоны.
-- Не менять `selectedBuildingId` и `selectedTile` внутри `addBuilding` при каждом realtime update; это сейчас может сдвигать UI-selection на чужие события.
-- Для tile lookup при клике заменить `mapTiles.find(...)` на `tilesByKey.get(...)`.
+- Перейти на normalized state: `buildingsById`, `resourceNodesById`, `monstersById`, `worldTilesByKey`.
+- Для рендера формировать массивы через memoized selectors только для видимой зоны.
+- Хранить spatial-index по chunk/tile: например `buildingIdsByChunk`, `resourceIdsByChunk`, `monsterIdsByChunk`.
+- Для `worldTiles` держать `tilesByKey`, чтобы realtime patch не сканировал весь массив.
 
-### Realtime-события слишком часто инвалидируют React Query
+### P1. Фронтенд: требуется браузерное профилирование retained Pixi path
 
-Файл: `frontend/src/features/world/realtime.ts`.
+Файл: `frontend/src/game/renderer/PixiStage.tsx`.
 
-После точечного применения события в Zustand код дополнительно вызывает `invalidateQueries` для `world`, `buildings`, `resources`, `monsters`, `inventory`. Для realtime-потока это может привести к лишним HTTP-запросам и постоянной замене массивов.
+Статус: исправлено архитектурно, но требует подтверждения профилированием.
 
-Рекомендация:
+`drawStage` больше не делает массовые `removeChildren()`/destroy для terrain, buildings, resources и building overlays на каждый redraw. Вместо этого слой держит:
 
-- Для событий мира патчить query-cache точечно (`setQueriesData`) вместо полной инвалидации.
-- Для монстров не инвалидировать `['monsters']` на каждое движение; поллинг оставить как reconciliation fallback.
-- Инвентарь инвалидировать только для событий, где payload реально меняет инвентарь, либо присылать inventory delta.
-- Добавить debounce/batch invalidation, если полная синхронизация все же нужна.
+- `terrainSpriteCache` по `tileKey`;
+- `buildingSpriteCache` по `building.id`;
+- `resourceSpriteCache` по `resource.id`;
+- `buildingOverlayCache` по `buildingId:overlayKey`;
+- отдельный retained monster layer.
 
-### Viewport/chunk radius рассинхронизирован
+Оставшийся риск не в полном пересоздании Pixi children, а в том, что при изменении камеры все еще пересчитываются видимые tiles/objects, hit areas и позиции. Это дешевле прежнего create/destroy path, но на больших viewport нужно измерить frame time, GC и количество children.
 
-В `IsoMap` chunk-загрузка всегда идет через `useVisibleChunks(centerChunk, 1)`, а realtime подписка берет `viewport.radius` и ограничивает его до 1..4. Монстры загружаются по `viewport.radius * 48`. Это может приводить к ситуации, где realtime и monsters видят больше мира, чем загруженные tiles/building layer.
+Рекомендации:
 
-Рекомендация:
+- Добавить dev-счетчики Pixi children по слоям, cache size, created/destroyed per redraw.
+- Разделить camera transform и object diff, если профилирование покажет дорогой pan/zoom.
+- Перерисовывать terrain только при изменении набора tiles, terrain texture set или существенном изменении видимого окна.
+- Для fallback Graphics рассмотреть `RenderTexture`/texture atlas, если fallback-построек станет много.
 
-- Ввести единый `visibleWorldWindow`: chunk radius, tile radius, pixel bounds.
-- Использовать его для world chunks, buildings/resources/monsters, realtime subscribe.
-- Менять радиус от zoom/stage size, а не держать константы в разных местах.
+Ожидаемый эффект от уже внесенной правки: меньше allocation/GC при pan/zoom/hover/selection и стабильнее FPS в stress-сценариях с большим количеством видимых объектов.
 
-### Рендер карты уже фильтрует объекты, но terrain все еще пересобирается
+### P1. Бэкенд: WebSocket fan-out линейный по числу соединений
 
-`filterVisibleMapObjects` отсекает здания/ресурсы/монстров по экрану. Это хорошо. Но `drawStage` пересобирает terrain sprites при изменении camera, hover, selection, monsters, buildings.
+Файлы: `backend/internal/service/eventbus.go`, `backend/internal/adapter/ws/gateway.go`.
 
-Рекомендация:
+`EventBus.Publish` отправляет событие всем подписчикам event bus, а gateway затем проходит по всем WebSocket-соединениям и вызывает `conn.Matches(...)`. Для десятков/сотен соединений это приемлемо, но общий мир с большим онлайном быстро превратит каждое chunk-событие в O(connections).
 
-- Разделить draw-процессы:
-  - camera transform: менять transform контейнеров;
-  - selection/hover: перерисовывать только overlay graphics;
-  - monsters: обновлять только monster-layer;
-  - terrain: пересоздавать только при смене tiles или terrain texture set.
-- В Pixi использовать контейнерный transform вместо пересчета каждой позиции при каждом pan, если wrapping логика позволяет.
+Рекомендации:
 
-### DOM-оверлеи поверх карты могут стать bottleneck
+- В gateway хранить индексы подписок: `chunkID -> connection ids`, `playerID -> connection ids`, `alliance -> connection ids`.
+- При `subscribe/unsubscribe` обновлять индексы.
+- На publish собирать целевой набор соединений по индексам и отправлять только ему.
+- Добавить метрики: active connections, subscriptions per chunk, event fanout size, enqueue drops, slow consumers.
 
-Сейчас DOM используется для строительных таймеров и work badges по видимым зданиям. Это приемлемо, но при сотнях видимых production/field overlays DOM начнет конкурировать с Pixi.
+### P1. Бэкенд: observability почти отсутствует
 
-Рекомендация:
+Файл: `backend/internal/adapter/http/router.go`.
 
-- Ограничить DOM-оверлеи только выбранным объектом, hover и небольшим числом важных ready-состояний.
-- Остальные статусы рисовать в Pixi overlay layer.
-- Для таймеров обновлять текст раз в секунду и только для видимых/важных объектов.
+`/metrics` сейчас возвращает только:
 
-### Сборка и ассеты требуют budget-политики
+```text
+real_city_http_ready 1
+```
 
-Vite-конфиг минимален и не задает chunking/budget. Public assets копируются как есть.
+Без метрик невозможно надежно понять, какие исправления дали эффект, где растет backlog и какие запросы становятся дорогими.
 
-Рекомендация:
+Рекомендации:
 
-- Добавить скрипт проверки размера `frontend/public/assets/runtime`.
-- Разделить `public/assets/runtime` и `tools/assets/output`/`docs/assets`.
-- Настроить manual chunks для крупных библиотек (`pixi.js`, `three`, react vendor) после анализа bundle.
-- Подключить bundle visualizer для периодической диагностики.
+- HTTP latency/count по route/method/status.
+- DB query duration по hot-path репозиториям: chunks, buildings viewport, monsters tick, actions, outbox.
+- Simulation tick duration/processed/failed/lag по подсистемам.
+- Outbox/action queue lag: oldest due, fetched, processed, retries.
+- WebSocket metrics: connections, subscriptions, fanout, drops.
+- Frontend perf telemetry для dev/staging: FPS, heap, visible objects, Pixi object counts.
 
-## Предлагаемый План Оптимизации
+## Бэкенд: Подробные Наблюдения
 
-### Этап 1. Быстрые Архитектурные Исправления
+### Postgres pool
 
-1. Перевести API на один общий Postgres pool.
-2. Подключить Redis для idempotency/rate-limit в non-dev окружении.
-3. Добавить базовые метрики simulation/http/ws/db.
-4. Вынести runtime-ассеты из общего массива public и ввести asset budget.
+Статус: исправлено для API.
 
-### Этап 2. Горячие Пути Бэкенда
+`newApp` вызывает `openPostgres` один раз и передает общий pool во все Postgres-репозитории. Pool закрывается в `app.run`. Это снимает прежний риск 7 независимых pool по 20 соединений в одном процессе.
 
-1. Переписать MonsterSpawner без `ListByMap` внутри `spawnUnsafe`.
-2. Переписать MonsterAI на `ListActiveForTick` и chunk cache внутри tick.
-3. Добавить batch load/create для world chunks.
-4. Оптимизировать размещение построек через footprint/intersection queries и транзакцию.
+Оставшееся улучшение:
 
-### Этап 3. Горячие Пути Фронтенда
+- Сделать параметры pool конфигурируемыми: `max_open_conns`, `max_idle_conns`, `conn_max_lifetime`.
+- Учитывать отдельный pool worker-процесса (`backend/cmd/worker/main.go`) при расчете лимитов Postgres.
 
-1. Перевести Pixi object layer на retained sprites/containers.
-2. Разделить terrain/object/monster/overlay redraw.
-3. Нормализовать Zustand-store и убрать O(n) upsert для realtime событий.
-4. Заменить realtime invalidation на точечные cache patches и throttled reconciliation.
+### World chunks
 
-### Этап 4. Нагрузочная Проверка
+Статус: частично исправлено.
 
-1. Запустить frontend perf-сценарии:
-   - `?perf=buildings&perfBuildings=2600`
-   - `?perf=monsters&perfMonsters=720`
-   - `?perf=mixed&perfBuildings=2600&perfMonsters=720&perfResources=260`
-2. Добавить backend seed/load script:
-   - 10k buildings;
-   - 5k resource nodes;
-   - 1k active monsters;
-   - 100 concurrent websocket clients;
-   - 50 players doing build/harvest/attack actions.
-3. Снимать p50/p95/p99 HTTP latency, simulation tick duration, DB query time, FPS, heap, dropped ws messages.
+`GetOrCreateChunks` теперь делает batch-чтение существующих чанков и tiles через bounding box, а tiles при создании чанка пишутся через `pq.CopyIn`. Это снимает часть старой проблемы `N chunks * SELECT chunks * SELECT tiles * 100 INSERT`.
+
+Оставшиеся риски:
+
+- Отсутствующие чанки по-прежнему создаются последовательно.
+- После создания чанка `createChunk` вызывает `findChunk`, то есть перечитывает только что созданный chunk.
+- `findChunks` читает tiles по bounding box и затем фильтрует wanted chunks в Go. Для обычного квадратного радиуса это нормально, но для разреженного набора координат может читать лишние tiles.
+- `ensureMap` все еще вызывается часто, хотя `ON CONFLICT DO NOTHING` делает это безопасным.
+
+Рекомендации:
+
+- Для пачки missing chunks создавать их в одной транзакции и по возможности возвращать сгенерированные tiles без повторного чтения.
+- Для разреженных наборов рассмотреть join через `VALUES (chunk_x, chunk_y)` вместо bounding box.
+- Кэшировать факт ensureMap на уровне repo/process или выполнять bootstrap отдельно.
+
+### MonsterAI
+
+Статус: существенно улучшено.
+
+`Tick` использует `ListActiveForTick(ctx, mapID, limit)`, а не `ListByMap`. Это привязывает работу tick к batch size, а не ко всем монстрам карты. Внутри tick есть cache чанков для `isPassable`.
+
+Оставшиеся риски:
+
+- `ListActiveForTick` сортирует по `updated_at`, но нет `next_tick_at`; монстры с разной скоростью/состоянием могут обрабатываться слишком часто или неравномерно.
+- `nearestTarget` ищет цель только в текущем chunk через `ListByChunk`, а не по aggro radius; это дешево, но может быть игровым и performance-компромиссом.
+- Каждый обновленный монстр пишет `Update`, `AddEvent`, публикует событие и логирует tick. При больших batch логирование станет заметным.
+- Нет атомарного claim/lock для монстров в `ListActiveForTick`, поэтому при нескольких worker-процессах возможна двойная обработка.
+
+Рекомендации:
+
+- Добавить `next_tick_at` или `locked_until` для монстров и claim через `FOR UPDATE SKIP LOCKED`.
+- Логировать monster tick sampling-ом или на debug-уровне.
+- Писать события батчем либо коалесцировать movement-события.
+- Использовать spatial-запрос по aggro radius, если gameplay требует видеть цели вне текущего chunk.
+
+### MonsterSpawner
+
+Статус: существенно улучшено.
+
+`CountAliveBySpawn` заменил чтение всех живых монстров, а `spawnUnsafe` проверяет только viewport вокруг кандидата. Индексы для spawn и viewport добавлены.
+
+Оставшиеся риски:
+
+- `relocateIfUnsafe` может многократно вызывать `spawnUnsafe`, а каждый вызов отдельно читает chunk и nearby buildings.
+- `tilePassable` не использует cache чанков, в отличие от MonsterAI.
+- При большом количестве spawn points или частых relocation затраты снова станут заметными.
+
+Рекомендации:
+
+- Добавить cache чанков и nearby buildings на время одного spawner tick.
+- Для ring-поиска предварительно загрузить bounding viewport построек вокруг всей зоны поиска.
+- Сохранять relocated spawn только при реальном изменении координат и считать relocation attempts метрикой.
+
+### Размещение построек
+
+Файл: `backend/internal/service/building.go`.
+
+Статус: остается риском среднего/высокого приоритета.
+
+Размещение построек выполняет несколько последовательных операций: проверка мира/footprint, список построек игрока, поиск пересечений через чанки, проверка монстров viewport, списание ресурсов, создание building, постановка action. Это приемлемо для одиночного действия, но уязвимо к latency и гонкам при конкурентном строительстве.
+
+Рекомендации:
+
+- Добавить специализированный запрос `ListBuildingsIntersectingFootprint(mapID, minX, minY, maxX, maxY)`.
+- Проверку лимита построек игрока делать агрегатом `COUNT`, а не полным `ListByPlayer`.
+- Перевести размещение в UnitOfWork: списание ресурсов, создание building, action queue.
+- Для предотвращения коллизий хранить `building_occupied_tiles(map_id, tile_x, tile_y, building_id)` с PK `(map_id, tile_x, tile_y)`.
+
+### Таймеры, actions и production
+
+Статус: база хорошая, но механизмы раздвоены.
+
+`game_actions` и `outbox_events` используют `FOR UPDATE SKIP LOCKED`, что хорошо для воркеров. При этом часть due-логики также живет в отдельных сервисах production/buildings/fields.
+
+Рекомендации:
+
+- Зафиксировать единый источник правды для таймеров: все через `game_actions` или due-сканеры только как repair/fallback.
+- Добавить идемпотентные state transitions для защиты от двойной обработки.
+- В метрики вынести lag oldest due и количество processed/failed по типу action.
+
+### Rate limit и idempotency
+
+Файлы: `backend/internal/adapter/http/router.go`, `backend/internal/adapter/http/middleware/*`.
+
+Статус: остается проблемой для multi-instance.
+
+Router создает `middleware.RateLimit(nil, ...)` и `middleware.Idempotency(nil, ...)`, то есть используются in-memory реализации. Они не синхронизируются между API-инстансами и могут копить ключи в памяти dev/prod процесса.
+
+Рекомендации:
+
+- Подключить Redis/Postgres-backed store для non-dev окружений.
+- Оставить in-memory только explicit dev fallback.
+- Добавить очистку expired idempotency records и rate-limit buckets.
+
+## Фронтенд: Подробные Наблюдения
+
+### Realtime и React Query
+
+Статус: исправлено для основного realtime-потока.
+
+`applyRealtimeEvent` патчит cache точечно:
+
+- `world.tile.changed` -> `['world', 'chunks']`;
+- building placed/updated/removed -> `['buildings']`;
+- resource changed -> `['resources', 'nodes']`;
+- monster events -> `['monsters']`.
+
+Это снимает старый риск сетевого шторма от `invalidateQueries` на каждое realtime-событие.
+
+Оставшиеся замечания:
+
+- В локальных mutations (`IsoMap`, `BuildMenu`, `Inspector`, `ProductionPanel`) invalidation остается нормальным и в целом уместным, но часть мест можно заменить прямым patch при необходимости.
+- Для движения монстров cache patch все еще сканирует массив query результата через `findIndex`; это нормально как промежуточный этап, но normalized cache станет лучше.
+
+### Viewport/chunk radius
+
+Статус: исправлено частично.
+
+`IsoMap` вычисляет `visibleChunkRadius` от `stageSize` и `camera.zoom`, использует его в `useVisibleChunks`, а `viewport.radius` синхронизируется с этим значением для realtime-подписок.
+
+Оставшиеся риски:
+
+- Монстры и объекты все еще фильтруются из уже загруженных массивов на клиенте; при росте мира лучше запрашивать и хранить их по viewport/chunk.
+- `deriveVisibleChunkRadius` ограничен 1..4. Это безопасно для API, но на экстремально широких экранах или малом zoom возможен компромисс между покрытием и количеством запросов.
+
+### Zustand-store
+
+Статус: улучшено, но не завершено.
+
+Побочные эффекты из `addBuilding` убраны, поэтому realtime/sync событие больше не меняет выбранный объект и не закрывает build menu. Upsert стал через `findIndex` и `slice`, без лишнего `filter/map + append`.
+
+Оставшееся улучшение:
+
+- Нормализовать большие коллекции.
+- Ввести selectors для видимой зоны.
+- Не пересчитывать `occupiedTileKeys(renderBuildings)` по всем зданиям, когда нужна только видимая/окрестная зона.
+
+### Pixi renderer
+
+Статус: существенно улучшено.
+
+Слой монстров отдельный и retained по контейнерам. Terrain/buildings/resources/building overlays теперь тоже retained: `PixiStage` хранит cache по tile/object/overlay keys, повторно использует `Sprite`, `Graphics` и `Container`, а stale children удаляет только при исчезновении из активного набора.
+
+Это закрывает старый full destroy/create path, который мог срабатывать при camera, hover, selection, tiles/buildings/resources и после загрузки textures. Оставшиеся затраты: расчет visible tiles, сортировка, обновление позиций, обновление hit areas и перерисовка `Graphics` fallback/overlay.
+
+Рекомендации:
+
+- Измерить pan/zoom на `?perf=buildings`, `?perf=monsters`, `?perf=mixed` через Chrome Performance.
+- Для hit areas можно хранить их рядом с retained object и обновлять при изменении позиции/размера.
+- Для fallback Graphics рассмотреть `RenderTexture`/texture atlas.
+- Добавить dev-счетчики Pixi children по слоям, чтобы видеть рост/утечки.
+
+### DOM-оверлеи
+
+Файл: `frontend/src/game/IsoMap.tsx`.
+
+DOM-оверлеи используются для строительных таймеров и work badges. Сейчас они рендерятся только для `visibleBuildings`, что хорошо. Но при сотнях видимых производств DOM может начать конкурировать с Pixi и React reconciliation.
+
+Рекомендации:
+
+- Оставить DOM для selected/hover/важных ready-состояний.
+- Массовые статусы рисовать в Pixi overlay layer.
+- Обновлять таймеры не чаще 1 раза в секунду и только для видимых overlays.
+
+### Ассеты и сборка
+
+Статус: заметно улучшено, но риск все еще средний/высокий.
+
+Факты текущего состояния:
+
+- `npm --prefix frontend run assets:budget`: `206.7 MB` runtime assets across `1990` files.
+- `frontend/dist/assets` после production build и `closeBundle` pruning не содержит `.glb`.
+- Production build удаляет `.blend`, `.blend1`, `.glb`, backup/review/preview/contact sheets из `dist/assets`.
+- Vite во время промежуточной таблицы still lists copied `.glb` before `closeBundle`; фактическая проверка через `find frontend/dist/assets -name '*.glb'` возвращает пустой результат.
+- GLB preview остается lazy dev/debug путем: `BuildingModelPreview` лениво грузит `BuildingGlbModel`, а `BuildingGlbModel` лениво грузит `three` и `GLTFLoader`.
+
+Это сильно лучше прежнего runtime бюджета около `726.5 MB`, но `206.7 MB` для веб-игры все еще много. Следующий выигрыш должен прийти от atlas/WebP/AVIF pipeline и выноса source/review материалов из `frontend/public/assets`.
+
+Рекомендации:
+
+- Физически вынести source/review/dev ассеты из `frontend/public/assets` в `tools/assets` или `docs/assets`, чтобы они не участвовали в dev-server public root.
+- Сжать GLB через Draco/Meshopt для preview/debug pipeline, но не возвращать GLB в runtime map.
+- Для PNG-тайлов и 2D-ассетов собрать texture atlases и рассмотреть WebP/AVIF, где качество приемлемо.
+- Уменьшить `ASSET_BUDGET_TOTAL_MB` поэтапно: например 1200 MB -> 600 MB -> 300 MB -> 200 MB -> 150 MB.
+- Добавить отчет по top-N runtime files в `assets:budget`, чтобы бюджет был не только gate, но и диагностикой.
+
+### Bundle chunking
+
+Файл: `frontend/vite.config.ts`.
+
+Статус: исправлено для основного route, но требует периодического контроля.
+
+Production build разделяет vendor chunks:
+
+- основной игровой `index`: `216.5 kB`, gzip `54.3 kB`;
+- `vendor-react`: `193.8 kB`, gzip `60.5 kB`;
+- `vendor-query`: `2.9 kB`, gzip `1.3 kB`;
+- `vendor-misc`: `79.6 kB`, gzip `25.1 kB`;
+- `vendor-pixi`: `516.8 kB`, gzip `148.8 kB`;
+- lazy `vendor-three-preview`: `777.8 kB`, gzip `202.6 kB`.
+
+`vendor-pixi` остается крупным, но он нужен на первом экране карты. `vendor-three-preview` крупнее, но попадает в отдельный lazy chunk для 3D preview/debug, а не в начальную карту. `chunkSizeWarningLimit` поднят до `900`, чтобы Vite не шумел из-за осознанного lazy preview chunk.
+
+Рекомендации:
+
+- Добавить bundle visualizer для периодической диагностики.
+- Не дробить Pixi на внутренние ручные chunks без анализа dependency graph: попытка разделить `pixi.js/lib/rendering`, `scene`, `assets`, `core` дает circular chunk warnings.
+- Лениво загружать тяжелые панели/debug tools, если они не нужны на первом экране.
+- Следить, чтобы `three` не импортировался синхронно из runtime-карты.
+
+## Рекомендуемый План Дальнейших Работ
+
+### Этап 1. Измеримость
+
+1. Добавить Prometheus-style метрики HTTP/DB/simulation/ws.
+2. Добавить frontend perf counters для Pixi children, redraw counts, FPS, heap.
+3. Добавить backend load seed: 10k buildings, 5k resources, 1k monsters.
+4. Прогнать `EXPLAIN ANALYZE` для chunks viewport, buildings viewport, monster tick, spawn count.
+
+### Этап 2. Retained Rendering И Профилирование
+
+1. Зафиксировать baseline FPS/heap/frame time для `?perf=buildings`, `?perf=monsters`, `?perf=mixed`.
+2. Добавить счетчики Pixi children/cache created/destroyed per redraw.
+3. Разделить redraw hover/selection от redraw terrain/object, если profiling покажет дорогой pan/zoom.
+4. Добавить pooling или `RenderTexture` для fallback/overlay graphics, если они станут hot path.
+
+### Этап 3. Нормализация Клиентского Состояния
+
+1. Ввести `byId`/`byKey` структуры в Zustand.
+2. Добавить selectors для видимой зоны.
+3. Синхронизировать React Query cache и Zustand через общие patch helpers.
+4. Снизить число пересчетов `filterVisibleMapObjects` и `occupiedTileKeys`.
+
+### Этап 4. Бэкенд Hot Path
+
+1. Индексировать WebSocket subscriptions.
+2. Добавить `next_tick_at`/claim для MonsterAI при нескольких worker.
+3. Оптимизировать placement через footprint queries и транзакцию.
+4. Добавить cache в MonsterSpawner relocation.
+
+### Этап 5. Ассеты
+
+1. Вынести source/review ассеты из `public`.
+2. Включить compression pipeline для preview GLB и texture assets.
+3. Собрать texture atlases для 2D карты.
+4. Ужесточить asset budget и добавить top-N отчет.
 
 ## Целевые Критерии
 
-Для ближайшего playable alpha:
+Для ближайшей playable alpha:
 
-- Backend p95 для чтения viewport/chunks: до 150 ms на локальной/тестовой БД.
+- Backend p95 для чтения viewport/chunks: до 150 ms на тестовой БД.
 - Backend simulation tick: стабильно меньше tick interval, без накопления backlog.
 - WebSocket dropped messages: 0 в нормальном сценарии.
 - Frontend desktop: 50-60 FPS на обычной карте, не ниже 30 FPS в stress-сценарии.
 - Frontend heap после 5 минут pan/zoom/realtime: стабилизируется, не растет монотонно.
-- Runtime assets initial route: загружает только нужный минимум, без скачивания крупных GLB для объектов вне экрана.
+- Runtime assets: ближайшая цель меньше 200 MB, далее меньше 150 MB.
+- Main app JS chunk: держать меньше 300 KB minified; `three` остается только lazy preview/debug chunk.
+- Runtime initial route: загружает только нужный минимум, без скачивания тяжелых ассетов вне экрана.
 
 ## Итог
 
-Главный риск бэкенда сейчас - не отсутствие индексов, а глобальные выборки и повторяющиеся запросы в симуляции. Главный риск фронтенда - не React сам по себе, а пересоздание Pixi-объектов и неуправляемый рост ассетов. Исправления хорошо ложатся на текущую архитектуру: систему не нужно переписывать, но нужно заменить несколько прототипных решений на retained rendering, batch/spatial queries и централизованное управление ресурсами.
+Повторный аудит показывает хороший прогресс: несколько прежних P1-проблем уже закрыты не косметически, а в правильном направлении. Бэкенд теперь меньше рискует упереться в Postgres pool и глобальные выборки монстров. Фронтенд перестал делать самые дорогие realtime-инвалидации, перевел массовые Pixi-слои на retained cache и убрал GLB из production runtime.
+
+Главные оставшиеся ограничения теперь более конкретные: нормализованное клиентское состояние, WebSocket fan-out по индексам, метрики, браузерное профилирование retained Pixi path и дальнейшее похудение 2D runtime assets. Систему переписывать не нужно; следующий прирост производительности даст удаление оставшихся full scan участков и подтверждение результатов профилированием.
