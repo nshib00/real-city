@@ -4,7 +4,7 @@ enabled = false
 [mcp_servers.blender]
 enabled = true
 command = "uvx"
-args = ["blender-mcp"]
+args = ["mcp-for-blender"]
 
 [mcp_servers.blender.env]
 BLENDER_HOST = "172.28.192.1"
