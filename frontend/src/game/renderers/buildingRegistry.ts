@@ -28,10 +28,12 @@ type ManifestPolicy = {
 
 const registry = new Map(buildingAssetManifests.map((manifest) => [manifest.kind, manifest]))
 
-const srcModelUrlLoaders = import.meta.glob('../../assets/buildings/**/*.glb', {
-  query: '?url',
-  import: 'default',
-}) as Record<string, () => Promise<string>>
+const srcModelUrlLoaders = import.meta.env.PROD
+  ? {} as Record<string, () => Promise<string>>
+  : import.meta.glob('../../assets/buildings/**/*.glb', {
+    query: '?url',
+    import: 'default',
+  }) as Record<string, () => Promise<string>>
 
 const manifestPolicies: Partial<Record<PlacedBuilding['kind'], ManifestPolicy>> = {
   town_hall: { level: townHallModelLevel, state: (building) => townHallModelState(building) },
