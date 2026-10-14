@@ -1,0 +1,788 @@
+{
+  "mountain_detail_ridge_massive": {
+    "kind": "mountain",
+    "triangles": 2260,
+    "objects": 23,
+    "bounds": [
+      [
+        -1.903,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.948,
+        1.8,
+        4.76
+      ]
+    ],
+    "png": "mountain_detail_ridge_massive.png",
+    "glb": "mountain_detail_ridge_massive.glb",
+    "alpha_bounds": null
+  },
+  "mountain_detail_spire_massive": {
+    "kind": "mountain",
+    "triangles": 2328,
+    "objects": 24,
+    "bounds": [
+      [
+        -1.83,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.858,
+        1.8,
+        5.52
+      ]
+    ],
+    "png": "mountain_detail_spire_massive.png",
+    "glb": "mountain_detail_spire_massive.glb",
+    "alpha_bounds": null
+  },
+  "mountain_detail_snowcap_massive": {
+    "kind": "mountain",
+    "triangles": 2216,
+    "objects": 24,
+    "bounds": [
+      [
+        -2.102,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.943,
+        1.8,
+        4.36
+      ]
+    ],
+    "png": "mountain_detail_snowcap_massive.png",
+    "glb": "mountain_detail_snowcap_massive.glb",
+    "alpha_bounds": null
+  },
+  "mine_l02_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3324,
+    "objects": 51,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.347
+      ]
+    ],
+    "png": "mine_l02_active_mountain_detail.png",
+    "glb": "mine_l02_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 2,
+    "state": "active"
+  },
+  "mine_l02_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 2928,
+    "objects": 42,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.848
+      ]
+    ],
+    "png": "mine_l02_construction_mountain_detail.png",
+    "glb": "mine_l02_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 2,
+    "state": "construction"
+  },
+  "mine_l02_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3500,
+    "objects": 55,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.334
+      ]
+    ],
+    "png": "mine_l02_damaged_mountain_detail.png",
+    "glb": "mine_l02_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 2,
+    "state": "damaged"
+  },
+  "mine_l03_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3412,
+    "objects": 53,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.374
+      ]
+    ],
+    "png": "mine_l03_active_mountain_detail.png",
+    "glb": "mine_l03_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 3,
+    "state": "active"
+  },
+  "mine_l03_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3016,
+    "objects": 44,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.869
+      ]
+    ],
+    "png": "mine_l03_construction_mountain_detail.png",
+    "glb": "mine_l03_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 3,
+    "state": "construction"
+  },
+  "mine_l03_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3588,
+    "objects": 57,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.361
+      ]
+    ],
+    "png": "mine_l03_damaged_mountain_detail.png",
+    "glb": "mine_l03_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 3,
+    "state": "damaged"
+  },
+  "mine_l04_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3456,
+    "objects": 54,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.401
+      ]
+    ],
+    "png": "mine_l04_active_mountain_detail.png",
+    "glb": "mine_l04_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 4,
+    "state": "active"
+  },
+  "mine_l04_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3016,
+    "objects": 44,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.89
+      ]
+    ],
+    "png": "mine_l04_construction_mountain_detail.png",
+    "glb": "mine_l04_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 4,
+    "state": "construction"
+  },
+  "mine_l04_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3632,
+    "objects": 58,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.388
+      ]
+    ],
+    "png": "mine_l04_damaged_mountain_detail.png",
+    "glb": "mine_l04_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 4,
+    "state": "damaged"
+  },
+  "mine_l05_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3456,
+    "objects": 54,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.428
+      ]
+    ],
+    "png": "mine_l05_active_mountain_detail.png",
+    "glb": "mine_l05_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 5,
+    "state": "active"
+  },
+  "mine_l05_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3148,
+    "objects": 47,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.911
+      ]
+    ],
+    "png": "mine_l05_construction_mountain_detail.png",
+    "glb": "mine_l05_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 5,
+    "state": "construction"
+  },
+  "mine_l05_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3632,
+    "objects": 58,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.415
+      ]
+    ],
+    "png": "mine_l05_damaged_mountain_detail.png",
+    "glb": "mine_l05_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 5,
+    "state": "damaged"
+  },
+  "mine_l06_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3984,
+    "objects": 66,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.454
+      ]
+    ],
+    "png": "mine_l06_active_mountain_detail.png",
+    "glb": "mine_l06_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 6,
+    "state": "active"
+  },
+  "mine_l06_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3368,
+    "objects": 52,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.932
+      ]
+    ],
+    "png": "mine_l06_construction_mountain_detail.png",
+    "glb": "mine_l06_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 6,
+    "state": "construction"
+  },
+  "mine_l06_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4160,
+    "objects": 70,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.442
+      ]
+    ],
+    "png": "mine_l06_damaged_mountain_detail.png",
+    "glb": "mine_l06_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 6,
+    "state": "damaged"
+  },
+  "mine_l07_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4072,
+    "objects": 68,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.481
+      ]
+    ],
+    "png": "mine_l07_active_mountain_detail.png",
+    "glb": "mine_l07_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 7,
+    "state": "active"
+  },
+  "mine_l07_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3456,
+    "objects": 54,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.953
+      ]
+    ],
+    "png": "mine_l07_construction_mountain_detail.png",
+    "glb": "mine_l07_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 7,
+    "state": "construction"
+  },
+  "mine_l07_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4248,
+    "objects": 72,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.469
+      ]
+    ],
+    "png": "mine_l07_damaged_mountain_detail.png",
+    "glb": "mine_l07_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 7,
+    "state": "damaged"
+  },
+  "mine_l08_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4248,
+    "objects": 72,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.508
+      ]
+    ],
+    "png": "mine_l08_active_mountain_detail.png",
+    "glb": "mine_l08_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 8,
+    "state": "active"
+  },
+  "mine_l08_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3632,
+    "objects": 58,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.974
+      ]
+    ],
+    "png": "mine_l08_construction_mountain_detail.png",
+    "glb": "mine_l08_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 8,
+    "state": "construction"
+  },
+  "mine_l08_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4424,
+    "objects": 76,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.496
+      ]
+    ],
+    "png": "mine_l08_damaged_mountain_detail.png",
+    "glb": "mine_l08_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 8,
+    "state": "damaged"
+  },
+  "mine_l09_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4468,
+    "objects": 77,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.535
+      ]
+    ],
+    "png": "mine_l09_active_mountain_detail.png",
+    "glb": "mine_l09_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 9,
+    "state": "active"
+  },
+  "mine_l09_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3764,
+    "objects": 61,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        1.995
+      ]
+    ],
+    "png": "mine_l09_construction_mountain_detail.png",
+    "glb": "mine_l09_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 9,
+    "state": "construction"
+  },
+  "mine_l09_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4644,
+    "objects": 81,
+    "bounds": [
+      [
+        -1.8,
+        -1.8,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.522
+      ]
+    ],
+    "png": "mine_l09_damaged_mountain_detail.png",
+    "glb": "mine_l09_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 9,
+    "state": "damaged"
+  },
+  "mine_l10_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4600,
+    "objects": 80,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.562
+      ]
+    ],
+    "png": "mine_l10_active_mountain_detail.png",
+    "glb": "mine_l10_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 10,
+    "state": "active"
+  },
+  "mine_l10_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3896,
+    "objects": 64,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.016
+      ]
+    ],
+    "png": "mine_l10_construction_mountain_detail.png",
+    "glb": "mine_l10_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 10,
+    "state": "construction"
+  },
+  "mine_l10_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4776,
+    "objects": 84,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.549
+      ]
+    ],
+    "png": "mine_l10_damaged_mountain_detail.png",
+    "glb": "mine_l10_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 10,
+    "state": "damaged"
+  },
+  "mine_l11_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4688,
+    "objects": 82,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.589
+      ]
+    ],
+    "png": "mine_l11_active_mountain_detail.png",
+    "glb": "mine_l11_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 11,
+    "state": "active"
+  },
+  "mine_l11_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3984,
+    "objects": 66,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.037
+      ]
+    ],
+    "png": "mine_l11_construction_mountain_detail.png",
+    "glb": "mine_l11_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 11,
+    "state": "construction"
+  },
+  "mine_l11_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4864,
+    "objects": 86,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.576
+      ]
+    ],
+    "png": "mine_l11_damaged_mountain_detail.png",
+    "glb": "mine_l11_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 11,
+    "state": "damaged"
+  },
+  "mine_l12_active_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4776,
+    "objects": 84,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.616
+      ]
+    ],
+    "png": "mine_l12_active_mountain_detail.png",
+    "glb": "mine_l12_active_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 12,
+    "state": "active"
+  },
+  "mine_l12_construction_mountain_detail": {
+    "kind": "mine",
+    "triangles": 3984,
+    "objects": 66,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.058
+      ]
+    ],
+    "png": "mine_l12_construction_mountain_detail.png",
+    "glb": "mine_l12_construction_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 12,
+    "state": "construction"
+  },
+  "mine_l12_damaged_mountain_detail": {
+    "kind": "mine",
+    "triangles": 4952,
+    "objects": 88,
+    "bounds": [
+      [
+        -1.8,
+        -1.815,
+        -0.03
+      ],
+      [
+        1.8,
+        1.8,
+        2.603
+      ]
+    ],
+    "png": "mine_l12_damaged_mountain_detail.png",
+    "glb": "mine_l12_damaged_mountain_detail.glb",
+    "alpha_bounds": null,
+    "level": 12,
+    "state": "damaged"
+  }
+}

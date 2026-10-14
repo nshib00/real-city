@@ -1,0 +1,42 @@
+[
+  {
+    "asset": "mountain_detail_ridge",
+    "triangles": 1988,
+    "alpha_bounds": [
+      15,
+      92,
+      497,
+      443
+    ]
+  },
+  {
+    "asset": "mountain_detail_spire",
+    "triangles": 2056,
+    "alpha_bounds": [
+      15,
+      70,
+      497,
+      443
+    ]
+  },
+  {
+    "asset": "mountain_detail_snowcap",
+    "triangles": 2008,
+    "alpha_bounds": [
+      15,
+      107,
+      497,
+      443
+    ]
+  },
+  {
+    "asset": "mine_l01_active_mountain_detail",
+    "triangles": 2776,
+    "alpha_bounds": [
+      15,
+      150,
+      497,
+      443
+    ]
+  }
+]

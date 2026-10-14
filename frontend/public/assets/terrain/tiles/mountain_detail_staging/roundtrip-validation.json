@@ -1,0 +1,22 @@
+[
+  {
+    "asset": "mountain_detail_ridge",
+    "triangles": 1988,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mountain_detail_spire",
+    "triangles": 2056,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mountain_detail_snowcap",
+    "triangles": 2008,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l01_active_mountain_detail",
+    "triangles": 2776,
+    "loose_vertices": 0
+  }
+]

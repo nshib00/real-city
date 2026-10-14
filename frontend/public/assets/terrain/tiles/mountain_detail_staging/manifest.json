@@ -1,0 +1,96 @@
+{
+  "family": "mountain_detail_staging",
+  "displayName": "Детальные горы и шахта, staging",
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "size": [
+    512,
+    512
+  ],
+  "footprint": 3.6,
+  "footprint_pixels": 480,
+  "anchor": [
+    256,
+    320
+  ],
+  "source": "mountain_detail_staging.blend",
+  "generator": "tools/assets/blender/generate_mountain_detail_models.py",
+  "runtimeIntegration": "not connected; separate staging assets only",
+  "assets": {
+    "mountain_detail_ridge": {
+      "triangles": 1988,
+      "objects": 23,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          -0.03
+        ],
+        [
+          1.8,
+          1.8,
+          2.42
+        ]
+      ],
+      "png": "mountain_detail_ridge.png",
+      "glb": "mountain_detail_ridge.glb",
+      "alpha_bounds": null
+    },
+    "mountain_detail_spire": {
+      "triangles": 2056,
+      "objects": 24,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          -0.03
+        ],
+        [
+          1.8,
+          1.8,
+          2.8
+        ]
+      ],
+      "png": "mountain_detail_spire.png",
+      "glb": "mountain_detail_spire.glb",
+      "alpha_bounds": null
+    },
+    "mountain_detail_snowcap": {
+      "triangles": 2008,
+      "objects": 24,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          -0.03
+        ],
+        [
+          1.8,
+          1.8,
+          2.22
+        ]
+      ],
+      "png": "mountain_detail_snowcap.png",
+      "glb": "mountain_detail_snowcap.glb",
+      "alpha_bounds": null
+    },
+    "mine_l01_active_mountain_detail": {
+      "triangles": 2776,
+      "objects": 42,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          -0.03
+        ],
+        [
+          1.8,
+          1.8,
+          1.86
+        ]
+      ],
+      "png": "mine_l01_active_mountain_detail.png",
+      "glb": "mine_l01_active_mountain_detail.glb",
+      "alpha_bounds": null
+    }
+  }
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "asset": "mountain_detail_ridge_massive",
+    "triangles": 2260,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mountain_detail_spire_massive",
+    "triangles": 2328,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mountain_detail_snowcap_massive",
+    "triangles": 2216,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l02_active_mountain_detail",
+    "triangles": 3716,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l02_construction_mountain_detail",
+    "triangles": 3320,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l02_damaged_mountain_detail",
+    "triangles": 3892,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l03_active_mountain_detail",
+    "triangles": 3804,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l03_construction_mountain_detail",
+    "triangles": 3408,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l03_damaged_mountain_detail",
+    "triangles": 3980,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l04_active_mountain_detail",
+    "triangles": 3848,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l04_construction_mountain_detail",
+    "triangles": 3408,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l04_damaged_mountain_detail",
+    "triangles": 4024,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l05_active_mountain_detail",
+    "triangles": 3848,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l05_construction_mountain_detail",
+    "triangles": 3540,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l05_damaged_mountain_detail",
+    "triangles": 4024,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l06_active_mountain_detail",
+    "triangles": 4376,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l06_construction_mountain_detail",
+    "triangles": 3760,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l06_damaged_mountain_detail",
+    "triangles": 4552,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l07_active_mountain_detail",
+    "triangles": 4464,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l07_construction_mountain_detail",
+    "triangles": 3848,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l07_damaged_mountain_detail",
+    "triangles": 4640,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l08_active_mountain_detail",
+    "triangles": 4640,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l08_construction_mountain_detail",
+    "triangles": 4024,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l08_damaged_mountain_detail",
+    "triangles": 4816,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l09_active_mountain_detail",
+    "triangles": 4860,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l09_construction_mountain_detail",
+    "triangles": 4156,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l09_damaged_mountain_detail",
+    "triangles": 5036,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l10_active_mountain_detail",
+    "triangles": 4992,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l10_construction_mountain_detail",
+    "triangles": 4288,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l10_damaged_mountain_detail",
+    "triangles": 5168,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l11_active_mountain_detail",
+    "triangles": 5080,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l11_construction_mountain_detail",
+    "triangles": 4376,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l11_damaged_mountain_detail",
+    "triangles": 5256,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l12_active_mountain_detail",
+    "triangles": 5168,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l12_construction_mountain_detail",
+    "triangles": 4376,
+    "loose_vertices": 0
+  },
+  {
+    "asset": "mine_l12_damaged_mountain_detail",
+    "triangles": 5344,
+    "loose_vertices": 0
+  }
+]
