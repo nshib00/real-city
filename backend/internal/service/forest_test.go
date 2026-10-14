@@ -89,6 +89,58 @@ func TestForestServiceChopAddsCoinsOnEachStage(t *testing.T) {
 	}
 }
 
+func TestForestServiceChopUpdatesExactRequestedCoordinate(t *testing.T) {
+	ctx := context.Background()
+	requested := world.Coord{X: -1, Y: 1}
+	wrappedNeighbor := world.Coord{X: 159, Y: 1}
+	requestedChunk := world.ChunkForTile(requested)
+	wrappedChunk := world.ChunkForTile(wrappedNeighbor)
+	worlds := &forestMultiChunkRepo{
+		chunks: map[world.ChunkCoord]world.Chunk{
+			requestedChunk: {
+				MapID: DefaultWorldID,
+				Coord: requestedChunk,
+				Tiles: []world.Tile{{
+					MapID:         DefaultWorldID,
+					Coord:         requested,
+					Chunk:         requestedChunk,
+					Terrain:       world.TerrainForest,
+					ForestDensity: 3,
+				}},
+			},
+			wrappedChunk: {
+				MapID: DefaultWorldID,
+				Coord: wrappedChunk,
+				Tiles: []world.Tile{{
+					MapID:         DefaultWorldID,
+					Coord:         wrappedNeighbor,
+					Chunk:         wrappedChunk,
+					Terrain:       world.TerrainForest,
+					ForestDensity: 3,
+				}},
+			},
+		},
+	}
+	economyService := NewEconomyService(memory.NewEconomyRepo(), nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service := NewForestService(worlds, economyService, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service.rareDrop = func() bool { return false }
+
+	result, err := service.Chop(ctx, "p1", requested)
+	if err != nil {
+		t.Fatalf("expected forest chop to succeed: %v", err)
+	}
+
+	if result.Tile.Coord != requested {
+		t.Fatalf("expected response for requested coord %#v, got %#v", requested, result.Tile.Coord)
+	}
+	if worlds.tile(requested).ForestDensity != 2 {
+		t.Fatalf("expected requested tile density to become 2, got %d", worlds.tile(requested).ForestDensity)
+	}
+	if worlds.tile(wrappedNeighbor).ForestDensity != 3 {
+		t.Fatalf("wrapped neighbor must not be changed, got density %d", worlds.tile(wrappedNeighbor).ForestDensity)
+	}
+}
+
 func TestForestServiceSchedulesRegrowthAfterClearingForest(t *testing.T) {
 	ctx := context.Background()
 	coord := world.Coord{X: 8, Y: 8}
@@ -264,6 +316,62 @@ func (r *forestWorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error
 
 func (r *forestWorldRepo) tile(coord world.Coord) world.Tile {
 	for _, tile := range r.chunk.Tiles {
+		if tile.Coord == coord {
+			return tile
+		}
+	}
+	return world.Tile{}
+}
+
+type forestMultiChunkRepo struct {
+	chunks map[world.ChunkCoord]world.Chunk
+}
+
+func (r *forestMultiChunkRepo) GetMap(ctx context.Context, id string) (world.WorldMap, error) {
+	_ = ctx
+	return world.WorldMap{ID: id}, nil
+}
+
+func (r *forestMultiChunkRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, bool, error) {
+	_ = ctx
+	_ = mapID
+	chunk, ok := r.chunks[coord]
+	if !ok {
+		return world.Chunk{MapID: DefaultWorldID, Coord: coord}, false, nil
+	}
+	return chunk, true, nil
+}
+
+func (r *forestMultiChunkRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	_ = ctx
+	_ = mapID
+	chunks := make([]world.Chunk, 0, len(coords))
+	for _, coord := range coords {
+		if chunk, ok := r.chunks[coord]; ok {
+			chunks = append(chunks, chunk)
+		}
+	}
+	return chunks, nil
+}
+
+func (r *forestMultiChunkRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
+	_ = ctx
+	chunk := r.chunks[tile.Chunk]
+	for index := range chunk.Tiles {
+		if chunk.Tiles[index].Coord == tile.Coord {
+			chunk.Tiles[index] = tile
+			r.chunks[tile.Chunk] = chunk
+			return nil
+		}
+	}
+	chunk.Tiles = append(chunk.Tiles, tile)
+	r.chunks[tile.Chunk] = chunk
+	return nil
+}
+
+func (r *forestMultiChunkRepo) tile(coord world.Coord) world.Tile {
+	chunk := r.chunks[world.ChunkForTile(coord)]
+	for _, tile := range chunk.Tiles {
 		if tile.Coord == coord {
 			return tile
 		}

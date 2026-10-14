@@ -176,9 +176,13 @@ type GameState = {
   selectedMonsterId: string | null
   hoveredTile: TileCoord | null
   buildings: PlacedBuilding[]
+  buildingIndexById: Record<string, number>
   resourceNodes: ResourceNode[]
+  resourceNodeIndexById: Record<string, number>
   monsters: MonsterEntity[]
+  monsterIndexById: Record<string, number>
   worldTiles: WorldTile[]
+  worldTileIndexByKey: Record<string, number>
   constructionNow: number
   camera: { x: number; y: number; zoom: number }
   viewport: { center: TileCoord; radius: number }
@@ -202,6 +206,7 @@ type GameState = {
   panCamera: (delta: { x: number; y: number }) => void
   focusTile: (input: { tile: TileCoord; viewportWidth: number; viewportHeight: number }) => void
   setZoom: (zoom: number) => void
+  setZoomAt: (input: { zoom: number; focalScreen?: TileCoord; viewportSize: { width: number; height: number } }) => void
   setViewportCenter: (center: TileCoord) => void
   setViewportRadius: (radius: number) => void
   setCompactPanels: (compactPanels: boolean) => void
@@ -220,9 +225,13 @@ export const useGameStore = create<GameState>((set) => ({
   selectedMonsterId: null,
   hoveredTile: null,
   buildings: [],
+  buildingIndexById: {},
   resourceNodes: [],
+  resourceNodeIndexById: {},
   monsters: [],
+  monsterIndexById: {},
   worldTiles: [],
+  worldTileIndexByKey: {},
   constructionNow: Date.now(),
   camera: { x: 0, y: 0, zoom: 1 },
   viewport: { center: { x: 0, y: 0 }, radius: 1 },
@@ -234,12 +243,11 @@ export const useGameStore = create<GameState>((set) => ({
       uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: tool === 'build' ? state.uiPreferences.buildMenuOpen : false }),
     })),
   selectTile: (selectedTile) => {
-    const wrappedTile = wrapGridCoord(selectedTile)
-    set({ selectedTile: wrappedTile, selectedBuildingId: null, selectedMonsterId: null })
+    set({ selectedTile, selectedBuildingId: null, selectedMonsterId: null })
   },
   selectBuilding: (selectedBuildingId) =>
     set((state) => {
-      const building = state.buildings.find((item) => item.id === selectedBuildingId)
+      const building = findByIndexedId(state.buildings, state.buildingIndexById, selectedBuildingId)
       return {
         selectedBuildingId,
         selectedMonsterId: null,
@@ -249,7 +257,7 @@ export const useGameStore = create<GameState>((set) => ({
     }),
   selectMonster: (selectedMonsterId) =>
     set((state) => {
-      const monster = state.monsters.find((item) => item.id === selectedMonsterId)
+      const monster = findByIndexedId(state.monsters, state.monsterIndexById, selectedMonsterId)
       return {
         selectedMonsterId,
         selectedBuildingId: null,
@@ -271,7 +279,7 @@ export const useGameStore = create<GameState>((set) => ({
         result = { ok: false, reason: 'Ратуша может быть только одна' }
         return state
       }
-      const tile = wrapGridCoord(input.tile)
+      const tile = input.tile
       if (state.buildings.some((building) => building.tile.x === tile.x && building.tile.y === tile.y)) {
         result = { ok: false, reason: 'Клетка уже занята' }
         return state
@@ -291,8 +299,10 @@ export const useGameStore = create<GameState>((set) => ({
         completesAt: durationMs > 0 ? now + durationMs : null,
       }
       result = { ok: true, building }
+      const nextBuildings = [...state.buildings, building]
       return {
-        buildings: [...state.buildings, building],
+        buildings: nextBuildings,
+        buildingIndexById: { ...state.buildingIndexById, [building.id]: nextBuildings.length - 1 },
         selectedBuildingId: building.id,
         selectedTile: tile,
         uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: false }),
@@ -301,25 +311,34 @@ export const useGameStore = create<GameState>((set) => ({
     return result
   },
   addBuilding: (building) =>
-    set((state) => ({
-      buildings: upsertById(state.buildings, building),
-    })),
-  setResourceNodes: (nodes) => set({ resourceNodes: nodes }),
+    set((state) => {
+      const result = upsertByIndexedId(state.buildings, state.buildingIndexById, building)
+      return { buildings: result.items, buildingIndexById: result.indexById }
+    }),
+  setResourceNodes: (nodes) => set({ resourceNodes: nodes, resourceNodeIndexById: buildIndexById(nodes) }),
   upsertResourceNode: (node) =>
-    set((state) => ({
-      resourceNodes: upsertById(state.resourceNodes, node),
-    })),
-  setMonsters: (monsters) => set({ monsters }),
+    set((state) => {
+      const result = upsertByIndexedId(state.resourceNodes, state.resourceNodeIndexById, node)
+      return { resourceNodes: result.items, resourceNodeIndexById: result.indexById }
+    }),
+  setMonsters: (monsters) => set({ monsters, monsterIndexById: buildIndexById(monsters) }),
   upsertMonster: (monster) =>
-    set((state) => ({
-      monsters: monster.state === 'dead' ? removeById(state.monsters, monster.id) : upsertById(state.monsters, monster),
-      selectedMonsterId: monster.state === 'dead' && state.selectedMonsterId === monster.id ? null : state.selectedMonsterId,
-    })),
-  setWorldTiles: (tiles) => set({ worldTiles: tiles }),
+    set((state) => {
+      const result = monster.state === 'dead'
+        ? removeByIndexedId(state.monsters, state.monsterIndexById, monster.id)
+        : upsertByIndexedId(state.monsters, state.monsterIndexById, monster)
+      return {
+        monsters: result.items,
+        monsterIndexById: result.indexById,
+        selectedMonsterId: monster.state === 'dead' && state.selectedMonsterId === monster.id ? null : state.selectedMonsterId,
+      }
+    }),
+  setWorldTiles: (tiles) => set({ worldTiles: tiles, worldTileIndexByKey: indexWorldTiles(tiles) }),
   updateWorldTile: (tile) =>
-    set((state) => ({
-      worldTiles: upsertWorldTile(state.worldTiles, tile),
-    })),
+    set((state) => {
+      const result = upsertWorldTile(state.worldTiles, state.worldTileIndexByKey, tile)
+      return { worldTiles: result.items, worldTileIndexByKey: result.indexByKey }
+    }),
   tickConstructions: (now) =>
     set((state) => ({
       constructionNow: now,
@@ -332,10 +351,14 @@ export const useGameStore = create<GameState>((set) => ({
       }),
     })),
   deleteBuilding: (buildingId) =>
-    set((state) => ({
-      buildings: state.buildings.filter((building) => building.id !== buildingId),
-      selectedBuildingId: state.selectedBuildingId === buildingId ? null : state.selectedBuildingId,
-    })),
+    set((state) => {
+      const result = removeByIndexedId(state.buildings, state.buildingIndexById, buildingId)
+      return {
+        buildings: result.items,
+        buildingIndexById: result.indexById,
+        selectedBuildingId: state.selectedBuildingId === buildingId ? null : state.selectedBuildingId,
+      }
+    }),
   panCamera: (delta) =>
     set((state) => ({
       camera: {
@@ -362,10 +385,26 @@ export const useGameStore = create<GameState>((set) => ({
     set((state) => ({
       camera: { ...state.camera, zoom: Math.max(0.6, Math.min(1.6, zoom)) },
     })),
+  setZoomAt: ({ zoom, focalScreen, viewportSize }) =>
+    set((state) => {
+      const nextZoom = Math.max(0.6, Math.min(1.6, zoom))
+      const target = focalScreen ?? { x: viewportSize.width / 2, y: viewportSize.height / 2 }
+      const originBase = { x: viewportSize.width * 0.48, y: viewportSize.height * 0.16 }
+      const origin = { x: originBase.x + state.camera.x, y: originBase.y + state.camera.y }
+      const worldScreen = {
+        x: (target.x - origin.x) / state.camera.zoom,
+        y: (target.y - origin.y) / state.camera.zoom,
+      }
+      const camera = wrapCameraOffset({
+        x: target.x - originBase.x - worldScreen.x * nextZoom,
+        y: target.y - originBase.y - worldScreen.y * nextZoom,
+      })
+      return { camera: { ...camera, zoom: nextZoom } }
+    }),
   setViewportCenter: (center) => set((state) => ({ viewport: { ...state.viewport, center: wrapGridCoord(center) } })),
   setViewportRadius: (radius) =>
     set((state) => ({
-      viewport: { ...state.viewport, radius: Math.max(1, Math.min(4, Math.round(radius))) },
+      viewport: { ...state.viewport, radius: Math.max(1, Math.min(3, Math.round(radius))) },
     })),
   setCompactPanels: (compactPanels) =>
     set((state) => ({
@@ -403,36 +442,87 @@ function persistUIPreferences(preferences: UIPreferences) {
   return preferences
 }
 
-function upsertById<T extends { id: string }>(items: T[], item: T) {
-  const index = items.findIndex((current) => current.id === item.id)
+function findByIndexedId<T extends { id: string }>(items: T[], indexById: Record<string, number>, id: string) {
+  const index = indexById[id]
+  if (index !== undefined && items[index]?.id === id) {
+    return items[index]
+  }
+  return items.find((item) => item.id === id)
+}
+
+function buildIndexById<T extends { id: string }>(items: T[]) {
+  const index: Record<string, number> = {}
+  items.forEach((item, position) => {
+    index[item.id] = position
+  })
+  return index
+}
+
+function upsertByIndexedId<T extends { id: string }>(items: T[], indexById: Record<string, number>, item: T) {
+  let index = indexById[item.id]
+  if (index === undefined || items[index]?.id !== item.id) {
+    index = items.findIndex((current) => current.id === item.id)
+  }
   if (index === -1) {
-    return [...items, item]
+    return {
+      items: [...items, item],
+      indexById: { ...indexById, [item.id]: items.length },
+    }
   }
   if (items[index] === item) {
-    return items
+    return { items, indexById }
   }
   const next = items.slice()
   next[index] = item
-  return next
-}
-
-function removeById<T extends { id: string }>(items: T[], id: string) {
-  const index = items.findIndex((item) => item.id === id)
-  if (index === -1) {
-    return items
+  return {
+    items: next,
+    indexById: indexById[item.id] === index ? indexById : { ...indexById, [item.id]: index },
   }
-  return [...items.slice(0, index), ...items.slice(index + 1)]
 }
 
-function upsertWorldTile(items: WorldTile[], tile: WorldTile) {
-  const index = items.findIndex((item) => item.x === tile.x && item.y === tile.y)
+function removeByIndexedId<T extends { id: string }>(items: T[], indexById: Record<string, number>, id: string) {
+  let index = indexById[id]
+  if (index === undefined || items[index]?.id !== id) {
+    index = items.findIndex((item) => item.id === id)
+  }
   if (index === -1) {
-    return [...items, tile]
+    return { items, indexById }
+  }
+  const next = [...items.slice(0, index), ...items.slice(index + 1)]
+  return { items: next, indexById: buildIndexById(next) }
+}
+
+function indexWorldTiles(items: WorldTile[]) {
+  const index: Record<string, number> = {}
+  items.forEach((item, position) => {
+    index[tileKey(item)] = position
+  })
+  return index
+}
+
+function upsertWorldTile(items: WorldTile[], indexByKey: Record<string, number>, tile: WorldTile) {
+  const key = tileKey(tile)
+  let index = indexByKey[key]
+  if (index === undefined || tileKey(items[index]) !== key) {
+    index = items.findIndex((item) => item.x === tile.x && item.y === tile.y)
+  }
+  if (index === -1) {
+    return {
+      items: [...items, tile],
+      indexByKey: { ...indexByKey, [key]: items.length },
+    }
   }
   if (items[index] === tile) {
-    return items
+    return { items, indexByKey }
   }
   const next = items.slice()
   next[index] = tile
-  return next
+  return {
+    items: next,
+    indexByKey: indexByKey[key] === index ? indexByKey : { ...indexByKey, [key]: index },
+  }
+}
+
+function tileKey(tile: TileCoord) {
+  return `${tile.x}:${tile.y}`
 }

@@ -5,7 +5,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { ProductionRecipeResponse } from '../shared/api/economy'
 import { startProduction } from '../shared/api/economy'
-import { chopForest } from '../shared/api/world'
+import { chopForest, getChunks } from '../shared/api/world'
+import type { WorldTile } from '../shared/contracts'
 import { useAuthStore } from '../features/auth/useAuthStore'
 import type { Player } from '../features/auth/types'
 import { useGameStore } from './state/useGameStore'
@@ -18,6 +19,7 @@ const economyMocks = vi.hoisted(() => ({
 
 const pixiMocks = vi.hoisted(() => ({
   latestProps: undefined as {
+    tiles?: { x: number; y: number }[]
     buildings?: { id: string; name: string }[]
     resources?: { id: string; resource: string }[]
     monsters?: { id: string; type: string }[]
@@ -38,12 +40,13 @@ vi.mock('../shared/api/economy', async () => {
 })
 
 vi.mock('../shared/api/world', () => ({
-  getChunks: vi.fn(async () => ({ chunks: [] })),
+  getChunks: vi.fn(),
   chopForest: vi.fn(),
 }))
 
 vi.mock('./renderer/PixiStage', () => ({
   PixiStage: (props: {
+    tiles?: { x: number; y: number }[]
     buildings?: { id: string; name: string }[]
     resources?: { id: string; resource: string }[]
     monsters?: { id: string; type: string }[]
@@ -59,6 +62,7 @@ vi.mock('./renderer/PixiStage', () => ({
       <div data-testid="pixi-stage">
         <button type="button" data-testid="pixi-forest-a" onClick={() => props.onSelectTile({ x: 1, y: 1 })} />
         <button type="button" data-testid="pixi-forest-b" onClick={() => props.onSelectTile({ x: 2, y: 1 })} />
+        <button type="button" data-testid="pixi-forest-negative" onClick={() => props.onSelectTile({ x: -1, y: 1 })} />
         {props.buildings?.map((building) => (
           <button
             key={building.id}
@@ -92,6 +96,9 @@ describe('IsoMap production interactions', () => {
   beforeEach(() => {
     window.history.replaceState(null, '', '/')
     pixiMocks.latestProps = undefined
+    vi.mocked(getChunks).mockReset()
+    vi.mocked(getChunks).mockResolvedValue({ chunks: [] })
+    vi.mocked(chopForest).mockReset()
     economyMocks.startProduction.mockResolvedValue({
       job: {
         id: 'job-1',
@@ -155,6 +162,7 @@ describe('IsoMap production interactions', () => {
     renderWithClient(<IsoMap />)
 
     expect(await screen.findByText('3')).toBeTruthy()
+    expect(screen.getByText('fps 0.0')).toBeTruthy()
     expect(pixiMocks.latestProps?.buildings?.map((building) => building.id)).toEqual(['lumber-yard-1'])
     expect(screen.getByLabelText('Лесопильный двор').className).toContain('map-building-overlay-anchor')
   })
@@ -193,16 +201,13 @@ describe('IsoMap production interactions', () => {
   })
 
   it('starts chopping each clicked forest tile even while another chop is pending', async () => {
+    vi.mocked(getChunks).mockResolvedValue({ chunks: [testChunk([
+      { x: 1, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
+      { x: 2, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
+    ])] })
     vi.mocked(chopForest).mockReturnValue(new Promise(() => undefined))
     renderWithClient(<IsoMap />)
-    act(() => {
-      useGameStore.setState({
-        worldTiles: [
-          { x: 1, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
-          { x: 2, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
-        ],
-      })
-    })
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(2))
 
     fireEvent.click(screen.getByTestId('pixi-forest-a'))
     expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 1 && tile.y === 1)?.forest_density).toBe(2)
@@ -211,6 +216,105 @@ describe('IsoMap production interactions', () => {
 
     await waitFor(() => expect(chopForest).toHaveBeenCalledTimes(2))
     expect(vi.mocked(chopForest).mock.calls.map(([tile]) => tile)).toEqual(expect.arrayContaining([{ x: 1, y: 1 }, { x: 2, y: 1 }]))
+  })
+
+  it('does not restore a recently chopped tile from stale chunk data when chopping the next tile', async () => {
+    const firstTile: WorldTile = { x: 1, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 }
+    const secondTile: WorldTile = { x: 2, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 }
+    const staleChunks = { chunks: [testChunk([firstTile, secondTile])] }
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
+    vi.mocked(getChunks).mockResolvedValue(staleChunks)
+    vi.mocked(chopForest).mockImplementation(async (tile) => ({
+      tile: {
+        ...(tile.x === firstTile.x ? firstTile : secondTile),
+        forest_density: 2,
+      },
+      inventory: { player_id: 'player-1', items: [], coin_capacity: 2000, updated_at: '2026-09-29T10:00:00Z' },
+    }))
+    renderWithClient(<IsoMap />, queryClient)
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(2))
+
+    fireEvent.click(screen.getByTestId('pixi-forest-a'))
+    await waitFor(() => {
+      expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 1 && tile.y === 1)?.forest_density).toBe(2)
+    })
+
+    act(() => {
+      queryClient.setQueryData(['world', 'chunks', 0, 0, 1], staleChunks)
+    })
+    fireEvent.click(screen.getByTestId('pixi-forest-b'))
+
+    await waitFor(() => expect(chopForest).toHaveBeenCalledTimes(2))
+    expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 1 && tile.y === 1)?.forest_density).toBe(2)
+    expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 2 && tile.y === 1)?.forest_density).toBe(2)
+  })
+
+  it('does not restore a fully cleared forest tile from stale chunk data after the recent chop window', async () => {
+    const nowSpy = vi.spyOn(Date, 'now').mockReturnValue(10_000)
+    const firstTile: WorldTile = { x: 1, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 }
+    const secondTile: WorldTile = { x: 2, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 }
+    const staleChunks = { chunks: [testChunk([firstTile, secondTile])] }
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
+    let firstDensity = firstTile.forest_density
+    vi.mocked(getChunks).mockResolvedValue(staleChunks)
+    vi.mocked(chopForest).mockImplementation(async (tile) => {
+      const source = tile.x === firstTile.x ? firstTile : secondTile
+      if (tile.x === firstTile.x) {
+        firstDensity -= 1
+        return {
+          tile: { ...firstTile, terrain: firstDensity <= 0 ? 'grass' : 'forest', forest_density: Math.max(0, firstDensity) },
+          inventory: { player_id: 'player-1', items: [], coin_capacity: 2000, updated_at: '2026-09-29T10:00:00Z' },
+        }
+      }
+      return {
+        tile: { ...source, forest_density: 2 },
+        inventory: { player_id: 'player-1', items: [], coin_capacity: 2000, updated_at: '2026-09-29T10:00:00Z' },
+      }
+    })
+    renderWithClient(<IsoMap />, queryClient)
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(2))
+
+    fireEvent.click(screen.getByTestId('pixi-forest-a'))
+    await waitFor(() => expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 1 && tile.y === 1)?.forest_density).toBe(2))
+    fireEvent.click(screen.getByTestId('pixi-forest-a'))
+    await waitFor(() => expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 1 && tile.y === 1)?.forest_density).toBe(1))
+    fireEvent.click(screen.getByTestId('pixi-forest-a'))
+    await waitFor(() => {
+      const tile = useGameStore.getState().worldTiles.find((item) => item.x === 1 && item.y === 1)
+      expect(tile?.terrain).toBe('grass')
+      expect(tile?.forest_density).toBe(0)
+    })
+
+    nowSpy.mockReturnValue(21_000)
+    act(() => {
+      queryClient.setQueryData(['world', 'chunks', 0, 0, 1], staleChunks)
+    })
+    fireEvent.click(screen.getByTestId('pixi-forest-b'))
+
+    await waitFor(() => expect(chopForest).toHaveBeenCalledTimes(4))
+    const first = useGameStore.getState().worldTiles.find((tile) => tile.x === 1 && tile.y === 1)
+    const second = useGameStore.getState().worldTiles.find((tile) => tile.x === 2 && tile.y === 1)
+    expect(first?.terrain).toBe('grass')
+    expect(first?.forest_density).toBe(0)
+    expect(second?.forest_density).toBe(2)
+    nowSpy.mockRestore()
+  })
+
+  it('chops the raw rendered tile coordinate without wrapping it to another cell', async () => {
+    vi.mocked(getChunks).mockResolvedValue({ chunks: [testChunk([
+      { x: -1, y: 1, chunk_x: -1, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
+      { x: 159, y: 1, chunk_x: 4, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
+    ])] })
+    vi.mocked(chopForest).mockReturnValue(new Promise(() => undefined))
+    renderWithClient(<IsoMap />)
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(2))
+
+    fireEvent.click(screen.getByTestId('pixi-forest-negative'))
+
+    await waitFor(() => expect(vi.mocked(chopForest).mock.calls.map(([tile]) => tile)).toContainEqual({ x: -1, y: 1 }))
+    expect(useGameStore.getState().selectedTile).toEqual({ x: -1, y: 1 })
+    expect(useGameStore.getState().worldTiles.find((tile) => tile.x === -1 && tile.y === 1)?.forest_density).toBe(2)
+    expect(useGameStore.getState().worldTiles.find((tile) => tile.x === 159 && tile.y === 1)?.forest_density).toBe(3)
   })
 
   it('passes visible monsters to Pixi and selects them through the object layer', async () => {
@@ -290,8 +394,7 @@ describe('IsoMap production interactions', () => {
   })
 })
 
-function renderWithClient(ui: ReactElement) {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
+function renderWithClient(ui: ReactElement, queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })) {
   return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>)
 }
 
@@ -353,5 +456,15 @@ function testPlayer(id: string): Player {
     },
     created_at: '2026-09-29T10:00:00Z',
     updated_at: '2026-09-29T10:00:00Z',
+  }
+}
+
+function testChunk(tiles: WorldTile[]) {
+  return {
+    map_id: 'dev-world',
+    chunk_x: tiles[0]?.chunk_x ?? 0,
+    chunk_y: tiles[0]?.chunk_y ?? 0,
+    version: 1,
+    tiles,
   }
 }

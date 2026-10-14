@@ -22,6 +22,8 @@ import { fieldCropSpec } from '../features/fields/fieldGrowth'
 import { ResourceIcon } from '../features/resources/ResourceIcon'
 import { mapObjectZIndex } from './renderer/depth'
 
+const RECENT_CHOP_TILE_TTL_MS = 10_000
+
 export function IsoMap() {
   const selectedTile = useGameStore((state) => state.selectedTile)
   const hoveredTile = useGameStore((state) => state.hoveredTile)
@@ -42,7 +44,7 @@ export function IsoMap() {
   const updateWorldTile = useGameStore((state) => state.updateWorldTile)
   const addBuilding = useGameStore((state) => state.addBuilding)
   const panCamera = useGameStore((state) => state.panCamera)
-  const setZoom = useGameStore((state) => state.setZoom)
+  const setZoomAt = useGameStore((state) => state.setZoomAt)
   const setViewportCenter = useGameStore((state) => state.setViewportCenter)
   const queryClient = useQueryClient()
   const player = useAuthStore((state) => state.player)
@@ -52,7 +54,10 @@ export function IsoMap() {
   const dragFrameRef = useRef<number | null>(null)
   const pendingChopTilesRef = useRef(new Set<string>())
   const optimisticChopTilesRef = useRef(new Map<string, WorldTile>())
+  const optimisticChopResultTilesRef = useRef(new Map<string, WorldTile>())
+  const recentChopTilesRef = useRef(new Map<string, { tile: WorldTile; expiresAt: number }>())
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
+  const performanceSnapshot = useRenderPerformanceSnapshot()
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
   const centerChunk = useMemo(() => tileToChunk(wrapGridCoord(viewport.center)), [viewport.center])
@@ -69,10 +74,10 @@ export function IsoMap() {
     [camera, stageSize, viewport.center],
   )
   const visibleBuildings = useMemo(() => filterVisibleMapObjects(renderBuildings, visibilityOptions), [renderBuildings, visibilityOptions])
-  const buildingOccupiedTiles = useMemo(() => occupiedTileKeys(renderBuildings), [renderBuildings])
+  const buildingOccupiedTiles = useMemo(() => occupiedTileKeys(visibleBuildings), [visibleBuildings])
   const visibleResourceNodes = useMemo(() => filterVisibleMapObjects(renderResourceNodes, visibilityOptions), [renderResourceNodes, visibilityOptions])
   const visibleMonsters = useMemo(() => filterVisibleMapObjects(renderMonsters, visibilityOptions), [renderMonsters, visibilityOptions])
-  const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes })
+  const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes, staleTime: 5 * 60_000, gcTime: 30 * 60_000 })
   const jobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, refetchInterval: 5000 })
   const recipes = recipesQuery.data?.recipes ?? []
   const productionJobs = jobsQuery.data?.jobs ?? []
@@ -89,15 +94,16 @@ export function IsoMap() {
   const chopMutation = useMutation({
     mutationFn: chopForest,
     onSuccess: (result) => {
+      rememberRecentChopTile(recentChopTilesRef.current, result.tile)
       updateWorldTile(result.tile)
       patchWorldTileInQueryCache(queryClient, result.tile)
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
-      void queryClient.invalidateQueries({ queryKey: ['world'] })
     },
     onError: (_error, variables) => {
       const key = tileActionKey(variables)
       const previous = optimisticChopTilesRef.current.get(key)
       if (previous) {
+        recentChopTilesRef.current.delete(key)
         updateWorldTile(previous)
         patchWorldTileInQueryCache(queryClient, previous)
       }
@@ -106,6 +112,7 @@ export function IsoMap() {
       const key = tileActionKey(variables)
       pendingChopTilesRef.current.delete(key)
       optimisticChopTilesRef.current.delete(key)
+      optimisticChopResultTilesRef.current.delete(key)
     },
   })
   const advanceFieldMutation = useMutation({
@@ -154,6 +161,8 @@ export function IsoMap() {
         terrain: worldTile.forest_density <= 1 ? 'grass' as const : worldTile.terrain,
       }
       optimisticChopTilesRef.current.set(key, worldTile)
+      optimisticChopResultTilesRef.current.set(key, optimisticTile)
+      rememberRecentChopTile(recentChopTilesRef.current, optimisticTile)
       updateWorldTile(optimisticTile)
       patchWorldTileInQueryCache(queryClient, optimisticTile)
       chopMutation.mutate({ x: tile.x, y: tile.y })
@@ -253,7 +262,9 @@ export function IsoMap() {
   }, [])
 
   useEffect(() => {
-    setWorldTiles(tiles)
+    const optimisticTiles = optimisticChopResultTilesRef.current
+    const recentChopTiles = recentChopTilesRef.current
+    setWorldTiles(mergeTransientWorldTiles(tiles, useGameStore.getState().worldTiles, optimisticTiles, recentChopTiles))
   }, [setWorldTiles, tiles])
 
   useEffect(() => {
@@ -303,7 +314,12 @@ export function IsoMap() {
       }}
       onWheel={(event) => {
         event.preventDefault()
-        setZoom(camera.zoom + (event.deltaY > 0 ? -0.08 : 0.08))
+        const rect = mapStageRef.current?.getBoundingClientRect()
+        setZoomAt({
+          zoom: camera.zoom + (event.deltaY > 0 ? -0.08 : 0.08),
+          focalScreen: rect ? { x: event.clientX - rect.left, y: event.clientY - rect.top } : undefined,
+          viewportSize: stageSize,
+        })
       }}
     >
       <PixiStage
@@ -357,6 +373,7 @@ export function IsoMap() {
       </div>
       <div className="map-debug" aria-live="polite">
         {performanceScenario ? <span>{performanceScenarioLabel(performanceScenario)}</span> : null}
+        <span>fps {performanceSnapshot.fps.toFixed(1)}</span>
         <span>chunk {centerChunk.x}:{centerChunk.y}</span>
         <span>zoom {camera.zoom.toFixed(2)}</span>
         <span>{chunksQuery.isFetching ? 'loading' : `${tiles.length} tiles`}</span>
@@ -378,7 +395,7 @@ function deriveVisibleChunkRadius(stageSize: { width: number; height: number }, 
   const visibleTilesX = stageSize.width / Math.max(1, TILE_WIDTH * zoom)
   const visibleTilesY = stageSize.height / Math.max(1, TILE_HEIGHT * zoom)
   const chunkSpan = Math.max(visibleTilesX, visibleTilesY) / 10
-  return Math.max(1, Math.min(4, Math.ceil(chunkSpan / 2) + 1))
+  return Math.max(1, Math.min(3, Math.ceil(chunkSpan / 2) + 1))
 }
 
 function MapPerformanceHud({
@@ -388,12 +405,7 @@ function MapPerformanceHud({
   scenario: PerformanceScenario
   visible: { buildings: number; resources: number; monsters: number }
 }) {
-  const [snapshot, setSnapshot] = useState<RenderPerformanceSnapshot>(() => renderPerformanceSnapshot())
-
-  useEffect(() => {
-    const interval = window.setInterval(() => setSnapshot(renderPerformanceSnapshot()), 1000)
-    return () => window.clearInterval(interval)
-  }, [])
+  const snapshot = useRenderPerformanceSnapshot()
 
   return (
     <div className="map-performance-hud" aria-label="Performance HUD">
@@ -404,6 +416,17 @@ function MapPerformanceHud({
       <span>gl {snapshot.activePixiContexts}+{snapshot.activeThreePreviews}</span>
     </div>
   )
+}
+
+function useRenderPerformanceSnapshot() {
+  const [snapshot, setSnapshot] = useState<RenderPerformanceSnapshot>(() => renderPerformanceSnapshot())
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setSnapshot(renderPerformanceSnapshot()), 1000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  return snapshot
 }
 
 function performanceScenarioLabel(scenario: PerformanceScenario) {
@@ -432,6 +455,52 @@ function patchTileInChunks(current: ChunksResponse | undefined, tile: WorldTile)
     return chunkChanged ? { ...chunk, tiles } : chunk
   })
   return changed ? { ...current, chunks } : current
+}
+
+function mergeTransientWorldTiles(
+  tiles: WorldTile[],
+  currentTiles: WorldTile[],
+  optimisticTiles: ReadonlyMap<string, WorldTile>,
+  recentChopTiles: Map<string, { tile: WorldTile; expiresAt: number }>,
+) {
+  const now = Date.now()
+  for (const [key, item] of recentChopTiles) {
+    if (item.expiresAt <= now) {
+      recentChopTiles.delete(key)
+    }
+  }
+  const currentTilesByKey = new Map(currentTiles.map((tile) => [tileActionKey(tile), tile]))
+  return tiles.map((tile) => {
+    const key = tileActionKey(tile)
+    const optimisticTile = optimisticTiles.get(key)
+    if (optimisticTile) {
+      return optimisticTile
+    }
+    const recentChopTile = recentChopTiles.get(key)?.tile
+    if (recentChopTile && shouldKeepRecentChopTile(tile, recentChopTile)) {
+      return recentChopTile
+    }
+    const currentTile = currentTilesByKey.get(key)
+    if (currentTile && shouldKeepLocallyChoppedTile(tile, currentTile)) {
+      return currentTile
+    }
+    return tile
+  })
+}
+
+function rememberRecentChopTile(chopTiles: Map<string, { tile: WorldTile; expiresAt: number }>, tile: WorldTile) {
+  chopTiles.set(tileActionKey(tile), { tile, expiresAt: Date.now() + RECENT_CHOP_TILE_TTL_MS })
+}
+
+function shouldKeepRecentChopTile(incoming: WorldTile, recent: WorldTile) {
+  return shouldKeepLocallyChoppedTile(incoming, recent)
+}
+
+function shouldKeepLocallyChoppedTile(incoming: WorldTile, local: WorldTile) {
+  if (incoming.terrain === 'forest' && local.terrain !== 'forest') {
+    return true
+  }
+  return incoming.terrain === 'forest' && local.terrain === 'forest' && incoming.forest_density > local.forest_density
 }
 
 function MapObject({
