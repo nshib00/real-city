@@ -1,0 +1,324 @@
+{
+  "asset_id": "oil_well",
+  "revision": "aeolian-style-runtime-2026-10-14",
+  "items": [
+    {
+      "id": "oil_well_l01_active",
+      "level": 1,
+      "state": "active",
+      "png": "oil_well_l01_active.png",
+      "glb": "oil_well_l01_active.glb",
+      "triangles": 2286,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          1.603
+        ]
+      ],
+      "alpha_bounds": [
+        102,
+        157,
+        411,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "png": "oil_well_l01_construction.png",
+      "glb": "oil_well_l01_construction.glb",
+      "triangles": 1962,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          0.89
+        ]
+      ],
+      "alpha_bounds": [
+        102,
+        187,
+        411,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "png": "oil_well_l01_damaged.png",
+      "glb": "oil_well_l01_damaged.glb",
+      "triangles": 2626,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          1.457
+        ]
+      ],
+      "alpha_bounds": [
+        102,
+        161,
+        411,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "png": "oil_well_l01_ruined.png",
+      "glb": "oil_well_l01_ruined.glb",
+      "triangles": 1918,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          0.613
+        ]
+      ],
+      "alpha_bounds": [
+        102,
+        192,
+        411,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l02_active",
+      "level": 2,
+      "state": "active",
+      "png": "oil_well_l02_active.png",
+      "glb": "oil_well_l02_active.glb",
+      "triangles": 2034,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          2.023
+        ]
+      ],
+      "alpha_bounds": [
+        131,
+        122,
+        404,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "png": "oil_well_l02_construction.png",
+      "glb": "oil_well_l02_construction.glb",
+      "triangles": 1710,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          1.137
+        ]
+      ],
+      "alpha_bounds": [
+        129,
+        161,
+        404,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "png": "oil_well_l02_damaged.png",
+      "glb": "oil_well_l02_damaged.glb",
+      "triangles": 2374,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          1.835
+        ]
+      ],
+      "alpha_bounds": [
+        131,
+        128,
+        404,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "png": "oil_well_l02_ruined.png",
+      "glb": "oil_well_l02_ruined.glb",
+      "triangles": 1666,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          0.69
+        ]
+      ],
+      "alpha_bounds": [
+        131,
+        183,
+        404,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l03_active",
+      "level": 3,
+      "state": "active",
+      "png": "oil_well_l03_active.png",
+      "glb": "oil_well_l03_active.glb",
+      "triangles": 2266,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          2.362
+        ]
+      ],
+      "alpha_bounds": [
+        117,
+        92,
+        412,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "png": "oil_well_l03_construction.png",
+      "glb": "oil_well_l03_construction.glb",
+      "triangles": 1942,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          1.338
+        ]
+      ],
+      "alpha_bounds": [
+        118,
+        141,
+        412,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "png": "oil_well_l03_damaged.png",
+      "glb": "oil_well_l03_damaged.glb",
+      "triangles": 2746,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          2.141
+        ]
+      ],
+      "alpha_bounds": [
+        117,
+        101,
+        412,
+        364
+      ]
+    },
+    {
+      "id": "oil_well_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "png": "oil_well_l03_ruined.png",
+      "glb": "oil_well_l03_ruined.glb",
+      "triangles": 1990,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          0.0
+        ],
+        [
+          1.8,
+          1.8,
+          0.738
+        ]
+      ],
+      "alpha_bounds": [
+        113,
+        174,
+        412,
+        364
+      ]
+    }
+  ],
+  "material_resources": {
+    "metal": "level 1 worn metal pump, fasteners, bands and barrels",
+    "planks": "level 1 plank deck, wooden derrick beams, tool crate and construction stacks",
+    "oil": "glossy black oil pool and localized damaged-state leaks"
+  },
+  "backup_of_previous_runtime": "backup_2026-10-14_pre_style_regen"
+}

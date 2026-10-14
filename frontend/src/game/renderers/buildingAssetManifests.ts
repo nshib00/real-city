@@ -41,7 +41,7 @@ export const FLAX_FIELD_ASSET_REVISION = 'mcp-midpoly-l01-l10-2026-10-08'
 export const REED_BED_ASSET_REVISION = 'mcp-midpoly-l01-l10-2026-10-09'
 export const OILSEED_FIELD_ASSET_REVISION = 'mcp-midpoly-l01-l07-2026-10-09'
 export const ROPE_YARD_ASSET_REVISION = 'mcp-midpoly-l01-l08-2026-10-08'
-export const OIL_WELL_ASSET_REVISION = 'runtime-l01-l03-2026-10-13'
+export const OIL_WELL_ASSET_REVISION = 'aeolian-style-runtime-2026-10-14'
 
 const l1To3 = [1, 2, 3] as const
 const l1To5 = [1, 2, 3, 4, 5] as const
