@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { PlacedBuilding } from '../state/useGameStore'
 import { resolveBuildingAtlasSource } from './buildingRegistry'
-import { COIN_STORAGE_ASSET_REVISION, FLAX_FIELD_ASSET_REVISION, GLASS_WORKSHOP_ASSET_REVISION, HERB_BED_ASSET_REVISION, LUMBER_YARD_ASSET_REVISION, MINE_ASSET_REVISION, MUSHROOM_GROVE_ASSET_REVISION, OILSEED_FIELD_ASSET_REVISION, REED_BED_ASSET_REVISION, ROPE_YARD_ASSET_REVISION, SAND_QUARRY_ASSET_REVISION, SEED_GARDEN_ASSET_REVISION, buildingSpriteAsset } from './buildingSpriteAssets'
+import { COIN_STORAGE_ASSET_REVISION, FLAX_FIELD_ASSET_REVISION, GLASS_WORKSHOP_ASSET_REVISION, HERB_BED_ASSET_REVISION, LUMBER_YARD_ASSET_REVISION, MINE_ASSET_REVISION, MUSHROOM_GROVE_ASSET_REVISION, OILSEED_FIELD_ASSET_REVISION, OIL_WELL_ASSET_REVISION, REED_BED_ASSET_REVISION, ROPE_YARD_ASSET_REVISION, SAND_QUARRY_ASSET_REVISION, SEED_GARDEN_ASSET_REVISION, buildingSpriteAsset } from './buildingSpriteAssets'
 
 describe('building sprite assets', () => {
   it('connects visible building kinds to png sprites', () => {
@@ -56,6 +56,12 @@ describe('building sprite assets', () => {
     )
     expect(buildingSpriteAsset(building({ kind: 'mine', level: 11, status: 'active', state: 'active', health: 20, maxHealth: 2562 }))).toBe(
       `/assets/buildings/industry/mine/mine_l11_damaged.png?v=${MINE_ASSET_REVISION}`,
+    )
+    expect(buildingSpriteAsset(building({ kind: 'oil_well', level: 3, status: 'active', state: 'active', health: 100 }))).toBe(
+      `/assets/buildings/industry/oil_well/oil_well_l03_active.png?v=${OIL_WELL_ASSET_REVISION}`,
+    )
+    expect(buildingSpriteAsset(building({ kind: 'oil_well', level: 2, status: 'active', state: 'ruined', health: 0 }))).toBe(
+      `/assets/buildings/industry/oil_well/oil_well_l02_ruined.png?v=${OIL_WELL_ASSET_REVISION}`,
     )
     expect(buildingSpriteAsset(building({ kind: 'coin_storage', level: 2, status: 'construction', state: 'building', health: 100 }))).toBe(
       `/assets/buildings/storage/coin_storage/coin_storage_l02_construction.png?v=${COIN_STORAGE_ASSET_REVISION}`,

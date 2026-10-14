@@ -27,6 +27,17 @@ describe('object draw data', () => {
     )
   })
 
+  it('draws wooden walls as single-tile isometric sprites', () => {
+    const wall = building({ id: 'wall-1', kind: 'wooden_wall', tile: { x: 0, y: 0 } })
+    const neighbor = building({ id: 'wall-2', kind: 'wooden_wall', tile: { x: 1, y: 0 } })
+
+    expect(buildingDrawCommands([wall], { allBuildings: [wall, neighbor] })[0]).toMatchObject({
+      textureUrl: '/assets/buildings/roads/wooden_wall/wooden_wall_end_e_active.png',
+      anchor: { x: 0.5, y: 0.625 },
+      size: { width: 256, height: 256 },
+    })
+  })
+
   it('uses manifest sprite metrics for 512x512 building sprites', () => {
     const [command] = buildingDrawCommands([building({ kind: 'mine' })])
 

@@ -27,7 +27,8 @@ OUT_DIR = ROOT / "frontend" / "public" / "assets" / "buildings" / "industry" / "
 ASSET_ID = "oil_well"
 LEVELS = (1, 2, 3)
 STATES = ("active", "construction", "damaged", "ruined")
-REVISION = "aeolian-style-runtime-2026-10-14"
+REVISION = "oil-well-no-side-rods-2026-10-14"
+BACKUP_NAME = "backup_2026-10-14_pre_remove_side_rods"
 BLEND_PATH = OUT_DIR / "oil_well_levels.blend"
 REPORT_PATH = OUT_DIR / "generation-report.json"
 ROUNDTRIP_PATH = OUT_DIR / "roundtrip-validation.json"
@@ -201,8 +202,9 @@ def add_ground(level, state):
     real_city_ground.add_ground_tile(CURRENT_COLLECTION, MATS, prefix=ASSET_ID, include_path=False)
     irregular_pool("oil_stained_ground", 0.0, -0.02, 0.090, 0.96, 0.64, "earth", level * 7)
     irregular_pool("gravel_work_area", 0.22, -0.18, 0.098, 0.72, 0.42, "gravel", 80 + level)
-    irregular_pool("deep_black_oil_pit", -0.02, -0.04, 0.116, 0.66, 0.48, "oil_deep", level * 13, rings=2, segments=36)
-    irregular_pool("glossy_oil_pool", -0.03, -0.04, 0.128, 0.52, 0.36, "oil", level * 17, rings=2, segments=36)
+    irregular_pool("deep_black_oil_pit", -0.02, -0.04, 0.116, 0.82, 0.58, "oil_deep", level * 13, rings=2, segments=36)
+    irregular_pool("glossy_oil_pool", -0.03, -0.04, 0.128, 0.64, 0.44, "oil", level * 17, rings=2, segments=36)
+    irregular_pool("visible_front_oil_shaft", -0.05, -0.30, 0.152, 0.54, 0.28, "oil_deep", 180 + level, rings=2, segments=32)
     if state in {"damaged", "ruined"}:
         irregular_pool("fresh_oil_leak", 0.42, -0.52, 0.120, 0.34, 0.16, "oil", 44 + level)
     for i, (x, y) in enumerate(((-1.42, 0.76), (1.36, -0.96), (-1.28, -0.58), (1.38, 0.98))):
@@ -337,8 +339,8 @@ def add_pumpjack_mechanism(level, state, height, tilt):
         beam("fallen_pumpjack_walking_beam", (-0.58, -0.10, 0.24), (0.66, -0.02, 0.34), 0.060, "beam" if level == 1 else "steel", vertices=10)
         beam("bent_pump_rod_to_oil_pit", (0.08, -0.02, 0.26), (-0.08, -0.04, 0.12), 0.022, "dark_metal", vertices=8)
         return
-    body_role = "wood" if level == 1 else "dark_metal"
-    beam_role = "beam" if level == 1 else ("steel" if level == 2 else "aeolian")
+    body_role = "dark_metal"
+    beam_role = "copper" if level == 1 else ("steel" if level == 2 else "aeolian")
     support_role = "wood" if level == 1 else "steel"
     completion = {"active": 1.0, "construction": 0.55, "damaged": 0.86}.get(state, 1.0)
     base_z = 0.20
@@ -352,6 +354,11 @@ def add_pumpjack_mechanism(level, state, height, tilt):
             box(f"internal_flywheel_spoke_{angle:.1f}", (-0.64, -0.18, base_z + 0.28), (0.34, 0.035, 0.040), "dark_metal", 0.004, rotation=(0, 0, angle))
     else:
         box("uninstalled_pumpjack_engine_block", (-0.48, -0.18, base_z + 0.08), (0.34, 0.24, 0.16), body_role, 0.014, rotation=(0, 0, 0.16))
+        beam("construction_pumpjack_left_support", (-0.18, -0.10, base_z + 0.05), (0.00, -0.08, frame_top), 0.034 + 0.005 * level, support_role, vertices=8)
+        beam("construction_pumpjack_right_support", (0.24, 0.02, base_z + 0.05), (0.00, -0.08, frame_top), 0.034 + 0.005 * level, support_role, vertices=8)
+        beam("construction_unmounted_walking_beam", (-0.54, -0.10, frame_top + 0.02), (0.56, 0.02, frame_top + 0.06), 0.050 + 0.006 * level, beam_role, vertices=10)
+        box("construction_pumpjack_horsehead", (0.66, 0.04, frame_top - 0.02), (0.13, 0.10, 0.25), beam_role, 0.012, rotation=(0, 0.08, 0.02))
+        beam("construction_sucker_rod_into_black_pit", (0.46, -0.02, frame_top - 0.08), (-0.02, -0.22, 0.150), 0.018, "dark_metal", vertices=8)
     if state != "construction":
         beam("pumpjack_left_support", (-0.22, -0.10, base_z + 0.06), (0.02, -0.08, frame_top), 0.036 + 0.006 * level, support_role, vertices=8)
         beam("pumpjack_right_support", (0.28, 0.02, base_z + 0.06), (0.02, -0.08, frame_top), 0.036 + 0.006 * level, support_role, vertices=8)
@@ -384,24 +391,11 @@ def add_derrick(level, state):
             if construction and i == 2:
                 target = (tx, ty, height * 0.34)
             beam(f"derrick_leg_{i}", (bx, by, 0.11), target, 0.052 + level * 0.008, leg_role, vertices=12)
+        completed_height = height * completion
         for z_factor in (0.24, 0.48, 0.72):
             if z_factor > completion + 0.05:
                 continue
             z = height * z_factor
-            wall_radius = 0.028 + level * 0.004
-            # Each face is braced inside its own plane, forming a closed cage instead of rods jutting outward.
-            beam(f"derrick_front_rail_{z_factor}", (-spread * 0.88, -spread, z), (spread * 0.88 + tilt * 0.30, -spread, z + 0.03), wall_radius, brace_role)
-            beam(f"derrick_back_rail_{z_factor}", (-spread * 0.88, spread, z + 0.03), (spread * 0.88 + tilt * 0.30, spread, z), wall_radius, brace_role)
-            beam(f"derrick_left_rail_{z_factor}", (-spread, -spread * 0.88, z), (-spread + tilt * 0.15, spread * 0.88, z + 0.03), wall_radius, brace_role)
-            beam(f"derrick_right_rail_{z_factor}", (spread, -spread * 0.88, z + 0.03), (spread + tilt * 0.15, spread * 0.88, z), wall_radius, brace_role)
-            beam(f"derrick_front_x_a_{z_factor}", (-spread * 0.72, -spread, z - 0.10), (spread * 0.72 + tilt * 0.25, -spread, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_front_x_b_{z_factor}", (spread * 0.72 + tilt * 0.25, -spread, z - 0.10), (-spread * 0.72, -spread, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_back_x_a_{z_factor}", (-spread * 0.72, spread, z - 0.10), (spread * 0.72 + tilt * 0.25, spread, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_back_x_b_{z_factor}", (spread * 0.72 + tilt * 0.25, spread, z - 0.10), (-spread * 0.72, spread, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_left_x_a_{z_factor}", (-spread, -spread * 0.72, z - 0.10), (-spread + tilt * 0.12, spread * 0.72, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_left_x_b_{z_factor}", (-spread + tilt * 0.12, spread * 0.72, z - 0.10), (-spread, -spread * 0.72, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_right_x_a_{z_factor}", (spread, -spread * 0.72, z - 0.10), (spread + tilt * 0.12, spread * 0.72, z + 0.15), wall_radius * 0.78, brace_role)
-            beam(f"derrick_right_x_b_{z_factor}", (spread + tilt * 0.12, spread * 0.72, z - 0.10), (spread, -spread * 0.72, z + 0.15), wall_radius * 0.78, brace_role)
             for x in (-spread * 0.55, spread * 0.55):
                 box(f"derrick_bolt_plate_{z_factor}_{x}", (x + tilt * 0.25, -spread - 0.025, z + 0.035), (0.16, 0.045, 0.075), "copper" if level >= 2 else "metal", 0.006)
         if not construction:
@@ -647,7 +641,7 @@ def write_manifest():
         "revision": REVISION,
         "style": "Aeolian bright fantasy stylized mid-poly",
         "runtime_integration": "connected to frontend building registry through oil_well asset family",
-        "backup_of_previous_runtime": "backup_2026-10-14_pre_style_regen",
+        "backup_of_previous_runtime": BACKUP_NAME,
         "assets": manifest_entries,
     }
     (OUT_DIR / "manifest.json").write_text(
@@ -664,9 +658,9 @@ def write_manifest():
                 "material_resources": {
                     "metal": "level 1 worn metal pump, fasteners, bands and barrels",
                     "planks": "level 1 plank deck, wooden derrick beams, tool crate and construction stacks",
-                    "oil": "glossy black oil pool and localized damaged-state leaks",
+                    "oil": "deep black open oil pit, visible front shaft and localized damaged-state leaks",
                 },
-                "backup_of_previous_runtime": "backup_2026-10-14_pre_style_regen",
+                "backup_of_previous_runtime": BACKUP_NAME,
             },
             ensure_ascii=False,
             indent=2,

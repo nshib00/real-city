@@ -1,9 +1,23 @@
 import { Assets } from 'pixi.js'
 import type { WorldTile } from '../../shared/contracts'
 
-const TEXTURED_TERRAINS = new Set(['grass', 'forest', 'water', 'mountain', 'road', 'oil_well', 'ruins'])
+const RUINS_VARIANTS = [
+  'ruins_town_square',
+  'ruins_archive',
+  'ruins_mint',
+  'ruins_storage',
+  'ruins_greenhouse',
+  'ruins_water_station',
+  'ruins_bastion',
+  'ruins_mechanic_workshop',
+  'ruins_wind_shrine',
+  'ruins_ore_obelisk',
+  'ruins_rift_watch',
+  'ruins_river_lighthouse',
+] as const
+const TEXTURED_TERRAINS = new Set(['grass', 'forest', 'water', 'mountain', 'road', 'oil_well', 'ruins', ...RUINS_VARIANTS])
 const TERRAIN_SPRITES = [...TEXTURED_TERRAINS, 'forest_thinned', 'forest_sparse']
-type TerrainTile = Pick<WorldTile, 'terrain'> & Partial<Pick<WorldTile, 'forest_density'>>
+type TerrainTile = { terrain: string } & Partial<Pick<WorldTile, 'forest_density'>>
 
 export const TERRAIN_SPRITE = {
   width: 512,

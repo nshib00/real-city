@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { PlacedBuilding } from '../state/useGameStore'
 import { buildingModelAsset } from './buildingModelAssets'
-import { COIN_STORAGE_ASSET_REVISION, FLAX_FIELD_ASSET_REVISION, GLASS_WORKSHOP_ASSET_REVISION, HERB_BED_ASSET_REVISION, LUMBER_YARD_ASSET_REVISION, MINE_ASSET_REVISION, MUSHROOM_GROVE_ASSET_REVISION, OILSEED_FIELD_ASSET_REVISION, REED_BED_ASSET_REVISION, ROPE_YARD_ASSET_REVISION, SAND_QUARRY_ASSET_REVISION, SEED_GARDEN_ASSET_REVISION } from './buildingSpriteAssets'
+import { COIN_STORAGE_ASSET_REVISION, FLAX_FIELD_ASSET_REVISION, GLASS_WORKSHOP_ASSET_REVISION, HERB_BED_ASSET_REVISION, LUMBER_YARD_ASSET_REVISION, MINE_ASSET_REVISION, MUSHROOM_GROVE_ASSET_REVISION, OILSEED_FIELD_ASSET_REVISION, OIL_WELL_ASSET_REVISION, REED_BED_ASSET_REVISION, ROPE_YARD_ASSET_REVISION, SAND_QUARRY_ASSET_REVISION, SEED_GARDEN_ASSET_REVISION } from './buildingSpriteAssets'
 
 describe('building model assets', () => {
   it('connects lumber yard states to public glb models', () => {
@@ -182,6 +182,21 @@ describe('building model assets', () => {
     )
   })
 
+  it('connects oil well states to updated public glb models', () => {
+    expect(buildingModelAsset(oilWell({ status: 'active', state: 'active', health: 100, level: 1 }))).toBe(
+      `/assets/buildings/industry/oil_well/oil_well_l01_active.glb?v=${OIL_WELL_ASSET_REVISION}`,
+    )
+    expect(buildingModelAsset(oilWell({ status: 'construction', state: 'building', health: 100, level: 2 }))).toBe(
+      `/assets/buildings/industry/oil_well/oil_well_l02_construction.glb?v=${OIL_WELL_ASSET_REVISION}`,
+    )
+    expect(buildingModelAsset(oilWell({ status: 'active', state: 'active', health: 30, maxHealth: 220, level: 3 }))).toBe(
+      `/assets/buildings/industry/oil_well/oil_well_l03_damaged.glb?v=${OIL_WELL_ASSET_REVISION}`,
+    )
+    expect(buildingModelAsset(oilWell({ status: 'active', state: 'ruined', health: 0, level: 99 }))).toBe(
+      `/assets/buildings/industry/oil_well/oil_well_l03_ruined.glb?v=${OIL_WELL_ASSET_REVISION}`,
+    )
+  })
+
   it('connects coin storage states to public glb models', () => {
     expect(buildingModelAsset(coinStorage({ status: 'active', state: 'active', health: 100, level: 1 }))).toBe(
       `/assets/buildings/storage/coin_storage/coin_storage_l01_active.glb?v=${COIN_STORAGE_ASSET_REVISION}`,
@@ -330,6 +345,19 @@ function mine(overrides: Pick<PlacedBuilding, 'status' | 'state' | 'health' | 'l
     id: 'mine-1',
     kind: 'mine',
     name: 'Шахта',
+    tile: { x: 0, y: 0 },
+    owner: 'test',
+    startedAt: 0,
+    completesAt: null,
+    ...overrides,
+  }
+}
+
+function oilWell(overrides: Pick<PlacedBuilding, 'status' | 'state' | 'health' | 'level'> & Partial<PlacedBuilding>): PlacedBuilding {
+  return {
+    id: 'oil-well-1',
+    kind: 'oil_well',
+    name: 'Нефтяная вышка',
     tile: { x: 0, y: 0 },
     owner: 'test',
     startedAt: 0,

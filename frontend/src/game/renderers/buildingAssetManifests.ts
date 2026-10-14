@@ -41,7 +41,7 @@ export const FLAX_FIELD_ASSET_REVISION = 'mcp-midpoly-l01-l10-2026-10-08'
 export const REED_BED_ASSET_REVISION = 'mcp-midpoly-l01-l10-2026-10-09'
 export const OILSEED_FIELD_ASSET_REVISION = 'mcp-midpoly-l01-l07-2026-10-09'
 export const ROPE_YARD_ASSET_REVISION = 'mcp-midpoly-l01-l08-2026-10-08'
-export const OIL_WELL_ASSET_REVISION = 'aeolian-style-runtime-2026-10-14'
+export const OIL_WELL_ASSET_REVISION = 'oil-well-no-side-rods-2026-10-14'
 
 const l1To3 = [1, 2, 3] as const
 const l1To5 = [1, 2, 3, 4, 5] as const
@@ -54,6 +54,15 @@ const l1To12 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
 const l1To13 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] as const
 const coreStates = ['active', 'construction', 'damaged'] as const
 const coreWithRuinedStates = ['active', 'construction', 'damaged', 'ruined'] as const
+const modularWallRender = {
+  anchor: [128, 160],
+  render: {
+    mode: 'sprite',
+    size: [256, 256],
+    preferredFormat: 'png',
+    fallbackFormat: 'png',
+  },
+} as const
 
 export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
   {
@@ -427,6 +436,7 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    ...modularWallRender,
   },
   {
     kind: 'stone_wall',
@@ -438,6 +448,7 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    ...modularWallRender,
   },
   {
     kind: 'concrete_wall',
@@ -449,6 +460,7 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    ...modularWallRender,
   },
   {
     kind: 'modern_wall',
@@ -460,5 +472,6 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    ...modularWallRender,
   },
 ]

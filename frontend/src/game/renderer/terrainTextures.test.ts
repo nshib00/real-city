@@ -31,6 +31,11 @@ describe('terrain textures', () => {
     expect(terrainPngTextureUrl({ terrain: 'ruins' })).toBe('/assets/terrain/tiles/ruins.png')
   })
 
+  it('connects generated ruins variants to runtime terrain sprites', () => {
+    expect(terrainTextureUrl({ terrain: 'ruins_archive' })).toBe('/assets/terrain/tiles/ruins_archive.png')
+    expect(terrainTextureUrl({ terrain: 'ruins_wind_shrine' })).toBe('/assets/terrain/tiles/ruins_wind_shrine.png')
+  })
+
   it('provides a regenerated road sprite', () => {
     expect(hasTerrainTexture({ terrain: 'road' })).toBe(true)
     expect(terrainTextureUrl({ terrain: 'road' })).toBe('/assets/terrain/tiles/road.png')
@@ -61,6 +66,8 @@ describe('terrain textures', () => {
     expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/mountain.png')
     expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/oil_well.png')
     expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/ruins.png')
+    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/ruins_archive.png')
+    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/ruins_wind_shrine.png')
     expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/road.png')
     expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/forest_thinned.png')
     expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/forest_sparse.png')
