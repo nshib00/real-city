@@ -73,6 +73,12 @@ func (c *Connection) Matches(eventPlayerID player.ID, chunkID string, alliance s
 	return c.subs.Matches(chunkID, string(eventPlayerID), alliance, string(c.playerID))
 }
 
+func (c *Connection) Subscriptions() SubscriptionSet {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	return c.subs.Clone()
+}
+
 func (c *Connection) Apply(command ClientCommand) {
 	c.mu.Lock()
 	defer c.mu.Unlock()

@@ -55,3 +55,23 @@ func (s SubscriptionSet) ChunkIDs() []string {
 	}
 	return result
 }
+
+func (s SubscriptionSet) Clone() SubscriptionSet {
+	clone := SubscriptionSet{
+		chunks:          make(map[string]bool, len(s.chunks)),
+		private:         s.private,
+		allianceChannel: s.allianceChannel,
+	}
+	for id, subscribed := range s.chunks {
+		clone.chunks[id] = subscribed
+	}
+	return clone
+}
+
+func (s SubscriptionSet) Private() bool {
+	return s.private
+}
+
+func (s SubscriptionSet) AllianceChannel() string {
+	return s.allianceChannel
+}

@@ -22,25 +22,34 @@ import (
 const websocketGUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 type Gateway struct {
-	tokens      *jwtadapter.Manager
-	events      *service.EventBus
-	log         *slog.Logger
-	connections map[string]*Connection
-	mu          sync.RWMutex
-	seq         atomic.Uint64
-	ctx         context.Context
-	cancel      context.CancelFunc
+	tokens       *jwtadapter.Manager
+	events       *service.EventBus
+	log          *slog.Logger
+	connections  map[string]*Connection
+	chunkSubs    map[string]map[string]*Connection
+	privateSubs  map[player.ID]map[string]*Connection
+	allianceSubs map[string]map[string]*Connection
+	mu           sync.RWMutex
+	seq          atomic.Uint64
+	eventsSent   atomic.Uint64
+	fanoutTotal  atomic.Uint64
+	drops        atomic.Uint64
+	ctx          context.Context
+	cancel       context.CancelFunc
 }
 
 func NewGateway(tokens *jwtadapter.Manager, events *service.EventBus, log *slog.Logger) *Gateway {
 	ctx, cancel := context.WithCancel(context.Background())
 	g := &Gateway{
-		tokens:      tokens,
-		events:      events,
-		log:         log,
-		connections: make(map[string]*Connection),
-		ctx:         ctx,
-		cancel:      cancel,
+		tokens:       tokens,
+		events:       events,
+		log:          log,
+		connections:  make(map[string]*Connection),
+		chunkSubs:    make(map[string]map[string]*Connection),
+		privateSubs:  make(map[player.ID]map[string]*Connection),
+		allianceSubs: make(map[string]map[string]*Connection),
+		ctx:          ctx,
+		cancel:       cancel,
 	}
 	go g.forwardEvents()
 	return g
@@ -104,7 +113,10 @@ func (g *Gateway) readLoop(client *Connection) {
 			}
 			return
 		}
+		before := client.Subscriptions()
 		client.Apply(command)
+		after := client.Subscriptions()
+		g.updateIndexes(client, before, after)
 		g.log.Info("ws.command", "event", "ws.command", "connection_id", client.ID(), "player_id", client.PlayerID(), "command", command.Type, "chunks", len(command.ChunkIDs))
 		client.Enqueue(AckEnvelope(g.nextSeq(), map[string]any{"command": command.Type, "chunk_ids": command.ChunkIDs}))
 	}
@@ -113,15 +125,15 @@ func (g *Gateway) readLoop(client *Connection) {
 func (g *Gateway) forwardEvents() {
 	for event := range g.events.Subscribe(g.ctx) {
 		envelope := EventEnvelope(event, g.nextSeq())
-		g.mu.RLock()
-		for _, conn := range g.connections {
-			if conn.Matches(event.PlayerID, event.ChunkID, event.Alliance) {
-				if !conn.Enqueue(envelope) {
-					g.log.Warn("ws.message_dropped", "event", "ws.message_dropped", "connection_id", conn.ID(), "player_id", conn.PlayerID(), "message_type", envelope.Type)
-				}
+		targets := g.targetConnections(event)
+		g.eventsSent.Add(1)
+		g.fanoutTotal.Add(uint64(len(targets)))
+		for _, conn := range targets {
+			if !conn.Enqueue(envelope) {
+				g.drops.Add(1)
+				g.log.Warn("ws.message_dropped", "event", "ws.message_dropped", "connection_id", conn.ID(), "player_id", conn.PlayerID(), "message_type", envelope.Type)
 			}
 		}
-		g.mu.RUnlock()
 	}
 }
 
@@ -135,6 +147,121 @@ func (g *Gateway) unregister(client *Connection) {
 	g.mu.Lock()
 	defer g.mu.Unlock()
 	delete(g.connections, client.ID())
+	g.removeIndexedLocked(client, client.Subscriptions())
+}
+
+func (g *Gateway) updateIndexes(client *Connection, before SubscriptionSet, after SubscriptionSet) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
+	g.removeIndexedLocked(client, before)
+	g.addIndexedLocked(client, after)
+}
+
+func (g *Gateway) addIndexedLocked(client *Connection, subs SubscriptionSet) {
+	for _, chunkID := range subs.ChunkIDs() {
+		addConnectionIndex(g.chunkSubs, chunkID, client)
+	}
+	if subs.Private() {
+		if _, ok := g.privateSubs[client.PlayerID()]; !ok {
+			g.privateSubs[client.PlayerID()] = make(map[string]*Connection)
+		}
+		g.privateSubs[client.PlayerID()][client.ID()] = client
+	}
+	if alliance := subs.AllianceChannel(); alliance != "" {
+		addConnectionIndex(g.allianceSubs, alliance, client)
+	}
+}
+
+func (g *Gateway) removeIndexedLocked(client *Connection, subs SubscriptionSet) {
+	for _, chunkID := range subs.ChunkIDs() {
+		removeConnectionIndex(g.chunkSubs, chunkID, client.ID())
+	}
+	if subs.Private() {
+		if conns, ok := g.privateSubs[client.PlayerID()]; ok {
+			delete(conns, client.ID())
+			if len(conns) == 0 {
+				delete(g.privateSubs, client.PlayerID())
+			}
+		}
+	}
+	if alliance := subs.AllianceChannel(); alliance != "" {
+		removeConnectionIndex(g.allianceSubs, alliance, client.ID())
+	}
+}
+
+func (g *Gateway) targetConnections(event service.Event) []*Connection {
+	g.mu.RLock()
+	defer g.mu.RUnlock()
+	if event.ChunkID == "" && event.PlayerID == "" && event.Alliance == "" {
+		return connectionSlice(g.connections)
+	}
+	targets := make(map[string]*Connection)
+	for id, conn := range g.chunkSubs[event.ChunkID] {
+		targets[id] = conn
+	}
+	for id, conn := range g.privateSubs[event.PlayerID] {
+		targets[id] = conn
+	}
+	for id, conn := range g.allianceSubs[event.Alliance] {
+		targets[id] = conn
+	}
+	return connectionSlice(targets)
+}
+
+type Stats struct {
+	Connections           int
+	ChunkSubscriptions    int
+	PrivateSubscriptions  int
+	AllianceSubscriptions int
+	EventsSent            uint64
+	FanoutTotal           uint64
+	Drops                 uint64
+}
+
+func (g *Gateway) Stats() Stats {
+	g.mu.RLock()
+	defer g.mu.RUnlock()
+	return Stats{
+		Connections:           len(g.connections),
+		ChunkSubscriptions:    indexedSubscriptionCount(g.chunkSubs),
+		PrivateSubscriptions:  indexedSubscriptionCount(g.privateSubs),
+		AllianceSubscriptions: indexedSubscriptionCount(g.allianceSubs),
+		EventsSent:            g.eventsSent.Load(),
+		FanoutTotal:           g.fanoutTotal.Load(),
+		Drops:                 g.drops.Load(),
+	}
+}
+
+func addConnectionIndex[K comparable](index map[K]map[string]*Connection, key K, conn *Connection) {
+	if _, ok := index[key]; !ok {
+		index[key] = make(map[string]*Connection)
+	}
+	index[key][conn.ID()] = conn
+}
+
+func removeConnectionIndex[K comparable](index map[K]map[string]*Connection, key K, connectionID string) {
+	if conns, ok := index[key]; ok {
+		delete(conns, connectionID)
+		if len(conns) == 0 {
+			delete(index, key)
+		}
+	}
+}
+
+func indexedSubscriptionCount[K comparable](index map[K]map[string]*Connection) int {
+	total := 0
+	for _, conns := range index {
+		total += len(conns)
+	}
+	return total
+}
+
+func connectionSlice(connections map[string]*Connection) []*Connection {
+	items := make([]*Connection, 0, len(connections))
+	for _, conn := range connections {
+		items = append(items, conn)
+	}
+	return items
 }
 
 func (g *Gateway) publishPresence(playerID player.ID, online bool) {
