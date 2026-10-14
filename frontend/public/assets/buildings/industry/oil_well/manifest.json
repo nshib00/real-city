@@ -45,12 +45,12 @@
       "state": "active",
       "png": "oil_well_l01_active.png",
       "glb": "oil_well_l01_active.glb",
-      "triangles": 2286,
+      "triangles": 2372,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -59,10 +59,10 @@
         ]
       ],
       "alpha_bounds": [
-        102,
-        157,
-        411,
-        364
+        117,
+        207,
+        395,
+        368
       ]
     },
     {
