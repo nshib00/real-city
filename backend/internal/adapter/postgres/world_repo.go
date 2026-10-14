@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"sync"
 
 	"github.com/lib/pq"
 
@@ -15,14 +16,24 @@ import (
 type WorldRepo struct {
 	db        *sql.DB
 	generator worldgen.Generator
+	mu        sync.RWMutex
+	cache     map[worldChunkCacheKey]world.Chunk
 }
 
 func NewWorldRepo(db *sql.DB) *WorldRepo {
 	return &WorldRepo{
 		db:        db,
 		generator: worldgen.New("dev-world", 20260727, 10),
+		cache:     make(map[worldChunkCacheKey]world.Chunk),
 	}
 }
+
+type worldChunkCacheKey struct {
+	mapID string
+	coord world.ChunkCoord
+}
+
+const worldChunkCacheMaxEntries = 1024
 
 func (r *WorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, error) {
 	if err := r.ensureMap(ctx); err != nil {
@@ -42,6 +53,9 @@ func (r *WorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, erro
 }
 
 func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, bool, error) {
+	if chunk, ok := r.cachedChunk(mapID, coord); ok {
+		return chunk, true, nil
+	}
 	chunk, err := r.findChunk(ctx, mapID, coord)
 	if err == nil {
 		return chunk, true, nil
@@ -58,15 +72,35 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 	if len(coords) == 0 {
 		return []world.Chunk{}, nil
 	}
+	chunksByCoord := make(map[world.ChunkCoord]world.Chunk, len(coords))
+	missing := make([]world.ChunkCoord, 0, len(coords))
+	for _, coord := range coords {
+		if chunk, ok := r.cachedChunk(mapID, coord); ok {
+			chunksByCoord[coord] = chunk
+			continue
+		}
+		missing = append(missing, coord)
+	}
+	if len(missing) == 0 {
+		chunks := make([]world.Chunk, 0, len(coords))
+		for _, coord := range coords {
+			chunks = append(chunks, chunksByCoord[coord])
+		}
+		return chunks, nil
+	}
 	if err := r.ensureMap(ctx); err != nil {
 		return nil, err
 	}
-	existing, err := r.findChunks(ctx, mapID, coords)
+	existing, err := r.findChunks(ctx, mapID, missing)
 	if err != nil {
 		return nil, err
 	}
 	chunks := make([]world.Chunk, 0, len(coords))
 	for _, coord := range coords {
+		if chunk, ok := chunksByCoord[coord]; ok {
+			chunks = append(chunks, chunk)
+			continue
+		}
 		if chunk, ok := existing[coord]; ok {
 			chunks = append(chunks, chunk)
 			continue
@@ -124,7 +158,11 @@ func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.Chu
 		}
 		chunk.Tiles = append(chunk.Tiles, tile)
 	}
-	return chunk, rows.Err()
+	if err := rows.Err(); err != nil {
+		return world.Chunk{}, err
+	}
+	r.storeChunk(chunk)
+	return cloneChunk(chunk), nil
 }
 
 func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) (map[world.ChunkCoord]world.Chunk, error) {
@@ -202,7 +240,13 @@ func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world
 		chunk.Tiles = append(chunk.Tiles, tile)
 		chunks[tile.Chunk] = chunk
 	}
-	return chunks, tileRows.Err()
+	if err := tileRows.Err(); err != nil {
+		return nil, err
+	}
+	for _, chunk := range chunks {
+		r.storeChunk(chunk)
+	}
+	return cloneChunkMap(chunks), nil
 }
 
 func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, error) {
@@ -258,7 +302,8 @@ func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.C
 	if err = tx.Commit(); err != nil {
 		return world.Chunk{}, err
 	}
-	return r.findChunk(ctx, mapID, coord)
+	r.storeChunk(chunk)
+	return cloneChunk(chunk), nil
 }
 
 func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
@@ -282,5 +327,61 @@ func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
 		SET version = version + 1, updated_at = now()
 		WHERE map_id = $1 AND chunk_x = $2 AND chunk_y = $3
 	`, tile.MapID, tile.Chunk.X, tile.Chunk.Y)
-	return err
+	if err != nil {
+		return err
+	}
+	r.patchCachedTile(tile)
+	return nil
+}
+
+func (r *WorldRepo) cachedChunk(mapID string, coord world.ChunkCoord) (world.Chunk, bool) {
+	r.mu.RLock()
+	chunk, ok := r.cache[worldChunkCacheKey{mapID: mapID, coord: coord}]
+	r.mu.RUnlock()
+	if !ok {
+		return world.Chunk{}, false
+	}
+	return cloneChunk(chunk), true
+}
+
+func (r *WorldRepo) storeChunk(chunk world.Chunk) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if len(r.cache) >= worldChunkCacheMaxEntries {
+		r.cache = make(map[worldChunkCacheKey]world.Chunk)
+	}
+	r.cache[worldChunkCacheKey{mapID: chunk.MapID, coord: chunk.Coord}] = cloneChunk(chunk)
+}
+
+func (r *WorldRepo) patchCachedTile(tile world.Tile) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	key := worldChunkCacheKey{mapID: tile.MapID, coord: tile.Chunk}
+	chunk, ok := r.cache[key]
+	if !ok {
+		return
+	}
+	chunk.Version++
+	for index, current := range chunk.Tiles {
+		if current.Coord == tile.Coord {
+			chunk.Tiles[index] = tile
+			r.cache[key] = chunk
+			return
+		}
+	}
+	chunk.Tiles = append(chunk.Tiles, tile)
+	r.cache[key] = chunk
+}
+
+func cloneChunk(chunk world.Chunk) world.Chunk {
+	chunk.Tiles = append([]world.Tile(nil), chunk.Tiles...)
+	return chunk
+}
+
+func cloneChunkMap(chunks map[world.ChunkCoord]world.Chunk) map[world.ChunkCoord]world.Chunk {
+	cloned := make(map[world.ChunkCoord]world.Chunk, len(chunks))
+	for coord, chunk := range chunks {
+		cloned[coord] = cloneChunk(chunk)
+	}
+	return cloned
 }
