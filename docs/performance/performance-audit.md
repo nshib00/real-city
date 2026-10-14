@@ -2,16 +2,16 @@
 
 Дата повторного анализа: 2026-10-14.
 
-Документ обновлен после очередных исправлений производительности на фронтенде. Анализ основан на повторном чтении рендерера, realtime-слоя, состояния клиента, Vite-конфига, asset budget и production build. Полное браузерное профилирование с Chrome Performance, WebGL frame capture и `EXPLAIN ANALYZE` для Postgres в рамках этого повторного аудита не запускались, поэтому численные оценки ниже являются инженерной оценкой по архитектуре, коду и сборочным метрикам.
+Документ обновлен после очередных исправлений производительности на бэкенде. Анализ основан на повторном чтении backend hot-path: WebSocket gateway, HTTP router/middleware, building placement, Postgres-репозитории, миграции индексов, workers и существующие тесты. Полное нагрузочное тестирование, Chrome Performance, WebGL frame capture и `EXPLAIN ANALYZE` для Postgres в рамках этого повторного аудита не запускались, поэтому численные оценки ниже являются инженерной оценкой по архитектуре, коду и тестовой проверке.
 
 ## Краткая Оценка
 
 | Часть | Оценка | Состояние |
 | --- | ---: | --- |
-| Бэкенд | 7/10 | Стало заметно лучше: API использует один общий Postgres pool, чанки загружаются batch-запросами, создание tiles переведено на `COPY`, MonsterAI больше не читает всех монстров карты, MonsterSpawner считает живых монстров агрегатом и проверяет постройки через viewport. Главные оставшиеся риски: линейная WebSocket-фильтрация по всем соединениям, слабые метрики, in-memory rate limit/idempotency, последовательное создание отсутствующих чанков, не полностью атомарные игровые действия. |
+| Бэкенд | 8/10 | Стало заметно лучше: API использует один общий Postgres pool, чанки загружаются batch-запросами, создание tiles переведено на `COPY`, MonsterAI больше не читает всех монстров карты, MonsterSpawner считает живых монстров агрегатом, WebSocket gateway маршрутизирует события через индексы подписок, `/metrics` показывает HTTP/WS-счетчики, а размещение построек больше не читает все здания игрока ради лимита. Главные оставшиеся риски: in-memory rate limit/idempotency, последовательное создание отсутствующих чанков, отсутствие DB/simulation latency metrics, не полностью атомарные игровые действия и отсутствие claim/lock для части simulation flows. |
 | Фронтенд | 8/10 | Основные прототипные bottleneck-и карты закрыты: realtime-события патчат query-cache, радиус чанков синхронизирован с viewport/zoom, tile lookup при клике стал `Map`, массовые объекты рисуются через Pixi, terrain/building/resource/overlay слои стали retained по ключам, GLB исключены из production runtime, runtime asset budget снизился до `206.7 MB`, а основной app chunk уменьшен до `216.5 kB`. Главные оставшиеся риски: Zustand хранит большие коллекции массивами, часть DOM-оверлеев может стать узким местом при сотнях производств, Pixi `vendor` chunk остается крупным, нет браузерного профилирования на реальном stress-сценарии. |
 
-Проект уже выглядит достаточно крепко для ранней playable alpha и локального stress-тестирования. До масштабирования на большой общий мир нужно нормализовать клиентское состояние, добавить наблюдаемость и подтвердить гипотезы браузерным профилированием на stress-сценариях.
+Проект уже выглядит достаточно крепко для ранней playable alpha и локального stress-тестирования. До масштабирования на большой общий мир нужно нормализовать клиентское состояние, расширить наблюдаемость до DB/workers и подтвердить гипотезы нагрузочным профилированием на stress-сценариях.
 
 ## Что Уже Улучшено
 
@@ -22,7 +22,11 @@
 - `backend/internal/worker/simulation/monster_ai.go`: MonsterAI использует `ListActiveForTick` вместо чтения всех монстров карты и держит cache чанков в рамках tick.
 - `backend/internal/adapter/postgres/monster_repo.go`: добавлены `ListActiveForTick` и `CountAliveBySpawn`.
 - `backend/internal/worker/simulation/monster_spawner.go`: Spawner больше не читает все постройки карты для каждой spawn-точки; используется `ListByViewport` вокруг кандидата и агрегированный `CountAliveBySpawn`.
-- `backend/db/migrations/000018_performance_indexes.sql`: добавлены индексы для tick монстров, живых монстров по spawn и viewport построек.
+- `backend/internal/adapter/ws/gateway.go`: WebSocket fan-out идет через индексы `chunkID -> connections`, `playerID -> private connections`, `alliance -> connections`; на событие собирается только целевой набор подключений.
+- `backend/internal/adapter/http/middleware/metrics.go`, `backend/internal/adapter/http/metrics.go`: `/metrics` теперь отдает in-process HTTP counters/sums по route/method/status class и WebSocket gauges/counters: connections, subscriptions, events, fanout, drops.
+- `backend/internal/service/building.go`, `backend/internal/adapter/postgres/building_repo.go`: placement больше не вызывает полный `ListByPlayer` для проверки лимита и ратуши; добавлен агрегатный `PlayerPlacementStats`.
+- `backend/db/migrations/000018_performance_indexes.sql`: добавлены индексы для tick монстров, живых монстров по spawn, viewport построек и owner/type/state статистики размещения.
+- Проверка после исправлений: `GOCACHE=/tmp/real-city-go-cache go test ./...` в `backend` проходит.
 
 ### Фронтенд
 
@@ -76,38 +80,22 @@
 
 Ожидаемый эффект от уже внесенной правки: меньше allocation/GC при pan/zoom/hover/selection и стабильнее FPS в stress-сценариях с большим количеством видимых объектов.
 
-### P1. Бэкенд: WebSocket fan-out линейный по числу соединений
-
-Файлы: `backend/internal/service/eventbus.go`, `backend/internal/adapter/ws/gateway.go`.
-
-`EventBus.Publish` отправляет событие всем подписчикам event bus, а gateway затем проходит по всем WebSocket-соединениям и вызывает `conn.Matches(...)`. Для десятков/сотен соединений это приемлемо, но общий мир с большим онлайном быстро превратит каждое chunk-событие в O(connections).
-
-Рекомендации:
-
-- В gateway хранить индексы подписок: `chunkID -> connection ids`, `playerID -> connection ids`, `alliance -> connection ids`.
-- При `subscribe/unsubscribe` обновлять индексы.
-- На publish собирать целевой набор соединений по индексам и отправлять только ему.
-- Добавить метрики: active connections, subscriptions per chunk, event fanout size, enqueue drops, slow consumers.
-
-### P1. Бэкенд: observability почти отсутствует
+### P1. Бэкенд: observability все еще неполная
 
 Файл: `backend/internal/adapter/http/router.go`.
 
-`/metrics` сейчас возвращает только:
+Статус: базово исправлено для HTTP и WebSocket, но не для DB/workers.
 
-```text
-real_city_http_ready 1
-```
+`/metrics` теперь отдает готовность, HTTP request counters/sums по route/method/status class и WebSocket counters/gauges по соединениям, подпискам, fanout и drops. Это уже позволяет видеть рост fan-out и общий HTTP профиль без внешних зависимостей.
 
-Без метрик невозможно надежно понять, какие исправления дали эффект, где растет backlog и какие запросы становятся дорогими.
+Оставшаяся проблема: нет duration/lag метрик на уровне Postgres-запросов, simulation tick, action/outbox queues и production/jobs. Без них все еще трудно отличить медленный SQL от backlog-а worker-а.
 
 Рекомендации:
 
-- HTTP latency/count по route/method/status.
-- DB query duration по hot-path репозиториям: chunks, buildings viewport, monsters tick, actions, outbox.
+- DB query duration по hot-path репозиториям: chunks, building placement/viewport, monsters tick, actions, outbox.
 - Simulation tick duration/processed/failed/lag по подсистемам.
 - Outbox/action queue lag: oldest due, fetched, processed, retries.
-- WebSocket metrics: connections, subscriptions, fanout, drops.
+- WebSocket metrics дополнить slow consumers / queue depth histogram, если появятся долгоживущие очереди.
 - Frontend perf telemetry для dev/staging: FPS, heap, visible objects, Pixi object counts.
 
 ## Бэкенд: Подробные Наблюдения
@@ -180,20 +168,39 @@ real_city_http_ready 1
 - Для ring-поиска предварительно загрузить bounding viewport построек вокруг всей зоны поиска.
 - Сохранять relocated spawn только при реальном изменении координат и считать relocation attempts метрикой.
 
+### WebSocket fan-out
+
+Статус: исправлено на уровне gateway.
+
+`backend/internal/adapter/ws/gateway.go` больше не проходит по всем WebSocket-соединениям для каждого targeted event. При `subscribe/unsubscribe` gateway обновляет индексы:
+
+- `chunkSubs`: подписки на чанки;
+- `privateSubs`: приватные события игрока;
+- `allianceSubs`: alliance-каналы.
+
+При публикации события gateway собирает union только из релевантных индексов. Глобальные события без `chunkID`, `playerID` и `alliance` по-прежнему рассылаются всем соединениям, что соответствует их семантике. Добавлены счетчики `eventsSent`, `fanoutTotal`, `drops` и gauges подписок/соединений для `/metrics`.
+
+Оставшиеся риски:
+
+- `EventBus.Publish` все еще рассылает событие всем подписчикам самого event bus. В текущей архитектуре это обычно один gateway внутри процесса, поэтому риск ниже, чем прежний scan всех WS clients. Если появятся несколько локальных подписчиков с разными интересами, bus тоже стоит индексировать или разделить по topic.
+- Индексы живут in-memory внутри API-инстанса. Для multi-instance WebSocket нужны sticky sessions или внешний pub/sub слой.
+- Нет histogram-а queue depth / slow consumers; сейчас видны только drops.
+
 ### Размещение построек
 
 Файл: `backend/internal/service/building.go`.
 
-Статус: остается риском среднего/высокого приоритета.
+Статус: частично исправлено.
 
-Размещение построек выполняет несколько последовательных операций: проверка мира/footprint, список построек игрока, поиск пересечений через чанки, проверка монстров viewport, списание ресурсов, создание building, постановка action. Это приемлемо для одиночного действия, но уязвимо к latency и гонкам при конкурентном строительстве.
+Размещение построек все еще выполняет несколько последовательных операций: проверка мира/footprint, поиск пересечений, проверка монстров viewport, списание ресурсов, создание building, постановка action. Но один старый горячий участок закрыт: вместо полного `ListByPlayer` для проверки ратуши и лимита теперь используется `PlayerPlacementStats`, который агрегирует `town_hall_level` и `used_limit` в Postgres. Для этого добавлен индекс `idx_buildings_owner_limit_stats`.
+
+Также добавлен явный метод `ListIntersectingFootprint`, пока реализованный тем же overlap-запросом, что и viewport. Это фиксирует контракт hot-path и упрощает дальнейшую замену на таблицу occupied tiles или специализированный SQL.
 
 Рекомендации:
 
-- Добавить специализированный запрос `ListBuildingsIntersectingFootprint(mapID, minX, minY, maxX, maxY)`.
-- Проверку лимита построек игрока делать агрегатом `COUNT`, а не полным `ListByPlayer`.
 - Перевести размещение в UnitOfWork: списание ресурсов, создание building, action queue.
 - Для предотвращения коллизий хранить `building_occupied_tiles(map_id, tile_x, tile_y, building_id)` с PK `(map_id, tile_x, tile_y)`.
+- Добавить DB duration metric для `PlayerPlacementStats`, footprint intersection и create building.
 
 ### Таймеры, actions и production
 
