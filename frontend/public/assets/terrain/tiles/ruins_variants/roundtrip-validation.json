@@ -1,0 +1,62 @@
+[
+  {
+    "terrain": "ruins_town_square",
+    "triangles": 2076,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_archive",
+    "triangles": 2168,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_mint",
+    "triangles": 1744,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_storage",
+    "triangles": 1552,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_greenhouse",
+    "triangles": 3896,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_water_station",
+    "triangles": 1716,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_bastion",
+    "triangles": 1816,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_mechanic_workshop",
+    "triangles": 1752,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_wind_shrine",
+    "triangles": 2272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_ore_obelisk",
+    "triangles": 1492,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_rift_watch",
+    "triangles": 1552,
+    "nonmanifold_edges": 0
+  },
+  {
+    "terrain": "ruins_river_lighthouse",
+    "triangles": 1408,
+    "nonmanifold_edges": 0
+  }
+]

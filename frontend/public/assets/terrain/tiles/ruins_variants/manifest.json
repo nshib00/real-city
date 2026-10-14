@@ -1,0 +1,101 @@
+{
+  "style": "Aeolian bright fantasy stylized mid-poly",
+  "size": [
+    512,
+    512
+  ],
+  "footprint": 3.6,
+  "footprint_pixels": 480,
+  "anchor": [
+    256,
+    320
+  ],
+  "camera_elevation": 30,
+  "variants": {
+    "ruins_town_square": {
+      "label": "Старая ратушная площадь",
+      "triangles": 2076,
+      "objects": 44,
+      "png": "ruins_town_square.png",
+      "glb": "ruins_town_square.glb"
+    },
+    "ruins_archive": {
+      "label": "Архив чертежей",
+      "triangles": 2168,
+      "objects": 50,
+      "png": "ruins_archive.png",
+      "glb": "ruins_archive.glb"
+    },
+    "ruins_mint": {
+      "label": "Монетный двор",
+      "triangles": 1744,
+      "objects": 40,
+      "png": "ruins_mint.png",
+      "glb": "ruins_mint.glb"
+    },
+    "ruins_storage": {
+      "label": "Старый складской узел",
+      "triangles": 1552,
+      "objects": 36,
+      "png": "ruins_storage.png",
+      "glb": "ruins_storage.glb"
+    },
+    "ruins_greenhouse": {
+      "label": "Заросшая оранжерея",
+      "triangles": 3896,
+      "objects": 78,
+      "png": "ruins_greenhouse.png",
+      "glb": "ruins_greenhouse.glb"
+    },
+    "ruins_water_station": {
+      "label": "Водяная станция",
+      "triangles": 1716,
+      "objects": 39,
+      "png": "ruins_water_station.png",
+      "glb": "ruins_water_station.glb"
+    },
+    "ruins_bastion": {
+      "label": "Каменный бастион",
+      "triangles": 1816,
+      "objects": 42,
+      "png": "ruins_bastion.png",
+      "glb": "ruins_bastion.glb"
+    },
+    "ruins_mechanic_workshop": {
+      "label": "Мастерская механизмов",
+      "triangles": 1752,
+      "objects": 40,
+      "png": "ruins_mechanic_workshop.png",
+      "glb": "ruins_mechanic_workshop.glb"
+    },
+    "ruins_wind_shrine": {
+      "label": "Святилище ветра",
+      "triangles": 2272,
+      "objects": 52,
+      "png": "ruins_wind_shrine.png",
+      "glb": "ruins_wind_shrine.glb"
+    },
+    "ruins_ore_obelisk": {
+      "label": "Залежный обелиск",
+      "triangles": 1492,
+      "objects": 29,
+      "png": "ruins_ore_obelisk.png",
+      "glb": "ruins_ore_obelisk.glb"
+    },
+    "ruins_rift_watch": {
+      "label": "Разломная сторожевая",
+      "triangles": 1552,
+      "objects": 36,
+      "png": "ruins_rift_watch.png",
+      "glb": "ruins_rift_watch.glb"
+    },
+    "ruins_river_lighthouse": {
+      "label": "Речной маяк",
+      "triangles": 1408,
+      "objects": 32,
+      "png": "ruins_river_lighthouse.png",
+      "glb": "ruins_river_lighthouse.glb"
+    }
+  },
+  "notes": "Root PNG/GLB copies are also written to frontend/public/assets/terrain/tiles/ for terrain runtime use."
+}

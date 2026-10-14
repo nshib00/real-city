@@ -1,0 +1,122 @@
+[
+  {
+    "terrain": "ruins_town_square",
+    "triangles": 2076,
+    "alpha_bounds": [
+      15,
+      149,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_archive",
+    "triangles": 2168,
+    "alpha_bounds": [
+      15,
+      166,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_mint",
+    "triangles": 1744,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_storage",
+    "triangles": 1552,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_greenhouse",
+    "triangles": 3896,
+    "alpha_bounds": [
+      15,
+      167,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_water_station",
+    "triangles": 1716,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_bastion",
+    "triangles": 1816,
+    "alpha_bounds": [
+      15,
+      197,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_mechanic_workshop",
+    "triangles": 1752,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_wind_shrine",
+    "triangles": 2272,
+    "alpha_bounds": [
+      15,
+      165,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_ore_obelisk",
+    "triangles": 1492,
+    "alpha_bounds": [
+      15,
+      191,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_rift_watch",
+    "triangles": 1552,
+    "alpha_bounds": [
+      15,
+      199,
+      497,
+      443
+    ]
+  },
+  {
+    "terrain": "ruins_river_lighthouse",
+    "triangles": 1408,
+    "alpha_bounds": [
+      15,
+      188,
+      497,
+      443
+    ]
+  }
+]
