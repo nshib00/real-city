@@ -45,6 +45,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	allianceHandler := handler.NewAllianceHandler(deps.Alliances)
 	chatHandler := handler.NewChatHandler(deps.Chat)
 	marketHandler := handler.NewMarketHandler(deps.Market)
+	httpMetrics := middleware.NewHTTPMetrics()
 
 	health := func(w http.ResponseWriter, r *http.Request) {
 		JSON(w, http.StatusOK, Envelope{
@@ -54,7 +55,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	}
 	mux.HandleFunc("GET /health", health)
 	mux.HandleFunc("GET /healthz", health)
-	mux.HandleFunc("GET /metrics", metrics)
+	mux.HandleFunc("GET /metrics", metrics(httpMetrics, deps.Realtime))
 	mux.HandleFunc("GET /swagger/openapi.json", swaggerOpenAPI)
 	mux.HandleFunc("GET /api/v1/world", worldHandler.World)
 	mux.HandleFunc("GET /api/v1/world/chunks", worldHandler.Chunks)
@@ -120,6 +121,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 		mux,
 		middleware.RequestID(),
 		middleware.Logger(log),
+		middleware.Metrics(httpMetrics),
 		middleware.Recoverer(func(r *http.Request, recovered any, stack []byte) {
 			log.Error("http.panic", "event", "http.panic", "request_id", middleware.RequestIDFromContext(r.Context()), "path", r.URL.Path, "panic", recovered, "stack", string(stack))
 		}),
@@ -129,13 +131,6 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 		middleware.RateLimit(nil, middleware.DefaultRateLimitRules()),
 		middleware.Idempotency(nil, 24*time.Hour),
 	)
-}
-
-func metrics(w http.ResponseWriter, r *http.Request) {
-	_ = r
-	w.Header().Set("Content-Type", "text/plain; version=0.0.4")
-	w.WriteHeader(http.StatusOK)
-	_, _ = w.Write([]byte("real_city_http_ready 1\n"))
 }
 
 func swaggerOpenAPI(w http.ResponseWriter, r *http.Request) {
