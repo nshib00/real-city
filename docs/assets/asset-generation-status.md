@@ -1304,6 +1304,94 @@
   roundtrip report без loose vertices, `git diff --check`, visual review по
   `state-review.png` и отдельным PNG L2/L3 active.
 
+Состояние на 2026-10-14, repair ямы/забора/качалки:
+
+- Перед правкой сохранен runtime-бэкап нефтяных вышек:
+  `frontend/public/assets/buildings/industry/oil_well/backup_2026-10-14_pre_oil_pit_pumpjack_fence_rework/`.
+- Перегенерированы все 12 PNG/GLB: уровни 1-3, состояния `active`,
+  `construction`, `damaged`, `ruined`. Ревизия manifest/report:
+  `oil-pit-pumpjack-fortified-fence-2026-10-14`.
+- В генераторе увеличена и затемнена нефтяная яма: добавлены
+  `deep_black_oil_pit`, `glossy_oil_pool` и видимая передняя черная шахта,
+  чтобы источник нефти читался внутри вышки во всех уровнях.
+- Каркас вышки перестроен: боковые, передние и задние прутья теперь находятся
+  в плоскостях своих стенок и образуют замкнутую клетку, без диагоналей,
+  выпирающих наружу.
+- Во все уровни добавлена внутренняя качалка по силуэту старого референса:
+  engine block, flywheel, walking beam, horsehead и sucker rod в черную яму;
+  construction-состояния получили частично установленный механизм.
+- Уровни 2-3 получили полностью замкнутый защитный забор. Уровень 3 усилен:
+  забор выше и толще, темно-серый железобетонный фундамент массивнее,
+  добавлены дополнительные металлические пластины и больше шипов.
+- Диапазон треугольников по report: 2252-5308. Проверки прошли: Blender MCP
+  `get_addon_status`/`get_scene_info`, генерация через UNC-путь,
+  `python3 -m py_compile tools/assets/blender/generate_oil_well_models.py`,
+  `python3 tools/assets/validate_building_sprites.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  `python3 tools/assets/validate_building_ground.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  roundtrip report на 12 GLB без loose/non-manifold vertices,
+  `git diff --check`, visual review по `state-review.png` и отдельным PNG
+  `oil_well_l01_active`, `oil_well_l03_active`,
+  `oil_well_l03_construction`.
+- Ограничение: длинный Blender MCP `execute_blender_code` дважды оборвал
+  текстовый ответ с `Communication error: No data received`, но после
+  `get_scene_info` подтвердилось, что генерация завершилась, сцена содержит
+  новые объекты, а runtime-файлы обновлены.
+
+Состояние на 2026-10-14, repair прямых прутьев:
+
+- Перед правкой сохранен runtime-бэкап текущей версии:
+  `frontend/public/assets/buildings/industry/oil_well/backup_2026-10-14_pre_straight_rods_rework/`.
+- Перегенерированы все 12 PNG/GLB: уровни 1-3, состояния `active`,
+  `construction`, `damaged`, `ruined`. Ревизия manifest/report:
+  `oil-well-straight-side-rods-2026-10-14`.
+- В `tools/assets/blender/generate_oil_well_models.py` удалены X-диагонали
+  каркаса нефтяной вышки. На каждой стороне теперь используются только прямые
+  горизонтальные пояса и прямые вертикальные стойки в плоскости стороны.
+- Сохранены предыдущие правки: черная нефтяная яма, внутренняя качалка,
+  замкнутые защитные заборы уровней 2-3 и усиленный забор уровня 3.
+- Диапазон треугольников по report: 2252-5452. Проверки прошли: Blender MCP
+  `get_addon_status`/`get_scene_info`, генерация через UNC-путь,
+  `python3 -m py_compile tools/assets/blender/generate_oil_well_models.py`,
+  `python3 tools/assets/validate_building_sprites.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  `python3 tools/assets/validate_building_ground.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  roundtrip report на 12 GLB без loose/non-manifold vertices, visual review по
+  `state-review.png` и отдельным PNG L1/L2/L3 active.
+- Ограничение: Blender MCP `look` снова не смог сохранить
+  `/tmp/blender_look_*.png`; screenshot-review выполнен по экспортированным
+  runtime PNG/contact sheet.
+
+Состояние на 2026-10-14, repair удаления боковых прутьев:
+
+- Перед правкой сохранен runtime-бэкап версии с прямыми прутьями:
+  `frontend/public/assets/buildings/industry/oil_well/backup_2026-10-14_pre_remove_side_rods/`.
+- Перегенерированы все 12 PNG/GLB: уровни 1-3, состояния `active`,
+  `construction`, `damaged`, `ruined`. Ревизия manifest/report:
+  `oil-well-no-side-rods-2026-10-14`.
+- В `tools/assets/blender/generate_oil_well_models.py` полностью удалена
+  генерация стеновых прутьев каркаса (`derrick_*_rail_*` и
+  `derrick_*_vertical_rod_*`). Сохранены несущие ноги вышки, верхняя рама,
+  bolt plates, черная нефтяная яма, внутренняя качалка и защитные заборы.
+- Диапазон треугольников по report: 2076-4012. Проверки прошли: Blender MCP
+  `get_addon_status`/`get_scene_info`, генерация через UNC-путь,
+  `python3 -m py_compile tools/assets/blender/generate_oil_well_models.py`,
+  `python3 tools/assets/validate_building_sprites.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  `python3 tools/assets/validate_building_ground.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  roundtrip report на 12 GLB без loose vertices, visual review по
+  `state-review.png`, и проверка GLB/сцены на отсутствие
+  `derrick_*_rail_*` / `derrick_*_vertical_rod_*`.
+- Ограничение: длинный Blender MCP `execute_blender_code` снова вернул
+  `Communication error: No data received`, но после ожидания runtime-файлы,
+  manifest/report, `.blend` и сцена `Real_City_Oil_Well_Models.005`
+  подтвердили завершение генерации. Blender MCP `look` снова не смог сохранить
+  `/tmp/blender_look_*.png`; screenshot-review выполнен по экспортированному
+  runtime contact sheet.
+
 ## Экономный шаблон следующего запроса
 
 ```text
