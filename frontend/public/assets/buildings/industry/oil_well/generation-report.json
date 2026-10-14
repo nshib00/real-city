@@ -34,12 +34,12 @@
       "state": "construction",
       "png": "oil_well_l01_construction.png",
       "glb": "oil_well_l01_construction.glb",
-      "triangles": 1962,
+      "triangles": 2048,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -48,10 +48,10 @@
         ]
       ],
       "alpha_bounds": [
-        102,
-        187,
-        411,
-        364
+        117,
+        220,
+        395,
+        368
       ]
     },
     {
@@ -60,12 +60,12 @@
       "state": "damaged",
       "png": "oil_well_l01_damaged.png",
       "glb": "oil_well_l01_damaged.glb",
-      "triangles": 2626,
+      "triangles": 2712,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -74,10 +74,10 @@
         ]
       ],
       "alpha_bounds": [
-        102,
-        161,
-        411,
-        364
+        117,
+        210,
+        395,
+        368
       ]
     },
     {
@@ -86,12 +86,12 @@
       "state": "ruined",
       "png": "oil_well_l01_ruined.png",
       "glb": "oil_well_l01_ruined.glb",
-      "triangles": 1918,
+      "triangles": 2004,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -100,10 +100,10 @@
         ]
       ],
       "alpha_bounds": [
-        102,
-        192,
-        411,
-        364
+        117,
+        220,
+        395,
+        368
       ]
     },
     {
@@ -112,12 +112,12 @@
       "state": "active",
       "png": "oil_well_l02_active.png",
       "glb": "oil_well_l02_active.glb",
-      "triangles": 2034,
+      "triangles": 2512,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -126,10 +126,10 @@
         ]
       ],
       "alpha_bounds": [
-        131,
-        122,
-        404,
-        364
+        117,
+        185,
+        395,
+        368
       ]
     },
     {
@@ -138,12 +138,12 @@
       "state": "construction",
       "png": "oil_well_l02_construction.png",
       "glb": "oil_well_l02_construction.glb",
-      "triangles": 1710,
+      "triangles": 2176,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -152,10 +152,10 @@
         ]
       ],
       "alpha_bounds": [
-        129,
-        161,
-        404,
-        364
+        117,
+        210,
+        395,
+        368
       ]
     },
     {
@@ -164,12 +164,12 @@
       "state": "damaged",
       "png": "oil_well_l02_damaged.png",
       "glb": "oil_well_l02_damaged.glb",
-      "triangles": 2374,
+      "triangles": 2864,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -178,10 +178,10 @@
         ]
       ],
       "alpha_bounds": [
-        131,
-        128,
-        404,
-        364
+        117,
+        188,
+        395,
+        368
       ]
     },
     {
@@ -190,12 +190,12 @@
       "state": "ruined",
       "png": "oil_well_l02_ruined.png",
       "glb": "oil_well_l02_ruined.glb",
-      "triangles": 1666,
+      "triangles": 2188,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -204,10 +204,10 @@
         ]
       ],
       "alpha_bounds": [
-        131,
-        183,
-        404,
-        364
+        117,
+        220,
+        395,
+        368
       ]
     },
     {
@@ -216,12 +216,12 @@
       "state": "active",
       "png": "oil_well_l03_active.png",
       "glb": "oil_well_l03_active.glb",
-      "triangles": 2266,
+      "triangles": 3184,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -231,9 +231,9 @@
       ],
       "alpha_bounds": [
         117,
-        92,
-        412,
-        364
+        166,
+        395,
+        368
       ]
     },
     {
@@ -242,12 +242,12 @@
       "state": "construction",
       "png": "oil_well_l03_construction.png",
       "glb": "oil_well_l03_construction.glb",
-      "triangles": 1942,
+      "triangles": 2776,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -256,10 +256,10 @@
         ]
       ],
       "alpha_bounds": [
-        118,
-        141,
-        412,
-        364
+        117,
+        197,
+        395,
+        368
       ]
     },
     {
@@ -268,12 +268,12 @@
       "state": "damaged",
       "png": "oil_well_l03_damaged.png",
       "glb": "oil_well_l03_damaged.glb",
-      "triangles": 2746,
+      "triangles": 3676,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
@@ -283,9 +283,9 @@
       ],
       "alpha_bounds": [
         117,
-        101,
-        412,
-        364
+        172,
+        395,
+        368
       ]
     },
     {
@@ -294,24 +294,24 @@
       "state": "ruined",
       "png": "oil_well_l03_ruined.png",
       "glb": "oil_well_l03_ruined.glb",
-      "triangles": 1990,
+      "triangles": 2928,
       "bounds": [
         [
           -1.8,
           -1.8,
-          0.0
+          -0.15
         ],
         [
           1.8,
           1.8,
-          0.738
+          0.843
         ]
       ],
       "alpha_bounds": [
-        113,
-        174,
-        412,
-        364
+        117,
+        218,
+        395,
+        368
       ]
     }
   ],
