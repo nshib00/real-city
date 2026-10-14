@@ -300,12 +300,26 @@
 - Runtime-папка: `frontend/public/assets/buildings/industry/oil_well/`.
 - Мастер-сцена: `frontend/public/assets/buildings/industry/oil_well/oil_well_levels.blend`.
 - Manifest: `frontend/public/assets/buildings/industry/oil_well/manifest.json`.
-- MCP QA render: `/tmp/oil_well_building_mcp_review.png`.
+- Отчет генерации:
+  `frontend/public/assets/buildings/industry/oil_well/generation-report.json`.
+- Roundtrip report:
+  `frontend/public/assets/buildings/industry/oil_well/roundtrip-validation.json`.
+- Визуальный обзор:
+  `frontend/public/assets/buildings/industry/oil_well/state-review.png`.
+- MCP QA render: `/tmp/oil_well_mcp_review.png`.
 
 Состояние на 2026-10-13:
 
-- Создано и подключено в runtime 12 PNG и 12 GLB: уровни 1-3, состояния
-  `active`, `construction`, `damaged`, `ruined`.
+- Перегенерировано 12 PNG и 12 GLB: уровни 1-3, состояния `active`,
+  `construction`, `damaged`, `ruined`.
+- Уровень 1 собран как ранняя деревянная вышка с настилом, веревками,
+  простым насосом и бочками. Уровень 2 переходит в серую металлическую ферму
+  с бетонными опорами, трубами, механикой и резервуаром. Уровень 3 использует
+  темный усиленный металл, защищенные резервуары, янтарные предупреждающие
+  акценты и голубую эоловую линию.
+- `construction` оставляет верхнюю часть недостроенной и добавляет свободные
+  балки/материалы; `damaged` наклоняет ферму, ломает трубы и добавляет свежие
+  протечки; `ruined` схлопывает вышку в обломки над нефтяной точкой.
 - Frontend registry обновлен: `oil_well` добавлен в
   `frontend/src/game/renderers/buildingAssetManifests.ts`, превью добавлено в
   build menu, каталог переименован в `Нефтяная вышка`.
@@ -316,13 +330,40 @@
   `frontend/src/game/renderer/terrainTextures.ts` и используют PNG из
   `frontend/public/assets/terrain/tiles/`; GLB terrain-модели лежат рядом как
   мастер/runtime-preview ассеты.
-- Проверки прошли: Blender CLI generation, PNG alpha/baseline validation,
-  manifest validation, GLB roundtrip по 12 файлам, targeted frontend tests
-  `placement.test.ts`, `terrainTextures.test.ts`, `buildingRegistry.test.ts`,
-  `npm run build`, Blender MCP `get_addon_status`/`get_scene_info`, live MCP
-  import `oil_well_l03_active.glb`, explicit MCP render review.
-- Ограничения: `mcp.look` снова не смог записать `/tmp/blender_look_*.png`;
-  визуальная проверка выполнена через явный Blender render в `/tmp`.
+- Проверки прошли: `python3 -m py_compile` генератора, Blender CLI generation,
+  manifest validation с triangles/bounds, contact sheet generation, встроенный
+  GLB roundtrip по 12 файлам без loose vertices, Blender MCP
+  `get_addon_status`/`get_scene_info`, загрузка мастер `.blend` в live Blender,
+  explicit MCP render review. Диапазон треугольников: 1382-2346.
+- Ограничения: `mcp.look` в этой среде нестабилен для записи в `/tmp`;
+  визуальная проверка выполнена через runtime contact sheet и явный Blender
+  render в `/tmp`.
+
+Обновление на 2026-10-14:
+
+- Нефтяные вышки L1-L3 во всех состояниях повторно перегенерированы и
+  подключены в runtime, чтобы соответствовать общему стилю построек Real City.
+- Предыдущий runtime-набор сохранен как backup:
+  `frontend/public/assets/buildings/industry/oil_well/backup_2026-10-14_pre_style_regen/`.
+- Генератор `tools/assets/blender/generate_oil_well_models.py` обновлен:
+  задан revision `aeolian-style-runtime-2026-10-14`, увеличен экранный footprint
+  модели до уровня остальных построек, расширена рабочая площадка, добавлены
+  светлый гравий, более теплые дерево/металл/бетон, цветные панели, крупные
+  трубы, резервуары, болтовые пластины и более читаемая качалка.
+- Кадр остается стандартным для building layer: PNG `512x384`, anchor
+  `[256,292]`; alpha width активных состояний теперь примерно 295-309 px вместо
+  мелкого старого диапазона около 165-173 px.
+- `OIL_WELL_ASSET_REVISION` обновлен на
+  `aeolian-style-runtime-2026-10-14`, runtime `manifest.json` и
+  `generation-report.json` синхронизированы.
+- Проверки прошли: Blender MCP generation через UNC-путь, `get_addon_status` и
+  `get_scene_info`, GLB roundtrip по 12 файлам без loose vertices, runtime
+  manifest/file/PNG validation, визуальный review экспортированных PNG и
+  `state-review.png`, targeted frontend tests `buildingSpriteAssets.test.ts`,
+  `buildingModelAssets.test.ts`, `buildingRegistry.test.ts`. Ограничение:
+  `mcp.look` по-прежнему не смог записать `/tmp/blender_look_7644.png`, поэтому
+  screenshot-review выполнен по экспортированным render PNG из того же
+  изометрического пайплайна.
 
 ## Грядки ветролиста
 
@@ -873,6 +914,46 @@
   (`Connection reset by peer`), поэтому новые документированные ресурсы пока
   без `.glb`/`.blend` мастер-геометрии.
 
+## Руины / Terrain-Варианты
+
+Рабочие файлы:
+
+- Генератор:
+  `tools/assets/blender/generate_ruins_terrain_models.py`.
+- Runtime-папка:
+  `frontend/public/assets/terrain/tiles/`.
+- Папка семейства:
+  `frontend/public/assets/terrain/tiles/ruins_variants/`.
+- Мастер-сцена:
+  `frontend/public/assets/terrain/tiles/ruins_variants/ruins_variants.blend`.
+- Manifest:
+  `frontend/public/assets/terrain/tiles/ruins_variants/manifest.json`.
+- Root manifest-копия:
+  `frontend/public/assets/terrain/tiles/ruins_variants_manifest.json`.
+- Contact sheet:
+  `frontend/public/assets/terrain/tiles/ruins_variants/ruins_variants_contact_sheet.png`.
+- MCP QA render:
+  `/tmp/ruins_variants_mcp_review.png`.
+
+Состояние на 2026-10-13:
+
+- Создано 12 подтипов захватываемых руин из дизайн-дока: старая ратушная
+  площадь, архив чертежей, монетный двор, складской узел, оранжерея, водяная
+  станция, каменный бастион, мастерская механизмов, святилище ветра, залежный
+  обелиск, разломная сторожевая и речной маяк.
+- У каждого подтипа есть PNG и GLB в `ruins_variants/`, а также root-копия
+  `ruins_<type>.png/.glb` прямо в `frontend/public/assets/terrain/tiles/`.
+- Все PNG имеют формат 512x512, anchor `[256,320]`, footprint 480 px и ту же
+  terrain-камеру, что базовые тайлы.
+- Проверки прошли: Blender MCP `get_addon_status`/`get_scene_info`,
+  Blender generation, встроенный Blender roundtrip-import, локальный
+  `python3 tools/assets/validate_ruins_terrain_variants.py`, contact sheet,
+  MCP import всех 12 GLB в live-сцену и explicit render review.
+- Диапазон треугольников: 1408-3896 на модель.
+- Ограничение: `mcp.look` снова не смог записать файл
+  `/tmp/blender_look_7644.png`; визуальная MCP-проверка выполнена явным
+  Blender render в UNC-путь `/tmp/ruins_variants_mcp_review.png`.
+
 ## Лесопильные дворы
 
 Текущая активная тема: полная пересборка `lumber_yard` 1-13 уровней во всех
@@ -933,6 +1014,265 @@
   (`Connection reset by peer`), поэтому live `get_viewport_screenshot()` для
   финального post-review нужно повторить после перезапуска MCP-сервера в
   Blender. Локальный `state-review.png` визуально проверен.
+
+## Детальные Горы И Шахта L1, Staging
+
+Рабочие файлы:
+
+- Генератор:
+  `tools/assets/blender/generate_mountain_detail_models.py`.
+- Валидатор:
+  `tools/assets/validate_mountain_detail_staging.py`.
+- Staging-папка:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/`.
+- Мастер-сцена:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/mountain_detail_staging.blend`.
+- Contact sheet:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/mountain_detail_contact_sheet.png`.
+- Manifest:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/manifest.json`.
+
+Состояние на 2026-10-13:
+
+- Создано 4 отдельных staging-ассета, не подключенных к игре и не заменяющих
+  текущие terrain/building модели:
+  `mountain_detail_ridge`, `mountain_detail_spire`,
+  `mountain_detail_snowcap`, `mine_l01_active_mountain_detail`.
+- Горы собраны как фасеточные пиковые меши с одним доминирующим пиком,
+  боковыми гребнями, светлыми ребрами, осыпью, мхом/травой и умеренным снегом.
+  Это тест нового подхода вместо старого `mountain()` из округлых валунов.
+- Шахта L1 active использует тот же каменный kit: компактная скала, один
+  наружный деревянный портал, темная глубина штольни, рельсы, вагонетка,
+  лампы и осыпь; в runtime `mine_l01_active` не заменялась.
+- Диапазон треугольников: 1536-2328 на модель.
+- Проверки прошли: Blender MCP `get_addon_status`/`get_scene_info`,
+  Blender generation, встроенный Blender roundtrip-import, локальный
+  `python3 tools/assets/validate_mountain_detail_staging.py`, contact sheet,
+  MCP загрузка `.blend` и explicit render review в
+  `/tmp/mountain_detail_mcp_review.png`.
+- Ограничение: `mcp.look` снова не смог записать файл
+  `/tmp/blender_look_7644.png`; визуальная MCP-проверка выполнена явным
+  Blender render в UNC-путь.
+
+Обновление на 2026-10-13:
+
+- Все 4 staging-ассета перегенерированы по правке: горы стали шире по площади
+  и выше, основные скальные массы теперь занимают почти всю 1x1 клетку.
+- Осыпные камни вокруг гор разложены нерегулярными кластерами вместо ровной
+  линии.
+- У `mine_l01_active_mountain_detail` удалена отдельная серая каменная
+  подстилка; осталась базовая grass-клетка. Скальные щеки и задняя масса
+  утолщены, портал встроен в каменную стену через backing/seam/socket-детали.
+- Новый диапазон треугольников: 1988-2776 на модель.
+- Проверки после правки прошли: Blender generation, встроенный roundtrip,
+  `python3 tools/assets/validate_mountain_detail_staging.py`, MCP загрузка
+  `.blend`, `get_scene_info` и explicit render review
+  `/tmp/mountain_detail_mcp_review_updated.png`.
+
+Обновление 2 на 2026-10-13:
+
+- Версии предыдущих 4 staging-моделей сохранены как backup:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/backup_2026-10-13_thicker_v1/`.
+- Старые файлы `mountain_detail_ridge`, `mountain_detail_spire`,
+  `mountain_detail_snowcap` и `mine_l01_active_mountain_detail` не
+  перезаписывались. Новая партия сохранена рядом отдельными именами и
+  отдельным manifest/report:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/manifest_massive.json`,
+  `generation-report-massive.json`, `roundtrip-validation-massive.json`,
+  `validation_massive.json`.
+- Новый генератор:
+  `tools/assets/blender/generate_mountain_detail_massive_models.py`.
+  Новый валидатор:
+  `tools/assets/validate_mountain_detail_massive_staging.py`.
+- Создано 36 новых staging-ассетов:
+  3 массивные горы `*_massive` и шахты уровней 2-12 в состояниях
+  `active`, `construction`, `damaged`.
+- Горы стали примерно вдвое выше предыдущих staging-версий; основные скальные
+  массы используют 90-95% площади клетки, оставляя только узкую видимую кромку
+  grass-тайла.
+- Шахты L2-L12 сделаны по образцу L1: толстая компактная скала почти на всю
+  клетку, один наружный портал, прикрепленный к каменной стене, темная
+  глубина штольни, рельсы и рабочие props. Прогрессия уровней добавляет
+  каменную/кирпичную крепь, железо, механизмы, взрывчатку, вентиляцию,
+  железобетон, супер-механизмы и светокристалл на поздних уровнях.
+- Проверки прошли: `python3 -m py_compile` для генератора/валидатора, Blender
+  CLI generation, встроенный Blender roundtrip-import, локальный
+  `python3 tools/assets/validate_mountain_detail_massive_staging.py`,
+  contact sheet `mountain_detail_massive_contact_sheet.png`, MCP загрузка
+  `mountain_detail_massive_staging.blend`, `get_scene_info` и explicit MCP
+  render review `/tmp/mountain_detail_massive_mcp_review.png`.
+  Диапазон треугольников: 2216-4336.
+- Ограничение: партия остается staging-набором, не подключенным к игре и не
+  заменяющим production terrain/building ассеты.
+
+Обновление 3 на 2026-10-13:
+
+- Предыдущая massive-партия с перекрытым входом сохранена как backup:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/backup_2026-10-13_massive_blocked_entrance/`.
+- Исправлены шахты L2-L12 во всех состояниях: цельный
+  `portal_stone_backing`, визуально закрывавший вход, заменен на раздельные
+  боковые скальные щеки, верхнюю скальную бровку и утопленный темный
+  `cave_far_shadow`. Центральный проем теперь остается открытым как у модели
+  L1.
+- Наружная арка получила отдельную сменяемую отделку по уровням: дерево/канат
+  на ранних уровнях, камень, кирпич с металлом, медно-железные детали,
+  бетонно-стальные усиления и late-game усиленная отделка со светокристаллом.
+- Перегенерированы `manifest_massive.json`, `generation-report-massive.json`,
+  `roundtrip-validation-massive.json`, `validation_massive.json`, контакт-лист,
+  PNG/GLB и `mountain_detail_massive_staging.blend`.
+- Проверки прошли: `python3 -m py_compile`, Blender CLI generation, встроенный
+  Blender roundtrip-import, `python3
+  tools/assets/validate_mountain_detail_massive_staging.py`, `git diff
+  --check`, визуальный contact sheet и explicit MCP render review
+  `/tmp/mountain_detail_massive_open_entrance_mcp_review.png`.
+  Итог: 36 assets, 33 шахты, loose vertices 0, диапазон треугольников
+  2216-4952.
+
+Обновление 4 на 2026-10-14:
+
+- Предыдущая massive-партия с открытым входом сохранена как backup:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/backup_2026-10-13_massive_open_entrance_v1/`.
+- Шахты L2-L12 во всех состояниях перегенерированы еще раз: основные
+  скальные массы сделаны толще и шире, а `peak_mesh` получил параметры
+  `pointiness` и `crag` для более естественных острых пиков и выраженных
+  вертикальных граней.
+- У входа убран нижний загромождающий серый камень: единый широкий
+  `mine_front_lip` заменен на два боковых уступа
+  `mine_front_lip_left/right`, уменьшены нижний `cave_floor_depth` и
+  каменные `post_socket`, чтобы центральный низ штольни оставался свободным.
+- Перегенерированы `manifest_massive.json`, `generation-report-massive.json`,
+  `roundtrip-validation-massive.json`, `validation_massive.json`, контакт-лист,
+  PNG/GLB и `mountain_detail_massive_staging.blend`.
+- Проверки прошли: `python3 -m py_compile`, Blender CLI generation, встроенный
+  Blender roundtrip-import, `python3
+  tools/assets/validate_mountain_detail_massive_staging.py`, `git diff
+  --check`, визуальный contact sheet и explicit MCP render review
+  `/tmp/mountain_detail_massive_sharper_entrance_mcp_review.png`.
+  Итог: 36 assets, 33 шахты, loose vertices 0, диапазон треугольников
+  2216-5344.
+
+Обновление 5 на 2026-10-14:
+
+- Предыдущая massive-партия с более острыми и толстыми горами сохранена как
+  backup:
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/backup_2026-10-14_massive_sharper_v1/`.
+- Шахты L2-L12 во всех состояниях перегенерированы так, чтобы скальная часть
+  совпадала с горой шахты L1: добавлен отдельный `mine_l01_peak_mesh` и общий
+  `add_l01_mine_rock_shell`, повторяющий четыре L1-компонента
+  `mine_back_mountain`, `mine_left_cheek`, `mine_right_cheek`,
+  `mine_front_lip` с теми же размерами, twist и lean.
+- Уровневые отличия L2-L12 сохранены только в портале, отделке арки,
+  рельсах, лампах, механизмах, ящиках, вентиляции и поздних decorative props;
+  базовый горный силуэт теперь не меняется от уровня к уровню.
+- Перегенерированы `manifest_massive.json`, `generation-report-massive.json`,
+  `roundtrip-validation-massive.json`, `validation_massive.json`, контакт-лист,
+  PNG/GLB и `mountain_detail_massive_staging.blend`.
+- Проверки прошли: `python3 -m py_compile`, Blender CLI generation, встроенный
+  Blender roundtrip-import, `python3
+  tools/assets/validate_mountain_detail_massive_staging.py`, `git diff
+  --check`, визуальный contact sheet. Blender MCP подключение проверено; MCP
+  render review был остановлен соединением после повторной загрузки сцены, но
+  файлы уже прошли roundtrip-валидацию и локальный валидатор.
+  Итог: 36 assets, 33 шахты, loose vertices 0, диапазон треугольников
+  2036-4060.
+
+Обновление 6 на 2026-10-14:
+
+- Новые модели шахт подключены в runtime вместо старого набора:
+  `mine_l01_active` взят из `mountain_detail_staging`, а
+  `mine_l02`-`mine_l12` во всех состояниях взяты из
+  `mountain_detail_massive_staging` и скопированы в
+  `frontend/public/assets/buildings/industry/mine/` под стандартными именами
+  `mine_lXX_<state>.png/.glb`.
+- Старый runtime-набор не удален и сохранен как backup:
+  `frontend/public/assets/buildings/industry/mine/backup_2026-10-14_pre_mountain_detail_runtime/`.
+- `MINE_ASSET_REVISION` обновлен на
+  `mountain-detail-runtime-2026-10-14`, чтобы frontend не использовал старый
+  кеш PNG/GLB.
+- Building renderer теперь читает `render.size` и `anchor` из
+  `buildingAssetManifests`; для шахты задан формат `512x512` с anchor
+  `[256,320]`, соответствующий staging terrain-camera. Сохраненные старые
+  `mine_l01_construction` и `mine_l01_damaged` допакованы из `512x384` в
+  `512x512` с offset `[0,28]`, чтобы не растягиваться при новом anchor.
+- Обновлены runtime `manifest.json` и `generation-report.json`.
+- Проверки прошли: сверка наличия 36 manifest items и PNG/GLB файлов, проверка
+  PNG-размеров, targeted frontend tests `buildingSpriteAssets.test.ts`,
+  `buildingModelAssets.test.ts`, `buildingRegistry.test.ts`,
+  `objectDrawData.test.ts`.
+
+Обновление 7 на 2026-10-14:
+
+- Для шахты L1 созданы недостающие новые состояния
+  `mine_l01_construction_mountain_detail` и
+  `mine_l01_damaged_mountain_detail` в
+  `frontend/public/assets/terrain/tiles/mountain_detail_staging/`.
+- Massive staging manifest расширен до 38 ассетов: активная L1-шахта остается в
+  исходном `manifest.json`, а construction/damaged L1 теперь лежат в
+  `manifest_massive.json` рядом с L2-L12. Состояния используют ту же L1-скалу,
+  открытый портал и внешнюю арку; construction показывает частично собранную
+  крепь, damaged - поврежденную крепь, обломки и темные сколы без перекрытия
+  входа.
+- Новые L1 construction/damaged подключены в runtime вместо временно
+  сохраненных старых файлов:
+  `frontend/public/assets/buildings/industry/mine/mine_l01_construction.*` и
+  `frontend/public/assets/buildings/industry/mine/mine_l01_damaged.*`.
+- Предыдущие runtime-файлы этих двух состояний сохранены в backup:
+  `frontend/public/assets/buildings/industry/mine/backup_2026-10-14_pre_l01_state_replacement/`.
+- `MINE_ASSET_REVISION` обновлен на
+  `mountain-detail-runtime-l01-states-2026-10-14`; runtime `manifest.json` и
+  `generation-report.json` больше не помечают L1 construction/damaged как
+  `retained_from_backup`.
+- Проверки прошли: Blender MCP generation через UNC-путь, визуальный review
+  сохраненных PNG в игровом ракурсе, `python3
+  tools/assets/validate_mountain_detail_massive_staging.py` на 38 ассетах.
+
+## Нефтяная вышка / Spec И Active L1
+
+Рабочие файлы:
+
+- Spec: `docs/assets/specs/industry/oil_well.yaml`.
+- Документация: `docs/buildings/resource-buildings/oil-well.md`.
+- Генератор: `tools/assets/blender/generate_oil_well_models.py`.
+- Runtime-папка: `frontend/public/assets/buildings/industry/oil_well/`.
+- Мастер-сцена: `frontend/public/assets/buildings/industry/oil_well/oil_well_levels.blend`.
+- Визуальный обзор:
+  `frontend/public/assets/buildings/industry/oil_well/state-review.png`.
+
+Состояние на 2026-10-14:
+
+- Добавлен catalog-bound spec для текущего уровня 1 `oil_well` с
+  `style_profile: aeolian_fantasy_midpoly`, общей flat ground-клеткой,
+  стандартным building PNG `512x384`, anchor `[256,292]`, material map
+  `metal/planks/oil`, states `active/construction/damaged/ruined` и
+  правилами изометрического стиля Real City.
+- В `docs/buildings/resource-buildings/oil-well.md` уточнен раздел
+  моделирования: нефтяная вышка должна использовать общий стиль построек,
+  яркую плоскую ground-клетку, локальное нефтяное пятно, крупные readable
+  props и материалы из стоимости.
+- Существующий runtime-набор пересобран через Windows Blender CLI:
+  12 PNG и 12 GLB для уровней 1-3 и состояний
+  `active/construction/damaged/ruined`. Для текущего запроса проверен
+  `oil_well_l01_active`: 2286 triangles, bounds
+  `[[-1.8,-1.8,0.0],[1.8,1.8,1.603]]`, PNG `512x384`, alpha bounds
+  `[102,157,411,364]`.
+- Генератор обновлен: `generation-report.json` теперь фиксирует
+  `material_resources`, а `alpha_bounds` считается и без PIL внутри Windows
+  Blender.
+- Проверки прошли: Blender MCP `get_addon_status`/`get_scene_info`,
+  visual review по runtime PNG и `state-review.png`,
+  `python3 tools/assets/validate_asset_specs.py
+  docs/assets/specs/industry/oil_well.yaml`,
+  `python3 tools/assets/validate_building_manifests.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  `python3 tools/assets/validate_building_sprites.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  `python3 -m py_compile tools/assets/blender/generate_oil_well_models.py`,
+  roundtrip report без loose vertices, `git diff --check`.
+- Ограничения: MCP `look` снова не создал `/tmp/blender_look_*.png`;
+  screenshot-review выполнен по экспортированным runtime PNG/contact sheet.
+  `validate_building_lods.py` для `oil_well` ожидает новый manifest-формат с
+  LOD0/LOD1/LOD2 records, а текущий генератор нефтяной вышки экспортирует один
+  GLB на состояние.
 
 ## Экономный шаблон следующего запроса
 
