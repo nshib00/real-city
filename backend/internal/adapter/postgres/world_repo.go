@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
+	"github.com/lib/pq"
+
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
@@ -218,7 +220,7 @@ func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.C
 		}
 	}()
 
-	_, err = tx.ExecContext(ctx, `
+	result, err := tx.ExecContext(ctx, `
 		INSERT INTO world_chunks (map_id, chunk_x, chunk_y, version)
 		VALUES ($1, $2, $3, $4)
 		ON CONFLICT (map_id, chunk_x, chunk_y) DO NOTHING
@@ -226,17 +228,32 @@ func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.C
 	if err != nil {
 		return world.Chunk{}, err
 	}
-	for _, tile := range chunk.Tiles {
-		_, err = tx.ExecContext(ctx, `
-			INSERT INTO world_tiles (
-				map_id, tile_x, tile_y, chunk_x, chunk_y, terrain, elevation, safe_zone, forest_density
-			)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-			ON CONFLICT (map_id, tile_x, tile_y) DO NOTHING
-		`, mapID, tile.Coord.X, tile.Coord.Y, coord.X, coord.Y, tile.Terrain, tile.Elevation, tile.SafeZone, tile.ForestDensity)
-		if err != nil {
+	affected, err := result.RowsAffected()
+	if err != nil {
+		return world.Chunk{}, err
+	}
+	if affected == 0 {
+		if err = tx.Commit(); err != nil {
 			return world.Chunk{}, err
 		}
+		return r.findChunk(ctx, mapID, coord)
+	}
+	stmt, err := tx.Prepare(pq.CopyIn("world_tiles", "map_id", "tile_x", "tile_y", "chunk_x", "chunk_y", "terrain", "elevation", "safe_zone", "forest_density"))
+	if err != nil {
+		return world.Chunk{}, err
+	}
+	for _, tile := range chunk.Tiles {
+		if _, err = stmt.Exec(mapID, tile.Coord.X, tile.Coord.Y, coord.X, coord.Y, tile.Terrain, tile.Elevation, tile.SafeZone, tile.ForestDensity); err != nil {
+			_ = stmt.Close()
+			return world.Chunk{}, err
+		}
+	}
+	if _, err = stmt.Exec(); err != nil {
+		_ = stmt.Close()
+		return world.Chunk{}, err
+	}
+	if err = stmt.Close(); err != nil {
+		return world.Chunk{}, err
 	}
 	if err = tx.Commit(); err != nil {
 		return world.Chunk{}, err
