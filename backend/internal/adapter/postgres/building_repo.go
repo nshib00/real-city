@@ -59,6 +59,35 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 	return scanBuildings(rows)
 }
 
+func (r *BuildingRepo) PlayerPlacementStats(ctx context.Context, playerID player.ID) (building.PlacementStats, error) {
+	row := execer(ctx, r.db).QueryRowContext(ctx, `
+		SELECT
+			COALESCE(MAX(CASE WHEN type = $2 AND state <> $3 THEN level ELSE 0 END), 0) AS town_hall_level,
+			COUNT(*) FILTER (
+				WHERE state <> $3
+				  AND type NOT IN ($4, $5, $6, $7, $8, $9, $10)
+			) AS used_limit
+		FROM buildings
+		WHERE owner_id = $1
+	`, playerID,
+		building.TypeTownHall,
+		building.StateRuined,
+		building.TypeRoad,
+		building.TypeStandardRoad,
+		building.TypePavedRoad,
+		building.TypeWoodenWall,
+		building.TypeStoneWall,
+		building.TypeConcreteWall,
+		building.TypeModernWall,
+	)
+	var stats building.PlacementStats
+	if err := row.Scan(&stats.TownHallLevel, &stats.UsedLimit); err != nil {
+		return building.PlacementStats{}, err
+	}
+	stats.HasTownHall = stats.TownHallLevel > 0
+	return stats, nil
+}
+
 func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.Building, error) {
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
@@ -81,6 +110,10 @@ func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord worl
 }
 
 func (r *BuildingRepo) ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
+	return r.listByViewport(ctx, mapID, minX, minY, maxX, maxY)
+}
+
+func (r *BuildingRepo) ListIntersectingFootprint(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
 	return r.listByViewport(ctx, mapID, minX, minY, maxX, maxY)
 }
 

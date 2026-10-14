@@ -80,7 +80,7 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 	if err != nil {
 		return building.Building{}, err
 	}
-	playerBuildings, err := s.buildings.ListByPlayer(ctx, input.PlayerID)
+	playerStats, err := s.buildings.PlayerPlacementStats(ctx, input.PlayerID)
 	if err != nil {
 		return building.Building{}, err
 	}
@@ -94,9 +94,9 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 		Tiles:            placementTiles,
 		Footprint:        spec.Footprint,
 		Existing:         existing,
-		HasTownHall:      building.HasTownHall(playerBuildings),
-		BuildingLimit:    building.BuildingLimitForTownHall(playerBuildings, s.rules),
-		UsedLimit:        building.UsedBuildingLimit(playerBuildings),
+		HasTownHall:      playerStats.HasTownHall,
+		BuildingLimit:    s.rules.LimitForTownHallLevel(playerStats.TownHallLevel),
+		UsedLimit:        playerStats.UsedLimit,
 		RequiresTownHall: spec.RequiresTownHall,
 	}); err != nil {
 		s.log.Warn("building.placement.invalid", "event", "building.placement.invalid", "player_id", input.PlayerID, "building_type", input.Type, "tile_x", input.Tile.X, "tile_y", input.Tile.Y, "error", err.Error())
@@ -387,7 +387,7 @@ func (s *BuildingService) existingBuildingsForFootprint(ctx context.Context, ori
 			maxY = coord.Y
 		}
 	}
-	return s.buildings.ListByViewport(ctx, DefaultWorldID, minX, minY, maxX, maxY)
+	return s.buildings.ListIntersectingFootprint(ctx, DefaultWorldID, minX, minY, maxX, maxY)
 }
 
 func (s *BuildingService) validateMonsterFree(ctx context.Context, origin world.Coord, footprint building.Footprint) error {

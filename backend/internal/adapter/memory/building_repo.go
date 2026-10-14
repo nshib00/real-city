@@ -56,6 +56,19 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 	return items, nil
 }
 
+func (r *BuildingRepo) PlayerPlacementStats(ctx context.Context, playerID player.ID) (building.PlacementStats, error) {
+	items, err := r.ListByPlayer(ctx, playerID)
+	if err != nil {
+		return building.PlacementStats{}, err
+	}
+	stats := building.PlacementStats{
+		HasTownHall:   building.HasTownHall(items),
+		TownHallLevel: townHallLevel(items),
+		UsedLimit:     building.UsedBuildingLimit(items),
+	}
+	return stats, nil
+}
+
 func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.Building, error) {
 	_ = ctx
 	r.mu.RLock()
@@ -106,6 +119,20 @@ func (r *BuildingRepo) ListByViewport(ctx context.Context, mapID string, minX, m
 		return items[i].Tile.Y < items[j].Tile.Y
 	})
 	return items, nil
+}
+
+func (r *BuildingRepo) ListIntersectingFootprint(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
+	return r.ListByViewport(ctx, mapID, minX, minY, maxX, maxY)
+}
+
+func townHallLevel(items []building.Building) int {
+	level := 0
+	for _, item := range items {
+		if item.Type == building.TypeTownHall && item.State != building.StateRuined && item.Level > level {
+			level = item.Level
+		}
+	}
+	return level
 }
 
 func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error) {

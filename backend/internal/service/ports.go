@@ -44,9 +44,11 @@ type BuildingRepository interface {
 	Create(ctx context.Context, b building.Building) error
 	FindByID(ctx context.Context, id building.ID) (building.Building, error)
 	ListByPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error)
+	PlayerPlacementStats(ctx context.Context, playerID player.ID) (building.PlacementStats, error)
 	ListByMap(ctx context.Context, mapID string) ([]building.Building, error)
 	ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error)
 	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
+	ListIntersectingFootprint(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
 	ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error)
 	Update(ctx context.Context, b building.Building) error
 	Delete(ctx context.Context, id building.ID) error

@@ -19,6 +19,12 @@ type PlacementInput struct {
 	RequiresTownHall bool
 }
 
+type PlacementStats struct {
+	HasTownHall   bool
+	TownHallLevel int
+	UsedLimit     int
+}
+
 func ValidatePlacement(input PlacementInput) error {
 	if input.Footprint.Width <= 0 || input.Footprint.Height <= 0 {
 		return apperror.WithFields(apperror.Validation, "building footprint must be positive", map[string]string{"footprint": "must be positive"})
