@@ -84,8 +84,9 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (g *Gateway) Shutdown() {
 	g.cancel()
 	g.mu.RLock()
-	defer g.mu.RUnlock()
-	for _, conn := range g.connections {
+	connections := connectionSlice(g.connections)
+	g.mu.RUnlock()
+	for _, conn := range connections {
 		conn.Close("gateway_shutdown")
 	}
 }
