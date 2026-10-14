@@ -112,6 +112,7 @@ export function BuildMenu() {
                     try {
                       const result = await placeBuildingRequest({ type: item.kind, tile_x: selectedTile.x, tile_y: selectedTile.y })
                       addBuilding(toPlacedBuilding(result.building))
+                      setBuildMenuOpen(false)
                       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
                       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
                     } catch (error) {
