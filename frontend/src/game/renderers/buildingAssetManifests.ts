@@ -31,7 +31,7 @@ export type BuildingAssetManifest = RuntimeAssetManifest & {
 export const LUMBER_YARD_ASSET_REVISION = 'grass-ground-2026-09-22'
 export const SAND_QUARRY_ASSET_REVISION = 'mcp-midpoly-l01-l11-2026-09-24'
 export const CLAY_QUARRY_ASSET_REVISION = 'mcp-midpoly-l01-l12-2026-10-12'
-export const MINE_ASSET_REVISION = 'mcp-midpoly-l01-l12-2026-09-28'
+export const MINE_ASSET_REVISION = 'mountain-detail-runtime-l01-states-2026-10-14'
 export const GLASS_WORKSHOP_ASSET_REVISION = 'mcp-midpoly-l01-l12-2026-09-29'
 export const COIN_STORAGE_ASSET_REVISION = 'mcp-midpoly-l01-l12-2026-09-29-rework2'
 export const SEED_GARDEN_ASSET_REVISION = 'mcp-midpoly-l01-l10-2026-10-09'
@@ -329,6 +329,13 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     displayName: 'Шахта',
     levels: l1To12,
     states: coreStates,
+    anchor: [256, 320],
+    render: {
+      mode: 'sprite',
+      size: [512, 512],
+      preferredFormat: 'png',
+      fallbackFormat: 'png',
+    },
     spriteSource: 'public',
     modelSource: 'public',
     revision: MINE_ASSET_REVISION,

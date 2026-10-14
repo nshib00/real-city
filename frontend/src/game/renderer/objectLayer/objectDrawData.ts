@@ -1,5 +1,5 @@
 import type { PlacedBuilding } from '../../state/useGameStore'
-import { resolveBuildingSpriteAsset } from '../../renderers/buildingRegistry'
+import { buildingRegistryEntry, resolveBuildingSpriteAsset } from '../../renderers/buildingRegistry'
 import { isModularPathKind, modularPathShapeFor } from '../../renderers/groundRoad'
 import { objectLayerSortKey } from './objectDepth'
 
@@ -47,6 +47,7 @@ export function buildingDrawCommand(
 ): BuildingDrawCommand {
   const shape = isModularPathKind(building.kind) ? modularPathShapeFor(building, [...allBuildings]) : undefined
   const textureUrl = resolveBuildingSpriteAsset(building, { shape })
+  const spriteMetrics = buildingSpriteMetrics(building)
 
   return {
     id: building.id,
@@ -54,9 +55,23 @@ export function buildingDrawCommand(
     label: building.name,
     tile: building.tile,
     textureUrl,
-    anchor: { x: DEFAULT_BUILDING_SPRITE.anchorX, y: DEFAULT_BUILDING_SPRITE.anchorY },
-    size: { width: DEFAULT_BUILDING_SPRITE.width, height: DEFAULT_BUILDING_SPRITE.height },
+    anchor: spriteMetrics.anchor,
+    size: spriteMetrics.size,
     sortKey: objectLayerSortKey(building.tile),
     selected: building.id === selectedBuildingId,
+  }
+}
+
+function buildingSpriteMetrics(building: PlacedBuilding) {
+  const manifest = buildingRegistryEntry(building.kind)
+  const [width, height] = manifest?.render?.size ?? [DEFAULT_BUILDING_SPRITE.width, DEFAULT_BUILDING_SPRITE.height]
+  const [anchorX, anchorY] = manifest?.anchor ?? [
+    DEFAULT_BUILDING_SPRITE.anchorX * DEFAULT_BUILDING_SPRITE.width,
+    DEFAULT_BUILDING_SPRITE.anchorY * DEFAULT_BUILDING_SPRITE.height,
+  ]
+
+  return {
+    anchor: { x: anchorX / width, y: anchorY / height },
+    size: { width, height },
   }
 }

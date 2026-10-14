@@ -3,17 +3,17 @@
   "display_name": "Шахта",
   "category": "industry",
   "generated_at": "2026-10-10",
-  "generator": "tools/assets/blender/generate_mine_models.py",
+  "generator": "tools/assets/blender/generate_mountain_detail_models.py; tools/assets/blender/generate_mountain_detail_massive_models.py",
   "migration_phase": 5,
   "style_reference": "Real City mine migrated to shared scene/export/report layer",
   "sprite": {
     "size": [
       512,
-      384
+      512
     ],
     "anchor": [
       256,
-      292
+      320
     ]
   },
   "levels": [
@@ -57,7 +57,7 @@
   "lod_policy": [
     {
       "name": "LOD0",
-      "ratio": 1.0
+      "ratio": 1
     },
     {
       "name": "LOD1",
@@ -112,36 +112,38 @@
       "state": "construction",
       "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.glb",
       "png": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.png",
-      "triangles": 5012,
+      "triangles": 2036,
       "bounds": [
         [
-          -1.7999999523162842,
-          1.7999999523162842
+          -1.8,
+          -1.8,
+          -0.03
         ],
         [
-          -1.7999999523162842,
-          1.7999999523162842
-        ],
-        [
-          -0.15000000596046448,
-          1.3674119710922241
+          1.8,
+          1.8,
+          1.86
         ]
       ],
       "sprite": {
         "size": [
           512,
-          384
+          512
         ],
         "anchor": [
           256,
-          292
+          320
         ]
       },
       "compatibility": {
         "glb_exists": true,
         "png_exists": true,
         "legacy_filename": true
-      }
+      },
+      "objects": 42,
+      "alpha_bounds": null,
+      "source_staging_asset": "frontend/public/assets/terrain/tiles/mountain_detail_staging/mine_l01_construction_mountain_detail",
+      "generated_from": "tools/assets/blender/generate_mountain_detail_massive_models.py"
     },
     "mine_l01_damaged": {
       "id": "mine_l01_damaged",
@@ -149,36 +151,38 @@
       "state": "damaged",
       "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.glb",
       "png": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.png",
-      "triangles": 5324,
+      "triangles": 2608,
       "bounds": [
         [
-          -1.7999999523162842,
-          1.7999999523162842
+          -1.8,
+          -1.8,
+          -0.03
         ],
         [
-          -1.7999999523162842,
-          1.7999999523162842
-        ],
-        [
-          -0.15000000596046448,
-          1.3674119710922241
+          1.8,
+          1.8,
+          1.849
         ]
       ],
       "sprite": {
         "size": [
           512,
-          384
+          512
         ],
         "anchor": [
           256,
-          292
+          320
         ]
       },
       "compatibility": {
         "glb_exists": true,
         "png_exists": true,
         "legacy_filename": true
-      }
+      },
+      "objects": 55,
+      "alpha_bounds": null,
+      "source_staging_asset": "frontend/public/assets/terrain/tiles/mountain_detail_staging/mine_l01_damaged_mountain_detail",
+      "generated_from": "tools/assets/blender/generate_mountain_detail_massive_models.py"
     },
     "mine_l02_active": {
       "id": "mine_l02_active",
@@ -1401,5 +1405,374 @@
         "legacy_filename": true
       }
     }
-  }
+  },
+  "asset": "mine",
+  "revision": "mountain-detail-runtime-l01-states-2026-10-14",
+  "source": "mountain_detail_staging.blend, mountain_detail_massive_staging.blend",
+  "runtime_integration": {
+    "0": "S",
+    "1": "t",
+    "2": "a",
+    "3": "g",
+    "4": "i",
+    "5": "n",
+    "6": "g",
+    "7": " ",
+    "8": "m",
+    "9": "i",
+    "10": "n",
+    "11": "e",
+    "12": "_",
+    "13": "l",
+    "14": "*",
+    "15": "_",
+    "16": "m",
+    "17": "o",
+    "18": "u",
+    "19": "n",
+    "20": "t",
+    "21": "a",
+    "22": "i",
+    "23": "n",
+    "24": "_",
+    "25": "d",
+    "26": "e",
+    "27": "t",
+    "28": "a",
+    "29": "i",
+    "30": "l",
+    "31": " ",
+    "32": "P",
+    "33": "N",
+    "34": "G",
+    "35": "/",
+    "36": "G",
+    "37": "L",
+    "38": "B",
+    "39": " ",
+    "40": "c",
+    "41": "o",
+    "42": "p",
+    "43": "i",
+    "44": "e",
+    "45": "d",
+    "46": " ",
+    "47": "t",
+    "48": "o",
+    "49": " ",
+    "50": "m",
+    "51": "i",
+    "52": "n",
+    "53": "e",
+    "54": "_",
+    "55": "l",
+    "56": "*",
+    "57": " ",
+    "58": "r",
+    "59": "u",
+    "60": "n",
+    "61": "t",
+    "62": "i",
+    "63": "m",
+    "64": "e",
+    "65": " ",
+    "66": "f",
+    "67": "i",
+    "68": "l",
+    "69": "e",
+    "70": "n",
+    "71": "a",
+    "72": "m",
+    "73": "e",
+    "74": "s",
+    "75": ".",
+    "connected_l01_state_models_at": "2026-10-14",
+    "l01_state_source_manifest": "frontend/public/assets/terrain/tiles/mountain_detail_staging/manifest_massive.json"
+  },
+  "backup_of_previous_runtime": "frontend/public/assets/buildings/industry/mine/backup_2026-10-14_pre_mountain_detail_runtime",
+  "assets": {
+    "mine_l01_active": {
+      "id": "mine_l01_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_active.png",
+      "source_staging_asset": "mine_l01_active_mountain_detail"
+    },
+    "mine_l01_construction": {
+      "id": "mine_l01_construction",
+      "sprite": {
+        "size": [
+          512,
+          512
+        ],
+        "anchor": [
+          256,
+          320
+        ]
+      },
+      "level": 1,
+      "state": "construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_construction.png",
+      "triangles": 2036,
+      "objects": 42,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          -0.03
+        ],
+        [
+          1.8,
+          1.8,
+          1.86
+        ]
+      ],
+      "alpha_bounds": null,
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      },
+      "source_staging_asset": "frontend/public/assets/terrain/tiles/mountain_detail_staging/mine_l01_construction_mountain_detail",
+      "generated_from": "tools/assets/blender/generate_mountain_detail_massive_models.py"
+    },
+    "mine_l01_damaged": {
+      "id": "mine_l01_damaged",
+      "sprite": {
+        "size": [
+          512,
+          512
+        ],
+        "anchor": [
+          256,
+          320
+        ]
+      },
+      "level": 1,
+      "state": "damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l01_damaged.png",
+      "triangles": 2608,
+      "objects": 55,
+      "bounds": [
+        [
+          -1.8,
+          -1.8,
+          -0.03
+        ],
+        [
+          1.8,
+          1.8,
+          1.849
+        ]
+      ],
+      "alpha_bounds": null,
+      "compatibility": {
+        "glb_exists": true,
+        "png_exists": true,
+        "legacy_filename": true
+      },
+      "source_staging_asset": "frontend/public/assets/terrain/tiles/mountain_detail_staging/mine_l01_damaged_mountain_detail",
+      "generated_from": "tools/assets/blender/generate_mountain_detail_massive_models.py"
+    },
+    "mine_l02_active": {
+      "id": "mine_l02_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_active.png",
+      "source_staging_asset": "mine_l02_active_mountain_detail"
+    },
+    "mine_l02_construction": {
+      "id": "mine_l02_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_construction.png",
+      "source_staging_asset": "mine_l02_construction_mountain_detail"
+    },
+    "mine_l02_damaged": {
+      "id": "mine_l02_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l02_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l02_damaged.png",
+      "source_staging_asset": "mine_l02_damaged_mountain_detail"
+    },
+    "mine_l03_active": {
+      "id": "mine_l03_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_active.png",
+      "source_staging_asset": "mine_l03_active_mountain_detail"
+    },
+    "mine_l03_construction": {
+      "id": "mine_l03_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_construction.png",
+      "source_staging_asset": "mine_l03_construction_mountain_detail"
+    },
+    "mine_l03_damaged": {
+      "id": "mine_l03_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l03_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l03_damaged.png",
+      "source_staging_asset": "mine_l03_damaged_mountain_detail"
+    },
+    "mine_l04_active": {
+      "id": "mine_l04_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_active.png",
+      "source_staging_asset": "mine_l04_active_mountain_detail"
+    },
+    "mine_l04_construction": {
+      "id": "mine_l04_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_construction.png",
+      "source_staging_asset": "mine_l04_construction_mountain_detail"
+    },
+    "mine_l04_damaged": {
+      "id": "mine_l04_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l04_damaged.png",
+      "source_staging_asset": "mine_l04_damaged_mountain_detail"
+    },
+    "mine_l05_active": {
+      "id": "mine_l05_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_active.png",
+      "source_staging_asset": "mine_l05_active_mountain_detail"
+    },
+    "mine_l05_construction": {
+      "id": "mine_l05_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_construction.png",
+      "source_staging_asset": "mine_l05_construction_mountain_detail"
+    },
+    "mine_l05_damaged": {
+      "id": "mine_l05_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l05_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l05_damaged.png",
+      "source_staging_asset": "mine_l05_damaged_mountain_detail"
+    },
+    "mine_l06_active": {
+      "id": "mine_l06_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_active.png",
+      "source_staging_asset": "mine_l06_active_mountain_detail"
+    },
+    "mine_l06_construction": {
+      "id": "mine_l06_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_construction.png",
+      "source_staging_asset": "mine_l06_construction_mountain_detail"
+    },
+    "mine_l06_damaged": {
+      "id": "mine_l06_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l06_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l06_damaged.png",
+      "source_staging_asset": "mine_l06_damaged_mountain_detail"
+    },
+    "mine_l07_active": {
+      "id": "mine_l07_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_active.png",
+      "source_staging_asset": "mine_l07_active_mountain_detail"
+    },
+    "mine_l07_construction": {
+      "id": "mine_l07_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_construction.png",
+      "source_staging_asset": "mine_l07_construction_mountain_detail"
+    },
+    "mine_l07_damaged": {
+      "id": "mine_l07_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l07_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l07_damaged.png",
+      "source_staging_asset": "mine_l07_damaged_mountain_detail"
+    },
+    "mine_l08_active": {
+      "id": "mine_l08_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_active.png",
+      "source_staging_asset": "mine_l08_active_mountain_detail"
+    },
+    "mine_l08_construction": {
+      "id": "mine_l08_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_construction.png",
+      "source_staging_asset": "mine_l08_construction_mountain_detail"
+    },
+    "mine_l08_damaged": {
+      "id": "mine_l08_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l08_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l08_damaged.png",
+      "source_staging_asset": "mine_l08_damaged_mountain_detail"
+    },
+    "mine_l09_active": {
+      "id": "mine_l09_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_active.png",
+      "source_staging_asset": "mine_l09_active_mountain_detail"
+    },
+    "mine_l09_construction": {
+      "id": "mine_l09_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_construction.png",
+      "source_staging_asset": "mine_l09_construction_mountain_detail"
+    },
+    "mine_l09_damaged": {
+      "id": "mine_l09_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l09_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l09_damaged.png",
+      "source_staging_asset": "mine_l09_damaged_mountain_detail"
+    },
+    "mine_l10_active": {
+      "id": "mine_l10_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_active.png",
+      "source_staging_asset": "mine_l10_active_mountain_detail"
+    },
+    "mine_l10_construction": {
+      "id": "mine_l10_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_construction.png",
+      "source_staging_asset": "mine_l10_construction_mountain_detail"
+    },
+    "mine_l10_damaged": {
+      "id": "mine_l10_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l10_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l10_damaged.png",
+      "source_staging_asset": "mine_l10_damaged_mountain_detail"
+    },
+    "mine_l11_active": {
+      "id": "mine_l11_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_active.png",
+      "source_staging_asset": "mine_l11_active_mountain_detail"
+    },
+    "mine_l11_construction": {
+      "id": "mine_l11_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_construction.png",
+      "source_staging_asset": "mine_l11_construction_mountain_detail"
+    },
+    "mine_l11_damaged": {
+      "id": "mine_l11_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l11_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l11_damaged.png",
+      "source_staging_asset": "mine_l11_damaged_mountain_detail"
+    },
+    "mine_l12_active": {
+      "id": "mine_l12_active",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_active.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_active.png",
+      "source_staging_asset": "mine_l12_active_mountain_detail"
+    },
+    "mine_l12_construction": {
+      "id": "mine_l12_construction",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_construction.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_construction.png",
+      "source_staging_asset": "mine_l12_construction_mountain_detail"
+    },
+    "mine_l12_damaged": {
+      "id": "mine_l12_damaged",
+      "glb": "frontend/public/assets/buildings/industry/mine/mine_l12_damaged.glb",
+      "png": "frontend/public/assets/buildings/industry/mine/mine_l12_damaged.png",
+      "source_staging_asset": "mine_l12_damaged_mountain_detail"
+    }
+  },
+  "backup_of_pre_l01_state_replacement": "frontend/public/assets/buildings/industry/mine/backup_2026-10-14_pre_l01_state_replacement"
 }

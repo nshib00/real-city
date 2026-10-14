@@ -27,6 +27,15 @@ describe('object draw data', () => {
     )
   })
 
+  it('uses manifest sprite metrics for 512x512 building sprites', () => {
+    const [command] = buildingDrawCommands([building({ kind: 'mine' })])
+
+    expect(command).toMatchObject({
+      anchor: { x: 0.5, y: 0.625 },
+      size: { width: 512, height: 512 },
+    })
+  })
+
   it('marks the selected building for Pixi styling', () => {
     expect(buildingDrawCommands([building({ id: 'selected' })], { selectedBuildingId: 'selected' })[0].selected).toBe(true)
   })
