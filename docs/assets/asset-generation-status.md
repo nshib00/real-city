@@ -1274,6 +1274,36 @@
   LOD0/LOD1/LOD2 records, а текущий генератор нефтяной вышки экспортирует один
   GLB на состояние.
 
+Состояние на 2026-10-14, поздняя итерация:
+
+- `oil_well_l01_active` оставлен без перегенерации после принятой правки
+  общей ground-клетки; контрольный hash PNG:
+  `9755dd6189777b3183043373bcb50fda0113e18d90a27de977eb9a68e3121663`.
+- Перегенерированы 11 ассетов: `oil_well_l01_{construction,damaged,ruined}`
+  и все состояния уровней 2-3. Уровни 2-3 получили бетонное защитное
+  ограждение с шипами; уровень 3 дополнительно получил металлическую обшивку
+  ограждения, темный металл, янтарные и эолиевые акценты.
+- Видимые материалы апгрейдов добавлены в генератор:
+  - уровень 2: железобетонные секции/ограда, механизм-шестерня, железные
+    слитки, премиум-доски;
+  - уровень 3: железные слитки, супер-механизм с янтарным ядром, усиленные
+    балки, флаконы янтарной эссенции, эолиевые направляющие/линии.
+- Runtime-файлы обновлены в
+  `frontend/public/assets/buildings/industry/oil_well/`: PNG/GLB для
+  сгенерированных состояний, `manifest.json`, `generation-report.json`,
+  `roundtrip-validation.json`, `state-review.png`, `oil_well_levels.blend`.
+- Диапазон треугольников по report: 2004-3676; `oil_well_l03_damaged` немного
+  выше изначального LOD0 budget из spec из-за защитной обвязки и богатых
+  материалов, но остается в умеренном 1x1 mid-poly диапазоне.
+- Проверки прошли: Blender MCP generation через UNC-путь,
+  `python3 -m py_compile tools/assets/blender/generate_oil_well_models.py`,
+  `python3 tools/assets/validate_building_sprites.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  `python3 tools/assets/validate_building_ground.py
+  frontend/public/assets/buildings/industry/oil_well/manifest.json`,
+  roundtrip report без loose vertices, `git diff --check`, visual review по
+  `state-review.png` и отдельным PNG L2/L3 active.
+
 ## Экономный шаблон следующего запроса
 
 ```text
