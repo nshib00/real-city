@@ -5,7 +5,7 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import { flattenChunkTiles, useVisibleChunks } from '../features/world/useVisibleChunks'
 import { canChopForestTile } from '../features/world/forestActions'
-import { gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, tileToChunk, wrapGridCoord } from './coordinates/iso'
+import { gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, tileToChunk, wrapGridCoord } from './coordinates/iso'
 import { resolvePerformanceScenarioFromSearch, type PerformanceScenario } from './dev/performanceScenarios'
 import { PixiStage } from './renderer/PixiStage'
 import { renderPerformanceSnapshot, type RenderPerformanceSnapshot } from './renderer/renderPerformanceMetrics'
@@ -56,12 +56,14 @@ export function IsoMap() {
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
   const centerChunk = useMemo(() => tileToChunk(wrapGridCoord(viewport.center)), [viewport.center])
-  const chunksQuery = useVisibleChunks(centerChunk, 1)
+  const visibleChunkRadius = useMemo(() => deriveVisibleChunkRadius(stageSize, camera.zoom), [camera.zoom, stageSize])
+  const chunksQuery = useVisibleChunks(centerChunk, visibleChunkRadius)
   const tiles = useMemo(() => flattenChunkTiles(chunksQuery.data?.chunks), [chunksQuery.data?.chunks])
   const renderBuildings = performanceScenario?.buildings ?? buildings
   const renderResourceNodes = performanceScenario?.resources ?? resourceNodes
   const renderMonsters = performanceScenario?.monsters ?? monsters
   const mapTiles = performanceScenario?.tiles ?? (worldTiles.length > 0 ? worldTiles : tiles)
+  const mapTilesByKey = useMemo(() => new Map(mapTiles.map((tile) => [tileActionKey(tile), tile])), [mapTiles])
   const visibilityOptions = useMemo(
     () => ({ camera, viewportCenter: viewport.center, viewportSize: stageSize }),
     [camera, stageSize, viewport.center],
@@ -138,7 +140,7 @@ export function IsoMap() {
   })
 
   function handleSelectTile(tile: { x: number; y: number }) {
-    const worldTile = mapTiles.find((item) => item.x === tile.x && item.y === tile.y)
+    const worldTile = mapTilesByKey.get(tileActionKey(tile))
     if (worldTile && canChopForestTile(worldTile)) {
       const key = tileActionKey(tile)
       selectTile(tile)
@@ -255,6 +257,12 @@ export function IsoMap() {
   }, [setWorldTiles, tiles])
 
   useEffect(() => {
+    if (viewport.radius !== visibleChunkRadius) {
+      useGameStore.getState().setViewportRadius(visibleChunkRadius)
+    }
+  }, [viewport.radius, visibleChunkRadius])
+
+  useEffect(() => {
     const element = mapStageRef.current
     if (!element || typeof ResizeObserver === 'undefined') {
       return
@@ -361,6 +369,16 @@ export function IsoMap() {
       ) : null}
     </section>
   )
+}
+
+function deriveVisibleChunkRadius(stageSize: { width: number; height: number }, zoom: number) {
+  if (stageSize.width <= 0 || stageSize.height <= 0) {
+    return 1
+  }
+  const visibleTilesX = stageSize.width / Math.max(1, TILE_WIDTH * zoom)
+  const visibleTilesY = stageSize.height / Math.max(1, TILE_HEIGHT * zoom)
+  const chunkSpan = Math.max(visibleTilesX, visibleTilesY) / 10
+  return Math.max(1, Math.min(4, Math.ceil(chunkSpan / 2) + 1))
 }
 
 function MapPerformanceHud({

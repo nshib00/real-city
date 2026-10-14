@@ -302,26 +302,23 @@ export const useGameStore = create<GameState>((set) => ({
   },
   addBuilding: (building) =>
     set((state) => ({
-      buildings: [...state.buildings.filter((item) => item.id !== building.id), building],
-      selectedBuildingId: building.id,
-      selectedTile: building.tile,
-      uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: false }),
+      buildings: upsertById(state.buildings, building),
     })),
   setResourceNodes: (nodes) => set({ resourceNodes: nodes }),
   upsertResourceNode: (node) =>
     set((state) => ({
-      resourceNodes: [...state.resourceNodes.filter((item) => item.id !== node.id), node],
+      resourceNodes: upsertById(state.resourceNodes, node),
     })),
   setMonsters: (monsters) => set({ monsters }),
   upsertMonster: (monster) =>
     set((state) => ({
-      monsters: monster.state === 'dead' ? state.monsters.filter((item) => item.id !== monster.id) : [...state.monsters.filter((item) => item.id !== monster.id), monster],
+      monsters: monster.state === 'dead' ? removeById(state.monsters, monster.id) : upsertById(state.monsters, monster),
       selectedMonsterId: monster.state === 'dead' && state.selectedMonsterId === monster.id ? null : state.selectedMonsterId,
     })),
   setWorldTiles: (tiles) => set({ worldTiles: tiles }),
   updateWorldTile: (tile) =>
     set((state) => ({
-      worldTiles: state.worldTiles.map((item) => (item.x === tile.x && item.y === tile.y ? tile : item)),
+      worldTiles: upsertWorldTile(state.worldTiles, tile),
     })),
   tickConstructions: (now) =>
     set((state) => ({
@@ -404,4 +401,38 @@ export const useGameStore = create<GameState>((set) => ({
 function persistUIPreferences(preferences: UIPreferences) {
   writeUIPreferences(preferences)
   return preferences
+}
+
+function upsertById<T extends { id: string }>(items: T[], item: T) {
+  const index = items.findIndex((current) => current.id === item.id)
+  if (index === -1) {
+    return [...items, item]
+  }
+  if (items[index] === item) {
+    return items
+  }
+  const next = items.slice()
+  next[index] = item
+  return next
+}
+
+function removeById<T extends { id: string }>(items: T[], id: string) {
+  const index = items.findIndex((item) => item.id === id)
+  if (index === -1) {
+    return items
+  }
+  return [...items.slice(0, index), ...items.slice(index + 1)]
+}
+
+function upsertWorldTile(items: WorldTile[], tile: WorldTile) {
+  const index = items.findIndex((item) => item.x === tile.x && item.y === tile.y)
+  if (index === -1) {
+    return [...items, tile]
+  }
+  if (items[index] === tile) {
+    return items
+  }
+  const next = items.slice()
+  next[index] = tile
+  return next
 }
