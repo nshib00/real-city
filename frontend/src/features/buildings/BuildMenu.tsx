@@ -1,6 +1,6 @@
 import { Building2, Check, Clock, UsersRound, X } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useGameStore } from '../../game/state/useGameStore'
 import { placeBuilding as placeBuildingRequest, toPlacedBuilding } from '../../shared/api/buildings'
@@ -42,11 +42,15 @@ export function BuildMenu() {
   const queryClient = useQueryClient()
   const inventoryQuery = useInventory()
   const inventory = inventoryQuery.data?.inventory.items
-  const ownerBuildings = player ? buildings.filter((building) => building.owner === player.id) : buildings
-  const freePopulation = availablePopulation(inventory, buildings, player?.id)
-  const hasTownHall = ownerBuildings.some((building) => building.kind === 'town_hall')
-  const selectedWorldTile = selectedTile ? worldTiles.find((tile) => tile.x === selectedTile.x && tile.y === selectedTile.y) ?? null : null
-  const visibleCatalog = sortBuildCatalogByCoinCost(category === 'all' ? buildCatalog : buildCatalog.filter((item) => item.category === category))
+  const ownerBuildings = useMemo(() => (player ? buildings.filter((building) => building.owner === player.id) : buildings), [buildings, player])
+  const freePopulation = useMemo(() => availablePopulation(inventory, buildings, player?.id), [buildings, inventory, player?.id])
+  const hasTownHall = useMemo(() => ownerBuildings.some((building) => building.kind === 'town_hall'), [ownerBuildings])
+  const worldTileByKey = useMemo(() => new Map(worldTiles.map((tile) => [`${tile.x}:${tile.y}`, tile])), [worldTiles])
+  const selectedWorldTile = selectedTile ? worldTileByKey.get(`${selectedTile.x}:${selectedTile.y}`) ?? null : null
+  const visibleCatalog = useMemo(
+    () => sortBuildCatalogByCoinCost(category === 'all' ? buildCatalog : buildCatalog.filter((item) => item.category === category)),
+    [category],
+  )
 
   if (!open) {
     return null
@@ -79,7 +83,7 @@ export function BuildMenu() {
             return (
               <article className={disabled ? 'build-card build-card-disabled' : 'build-card'} key={item.kind}>
                 <div className={`build-image build-icon-${item.kind}`} aria-hidden="true">
-                  {item.previewImage ? <img src={item.previewImage} alt="" draggable={false} /> : <Building2 size={22} />}
+                  {item.previewImage ? <img src={item.previewImage} alt="" draggable={false} loading="lazy" decoding="async" /> : <Building2 size={22} />}
                 </div>
                 <div className="build-card-body">
                   <strong>{item.name}</strong>

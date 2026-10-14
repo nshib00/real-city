@@ -7,7 +7,8 @@ export function useVisibleChunks(center: { x: number; y: number }, radius = 1) {
   return useQuery({
     queryKey: ['world', 'chunks', center.x, center.y, radius],
     queryFn: () => getChunks(center, radius),
-    placeholderData: (previous) => previous,
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
   })
 }
 

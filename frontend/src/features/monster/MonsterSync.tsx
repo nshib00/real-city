@@ -1,17 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
+import { CHUNK_SIZE, tileToChunk } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
 import { listMonsters, toMonster } from '../../shared/api/monsters'
 
 export function MonsterSync() {
   const viewport = useGameStore((state) => state.viewport)
   const setMonsters = useGameStore((state) => state.setMonsters)
+  const centerChunk = tileToChunk(viewport.center)
+  const queryCenter = chunkCenterTile(centerChunk)
+  const radiusTiles = viewport.radius * CHUNK_SIZE + CHUNK_SIZE
   const query = useQuery({
-    queryKey: ['monsters', viewport.center.x, viewport.center.y, viewport.radius],
-    queryFn: () => listMonsters({ x: viewport.center.x, y: viewport.center.y, radius: viewport.radius * 48 }),
+    queryKey: ['monsters', centerChunk.x, centerChunk.y, viewport.radius],
+    queryFn: () => listMonsters({ x: queryCenter.x, y: queryCenter.y, radius: radiusTiles }),
     retry: false,
     refetchInterval: 8000,
+    staleTime: 5000,
   })
 
   useEffect(() => {
@@ -21,4 +26,11 @@ export function MonsterSync() {
   }, [query.data, setMonsters])
 
   return null
+}
+
+function chunkCenterTile(chunk: { x: number; y: number }) {
+  return {
+    x: chunk.x * CHUNK_SIZE + Math.floor(CHUNK_SIZE / 2),
+    y: chunk.y * CHUNK_SIZE + Math.floor(CHUNK_SIZE / 2),
+  }
 }

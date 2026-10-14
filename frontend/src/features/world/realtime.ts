@@ -24,8 +24,8 @@ export function useWorldRealtime() {
   const upsertResourceNode = useGameStore((state) => state.upsertResourceNode)
   const upsertMonster = useGameStore((state) => state.upsertMonster)
   const setRealtimeStatus = useGameStore((state) => state.setRealtimeStatus)
-  const centerChunk = useMemo(() => tileToChunk(viewport.center), [viewport.center])
-  const chunkIDs = useMemo(() => chunksAround(centerChunk, viewport.radius).map((chunk) => `${DEFAULT_WORLD_ID}:${chunk.x}:${chunk.y}`), [centerChunk, viewport.radius])
+  const centerChunk = useMemo(() => tileToChunk(viewport.center), [viewport.center.x, viewport.center.y])
+  const chunkIDs = useMemo(() => chunksAround(centerChunk, viewport.radius).map((chunk) => `${DEFAULT_WORLD_ID}:${chunk.x}:${chunk.y}`), [centerChunk.x, centerChunk.y, viewport.radius])
 
   useEffect(() => {
     const offStatus = realtimeClient.onStatus(setRealtimeStatus)
@@ -236,7 +236,7 @@ function removeById<T extends { id: string }>(items: T[], id: string) {
 }
 
 function chunksAround(center: { x: number; y: number }, radius: number) {
-  const safeRadius = Math.max(1, Math.min(4, Math.round(radius)))
+  const safeRadius = Math.max(1, Math.min(3, Math.round(radius)))
   const chunks: { x: number; y: number }[] = []
   for (let y = center.y - safeRadius; y <= center.y + safeRadius; y += 1) {
     for (let x = center.x - safeRadius; x <= center.x + safeRadius; x += 1) {

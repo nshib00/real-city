@@ -9,7 +9,7 @@ export function ProductionPanel() {
   const queryClient = useQueryClient()
   const buildings = useGameStore((state) => state.buildings)
   const player = useAuthStore((state) => state.player)
-  const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes, retry: false })
+  const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes, retry: false, staleTime: 5 * 60_000, gcTime: 30 * 60_000 })
   const jobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, retry: false, refetchInterval: 5000 })
   const startMutation = useMutation({
     mutationFn: startProduction,
