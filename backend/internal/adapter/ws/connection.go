@@ -31,6 +31,7 @@ type Connection struct {
 	closeOnce     sync.Once
 	closed        chan struct{}
 	disconnectLog func(reason string)
+	transport     *TransportMetrics
 }
 
 func NewConnection(conn net.Conn, reader *bufio.Reader, playerID player.ID, sendQueue int) *Connection {
@@ -59,9 +60,17 @@ func (c *Connection) PlayerID() player.ID {
 
 func (c *Connection) Enqueue(message Envelope) bool {
 	select {
+	case <-c.closed:
+		return false
 	case c.send <- message:
+		if c.transport != nil {
+			c.transport.enqueued.Add(1)
+		}
 		return true
 	default:
+		if c.transport != nil {
+			c.transport.slowConsumers.Add(1)
+		}
 		c.Close("send_queue_full")
 		return false
 	}
@@ -120,8 +129,14 @@ func (c *Connection) WriteLoop() {
 			}
 			_ = c.conn.SetWriteDeadline(time.Now().Add(5 * time.Second))
 			if err := writeTextFrame(c.conn, data); err != nil {
+				if c.transport != nil {
+					c.transport.writeErrors.Add(1)
+				}
 				c.Close("write_failed")
 				return
+			}
+			if c.transport != nil {
+				c.transport.delivered.Add(1)
 			}
 		case <-c.closed:
 			return

@@ -1,0 +1,91 @@
+groups:
+  - name: real-city-worker
+    rules:
+      - alert: RealCityScrapeUnavailable
+        expr: up{job=~"api|worker"} == 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Prometheus не получает /metrics процесса {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#недоступен-scrape"
+      - alert: RealCitySimulationHeartbeatMissing
+        expr: (time() - real_city_simulation_heartbeat_timestamp_seconds > 30) and on(job, instance) (real_city_simulation_enabled == 1) and on(job, instance) (time() - real_city_process_start_time_seconds > 30) and on(job, instance) (up == 1)
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Tick не завершается на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#tick-не-завершается-или-длится-дольше-интервала"
+      - alert: RealCitySimulationNoSuccess
+        expr: (time() - real_city_simulation_last_success_timestamp_seconds{mode="scheduled"} > 120) and on(job, instance) (real_city_simulation_enabled == 1) and on(job, instance) (time() - real_city_process_start_time_seconds > 120) and on(job, instance) (up == 1)
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Последний успешный scheduled tick на {{ $labels.instance }} старше двух минут"
+          runbook: "docs/operations/observability.md#tick-не-завершается-или-длится-дольше-интервала"
+      - alert: RealCityQueueSnapshotStale
+        expr: (time() - real_city_queue_snapshot_timestamp_seconds > 120) and on(job, instance) (up == 1)
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Агрегаты очередей не обновляются на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#растет-возраст-очереди"
+      - alert: RealCitySimulationTickSlow
+        expr: histogram_quantile(0.95, sum by (le, job, instance) (rate(real_city_simulation_tick_duration_seconds_bucket{mode="scheduled"}[5m]))) > 1 and on(job, instance) sum by (job, instance) (increase(real_city_simulation_ticks_total{mode="scheduled"}[5m])) >= 5 and on(job, instance) (real_city_simulation_enabled == 1) and on(job, instance) (up == 1)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p95 scheduled tick на {{ $labels.instance }} дольше интервала 1 s"
+          runbook: "docs/operations/observability.md#tick-не-завершается-или-длится-дольше-интервала"
+      - alert: RealCityQueueAgeGrowing
+        expr: (real_city_queue_oldest_due_age_seconds > 60) and on(job, instance, component) ((real_city_queue_oldest_due_age_seconds - min_over_time(real_city_queue_oldest_due_age_seconds[10m])) > 30) and on(job, instance, component) (real_city_queue_due > 0) and on(job, instance) (time() - real_city_queue_snapshot_timestamp_seconds < 120) and on(job, instance) (up == 1)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Возраст просроченной очереди {{ $labels.component }} растет на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#растет-возраст-очереди"
+      - alert: RealCityActionProcessingErrors
+        expr: increase(real_city_action_items_total{result="failed"}[5m]) > 0 and on(job, instance) (up == 1)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Не удалось сохранить статус action на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#ошибки-обработки-и-доставки"
+      - alert: RealCitySimulationStageErrors
+        expr: increase(real_city_simulation_stage_items_total{result="failed"}[5m]) > 0 and on(job, instance) (up == 1)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Ошибки этапа {{ $labels.component }} на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#ошибки-обработки-и-доставки"
+      - alert: RealCityOutboxProcessingErrors
+        expr: increase(real_city_outbox_items_total{result=~"failed|dead"}[5m]) > 0 and on(job, instance) (up == 1)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Ошибки обработки outbox или dead letters на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#ошибки-обработки-и-доставки"
+      - alert: RealCityWebSocketDrops
+        expr: increase(real_city_ws_messages_dropped_total{job="api"}[5m]) > 5 and on(job, instance) (up == 1)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "WebSocket теряет сообщения на {{ $labels.instance }}"
+          runbook: "docs/operations/observability.md#потери-websocket"
+      - alert: RealCityDatabasePoolWait
+        expr: (increase(real_city_db_pool_wait_duration_seconds_total[5m]) / clamp_min(increase(real_city_db_pool_wait_count_total[5m]), 1) > 0.05) and on(job, instance) (increase(real_city_db_pool_wait_count_total[5m]) > 5) and on(job, instance) (up == 1)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Среднее ожидание Postgres pool на {{ $labels.instance }} превышает 50 ms"
+          runbook: "docs/operations/observability.md#ожидание-пула-postgres"

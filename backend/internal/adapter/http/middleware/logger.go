@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"bufio"
 	"log/slog"
+	"net"
 	"net/http"
 	"strconv"
 	"time"
@@ -37,20 +39,50 @@ func Logger(log *slog.Logger) Middleware {
 
 type ResponseRecorder struct {
 	http.ResponseWriter
-	StatusCode int
-	Size       int
-	Panic      bool
+	StatusCode  int
+	Size        int
+	Panic       bool
+	wroteHeader bool
 }
 
 func (r *ResponseRecorder) WriteHeader(status int) {
+	if r.wroteHeader {
+		return
+	}
+	r.wroteHeader = true
 	r.StatusCode = status
 	r.ResponseWriter.WriteHeader(status)
 }
 
 func (r *ResponseRecorder) Write(data []byte) (int, error) {
+	if !r.wroteHeader {
+		r.WriteHeader(http.StatusOK)
+	}
 	written, err := r.ResponseWriter.Write(data)
 	r.Size += written
 	return written, err
+}
+
+func (r *ResponseRecorder) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	h, ok := r.ResponseWriter.(http.Hijacker)
+	if !ok {
+		return nil, nil, http.ErrNotSupported
+	}
+	conn, rw, err := h.Hijack()
+	if err == nil {
+		r.StatusCode = http.StatusSwitchingProtocols
+		r.wroteHeader = true
+	}
+	return conn, rw, err
+}
+
+func (r *ResponseRecorder) Flush() {
+	if f, ok := r.ResponseWriter.(http.Flusher); ok {
+		if !r.wroteHeader {
+			r.WriteHeader(http.StatusOK)
+		}
+		f.Flush()
+	}
 }
 
 func (r *ResponseRecorder) MarkPanic() {

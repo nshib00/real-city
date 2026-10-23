@@ -1,0 +1,36 @@
+{
+  "uid": "real-city-api-world",
+  "title": "Real City — API и карта",
+  "description": "Маршруты карты и размещения рядом с DB, генерацией чанков и кэшем.",
+  "tags": ["real-city", "observability", "api"],
+  "timezone": "browser",
+  "schemaVersion": 41,
+  "version": 1,
+  "refresh": "15s",
+  "time": { "from": "now-1h", "to": "now" },
+  "templating": { "list": [
+    { "name": "instance", "label": "API instance", "type": "query", "datasource": { "type": "prometheus", "uid": "prometheus" }, "query": "label_values(up{job=\"api\"}, instance)", "refresh": 1, "includeAll": true, "allValue": ".*", "multi": true, "current": { "text": "All", "value": "$__all" } }
+  ] },
+  "panels": [
+    { "id": 1, "type": "timeseries", "title": "Маршруты карты: запросы в секунду", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "unit": "reqps" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (route, status_class) (rate(real_city_http_requests_total{job=\"api\",instance=~\"$instance\",route=~\"GET /api/v1/world/(chunks|viewport)|POST /api/v1/buildings\"}[5m]))", "legendFormat": "{{route}} {{status_class}}" }] },
+    { "id": 2, "type": "timeseries", "title": "Маршруты карты: HTTP p95 / p99", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, route) (rate(real_city_http_request_duration_seconds_bucket{job=\"api\",instance=~\"$instance\",route=~\"GET /api/v1/world/(chunks|viewport)|POST /api/v1/buildings\"}[5m])))", "legendFormat": "{{route}} p95" },
+      { "refId": "B", "expr": "histogram_quantile(0.99, sum by (le, route) (rate(real_city_http_request_duration_seconds_bucket{job=\"api\",instance=~\"$instance\",route=~\"GET /api/v1/world/(chunks|viewport)|POST /api/v1/buildings\"}[5m])))", "legendFormat": "{{route}} p99" }
+    ] },
+    { "id": 3, "type": "timeseries", "title": "Маршруты карты: HTTP 5xx в секунду", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 }, "fieldConfig": { "defaults": { "min": 0, "unit": "reqps" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (route) (rate(real_city_http_requests_total{job=\"api\",instance=~\"$instance\",status_class=\"5xx\",route=~\"GET /api/v1/world/(chunks|viewport)|POST /api/v1/buildings\"}[5m]))", "legendFormat": "{{route}}" }] },
+    { "id": 4, "type": "timeseries", "title": "DB hot path: p95", "description": "Время операции включает ожидание соединения и чтение строк. Вложенные операции не суммировать.", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, operation) (rate(real_city_db_operation_duration_seconds_bucket{job=\"api\",instance=~\"$instance\",operation=~\"world\\\\.(find_chunk|find_chunks|copy_tiles|update_tile)|building\\\\.(player_placement_stats|footprint_intersection|viewport_list|insert)\"}[5m])))", "legendFormat": "{{operation}}" }] },
+    { "id": 5, "type": "timeseries", "title": "Получение и создание чанков: p95", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, operation) (rate(real_city_world_operation_duration_seconds_bucket{job=\"api\",instance=~\"$instance\",operation=~\"world\\\\.(get_or_create_chunk|get_or_create_chunks|create_chunk|generate_chunk)\"}[5m])))", "legendFormat": "{{operation}}" }] },
+    { "id": 6, "type": "timeseries", "title": "Размещение постройки: p95 по участку", "description": "total включает critical; линии не суммировать.", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, component) (rate(real_city_building_placement_duration_seconds_bucket{job=\"api\",instance=~\"$instance\"}[5m])))", "legendFormat": "{{component}}" }] },
+    { "id": 7, "type": "timeseries", "title": "Кэш чанков: hit / miss в секунду", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 }, "fieldConfig": { "defaults": { "min": 0, "unit": "ops" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (result) (rate(real_city_world_cache_lookups_total{job=\"api\",instance=~\"$instance\"}[5m]))", "legendFormat": "{{result}} /s" }] },
+    { "id": 8, "type": "timeseries", "title": "Новые чанки и размер кэша", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "sum(rate(real_city_world_chunks_created_total{job=\"api\",instance=~\"$instance\"}[5m]))", "legendFormat": "создано /s" },
+      { "refId": "B", "expr": "sum(real_city_world_cache_entries{job=\"api\",instance=~\"$instance\"})", "legendFormat": "записи кэша" }
+    ] },
+    { "id": 9, "type": "timeseries", "title": "Пул БД API: ожидание и занято", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "real_city_db_pool_in_use_connections{job=\"api\",instance=~\"$instance\"}", "legendFormat": "{{instance}} занято" },
+      { "refId": "B", "expr": "rate(real_city_db_pool_wait_count_total{job=\"api\",instance=~\"$instance\"}[5m])", "legendFormat": "{{instance}} ожидают /s" }
+    ] },
+    { "id": 10, "type": "timeseries", "title": "Ошибки DB hot path в секунду", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 32 }, "fieldConfig": { "defaults": { "min": 0, "unit": "ops" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (operation, result) (rate(real_city_db_operation_duration_seconds_count{job=\"api\",instance=~\"$instance\",result=~\"error|timeout\",operation=~\"world\\\\..*|building\\\\..*\"}[5m]))", "legendFormat": "{{operation}} {{result}}" }] },
+    { "id": 11, "type": "timeseries", "title": "Кэш чанков: hit ratio", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 40 }, "fieldConfig": { "defaults": { "min": 0, "max": 1, "unit": "percentunit" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum(rate(real_city_world_cache_lookups_total{job=\"api\",instance=~\"$instance\",result=\"hit\"}[5m])) / clamp_min(sum(rate(real_city_world_cache_lookups_total{job=\"api\",instance=~\"$instance\"}[5m])), 0.000001)", "legendFormat": "hit ratio" }] }
+  ]
+}

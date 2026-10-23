@@ -30,7 +30,8 @@ func (r *ActionRepo) Append(ctx context.Context, item action.GameAction) error {
 	return err
 }
 
-func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) ([]action.GameAction, error) {
+func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) (items []action.GameAction, resultErr error) {
+	defer observe("action.fetch_due", time.Now(), &resultErr)
 	if limit <= 0 {
 		limit = 100
 	}
@@ -55,7 +56,7 @@ func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, loc
 		return nil, err
 	}
 	defer rows.Close()
-	items := make([]action.GameAction, 0)
+	items = make([]action.GameAction, 0)
 	for rows.Next() {
 		item, err := scanAction(rows)
 		if err != nil {
@@ -66,7 +67,8 @@ func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, loc
 	return items, rows.Err()
 }
 
-func (r *ActionRepo) MarkDone(ctx context.Context, id action.ID, now time.Time) error {
+func (r *ActionRepo) MarkDone(ctx context.Context, id action.ID, now time.Time) (resultErr error) {
+	defer observe("action.mark_done", time.Now(), &resultErr)
 	return r.update(ctx, id, `
 		UPDATE game_actions
 		SET status = $2, locked_until = NULL, updated_at = $3
@@ -74,7 +76,8 @@ func (r *ActionRepo) MarkDone(ctx context.Context, id action.ID, now time.Time) 
 	`, action.StatusDone, now)
 }
 
-func (r *ActionRepo) MarkFailed(ctx context.Context, id action.ID, message string, retryAt time.Time, now time.Time) error {
+func (r *ActionRepo) MarkFailed(ctx context.Context, id action.ID, message string, retryAt time.Time, now time.Time) (resultErr error) {
+	defer observe("action.mark_failed", time.Now(), &resultErr)
 	return r.update(ctx, id, `
 		UPDATE game_actions
 		SET status = $2, attempts = attempts + 1, last_error = $3, due_at = $4, locked_until = NULL, updated_at = $5

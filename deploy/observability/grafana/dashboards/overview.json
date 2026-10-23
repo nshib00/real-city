@@ -1,0 +1,38 @@
+{
+  "uid": "real-city-overview",
+  "title": "Real City — обзор производительности",
+  "description": "Доступность, HTTP, WebSocket, simulation, очереди и пул Postgres. Пустые графики означают отсутствие данных или отключенный worker.",
+  "tags": ["real-city", "observability", "performance"],
+  "timezone": "browser",
+  "schemaVersion": 41,
+  "version": 1,
+  "refresh": "15s",
+  "time": { "from": "now-1h", "to": "now" },
+  "templating": { "list": [
+    { "name": "job", "label": "Job", "type": "query", "datasource": { "type": "prometheus", "uid": "prometheus" }, "query": "label_values(up{job=~\"api|worker\"}, job)", "refresh": 1, "includeAll": true, "allValue": ".*", "multi": true, "current": { "text": "All", "value": "$__all" } },
+    { "name": "instance", "label": "Instance", "type": "query", "datasource": { "type": "prometheus", "uid": "prometheus" }, "query": "label_values(up{job=~\"$job\"}, instance)", "refresh": 1, "includeAll": true, "allValue": ".*", "multi": true, "current": { "text": "All", "value": "$__all" } }
+  ] },
+  "panels": [
+    { "id": 1, "type": "timeseries", "title": "Доступность /metrics", "gridPos": { "h": 7, "w": 8, "x": 0, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "max": 1, "unit": "short" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "up{job=~\"$job\",instance=~\"$instance\"}", "legendFormat": "{{job}} / {{instance}}" }] },
+    { "id": 2, "type": "timeseries", "title": "HTTP запросы в секунду", "gridPos": { "h": 7, "w": 8, "x": 8, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "unit": "reqps" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (job, instance, status_class) (rate(real_city_http_requests_total{job=~\"$job\",instance=~\"$instance\"}[5m]))", "legendFormat": "{{instance}} {{status_class}}" }] },
+    { "id": 3, "type": "timeseries", "title": "HTTP 5xx, доля ответов", "gridPos": { "h": 7, "w": 8, "x": 16, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "max": 1, "unit": "percentunit" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (job, instance) (rate(real_city_http_requests_total{job=~\"$job\",instance=~\"$instance\",status_class=\"5xx\"}[5m])) / clamp_min(sum by (job, instance) (rate(real_city_http_requests_total{job=~\"$job\",instance=~\"$instance\"}[5m])), 0.000001)", "legendFormat": "{{instance}}" }] },
+    { "id": 4, "type": "timeseries", "title": "HTTP p50 / p95 / p99", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 7 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "histogram_quantile(0.50, sum by (le) (rate(real_city_http_request_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\"}[5m])))", "legendFormat": "p50" },
+      { "refId": "B", "expr": "histogram_quantile(0.95, sum by (le) (rate(real_city_http_request_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\"}[5m])))", "legendFormat": "p95" },
+      { "refId": "C", "expr": "histogram_quantile(0.99, sum by (le) (rate(real_city_http_request_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\"}[5m])))", "legendFormat": "p99" }
+    ] },
+    { "id": 5, "type": "timeseries", "title": "WebSocket соединения и drops", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 7 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "sum(real_city_ws_connections{job=~\"$job\",instance=~\"$instance\"})", "legendFormat": "соединения" },
+      { "refId": "B", "expr": "sum(rate(real_city_ws_messages_dropped_total{job=~\"$job\",instance=~\"$instance\"}[5m]))", "legendFormat": "drops/s" }
+    ] },
+    { "id": 6, "type": "timeseries", "title": "Scheduled tick p95 и интервал", "description": "Интервал по умолчанию 1 s; при изменении SIMULATION_TICK_INTERVAL обновите горизонтальную линию.", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 15 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s", "custom": { "thresholdsStyle": { "mode": "line" } }, "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, job, instance) (rate(real_city_simulation_tick_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\",mode=\"scheduled\"}[5m])))", "legendFormat": "{{instance}} p95" },
+      { "refId": "B", "expr": "vector(1)", "legendFormat": "интервал 1 s" }
+    ] },
+    { "id": 7, "type": "timeseries", "title": "Scheduled tick: фактический интервал завершения", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 15 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "1 / clamp_min(sum by (job, instance) (rate(real_city_simulation_ticks_total{job=~\"$job\",instance=~\"$instance\",mode=\"scheduled\"}[5m])), 0.000001)", "legendFormat": "{{instance}}" }] },
+    { "id": 8, "type": "timeseries", "title": "Просроченные элементы по очередям", "description": "Очереди buildings/production могут пересекаться с actions; значения не складывать.", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 23 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "real_city_queue_due{job=~\"$job\",instance=~\"$instance\"}", "legendFormat": "{{instance}} {{component}}" }] },
+    { "id": 9, "type": "timeseries", "title": "Возраст самого старого просроченного элемента", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 23 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "real_city_queue_oldest_due_age_seconds{job=~\"$job\",instance=~\"$instance\"}", "legendFormat": "{{instance}} {{component}}" }] },
+    { "id": 10, "type": "timeseries", "title": "Пул Postgres: занято / лимит", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 31 }, "fieldConfig": { "defaults": { "min": 0, "unit": "percentunit" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "real_city_db_pool_in_use_connections{job=~\"$job\",instance=~\"$instance\"} / clamp_min(real_city_db_pool_max_open_connections{job=~\"$job\",instance=~\"$instance\"}, 1)", "legendFormat": "{{instance}}" }] },
+    { "id": 11, "type": "timeseries", "title": "Пул Postgres: ожидание соединения", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 31 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "rate(real_city_db_pool_wait_duration_seconds_total{job=~\"$job\",instance=~\"$instance\"}[5m]) / clamp_min(rate(real_city_db_pool_wait_count_total{job=~\"$job\",instance=~\"$instance\"}[5m]), 0.000001)", "legendFormat": "{{instance}} среднее при ожидании" }] }
+  ]
+}

@@ -73,7 +73,14 @@ func BodyLimit(maxBytes int64) Middleware {
 
 func Timeout(duration time.Duration) Middleware {
 	return func(next http.Handler) http.Handler {
-		return http.TimeoutHandler(next, duration, `{"error":{"kind":"timeout","message":"request timed out"}}`)
+		timed := http.TimeoutHandler(next, duration, `{"error":{"kind":"timeout","message":"request timed out"}}`)
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.URL.Path == "/api/v1/realtime" {
+				next.ServeHTTP(w, r)
+				return
+			}
+			timed.ServeHTTP(w, r)
+		})
 	}
 }
 

@@ -48,6 +48,7 @@ type WebSocketConfig struct {
 }
 
 type SimulationConfig struct {
+	Embedded        bool
 	TickInterval    time.Duration
 	BatchSize       int
 	WorkerCount     int
@@ -61,7 +62,8 @@ type StorageConfig struct {
 }
 
 type ObservabilityConfig struct {
-	LogLevel string
+	LogLevel    string
+	MetricsAddr string
 }
 
 func Load() Config {
@@ -92,6 +94,7 @@ func Load() Config {
 			WriteTimeout: duration("WS_WRITE_TIMEOUT", 5*time.Second),
 		},
 		Simulation: SimulationConfig{
+			Embedded:        boolean("SIMULATION_EMBEDDED", true),
 			TickInterval:    duration("SIMULATION_TICK_INTERVAL", time.Second),
 			BatchSize:       integer("SIMULATION_BATCH_SIZE", 100),
 			WorkerCount:     integer("SIMULATION_WORKER_COUNT", 1),
@@ -103,7 +106,8 @@ func Load() Config {
 			PublicURL: env("STORAGE_PUBLIC_URL", "http://localhost:8080/assets"),
 		},
 		Observability: ObservabilityConfig{
-			LogLevel: env("LOG_LEVEL", "info"),
+			LogLevel:    env("LOG_LEVEL", "info"),
+			MetricsAddr: env("WORKER_METRICS_ADDR", "127.0.0.1:9091"),
 		},
 	}
 }
@@ -113,6 +117,18 @@ func env(key, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+func boolean(key string, fallback bool) bool {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
+	}
+	parsed, err := strconv.ParseBool(value)
+	if err != nil {
+		return fallback
+	}
+	return parsed
 }
 
 func duration(key string, fallback time.Duration) time.Duration {

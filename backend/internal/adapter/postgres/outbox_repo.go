@@ -30,7 +30,8 @@ func (r *OutboxRepo) Append(ctx context.Context, item outbox.OutboxEvent) error 
 	return err
 }
 
-func (r *OutboxRepo) FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) ([]outbox.OutboxEvent, error) {
+func (r *OutboxRepo) FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) (items []outbox.OutboxEvent, resultErr error) {
+	defer observe("outbox.fetch_due", time.Now(), &resultErr)
 	_ = lockTTL
 	if limit <= 0 {
 		limit = 100
@@ -56,7 +57,7 @@ func (r *OutboxRepo) FetchDue(ctx context.Context, now time.Time, limit int, loc
 		return nil, err
 	}
 	defer rows.Close()
-	items := make([]outbox.OutboxEvent, 0)
+	items = make([]outbox.OutboxEvent, 0)
 	for rows.Next() {
 		item, err := scanOutboxEvent(rows)
 		if err != nil {
@@ -67,13 +68,15 @@ func (r *OutboxRepo) FetchDue(ctx context.Context, now time.Time, limit int, loc
 	return items, rows.Err()
 }
 
-func (r *OutboxRepo) MarkSent(ctx context.Context, id outbox.ID, now time.Time) error {
+func (r *OutboxRepo) MarkSent(ctx context.Context, id outbox.ID, now time.Time) (resultErr error) {
+	defer observe("outbox.mark_sent", time.Now(), &resultErr)
 	return r.update(ctx, id, `
 		UPDATE outbox_events SET status = $2, locked_until = NULL, updated_at = $3 WHERE id = $1
 	`, outbox.StatusSent, now)
 }
 
-func (r *OutboxRepo) MarkFailed(ctx context.Context, id outbox.ID, message string, retryAt time.Time, now time.Time) error {
+func (r *OutboxRepo) MarkFailed(ctx context.Context, id outbox.ID, message string, retryAt time.Time, now time.Time) (resultErr error) {
+	defer observe("outbox.mark_failed", time.Now(), &resultErr)
 	return r.update(ctx, id, `
 		UPDATE outbox_events
 		SET status = $2, attempts = attempts + 1, last_error = $3, next_attempt_at = $4, locked_until = NULL, updated_at = $5
@@ -81,7 +84,8 @@ func (r *OutboxRepo) MarkFailed(ctx context.Context, id outbox.ID, message strin
 	`, outbox.StatusPending, message, retryAt, now)
 }
 
-func (r *OutboxRepo) MarkDead(ctx context.Context, id outbox.ID, message string, now time.Time) error {
+func (r *OutboxRepo) MarkDead(ctx context.Context, id outbox.ID, message string, now time.Time) (resultErr error) {
+	defer observe("outbox.mark_dead", time.Now(), &resultErr)
 	return r.update(ctx, id, `
 		UPDATE outbox_events
 		SET status = $2, attempts = attempts + 1, last_error = $3, locked_until = NULL, updated_at = $4

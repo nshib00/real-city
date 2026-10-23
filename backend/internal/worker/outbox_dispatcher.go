@@ -8,6 +8,7 @@ import (
 
 	outbox "real-city/backend/internal/domain/event"
 	"real-city/backend/internal/domain/player"
+	"real-city/backend/internal/observability"
 	"real-city/backend/internal/service"
 	"real-city/backend/pkg/config"
 )
@@ -46,28 +47,48 @@ func (d *OutboxDispatcher) Run(ctx context.Context) error {
 	}
 }
 
-func (d *OutboxDispatcher) Dispatch(ctx context.Context) (int, error) {
+func (d *OutboxDispatcher) Dispatch(ctx context.Context) (processed int, resultErr error) {
+	started := time.Now()
+	defer func() { observability.Dispatch("total", started, resultErr) }()
 	now := d.now()
+	fetchStarted := time.Now()
 	items, err := d.repo.FetchDue(ctx, now, d.cfg.BatchSize, d.cfg.LockTTL)
+	observability.Dispatch("fetch", fetchStarted, err)
 	if err != nil {
 		d.log.Warn("outbox.dispatch.fetch_failed", "event", "outbox.dispatch.fetch_failed", "error", err.Error())
 		return 0, err
 	}
+	for range items {
+		observability.Outbox("fetched")
+	}
 	for _, item := range items {
-		if err := d.publish(item); err != nil {
+		publishStarted := time.Now()
+		publishErr := d.publish(item)
+		observability.Dispatch("publish", publishStarted, publishErr)
+		if err := publishErr; err != nil {
 			if item.Attempts >= 5 {
-				_ = d.repo.MarkDead(ctx, item.ID, err.Error(), now)
+				if markErr := d.repo.MarkDead(ctx, item.ID, err.Error(), now); markErr != nil {
+					observability.Outbox("failed")
+					return 0, markErr
+				}
+				observability.Outbox("dead")
 				d.log.Warn("outbox.dispatch.dead", "event", "outbox.dispatch.dead", "event_id", item.ID, "attempts", item.Attempts+1, "error", err.Error())
 				continue
 			}
 			retryAt := now.Add(time.Duration(item.Attempts+1) * time.Second)
-			_ = d.repo.MarkFailed(ctx, item.ID, err.Error(), retryAt, now)
+			if markErr := d.repo.MarkFailed(ctx, item.ID, err.Error(), retryAt, now); markErr != nil {
+				observability.Outbox("failed")
+				return 0, markErr
+			}
+			observability.Outbox("retried")
 			d.log.Warn("outbox.dispatch.failed", "event", "outbox.dispatch.failed", "event_id", item.ID, "retry_at", retryAt, "error", err.Error())
 			continue
 		}
 		if err := d.repo.MarkSent(ctx, item.ID, now); err != nil {
+			observability.Outbox("failed")
 			return 0, err
 		}
+		observability.Outbox("sent")
 		d.log.Info("outbox.dispatch.sent", "event", "outbox.dispatch.sent", "event_id", item.ID, "event_type", item.Type)
 	}
 	return len(items), nil

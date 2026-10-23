@@ -1,0 +1,75 @@
+services:
+  # Для самостоятельного worker выставить SIMULATION_EMBEDDED=false в окружении
+  # перед запуском API; цели worker в Prometheus включать только после запуска.
+  backend:
+    environment:
+      SIMULATION_EMBEDDED: ${SIMULATION_EMBEDDED:-true}
+
+  worker:
+    profiles: [standalone-worker]
+    build:
+      context: ./backend
+    command: ["sh", "-ec", "test \"$$SIMULATION_EMBEDDED\" = false || { echo 'Set SIMULATION_EMBEDDED=false for API and worker'; exit 1; }; exec /app/worker"]
+    env_file:
+      - ./backend/.env.example
+    environment:
+      SIMULATION_EMBEDDED: ${SIMULATION_EMBEDDED:-true}
+      WORKER_METRICS_ADDR: :9091
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+      - --storage.tsdb.retention.size=2GB
+    volumes:
+      - ./deploy/observability/prometheus:/etc/prometheus:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+    depends_on:
+      backend:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9090/-/healthy"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    mem_limit: 512m
+    cpus: 1.0
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:12.4.11
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./deploy/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    mem_limit: 512m
+    cpus: 1.0
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+  grafana_data:

@@ -1,0 +1,43 @@
+{
+  "uid": "real-city-simulation",
+  "title": "Real City — simulation и доставка",
+  "description": "Только scheduled tick для этапов. Очереди buildings/production могут пересекаться с actions; не складывать.",
+  "tags": ["real-city", "observability", "simulation"],
+  "timezone": "browser",
+  "schemaVersion": 41,
+  "version": 1,
+  "refresh": "15s",
+  "time": { "from": "now-1h", "to": "now" },
+  "templating": { "list": [
+    { "name": "job", "label": "Runner job", "type": "query", "datasource": { "type": "prometheus", "uid": "prometheus" }, "query": "label_values(real_city_simulation_enabled, job)", "refresh": 1, "includeAll": true, "allValue": ".*", "multi": true, "current": { "text": "All", "value": "$__all" } },
+    { "name": "instance", "label": "Runner instance", "type": "query", "datasource": { "type": "prometheus", "uid": "prometheus" }, "query": "label_values(real_city_simulation_enabled{job=~\"$job\"}, instance)", "refresh": 1, "includeAll": true, "allValue": ".*", "multi": true, "current": { "text": "All", "value": "$__all" } }
+  ] },
+  "panels": [
+    { "id": 1, "type": "timeseries", "title": "Scheduled tick p95 и интервал", "description": "Интервал по умолчанию 1 s; при изменении конфигурации обновите линию.", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, job, instance) (rate(real_city_simulation_tick_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\",mode=\"scheduled\"}[5m])))", "legendFormat": "{{instance}} p95" },
+      { "refId": "B", "expr": "vector(1)", "legendFormat": "интервал 1 s" }
+    ] },
+    { "id": 2, "type": "timeseries", "title": "Последний успешный tick и heartbeat: возраст", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "(time() - real_city_simulation_last_success_timestamp_seconds{job=~\"$job\",instance=~\"$instance\",mode=\"scheduled\"}) and on(job, instance, mode) (real_city_simulation_last_success_timestamp_seconds{job=~\"$job\",instance=~\"$instance\",mode=\"scheduled\"} > 0)", "legendFormat": "{{instance}} успех" },
+      { "refId": "B", "expr": "(time() - real_city_simulation_heartbeat_timestamp_seconds{job=~\"$job\",instance=~\"$instance\"}) and on(job, instance) (real_city_simulation_heartbeat_timestamp_seconds{job=~\"$job\",instance=~\"$instance\"} > 0)", "legendFormat": "{{instance}} завершение" }
+    ] },
+    { "id": 3, "type": "timeseries", "title": "Этапы scheduled tick: p95", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, component) (rate(real_city_simulation_stage_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\"}[5m])))", "legendFormat": "{{component}}" }] },
+    { "id": 4, "type": "timeseries", "title": "Этапы: обработано / ошибки в секунду", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 }, "fieldConfig": { "defaults": { "min": 0, "unit": "ops" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (component, result) (rate(real_city_simulation_stage_items_total{job=~\"$job\",instance=~\"$instance\"}[5m]))", "legendFormat": "{{component}} {{result}}" }] },
+    { "id": 5, "type": "timeseries", "title": "Этапы: насыщение batch в секунду", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 }, "fieldConfig": { "defaults": { "min": 0, "unit": "ops" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (component) (rate(real_city_simulation_stage_saturated_total{job=~\"$job\",instance=~\"$instance\"}[5m]))", "legendFormat": "{{component}}" }] },
+    { "id": 6, "type": "timeseries", "title": "Просрочено по очередям", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "real_city_queue_due{job=~\"$job\",instance=~\"$instance\"}", "legendFormat": "{{instance}} {{component}}" }] },
+    { "id": 7, "type": "timeseries", "title": "Возраст oldest due: actions / outbox / jobs", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "real_city_queue_oldest_due_age_seconds{job=~\"$job\",instance=~\"$instance\"}", "legendFormat": "{{instance}} {{component}}" }] },
+    { "id": 8, "type": "timeseries", "title": "Actions: fetched / processed / retried / failed", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 }, "fieldConfig": { "defaults": { "min": 0, "unit": "ops" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (result) (rate(real_city_action_items_total{job=~\"$job\",instance=~\"$instance\"}[5m]))", "legendFormat": "{{result}} /s" }] },
+    { "id": 9, "type": "timeseries", "title": "Outbox dispatch: fetch / publish / total p95", "description": "publish — синхронный локальный EventBus, не подтверждение доставки WebSocket.", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, component) (rate(real_city_outbox_dispatch_duration_seconds_bucket{job=~\"$job\",instance=~\"$instance\"}[5m])))", "legendFormat": "{{component}}" }] },
+    { "id": 10, "type": "timeseries", "title": "Outbox: fetched / sent / retried / dead / failed", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 32 }, "fieldConfig": { "defaults": { "min": 0, "unit": "ops" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "sum by (result) (rate(real_city_outbox_items_total{job=~\"$job\",instance=~\"$instance\"}[5m]))", "legendFormat": "{{result}} /s" }] },
+    { "id": 11, "type": "timeseries", "title": "Outbox dead letters", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 40 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "real_city_queue_dead{job=~\"$job\",instance=~\"$instance\"}", "legendFormat": "{{instance}}" }] },
+    { "id": 12, "type": "timeseries", "title": "Снимок очередей: возраст", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 40 }, "fieldConfig": { "defaults": { "min": 0, "unit": "s" }, "overrides": [] }, "targets": [{ "refId": "A", "expr": "(time() - real_city_queue_snapshot_timestamp_seconds{job=~\"$job\",instance=~\"$instance\"}) and on(job, instance) (real_city_queue_snapshot_timestamp_seconds{job=~\"$job\",instance=~\"$instance\"} > 0)", "legendFormat": "{{instance}}" }] },
+    { "id": 13, "type": "timeseries", "title": "WebSocket fan-out p95 и drops", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 48 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "histogram_quantile(0.95, sum by (le) (rate(real_city_ws_fanout_size_bucket{job=\"api\"}[5m])))", "legendFormat": "fan-out p95" },
+      { "refId": "B", "expr": "sum(rate(real_city_ws_messages_dropped_total{job=\"api\"}[5m]))", "legendFormat": "drops/s" }
+    ] },
+    { "id": 14, "type": "timeseries", "title": "WebSocket очередь и медленные клиенты", "gridPos": { "h": 8, "w": 12, "x": 12, "y": 48 }, "fieldConfig": { "defaults": { "min": 0, "unit": "short" }, "overrides": [] }, "targets": [
+      { "refId": "A", "expr": "sum(real_city_ws_send_queue_depth{job=\"api\"})", "legendFormat": "в очереди" },
+      { "refId": "B", "expr": "sum(rate(real_city_ws_slow_consumers_total{job=\"api\"}[5m]))", "legendFormat": "медленные /s" }
+    ] }
+  ]
+}

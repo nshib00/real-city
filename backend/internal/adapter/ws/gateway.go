@@ -21,6 +21,8 @@ import (
 
 const websocketGUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
+var errInvalidUpgrade = errors.New("invalid websocket upgrade")
+
 type Gateway struct {
 	tokens       *jwtadapter.Manager
 	events       *service.EventBus
@@ -34,6 +36,7 @@ type Gateway struct {
 	eventsSent   atomic.Uint64
 	fanoutTotal  atomic.Uint64
 	drops        atomic.Uint64
+	transport    TransportMetrics
 	ctx          context.Context
 	cancel       context.CancelFunc
 }
@@ -58,16 +61,24 @@ func NewGateway(tokens *jwtadapter.Manager, events *service.EventBus, log *slog.
 func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	playerID, err := g.authenticate(r)
 	if err != nil {
+		g.transport.upgradeAuthFailures.Add(1)
 		g.log.Warn("ws.auth_failed", "event", "ws.auth_failed", "error", err.Error())
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
 		return
 	}
 	conn, reader, err := upgrade(w, r)
 	if err != nil {
+		if errors.Is(err, errInvalidUpgrade) {
+			g.transport.upgradeHandshakeFailures.Add(1)
+		} else {
+			g.transport.upgradeTransportFailures.Add(1)
+		}
 		g.log.Warn("ws.upgrade_failed", "event", "ws.upgrade_failed", "player_id", playerID, "error", err.Error())
 		return
 	}
+	g.transport.upgradesOK.Add(1)
 	client := NewConnection(conn, reader, playerID, 64)
+	client.transport = &g.transport
 	client.disconnectLog = func(reason string) {
 		g.unregister(client)
 		g.publishPresence(playerID, false)
@@ -129,6 +140,7 @@ func (g *Gateway) forwardEvents() {
 		targets := g.targetConnections(event)
 		g.eventsSent.Add(1)
 		g.fanoutTotal.Add(uint64(len(targets)))
+		g.transport.ObserveFanout(len(targets))
 		for _, conn := range targets {
 			if !conn.Enqueue(envelope) {
 				g.drops.Add(1)
@@ -217,11 +229,17 @@ type Stats struct {
 	EventsSent            uint64
 	FanoutTotal           uint64
 	Drops                 uint64
+	Transport             TransportStats
 }
 
 func (g *Gateway) Stats() Stats {
 	g.mu.RLock()
 	defer g.mu.RUnlock()
+	transport := g.transport.Snapshot()
+	for _, conn := range g.connections {
+		transport.SendQueueDepth += len(conn.send)
+		transport.SendQueueCapacity += cap(conn.send)
+	}
 	return Stats{
 		Connections:           len(g.connections),
 		ChunkSubscriptions:    indexedSubscriptionCount(g.chunkSubs),
@@ -230,6 +248,7 @@ func (g *Gateway) Stats() Stats {
 		EventsSent:            g.eventsSent.Load(),
 		FanoutTotal:           g.fanoutTotal.Load(),
 		Drops:                 g.drops.Load(),
+		Transport:             transport,
 	}
 }
 
@@ -280,12 +299,12 @@ func (g *Gateway) nextSeq() uint64 {
 func upgrade(w http.ResponseWriter, r *http.Request) (net.Conn, *bufio.Reader, error) {
 	if !strings.EqualFold(r.Header.Get("Upgrade"), "websocket") || !strings.Contains(strings.ToLower(r.Header.Get("Connection")), "upgrade") {
 		http.Error(w, "websocket upgrade required", http.StatusBadRequest)
-		return nil, nil, errors.New("websocket upgrade required")
+		return nil, nil, errInvalidUpgrade
 	}
 	key := r.Header.Get("Sec-WebSocket-Key")
 	if key == "" {
 		http.Error(w, "websocket key required", http.StatusBadRequest)
-		return nil, nil, errors.New("websocket key required")
+		return nil, nil, errInvalidUpgrade
 	}
 	hijacker, ok := w.(http.Hijacker)
 	if !ok {

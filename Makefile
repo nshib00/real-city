@@ -1,4 +1,5 @@
 COMPOSE := docker compose -f docker-compose.yml -f docker-compose.dev.yml
+COMPOSE_OBSERVABILITY := $(COMPOSE) -f docker-compose.observability.yml
 COMPOSE_TEST := docker compose -p real-city-test -f docker-compose.test.yml
 POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
 TEST_POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
@@ -10,6 +11,7 @@ BLENDER ?= blender
  test-backend-up test-backend-down test-backend-logs test-db-up \
  test-migrate-up test-migrate-down test-migrate-status \
  create-test-admin frontend-dev frontend-dev-test \
+ observability-up observability-down observability-targets observability-logs \
  asset-pipeline-smoke asset-pipeline-local asset-contact-sheets asset-pipeline-blender-roundtrip
 
 test: backend-test frontend-test
@@ -30,6 +32,18 @@ backend-down:
 
 backend-logs:
 	$(COMPOSE) logs -f backend
+
+observability-up: migrate-up
+	$(COMPOSE_OBSERVABILITY) up -d --build --wait --wait-timeout 120 backend prometheus grafana
+
+observability-down:
+	$(COMPOSE_OBSERVABILITY) stop grafana prometheus
+
+observability-targets:
+	curl --fail --silent --show-error 'http://127.0.0.1:9090/api/v1/targets?state=active' | python3 -m json.tool
+
+observability-logs:
+	$(COMPOSE_OBSERVABILITY) logs -f prometheus grafana
 
 db-up:
 	docker compose up -d postgres redis

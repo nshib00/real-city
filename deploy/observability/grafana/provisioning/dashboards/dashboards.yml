@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: Real City
+    orgId: 1
+    folder: Real City
+    folderUid: real-city
+    type: file
+    disableDeletion: false
+    editable: false
+    options:
+      path: /var/lib/grafana/dashboards

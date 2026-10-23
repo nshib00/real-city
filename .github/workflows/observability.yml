@@ -1,0 +1,23 @@
+name: observability
+
+on:
+  push:
+    paths:
+      - .github/workflows/observability.yml
+      - docker-compose*.yml
+      - deploy/observability/**
+      - scripts/check-observability.sh
+  pull_request:
+    paths:
+      - .github/workflows/observability.yml
+      - docker-compose*.yml
+      - deploy/observability/**
+      - scripts/check-observability.sh
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверить Compose, Prometheus, PromQL и Grafana JSON
+        run: bash scripts/check-observability.sh
