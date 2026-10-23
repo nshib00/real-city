@@ -1,0 +1,45 @@
+{
+  "asset_id": "dye_garden",
+  "category": "fields",
+  "kind": "building",
+  "display_name": "Красильный сад",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "stage01", "stage02", "stage03", "stage04", "active", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Каменная крестовая грядка с тремя пигментными секциями, тканевыми пробниками и золотыми креплениями.", "cost_resources": ["coins", "herbs", "dyes", "fabric", "stone_block", "gold_ingot", "rare_flowers"], "triangle_budget": {"min": 700, "max": 6500}},
+    {"level": 2, "visual_goal": "Четвертая цветовая секция, более нарядные крепления и резная стойка из премиум-досок.", "cost_resources": ["coins", "herbs", "dyes", "fabric", "stone_block", "gold_ingot", "rare_flowers", "premium_planks"], "triangle_budget": {"min": 800, "max": 7500}},
+    {"level": 3, "visual_goal": "Пигментные лотки, дополнительные пробники и изумрудные метки на бортах.", "cost_resources": ["coins", "herbs", "dyes", "fabric", "stone_block", "gold_ingot", "rare_flowers", "premium_planks", "emerald_dust"], "triangle_budget": {"min": 950, "max": 9000}},
+    {"level": 4, "visual_goal": "Сортировочный стол, контролируемая подача пигмента и медно-золотой механизм.", "cost_resources": ["coins", "herbs", "dyes", "fabric", "stone_block", "gold_ingot", "rare_flowers", "premium_planks", "emerald_dust", "mechanism"], "triangle_budget": {"min": 1100, "max": 10500}},
+    {"level": 5, "visual_goal": "Богатые каменные орнаменты, звездное стекло и больше редких цветов в центральной чаше.", "cost_resources": ["coins", "herbs", "dyes", "fabric", "stone_block", "gold_ingot", "rare_flowers", "premium_planks", "emerald_dust", "mechanism", "star_glass"], "triangle_budget": {"min": 1300, "max": 12000}},
+    {"level": 6, "visual_goal": "Выставочный красильный сад с полной четырехцветной композицией и сложными престижными деталями.", "cost_resources": ["coins", "herbs", "dyes", "fabric", "stone_block", "gold_ingot", "rare_flowers", "premium_planks", "emerald_dust", "mechanism", "star_glass"], "triangle_budget": {"min": 1500, "max": 13500}}
+  ],
+  "material_map": {
+    "herbs": {"visible_as": "организованные листья пигментных культур", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6]},
+    "dyes": {"visible_as": "красный, синий, охряный и лиловый пигмент в секциях и чашах", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6]},
+    "fabric": {"visible_as": "развешенные тканевые пробники и ленты", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6]},
+    "stone_block": {"visible_as": "непрерывные низкие борта, крестовые разделители и резные тумбы", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6]},
+    "gold_ingot": {"visible_as": "золотые крепления и тонкие орнаменты", "priority": "accent", "levels": [1, 2, 3, 4, 5, 6]},
+    "rare_flowers": {"visible_as": "цветы в центральной чаше и зрелых секциях", "priority": "accent", "levels": [1, 2, 3, 4, 5, 6]},
+    "premium_planks": {"visible_as": "резная стойка пробников и сортировочный стол", "priority": "secondary", "levels": [2, 3, 4, 5, 6]},
+    "emerald_dust": {"visible_as": "изумрудные метки на бортах и приборе", "priority": "accent", "levels": [3, 4, 5, 6]},
+    "mechanism": {"visible_as": "привод подачи пигмента и зубчатые колеса", "priority": "secondary", "levels": [4, 5, 6]},
+    "star_glass": {"visible_as": "малые призматические вставки в каменных тумбах", "priority": "accent", "levels": [5, 6]}
+  },
+  "level_progression": {"mass": {"rule": "Каменные секции и цветущие культуры становятся плотнее без роста footprint."}, "height": {"rule": "Растут только стойки пробников, редкие цветы и прибор."}, "materials": {"rule": "Новые ресурсы добавляют реальные конструктивные элементы на соответствующих уровнях."}, "props": {"rule": "Добавляются лотки, стойки, стол, привод и призматические вставки."}, "late_elements": {"rule": "Механизм с уровня 4, звездное стекло с уровня 5."}, "constraints": {"rule": "Низкая открытая грядка; четыре цветовые секции разделены крестом и не выглядят случайным конфетти."}},
+  "state_policy": {
+    "construction": {"rule": "Пустая грядка с частично установленными бортами, лежащими рейками и свернутыми тканевыми лентами."},
+    "stage01": {"rule": "Небольшие ростки в размеченных цветовых секциях."},
+    "stage02": {"rule": "Низкие кустики с первыми цветными бутонами."},
+    "stage03": {"rule": "Яркие цветочные пятна занимают большую часть секций."},
+    "stage04": {"rule": "Полное цветение; лотки с собранным пигментом у края."},
+    "active": {"rule": "Полный сад с четко разделенными цветами и видимым ремесленным оснащением."},
+    "damaged": {"rule": "Разорванные пробники, перевернутые лотки, сломанные секции борта и примятые цветы."},
+    "ruined": {"rule": "Почти пустая земля, тусклые пигменты, сломанный каменный крест и остатки ткани."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "vegetation-artist", "prop-artist"], "production": ["materials", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 700, "max": 13500}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 350, "max": 7600}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 150, "max": 4200}, "export": true}], "preserve": ["ground", "stone_frame", "cross_dividers", "pigment_crops", "fabric_swatches"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 8, "include_states": ["construction", "stage01", "stage02", "stage03", "stage04", "active", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/fields/dye_garden", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/fields/dye-garden.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/fields/crystal_greenhouse", "frontend/public/assets/buildings/fields/herb_bed"]}
+}

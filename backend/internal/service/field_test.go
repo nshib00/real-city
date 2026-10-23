@@ -63,7 +63,9 @@ func TestFieldServiceManualWindleafCycleReservesAndReleasesPopulation(t *testing
 	if inventory.Items[economy.ResourcePopulation] != startInventory.Items[economy.ResourcePopulation]-1 {
 		t.Fatalf("expected one field worker reserved, got start=%d after=%d", startInventory.Items[economy.ResourcePopulation], inventory.Items[economy.ResourcePopulation])
 	}
-
+	if _, err := buildingService.Upgrade(ctx, bed.ID, player.ID("p1")); err == nil {
+		t.Fatal("expected field upgrade to wait until workers return")
+	}
 	for stage := 2; stage <= 4; stage++ {
 		now = started.FieldStageReadyAt.Add(time.Second)
 		readyInventory, err := economyService.Inventory(ctx, player.ID("p1"))

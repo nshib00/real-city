@@ -66,6 +66,23 @@ func (r *EconomyRepo) SaveInventory(ctx context.Context, inventory economy.Inven
 	return nil
 }
 
+func (r *EconomyRepo) SpendResourceIfAvailable(ctx context.Context, playerID player.ID, resource economy.ResourceType, amount int, now time.Time) (bool, error) {
+	_ = ctx
+	if amount <= 0 {
+		return false, nil
+	}
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	inventory, ok := r.inventories[playerID]
+	if !ok || inventory.Items[resource] < amount {
+		return false, nil
+	}
+	inventory.Items[resource] -= amount
+	inventory.UpdatedAt = now
+	r.inventories[playerID] = inventory
+	return true, nil
+}
+
 func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction) error {
 	_ = ctx
 	r.mu.Lock()
@@ -73,6 +90,18 @@ func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction
 	id := player.ID(tx.PlayerID)
 	r.transactions[id] = append(r.transactions[id], tx)
 	return nil
+}
+
+func (r *EconomyRepo) HasPopulationTransactions(ctx context.Context, playerID player.ID) (bool, error) {
+	_ = ctx
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	for _, transaction := range r.transactions[playerID] {
+		if transaction.Resource == economy.ResourcePopulation {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 func (r *EconomyRepo) ListTransactions(ctx context.Context, playerID player.ID, limit int) ([]economy.Transaction, error) {

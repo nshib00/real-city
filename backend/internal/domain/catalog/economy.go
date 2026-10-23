@@ -27,6 +27,7 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceCopper, Name: "Медь", Category: "raw"},
 	{Type: economy.ResourceResin, Name: "Смола", Category: "raw"},
 	{Type: economy.ResourceFlax, Name: "Лен", Category: "raw"},
+	{Type: economy.ResourceFiber, Name: "Волокно", Category: "raw"},
 	{Type: economy.ResourceReed, Name: "Тростник", Category: "raw"},
 	{Type: economy.ResourceWindleaf, Name: "Ветролист", Category: "raw"},
 	{Type: economy.ResourceHerbs, Name: "Травы", Category: "raw"},
@@ -47,6 +48,7 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourcePlanks, Name: "Доски", Category: "crafted"},
 	{Type: economy.ResourcePremiumPlanks, Name: "Премиум-доски", Category: "crafted"},
 	{Type: economy.ResourceRope, Name: "Веревка", Category: "crafted"},
+	{Type: economy.ResourceCopperParts, Name: "Медные детали", Category: "crafted"},
 	{Type: economy.ResourceTools, Name: "Инструменты", Category: "crafted"},
 	{Type: economy.ResourceIronIngot, Name: "Железный слиток", Category: "crafted"},
 	{Type: economy.ResourceGoldIngot, Name: "Золотой слиток", Category: "crafted"},
@@ -56,12 +58,22 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceReinforcedBeam, Name: "Усиленные балки", Category: "crafted"},
 	{Type: economy.ResourceArmorPlates, Name: "Защитные пластины", Category: "crafted"},
 	{Type: economy.ResourceFabric, Name: "Ткань", Category: "crafted"},
+	{Type: economy.ResourceMechanism, Name: "Механизм", Category: "crafted"},
+	{Type: economy.ResourcePaper, Name: "Бумага", Category: "crafted"},
+	{Type: economy.ResourceTile, Name: "Черепица", Category: "crafted"},
+	{Type: economy.ResourceQuietPowder, Name: "Тихий порошок", Category: "rare"},
+	{Type: economy.ResourceMemoryShard, Name: "Осколок памяти", Category: "rare"},
 	{Type: economy.ResourceElectronics, Name: "Электроника", Category: "crafted"},
 	{Type: economy.ResourceSulfur, Name: "Сера", Category: "crafted"},
 	{Type: economy.ResourceExplosives, Name: "Взрывчатка", Category: "crafted"},
 	{Type: economy.ResourceOil, Name: "Нефть", Category: "fuel"},
+	{Type: economy.ResourcePlantOil, Name: "Растительное масло", Category: "crafted"},
+	{Type: economy.ResourcePaints, Name: "Краски", Category: "crafted"},
+	{Type: economy.ResourceOleoresin, Name: "Живица", Category: "rare"},
+	{Type: economy.ResourceAeolianAlloy, Name: "Эолиевый сплав", Category: "rare"},
 	{Type: economy.ResourceFuel, Name: "Бензин", Category: "fuel"},
 	{Type: economy.ResourceSuperSeeds, Name: "Супер-семена", Category: "rare"},
+	{Type: economy.ResourceSuperFiber, Name: "Супер-волокно", Category: "rare"},
 	{Type: economy.ResourceSuperFiber, Name: "Супер-волокно", Category: "rare"},
 	{Type: economy.ResourceSuperMushrooms, Name: "Супер-грибы", Category: "rare"},
 	{Type: economy.ResourceSuperWindleaf, Name: "Супер-ветролист", Category: "rare"},
@@ -70,6 +82,7 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceElderwoodHeart, Name: "Сердцевина древня", Category: "rare", Description: "Редкая находка при рубке леса."},
 	{Type: economy.ResourceRuneTile, Name: "Руническая черепица", Category: "rare"},
 	{Type: economy.ResourceBlueSalt, Name: "Синяя соль", Category: "rare", Description: "Редкая минеральная примесь из песчаных карьеров."},
+	{Type: economy.ResourceKaolin, Name: "Каолин", Category: "rare", Description: "Редкая чистая фракция глины из глиняного карьера."},
 }
 
 func ResourceByType(t economy.ResourceType) (ResourceSpec, bool) {
@@ -86,10 +99,10 @@ var ProductionRecipes = []economy.ProductionRecipe{
 		ID:           "planks_from_wood",
 		Name:         "Распил древесины",
 		BuildingType: "lumber_yard",
-		Duration:     2 * time.Minute,
-		Workers:      2,
-		Input:        []economy.ResourceAmount{{Resource: economy.ResourceWood, Amount: 12}},
-		Output:       []economy.ResourceAmount{{Resource: economy.ResourcePlanks, Amount: 6}},
+		Duration:     270 * time.Second,
+		Workers:      3,
+		Input:        []economy.ResourceAmount{{Resource: economy.ResourceWood, Amount: 15}},
+		Output:       []economy.ResourceAmount{{Resource: economy.ResourcePlanks, Amount: 2}},
 	},
 	{
 		ID:           "stone_blocks",
@@ -110,21 +123,20 @@ var ProductionRecipes = []economy.ProductionRecipe{
 		Output:       []economy.ResourceAmount{{Resource: economy.ResourceBrick, Amount: 10}},
 	},
 	{
-		ID:           "fuel_from_oil",
-		Name:         "Переработка бензина",
-		BuildingType: "oil_refinery",
-		Duration:     6 * time.Minute,
-		Workers:      4,
-		Input:        []economy.ResourceAmount{{Resource: economy.ResourceOil, Amount: 8}},
-		Output:       []economy.ResourceAmount{{Resource: economy.ResourceFuel, Amount: 5}},
-	},
-	{
 		ID:           "sand_quarry_run",
 		Name:         "Добыча песка",
 		BuildingType: "sand_quarry",
 		Duration:     530 * time.Second,
 		Workers:      4,
 		Output:       []economy.ResourceAmount{{Resource: economy.ResourceSand, Amount: 10}, {Resource: economy.ResourceCoins, Amount: 70}},
+	},
+	{
+		ID:           "clay_quarry_run",
+		Name:         "Добыча глины",
+		BuildingType: "clay_quarry",
+		Duration:     6 * time.Minute,
+		Workers:      3,
+		Output:       []economy.ResourceAmount{{Resource: economy.ResourceClay, Amount: 18}},
 	},
 	{
 		ID:           "glass_batch",
@@ -151,6 +163,26 @@ func RecipeForBuildingLevel(id string, level int) (economy.ProductionRecipe, boo
 	if !ok {
 		return economy.ProductionRecipe{}, false
 	}
+	if mainID, minimum, found := industryExtraRecipe(id); found {
+		if level < minimum {
+			level = minimum
+		}
+		if level > 10 {
+			level = 10
+		}
+		recipe.RequiredLevel = level
+		recipe.Workers = industryLevelRecipes[mainID][level-1].Workers
+		return recipe, true
+	}
+	if levels, found := industryLevelRecipes[id]; found {
+		if level < 1 {
+			level = 1
+		}
+		if level > len(levels) {
+			level = len(levels)
+		}
+		return levels[level-1], true
+	}
 	if id == "sand_quarry_run" {
 		if level < 1 {
 			level = 1
@@ -166,6 +198,25 @@ func RecipeForBuildingLevel(id string, level int) (economy.ProductionRecipe, boo
 		recipe.Output = []economy.ResourceAmount{{Resource: economy.ResourceSand, Amount: spec.Sand}, {Resource: economy.ResourceCoins, Amount: spec.Coins}}
 		if spec.BlueSaltChance > 0 {
 			recipe.RareOutput = []economy.RareProductionOutput{{Resource: economy.ResourceBlueSalt, Amount: 1, Chance: spec.BlueSaltChance}}
+		}
+		return recipe, true
+	}
+	if id == "clay_quarry_run" {
+		if level < 1 {
+			level = 1
+		}
+		if level > len(clayQuarryRecipes) {
+			level = len(clayQuarryRecipes)
+		}
+		spec := clayQuarryRecipes[level-1]
+		recipe.Duration = spec.Duration
+		recipe.Workers = spec.Workers
+		recipe.RequiredLevel = level
+		recipe.Input = nil
+		recipe.FuelPerRun = spec.Fuel
+		recipe.Output = []economy.ResourceAmount{{Resource: economy.ResourceClay, Amount: spec.Clay}}
+		if spec.KaolinChance > 0 {
+			recipe.RareOutput = []economy.RareProductionOutput{{Resource: economy.ResourceKaolin, Amount: 1, Chance: spec.KaolinChance}}
 		}
 		return recipe, true
 	}
@@ -212,31 +263,58 @@ func RecipeForBuildingLevel(id string, level int) (economy.ProductionRecipe, boo
 		recipe.FuelPerRun = spec.Fuel
 	}
 	recipe.Output = []economy.ResourceAmount{{Resource: economy.ResourcePlanks, Amount: spec.Planks}}
+	if spec.PremiumPlankChance > 0 {
+		recipe.RareOutput = []economy.RareProductionOutput{{Resource: economy.ResourcePremiumPlanks, Amount: 1, Chance: spec.PremiumPlankChance}}
+	}
 	return recipe, true
 }
 
+func IsIndustryLevelRecipe(id string) bool {
+	_, ok := industryLevelRecipes[id]
+	return ok
+}
+
+func industryExtraRecipe(id string) (string, int, bool) {
+	switch id {
+	case "reinforced_concrete_batch":
+		return "concrete_batch", 6, true
+	case "armor_plates_batch":
+		return "explosives_batch", 5, true
+	case "rune_tile_batch":
+		return "tile_batch", 8, true
+	default:
+		return "", 0, false
+	}
+}
+
+func IndustryExtraRecipeMinimum(id string) (int, bool) {
+	_, minimum, ok := industryExtraRecipe(id)
+	return minimum, ok
+}
+
 type lumberYardRecipe struct {
-	Wood     int
-	Planks   int
-	Fuel     int
-	Workers  int
-	Duration time.Duration
+	Wood               int
+	Planks             int
+	Fuel               int
+	Workers            int
+	Duration           time.Duration
+	PremiumPlankChance float64
 }
 
 var lumberYardRecipes = []lumberYardRecipe{
 	{Wood: 15, Planks: 2, Workers: 3, Duration: 270 * time.Second},
 	{Wood: 13, Planks: 4, Workers: 3, Duration: 490 * time.Second},
-	{Wood: 19, Planks: 7, Workers: 4, Duration: 765 * time.Second},
-	{Wood: 24, Planks: 11, Fuel: 5, Workers: 4, Duration: 1395 * time.Second},
-	{Wood: 30, Planks: 15, Fuel: 8, Workers: 5, Duration: 1770 * time.Second},
-	{Wood: 35, Planks: 20, Fuel: 13, Workers: 5, Duration: 2040 * time.Second},
-	{Wood: 40, Planks: 25, Fuel: 17, Workers: 6, Duration: 2230 * time.Second},
-	{Wood: 44, Planks: 33, Fuel: 20, Workers: 6, Duration: 2420 * time.Second},
-	{Wood: 50, Planks: 37, Fuel: 25, Workers: 7, Duration: 2575 * time.Second},
-	{Wood: 53, Planks: 40, Fuel: 34, Workers: 7, Duration: 2700 * time.Second},
-	{Wood: 55, Planks: 44, Fuel: 40, Workers: 8, Duration: 2855 * time.Second},
-	{Wood: 58, Planks: 54, Fuel: 47, Workers: 8, Duration: 3100 * time.Second},
-	{Wood: 65, Planks: 65, Fuel: 55, Workers: 9, Duration: 3185 * time.Second},
+	{Wood: 19, Planks: 7, Workers: 4, Duration: 765 * time.Second, PremiumPlankChance: 0.005},
+	{Wood: 24, Planks: 11, Fuel: 5, Workers: 4, Duration: 1395 * time.Second, PremiumPlankChance: 0.01},
+	{Wood: 30, Planks: 15, Fuel: 8, Workers: 5, Duration: 1770 * time.Second, PremiumPlankChance: 0.017},
+	{Wood: 35, Planks: 20, Fuel: 13, Workers: 5, Duration: 2040 * time.Second, PremiumPlankChance: 0.026},
+	{Wood: 40, Planks: 25, Fuel: 17, Workers: 6, Duration: 2230 * time.Second, PremiumPlankChance: 0.037},
+	{Wood: 44, Planks: 33, Fuel: 20, Workers: 6, Duration: 2420 * time.Second, PremiumPlankChance: 0.053},
+	{Wood: 50, Planks: 37, Fuel: 25, Workers: 7, Duration: 2575 * time.Second, PremiumPlankChance: 0.062},
+	{Wood: 53, Planks: 40, Fuel: 34, Workers: 7, Duration: 2700 * time.Second, PremiumPlankChance: 0.075},
+	{Wood: 55, Planks: 44, Fuel: 40, Workers: 8, Duration: 2855 * time.Second, PremiumPlankChance: 0.096},
+	{Wood: 58, Planks: 54, Fuel: 47, Workers: 8, Duration: 3100 * time.Second, PremiumPlankChance: 0.135},
+	{Wood: 65, Planks: 65, Fuel: 55, Workers: 9, Duration: 3185 * time.Second, PremiumPlankChance: 0.172},
 }
 
 type sandQuarryRecipe struct {
@@ -259,6 +337,29 @@ var sandQuarryRecipes = []sandQuarryRecipe{
 	{Sand: 93, Coins: 9000, Workers: 19, Duration: 2055 * time.Second, BlueSaltChance: 0.127},
 	{Sand: 102, Coins: 14300, Workers: 21, Duration: 2325 * time.Second, BlueSaltChance: 0.15},
 	{Sand: 114, Coins: 19300, Workers: 23, Duration: 2810 * time.Second, BlueSaltChance: 0.174},
+}
+
+type clayQuarryRecipe struct {
+	Clay         int
+	Fuel         int
+	Workers      int
+	Duration     time.Duration
+	KaolinChance float64
+}
+
+var clayQuarryRecipes = []clayQuarryRecipe{
+	{Clay: 18, Workers: 3, Duration: 360 * time.Second},
+	{Clay: 30, Workers: 4, Duration: 450 * time.Second},
+	{Clay: 44, Workers: 5, Duration: 560 * time.Second, KaolinChance: 0.008},
+	{Clay: 62, Workers: 7, Duration: 760 * time.Second, KaolinChance: 0.016},
+	{Clay: 84, Workers: 9, Duration: 970 * time.Second, KaolinChance: 0.029},
+	{Clay: 112, Workers: 11, Duration: 1200 * time.Second, KaolinChance: 0.044},
+	{Clay: 150, Fuel: 8, Workers: 13, Duration: 1410 * time.Second, KaolinChance: 0.065},
+	{Clay: 188, Fuel: 12, Workers: 15, Duration: 1640 * time.Second, KaolinChance: 0.088},
+	{Clay: 230, Fuel: 17, Workers: 17, Duration: 1905 * time.Second, KaolinChance: 0.114},
+	{Clay: 276, Fuel: 23, Workers: 19, Duration: 2190 * time.Second, KaolinChance: 0.142},
+	{Clay: 330, Fuel: 30, Workers: 21, Duration: 2520 * time.Second, KaolinChance: 0.175},
+	{Clay: 395, Fuel: 38, Workers: 24, Duration: 2880 * time.Second, KaolinChance: 0.22},
 }
 
 type glassWorkshopRecipe struct {

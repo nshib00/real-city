@@ -1,0 +1,73 @@
+{
+  "asset_id": "mechanical_workshop",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "documented_future_levels",
+  "display_name": "Механическая мастерская",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Открытая кирпичная мастерская с токарным станком, деревянным верстаком и ручной подачей заготовок", "cost_resources": ["coins", "brick", "copper"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["brick_floor", "manual_lathe", "wooden_bench"]},
+    {"level": 2, "visual_goal": "Крупное открытое маховое колесо на стене и больше медных заготовок", "cost_resources": ["coins", "brick", "copper"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["flywheel", "blanks"]},
+    {"level": 3, "visual_goal": "Стекло и железо в токарном посте, медный паропровод и латунный вентиль", "cost_resources": ["coins", "iron_ingot", "glass"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["steam_pipe", "pressure_valve"]},
+    {"level": 4, "visual_goal": "Первая парная зубчатая передача и механическая подача станка", "cost_resources": ["coins", "iron_ingot", "glass"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["second_gear", "feed_drive"]},
+    {"level": 5, "visual_goal": "Стальной вытяжной короб, защищённый привод и манометр", "cost_resources": ["coins", "steel", "mechanism"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["exhaust", "drive_hood", "gauge"]},
+    {"level": 6, "visual_goal": "Защитный кожух станка и сортированные ячейки деталей", "cost_resources": ["coins", "steel", "mechanism"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["lathe_guard", "parts_shelf"]},
+    {"level": 7, "visual_goal": "Усиленная верхняя балка с медными заклёпками", "cost_resources": ["coins", "steel", "mechanism"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["reinforced_lintel"]},
+    {"level": 8, "visual_goal": "Бронированный точный портал и приборный стол", "cost_resources": ["coins", "reinforced_beams", "electronics"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["precision_gantry", "readout_console"]},
+    {"level": 9, "visual_goal": "Пост точной сборки супер-механизмов и новый рабочий инструмент", "cost_resources": ["coins", "reinforced_beams", "electronics"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["super_mechanism_cradle", "precision_head"]},
+    {"level": 10, "visual_goal": "Медная корона, полный производственный комплект и защищённое хранение", "cost_resources": ["coins", "reinforced_beams", "electronics"], "triangle_budget": {"min": 700, "max": 11000}, "adds": ["copper_crown", "finished_goods_crate"]}
+  ],
+  "states": ["active", "construction", "damaged"],
+  "material_map": {
+    "iron_ore": {"visible_as": "железная заготовка в патроне токарного станка; материал текущей каталожной стоимости", "priority": "secondary", "levels": [1]},
+    "planks": {"visible_as": "дощатый настил и стол верстака; материал текущей каталожной стоимости", "priority": "primary", "levels": [1]},
+    "brick": {"visible_as": "сплошная рабочая плита и задняя кирпичная стена", "priority": "primary", "levels": [1, 2]},
+    "copper": {"visible_as": "крупное зубчатое колесо, трубы, клапаны и заготовки", "priority": "primary", "levels": [1, 2]},
+    "iron_ingot": {"visible_as": "патрон, рельсы токарного станка и привод", "priority": "primary", "levels": [3, 4]},
+    "glass": {"visible_as": "стекло манометра и смотровых приборов", "priority": "secondary", "levels": [3, 4]},
+    "steel": {"visible_as": "вытяжка, кожух, полки и усиленная балка", "priority": "primary", "levels": [5, 6, 7]},
+    "mechanism": {"visible_as": "зубчатая передача и автоматическая подача", "priority": "primary", "levels": [5, 6, 7]},
+    "reinforced_beams": {"visible_as": "верхний защищённый портал точной сборки", "priority": "primary", "levels": [8, 9, 10]},
+    "electronics": {"visible_as": "приборная панель с тремя световыми индикаторами", "priority": "secondary", "levels": [8, 9, 10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "За неизменной клеткой 1×1 растёт плотность токарного поста, передач, труб и защищённых опор."},
+    "materials": {"rule": "Кирпич и доски переходят к железу, меди, стали и усиленному точному порталу."},
+    "props": {"rule": "Каждый уровень добавляет рабочую конструкцию: маховик, паропровод, привод, вытяжку, ячейки или точную сборку."}
+  },
+  "state_policy": {
+    "active": {"rule": "Целый станок, крупные открытые шестерни и паропровод; всё оборудование на опорах."},
+    "construction": {"rule": "Половина стены, открытые стойки и недособранный станок; трубные секции и балки лежат на площадке."},
+    "damaged": {"rule": "Крупный пролом в стене, утраченная верхняя конструкция и разрушенный станок; обломки лежат на полу."}
+  },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"],
+    "asset_type": ["prop-artist", "hard-surface"],
+    "production": ["materials", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1, "triangle_budget": {"min": 700, "max": 11000}, "export": true},
+      {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 300, "max": 6000}, "export": true},
+      {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 150, "max": 3200}, "export": true}
+    ],
+    "preserve": ["ground", "lathe", "wall_flywheel", "steam_pipe", "vise_bench"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["active", "construction", "damaged"]},
+    "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/mechanical_workshop", "use_public_glb": true},
+  "references": {
+    "docs": ["docs/buildings/industry/mechanical-workshop.md", "docs/art/visual-style-guide.md"],
+    "existing_generators": ["tools/assets/blender/real_city/components/mechanical_workshop.py"],
+    "existing_assets": ["frontend/public/assets/buildings/industry/electronics_workshop"]
+  },
+  "generation_notes": "Стимпанк выражен видимым медным маховиком, латунными трубами, паровым клапаном, шестернями и манометром. Каталог содержит только упрощённый уровень 1; balance docs остаётся проектным."
+}

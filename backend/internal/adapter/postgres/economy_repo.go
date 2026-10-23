@@ -6,6 +6,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/lib/pq"
+
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
@@ -60,17 +62,38 @@ func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coin
 }
 
 func (r *EconomyRepo) SaveInventory(ctx context.Context, inventory economy.Inventory) error {
-	for resource, amount := range inventory.Items {
-		if _, err := execer(ctx, r.db).ExecContext(ctx, `
-			INSERT INTO player_inventories (player_id, resource, amount, updated_at)
-			VALUES ($1, $2, $3, $4)
-			ON CONFLICT (player_id, resource)
-			DO UPDATE SET amount = EXCLUDED.amount, updated_at = EXCLUDED.updated_at
-		`, inventory.PlayerID, resource, amount, inventory.UpdatedAt); err != nil {
-			return err
-		}
+	if len(inventory.Items) == 0 {
+		return nil
 	}
-	return nil
+	resources := make([]string, 0, len(inventory.Items))
+	amounts := make([]int64, 0, len(inventory.Items))
+	for resource, amount := range inventory.Items {
+		resources = append(resources, string(resource))
+		amounts = append(amounts, int64(amount))
+	}
+	_, err := execer(ctx, r.db).ExecContext(ctx, `
+		INSERT INTO player_inventories (player_id, resource, amount, updated_at)
+		SELECT $1, entries.resource, entries.amount, $4
+		FROM unnest($2::text[], $3::bigint[]) AS entries(resource, amount)
+		ON CONFLICT (player_id, resource)
+		DO UPDATE SET amount = EXCLUDED.amount, updated_at = EXCLUDED.updated_at
+	`, inventory.PlayerID, pq.Array(resources), pq.Array(amounts), inventory.UpdatedAt)
+	return err
+}
+
+func (r *EconomyRepo) SpendResourceIfAvailable(ctx context.Context, playerID player.ID, resource economy.ResourceType, amount int, now time.Time) (bool, error) {
+	if amount <= 0 {
+		return false, nil
+	}
+	result, err := execer(ctx, r.db).ExecContext(ctx, `
+		UPDATE player_inventories SET amount = amount - $3, updated_at = $4
+		WHERE player_id = $1 AND resource = $2 AND amount >= $3
+	`, playerID, resource, amount, now)
+	if err != nil {
+		return false, err
+	}
+	affected, err := result.RowsAffected()
+	return affected == 1, err
 }
 
 func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction) error {
@@ -79,6 +102,12 @@ func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction
 		VALUES ($1, $2, $3, $4, $5, $6, $7)
 	`, tx.ID, tx.PlayerID, tx.Kind, tx.Resource, tx.Amount, tx.Reason, tx.CreatedAt)
 	return err
+}
+
+func (r *EconomyRepo) HasPopulationTransactions(ctx context.Context, playerID player.ID) (bool, error) {
+	var exists bool
+	err := execer(ctx, r.db).QueryRowContext(ctx, `SELECT EXISTS (SELECT 1 FROM economy_transactions WHERE player_id = $1 AND resource = $2)`, playerID, economy.ResourcePopulation).Scan(&exists)
+	return exists, err
 }
 
 func (r *EconomyRepo) ListTransactions(ctx context.Context, playerID player.ID, limit int) ([]economy.Transaction, error) {

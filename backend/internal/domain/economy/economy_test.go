@@ -48,6 +48,16 @@ func TestInventoryOnlyCoinsHaveCapacity(t *testing.T) {
 	}
 }
 
+func TestCoinsAboveCapacityRemainIntactOnNextAddition(t *testing.T) {
+	now := time.Now()
+	inventory := NewInventory("p1", now, 2000)
+	inventory.Items[ResourceCoins] = 2300
+	overflow := inventory.Add([]ResourceAmount{{Resource: ResourceCoins, Amount: 50}}, now)
+	if inventory.Items[ResourceCoins] != 2300 || len(overflow) != 1 || overflow[0].Amount != 50 {
+		t.Fatalf("coins above capacity must not disappear: inventory=%d overflow=%#v", inventory.Items[ResourceCoins], overflow)
+	}
+}
+
 func TestWindleafCropHasSuperChanceAndRewards(t *testing.T) {
 	crop := WindleafCropForLevel(11)
 	if crop.SuperChanceBps != 75 {

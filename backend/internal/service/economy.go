@@ -34,6 +34,7 @@ var coinStorageCapacityByLevel = []int{
 
 type skipCatchUpKey struct{}
 type skipStarterPopulationKey struct{}
+type uncappedCoinsKey struct{}
 
 type EconomyService struct {
 	repo      EconomyRepository
@@ -82,6 +83,9 @@ func (s *EconomyService) Inventory(ctx context.Context, playerID player.ID) (eco
 	}
 	if err := s.applyInventoryPolicy(ctx, playerID, &inventory); err != nil {
 		return economy.Inventory{}, err
+	}
+	if ctx.Value(uncappedCoinsKey{}) == true {
+		inventory.BypassCoinCapacity = true
 	}
 	if ctx.Value(skipStarterPopulationKey{}) == true {
 		return inventory, nil
@@ -149,7 +153,11 @@ func WithoutCatchUp(ctx context.Context) context.Context {
 }
 
 func withoutStarterPopulationBackfill(ctx context.Context) context.Context {
-	return context.WithValue(ctx, skipStarterPopulationKey{}, true)
+	return context.WithValue(WithoutCatchUp(ctx), skipStarterPopulationKey{}, true)
+}
+
+func withUncappedCoins(ctx context.Context) context.Context {
+	return context.WithValue(ctx, uncappedCoinsKey{}, true)
 }
 
 func (s *EconomyService) Spend(ctx context.Context, playerID player.ID, cost []economy.ResourceAmount, reason string) (economy.Inventory, error) {
@@ -223,6 +231,7 @@ func (s *EconomyService) CoinCapacity(ctx context.Context, playerID player.ID) (
 }
 
 func (s *EconomyService) applyInventoryPolicy(ctx context.Context, playerID player.ID, inventory *economy.Inventory) error {
+	inventory.BypassCoinCapacity = false
 	if s.players == nil {
 		return nil
 	}
@@ -267,6 +276,13 @@ func (s *EconomyService) ensureTownHallStarterPopulation(ctx context.Context, pl
 		}
 	}
 	if !hasActiveTownHall || hasActiveConstruction {
+		return inventory, nil
+	}
+	usedPopulation, err := s.repo.HasPopulationTransactions(ctx, playerID)
+	if err != nil {
+		return economy.Inventory{}, err
+	}
+	if usedPopulation {
 		return inventory, nil
 	}
 	inventory.Items[economy.ResourcePopulation] = townHallStarterPopulation

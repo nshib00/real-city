@@ -1,0 +1,163 @@
+"""Синхронизирует игровые таблицы industry-построек с docs/buildings/industry."""
+
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+SPECS = {
+    "brick_yard": ("brick-yard", "BrickYard", "Кирпичный двор", "brick_yard_batch"),
+    "foundry": ("foundry", "Foundry", "Литейная", "iron_ingot_batch"),
+    "oil_press": ("oil-press", "OilPress", "Маслобойня", "plant_oil_batch"),
+    "oil_refinery": ("oil-refinery", "OilRefinery", "Нефтеперерабатывающий завод", "fuel_from_oil"),
+    "resin_kiln": ("resin-kiln", "ResinKiln", "Смолокурня", "resin_batch"),
+    "steelworks": ("steelworks", "Steelworks", "Сталеплавильный завод", "steel_batch"),
+    "sulfur_spring": ("sulfur-spring", "SulfurSpring", "Серный источник", "sulfur_batch"),
+    "electronics_workshop": ("electronics-workshop", "Electronics", "Электронная мастерская", "electronics_batch"),
+    "mechanical_workshop": ("mechanical-workshop", "MechanicalShop", "Механическая мастерская", "copper_parts_batch"),
+    "paint_workshop": ("dye-works", "PaintWorkshop", "Красильная мастерская", "paint_batch"),
+    "copper_mine": ("copper-mine", "CopperMine", "Медный рудник", "copper_mine_batch"),
+    "cement_workshop": ("cement-workshop", "CementWorkshop", "Цементный цех", "cement_batch"),
+    "concrete_plant": ("concrete-plant", "ConcretePlant", "Бетонный завод", "concrete_batch"),
+    "paper_workshop": ("paper-workshop", "PaperWorkshop", "Бумажная мастерская", "paper_batch"),
+    "weaving_yard": ("weaving-workshop", "WeavingYard", "Ткацкая мастерская", "fabric_batch"),
+    "military_factory": ("military-factory", "MilitaryPlant", "Военный завод", "explosives_batch"),
+    "tile_factory": ("tile-factory", "TileFactory", "Черепичный завод", "tile_batch"),
+}
+RESOURCES = {
+    "монет": "coins", "доски": "planks", "камень": "stone", "глина": "clay",
+    "кирпичи": "brick", "железные слитки": "iron_ingot", "механизмы": "mechanism",
+    "железобетон": "reinforced_concrete", "усиленные балки": "reinforced_beams",
+    "цемент": "cement", "стекло": "glass", "сталь": "steel", "бетон": "concrete",
+    "тростник": "reed", "веревки": "rope", "волокно": "fiber", "ткань": "fabric",
+    "супер-волокно": "super-fiber", "защитные пластины": "armor_plates",
+    "электроника": "electronics", "медные детали": "copper_parts", "песок": "sand",
+    "сера": "sulfur", "взрывчатка": "explosives", "черепица": "tile",
+    "уголь": "coal", "бензин": "fuel", "бумага": "paper",
+    "металл": "metal", "нефть": "oil", "древесина": "wood",
+    "железная руда": "iron_ore", "медь": "copper", "масличные растения": "oil_plants",
+    "масло": "plant_oil", "смола": "resin", "эолиевый сплав": "aeolian_alloy",
+    "светокристаллы": "light_crystal", "супер-механизм": "super_mechanism",
+    "каменные блоки": "stone_block", "звездное стекло": "star_glass",
+    "красители": "dyes", "краски": "paints",
+}
+
+
+def amount(text):
+    parts = []
+    for chunk in re.split(r",\s*|\s*\+\s*", text):
+        chunk = chunk.strip()
+        if chunk in ("нет", "без расходуемого сырья") or not chunk:
+            continue
+        match = re.fullmatch(r"([\d ]+) монет|(.+?) × (\d+)", chunk)
+        if not match:
+            raise ValueError(f"Не распознано количество: {chunk}")
+        resource = "coins" if match[1] else RESOURCES[match[2]]
+        quantity = int((match[1] or match[3]).replace(" ", ""))
+        parts.append((resource, quantity))
+    return parts
+
+
+def minutes(text):
+    match = re.fullmatch(r"(?:(\d+) ч )?(\d+) мин", text)
+    if not match:
+        raise ValueError(text)
+    return int(match[1] or 0) * 60 + int(match[2])
+
+
+def load_specs():
+    specs = {}
+    for kind, (source, go_type, title, recipe_id) in SPECS.items():
+        path = ROOT / "docs/buildings/industry" / f"{source}.md"
+        rows = []
+        for line in path.read_text().splitlines():
+            cols = [part.strip() for part in line.strip().strip("|").split("|")]
+            if len(cols) != 14 or not cols[0].isdigit():
+                continue
+            left, right = cols[5].split(" → ")
+            rows.append(dict(level=int(cols[0]), cost=amount(cols[1]), build=minutes(cols[2]),
+                             work=minutes(cols[3]), workers=int(cols[4]), input=amount(left),
+                             output=amount(right), fuel=amount(cols[7]), rare=cols[6], health=int(cols[8]),
+                             xp=(int(cols[9]), int(cols[10]), int(cols[11]))))
+        if [row["level"] for row in rows] != list(range(1, 11)):
+            raise ValueError(f"Ожидались уровни 1–10: {path}")
+        specs[kind] = (go_type, title, recipe_id, rows)
+    return specs
+
+
+def go_amount(items, type_name):
+    return "[]" + type_name + "{" + ", ".join(
+        "{Resource: %r, Amount: %d}" % (resource, count) for resource, count in items
+    ).replace("'", '"') + "}"
+
+
+def generate_go(specs):
+    lines = ["// Code generated by tools/generate_industry_gameplay.py; DO NOT EDIT.",
+             "package catalog", "", "import (", '\t"time"', '\t"real-city/backend/internal/domain/building"',
+             '\t"real-city/backend/internal/domain/economy"', ")", "",
+             "var industryLevelRecipes = map[string][]economy.ProductionRecipe{}", "", "func init() {"]
+    for kind, (go_type, title, recipe_id, rows) in specs.items():
+        first = rows[0]
+        lines += [f'\tBuildings[building.Type{go_type}] = BuildingType{{',
+                  f'\t\tType: building.Type{go_type}, Category: "industry", Name: "{title}", Level: 1,',
+                  '\t\tFootprint: building.Footprint{Width: 1, Height: 1}, RequiresTownHall: true, CountsTowardLimit: true,',
+                  f'\t\tBuildDuration: {first["build"]} * time.Minute, Population: {first["workers"]}, Health: {first["health"]},',
+                  f'\t\tCost: {go_amount(first["cost"], "building.Cost")}, UpgradeLevels: []BuildingUpgradeLevel{{']
+        for row in rows:
+            lines.append(f'\t\t\t{{Level: {row["level"]}, BuildDuration: {row["build"]} * time.Minute, Population: {row["workers"]}, Health: {row["health"]}, Cost: {go_amount(row["cost"], "building.Cost")}}},')
+        lines += ['\t\t},', '\t}', f'\tbuildingXP[building.Type{go_type}] = []BuildingXP{{']
+        lines += [f'\t\t{{Completion: {r["xp"][0]}, Work: {r["xp"][1]}, Destruction: {r["xp"][2]}}},' for r in rows]
+        lines += ['\t}', f'\tindustryLevelRecipes["{recipe_id}"] = []economy.ProductionRecipe{{']
+        for row in rows:
+            ingredients = row['input'] + [(resource, count) for resource, count in row['fuel'] if resource != 'fuel']
+            fuel = next((count for resource, count in row['fuel'] if resource == 'fuel'), 0)
+            rare = ''
+            if row['rare'] != 'нет':
+                match = re.fullmatch(r'живица × (\d+) \(([\d,]+)%\)', row['rare'])
+                if not match:
+                    raise ValueError(f'Неизвестный редкий выход: {row["rare"]}')
+                rare = f', RareOutput: []economy.RareProductionOutput{{{{Resource: "oleoresin", Amount: {match[1]}, Chance: {float(match[2].replace(",", ".")) / 100:g}}}}}'
+            lines.append(f'\t\t{{ID: "{recipe_id}", Name: "{title}", BuildingType: "{kind}", RequiredLevel: {row["level"]}, Duration: {row["work"]} * time.Minute, Workers: {row["workers"]}, Input: {go_amount(ingredients, "economy.ResourceAmount")}, Output: {go_amount(row["output"], "economy.ResourceAmount")}, FuelPerRun: {fuel}{rare}}},')
+        lines += ['\t}', f'\tProductionRecipes = append(ProductionRecipes, industryLevelRecipes["{recipe_id}"][0])']
+    lines += ['}', '']
+    return '\n'.join(lines)
+
+
+def ts_amount(items):
+    return '[' + ', '.join(f"{{ resource: '{resource}', amount: {count} }}" for resource, count in items) + ']'
+
+
+def generate_ts(specs):
+    lines = ['// Code generated by tools/generate_industry_gameplay.py; DO NOT EDIT.',
+             "import type { BuildingCatalogItem, BuildingTypeId } from './buildings'", '',
+             "export const industrySpecBuildings: Partial<Record<BuildingTypeId, BuildingCatalogItem>> = {"]
+    for kind, (_, title, _, rows) in specs.items():
+        first = rows[0]
+        lines += [f"  {kind}: {{ type: '{kind}', category: 'industry', name: '{title}', level: 1,",
+                  f"    footprint: {{ width: 1, height: 1 }}, buildSeconds: {first['build'] * 60}, population: {first['workers']}, health: {first['health']},",
+                  f"    cost: {ts_amount(first['cost'])}, firstLevel: true, upgradeTo: [], upgradeLevels: ["]
+        for row in rows:
+            lines.append(f"      {{ level: {row['level']}, buildSeconds: {row['build'] * 60}, population: {row['workers']}, health: {row['health']}, cost: {ts_amount(row['cost'])} }},")
+        lines += ['    ],', '  },']
+    lines += ['}', '']
+    return '\n'.join(lines)
+
+
+if __name__ == '__main__':
+    specs = load_specs()
+    targets = {
+        ROOT / 'backend/internal/domain/catalog/industry_specs_generated.go': subprocess.run(
+            ['gofmt'], input=generate_go(specs), text=True, capture_output=True, check=True
+        ).stdout,
+        ROOT / 'shared/catalog/industrySpecs.generated.ts': generate_ts(specs),
+    }
+    if sys.argv[1:] == ['--check']:
+        stale = [str(path.relative_to(ROOT)) for path, content in targets.items() if not path.exists() or path.read_text() != content]
+        if stale:
+            raise SystemExit('Устарели файлы: ' + ', '.join(stale))
+    elif len(sys.argv) == 1:
+        for path, content in targets.items():
+            path.write_text(content)
+    else:
+        raise SystemExit('Использование: generate_industry_gameplay.py [--check]')

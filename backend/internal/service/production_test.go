@@ -44,6 +44,154 @@ func TestProductionServiceReservesAndReleasesPopulationWhenJobBecomesReady(t *te
 	}
 }
 
+func TestLumberYardConsumesFuelAndAwardsPremiumPlank(t *testing.T) {
+	ctx := context.Background()
+	buildings, repo, economyService, productionService := newProductionPopulationTestServices()
+	createActiveProductionBuilding(t, ctx, buildings, "lumber-premium", player.ID("p1"), building.TypeLumberYard, 4)
+	inventory := setTestPopulation(t, ctx, repo, economyService, player.ID("p1"), 20)
+	inventory.Items[economy.ResourceFuel] = 5
+	if err := repo.SaveInventory(ctx, inventory); err != nil {
+		t.Fatal(err)
+	}
+	productionService.randFloat = func() float64 { return 0 }
+	job, afterStart, err := productionService.Start(ctx, player.ID("p1"), "lumber-premium", "planks_from_wood")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if afterStart.Items[economy.ResourceWood] != 76 || afterStart.Items[economy.ResourceFuel] != 0 || job.CompletesAt.Sub(job.StartedAt) != 1395*time.Second {
+		t.Fatalf("unexpected cost or duration: inventory=%#v job=%#v", afterStart.Items, job)
+	}
+	_, afterCollect, err := productionService.CompleteAt(ctx, player.ID("p1"), job.ID, job.CompletesAt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if afterCollect.Items[economy.ResourcePlanks] != inventory.Items[economy.ResourcePlanks]+11 || afterCollect.Items[economy.ResourcePremiumPlanks] != inventory.Items[economy.ResourcePremiumPlanks]+1 {
+		t.Fatalf("unexpected sawmill output: %#v", afterCollect.Items)
+	}
+}
+
+func TestClayQuarryConsumesFuelAndAwardsKaolin(t *testing.T) {
+	ctx := context.Background()
+	buildings, repo, economyService, productionService := newProductionPopulationTestServices()
+	createActiveProductionBuilding(t, ctx, buildings, "clay-1", player.ID("p1"), building.TypeClayQuarry, 7)
+	inventory := setTestPopulation(t, ctx, repo, economyService, player.ID("p1"), 30)
+	inventory.Items[economy.ResourceFuel] = 8
+	if err := repo.SaveInventory(ctx, inventory); err != nil {
+		t.Fatal(err)
+	}
+	productionService.randFloat = func() float64 { return 0 }
+	job, afterStart, err := productionService.Start(ctx, player.ID("p1"), "clay-1", "clay_quarry_run")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if afterStart.Items[economy.ResourceFuel] != 0 || afterStart.Items[economy.ResourcePopulation] != inventory.Items[economy.ResourcePopulation]-13 || job.CompletesAt.Sub(job.StartedAt) != 1410*time.Second {
+		t.Fatalf("unexpected quarry costs or duration: %#v %#v", afterStart.Items, job)
+	}
+	if _, err := productionService.ReadyAt(ctx, player.ID("p1"), job.ID, job.CompletesAt); err != nil {
+		t.Fatal(err)
+	}
+	_, afterCollect, err := productionService.CompleteAt(ctx, player.ID("p1"), job.ID, job.CompletesAt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if afterCollect.Items[economy.ResourceClay] != inventory.Items[economy.ResourceClay]+150 || afterCollect.Items[economy.ResourceKaolin] != inventory.Items[economy.ResourceKaolin]+1 || afterCollect.Items[economy.ResourcePopulation] != inventory.Items[economy.ResourcePopulation] {
+		t.Fatalf("unexpected clay quarry output: %#v", afterCollect.Items)
+	}
+}
+
+func TestProductionRecipesExposeEveryClayQuarryLevel(t *testing.T) {
+	_, _, _, productionService := newProductionPopulationTestServices()
+	recipes, err := productionService.Recipes(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	levels := make(map[int]bool)
+	for _, recipe := range recipes {
+		if recipe.BuildingType == "clay_quarry" {
+			levels[recipe.RequiredLevel] = true
+		}
+	}
+	if len(levels) != 12 {
+		t.Fatalf("expected all 12 clay quarry levels, got %#v", levels)
+	}
+}
+
+func TestProductionRecipesExposeEveryLumberYardLevel(t *testing.T) {
+	_, _, _, productionService := newProductionPopulationTestServices()
+	recipes, err := productionService.Recipes(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	levels := make(map[int]bool)
+	for _, recipe := range recipes {
+		if recipe.BuildingType == "lumber_yard" {
+			levels[recipe.RequiredLevel] = true
+		}
+	}
+	if len(levels) != 13 {
+		t.Fatalf("expected all 13 sawmill levels, got %#v", levels)
+	}
+}
+
+func TestBuildingCannotChangeWhileProductionWorkersOrRewardsArePending(t *testing.T) {
+	ctx := context.Background()
+	buildingRepo, economyRepo, economyService, productionService := newProductionPopulationTestServices()
+	buildingService := NewBuildingService(buildingRepo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	buildingService.SetEconomy(economyService)
+	createActiveProductionBuilding(t, ctx, buildingRepo, "lumber-1", player.ID("p1"), building.TypeLumberYard, 1)
+	start := setTestPopulation(t, ctx, economyRepo, economyService, player.ID("p1"), 10)
+	job, _, err := productionService.Start(ctx, player.ID("p1"), "lumber-1", "planks_from_wood")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := buildingService.Upgrade(ctx, building.ID("lumber-1"), player.ID("p1")); err == nil {
+		t.Fatal("expected upgrade during production to be rejected")
+	}
+	if _, err := productionService.ReadyAt(ctx, player.ID("p1"), job.ID, job.CompletesAt.Add(time.Second)); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := buildingService.Upgrade(ctx, building.ID("lumber-1"), player.ID("p1")); err == nil {
+		t.Fatal("expected upgrade before collecting production rewards to be rejected")
+	}
+	if _, _, err := productionService.CompleteAt(ctx, player.ID("p1"), job.ID, job.CompletesAt.Add(time.Second)); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildingService.Demolish(ctx, building.ID("lumber-1"), player.ID("p1")); err != nil {
+		t.Fatal(err)
+	}
+	inventory, err := economyService.Inventory(ctx, player.ID("p1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if inventory.Items[economy.ResourcePopulation] != start.Items[economy.ResourcePopulation] {
+		t.Fatalf("expected workers to return after production, got %d", inventory.Items[economy.ResourcePopulation])
+	}
+}
+
+func TestReleasingProductionWorkersDoesNotTriggerNestedCatchUp(t *testing.T) {
+	ctx := context.Background()
+	buildingRepo, economyRepo, economyService, productionService := newProductionPopulationTestServices()
+	createActiveProductionBuilding(t, ctx, buildingRepo, "lumber-1", player.ID("p1"), building.TypeLumberYard, 1)
+	start := setTestPopulation(t, ctx, economyRepo, economyService, player.ID("p1"), 10)
+	job, _, err := productionService.Start(ctx, player.ID("p1"), "lumber-1", "planks_from_wood")
+	if err != nil {
+		t.Fatal(err)
+	}
+	catchUpCalls := 0
+	economyService.SetCatchUp(func(ctx context.Context, playerID player.ID) error {
+		catchUpCalls++
+		_, err := productionService.ReadyAt(ctx, playerID, job.ID, job.CompletesAt.Add(time.Second))
+		return err
+	})
+	inventory, err := economyService.Inventory(ctx, player.ID("p1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if catchUpCalls != 1 || inventory.Items[economy.ResourcePopulation] != start.Items[economy.ResourcePopulation] {
+		t.Fatalf("expected one catch-up and returned workers, got calls=%d population=%d", catchUpCalls, inventory.Items[economy.ResourcePopulation])
+	}
+}
+
 func TestProductionServiceRejectsStartWhenPopulationIsBusy(t *testing.T) {
 	ctx := context.Background()
 	buildingRepo, economyRepo, economyService, productionService := newProductionPopulationTestServices()

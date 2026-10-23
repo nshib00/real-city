@@ -8,16 +8,18 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/pkg/apperror"
 )
 
 type FieldService struct {
-	economy   *EconomyService
-	buildings BuildingRepository
-	now       func() time.Time
-	superRoll func(chanceBps int) bool
+	economy    *EconomyService
+	buildings  BuildingRepository
+	now        func() time.Time
+	superRoll  func(chanceBps int) bool
+	experience *ExperienceService
 }
 
 func NewFieldService(economyService *EconomyService, buildings BuildingRepository) *FieldService {
@@ -35,6 +37,10 @@ func (s *FieldService) SetNowForTest(now func() time.Time) {
 
 func (s *FieldService) SetSuperRollForTest(roll func(chanceBps int) bool) {
 	s.superRoll = roll
+}
+
+func (s *FieldService) SetExperience(experience *ExperienceService) {
+	s.experience = experience
 }
 
 func (s *FieldService) StartWindleafCycle(item building.Building, now time.Time, super bool) building.Building {
@@ -77,12 +83,12 @@ func (s *FieldService) AdvanceField(ctx context.Context, playerID player.ID, id 
 		}
 		crop, ok := economy.FieldCropForBuildingType(string(item.Type), item.Level, false)
 		if !ok {
-			s.releasePopulation(ctx, playerID, buildingPopulation(item), fieldReason(item, "workers:start:refund"))
+			_ = s.releasePopulation(ctx, playerID, buildingPopulation(item), fieldReason(item, "workers:start:refund"))
 			return building.Building{}, economy.Inventory{}, apperror.New(apperror.Validation, "field crop is not configured")
 		}
 		item = s.startFieldCycle(item, s.now(), s.superRoll(crop.SuperChanceBps))
 		if err := s.buildings.Update(ctx, item); err != nil {
-			s.releasePopulation(ctx, playerID, buildingPopulation(item), fieldReason(item, "workers:start:refund"))
+			_ = s.releasePopulation(ctx, playerID, buildingPopulation(item), fieldReason(item, "workers:start:refund"))
 			return building.Building{}, economy.Inventory{}, err
 		}
 		inventory, err := s.currentInventory(ctx, playerID)
@@ -114,7 +120,7 @@ func (s *FieldService) AdvanceField(ctx context.Context, playerID player.ID, id 
 	item.FieldStageReadyAt = &readyAt
 	item.UpdatedAt = now
 	if err := s.buildings.Update(ctx, item); err != nil {
-		s.releasePopulation(ctx, playerID, buildingPopulation(item), fieldReason(item, "workers:stage_start:refund"))
+		_ = s.releasePopulation(ctx, playerID, buildingPopulation(item), fieldReason(item, "workers:stage_start:refund"))
 		return building.Building{}, economy.Inventory{}, err
 	}
 	inventory, err := s.currentInventory(ctx, playerID)
@@ -161,10 +167,21 @@ func (s *FieldService) HarvestField(ctx context.Context, playerID player.ID, id 
 	if err != nil {
 		return building.Building{}, economy.Inventory{}, err
 	}
+	harvestKey := fmt.Sprintf("field:%s:harvest:%d", item.ID, item.FieldStageReadyAt.UnixNano())
+	superCrop := item.FieldSuperCrop
 	clearWindleafCycle(&item)
 	item.UpdatedAt = now
 	if err := s.buildings.Update(ctx, item); err != nil {
 		return building.Building{}, economy.Inventory{}, err
+	}
+	if s.experience != nil {
+		reward := catalog.ExperienceForBuilding(item.Type, item.Level).Work
+		if superCrop {
+			reward *= 3
+		}
+		if err := s.experience.Award(ctx, playerID, reward, "field:harvest", harvestKey); err != nil {
+			return building.Building{}, economy.Inventory{}, err
+		}
 	}
 	inventory, err = s.currentInventory(ctx, playerID)
 	if err != nil {
@@ -184,8 +201,7 @@ func (s *FieldService) releaseCompletedFieldPhase(ctx context.Context, playerID 
 	if err := s.buildings.Update(ctx, *item); err != nil {
 		return err
 	}
-	s.releasePopulation(ctx, playerID, amount, reason)
-	return nil
+	return s.releasePopulation(ctx, playerID, amount, reason)
 }
 
 func fieldReason(item building.Building, suffix string) string {
@@ -203,11 +219,12 @@ func (s *FieldService) reservePopulation(ctx context.Context, playerID player.ID
 	return nil
 }
 
-func (s *FieldService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) {
+func (s *FieldService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) error {
 	if amount <= 0 || s.economy == nil {
-		return
+		return nil
 	}
-	_, _, _ = s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	_, _, err := s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	return err
 }
 
 func (s *FieldService) currentInventory(ctx context.Context, playerID player.ID) (economy.Inventory, error) {

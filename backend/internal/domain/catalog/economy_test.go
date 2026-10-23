@@ -7,6 +7,43 @@ import (
 	"real-city/backend/internal/domain/economy"
 )
 
+func TestLumberYardRecipesMatchSpecification(t *testing.T) {
+	cases := []struct {
+		wood, planks, fuel, seconds int
+		chance                      float64
+	}{
+		{15, 2, 0, 270, 0},
+		{13, 4, 0, 490, 0},
+		{19, 7, 0, 765, 0.005},
+		{24, 11, 5, 1395, 0.01},
+		{30, 15, 8, 1770, 0.017},
+		{35, 20, 13, 2040, 0.026},
+		{40, 25, 17, 2230, 0.037},
+		{44, 33, 20, 2420, 0.053},
+		{50, 37, 25, 2575, 0.062},
+		{53, 40, 34, 2700, 0.075},
+		{55, 44, 40, 2855, 0.096},
+		{58, 54, 47, 3100, 0.135},
+		{65, 65, 55, 3185, 0.172},
+	}
+	for index, want := range cases {
+		level := index + 1
+		recipe, ok := RecipeForBuildingLevel("planks_from_wood", level)
+		if !ok || recipe.RequiredLevel != level || recipe.Duration != time.Duration(want.seconds)*time.Second || recipe.FuelPerRun != want.fuel {
+			t.Fatalf("unexpected level %d recipe: %#v", level, recipe)
+		}
+		assertInput(t, recipe.Input, economy.ResourceWood, want.wood)
+		assertOutput(t, recipe.Output, economy.ResourcePlanks, want.planks)
+		if want.chance == 0 {
+			if len(recipe.RareOutput) != 0 {
+				t.Fatalf("level %d should not produce premium planks", level)
+			}
+		} else if len(recipe.RareOutput) != 1 || recipe.RareOutput[0].Resource != economy.ResourcePremiumPlanks || recipe.RareOutput[0].Amount != 1 || recipe.RareOutput[0].Chance != want.chance {
+			t.Fatalf("unexpected level %d rare output: %#v", level, recipe.RareOutput)
+		}
+	}
+}
+
 func TestSandQuarryRecipeForBuildingLevel(t *testing.T) {
 	levelOne, ok := RecipeForBuildingLevel("sand_quarry_run", 1)
 	if !ok {
@@ -38,6 +75,45 @@ func TestSandQuarryRecipeForBuildingLevel(t *testing.T) {
 	assertOutput(t, levelEleven.Output, economy.ResourceCoins, 19300)
 	if len(levelEleven.RareOutput) != 1 || levelEleven.RareOutput[0].Chance != 0.174 {
 		t.Fatalf("unexpected level 11 rare output: %#v", levelEleven.RareOutput)
+	}
+}
+
+func TestClayQuarryRecipesMatchSpecification(t *testing.T) {
+	cases := []struct {
+		clay, fuel, workers, seconds int
+		chance                     float64
+	}{
+		{18, 0, 3, 360, 0},
+		{30, 0, 4, 450, 0},
+		{44, 0, 5, 560, 0.008},
+		{62, 0, 7, 760, 0.016},
+		{84, 0, 9, 970, 0.029},
+		{112, 0, 11, 1200, 0.044},
+		{150, 8, 13, 1410, 0.065},
+		{188, 12, 15, 1640, 0.088},
+		{230, 17, 17, 1905, 0.114},
+		{276, 23, 19, 2190, 0.142},
+		{330, 30, 21, 2520, 0.175},
+		{395, 38, 24, 2880, 0.22},
+	}
+	for index, want := range cases {
+		level := index + 1
+		recipe, ok := RecipeForBuildingLevel("clay_quarry_run", level)
+		if !ok || recipe.RequiredLevel != level || recipe.Duration != time.Duration(want.seconds)*time.Second || recipe.Workers != want.workers || recipe.FuelPerRun != want.fuel {
+			t.Fatalf("unexpected level %d recipe: %#v", level, recipe)
+		}
+		assertOutput(t, recipe.Output, economy.ResourceClay, want.clay)
+		if want.chance == 0 {
+			if len(recipe.RareOutput) != 0 {
+				t.Fatalf("level %d should not produce kaolin: %#v", level, recipe.RareOutput)
+			}
+		} else if len(recipe.RareOutput) != 1 || recipe.RareOutput[0].Resource != economy.ResourceKaolin || recipe.RareOutput[0].Amount != 1 || recipe.RareOutput[0].Chance != want.chance {
+			t.Fatalf("unexpected level %d rare output: %#v", level, recipe.RareOutput)
+		}
+	}
+	last, _ := RecipeForBuildingLevel("clay_quarry_run", 99)
+	if last.RequiredLevel != 12 {
+		t.Fatalf("expected level 12 clamp, got %#v", last)
 	}
 }
 

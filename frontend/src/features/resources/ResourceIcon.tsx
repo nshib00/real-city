@@ -9,6 +9,9 @@ type ResourceIconProps = {
 export const RESOURCE_ICON_ASSET_REVISION = 'midpoly-regen-2026-09-27'
 
 export function resourceIconUrl(id: string) {
+  if (id === 'kaolin') {
+    return '/assets/resources/icons/kaolin.svg'
+  }
   return `/assets/resources/icons/${id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`
 }
 

@@ -3,6 +3,7 @@ import { Building2, HandCoins, UsersRound } from 'lucide-react'
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import type { ResourceCatalogItem } from '../../../../shared/catalog/resources'
 import { useGameStore } from '../../game/state/useGameStore'
+import { useAuthStore } from '../auth/useAuthStore'
 import { IconButton } from '../../shared/ui'
 import { availablePopulation, useInventory } from '../economy/useInventory'
 import { resourceIconUrl } from '../resources/ResourceIcon'
@@ -33,10 +34,12 @@ export function ResourceBar() {
   const toggleResourceRegistry = useGameStore((state) => state.toggleResourceRegistry)
   const setAlliancePanelOpen = useGameStore((state) => state.setAlliancePanelOpen)
   const buildings = useGameStore((state) => state.buildings)
+  const player = useAuthStore((state) => state.player)
+  const ownerBuildings = buildings.filter((building) => building.owner === player?.id)
   const inventoryQuery = useInventory()
   const items = inventoryQuery.data?.inventory.items
   const coinCapacity = inventoryQuery.data?.inventory.coin_capacity
-  const buildingValue = buildingCapacityValue(buildings)
+  const buildingValue = buildingCapacityValue(ownerBuildings)
   const visiblePanelResources = orderedPanelResources
     .map((resource) => ({
       id: resource.id,
@@ -54,8 +57,8 @@ export function ResourceBar() {
         <strong>{buildingValue}</strong>
       </div>
       {pinnedResources.map(({ id, label, fallback, limitFallback, note }) => {
-        const amount = id === 'population' ? availablePopulation(items, buildings) : resourceAmount(items, id, fallback)
-        const limit = resourceLimit({ id, limitFallback, coinCapacity, buildings })
+        const amount = id === 'population' ? availablePopulation(items) : resourceAmount(items, id, fallback)
+        const limit = resourceLimit({ id, limitFallback, coinCapacity, buildings: ownerBuildings })
         const value = limit ? `${amount}/${limit}` : amount
         const warning = id === 'coins' && coinCapacity && amount >= coinCapacity * 0.9
         const title = note ? `${label}: ${value}, ${note}` : `${label}: ${value}`

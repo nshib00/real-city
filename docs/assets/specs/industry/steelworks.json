@@ -1,0 +1,399 @@
+{
+  "asset_id": "steelworks",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "documented_future_levels",
+  "display_name": "Сталеплавильный завод",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Огнестойкая печь, уголь и железные слитки",
+      "cost_resources": [
+        "coins",
+        "iron",
+        "coal"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Огнестойкая печь, уголь и железные слитки"
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Высокая печь с дополнительным поясом",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "brick"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Высокая печь с дополнительным поясом"
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Механическая подача и огнезащитный экран",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "iron_ingot"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Механическая подача и огнезащитный экран"
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Первый ковш, рельсовый путь и привод",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "iron_ingot"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Первый ковш, рельсовый путь и привод"
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Стальной корпус и защитные пластины",
+      "cost_resources": [
+        "coins",
+        "steel",
+        "armor_plates"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Стальной корпус и защитные пластины"
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Увеличенный ковш и больше заготовок",
+      "cost_resources": [
+        "coins",
+        "steel",
+        "armor_plates"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Увеличенный ковш и больше заготовок"
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Усиленная воздушная система",
+      "cost_resources": [
+        "coins",
+        "steel",
+        "armor_plates"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Усиленная воздушная система"
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Железобетонные щиты и балочная рама",
+      "cost_resources": [
+        "coins",
+        "reinforced_beams",
+        "super_mechanism"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Железобетонные щиты и балочная рама"
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Крупный огнезащитный корпус",
+      "cost_resources": [
+        "coins",
+        "reinforced_beams",
+        "super_mechanism"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Крупный огнезащитный корпус"
+      ]
+    },
+    {
+      "level": 10,
+      "visual_goal": "Полная линия плавки и проката",
+      "cost_resources": [
+        "coins",
+        "reinforced_beams",
+        "super_mechanism"
+      ],
+      "triangle_budget": {
+        "min": 500,
+        "max": 10000
+      },
+      "adds": [
+        "Полная линия плавки и проката"
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "material_map": {
+    "iron": {
+      "visible_as": "входные железные заготовки",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "coal": {
+      "visible_as": "угольный топливный лоток",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "огнестойкий цоколь и щиты",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "brick": {
+      "visible_as": "кладка высокой печи",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "mechanism": {
+      "visible_as": "воздушный привод и тележка",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "заготовки у входа",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "steel": {
+      "visible_as": "пояса, ковш и тележка",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "armor_plates": {
+      "visible_as": "жарозащитный экран",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_beams": {
+      "visible_as": "силовые опоры поздней печи",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "super_mechanism": {
+      "visible_as": "точный привод наддува",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Промышленный узел растёт в пределах клетки; новые узлы появляются ступенчато."
+    },
+    "materials": {
+      "rule": "Видимые материалы следуют стоимости уровня и сохраняют читаемую конструкцию."
+    },
+    "props": {
+      "rule": "Вход сырья, рабочий узел и выход продукта визуально разделены."
+    }
+  },
+  "state_policy": {
+    "active": {
+      "rule": "целая высокая печь, горячий ковш и заготовки"
+    },
+    "construction": {
+      "rule": "только нижний курс печи, верх и привод не установлены"
+    },
+    "damaged": {
+      "rule": "верх печи обрушен, ковш утрачен и кладка лежит на полу"
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "fantasy-worlds",
+      "stylized-style",
+      "isometric-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "prop-artist",
+      "hard-surface"
+    ],
+    "production": [
+      "materials",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1,
+        "triangle_budget": {
+          "min": 500,
+          "max": 10000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 220,
+          "max": 5500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 100,
+          "max": 3000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "blast_furnace",
+      "coal_feed",
+      "ingots",
+      "ladle"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/industry/steelworks",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/industry/steelworks.md",
+      "docs/art/visual-style-guide.md"
+    ],
+    "existing_generators": [
+      "tools/assets/blender/real_city/components/process_industry.py"
+    ],
+    "existing_assets": [
+      "frontend/public/assets/buildings/industry/paint_workshop",
+      "frontend/public/assets/terrain/tiles/grass.png"
+    ]
+  },
+  "notes": [
+    "Каталог содержит упрощённый уровень 1; уровни 2–10 описаны в проектной таблице здания."
+  ]
+}

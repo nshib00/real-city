@@ -1,0 +1,48 @@
+{
+  "asset_id": "crystal_greenhouse",
+  "category": "fields",
+  "kind": "building",
+  "display_name": "Кристальная оранжерея",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "stage01", "stage02", "stage03", "stage04", "active", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Низкая стеклянная оранжерея с каменным цоколем, медным каркасом и двумя кристальными ростками.", "cost_resources": ["coins", "glass", "star_glass", "copper_parts", "stone_block", "light_crystal", "mechanism"], "triangle_budget": {"min": 700, "max": 7500}},
+    {"level": 2, "visual_goal": "Выше купол, появляются боковые линзы, дополнительные ребра и три плодоносящих растения.", "cost_resources": ["coins", "glass", "star_glass", "copper_parts", "stone_block", "light_crystal", "mechanism", "emerald_dust"], "triangle_budget": {"min": 800, "max": 9500}},
+    {"level": 3, "visual_goal": "Сегментированный высокий купол с механическим вентилятором, контрфорсами и плотной посадкой.", "cost_resources": ["coins", "glass", "star_glass", "copper_parts", "stone_block", "light_crystal", "mechanism", "emerald_dust"], "triangle_budget": {"min": 1000, "max": 11500}},
+    {"level": 4, "visual_goal": "Звездные стеклянные секции, расширенная вентиляция, гравированный цоколь и центральный эолийский кристалл.", "cost_resources": ["coins", "glass", "star_glass", "copper_parts", "stone_block", "light_crystal", "mechanism", "emerald_dust", "aeolian-crystal"], "triangle_budget": {"min": 1200, "max": 13500}}
+  ],
+  "material_map": {
+    "glass": {"visible_as": "прозрачные секции стен и купола", "priority": "primary", "levels": [1, 2, 3, 4]},
+    "star_glass": {"visible_as": "фиолетовые сегменты фонаря и верхнего кольца", "priority": "accent", "levels": [1, 2, 3, 4]},
+    "copper_parts": {"visible_as": "несущие ребра купола, кольца, крепеж и линзы", "priority": "primary", "levels": [1, 2, 3, 4]},
+    "stone_block": {"visible_as": "кладка цоколя, угловые опоры и контрфорсы", "priority": "primary", "levels": [1, 2, 3, 4]},
+    "light_crystal": {"visible_as": "тонкие угловые светокристаллы и плоды", "priority": "accent", "levels": [1, 2, 3, 4]},
+    "mechanism": {"visible_as": "вентиляционный привод и механический блок", "priority": "secondary", "levels": [1, 2, 3, 4]},
+    "emerald_dust": {"visible_as": "изумрудные метки в рассаде и на цоколе", "priority": "accent", "levels": [2, 3, 4]},
+    "aeolian-crystal": {"visible_as": "центральный вытянутый аметистовый кристалл", "priority": "accent", "levels": [4]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Купол и цоколь становятся крупнее и сложнее, посадка гуще."},
+    "height": {"rule": "Высота фонаря растет на каждом уровне без изменения масштаба камеры."},
+    "materials": {"rule": "Стекло и медь сохраняются на каждом уровне; звездное стекло и дорогие вставки становятся заметнее."},
+    "props": {"rule": "Добавляются линзы, вентиляционные блоки, кристальные плоды и гравировка."},
+    "late_elements": {"rule": "Контрфорсы с уровня 3, эолийский кристалл только на уровне 4."},
+    "constraints": {"rule": "Растения должны оставаться видимыми сквозь стекло; весь объем внутри footprint 1x1."}
+  },
+  "state_policy": {
+    "construction": {"rule": "Собрано основание и часть стоек; неустановленные стеклянные панели лежат на земле, большая часть купола отсутствует."},
+    "stage01": {"rule": "Купол собран, внутри один маленький кристальный росток."},
+    "stage02": {"rule": "Несколько светлых стеблей и первые листья без плодов."},
+    "stage03": {"rule": "Пышные кристальные листья и первые немногочисленные плоды."},
+    "stage04": {"rule": "Зрелые светящиеся плоды; геометрия соответствует рабочему состоянию."},
+    "active": {"rule": "Каркас и купол целы, видны растения и плоды."},
+    "damaged": {"rule": "Отсутствует крупная секция купола и часть стен, ребра погнуты, осколки лежат на земле."},
+    "ruined": {"rule": "Остались низкий цоколь и обломки стекла, механизм поврежден, центральный кристалл сломан."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "vegetation-artist", "prop-artist"], "production": ["materials", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 700, "max": 13500}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 350, "max": 7500}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 150, "max": 4000}, "export": true}], "preserve": ["ground", "stone_plinth", "glass_dome", "copper_ribs", "crystal_fruit"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 8, "include_states": ["construction", "stage01", "stage02", "stage03", "stage04", "active", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/fields/crystal_greenhouse", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/fields/crystal-greenhouse.md", "docs/buildings/fields/fields-and-beds.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/fields/herb_bed", "frontend/public/assets/buildings/center/town_hall"]}
+}

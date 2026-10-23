@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import { useGameStore } from '../../game/state/useGameStore'
+import { useAuthStore } from '../auth/useAuthStore'
 import { Drawer, SegmentedControl } from '../../shared/ui'
 import { useInventory } from '../economy/useInventory'
 import { ResourceIcon } from './ResourceIcon'
@@ -37,6 +38,8 @@ export function ResourceRegistry() {
   const open = useGameStore((state) => state.uiPreferences.resourceRegistryOpen)
   const toggleResourceRegistry = useGameStore((state) => state.toggleResourceRegistry)
   const buildings = useGameStore((state) => state.buildings)
+  const player = useAuthStore((state) => state.player)
+  const ownerBuildings = buildings.filter((building) => building.owner === player?.id)
   const inventoryQuery = useInventory()
   const items = inventoryQuery.data?.inventory.items
   const coinCapacity = inventoryQuery.data?.inventory.coin_capacity
@@ -50,7 +53,7 @@ export function ResourceRegistry() {
           <article className="resource-registry-row" key={resource.name}>
             <ResourceIcon id={resource.id} label={resource.name} />
             <strong>{resource.name}</strong>
-            <span>{resourceValue({ id: resource.id, fallback: resource.fallback, limitFallback: resource.limitFallback, items, coinCapacity, buildings })}</span>
+            <span>{resourceValue({ id: resource.id, fallback: resource.fallback, limitFallback: resource.limitFallback, items, coinCapacity, buildings: ownerBuildings })}</span>
             <small>{resource.limit}</small>
             <em>{resource.source}</em>
           </article>

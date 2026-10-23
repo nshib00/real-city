@@ -1,0 +1,51 @@
+{
+  "asset_id": "concrete_plant",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "documented_future_levels",
+  "display_name": "Бетонный завод",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Открытая площадка с тремя отсеками сырья, смесителем и водой.", "cost_resources": ["coins", "brick", "cement"], "triangle_budget": {"min": 900, "max": 7500}, "adds": ["three_bins", "mixer", "water_tank"]},
+    {"level": 2, "visual_goal": "Настил, постоянные формы и регулярная отгрузка.", "cost_resources": ["coins", "brick", "cement"], "triangle_budget": {"min": 900, "max": 7800}, "adds": ["loading_forms"]},
+    {"level": 3, "visual_goal": "Каменный цоколь и закрытые желоба.", "cost_resources": ["coins", "glass", "iron_ingot"], "triangle_budget": {"min": 950, "max": 8200}, "adds": ["stone_footing", "feed_chutes"]},
+    {"level": 4, "visual_goal": "Топливный бак и первый механический привод.", "cost_resources": ["coins", "glass", "iron_ingot"], "triangle_budget": {"min": 1000, "max": 8500}, "adds": ["fuel_reservoir", "drive"]},
+    {"level": 5, "visual_goal": "Первый силос и медный водяной контур.", "cost_resources": ["coins", "mechanism", "steel"], "triangle_budget": {"min": 1050, "max": 9000}, "adds": ["silo", "water_pipe"]},
+    {"level": 6, "visual_goal": "Закрытая подача, кожух смесителя и рельсовая тележка.", "cost_resources": ["coins", "mechanism", "steel"], "triangle_budget": {"min": 1100, "max": 9500}, "adds": ["feed_canopy", "guard", "loading_cart"]},
+    {"level": 7, "visual_goal": "Высокий силос, стальные опоры и маркировка.", "cost_resources": ["coins", "mechanism", "steel"], "triangle_budget": {"min": 1150, "max": 10000}, "adds": ["tall_silo", "hazard_marks"]},
+    {"level": 8, "visual_goal": "Железобетонный корпус и крановая балка.", "cost_resources": ["coins", "reinforced_concrete", "reinforced_beams"], "triangle_budget": {"min": 1200, "max": 10500}, "adds": ["reinforced_base", "gantry"]},
+    {"level": 9, "visual_goal": "Второй силос и защищенная отгрузка.", "cost_resources": ["coins", "reinforced_concrete", "reinforced_beams"], "triangle_budget": {"min": 1250, "max": 11000}, "adds": ["second_silo"]},
+    {"level": 10, "visual_goal": "Двойной силос, точный привод и контроль смеси.", "cost_resources": ["coins", "reinforced_concrete", "reinforced_beams"], "triangle_budget": {"min": 1300, "max": 11500}, "adds": ["precision_control"]}
+  ],
+  "states": ["active", "construction", "damaged"],
+  "material_map": {
+    "brick": {"visible_as": "ранняя кладка технических оснований и отсека смесителя", "priority": "primary", "levels": [1, 2]},
+    "cement": {"visible_as": "белый порошок в отдельном бункере и бетонная продукция", "priority": "primary", "levels": [1, 2]},
+    "sand": {"visible_as": "светлый песок в отдельном сырьевом бункере", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+    "glass": {"visible_as": "стеклянная шкала водяного бака", "priority": "secondary", "levels": [3, 4]},
+    "iron_ingot": {"visible_as": "закрытые желоба, рама и топливный бак", "priority": "primary", "levels": [3, 4]},
+    "mechanism": {"visible_as": "привод барабана, тележка и точный контроль", "priority": "primary", "levels": [5, 6, 7]},
+    "steel": {"visible_as": "силос, защитные стойки и рама", "priority": "primary", "levels": [5, 6, 7]},
+    "reinforced_concrete": {"visible_as": "плита, закрытый кожух и силосы", "priority": "primary", "levels": [8, 9, 10]},
+    "reinforced_beams": {"visible_as": "крановая балка и несущие опоры", "priority": "primary", "levels": [8, 9, 10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "От открытого ручного двора к плотному бетонному узлу в пределах клетки."},
+    "height": {"rule": "Силосы и кран растут при постоянной изометрической камере."},
+    "materials": {"rule": "Кирпич и дерево постепенно уступают стали и железобетону."},
+    "props": {"rule": "Видимы три сырьевых потока, вода, смеситель и выпуск блоков."}
+  },
+  "state_policy": {
+    "active": {"rule": "Рабочий барабан, заполненные бункеры, подключенная вода и готовые блоки."},
+    "construction": {"rule": "Каркас без барабана и большинства поздних узлов; неустановленные детали лежат на площадке."},
+    "damaged": {"rule": "Смеситель и силос обрушены, отгрузка разбита, сырье рассыпано."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 900, "max": 11500}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 400, "max": 6500}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 200, "max": 3500}, "export": true}], "preserve": ["ground", "mixer", "three_bins", "water_tank", "silo", "loading_bed"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["active", "construction", "damaged"]}, "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/concrete_plant", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/industry/concrete-plant.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/components/cement_workshop.py"], "existing_assets": ["frontend/public/assets/buildings/industry/cement_workshop", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Уровни 1–10 и три состояния заданы docs/buildings/industry/concrete-plant.md.", "Каталог на 2026-10-18 содержит только упрощенный уровень 1; баланс требует отдельной синхронизации."]
+}

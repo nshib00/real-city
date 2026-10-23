@@ -1,0 +1,393 @@
+{
+  "asset_id": "military_factory",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "documented_future_levels",
+  "display_name": "Военный завод",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Невысокий бетонный защищённый цех с ручной подачей и герметичным смесителем.",
+      "cost_resources": [
+        "coins",
+        "steel",
+        "concrete"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "plain_shell"
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Расширенный корпус и отдельный закрытый приём сырья.",
+      "cost_resources": [
+        "coins",
+        "steel",
+        "concrete"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "receiving_bay"
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Кирпичная облицовка, первая бронеполоса и укреплённая дверь.",
+      "cost_resources": [
+        "coins",
+        "armor_plates",
+        "brick"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "brick_armor"
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Дополнительное топливное отделение и первый механический привод.",
+      "cost_resources": [
+        "coins",
+        "armor_plates",
+        "brick"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "drive"
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Железобетонный корпус, механизм и стойка защитных пластин.",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "reinforced_concrete"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "mechanized_cell"
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Увеличенная сборочная ячейка и два закрытых трубопровода.",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "reinforced_concrete"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "sealed_transfer"
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Вытяжка и усиленный производственный контур.",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "reinforced_concrete"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "extractor"
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Усиленные балки, электроника и дистанционный пульт.",
+      "cost_resources": [
+        "coins",
+        "reinforced_beam",
+        "electronics"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "remote_control"
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Защищённое хранение готовой продукции и точные приборы.",
+      "cost_resources": [
+        "coins",
+        "reinforced_beam",
+        "electronics"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "secure_storage"
+      ]
+    },
+    {
+      "level": 10,
+      "visual_goal": "Максимально усиленный корпус с плотной бронёй и полной автоматизацией.",
+      "cost_resources": [
+        "coins",
+        "reinforced_beam",
+        "electronics"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 9000
+      },
+      "adds": [
+        "master_hall"
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "material_map": {
+    "fuel": {
+      "visible_as": "отдельный закрытый топливный бак с маркировкой",
+      "priority": "primary",
+      "levels": [1]
+    },
+    "steel": {
+      "visible_as": "каркас, бронеполосы, дверь и крышка смесителя",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "concrete": {
+      "visible_as": "ранний защитный корпус и пол",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "armor_plates": {
+      "visible_as": "накладная броня и защитный экран",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "brick": {
+      "visible_as": "кирпичная облицовка топливного разделителя и корпуса",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "mechanism": {
+      "visible_as": "привод смесителя и герметичный перенос",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "несущая оболочка цеха и крыша хранилища",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_beam": {
+      "visible_as": "усиленные балки и рёбра крыши",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "electronics": {
+      "visible_as": "дистанционный пульт, приборы и световые панели",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Корпус шире и выше на каждом уровне при неизменной камере и клетке."
+    },
+    "materials": {
+      "rule": "Бетон и сталь переходят к кирпичной броне, железобетону, усиленным балкам и электронике."
+    },
+    "props": {
+      "rule": "Закрытые ёмкости серы, топлива, ткань, смеситель и запечатанная продукция остаются раздельными."
+    }
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Целый закрытый цех, запечатанный смеситель, отмеченные хранилища."
+    },
+    "construction": {
+      "rule": "Отсутствует верхняя половина стен и вся кровля; видны каркас и неустановленные панели."
+    },
+    "damaged": {
+      "rule": "Большой фронтальный пролом, потеря правой стены и половины крыши, упавшие панели и смеситель."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "fantasy-worlds",
+      "stylized-style",
+      "isometric-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "hard-surface",
+      "prop-artist"
+    ],
+    "production": [
+      "materials",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1,
+        "triangle_budget": {
+          "min": 700,
+          "max": 9000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 300,
+          "max": 5000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 150,
+          "max": 2800
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "shell",
+      "mixer",
+      "sealed_tanks",
+      "output_crates"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/industry/military_factory",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/industry/military-factory.md",
+      "docs/art/visual-style-guide.md"
+    ],
+    "existing_generators": [
+      "tools/assets/blender/real_city/components/concrete_plant.py"
+    ],
+    "existing_assets": [
+      "frontend/public/assets/buildings/industry/concrete_plant",
+      "frontend/public/assets/terrain/tiles/grass.png"
+    ]
+  },
+  "notes": [
+    "Каталог содержит упрощённый уровень 1 с иными затратами; для визуальной прогрессии уровней 1–10 использована документация.",
+    "Без открытой взрывчатки или буквальных ракет."
+  ]
+}

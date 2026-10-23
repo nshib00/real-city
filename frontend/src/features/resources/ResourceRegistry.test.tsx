@@ -74,6 +74,23 @@ describe('ResourceRegistry', () => {
     expect(row).toBeTruthy()
     expect(row?.textContent).toContain('0')
   })
+
+  it('shows fiber claimed from a resource guardian', () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    queryClient.setQueryData(['economy', 'inventory'], {
+      inventory: {
+        player_id: 'test-player',
+        items: [{ resource: 'fiber', amount: 4 }],
+        coin_capacity: 2000,
+        updated_at: '2026-10-16T00:00:00Z',
+      },
+    })
+
+    render(<QueryClientProvider client={queryClient}><ResourceRegistry /></QueryClientProvider>)
+    fireEvent.click(screen.getByText('Сырье'))
+
+    expect(screen.getByText('Волокно').closest('.resource-registry-row')?.textContent).toContain('4')
+  })
 })
 
 function inventoryPayload(coins: number, population: number, coinCapacity: number) {

@@ -1,0 +1,71 @@
+{
+  "asset_id": "tile_factory",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "implemented",
+  "display_name": "Черепичный завод",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Кирпичная печь, ручная форма, открытая сушка и малая партия черепицы.", "cost_resources": ["coins", "brick", "clay"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["kiln", "hand_mold", "drying_rack"]},
+    {"level": 2, "visual_goal": "Вторая сушильная стойка и кирпичная тяговая труба.", "cost_resources": ["coins", "brick", "clay"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["chimney", "second_rack"]},
+    {"level": 3, "visual_goal": "Каменные контрфорсы печи и железные формовочные матрицы.", "cost_resources": ["coins", "stone", "iron_ingot"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["stone_buttress", "iron_molds"]},
+    {"level": 4, "visual_goal": "Усиленный корпус и первый механический пресс черепицы.", "cost_resources": ["coins", "stone", "iron_ingot"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["press"]},
+    {"level": 5, "visual_goal": "Медный привод, железная дверца и защитные пояса печи.", "cost_resources": ["coins", "mechanism", "copper_parts"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["copper_drive", "kiln_guard"]},
+    {"level": 6, "visual_goal": "Третья сушильная стойка, навес и больший выход черепицы.", "cost_resources": ["coins", "mechanism", "copper_parts"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["third_rack", "canopy"]},
+    {"level": 7, "visual_goal": "Крупная печь с усиленным прессом и упорядоченным складом.", "cost_resources": ["coins", "mechanism", "copper_parts"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["larger_kiln"]},
+    {"level": 8, "visual_goal": "Железобетонный корпус, закрытая подача, вытяжка и стеклянный прибор.", "cost_resources": ["coins", "reinforced_concrete", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["concrete_shell", "closed_feed", "glass_gauge"]},
+    {"level": 9, "visual_goal": "Плотная линия с защищённым хранением готовой продукции.", "cost_resources": ["coins", "reinforced_concrete", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["protected_store"]},
+    {"level": 10, "visual_goal": "Крупнейшая закрытая линия и медный знак на завершённой печи.", "cost_resources": ["coins", "reinforced_concrete", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["master_kiln"]}
+  ],
+  "states": ["active", "construction", "damaged"],
+  "material_map": {
+    "clay": {"visible_as": "сырая черепица в формах и на сушильных стойках", "priority": "primary", "levels": [1, 2]},
+    "brick": {"visible_as": "кладка обжиговой печи и трубы", "priority": "primary", "levels": [1, 2]},
+    "coal": {"visible_as": "топливный отсек у печи по каталогу и рецепту", "priority": "secondary", "levels": [1]},
+    "stone": {"visible_as": "каменные контрфорсы и основание печи", "priority": "primary", "levels": [3, 4]},
+    "iron_ingot": {"visible_as": "железные матрицы, пресс и защитная дверца", "priority": "primary", "levels": [3, 4]},
+    "mechanism": {"visible_as": "привод пресса, закрытая линия и вытяжка", "priority": "primary", "levels": [5, 6, 7, 8, 9, 10]},
+    "copper_parts": {"visible_as": "медный привод прессовальной линии", "priority": "primary", "levels": [5, 6, 7]},
+    "reinforced_concrete": {"visible_as": "жаростойкий корпус и защищённое хранилище", "priority": "primary", "levels": [8, 9, 10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Печь и выпуск черепицы растут при постоянной камере и клетке."},
+    "materials": {"rule": "Кирпич и глина дополняются камнем, железом, медью и железобетоном."},
+    "props": {"rule": "Добавляются труба, сушильные стойки, пресс, привод, вытяжка и защищённый склад."}
+  },
+  "state_policy": {
+    "active": {"rule": "Целая печь, формовка и ряды сырой и готовой черепицы."},
+    "construction": {"rule": "Половинная печь без свода и трубы, неустановленные матрицы и часть сушильных рам."},
+    "damaged": {"rule": "Пробитая печь без свода, упавшая труба, обломанные формы и рассыпанная черепица."}
+  },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"],
+    "asset_type": ["prop-artist", "hard-surface"],
+    "production": ["materials", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1, "triangle_budget": {"min": 700, "max": 9000}, "export": true},
+      {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 300, "max": 5000}, "export": true},
+      {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 150, "max": 2800}, "export": true}
+    ],
+    "preserve": ["ground", "kiln", "forming_press", "drying_racks", "tile_output"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["active", "construction", "damaged"]},
+    "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/tile_factory", "use_public_glb": true},
+  "references": {
+    "docs": ["docs/buildings/industry/tile-factory.md", "docs/art/visual-style-guide.md"],
+    "existing_generators": ["tools/assets/blender/real_city/components/brick_yard.py"],
+    "existing_assets": ["frontend/public/assets/buildings/industry/brick_yard", "frontend/public/assets/terrain/tiles/grass.png"]
+  },
+  "notes": ["Уровни 1–10 подключены к каталогу с ценой и характеристиками по docs/buildings/industry/tile-factory.md."]
+}

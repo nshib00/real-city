@@ -4,6 +4,8 @@ import { listProductionJobs, listProductionRecipes, patchProductionJob, startPro
 import { useGameStore } from '../../game/state/useGameStore'
 import { useAuthStore } from '../auth/useAuthStore'
 import { ResourceIcon } from '../resources/ResourceIcon'
+import { formatRemaining } from '../../shared/time/formatRemaining'
+import { updateProductionCache } from './updateProductionCache'
 
 export function ProductionPanel() {
   const queryClient = useQueryClient()
@@ -13,61 +15,62 @@ export function ProductionPanel() {
   const jobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, retry: false, refetchInterval: 5000 })
   const startMutation = useMutation({
     mutationFn: startProduction,
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['production'] })
-      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
-    },
+    onSuccess: (result) => updateProductionCache(queryClient, result),
   })
   const patchMutation = useMutation({
     mutationFn: ({ id, action }: { id: string; action: 'complete' | 'cancel' }) => patchProductionJob(id, action),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['production'] })
-      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
-    },
+    onSuccess: (result) => updateProductionCache(queryClient, result),
   })
 
   const recipes = recipesQuery.data?.recipes ?? []
+  const recipeIds = [...new Set(recipes.map((recipe) => recipe.id))]
   const jobs = jobsQuery.data?.jobs ?? []
 
   return (
     <aside className="production-panel" aria-label="Производство">
       <h2>Производство</h2>
       <div className="production-recipes">
-        {recipes.map((recipe) => (
-          <article className="production-card" key={recipe.id}>
-            <strong>{recipe.name}</strong>
-            <span>{formatSeconds(recipe.duration_sec)} · рабочих {recipe.workers}</span>
-            <div className="production-cost">
-              {recipe.input.map((item) => (
-                <span key={`${recipe.id}-${item.resource}`}>
-                  <ResourceIcon id={item.resource} label={item.resource} /> {item.amount}
-                </span>
-              ))}
-              {recipe.output.map((item) => (
-                <span key={`${recipe.id}-out-${item.resource}`}>
-                  +<ResourceIcon id={item.resource} label={item.resource} /> {item.amount}
-                </span>
-              ))}
-              {recipe.rare_output.map((item) => (
-                <span key={`${recipe.id}-rare-${item.resource}`}>
-                  +<ResourceIcon id={item.resource} label={item.resource} /> {item.amount} · {formatChance(item.chance)}
-                </span>
-              ))}
-            </div>
-            <button
-              type="button"
-              disabled={!findProductionBuildingId(buildings, player?.id, recipe.building_type)}
-              onClick={() => {
-                const buildingId = findProductionBuildingId(buildings, player?.id, recipe.building_type)
-                if (buildingId) {
-                  startMutation.mutate({ building_id: buildingId, recipe_id: recipe.id })
-                }
-              }}
-            >
-              Запустить
-            </button>
-          </article>
-        ))}
+        {recipeIds.map((recipeId) => {
+          const building = buildings.find((item) => item.owner === player?.id && item.status === 'active' && recipes.some((recipe) => recipe.id === recipeId && recipe.building_type === item.kind))
+          const recipe = recipes.find((item) => item.id === recipeId && item.required_level === building?.level)
+            ?? recipes.find((item) => item.id === recipeId && item.required_level === 0)
+            ?? recipes.find((item) => item.id === recipeId)
+          if (!recipe) return null
+          return (
+            <article className="production-card" key={recipe.id}>
+              <strong>{recipe.name}</strong>
+              <span>{formatSeconds(recipe.duration_sec)} · рабочих {recipe.workers}</span>
+              <div className="production-cost">
+                {recipe.input.map((item) => (
+                  <span key={`${recipe.id}-${item.resource}`}>
+                    <ResourceIcon id={item.resource} label={item.resource} /> {item.amount}
+                  </span>
+                ))}
+                {recipe.output.map((item) => (
+                  <span key={`${recipe.id}-out-${item.resource}`}>
+                    +<ResourceIcon id={item.resource} label={item.resource} /> {item.amount}
+                  </span>
+                ))}
+                {recipe.rare_output.map((item) => (
+                  <span key={`${recipe.id}-rare-${item.resource}`}>
+                    +<ResourceIcon id={item.resource} label={item.resource} /> {item.amount} · {formatChance(item.chance)}
+                  </span>
+                ))}
+              </div>
+              <button
+                type="button"
+                disabled={!building}
+                onClick={() => {
+                  if (building) {
+                    startMutation.mutate({ building_id: building.id, recipe_id: recipe.id })
+                  }
+                }}
+              >
+                Запустить
+              </button>
+            </article>
+          )
+        })}
       </div>
       <div className="production-jobs">
         {jobs.map((job) => (
@@ -86,13 +89,8 @@ export function ProductionPanel() {
 
 function formatSeconds(seconds: number) {
   const minutes = Math.floor(seconds / 60)
-  return `${minutes} мин.`
-}
-
-function formatRemaining(ms: number) {
-  const seconds = Math.max(0, Math.ceil(ms / 1000))
-  const minutes = Math.floor(seconds / 60)
-  return `${minutes}:${String(seconds % 60).padStart(2, '0')}`
+  const remainingSeconds = seconds % 60
+  return remainingSeconds ? `${minutes} мин. ${remainingSeconds} сек.` : `${minutes} мин.`
 }
 
 function formatChance(chance: number) {
@@ -105,9 +103,5 @@ const statusLabel = {
   completed: 'собрано',
   cancelled: 'отменено',
 } as const
-
-function findProductionBuildingId(buildings: ReturnType<typeof useGameStore.getState>['buildings'], playerId: string | undefined, kind: string) {
-  return buildings.find((building) => building.owner === playerId && building.status === 'active' && building.kind === kind)?.id ?? null
-}
 
 export { formatSeconds as productionFormatSeconds }

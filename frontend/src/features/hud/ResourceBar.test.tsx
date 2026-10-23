@@ -5,10 +5,13 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import type { BuildingKind, PlacedBuilding } from '../../game/state/useGameStore'
 import { useGameStore } from '../../game/state/useGameStore'
+import { useAuthStore } from '../auth/useAuthStore'
+import type { Player } from '../auth/types'
 import { ResourceBar } from './ResourceBar'
 
 describe('ResourceBar', () => {
   beforeEach(() => {
+    useAuthStore.setState({ player: { id: 'test' } as Player })
     useGameStore.setState({
       buildings: [],
       uiPreferences: { compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
@@ -107,6 +110,7 @@ describe('ResourceBar', () => {
         activeBuilding('road', 1),
         activeBuilding('wooden_wall', 1),
         { ...activeBuilding('market', 1), state: 'ruined' },
+        { ...activeBuilding('dugout', 3), id: 'foreign-dugout', owner: 'foreign' },
       ],
     })
 
@@ -116,7 +120,7 @@ describe('ResourceBar', () => {
       </QueryClientProvider>,
     )
 
-    expect(screen.getByLabelText('Жители: 3/16')).toBeTruthy()
+    expect(screen.getByLabelText('Жители: 0/16')).toBeTruthy()
     expect(screen.getByLabelText('Постройки: 3/11')).toBeTruthy()
   })
 })

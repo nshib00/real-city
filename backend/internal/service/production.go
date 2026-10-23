@@ -16,14 +16,15 @@ import (
 )
 
 type ProductionService struct {
-	repo      EconomyRepository
-	economy   *EconomyService
-	log       *slog.Logger
-	now       func() time.Time
-	events    *EventBus
-	actions   ActionRepository
-	buildings BuildingRepository
-	randFloat func() float64
+	repo       EconomyRepository
+	economy    *EconomyService
+	log        *slog.Logger
+	now        func() time.Time
+	events     *EventBus
+	actions    ActionRepository
+	buildings  BuildingRepository
+	experience *ExperienceService
+	randFloat  func() float64
 }
 
 func NewProductionService(repo EconomyRepository, economyService *EconomyService, log *slog.Logger) *ProductionService {
@@ -42,9 +43,42 @@ func (s *ProductionService) SetBuildings(buildings BuildingRepository) {
 	s.buildings = buildings
 }
 
+func (s *ProductionService) SetExperience(experience *ExperienceService) {
+	s.experience = experience
+}
+
 func (s *ProductionService) Recipes(ctx context.Context) ([]economy.ProductionRecipe, error) {
 	_ = ctx
-	return catalog.ProductionRecipes, nil
+	recipes := make([]economy.ProductionRecipe, 0, len(catalog.ProductionRecipes)+23)
+	for _, recipe := range catalog.ProductionRecipes {
+		if minimum, ok := catalog.IndustryExtraRecipeMinimum(recipe.ID); ok {
+			for level := minimum; level <= 10; level++ {
+				levelRecipe, _ := catalog.RecipeForBuildingLevel(recipe.ID, level)
+				recipes = append(recipes, levelRecipe)
+			}
+			continue
+		}
+		if catalog.IsIndustryLevelRecipe(recipe.ID) {
+			for level := 1; level <= 10; level++ {
+				levelRecipe, _ := catalog.RecipeForBuildingLevel(recipe.ID, level)
+				recipes = append(recipes, levelRecipe)
+			}
+			continue
+		}
+		if recipe.ID != "planks_from_wood" && recipe.ID != "clay_quarry_run" {
+			recipes = append(recipes, recipe)
+			continue
+		}
+		maxLevel := 13
+		if recipe.ID == "clay_quarry_run" {
+			maxLevel = 12
+		}
+		for level := 1; level <= maxLevel; level++ {
+			levelRecipe, _ := catalog.RecipeForBuildingLevel(recipe.ID, level)
+			recipes = append(recipes, levelRecipe)
+		}
+	}
+	return recipes, nil
 }
 
 func (s *ProductionService) List(ctx context.Context, playerID player.ID) ([]economy.ProductionJob, error) {
@@ -89,7 +123,7 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 	}
 	inventory, err := s.economy.Spend(ctx, playerID, economy.WithFuelCost(recipe.Input, recipe), "production:"+recipe.ID)
 	if err != nil {
-		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:refund:"+recipe.ID)
+		_ = s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:refund:"+recipe.ID)
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
 	now := s.now()
@@ -105,7 +139,7 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 		UpdatedAt:   now,
 	}
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
-		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:refund:"+recipe.ID)
+		_ = s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:refund:"+recipe.ID)
 		_, _, _ = s.economy.Add(ctx, playerID, economy.WithFuelCost(recipe.Input, recipe), "production:refund:"+recipe.ID)
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
@@ -169,16 +203,29 @@ func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, 
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
 	if previousState == economy.ProductionRunning {
-		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:complete:"+recipe.ID)
+		if err := s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:complete:"+recipe.ID); err != nil {
+			return economy.ProductionJob{}, economy.Inventory{}, err
+		}
 	}
 	output := append([]economy.ResourceAmount(nil), recipe.Output...)
-	output = append(output, s.rollRareOutput(recipe)...)
+	rareOutput := s.rollRareOutput(recipe)
+	output = append(output, rareOutput...)
 	inventory, _, err := s.economy.Add(ctx, playerID, output, "production:"+recipe.ID)
 	if err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
+	if s.experience != nil && s.buildings != nil {
+		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+		if err != nil {
+			return economy.ProductionJob{}, economy.Inventory{}, err
+		}
+		reward := catalog.ExperienceForBuilding(item.Type, item.Level).Work
+		if err := s.experience.Award(ctx, playerID, reward, "production:complete", "production:"+string(job.ID)+":complete"); err != nil {
+			return economy.ProductionJob{}, economy.Inventory{}, err
+		}
+	}
 	s.publish(job, inventory)
-	s.log.Info("economy.production.completed", "event", "economy.production.completed", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID)
+	s.log.Info("economy.production.completed", "event", "economy.production.completed", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID, "output", output, "rare_output", rareOutput, "rare_chances", recipe.RareOutput)
 	return job, inventory, nil
 }
 
@@ -231,7 +278,9 @@ func (s *ProductionService) ReadyAt(ctx context.Context, playerID player.ID, id 
 	if err := s.repo.SaveProductionJob(ctx, job); err != nil {
 		return economy.ProductionJob{}, err
 	}
-	s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:ready:"+recipe.ID)
+	if err := s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:ready:"+recipe.ID); err != nil {
+		return economy.ProductionJob{}, err
+	}
 	s.log.Info("economy.production.ready", "event", "economy.production.ready", "player_id", playerID, "job_id", job.ID, "recipe_id", job.RecipeID)
 	return job, nil
 }
@@ -275,7 +324,9 @@ func (s *ProductionService) Cancel(ctx context.Context, playerID player.ID, id e
 		return economy.ProductionJob{}, err
 	}
 	if recipe, ok := s.recipeForJob(ctx, job); ok {
-		s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:cancel:"+recipe.ID)
+		if err := s.releasePopulation(ctx, playerID, recipe.Workers, "production:workers:cancel:"+recipe.ID); err != nil {
+			return economy.ProductionJob{}, err
+		}
 	}
 	s.log.Info("economy.production.cancelled", "event", "economy.production.cancelled", "player_id", playerID, "job_id", job.ID)
 	return job, nil
@@ -292,11 +343,12 @@ func (s *ProductionService) reservePopulation(ctx context.Context, playerID play
 	return nil
 }
 
-func (s *ProductionService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) {
+func (s *ProductionService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) error {
 	if amount <= 0 || s.economy == nil {
-		return
+		return nil
 	}
-	_, _, _ = s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	_, _, err := s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	return err
 }
 
 func (s *ProductionService) recipeForJob(ctx context.Context, job economy.ProductionJob) (economy.ProductionRecipe, bool) {

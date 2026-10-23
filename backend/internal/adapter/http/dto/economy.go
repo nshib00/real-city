@@ -42,14 +42,15 @@ type ResourceNodeResponse struct {
 }
 
 type ProductionRecipeResponse struct {
-	ID           string               `json:"id"`
-	Name         string               `json:"name"`
-	BuildingType string               `json:"building_type"`
-	DurationSec  int                  `json:"duration_sec"`
-	Workers      int                  `json:"workers"`
-	Input        []ResourceAmount     `json:"input"`
-	Output       []ResourceAmount     `json:"output"`
-	RareOutput   []RareResourceAmount `json:"rare_output"`
+	ID            string               `json:"id"`
+	Name          string               `json:"name"`
+	BuildingType  string               `json:"building_type"`
+	RequiredLevel int                  `json:"required_level"`
+	DurationSec   int                  `json:"duration_sec"`
+	Workers       int                  `json:"workers"`
+	Input         []ResourceAmount     `json:"input"`
+	Output        []ResourceAmount     `json:"output"`
+	RareOutput    []RareResourceAmount `json:"rare_output"`
 }
 
 type RareResourceAmount struct {
@@ -146,14 +147,15 @@ func ResourceNodes(items []economy.ResourceNode) []ResourceNodeResponse {
 
 func ProductionRecipe(item economy.ProductionRecipe) ProductionRecipeResponse {
 	return ProductionRecipeResponse{
-		ID:           item.ID,
-		Name:         item.Name,
-		BuildingType: item.BuildingType,
-		DurationSec:  int(item.Duration.Seconds()),
-		Workers:      item.Workers,
-		Input:        resourceAmounts(item.Input),
-		Output:       resourceAmounts(item.Output),
-		RareOutput:   rareResourceAmounts(item.RareOutput),
+		ID:            item.ID,
+		Name:          item.Name,
+		BuildingType:  item.BuildingType,
+		RequiredLevel: item.RequiredLevel,
+		DurationSec:   int(item.Duration.Seconds()),
+		Workers:       item.Workers,
+		Input:         resourceAmounts(economy.WithFuelCost(item.Input, item)),
+		Output:        resourceAmounts(item.Output),
+		RareOutput:    rareResourceAmounts(item.RareOutput),
 	}
 }
 

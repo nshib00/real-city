@@ -30,6 +30,7 @@ export type ProductionRecipeResponse = {
   id: string
   name: string
   building_type: string
+  required_level: number
   duration_sec: number
   workers: number
   input: InventoryItem[]

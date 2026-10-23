@@ -1,0 +1,50 @@
+{
+  "asset_id": "brick_yard",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "planned",
+  "display_name": "Кирпичный двор",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Ручная глиняная печь, формы, мокрые заготовки и малый двор.", "cost_resources": ["coins", "planks", "clay"], "triangle_budget": {"min": 900, "max": 6500}, "adds": ["clay_kiln", "drying_rows"]},
+    {"level": 2, "visual_goal": "Больше сушильных рядов и простой деревянный навес.", "cost_resources": ["coins", "planks", "clay"], "triangle_budget": {"min": 950, "max": 6800}, "adds": ["drying_canopy", "brick_stacks"]},
+    {"level": 3, "visual_goal": "Каменный фундамент, отдельная угольная корзина и дымоход.", "cost_resources": ["coins", "stone", "stone_block"], "triangle_budget": {"min": 1000, "max": 7200}, "adds": ["stone_foundation", "coal_bin", "chimney"]},
+    {"level": 4, "visual_goal": "Кирпичная кладка печи и защитный бортик с тележкой.", "cost_resources": ["coins", "stone", "stone_block"], "triangle_budget": {"min": 1100, "max": 7600}, "adds": ["brick_facing", "heat_guard", "cart"]},
+    {"level": 5, "visual_goal": "Железные дверцы, крепления и отдельный склад готовых кирпичей.", "cost_resources": ["coins", "brick", "iron_ingot"], "triangle_budget": {"min": 1200, "max": 8000}, "adds": ["iron_door", "covered_storage"]},
+    {"level": 6, "visual_goal": "Удлинённая печь, высокий дымоход, рельсовая тележка и сортировочный стол.", "cost_resources": ["coins", "brick", "iron_ingot"], "triangle_budget": {"min": 1300, "max": 8500}, "adds": ["long_kiln", "rail_cart", "sorting_table"]},
+    {"level": 7, "visual_goal": "Усиленная кладка, железные обручи и защищённая топливная зона.", "cost_resources": ["coins", "brick", "iron_ingot"], "triangle_budget": {"min": 1400, "max": 9000}, "adds": ["iron_hoops", "fuel_bay"]},
+    {"level": 8, "visual_goal": "Компактный привод подачи, вытяжка и стальные защитные детали.", "cost_resources": ["coins", "reinforced_concrete", "mechanism"], "triangle_budget": {"min": 1500, "max": 9400}, "adds": ["feed_mechanism", "extractor", "concrete_base"]},
+    {"level": 9, "visual_goal": "Железобетонное основание и разделённый склад двух сортов кирпича.", "cost_resources": ["coins", "reinforced_concrete", "mechanism"], "triangle_budget": {"min": 1600, "max": 9800}, "adds": ["reinforced_shell", "sorted_storage"]},
+    {"level": 10, "visual_goal": "Максимальная печь с защищённой механической подачей и выразительным дымоходом.", "cost_resources": ["coins", "reinforced_concrete", "mechanism"], "triangle_budget": {"min": 1700, "max": 10500}, "adds": ["protected_feed", "final_chimney", "full_storage"]}
+  ],
+  "states": ["active", "construction", "damaged"],
+  "material_map": {
+    "clay": {"visible_as": "сырая глина, формы и ранняя печь", "priority": "primary", "levels": [1, 2]},
+    "planks": {"visible_as": "настилы с заготовками и стойки навеса", "priority": "primary", "levels": [1, 2]},
+    "stone": {"visible_as": "каменное основание печи", "priority": "primary", "levels": [3, 4]},
+    "stone_block": {"visible_as": "тесаные опоры жаровой зоны", "priority": "secondary", "levels": [3, 4]},
+    "brick": {"visible_as": "кладка печи и готовые штабели", "priority": "primary", "levels": [5, 6, 7]},
+    "iron_ingot": {"visible_as": "дверцы, обручи и рельсы", "priority": "secondary", "levels": [5, 6, 7]},
+    "reinforced_concrete": {"visible_as": "силовое основание и защитный кожух", "priority": "primary", "levels": [8, 9, 10]},
+    "mechanism": {"visible_as": "колёса и привод подачи", "priority": "primary", "levels": [8, 9, 10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Печь, сушильная зона и склад уплотняются внутри одной клетки."},
+    "height": {"rule": "Дымоход и вытяжка растут по уровням без изменения камеры."},
+    "materials": {"rule": "Глина и доски сменяются камнем, кирпичом, железом и железобетоном согласно таблице баланса."},
+    "props": {"rule": "Формы, тележка, уголь, поддоны, рельсы и привод показывают технологический рост."},
+    "constraints": {"rule": "Печь остаётся открытым производственным двором, а не крупным заводом; основание одинаково в состояниях."}
+  },
+  "state_policy": {
+    "active": {"rule": "Готовая печь и рабочие ряды с крупными функциональными деталями."},
+    "construction": {"rule": "Половина корпуса и неполный навес, дымоход не завершён; материалы лежат на земле."},
+    "damaged": {"rule": "Обвалена крупная часть корпуса и дымохода, сломан навес, обломки на земле."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 900, "max": 10500}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 450, "max": 6000}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 220, "max": 3200}, "export": true}], "preserve": ["ground", "kiln", "chimney", "drying_racks", "storage"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["active", "construction", "damaged"]}, "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/brick_yard", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/industry/brick-yard.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/generate_glass_workshop_models.py"], "existing_assets": ["frontend/public/assets/buildings/industry/glass_workshop", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Уровни 1–10 и баланс взяты из docs/buildings/industry/brick-yard.md.", "На 2026-10-17 brick_yard отсутствует в игровом каталоге; brick_kiln является отдельным одноуровневым типом. Генерация ассетов не меняет игровой каталог."]
+}

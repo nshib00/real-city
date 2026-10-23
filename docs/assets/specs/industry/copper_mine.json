@@ -1,0 +1,51 @@
+{
+  "asset_id": "copper_mine",
+  "category": "industry",
+  "kind": "building",
+  "display_name": "Медный рудник",
+  "catalog_level_policy": "documented_future_levels",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Дощатая крепь, каменистая штольня, крупные медно-зелёные прожилки и простая вагонетка.", "cost_resources": ["coins", "planks", "stone"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["timber_portal", "copper_veins", "ore_cart"]},
+    {"level": 2, "visual_goal": "Плотнее укреплённый вход, корзины руды и дополнительный настил.", "cost_resources": ["coins", "planks", "stone"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["ore_baskets", "plank_walkway"]},
+    {"level": 3, "visual_goal": "Тёсаные каменные опоры, верёвочный привод и рельсовая подача.", "cost_resources": ["coins", "stone_block", "rope"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["stone_portal", "rope_drive"]},
+    {"level": 4, "visual_goal": "Усиленная крепь, глубокие рельсы и сортировочный пост.", "cost_resources": ["coins", "stone_block", "rope"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["deep_track", "sorting_table"]},
+    {"level": 5, "visual_goal": "Кирпичная обкладка и первый механический ворот.", "cost_resources": ["coins", "brick", "mechanism"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["brick_portal", "mechanical_hoist"]},
+    {"level": 6, "visual_goal": "Стальной привод, лебёдка и защищённое хранение топлива.", "cost_resources": ["coins", "brick", "mechanism"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["steel_winch", "fuel_bay"]},
+    {"level": 7, "visual_goal": "Расширенный привод, вентиляция и больше медной руды у выхода.", "cost_resources": ["coins", "brick", "mechanism"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["ventilation", "ore_sifter"]},
+    {"level": 8, "visual_goal": "Железобетонные щёки портала, стальные фермы и закрытые насосные трубы.", "cost_resources": ["coins", "reinforced_concrete", "steel"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["reinforced_portal", "steel_truss"]},
+    {"level": 9, "visual_goal": "Двойная стальная броня, приборы и защищённая сортировка руды.", "cost_resources": ["coins", "reinforced_concrete", "steel"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["steel_guard", "ore_sorter"]},
+    {"level": 10, "visual_goal": "Полностью механизированная штольня с тяжёлым воротом и медной маркировкой.", "cost_resources": ["coins", "reinforced_concrete", "steel"], "triangle_budget": {"min": 1800, "max": 14000}, "adds": ["protected_lift", "operator_post"]}
+  ],
+  "states": ["active", "construction", "damaged"],
+  "material_map": {
+    "planks": {"visible_as": "крепь, настилы, вагонетка и строительные штабели", "priority": "primary", "levels": [1, 2]},
+    "stone": {"visible_as": "скальный вход и каменная масса штольни", "priority": "primary", "levels": [1, 2]},
+    "stone_block": {"visible_as": "тёсаные опоры портала", "priority": "primary", "levels": [3, 4]},
+    "rope": {"visible_as": "тросы, растяжки и привод", "priority": "secondary", "levels": [3, 4]},
+    "brick": {"visible_as": "обкладка портала", "priority": "primary", "levels": [5, 6, 7]},
+    "mechanism": {"visible_as": "лебёдка, привод и сортировщик", "priority": "primary", "levels": [5, 6, 7]},
+    "reinforced_concrete": {"visible_as": "защищённые щёки штольни", "priority": "primary", "levels": [8, 9, 10]},
+    "steel": {"visible_as": "фермы, рельсы и броневые панели", "priority": "primary", "levels": [8, 9, 10]},
+    "copper": {"visible_as": "крупные медные рудные прожилки и груз вагонетки", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Скальный портал и оборудование уплотняются в пределах одной клетки."},
+    "height": {"rule": "Растут ворот, вентиляция и защитный верхний пояс при неизменной камере."},
+    "materials": {"rule": "Доски и камень переходят к каменным блокам, кирпичу и механизму, затем к железобетону и стали."},
+    "props": {"rule": "Медная руда видна в жиле и вагонетке каждого уровня; редкие материалы появляются в самой конструкции."},
+    "constraints": {"rule": "Земля одинакова во всех состояниях уровня; штольня, крепь и вагонетка узнаваемы в изометрии."}
+  },
+  "state_policy": {
+    "active": {"rule": "Полная штольня с рельсами, медной рудой и уровневым оборудованием."},
+    "construction": {"rule": "Открытая неполная крепь, части механизма и материалы на земле; не менее трети надземной части отсутствует."},
+    "damaged": {"rule": "Обрушенный верх портала, сломанная крепь, повреждённый привод и обломки рядом со входом."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 1800, "max": 14000}, "export": true}, {"name": "LOD1", "ratio": 0.7, "triangle_budget": {"min": 900, "max": 12000}, "export": true}, {"name": "LOD2", "ratio": 0.4, "triangle_budget": {"min": 450, "max": 10000}, "export": true}], "preserve": ["ground", "copper_veins", "portal", "ore_cart", "level_upgrades"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 512], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 320], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["active", "construction", "damaged"]}, "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/copper_mine", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/industry/copper-mine.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/generate_mine_models.py"], "existing_assets": ["frontend/public/assets/buildings/industry/mine", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Документ описывает уровни 1–10; каталог пока содержит только уровень 1 с иным балансом. Генерация ассетов не меняет баланс.", "Игровые состояния: active, construction, damaged. Простои и готовая продукция показываются UI поверх active."]
+}

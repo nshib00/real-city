@@ -27,6 +27,7 @@ const (
 	ResourceCopper         ResourceType = "copper"
 	ResourceResin          ResourceType = "resin"
 	ResourceFlax           ResourceType = "flax"
+	ResourceFiber          ResourceType = "fiber"
 	ResourceReed           ResourceType = "reed"
 	ResourceWindleaf       ResourceType = "windleaf"
 	ResourceHerbs          ResourceType = "herbs"
@@ -57,12 +58,20 @@ const (
 	ResourceReinforcedBeam ResourceType = "reinforced_beams"
 	ResourceArmorPlates    ResourceType = "armor_plates"
 	ResourceFabric         ResourceType = "fabric"
+	ResourcePaper          ResourceType = "paper"
+	ResourceTile           ResourceType = "tile"
+	ResourceQuietPowder    ResourceType = "quiet_powder"
+	ResourceMemoryShard    ResourceType = "memory_shard"
 	ResourceMechanism      ResourceType = "mechanism"
 	ResourceSuperMechanism ResourceType = "super_mechanism"
 	ResourceElectronics    ResourceType = "electronics"
 	ResourceSulfur         ResourceType = "sulfur"
 	ResourceExplosives     ResourceType = "explosives"
 	ResourceOil            ResourceType = "oil"
+	ResourcePlantOil       ResourceType = "plant_oil"
+	ResourcePaints         ResourceType = "paints"
+	ResourceOleoresin      ResourceType = "oleoresin"
+	ResourceAeolianAlloy   ResourceType = "aeolian_alloy"
 	ResourceFuel           ResourceType = "fuel"
 	ResourceSuperSeeds     ResourceType = "super-seeds"
 	ResourceSuperFiber     ResourceType = "super-fiber"
@@ -73,6 +82,7 @@ const (
 	ResourceElderwoodHeart ResourceType = "elderwood-heart"
 	ResourceRuneTile       ResourceType = "rune_tile"
 	ResourceBlueSalt       ResourceType = "blue_salt"
+	ResourceKaolin         ResourceType = "kaolin"
 )
 
 const (
@@ -204,6 +214,7 @@ func AllResourceTypes() []ResourceType {
 		ResourceCopper,
 		ResourceResin,
 		ResourceFlax,
+		ResourceFiber,
 		ResourceReed,
 		ResourceWindleaf,
 		ResourceHerbs,
@@ -234,12 +245,20 @@ func AllResourceTypes() []ResourceType {
 		ResourceReinforcedBeam,
 		ResourceArmorPlates,
 		ResourceFabric,
+		ResourcePaper,
+		ResourceTile,
+		ResourceQuietPowder,
+		ResourceMemoryShard,
 		ResourceMechanism,
 		ResourceSuperMechanism,
 		ResourceElectronics,
 		ResourceSulfur,
 		ResourceExplosives,
 		ResourceOil,
+		ResourcePlantOil,
+		ResourcePaints,
+		ResourceOleoresin,
+		ResourceAeolianAlloy,
 		ResourceFuel,
 		ResourceSuperSeeds,
 		ResourceSuperFiber,
@@ -250,6 +269,7 @@ func AllResourceTypes() []ResourceType {
 		ResourceElderwoodHeart,
 		ResourceRuneTile,
 		ResourceBlueSalt,
+		ResourceKaolin,
 	}
 }
 
@@ -281,9 +301,10 @@ func (i *Inventory) Add(items []ResourceAmount, now time.Time) []ResourceAmount 
 		}
 		if item.Resource == ResourceCoins && i.CoinCapacity > 0 && !i.BypassCoinCapacity {
 			next := i.Items[item.Resource] + item.Amount
-			if next > i.CoinCapacity {
-				overflow = append(overflow, ResourceAmount{Resource: item.Resource, Amount: next - i.CoinCapacity})
-				next = i.CoinCapacity
+			limit := max(i.CoinCapacity, i.Items[item.Resource])
+			if next > limit {
+				overflow = append(overflow, ResourceAmount{Resource: item.Resource, Amount: next - limit})
+				next = limit
 			}
 			i.Items[item.Resource] = next
 			continue

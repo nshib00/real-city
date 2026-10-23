@@ -1,0 +1,408 @@
+{
+  "asset_id": "electronics_workshop",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "documented_future_levels",
+  "display_name": "Электронная мастерская",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Чистая открытая лаборатория: железобетонная плита, стальной каркас, один сборочный стол, платы и шкаф готовой электроники",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "steel"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "floor",
+        "first_bench",
+        "product_cabinet"
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Второй сборочный стол, верхняя сервисная балка и дополнительные лампы",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "steel"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "second_bench",
+        "service_beam"
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Микроскоп, измерительный стенд и механический монтажный узел",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "microscope",
+        "measurement"
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Стеклянная боковая перегородка с металлическими стойками",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "glass_partition"
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Автоматическая паяльная рука, защищённая вытяжка и упорядоченные рабочие места",
+      "cost_resources": [
+        "coins",
+        "light_crystal",
+        "reinforced_beams"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "robot_arm",
+        "vent_hood"
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Расширенная диагностика и индикаторы закрытого шкафа",
+      "cost_resources": [
+        "coins",
+        "light_crystal",
+        "reinforced_beams"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "diagnostics",
+        "cabinet_indicators"
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Бронированный кровельный хребет и световая полоса",
+      "cost_resources": [
+        "coins",
+        "light_crystal",
+        "reinforced_beams"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "roof_spine",
+        "light_strip"
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Усиленные балки и прецизионный привод над сборочной линией",
+      "cost_resources": [
+        "coins",
+        "aeolian_alloy",
+        "super_mechanism"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "reinforced_frame",
+        "precision_drive"
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Защищённый шкаф и малый светокристалл контроля",
+      "cost_resources": [
+        "coins",
+        "aeolian_alloy",
+        "super_mechanism"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "armored_cabinet",
+        "crystal_sensor"
+      ]
+    },
+    {
+      "level": 10,
+      "visual_goal": "Полная технологичная линия с усиленной короной и максимальным выпуском плат",
+      "cost_resources": [
+        "coins",
+        "aeolian_alloy",
+        "super_mechanism"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 11000
+      },
+      "adds": [
+        "final_armor_crown",
+        "extra_output"
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "material_map": {
+    "electronics": {
+      "visible_as": "платы и диагностический экран как продукция мастерской; ресурс указан в текущей каталожной заглушке стоимости уровня 1",
+      "priority": "primary",
+      "levels": [1]
+    },
+    "glass": {
+      "visible_as": "линзы приборов и защитная стеклянная перегородка",
+      "priority": "secondary",
+      "levels": [1, 4]
+    },
+    "reinforced_concrete": {
+      "visible_as": "чистая несущая плита и задняя стена",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "steel": {
+      "visible_as": "несущие стойки, столы и шкаф продукции",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "mechanism": {
+      "visible_as": "микроскоп и автоматизированный монтажный узел",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "star_glass": {
+      "visible_as": "линзы измерительного стенда и стеклянная перегородка",
+      "priority": "secondary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "light_crystal": {
+      "visible_as": "защищённые световые полосы и малый контрольный кристалл",
+      "priority": "secondary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_beams": {
+      "visible_as": "верхняя сервисная балка и кровельный хребет",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "aeolian_alloy": {
+      "visible_as": "светлая броня шкафа и усиленная корона",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "super_mechanism": {
+      "visible_as": "прецизионный привод автоматической линии",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Плотность столов и защищённого корпуса растёт в пределах неизменной клетки 1×1."
+    },
+    "materials": {
+      "rule": "Железобетон и сталь дополняются стеклом, балками, бронёй и редкими акцентами."
+    },
+    "props": {
+      "rule": "Платы, медные дорожки, измерительные приборы, вход сырья и выход электроники видны в изометрии."
+    }
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Рабочие столы с платами, диагностика, целый корпус и закрытый шкаф."
+    },
+    "construction": {
+      "rule": "Открытая плита и частичный каркас; платы, кровля, перегородка и большая часть оборудования не смонтированы."
+    },
+    "damaged": {
+      "rule": "Утрачены часть стены, кровля, приборы и шкаф; крупные панели и платы лежат на земле."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "fantasy-worlds",
+      "stylized-style",
+      "isometric-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "prop-artist",
+      "hard-surface"
+    ],
+    "production": [
+      "materials",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1,
+        "triangle_budget": {
+          "min": 700,
+          "max": 11000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 300,
+          "max": 6000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 150,
+          "max": 3200
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "assembly_bench",
+      "pcb",
+      "diagnostic_screen",
+      "finished_goods_cabinet"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/industry/electronics_workshop",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/industry/electronics-workshop.md",
+      "docs/art/visual-style-guide.md"
+    ],
+    "existing_generators": [
+      "tools/assets/blender/real_city/components/electronics_workshop.py"
+    ],
+    "existing_assets": [
+      "frontend/public/assets/buildings/industry/paint_workshop",
+      "frontend/public/assets/terrain/tiles/grass.png"
+    ]
+  },
+  "notes": [
+    "Каталог пока содержит только упрощённый уровень 1 с ценой, расходящейся с проектной таблицей; игровой баланс этой задачей не меняется.",
+    "Эолиевый сплав указан в проектной таблице уровней 8–10, но отдельный ресурсный id пока отсутствует в общем каталоге."
+  ]
+}

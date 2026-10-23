@@ -1,0 +1,73 @@
+{
+  "asset_id": "weaving_yard",
+  "category": "industry",
+  "kind": "building",
+  "catalog_status": "registered",
+  "catalog_level_policy": "implemented",
+  "display_name": "Ткацкая мастерская",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Открытый ручной станок, лён и первые рулоны ткани.", "cost_resources": ["coins", "planks", "fiber"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["hand_loom", "fiber_crate", "cloth_rolls"]},
+    {"level": 2, "visual_goal": "Тканый навес, больше мотков и верёвочные бухты.", "cost_resources": ["coins", "planks", "fiber"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["woven_canopy", "rope_coils"]},
+    {"level": 3, "visual_goal": "Усиленная рама и организованная зона сырья.", "cost_resources": ["coins", "rope", "stone"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["sturdy_loom"]},
+    {"level": 4, "visual_goal": "Каменное рабочее основание и красильный чан.", "cost_resources": ["coins", "rope", "stone"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["stone_floor", "dye_vat"]},
+    {"level": 5, "visual_goal": "Кирпичная эпоха, медный привод и более широкая ткань.", "cost_resources": ["coins", "brick", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["drive_wheel"]},
+    {"level": 6, "visual_goal": "Увеличенный стан с педалями и ремённой передачей.", "cost_resources": ["coins", "brick", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["longer_loom", "belt_drive"]},
+    {"level": 7, "visual_goal": "Второй малый стан и защищённое хранение ткани.", "cost_resources": ["coins", "brick", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["second_loom", "covered_store"]},
+    {"level": 8, "visual_goal": "Железобетонная рабочая зона и стальная защита механизма.", "cost_resources": ["coins", "reinforced_beams", "super-fiber"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["reinforced_floor", "steel_guard"]},
+    {"level": 9, "visual_goal": "Усиленный навес, дорогая ткань и калибровочный знак.", "cost_resources": ["coins", "reinforced_beams", "super-fiber"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["reinforced_canopy", "quality_badge"]},
+    {"level": 10, "visual_goal": "Крупнейшая точная линия, богатая ткань и малый светокристалл.", "cost_resources": ["coins", "reinforced_beams", "super-fiber"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["master_loom", "crystal_accent"]}
+  ],
+  "states": ["active", "construction", "damaged"],
+  "material_map": {
+    "wood": {"visible_as": "стойки ткацкого станка, навес и ящики", "priority": "primary", "levels": [1, 2, 3]},
+    "planks": {"visible_as": "рама станка, педали и планки рабочего места", "priority": "primary", "levels": [1, 2]},
+    "flax": {"visible_as": "мотки сырья по каталогу первого уровня", "priority": "primary", "levels": [1]},
+    "fiber": {"visible_as": "светлые мотки на входе и натянутая основа ткани", "priority": "primary", "levels": [1, 2]},
+    "rope": {"visible_as": "бухты и связи навеса", "priority": "primary", "levels": [3, 4]},
+    "stone": {"visible_as": "каменная рабочая площадка и красильный чан", "priority": "primary", "levels": [3, 4]},
+    "brick": {"visible_as": "тёплая облицовка рабочего основания", "priority": "secondary", "levels": [5, 6, 7]},
+    "mechanism": {"visible_as": "колесо, ремень и защищённый привод станка", "priority": "primary", "levels": [5, 6, 7]},
+    "reinforced_beams": {"visible_as": "стальные опоры, усиленный навес и кожух", "priority": "primary", "levels": [8, 9, 10]},
+    "super-fiber": {"visible_as": "ровные рулоны дорогой ткани с золотой каймой", "priority": "primary", "levels": [8, 9, 10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Станок растёт в пределах постоянной клетки; поздние ступени получают второй станок и склад."},
+    "materials": {"rule": "Дерево и лён дополняются камнем, кирпичом, металлом и усиленными балками."},
+    "props": {"rule": "Добавляются навес, бухты, красильный чан, привод, защищённый склад и калибровка."}
+  },
+  "state_policy": {
+    "active": {"rule": "Целый станок с натянутой основой, полотном и готовыми рулонами."},
+    "construction": {"rule": "Неполная рама без верхней перекладины, ткани, привода и кровли; материалы лежат рядом."},
+    "damaged": {"rule": "Сломана правая стойка и кровля, полотно порвано, детали упали на землю."}
+  },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"],
+    "asset_type": ["prop-artist", "hard-surface"],
+    "production": ["materials", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1, "triangle_budget": {"min": 700, "max": 9000}, "export": true},
+      {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 300, "max": 5000}, "export": true},
+      {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 150, "max": 2800}, "export": true}
+    ],
+    "preserve": ["ground", "loom_frame", "warp", "cloth", "canopy", "finished_rolls"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["active", "construction", "damaged"]},
+    "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/weaving_yard", "use_public_glb": true},
+  "references": {
+    "docs": ["docs/buildings/industry/weaving-workshop.md", "docs/art/visual-style-guide.md"],
+    "existing_generators": ["tools/assets/blender/real_city/components/paper_workshop.py"],
+    "existing_assets": ["frontend/public/assets/buildings/industry/paper_workshop", "frontend/public/assets/terrain/tiles/grass.png"]
+  },
+  "notes": ["Каталог содержит уровни 1–10 и цены по таблице баланса; идентификаторы ресурсов совпадают с shared/catalog."]
+}
