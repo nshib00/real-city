@@ -64,8 +64,8 @@ test-backend-down:
 test-backend-logs:
 	$(COMPOSE_TEST) logs -f backend
 
-create-test-admin:
-	POSTGRES_DSN="$(POSTGRES_DSN)" ./scripts/create-test-admin.sh
+create-test-admin: test-migrate-up
+	./scripts/create-test-admin.sh
 
 backend-run-local:
 	cd backend && go run ./cmd/api
