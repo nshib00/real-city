@@ -27,6 +27,7 @@ describe('auth api', () => {
                 avatar_url: '',
                 level: 1,
                 xp: 0,
+                level_start_xp: 0,
                 next_level_xp: 100,
                 settings: {
                   notifications: {

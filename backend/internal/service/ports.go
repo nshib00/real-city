@@ -18,10 +18,13 @@ import (
 
 type PlayerRepository interface {
 	Create(ctx context.Context, p player.Player) error
+	SavePresence(ctx context.Context, id player.ID, x, y int, now time.Time) error
+	ListNearbyPresence(ctx context.Context, viewer player.ID, x, y, radius int, since time.Time) ([]player.Presence, error)
 	FindByID(ctx context.Context, id player.ID) (player.Player, error)
 	FindByEmail(ctx context.Context, email string) (player.Player, error)
 	UpdateProfile(ctx context.Context, id player.ID, profile player.Profile) (player.Player, error)
 	UpdateProgress(ctx context.Context, id player.ID, xp int, level int) (player.Player, error)
+	AwardXPEvent(ctx context.Context, id player.ID, amount int, reason string, eventKey string) (bool, error)
 	UpdatePasswordHash(ctx context.Context, id player.ID, passwordHash string) error
 	Delete(ctx context.Context, id player.ID) error
 }
@@ -37,6 +40,7 @@ type WorldRepository interface {
 	GetMap(ctx context.Context, id string) (world.WorldMap, error)
 	GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (chunk world.Chunk, cacheHit bool, err error)
 	GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error)
+	GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error)
 	UpdateTile(ctx context.Context, tile world.Tile) error
 }
 
@@ -50,14 +54,19 @@ type BuildingRepository interface {
 	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
 	ListIntersectingFootprint(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
 	ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error)
+	ListReadyCannons(ctx context.Context, mapID string, now time.Time, afterID building.ID, limit int) ([]building.Building, error)
+	ClaimCannonShot(ctx context.Context, id building.ID, now, next time.Time, targetID string, expectedHealth int) (bool, error)
+	ConsumeTrapCharge(ctx context.Context, id building.ID, expectedHealth int) (bool, error)
 	Update(ctx context.Context, b building.Building) error
 	Delete(ctx context.Context, id building.ID) error
 }
 
 type EconomyRepository interface {
+	SpendResourceIfAvailable(ctx context.Context, playerID player.ID, resource economy.ResourceType, amount int, now time.Time) (bool, error)
 	GetInventory(ctx context.Context, playerID player.ID, coinCapacity int) (economy.Inventory, error)
 	SaveInventory(ctx context.Context, inventory economy.Inventory) error
 	AddTransaction(ctx context.Context, tx economy.Transaction) error
+	HasPopulationTransactions(ctx context.Context, playerID player.ID) (bool, error)
 	ListTransactions(ctx context.Context, playerID player.ID, limit int) ([]economy.Transaction, error)
 	ListResourceNodes(ctx context.Context, mapID string) ([]economy.ResourceNode, error)
 	SaveResourceNode(ctx context.Context, node economy.ResourceNode) error
@@ -106,6 +115,7 @@ type MonsterRepository interface {
 	ListActiveForTick(ctx context.Context, mapID string, limit int) ([]monster.Monster, error)
 	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.Monster, error)
 	Update(ctx context.Context, item monster.Monster) error
+	UpdateIfCurrent(ctx context.Context, previous, next monster.Monster) (bool, error)
 	CountAliveBySpawn(ctx context.Context, mapID string) (map[monster.SpawnID]int, error)
 	ListSpawnPoints(ctx context.Context, mapID string) ([]monster.SpawnPoint, error)
 	SaveSpawnPoint(ctx context.Context, item monster.SpawnPoint) error

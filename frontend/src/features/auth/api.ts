@@ -45,6 +45,10 @@ export async function getMe() {
   return request<Player>('/players/me')
 }
 
+export function getPublicPlayer(id: string) {
+  return request<{ id: string; display_name: string; level: number }>(`/players/${encodeURIComponent(id)}`)
+}
+
 export async function updateMe(input: {
   display_name: string
   city_name: string

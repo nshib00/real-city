@@ -15,7 +15,8 @@ export type PlayerProfile = {
   avatar_url: string
   level: number
   xp: number
-  next_level_xp: number
+  level_start_xp?: number
+  next_level_xp: number | null
   settings: ProfileSettings
   updated_at: string
 }

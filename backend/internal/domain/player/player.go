@@ -131,7 +131,7 @@ func ValidateName(name string) error {
 	return nil
 }
 
-var levelThresholds = []int{0, 100, 250, 500, 900, 1400, 2100, 3000, 4100, 5500, 7200, 9200, 11500, 14200, 17400}
+var levelThresholds = []int{0, 200, 700, 1900, 4700, 11200, 26200, 61200, 141200, 321200, 721200, 1621200, 3621200, 8121200, 18121200}
 
 func LevelForXP(xp int) int {
 	if xp <= 0 {
@@ -154,6 +154,16 @@ func NextLevelXP(level int) int {
 		return 0
 	}
 	return levelThresholds[level]
+}
+
+func LevelStartXP(level int) int {
+	if level < 1 {
+		return levelThresholds[0]
+	}
+	if level >= len(levelThresholds) {
+		return levelThresholds[len(levelThresholds)-1]
+	}
+	return levelThresholds[level-1]
 }
 
 func NormalizeProfile(profile Profile) Profile {

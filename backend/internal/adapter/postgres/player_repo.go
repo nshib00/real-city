@@ -93,6 +93,48 @@ func (r *PlayerRepo) UpdateProgress(ctx context.Context, id player.ID, xp int, l
 	return r.FindByID(ctx, id)
 }
 
+func (r *PlayerRepo) AwardXPEvent(ctx context.Context, id player.ID, amount int, reason string, eventKey string) (bool, error) {
+	tx, ownsTransaction := ctx.Value(txKey{}).(*sql.Tx)
+	if !ownsTransaction {
+		var err error
+		tx, err = r.db.BeginTx(ctx, nil)
+		if err != nil {
+			return false, err
+		}
+		defer tx.Rollback()
+	}
+	var currentXP int
+	if err := tx.QueryRowContext(ctx, `SELECT xp FROM player_profiles WHERE player_id = $1 FOR UPDATE`, id).Scan(&currentXP); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, apperror.New(apperror.NotFound, "player not found")
+		}
+		return false, err
+	}
+	result, err := tx.ExecContext(ctx, `
+		INSERT INTO player_xp_events (event_key, player_id, amount, reason)
+		VALUES ($1, $2, $3, $4)
+		ON CONFLICT (event_key) DO NOTHING
+	`, eventKey, id, amount, reason)
+	if err != nil {
+		return false, err
+	}
+	inserted, err := result.RowsAffected()
+	if err != nil {
+		return false, err
+	}
+	if inserted == 0 {
+		return false, nil
+	}
+	nextXP := currentXP + amount
+	if _, err := tx.ExecContext(ctx, `UPDATE player_profiles SET xp = $2, level = $3, updated_at = now() WHERE player_id = $1`, id, nextXP, player.LevelForXP(nextXP)); err != nil {
+		return false, err
+	}
+	if ownsTransaction {
+		return true, nil
+	}
+	return true, tx.Commit()
+}
+
 func (r *PlayerRepo) UpdatePasswordHash(ctx context.Context, id player.ID, passwordHash string) error {
 	result, err := r.db.ExecContext(ctx, `UPDATE players SET password_hash = $2, updated_at = $3 WHERE id = $1 AND status <> 'deleted'`, id, passwordHash, time.Now().UTC())
 	if err != nil {

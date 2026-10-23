@@ -29,13 +29,13 @@ func TestPlayerServiceAwardXPLevelsProfile(t *testing.T) {
 	}
 
 	service := NewPlayerService(repo, memory.NewSessionStore(), slog.Default())
-	updated, err := service.AwardXP(context.Background(), p.ID, 260, "test")
+	updated, err := service.AwardXP(context.Background(), p.ID, 700, "test")
 	if err != nil {
 		t.Fatalf("AwardXP() error = %v", err)
 	}
 
-	if updated.Profile.XP != 260 {
-		t.Fatalf("expected 260 xp, got %d", updated.Profile.XP)
+	if updated.Profile.XP != 700 {
+		t.Fatalf("expected 700 xp, got %d", updated.Profile.XP)
 	}
 	if updated.Profile.Level != 3 {
 		t.Fatalf("expected level 3, got %d", updated.Profile.Level)

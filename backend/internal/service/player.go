@@ -30,6 +30,31 @@ func (s *PlayerService) GetMe(ctx context.Context, id player.ID) (player.Player,
 	return s.players.FindByID(ctx, id)
 }
 
+func (s *PlayerService) GetPublic(ctx context.Context, id player.ID) (player.Player, error) {
+	return s.players.FindByID(ctx, id)
+}
+
+func (s *PlayerService) UpdatePresence(ctx context.Context, id player.ID, x, y int) error {
+	if x < 0 || x >= 160 || y < 0 || y >= 160 {
+		return apperror.New(apperror.Validation, "invalid presence tile")
+	}
+	p, err := s.players.FindByID(ctx, id)
+	if err != nil {
+		return err
+	}
+	if p.Status != player.StatusActive {
+		return apperror.New(apperror.Forbidden, "player is not active")
+	}
+	return s.players.SavePresence(ctx, id, x, y, time.Now().UTC())
+}
+
+func (s *PlayerService) NearbyPresence(ctx context.Context, viewer player.ID, x, y, radius int) ([]player.Presence, error) {
+	if x < 0 || x >= 160 || y < 0 || y >= 160 || radius < 1 || radius > 80 {
+		return nil, apperror.New(apperror.Validation, "invalid presence viewport")
+	}
+	return s.players.ListNearbyPresence(ctx, viewer, x, y, radius, time.Now().UTC().Add(-20*time.Second))
+}
+
 func (s *PlayerService) UpdateProfile(ctx context.Context, id player.ID, input UpdateProfileInput) (player.Player, error) {
 	current, err := s.players.FindByID(ctx, id)
 	if err != nil {

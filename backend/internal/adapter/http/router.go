@@ -1,6 +1,7 @@
 package httpadapter
 
 import (
+	"database/sql"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -32,6 +33,7 @@ type RouterDeps struct {
 	Market     *service.MarketService
 	Tokens     *jwtadapter.Manager
 	Realtime   *wsadapter.Gateway
+	DBPool     *sql.DB
 }
 
 func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
@@ -55,7 +57,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	}
 	mux.HandleFunc("GET /health", health)
 	mux.HandleFunc("GET /healthz", health)
-	mux.HandleFunc("GET /metrics", metrics(httpMetrics, deps.Realtime))
+	mux.HandleFunc("GET /metrics", metrics(httpMetrics, deps.Realtime, deps.DBPool))
 	mux.HandleFunc("GET /swagger/openapi.json", swaggerOpenAPI)
 	mux.HandleFunc("GET /api/v1/world", worldHandler.World)
 	mux.HandleFunc("GET /api/v1/world/chunks", worldHandler.Chunks)
@@ -81,6 +83,9 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.HandleFunc("POST /api/v1/auth/refresh", authHandler.Refresh)
 	mux.Handle("POST /api/v1/auth/logout", middleware.Auth(deps.Tokens, http.HandlerFunc(authHandler.Logout)))
 	mux.Handle("GET /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.Me)))
+	mux.Handle("POST /api/v1/players/me/presence", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.UpdatePresence)))
+	mux.Handle("GET /api/v1/players/nearby", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.NearbyPresence)))
+	mux.Handle("GET /api/v1/players/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.Public)))
 	mux.Handle("PATCH /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.UpdateMe)))
 	mux.Handle("PATCH /api/v1/players/me/password", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.ChangePassword)))
 	mux.Handle("DELETE /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.DeleteMe)))
@@ -121,7 +126,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 		mux,
 		middleware.RequestID(),
 		middleware.Logger(log),
-		middleware.Metrics(httpMetrics),
+		middleware.Metrics(httpMetrics, mux),
 		middleware.Recoverer(func(r *http.Request, recovered any, stack []byte) {
 			log.Error("http.panic", "event", "http.panic", "request_id", middleware.RequestIDFromContext(r.Context()), "path", r.URL.Path, "panic", recovered, "stack", string(stack))
 		}),

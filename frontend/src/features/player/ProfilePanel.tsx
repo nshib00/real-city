@@ -1,10 +1,12 @@
 import { Bell, LogOut, MonitorCog, Settings, ShieldAlert, Star, UserRound } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { logout, updateMe } from '../auth/api'
+import { getMe, logout, updateMe } from '../auth/api'
 import type { RenderQuality } from '../auth/types'
 import { useAuthStore } from '../auth/useAuthStore'
 import { Drawer } from '../../shared/ui/Drawer'
+
+const levelThresholds = [0, 200, 700, 1900, 4700, 11200, 26200, 61200, 141200, 321200, 721200, 1621200, 3621200, 8121200, 18121200]
 
 export function ProfilePanel() {
   const { player, setPlayer } = useAuthStore()
@@ -20,6 +22,16 @@ export function ProfilePanel() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
+    if (!player?.id) {
+      return
+    }
+    const timer = window.setInterval(() => {
+      getMe().then(setPlayer).catch(() => undefined)
+    }, 10_000)
+    return () => window.clearInterval(timer)
+  }, [player?.id, setPlayer])
+
+  useEffect(() => {
     if (!player) {
       return
     }
@@ -30,13 +42,6 @@ export function ProfilePanel() {
     setRaidAlerts(player.profile.settings.notifications.raid_alerts)
     setProductionReady(player.profile.settings.notifications.production_ready)
     setMarketUpdates(player.profile.settings.notifications.market_updates)
-  }, [player])
-
-  const xpPercent = useMemo(() => {
-    if (!player || player.profile.next_level_xp <= 0) {
-      return 100
-    }
-    return Math.max(0, Math.min(100, Math.round((player.profile.xp / player.profile.next_level_xp) * 100)))
   }, [player])
 
   if (!player) {
@@ -79,7 +84,15 @@ export function ProfilePanel() {
 
   const profile = player.profile
   const avatarLabel = profile.display_name.slice(0, 1).toUpperCase()
-  const xpLabel = profile.next_level_xp > 0 ? `${profile.xp}/${profile.next_level_xp}` : `${profile.xp}`
+  const totalXP = Number.isFinite(profile.xp) ? Math.max(0, profile.xp) : 0
+  const level = levelThresholds.reduce((current, threshold, index) => totalXP >= threshold ? index + 1 : current, 1)
+  const levelStartXP = levelThresholds[level - 1]
+  const nextThreshold = levelThresholds[level]
+  const levelXP = totalXP - levelStartXP
+  const nextLevelXP = nextThreshold === undefined ? 0 : nextThreshold - levelStartXP
+  const remainingXP = nextThreshold === undefined ? 0 : nextThreshold - totalXP
+  const xpPercent = nextLevelXP > 0 ? Math.max(0, Math.min(100, Math.round((levelXP / nextLevelXP) * 100))) : 0
+  const xpLabel = nextLevelXP > 0 ? `${levelXP}/${nextLevelXP}` : `${levelXP}`
 
   return (
     <>
@@ -88,8 +101,8 @@ export function ProfilePanel() {
           <span className="profile-avatar" aria-hidden="true">
             {profile.avatar_url ? <img src={profile.avatar_url} alt="" /> : avatarLabel}
           </span>
-          <span className="profile-level-badge" title={`Уровень ${profile.level}`}>
-            <Star size={12} /> {profile.level}
+          <span className="profile-level-badge" title={`Уровень ${level}`}>
+            <Star size={12} /> {level}
           </span>
           <span className="profile-xp-mini" aria-hidden="true">
             <span style={{ width: `${xpPercent}%` }} />
@@ -122,11 +135,11 @@ export function ProfilePanel() {
             <article>
               <Star size={16} />
               <span>Уровень</span>
-              <strong>{profile.level}</strong>
+              <strong>{level}</strong>
             </article>
             <article>
               <span>XP</span>
-              <strong>{xpLabel}</strong>
+              <strong title={`Всего опыта: ${totalXP}`}>{xpLabel}</strong>
             </article>
             <article>
               <span>Роль</span>
@@ -142,6 +155,7 @@ export function ProfilePanel() {
             <div>
               <span style={{ width: `${xpPercent}%` }} />
             </div>
+            <small>{nextThreshold === undefined ? 'Максимальный уровень' : `До следующего уровня: ${remainingXP} XP`}</small>
           </div>
 
           <dl className="profile-meta">
