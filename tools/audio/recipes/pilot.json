@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "sounds": [
+    {
+      "sound_id": "ui.click", "seed": 1101,
+      "variants": [{"pitch": 0.96, "attack": 0.9, "texture": 0.9}, {"pitch": 1, "attack": 1, "texture": 1}, {"pitch": 1.05, "attack": 1.1, "texture": 1.1}],
+      "candidates": {
+        "a": {"duration": 0.085, "layers": [{"wave": "noise", "gain": 0.25, "duration": 0.035, "lowpass": 0.12, "adsr": [0.001, 0.012, 0.15, 0.02]}, {"wave": "triangle", "frequency": 720, "sweep": -2800, "gain": 0.15, "duration": 0.065, "adsr": [0.001, 0.01, 0.24, 0.05]}]},
+        "b": {"duration": 0.09, "layers": [{"wave": "noise", "gain": 0.32, "duration": 0.04, "lowpass": 0.08, "adsr": [0.002, 0.016, 0.12, 0.018]}, {"wave": "sine", "frequency": 920, "sweep": -4200, "gain": 0.11, "duration": 0.07, "adsr": [0.001, 0.01, 0.23, 0.055]}]}
+      }
+    },
+    {
+      "sound_id": "economy.coin.earned", "seed": 2101,
+      "variants": [{"pitch": 0.95, "attack": 1, "texture": 0.9}, {"pitch": 1.04, "attack": 0.9, "texture": 1.1}],
+      "candidates": {
+        "a": {"duration": 0.3, "echo": {"delay": 0.055, "gain": 0.2}, "layers": [{"wave": "sine", "frequency": 1040, "sweep": -210, "gain": 0.36, "duration": 0.24, "adsr": [0.001, 0.065, 0.26, 0.17]}, {"wave": "triangle", "frequency": 1560, "gain": 0.1, "start": 0.045, "duration": 0.17, "adsr": [0.001, 0.05, 0.18, 0.1]}]},
+        "b": {"duration": 0.32, "echo": {"delay": 0.07, "gain": 0.16}, "layers": [{"wave": "sine", "frequency": 880, "sweep": 130, "gain": 0.3, "duration": 0.26, "adsr": [0.001, 0.05, 0.3, 0.19]}, {"wave": "triangle", "frequency": 1320, "gain": 0.16, "start": 0.065, "duration": 0.19, "adsr": [0.001, 0.04, 0.2, 0.13]}]}
+      }
+    },
+    {
+      "sound_id": "economy.harvest.field", "seed": 3101,
+      "variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.05, "attack": 1.1, "texture": 0.9}],
+      "candidates": {
+        "a": {"duration": 0.42, "layers": [{"wave": "noise", "gain": 0.45, "lowpass": 0.05, "duration": 0.3, "adsr": [0.035, 0.11, 0.3, 0.13]}, {"wave": "triangle", "frequency": 430, "sweep": -180, "gain": 0.12, "start": 0.13, "duration": 0.25, "adsr": [0.01, 0.06, 0.3, 0.16]}]},
+        "b": {"duration": 0.46, "layers": [{"wave": "noise", "gain": 0.42, "lowpass": 0.025, "duration": 0.34, "adsr": [0.06, 0.1, 0.32, 0.15]}, {"wave": "sine", "frequency": 550, "sweep": -330, "gain": 0.11, "start": 0.16, "duration": 0.23, "adsr": [0.005, 0.045, 0.24, 0.15]}]}
+      }
+    },
+    {
+      "sound_id": "build.completed", "seed": 4101,
+      "variants": [{"pitch": 0.95, "attack": 1, "texture": 0.9}, {"pitch": 1.04, "attack": 0.9, "texture": 1.1}],
+      "candidates": {
+        "a": {"duration": 0.62, "echo": {"delay": 0.09, "gain": 0.18}, "layers": [{"wave": "noise", "gain": 0.45, "lowpass": 0.04, "duration": 0.22, "adsr": [0.001, 0.04, 0.12, 0.17]}, {"wave": "triangle", "frequency": 380, "sweep": 220, "gain": 0.24, "start": 0.08, "duration": 0.48, "adsr": [0.025, 0.12, 0.42, 0.25]}]},
+        "b": {"duration": 0.65, "echo": {"delay": 0.11, "gain": 0.13}, "layers": [{"wave": "noise", "gain": 0.35, "lowpass": 0.08, "duration": 0.19, "adsr": [0.001, 0.035, 0.13, 0.13]}, {"wave": "sine", "frequency": 460, "sweep": 160, "gain": 0.3, "start": 0.11, "duration": 0.45, "adsr": [0.01, 0.1, 0.35, 0.24]}]}
+      }
+    },
+    {
+      "sound_id": "combat.weapon.cannon", "seed": 5101,
+      "variants": [{"pitch": 0.94, "attack": 0.9, "texture": 1}, {"pitch": 1.05, "attack": 1.1, "texture": 0.9}],
+      "candidates": {
+        "a": {"duration": 0.58, "echo": {"delay": 0.12, "gain": 0.22}, "layers": [{"wave": "noise", "gain": 0.72, "lowpass": 0.055, "duration": 0.38, "adsr": [0.001, 0.06, 0.25, 0.28]}, {"wave": "sine", "frequency": 110, "sweep": -120, "gain": 0.4, "duration": 0.42, "adsr": [0.001, 0.06, 0.45, 0.28]}]},
+        "b": {"duration": 0.6, "echo": {"delay": 0.14, "gain": 0.16}, "layers": [{"wave": "noise", "gain": 0.8, "lowpass": 0.035, "duration": 0.42, "adsr": [0.001, 0.045, 0.2, 0.31]}, {"wave": "triangle", "frequency": 95, "sweep": -100, "gain": 0.36, "duration": 0.46, "adsr": [0.001, 0.085, 0.4, 0.3]}]}
+      }
+    },
+    {
+      "sound_id": "combat.player.hit", "seed": 6101,
+      "variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.04, "attack": 1.1, "texture": 0.9}],
+      "candidates": {
+        "a": {"duration": 0.32, "layers": [{"wave": "noise", "gain": 0.47, "lowpass": 0.065, "duration": 0.23, "adsr": [0.001, 0.035, 0.18, 0.17]}, {"wave": "sine", "frequency": 230, "sweep": -410, "gain": 0.22, "duration": 0.29, "adsr": [0.001, 0.05, 0.22, 0.21]}]},
+        "b": {"duration": 0.34, "layers": [{"wave": "noise", "gain": 0.5, "lowpass": 0.035, "duration": 0.26, "adsr": [0.001, 0.045, 0.21, 0.18]}, {"wave": "triangle", "frequency": 180, "sweep": -300, "gain": 0.18, "duration": 0.31, "adsr": [0.001, 0.055, 0.3, 0.22]}]}
+      }
+    }
+  ]
+}

@@ -131,6 +131,9 @@ frontend/public/assets/**/work/
 *.flac
 *.ogg
 *.mp3
+!tools/audio/master/*.wav
+!frontend/public/assets/audio/build/
+!frontend/public/assets/audio/**/*.mp3
 *.zip
 *.tar
 *.tar.gz
