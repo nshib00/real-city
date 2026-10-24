@@ -1,0 +1,46 @@
+{
+  "asset_id": "defense_guardian_enclosure",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Вольер союзников",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "active", "no_keeper", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Открытая площадка с двумя гнёздами, деревянным настилом и кормушками.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_concrete", "ancient_core"], "triangle_budget": {"min": 600, "max": 7000}, "adds": ["two_nests", "low_shelter"]},
+    {"level": 2, "visual_goal": "Третий навес и третье гнездо, более плотный плетень.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_concrete", "ancient_core"], "triangle_budget": {"min": 800, "max": 8000}, "adds": ["third_nest", "third_canopy"]},
+    {"level": 3, "visual_goal": "Каменное ограждение, четыре места для защитников и укреплённые опоры.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "ancient_core"], "triangle_budget": {"min": 1000, "max": 9500}, "adds": ["stone_fence", "fourth_nest", "reinforced_beams"]},
+    {"level": 4, "visual_goal": "Травяная лечебница с лотками и тканевым навесом, пять мест.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "ancient_core"], "triangle_budget": {"min": 1200, "max": 11000}, "adds": ["healing_station", "fifth_nest"]},
+    {"level": 5, "visual_goal": "Многосекционный вольер на шесть мест с дорогими материалами и двумя светокристаллами.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "ancient_core", "light_crystal"], "triangle_budget": {"min": 1400, "max": 12500}, "adds": ["sixth_nest", "divided_yard", "light_crystals"]}
+  ],
+  "material_map": {
+    "premium_planks": {"visible_as": "несущий настил, резные стойки и крыши навесов", "priority": "primary", "levels": [1, 2, 3, 4, 5]},
+    "stone_block": {"visible_as": "блоки основания и ограждение с третьего уровня", "priority": "primary", "levels": [1, 2, 3, 4, 5]},
+    "herbs": {"visible_as": "пучки трав, лечебные лотки и зелёные связки", "priority": "secondary", "levels": [1, 2, 3, 4, 5]},
+    "reinforced_concrete": {"visible_as": "низкие устойчивые опоры и борта ранних уровней", "priority": "secondary", "levels": [1, 2]},
+    "reinforced_beams": {"visible_as": "силовые поперечины и крепления ограды", "priority": "secondary", "levels": [3, 4, 5]},
+    "ancient_core": {"visible_as": "малые янтарные эмблемы у гнёзд и у входа", "priority": "accent", "levels": [1, 2, 3, 4, 5]},
+    "light_crystal": {"visible_as": "два тонких аметистовых светокристалла на стойках", "priority": "accent", "levels": [5]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Открытая площадка постепенно превращается в несколько отделённых, хорошо защищённых секций."},
+    "height": {"rule": "Навесы и ограда растут, но сохраняют читаемую открытую середину клетки."},
+    "materials": {"rule": "Дерево, плетень и трава остаются основой; камень и балки усиливаются на старших уровнях."},
+    "props": {"rule": "Кормушки, гнёзда и лечебные лотки читаются отдельно; существ в модели нет."},
+    "late_elements": {"rule": "Лечебница появляется на четвёртом уровне, светокристаллы только на пятом."},
+    "constraints": {"rule": "Не изображать защитников как часть здания; все элементы внутри 1x1 footprint."}
+  },
+  "state_policy": {
+    "construction": {"rule": "Часть опор, навесов и плетня ещё не установлена; доски и камни лежат у входа."},
+    "active": {"rule": "Все места и навесы собраны, лечебница работает."},
+    "no_keeper": {"rule": "Конструкция цела, но кормушка закрыта, травы убраны и у входа висит заметный пустой знак смотрителя."},
+    "damaged": {"rule": "Разрушены часть ограды и навесов, сломаны опоры, элементы лежат на земле."},
+    "ruined": {"rule": "Сохранились низкие борта и фрагменты гнёзд; крупные секции рухнули на землю."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "prop-artist", "vegetation-artist"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 600, "max": 12500}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 300, "max": 7000}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 150, "max": 3800}, "export": true}], "preserve": ["ground", "nest_count", "fence", "healing_station"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 5, "include_states": ["construction", "active", "no_keeper", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/defense_guardian_enclosure", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/defense/guardian-enclosure.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/defense/defense_automaton_bay", "frontend/public/assets/buildings/center/town_hall"]},
+  "notes": ["Баланс проектный; постройка ещё не добавлена в игровой каталог."]
+}

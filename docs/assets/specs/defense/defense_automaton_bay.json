@@ -1,0 +1,47 @@
+{
+  "asset_id": "defense_automaton_bay",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Мастерская автоматонов",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "active", "no_mechanic", "no_fuel", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Каменный цоколь, механический верстак, первая сборочная рама и низкий рабочий навес.", "cost_resources": ["coins", "mechanism", "electronics", "steel", "reinforced_concrete"], "triangle_budget": {"min": 700, "max": 6200}, "adds": ["workbench", "primary_gantry", "stone_plinth"]},
+    {"level": 2, "visual_goal": "Вторая сборочная рама и дополнительные стальные соединения.", "cost_resources": ["coins", "mechanism", "electronics", "steel", "reinforced_concrete"], "triangle_budget": {"min": 900, "max": 7600}, "adds": ["secondary_gantry"]},
+    {"level": 3, "visual_goal": "Тестовый стенд с видимым колесом и защитными пластинами.", "cost_resources": ["coins", "mechanism", "electronics", "armor_plates", "reinforced_beams"], "triangle_budget": {"min": 1100, "max": 8800}, "adds": ["test_stand", "armor_reinforcement"]},
+    {"level": 4, "visual_goal": "Опирающийся на фундамент ремонтный манипулятор и усиленная рама.", "cost_resources": ["coins", "mechanism", "electronics", "armor_plates", "reinforced_beams"], "triangle_budget": {"min": 1400, "max": 10400}, "adds": ["repair_manipulator"]},
+    {"level": 5, "visual_goal": "Закрытый цех с металлической крышей, медными швами и небольшим маяком.", "cost_resources": ["coins", "mechanism", "electronics", "armor_plates", "super_mechanism"], "triangle_budget": {"min": 1600, "max": 12500}, "adds": ["roofed_workshop", "service_beacon"]}
+  ],
+  "material_map": {
+    "mechanism": {"visible_as": "медные шарниры, шестерни и поворотный узел манипулятора", "priority": "primary", "levels": [1, 2, 3, 4, 5]},
+    "electronics": {"visible_as": "световые индикаторы панели и маяка", "priority": "secondary", "levels": [1, 2, 3, 4, 5]},
+    "steel": {"visible_as": "силовые стойки верстака и сборочных рам", "priority": "primary", "levels": [1, 2, 3, 4, 5]},
+    "reinforced_concrete": {"visible_as": "низкий цоколь и опоры станков", "priority": "primary", "levels": [1, 2, 3, 4, 5]},
+    "armor_plates": {"visible_as": "накладки тестового стенда, манипулятора и крыши", "priority": "primary", "levels": [3, 4, 5]},
+    "reinforced_beams": {"visible_as": "усиленные перекладины сборочных рам", "priority": "secondary", "levels": [3, 4, 5]},
+    "super_mechanism": {"visible_as": "верхний медный привод и маяк закрытого цеха", "priority": "accent", "levels": [5]}
+  },
+  "level_progression": {
+    "mass": {"rule": "От открытого верстака к двум рамам, стенду, манипулятору и закрытому цеху."},
+    "height": {"rule": "Силуэт растёт за счёт манипулятора и крыши, сохраняя один тайл."},
+    "materials": {"rule": "Сталь и железобетон остаются основой, бронепластины усиливают старшие уровни."},
+    "props": {"rule": "Рабочие детали крупны и читаются в изометрии."},
+    "late_elements": {"rule": "На последнем уровне появляется крышный привод с маяком."},
+    "constraints": {"rule": "Роботы и механик являются отдельными игровыми сущностями; внутри ассета их нет."}
+  },
+  "state_policy": {
+    "construction": {"rule": "Рамы и верстак собраны частично, отсутствует большая часть верхних узлов и крыши; детали лежат на земле."},
+    "active": {"rule": "Полный рабочий цех, освещены панель и маяк."},
+    "no_mechanic": {"rule": "Целая мастерская с припаркованным инструментом и знаком отсутствия механика."},
+    "no_fuel": {"rule": "Целая мастерская с погасшими индикаторами и заметной меткой пустой канистры."},
+    "damaged": {"rule": "Утрачен верх рам, повреждён верстак, крыша обрушена, на земле лежат крупные фрагменты."},
+    "ruined": {"rule": "Остался низкий цоколь и разрозненные части станков, крыша и рамы лежат на земле."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["hard-surface", "prop-artist"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 700, "max": 12500}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 350, "max": 7000}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 180, "max": 3600}, "export": true}], "preserve": ["ground", "workbench", "assembly_frames", "level_upgrades"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 6, "include_states": ["construction", "active", "no_mechanic", "no_fuel", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/defense_automaton_bay", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/defense/automaton-bay.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/defense/defense_storm_coil", "frontend/public/assets/buildings/housing/dugout"]},
+  "notes": ["Баланс проектный; здание отсутствует в игровом каталоге."]
+}

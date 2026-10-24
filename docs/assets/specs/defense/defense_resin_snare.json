@@ -1,0 +1,64 @@
+{
+  "asset_id": "defense_resin_snare",
+  "category": "defense",
+  "kind": "prop",
+  "display_name": "Смоляная западня",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "armed", "triggered", "empty", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Низкий дощатый чан с янтарной смолой и двумя створками.", "cost_resources": ["coins", "planks", "resin", "iron_ingot"], "triangle_budget": {"min": 700, "max": 4200}, "adds": ["timber_vat", "resin_pool", "iron_hinges"]},
+    {"level": 2, "visual_goal": "Приподнятые створки, пружинные рычаги и усиленные железные петли.", "cost_resources": ["coins", "planks", "resin", "iron_ingot"], "triangle_budget": {"min": 800, "max": 5200}, "adds": ["raised_shutters", "lever_arms"]},
+    {"level": 3, "visual_goal": "Каменные опоры и железная рамка вокруг смоляного канала.", "cost_resources": ["coins", "stone_block", "resin", "iron_ingot"], "triangle_budget": {"min": 900, "max": 6200}, "adds": ["stone_feet", "iron_frame"]},
+    {"level": 4, "visual_goal": "Два параллельных смоляных канала с отдельными створками и стальным усилением.", "cost_resources": ["coins", "stone_block", "resin", "steel"], "triangle_budget": {"min": 1100, "max": 7500}, "adds": ["dual_channels", "steel_reinforcement"]}
+  ],
+  "material_map": {
+    "planks": {"visible_as": "дощатые борта, настил и створки", "priority": "primary", "levels": [1, 2, 3, 4]},
+    "resin": {"visible_as": "глянцевые тёмно-янтарные каналы и потёки", "priority": "primary", "levels": [1, 2, 3, 4]},
+    "iron_ingot": {"visible_as": "петли, заклёпки, тяги и рамка", "priority": "secondary", "levels": [1, 2, 3]},
+    "stone_block": {"visible_as": "низкие каменные опоры и канальная облицовка", "priority": "primary", "levels": [3, 4]},
+    "steel": {"visible_as": "усиленные балки и накладки двойного канала", "priority": "primary", "levels": [4]}
+  },
+  "level_progression": {
+    "mass": {"rule": "От одного дощатого чана к двум каналам с каменным и стальным усилением."},
+    "height": {"rule": "Низкая проходимая ловушка; створки выше рамы, но не скрывают монстра."},
+    "materials": {"rule": "Доски и смола присутствуют всегда; камень с третьего уровня, сталь с четвёртого."},
+    "props": {"rule": "Петли, заклёпки, рычаги и дозирующие желоба читаются на изометрической карте."}
+  },
+  "state_policy": {
+    "construction": {"rule": "Недособранный чан: часть бортов, створок и канала лежит рядом; смола ещё не залита полностью."},
+    "armed": {"rule": "Каналы заполнены, створки готовы к срабатыванию."},
+    "triggered": {"rule": "Створки раскрыты, смола расплескалась за пределы канала."},
+    "empty": {"rule": "Каналы пусты и матовы, створки опущены; крупный индикатор пустого бака."},
+    "damaged": {"rule": "Крупный пролом в борту и рамке, сорванные створки и обломки на земле."},
+    "ruined": {"rule": "Разобранные борта и сломанные тяги лежат на земле; работающий канал утрачен."}
+  },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "isometric-style", "fantasy-worlds", "stylized-style", "hand-painted-style"],
+    "asset_type": ["prop-artist", "hard-surface"],
+    "production": ["materials", "texture-workflow", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 700, "max": 7500}, "export": true},
+      {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 350, "max": 4200}, "export": true},
+      {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 180, "max": 2200}, "export": true}
+    ],
+    "preserve": ["ground", "channels", "shutters", "material_progression"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 6, "include_states": ["construction", "armed", "triggered", "empty", "damaged", "ruined"]},
+    "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/defense_resin_snare", "use_public_glb": true},
+  "references": {
+    "docs": ["docs/buildings/defense/resin-snare.md", "docs/art/visual-style-guide.md"],
+    "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"],
+    "existing_assets": ["frontend/public/assets/buildings/defense/defense_stakes", "frontend/public/assets/buildings/housing/dugout"]
+  },
+  "notes": ["Баланс проектный; ловушка пока отсутствует в игровом каталоге."]
+}

@@ -1,0 +1,66 @@
+{
+  "asset_id": "defense_stakes",
+  "category": "defense",
+  "kind": "prop",
+  "display_name": "Колья",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "armed", "triggered", "empty", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Три низких заострённых деревянных кола.", "cost_resources": ["coins", "wood"], "triangle_budget": {"min": 300, "max": 3000}, "adds": ["three_stakes"]},
+    {"level": 2, "visual_goal": "Поперечная деревянная стяжка с верёвочными узлами.", "cost_resources": ["coins", "wood", "rope"], "triangle_budget": {"min": 350, "max": 3400}, "adds": ["cross_tie", "rope_knots"]},
+    {"level": 3, "visual_goal": "Жёсткая дощатая рама вокруг группы кольев.", "cost_resources": ["coins", "planks", "rope"], "triangle_budget": {"min": 400, "max": 3800}, "adds": ["plank_frame"]},
+    {"level": 4, "visual_goal": "Железные наконечники и крепёж на дощатой раме.", "cost_resources": ["coins", "planks", "rope", "iron_ingot"], "triangle_budget": {"min": 450, "max": 4300}, "adds": ["iron_points", "iron_collars"]},
+    {"level": 5, "visual_goal": "Два ряда кольев с отдельными поперечинами.", "cost_resources": ["coins", "planks", "iron_ingot"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["second_row", "double_brace"]},
+    {"level": 6, "visual_goal": "Смещённые ряды кольев с каменными опорами и усиленными стяжками.", "cost_resources": ["coins", "planks", "iron_ingot", "stone_block"], "triangle_budget": {"min": 550, "max": 5500}, "adds": ["checkerboard", "stone_feet", "reinforced_brace"]}
+  ],
+  "material_map": {
+    "wood": {"visible_as": "несущие колы ранних уровней", "priority": "primary", "levels": [1, 2]},
+    "rope": {"visible_as": "нижние обвязки кольев и узлы на стяжках", "priority": "secondary", "levels": [2, 3, 4]},
+    "planks": {"visible_as": "поперечины и жёсткая рама", "priority": "primary", "levels": [3, 4, 5, 6]},
+    "iron_ingot": {"visible_as": "наконечники, кольца и усиленные стяжки", "priority": "primary", "levels": [4, 5, 6]},
+    "stone_block": {"visible_as": "низкие каменные опоры шестого уровня", "priority": "secondary", "levels": [6]}
+  },
+  "level_progression": {
+    "mass": {"rule": "От трёх кольев к двойному шахматному ряду; трава остаётся видимой."},
+    "height": {"rule": "Все шесть уровней ниже ног проходящего монстра."},
+    "materials": {"rule": "Дерево и верёвка дополняются досками, железом и камнем по стоимости."},
+    "props": {"rule": "Узлы, обручи и обломки показывают механику ловушки крупными читаемыми деталями."}
+  },
+  "state_policy": {
+    "construction": {"rule": "Треть кольев лежит рядом; рама и материалы на земле ещё не собраны полностью."},
+    "armed": {"rule": "Низкий собранный зубчатый силуэт, колья готовы к срабатыванию."},
+    "triggered": {"rule": "Колья коротко наклонены, рядом следы наступившего монстра."},
+    "empty": {"rule": "Колья опущены; ловушка визуально разряжена."},
+    "damaged": {"rule": "Часть кольев обломана, видны щепки, рама сохраняет узнаваемость."},
+    "ruined": {"rule": "Колья повалены на землю и не образуют рабочую ловушку."}
+  },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "isometric-style", "fantasy-worlds", "stylized-style", "hand-painted-style"],
+    "asset_type": ["prop-artist", "hard-surface"],
+    "production": ["materials", "texture-workflow", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 300, "max": 5500}, "export": true},
+      {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 160, "max": 3000}, "export": true},
+      {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 80, "max": 1550}, "export": true}
+    ],
+    "preserve": ["ground", "stake_count", "frame", "material_progression"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 6, "include_states": ["construction", "armed", "triggered", "empty", "damaged", "ruined"]},
+    "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/defense_stakes", "use_public_glb": true},
+  "references": {
+    "docs": ["docs/buildings/defense/stakes.md", "docs/art/visual-style-guide.md"],
+    "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"],
+    "existing_assets": ["frontend/public/assets/buildings/defense/defense_cannon", "frontend/public/assets/buildings/housing/dugout"]
+  },
+  "notes": ["Проектный баланс ловушки ещё не подключён к каталогу или серверу.", "Состояние armed выполняет роль готовой active-геометрии; отдельного active состояния спека не задаёт."]
+}

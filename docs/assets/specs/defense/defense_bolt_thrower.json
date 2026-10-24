@@ -1,0 +1,69 @@
+{
+  "asset_id": "defense_bolt_thrower",
+  "category": "defense",
+  "kind": "prop",
+  "display_name": "Болтомёт",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "active", "no_crew", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Низкая деревянная рама и одно плечо с болтом.", "cost_resources": ["coins", "planks", "iron_ingot", "rope"], "triangle_budget": {"min": 500, "max": 3500}, "adds": ["wood_carriage", "single_bow", "bolt"]},
+    {"level": 2, "visual_goal": "Упрочнённая тетива с обмотками на плечах.", "cost_resources": ["coins", "planks", "iron_ingot", "rope"], "triangle_budget": {"min": 550, "max": 3800}, "adds": ["reinforced_string", "rope_collars"]},
+    {"level": 3, "visual_goal": "Поворотный штырь и видимая шестерня натяжения.", "cost_resources": ["coins", "stone_block", "iron_ingot", "mechanism"], "triangle_budget": {"min": 600, "max": 4300}, "adds": ["pivot_pin", "ratchet"]},
+    {"level": 4, "visual_goal": "Небольшой дощатый навес над местом расчёта.", "cost_resources": ["coins", "stone_block", "iron_ingot", "mechanism"], "triangle_budget": {"min": 700, "max": 4900}, "adds": ["crew_canopy"]},
+    {"level": 5, "visual_goal": "Низкий каменный цоколь и стальные боковые усилители.", "cost_resources": ["coins", "stone_block", "steel", "mechanism"], "triangle_budget": {"min": 800, "max": 5400}, "adds": ["stone_base", "steel_battens"]},
+    {"level": 6, "visual_goal": "Удлинённые плечи и металлический прицел.", "cost_resources": ["coins", "stone_block", "steel", "mechanism"], "triangle_budget": {"min": 850, "max": 5900}, "adds": ["long_bow", "sight"]},
+    {"level": 7, "visual_goal": "Латунный привод поворота и боковые защитные пластины.", "cost_resources": ["coins", "steel", "mechanism", "protective_plate"], "triangle_budget": {"min": 900, "max": 6400}, "adds": ["turning_drive", "guard_plates"]},
+    {"level": 8, "visual_goal": "Защищённый механизм натяжения с видимыми вентиляционными прорезями.", "cost_resources": ["coins", "steel", "mechanism", "protective_plate"], "triangle_budget": {"min": 950, "max": 6900}, "adds": ["covered_drive"]}
+  ],
+  "material_map": {
+    "planks": {"visible_as": "несущая дощатая рама, направляющая и навес", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6, 7, 8]},
+    "iron_ingot": {"visible_as": "наконечник болта, скобы, штырь и крепления", "priority": "primary", "levels": [1, 2, 3, 4]},
+    "rope": {"visible_as": "тетива и обмотки плеч", "priority": "primary", "levels": [1, 2]},
+    "stone_block": {"visible_as": "поворотная опора и низкий каменный цоколь", "priority": "secondary", "levels": [3, 4, 5, 6]},
+    "mechanism": {"visible_as": "храповик и лебёдка натяжения", "priority": "primary", "levels": [3, 4, 5, 6, 7, 8]},
+    "steel": {"visible_as": "боковые усилители и поздние плечи", "priority": "primary", "levels": [5, 6, 7, 8]},
+    "protective_plate": {"visible_as": "защита расчёта и кожух привода", "priority": "primary", "levels": [7, 8]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Рама укрепляется, но основание поворотной головы остаётся внутри одной клетки."},
+    "height": {"rule": "Навес с четвёртого уровня поднимается над рабочей рамой."},
+    "materials": {"rule": "Дерево и верёвка дополняются камнем, сталью и защитными пластинами по переходам стоимости."},
+    "props": {"rule": "Штырь, прицел, привод и кожух показывают последовательные улучшения."}
+  },
+  "state_policy": {
+    "construction": {"rule": "Открытая неполная рама; одно плечо и лебёдка лежат рядом, поздний навес недостроен."},
+    "active": {"rule": "Собранное оружие с натянутой тетивой и коротким болтом на направляющей."},
+    "no_crew": {"rule": "Собранное оружие с ослабленной тетивой и пустой направляющей."},
+    "damaged": {"rule": "Один несущий рельс и плечо сломаны, навес и верхние узлы отсутствуют; обломки на земле."},
+    "ruined": {"rule": "Плечо, рельсы и привод обрушены на клетку; рабочая конструкция исчезла."}
+  },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "isometric-style", "fantasy-worlds", "stylized-style", "hand-painted-style"],
+    "asset_type": ["prop-artist", "hard-surface"],
+    "production": ["materials", "texture-workflow", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 500, "max": 6900}, "export": true},
+      {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 250, "max": 3800}, "export": true},
+      {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 110, "max": 1950}, "export": true}
+    ],
+    "preserve": ["ground", "carriage", "bow", "canopy", "stone_base", "armor"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 5, "include_states": ["construction", "active", "no_crew", "damaged", "ruined"]},
+    "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/defense_bolt_thrower", "use_public_glb": true},
+  "references": {
+    "docs": ["docs/buildings/defense/bolt-thrower.md", "docs/art/visual-style-guide.md"],
+    "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"],
+    "existing_assets": ["frontend/public/assets/buildings/defense/defense_cannon", "frontend/public/assets/buildings/housing/dugout"]
+  },
+  "notes": ["Баланс и механика орудия в документации проектные; этот пакет создаёт модели без подключения серверной боевой логики."]
+}

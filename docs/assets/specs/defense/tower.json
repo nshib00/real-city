@@ -1,0 +1,34 @@
+{
+  "asset_id": "tower",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Сторожевая башня",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "active", "damaged"],
+  "levels": [
+    {"level": 1, "visual_goal": "Каменный цоколь, высокая деревянная смотровая площадка с лестницей, открытым обзором и сигнальным фонарём.", "cost_resources": ["coins", "wood", "stone", "planks", "iron_ingot"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["stone_plinth", "timber_frame", "observation_deck", "signal_lantern"]}
+  ],
+  "material_map": {
+    "wood": {"visible_as": "четыре опорных столба, раскосы, перила и лестница", "priority": "primary", "levels": [1]},
+    "stone": {"visible_as": "кладка цоколя и четыре башмака опор", "priority": "primary", "levels": [1]},
+    "planks": {"visible_as": "дощатый настил, ступени и лёгкий навес", "priority": "primary", "levels": [1]},
+    "iron_ingot": {"visible_as": "железные обоймы, заклёпки и каркас фонаря", "priority": "secondary", "levels": [1]}
+  },
+  "level_progression": {"mass": {"rule": "Только один уровень по каталогу; апгрейды не заданы."}, "height": {"rule": "Высокий настил различим с изометрической камеры."}, "materials": {"rule": "Дерево, камень, доски и железо читаются в основной конструкции."}, "props": {"rule": "Фонарь обозначает наблюдение, без оружия и боевой анимации."}},
+  "state_policy": {
+    "construction": {"visual_goal": "Каменный цоколь, частично поставленные стойки, открытый каркас без настила и навеса, материалы на земле."},
+    "active": {"visual_goal": "Завершённая площадка, перила, лестница, фонарь и лёгкий навес."},
+    "damaged": {"visual_goal": "Сломана часть настила, перил и навеса; фонарь упал, обломки лежат на земле."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["prop-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [
+    {"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 500, "max": 5000}, "export": true},
+    {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 250, "max": 3200}, "export": true},
+    {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 120, "max": 1900}, "export": true}
+  ], "preserve": ["ground", "plinth", "legs", "deck", "lantern"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["construction", "active", "damaged"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/tower", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/defense/tower.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/center/town_hall", "frontend/public/assets/buildings/housing/dugout"]},
+  "notes": ["ID и один уровень соответствуют игровому каталогу. Башня не имеет заданной автоматической атаки."]
+}

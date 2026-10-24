@@ -1,0 +1,79 @@
+asset_id: defense_cannon
+category: defense
+kind: building
+display_name: Пушка
+style_profile: aeolian_fantasy_midpoly
+footprint: { width: 1, height: 1 }
+states: [active, construction, damaged, ruined]
+
+levels:
+  - { level: 1, visual_goal: "Короткий ствол и дощатый лафет со стяжками.", cost_resources: [coins, planks, rope], triangle_budget: { min: 600, max: 4500 }, adds: [wood_carriage, short_barrel] }
+  - { level: 2, visual_goal: "Колеса с железными ободами и скобы.", cost_resources: [coins, planks, rope], triangle_budget: { min: 800, max: 5000 }, adds: [wheels, metal_rims] }
+  - { level: 3, visual_goal: "Каменные опоры и длинный ствол.", cost_resources: [coins, planks, stone_block, iron_ingot], triangle_budget: { min: 1000, max: 5500 }, adds: [stone_feet, long_barrel] }
+  - { level: 4, visual_goal: "Щит расчета и усиленный затвор.", cost_resources: [coins, stone_block, iron_ingot], triangle_budget: { min: 1100, max: 5800 }, adds: [crew_shield, breech_lock] }
+  - { level: 5, visual_goal: "Двойные направляющие лафета.", cost_resources: [coins, stone_block, iron_ingot], triangle_budget: { min: 1200, max: 6200 }, adds: [double_carriage] }
+  - { level: 6, visual_goal: "Укрепленная каменная платформа.", cost_resources: [coins, stone_block, iron_ingot], triangle_budget: { min: 1300, max: 6800 }, adds: [reinforced_platform] }
+  - { level: 7, visual_goal: "Зубчатый привод наведения.", cost_resources: [coins, stone_block, mechanism], triangle_budget: { min: 1500, max: 7200 }, adds: [aiming_gear] }
+  - { level: 8, visual_goal: "Парные опоры отдачи и броня.", cost_resources: [coins, stone_block, mechanism, armor_plates], triangle_budget: { min: 1600, max: 7700 }, adds: [recoil_feet, armor] }
+  - { level: 9, visual_goal: "Высокая бронированная турель.", cost_resources: [coins, stone_block, mechanism, armor_plates], triangle_budget: { min: 1800, max: 8200 }, adds: [turret_sides] }
+  - { level: 10, visual_goal: "Прицел и кожух затвора.", cost_resources: [coins, mechanism, armor_plates, electronics], triangle_budget: { min: 1900, max: 8700 }, adds: [sight, barrel_cowl] }
+  - { level: 11, visual_goal: "Тяжелое кольцо основания.", cost_resources: [coins, mechanism, armor_plates, electronics], triangle_budget: { min: 2000, max: 9200 }, adds: [bearing_ring] }
+  - { level: 12, visual_goal: "Завершенная артиллерийская платформа с управляющим узлом.", cost_resources: [coins, mechanism, armor_plates, electronics], triangle_budget: { min: 2200, max: 9800 }, adds: [control_module] }
+
+material_map:
+  planks: { visible_as: "лафет, направляющие и колесные детали", priority: primary, levels: [1, 2, 3, 4, 5, 6] }
+  rope: { visible_as: "стяжки раннего лафета и строительные материалы", priority: secondary, levels: [1, 2] }
+  stone_block: { visible_as: "опоры и укрепленная платформа", priority: primary, levels: [3, 4, 5, 6, 7, 8, 9] }
+  iron_ingot: { visible_as: "ствол, скобы и затвор", priority: primary, levels: [3, 4, 5, 6] }
+  mechanism: { visible_as: "привод наведения и механизмы отдачи", priority: primary, levels: [7, 8, 9, 10, 11, 12] }
+  armor_plates: { visible_as: "щит и боковые панели турели", priority: primary, levels: [8, 9, 10, 11, 12] }
+  electronics: { visible_as: "бирюзовый прицел и управляющий узел", priority: accent, levels: [10, 11, 12] }
+
+level_progression:
+  mass: { rule: "Лафет усиливается камнем, затем механикой и броней в пределах одной клетки." }
+  height: { rule: "Ствол остается главным силуэтом; поздняя турель растет умеренно." }
+  materials: { rule: "Дерево, камень и железо переходят в темный металл, броню и бирюзовую электронику." }
+  props: { rule: "Функциональные колеса, затвор, зубчатый привод, поршни и прицел." }
+
+state_policy:
+  active: { rule: "Собранное и устойчивое орудие без вспышки выстрела." }
+  construction: { rule: "Неполный лафет, снятый ствол на козлах и материалы на земле.", required_elements: [unfinished_carriage, unmounted_barrel, materials] }
+  damaged: { rule: "Сорванная левая направляющая и колесо; без крупной верхней брони.", required_elements: [broken_carriage, fallen_wheel, debris] }
+  ruined: { rule: "Ствол лежит на земле, лафет развален, пушка не выглядит рабочей.", required_elements: [fallen_barrel, debris] }
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [hard-surface, prop-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 600, max: 9800 }, export: true }
+    - { name: LOD1, ratio: 0.55, triangle_budget: { min: 300, max: 5400 }, export: true }
+    - { name: LOD2, ratio: 0.28, triangle_budget: { min: 150, max: 2800 }, export: true }
+  preserve: [ground, barrel, carriage, level_silhouette]
+  exports: { naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb", include_lod0: true, include_lod1: true, include_lod2: true }
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet: { enabled: true, columns: 4, include_states: [active, construction, damaged, ruined] }
+  alpha_bounds: { min_opaque_pixels: 1000, max_crop_margin_px: 10, bottom_anchor_tolerance_px: 10 }
+
+output:
+  runtime_dir: frontend/public/assets/buildings/defense/defense_cannon
+  source_dir: frontend/src/assets/buildings/defense/defense_cannon
+  use_public_glb: true
+
+references:
+  docs: [docs/buildings/defense/cannon.md, docs/assets/defense-cannon-model-brief.md, docs/art/visual-style-guide.md]
+  existing_generators: [tools/assets/blender/real_city/orchestrator.py]
+  existing_assets: [frontend/public/assets/buildings/center/town_hall, frontend/public/assets/buildings/housing/dugout]
+
+notes:
+  - "idle_no_ammo использует active геометрию и отдельный UI-индикатор."
+  - "Каталог содержит defense_cannon; runtime lookup использует модели и спрайты всех 12 уровней."

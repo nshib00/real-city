@@ -1,0 +1,40 @@
+{
+  "asset_id": "defense_storm_coil",
+  "category": "defense",
+  "kind": "prop",
+  "display_name": "Грозовая катушка",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "states": ["construction", "active", "no_fuel", "no_crew", "damaged", "ruined"],
+  "levels": [
+    {"level": 1, "visual_goal": "Медная обмотка промышленного столба на каменном основании.", "cost_resources": ["coins", "copper_parts", "mechanism", "electronics", "steel"], "triangle_budget": {"min": 800, "max": 6000}, "adds": ["stone_base", "primary_winding", "steel_core"]},
+    {"level": 2, "visual_goal": "Четыре поддержанных изолятора и стальные опоры.", "cost_resources": ["coins", "copper_parts", "mechanism", "electronics", "steel"], "triangle_budget": {"min": 1000, "max": 7000}, "adds": ["insulators", "braces"]},
+    {"level": 3, "visual_goal": "Вторая обмотка и железобетонная опора.", "cost_resources": ["coins", "copper_parts", "mechanism", "electronics", "reinforced_concrete"], "triangle_budget": {"min": 1200, "max": 8000}, "adds": ["secondary_winding", "reinforced_base"]},
+    {"level": 4, "visual_goal": "Защитная решётка вокруг рабочего узла.", "cost_resources": ["coins", "copper_parts", "mechanism", "electronics", "reinforced_concrete"], "triangle_budget": {"min": 1500, "max": 9500}, "adds": ["protective_grille"]},
+    {"level": 5, "visual_goal": "Крупное верхнее разрядное кольцо и защитный металл.", "cost_resources": ["coins", "copper_parts", "mechanism", "electronics", "armor_plates"], "triangle_budget": {"min": 1700, "max": 10500}, "adds": ["discharge_ring", "armor"]},
+    {"level": 6, "visual_goal": "Высокий многослойный сердечник с дополнительными концентрическими поясами.", "cost_resources": ["coins", "copper_parts", "mechanism", "electronics", "armor_plates"], "triangle_budget": {"min": 1900, "max": 12000}, "adds": ["multilayer_core"]}
+  ],
+  "material_map": {
+    "copper_parts": {"visible_as": "медные кольца обмотки и выводы", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6]},
+    "mechanism": {"visible_as": "поворотный подшипник и концентрический узел", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6]},
+    "electronics": {"visible_as": "голубая линза излучателя и панель состояния", "priority": "secondary", "levels": [1, 2, 3, 4, 5, 6]},
+    "steel": {"visible_as": "несущий сердечник, терминалы и стяжки", "priority": "primary", "levels": [1, 2]},
+    "reinforced_concrete": {"visible_as": "усиленные ноги и балки основания", "priority": "primary", "levels": [3, 4]},
+    "armor_plates": {"visible_as": "защитная решётка и верхние накладки", "priority": "primary", "levels": [5, 6]}
+  },
+  "level_progression": {"mass": {"rule": "Растут верхние узлы внутри одной клетки."}, "height": {"rule": "Сердечник постепенно поднимается."}, "materials": {"rule": "Камень и сталь сменяются железобетоном и защитными пластинами."}, "props": {"rule": "Изоляторы, вторая обмотка, решётка, разрядное кольцо и многослойный сердечник добавляются по таблице."}},
+  "state_policy": {
+    "construction": {"rule": "Неполный сердечник и часть обмотки; остальные детали лежат на земле."},
+    "active": {"rule": "Целый механизм с приглушённой голубой линзой и рабочим индикатором."},
+    "no_fuel": {"rule": "Целый механизм с погашенной линзой и пустым топливным индикатором."},
+    "no_crew": {"rule": "Целый механизм с погашенной линзой и пустой операторской панелью."},
+    "damaged": {"rule": "Верхний узел и часть терминалов отсутствуют; обломки лежат на земле."},
+    "ruined": {"rule": "Остался низкий ствол; верхний сердечник и обмотка обрушены на землю."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["prop-artist", "hard-surface"], "production": ["materials", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 800, "max": 12000}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 400, "max": 6600}, "export": true}, {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 200, "max": 3400}, "export": true}], "preserve": ["ground", "foundation", "steel_core", "winding", "discharge_ring"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 6, "include_states": ["construction", "active", "no_fuel", "no_crew", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/defense/defense_storm_coil", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/defense/storm-coil.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/defense/defense_cannon", "frontend/public/assets/buildings/defense/tower"]},
+  "notes": ["Баланс в документации проектный; пакет содержит модели и не подключает серверную боевую логику."]
+}
