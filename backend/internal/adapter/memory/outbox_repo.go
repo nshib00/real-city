@@ -87,6 +87,26 @@ func (r *OutboxRepo) MarkDead(ctx context.Context, id outbox.ID, message string,
 	})
 }
 
+func (r *OutboxRepo) PruneSent(ctx context.Context, before time.Time, limit int) (int, error) {
+	_ = ctx
+	if limit <= 0 {
+		return 0, nil
+	}
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	pruned := 0
+	for id, item := range r.events {
+		if item.Status == outbox.StatusSent && item.UpdatedAt.Before(before) {
+			delete(r.events, id)
+			pruned++
+			if pruned == limit {
+				break
+			}
+		}
+	}
+	return pruned, nil
+}
+
 func (r *OutboxRepo) update(id outbox.ID, fn func(*outbox.OutboxEvent)) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()

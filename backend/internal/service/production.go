@@ -24,6 +24,7 @@ type ProductionService struct {
 	actions    ActionRepository
 	buildings  BuildingRepository
 	experience *ExperienceService
+	resources  *ResourceService
 	randFloat  func() float64
 }
 
@@ -41,6 +42,10 @@ func (s *ProductionService) SetActionQueue(actions ActionRepository) {
 
 func (s *ProductionService) SetBuildings(buildings BuildingRepository) {
 	s.buildings = buildings
+}
+
+func (s *ProductionService) SetResources(resources *ResourceService) {
+	s.resources = resources
 }
 
 func (s *ProductionService) SetExperience(experience *ExperienceService) {
@@ -78,6 +83,9 @@ func (s *ProductionService) Recipes(ctx context.Context) ([]economy.ProductionRe
 			recipes = append(recipes, levelRecipe)
 		}
 	}
+	for level := 1; level <= 3; level++ {
+		recipes = append(recipes, catalog.OilExtractionRecipe(level))
+	}
 	return recipes, nil
 }
 
@@ -107,6 +115,14 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 		recipe, _ = catalog.RecipeForBuildingLevel(recipeID, item.Level)
 		if item.Level < recipe.RequiredLevel {
 			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "building level is too low for recipe")
+		}
+		if recipeID == catalog.OilExtractionRecipeID {
+			if s.resources == nil {
+				return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "нефтяная скважина недоступна")
+			}
+			if err := s.resources.CheckOilCycle(ctx, item); err != nil {
+				return economy.ProductionJob{}, economy.Inventory{}, err
+			}
 		}
 	}
 	jobs, err := s.repo.ListProductionJobs(ctx, playerID)
@@ -190,10 +206,24 @@ func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, 
 	if !ok {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.NotFound, "production recipe not found")
 	}
+	var completionBuilding *building.Building
 	if s.buildings != nil {
 		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
 		if err == nil && string(item.Type) == recipe.BuildingType {
 			recipe, _ = catalog.RecipeForBuildingLevel(job.RecipeID, item.Level)
+			completionBuilding = &item
+		}
+	}
+	if job.RecipeID == catalog.OilExtractionRecipeID {
+		if s.resources == nil || s.buildings == nil {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "нефтяная скважина недоступна")
+		}
+		well, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+		if err != nil || well.OwnerID != string(playerID) || well.State != building.StateActive {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "нефтяная вышка не работает")
+		}
+		if err := s.resources.CompleteOilCycle(ctx, well, now); err != nil {
+			return economy.ProductionJob{}, economy.Inventory{}, err
 		}
 	}
 	previousState := job.State
@@ -215,11 +245,14 @@ func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, 
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
 	if s.experience != nil && s.buildings != nil {
-		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
-		if err != nil {
-			return economy.ProductionJob{}, economy.Inventory{}, err
+		if completionBuilding == nil {
+			item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+			if err != nil {
+				return economy.ProductionJob{}, economy.Inventory{}, err
+			}
+			completionBuilding = &item
 		}
-		reward := catalog.ExperienceForBuilding(item.Type, item.Level).Work
+		reward := catalog.ExperienceForBuilding(completionBuilding.Type, completionBuilding.Level).Work
 		if err := s.experience.Award(ctx, playerID, reward, "production:complete", "production:"+string(job.ID)+":complete"); err != nil {
 			return economy.ProductionJob{}, economy.Inventory{}, err
 		}

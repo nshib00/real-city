@@ -38,6 +38,7 @@ type ForestService struct {
 	log           *slog.Logger
 	events        *EventBus
 	actions       ActionRepository
+	experience    *ExperienceService
 	rareDrop      func() bool
 	regrowthDelay func() time.Duration
 	now           func() time.Time
@@ -66,6 +67,10 @@ func (s *ForestService) SetActionQueue(actions ActionRepository) {
 	s.actions = actions
 }
 
+func (s *ForestService) SetExperience(experience *ExperienceService) {
+	s.experience = experience
+}
+
 func (s *ForestService) Chop(ctx context.Context, playerID player.ID, coord world.Coord) (ChopForestResult, error) {
 	chunkCoord := world.ChunkForTile(coord)
 	chunk, _, err := s.worlds.GetOrCreateChunk(ctx, DefaultWorldID, chunkCoord)
@@ -92,12 +97,18 @@ func (s *ForestService) Chop(ctx context.Context, playerID player.ID, coord worl
 	if err != nil {
 		return ChopForestResult{}, err
 	}
+	if s.experience != nil {
+		key := fmt.Sprintf("forest:chop:%d:%d:%d", coord.X, coord.Y, s.now().UnixNano())
+		if err := s.experience.Award(ctx, playerID, 1, "forest:chop", key); err != nil {
+			return ChopForestResult{}, err
+		}
+	}
 	if s.events != nil {
 		s.events.Publish(Event{
 			Type:     EventTileChanged,
 			ChunkID:  world.ChunkID(nextTile.MapID, nextTile.Chunk),
 			PlayerID: playerID,
-			Payload:  TileChangedPayload{Tile: nextTile},
+			Payload:  TileChangedPayload{Tile: nextTile, Reason: "forest_cut"},
 		})
 	}
 	s.log.Info("world.forest.chopped", "event", "world.forest.chopped", "player_id", playerID, "tile_x", coord.X, "tile_y", coord.Y, "forest_density", nextTile.ForestDensity)
@@ -105,7 +116,7 @@ func (s *ForestService) Chop(ctx context.Context, playerID player.ID, coord worl
 }
 
 func (s *ForestService) RegrowAround(ctx context.Context, source world.Coord, now time.Time) (world.Tile, bool, error) {
-	chunks, err := s.worlds.GetOrCreateChunks(ctx, DefaultWorldID, chunksAroundSquare(source, forestRegrowthRadius))
+	chunks, err := s.worlds.GetOrCreateChunksFresh(ctx, DefaultWorldID, chunksAroundSquare(source, forestRegrowthRadius))
 	if err != nil {
 		return world.Tile{}, false, err
 	}
@@ -160,7 +171,7 @@ func (s *ForestService) RegrowAround(ctx context.Context, source world.Coord, no
 		s.events.Publish(Event{
 			Type:    EventTileChanged,
 			ChunkID: world.ChunkID(selected.MapID, selected.Chunk),
-			Payload: TileChangedPayload{Tile: selected},
+			Payload: TileChangedPayload{Tile: selected, Reason: "forest_regrown"},
 		})
 	}
 	s.log.Info("world.forest.regrown", "event", "world.forest.regrown", "tile_x", selected.Coord.X, "tile_y", selected.Coord.Y, "source_x", source.X, "source_y", source.Y, "free_natural", freeNatural, "forest_count", forestCount, "at", now)

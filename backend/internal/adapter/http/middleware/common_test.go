@@ -3,6 +3,9 @@ package middleware
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
+	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -80,5 +83,56 @@ func TestIdempotencyReplaysSuccessfulResponse(t *testing.T) {
 	}
 	if calls != 1 {
 		t.Fatalf("handler calls = %d", calls)
+	}
+}
+
+func TestIdempotencyRejectsChangedBody(t *testing.T) {
+	calls := 0
+	handler := Chain(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		w.WriteHeader(http.StatusCreated)
+	}), Idempotency(NewMemoryIdempotencyStore(time.Now), time.Hour))
+	for i, body := range []string{`{"amount":1}`, `{"amount":2}`} {
+		req := httptest.NewRequest(http.MethodPost, "/api/v1/market/orders", strings.NewReader(body))
+		req.Header.Set("Idempotency-Key", "same-key-123")
+		rec := httptest.NewRecorder()
+		handler.ServeHTTP(rec, req)
+		want := http.StatusCreated
+		if i == 1 {
+			want = http.StatusConflict
+		}
+		if rec.Code != want {
+			t.Fatalf("request %d: status %d, want %d", i, rec.Code, want)
+		}
+	}
+	if calls != 1 {
+		t.Fatalf("handler calls = %d", calls)
+	}
+}
+
+func TestIdempotencySerializesConcurrentRequests(t *testing.T) {
+	var calls atomic.Int32
+	handler := Chain(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls.Add(1)
+		time.Sleep(10 * time.Millisecond)
+		w.WriteHeader(http.StatusCreated)
+	}), Idempotency(NewMemoryIdempotencyStore(time.Now), time.Hour))
+	var wg sync.WaitGroup
+	for range 8 {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			req := httptest.NewRequest(http.MethodPost, "/api/v1/buildings", strings.NewReader(`{"type":"dugout"}`))
+			req.Header.Set("Idempotency-Key", "concurrent-123")
+			rec := httptest.NewRecorder()
+			handler.ServeHTTP(rec, req)
+			if rec.Code != http.StatusCreated {
+				t.Errorf("status = %d", rec.Code)
+			}
+		}()
+	}
+	wg.Wait()
+	if calls.Load() != 1 {
+		t.Fatalf("handler calls = %d", calls.Load())
 	}
 }

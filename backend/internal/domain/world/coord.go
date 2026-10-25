@@ -46,6 +46,7 @@ type Tile struct {
 	Coord         Coord
 	Chunk         ChunkCoord
 	Terrain       TerrainType
+	RuinType      string
 	Elevation     int
 	SafeZone      bool
 	ForestDensity int

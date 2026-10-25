@@ -1,11 +1,13 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"real-city/backend/internal/adapter/http/dto"
 	"real-city/backend/internal/adapter/http/middleware"
+	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
@@ -50,18 +52,46 @@ func (h *MonsterHandler) Get(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, envelope{"monster": dto.Monster(item)})
 }
 
-func (h *MonsterHandler) Attack(w http.ResponseWriter, r *http.Request) {
+func (h *MonsterHandler) UseWeapon(w http.ResponseWriter, r *http.Request) {
 	playerID, ok := middleware.PlayerID(r.Context())
 	if !ok {
 		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
 		return
 	}
-	item, rewards, err := h.combat.AttackMonster(r.Context(), monster.ID(r.PathValue("id")), playerID)
+	var input struct {
+		Weapon string `json:"weapon"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		writeError(w, apperror.New(apperror.Validation, "invalid weapon request"))
+		return
+	}
+	attack, err := h.combat.UseWeapon(r.Context(), monster.ID(r.PathValue("id")), playerID, economy.ResourceType(input.Weapon), r.Header.Get("Idempotency-Key"))
 	if err != nil {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusOK, envelope{"monster": dto.Monster(item), "rewards": rewards})
+	response := envelope{"attack": attack}
+	if attack.Monster != nil {
+		response["monster"] = dto.Monster(*attack.Monster)
+	}
+	if attack.Loot != nil {
+		response["loot"] = dto.LootDrop(*attack.Loot)
+	}
+	writeJSON(w, http.StatusAccepted, response)
+}
+
+func (h *MonsterHandler) PendingWeapons(w http.ResponseWriter, r *http.Request) {
+	playerID, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
+		return
+	}
+	items, err := h.combat.PendingWeapons(r.Context(), playerID)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"attacks": items})
 }
 
 func (h *MonsterHandler) Threats(w http.ResponseWriter, r *http.Request) {
@@ -105,8 +135,8 @@ func viewportParams(r *http.Request) (world.Coord, int) {
 	if radius <= 0 {
 		radius = 24
 	}
-	if radius > 96 {
-		radius = 96
+	if radius > 128 {
+		radius = 128
 	}
 	return world.Coord{X: x, Y: y}, radius
 }

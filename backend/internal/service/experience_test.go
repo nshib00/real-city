@@ -114,10 +114,10 @@ func TestMonsterKillAwardsXPOnlyOnDeath(t *testing.T) {
 	if err != nil || killed.State != monster.StateDead {
 		t.Fatalf("expected dead monster, got %#v, %v", killed, err)
 	}
-	if got := playerXP(t, repo); got != 18 {
-		t.Fatalf("expected 18 XP for roamer kill, got %d", got)
+	if got := playerXP(t, repo); got != 36 {
+		t.Fatalf("expected 36 XP for roamer kill, got %d", got)
 	}
-	if _, _, err := service.Attack(ctx, item.ID, "p1"); err == nil || playerXP(t, repo) != 18 {
+	if _, _, err := service.Attack(ctx, item.ID, "p1"); err == nil || playerXP(t, repo) != 36 {
 		t.Fatal("repeated attack must not grant more XP")
 	}
 }

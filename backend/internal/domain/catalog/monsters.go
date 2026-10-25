@@ -3,6 +3,7 @@ package catalog
 import (
 	"time"
 
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/monster"
 )
 
@@ -10,7 +11,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeRoamingMelee,
 		Name:           "Бродячий налетчик",
-		MaxHealth:      180,
+		MaxHealth:      360,
 		Damage:         18,
 		SpeedTiles:     1,
 		AggroRadius:    5,
@@ -22,7 +23,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeResourceGuardian,
 		Name:           "Страж залежи",
-		MaxHealth:      280,
+		MaxHealth:      560,
 		Damage:         26,
 		SpeedTiles:     1,
 		AggroRadius:    4,
@@ -34,7 +35,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeRuinsGuardian,
 		Name:           "Сторож руин",
-		MaxHealth:      420,
+		MaxHealth:      840,
 		Damage:         38,
 		SpeedTiles:     1,
 		AggroRadius:    6,
@@ -46,7 +47,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeForestStalker,
 		Name:           "Лесной следопыт",
-		MaxHealth:      150,
+		MaxHealth:      300,
 		Damage:         14,
 		SpeedTiles:     2,
 		AggroRadius:    6,
@@ -58,7 +59,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeSporeBeast,
 		Name:           "Споровый зверь",
-		MaxHealth:      320,
+		MaxHealth:      640,
 		Damage:         22,
 		SpeedTiles:     1,
 		AggroRadius:    4,
@@ -70,7 +71,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeIronbackBrute,
 		Name:           "Железоспин",
-		MaxHealth:      620,
+		MaxHealth:      1240,
 		Damage:         44,
 		SpeedTiles:     1,
 		AggroRadius:    5,
@@ -82,7 +83,7 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeEmberWisp,
 		Name:           "Тлеющий огонек",
-		MaxHealth:      240,
+		MaxHealth:      480,
 		Damage:         16,
 		SpeedTiles:     1,
 		AggroRadius:    7,
@@ -94,8 +95,8 @@ var monsterSpecs = []monster.Spec{
 	{
 		Type:           monster.TypeAncientColossus,
 		Name:           "Древний колосс",
-		MaxHealth:      2400,
-		Damage:         120,
+		MaxHealth:      300000,
+		Damage:         2400,
 		SpeedTiles:     1,
 		AggroRadius:    8,
 		AttackRange:    1,
@@ -118,4 +119,37 @@ func MonsterSpec(kind monster.Type) (monster.Spec, bool) {
 		}
 	}
 	return monster.Spec{}, false
+}
+
+// MonsterPrefersBuilding reports whether a building belongs to the monster's
+// first-choice target group. Targets outside that group remain valid fallback targets.
+func MonsterPrefersBuilding(kind monster.Type, target building.Type) bool {
+	spec, ok := GetBuilding(target)
+	if !ok {
+		return false
+	}
+	switch kind {
+	case monster.TypeRoamingMelee:
+		return spec.Category == "housing"
+	case monster.TypeResourceGuardian:
+		switch target {
+		case building.TypeSandQuarry, building.TypeClayQuarry, building.TypeMine,
+			building.TypeIronMine, building.TypeCopperMine, building.TypeOilWell,
+			building.TypeSulfurSpring, building.TypeStoneCutters:
+			return true
+		}
+	case monster.TypeRuinsGuardian:
+		return spec.Category == "storage" || spec.Category == "trade"
+	case monster.TypeForestStalker:
+		return target == building.TypeLumberYard || target == building.TypeResinKiln
+	case monster.TypeSporeBeast:
+		return spec.Category == "fields"
+	case monster.TypeIronbackBrute:
+		return spec.Category == "defense" && !building.IsTrapType(target)
+	case monster.TypeEmberWisp:
+		return spec.Category == "industry" || spec.Category == "storage"
+	case monster.TypeAncientColossus:
+		return target == building.TypeTownHall
+	}
+	return false
 }

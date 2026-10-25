@@ -2,6 +2,7 @@ package building
 
 import (
 	"fmt"
+	"strings"
 
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/pkg/apperror"
@@ -39,23 +40,45 @@ func ValidatePlacement(input PlacementInput) error {
 		return apperror.WithFields(apperror.Conflict, "лимит построек уже достигнут", map[string]string{"limit": fmt.Sprintf("%d/%d", input.UsedLimit, input.BuildingLimit)})
 	}
 	terrainTiles := terrainTilesByCoord(input.Tile, input.Tiles)
+	if input.Type == TypeOilWell && (input.Footprint.Width != 1 || input.Footprint.Height != 1 || input.Tile.Terrain != world.TerrainOilWell) {
+		return apperror.New(apperror.Validation, "нефтяную вышку можно строить только на нефтяном месторождении")
+	}
+	if strings.HasPrefix(string(input.Type), "ruins_") && (input.Tile.Terrain != world.TerrainRuins || string(input.Type) != input.Tile.RuinType || input.Footprint.Width != 1 || input.Footprint.Height != 1) {
+		return apperror.New(apperror.Validation, "тип руины не совпадает с выбранной клеткой")
+	}
 	for _, coord := range footprintTiles(input.Tile.Coord, input.Footprint) {
 		tile, ok := terrainTiles[coord]
 		if !ok {
 			continue
 		}
-		if tile.Terrain == world.TerrainWater || tile.Terrain == world.TerrainMountain || tile.Terrain == world.TerrainForest || tile.Terrain == world.TerrainRuins || tile.Terrain == world.TerrainOilWell {
+		if tile.Terrain == world.TerrainWater || tile.Terrain == world.TerrainMountain || tile.Terrain == world.TerrainForest || (tile.Terrain == world.TerrainRuins && !(coord == input.Tile.Coord && input.Footprint.Width == 1 && input.Footprint.Height == 1 && string(input.Type) == tile.RuinType)) || (tile.Terrain == world.TerrainOilWell && input.Type != TypeOilWell) {
 			return apperror.WithFields(apperror.Validation, "на этой поверхности строить нельзя", map[string]string{"terrain": string(tile.Terrain), "tile": coordKey(coord)})
 		}
 	}
 
-	occupied := occupiedTiles(input.Existing)
+	occupied := occupiedTilesFor(input.Type, input.Existing)
 	for _, tile := range footprintTiles(input.Tile.Coord, input.Footprint) {
 		if occupied[tile] {
 			return apperror.WithFields(apperror.Conflict, "клетка уже занята постройкой", map[string]string{"tile": coordKey(tile)})
 		}
 	}
 	return nil
+}
+
+func occupiedTilesFor(target Type, buildings []Building) map[world.Coord]bool {
+	result := make(map[world.Coord]bool)
+	for _, existing := range buildings {
+		if existing.State == StateRuined {
+			continue
+		}
+		if IsTrapType(target) && IsRoadType(existing.Type) || IsRoadType(target) && IsTrapType(existing.Type) {
+			continue
+		}
+		for _, tile := range existing.OccupiedTiles() {
+			result[tile] = true
+		}
+	}
+	return result
 }
 
 func terrainTilesByCoord(origin world.Tile, tiles []world.Tile) map[world.Coord]world.Tile {

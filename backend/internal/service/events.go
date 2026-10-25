@@ -21,6 +21,7 @@ const (
 	EventProductionDone     EventType = "economy.production.completed"
 	EventInventoryChanged   EventType = "economy.inventory.changed"
 	EventPresenceChanged    EventType = "presence.changed"
+	EventPresenceMoved      EventType = "presence.moved"
 	EventCombatResolved     EventType = "combat.resolved"
 	EventMonsterSpawned     EventType = "monster.spawned"
 	EventMonsterMoved       EventType = "monster.moved"
@@ -30,6 +31,8 @@ const (
 	EventMonsterDespawned   EventType = "monster.despawned"
 	EventMonsterLootDropped EventType = "monster.loot.dropped"
 	EventMonsterLootClaimed EventType = "monster.loot.claimed"
+	EventCannonShot         EventType = "cannon.shot"
+	EventDefenseTriggered   EventType = "defense.triggered"
 )
 
 type Event struct {
@@ -42,15 +45,23 @@ type Event struct {
 }
 
 type TileChangedPayload struct {
-	Tile world.Tile `json:"tile"`
+	Tile   world.Tile `json:"tile"`
+	Reason string     `json:"reason,omitempty"`
 }
 
 type BuildingPayload struct {
 	Building building.Building `json:"building"`
+	Reason   string            `json:"reason,omitempty"`
+	Damage   int               `json:"damage,omitempty"`
 }
 
 type BuildingRemovedPayload struct {
-	BuildingID building.ID `json:"building_id"`
+	BuildingID   building.ID   `json:"building_id"`
+	Reason       string        `json:"reason,omitempty"`
+	Damage       int           `json:"damage,omitempty"`
+	TileX        int           `json:"tile_x,omitempty"`
+	TileY        int           `json:"tile_y,omitempty"`
+	BuildingType building.Type `json:"building_type,omitempty"`
 }
 
 type ResourceChangedPayload struct {
@@ -71,10 +82,37 @@ type PresencePayload struct {
 	Online   bool      `json:"online"`
 }
 
+type PresenceMovedPayload struct {
+	Player player.Presence `json:"player"`
+}
+
 type MonsterPayload struct {
 	Monster monster.Monster `json:"monster"`
+	Damage  int             `json:"damage,omitempty"`
+	Source  string          `json:"source,omitempty"`
 }
 
 type MonsterLootPayload struct {
 	Loot monster.LootDrop `json:"loot"`
+}
+
+type CannonShotPayload struct {
+	BuildingID   string `json:"building_id"`
+	BuildingType string `json:"building_type,omitempty"`
+	MonsterID    string `json:"monster_id"`
+	Damage       int    `json:"damage"`
+	DamageType   string `json:"damage_type"`
+	Ammo         string `json:"ammo"`
+	TileX        int    `json:"tile_x"`
+	TileY        int    `json:"tile_y"`
+	TargetTileX  int    `json:"target_tile_x"`
+	TargetTileY  int    `json:"target_tile_y"`
+}
+
+type DefenseTriggeredPayload struct {
+	BuildingID   string `json:"building_id"`
+	BuildingType string `json:"building_type"`
+	MonsterID    string `json:"monster_id"`
+	TileX        int    `json:"tile_x"`
+	TileY        int    `json:"tile_y"`
 }

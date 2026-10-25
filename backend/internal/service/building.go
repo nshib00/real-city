@@ -12,19 +12,23 @@ import (
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
+	"real-city/backend/internal/observability"
+	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
 )
 
 type BuildingService struct {
-	buildings BuildingRepository
-	worlds    WorldRepository
-	log       *slog.Logger
-	now       func() time.Time
-	rules     building.BuildRules
-	events    *EventBus
-	economy   *EconomyService
-	actions   ActionRepository
-	monsters  MonsterRepository
+	buildings  BuildingRepository
+	worlds     WorldRepository
+	log        *slog.Logger
+	now        func() time.Time
+	rules      building.BuildRules
+	events     *EventBus
+	economy    *EconomyService
+	actions    ActionRepository
+	monsters   MonsterRepository
+	experience *ExperienceService
+	resources  *ResourceService
 }
 
 type PlaceBuildingInput struct {
@@ -57,15 +61,34 @@ func (s *BuildingService) SetMonsters(monsters MonsterRepository) {
 	s.monsters = monsters
 }
 
+func (s *BuildingService) SetExperience(experience *ExperienceService) {
+	s.experience = experience
+}
+
+func (s *BuildingService) SetResources(resources *ResourceService) { s.resources = resources }
+
 func (s *BuildingService) Catalog(ctx context.Context) ([]catalog.BuildingType, error) {
 	_ = ctx
 	return catalog.FirstLevelBuildings(), nil
 }
 
-func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (building.Building, error) {
+func (s *BuildingService) FullCatalog(ctx context.Context) ([]catalog.BuildingType, error) {
+	_ = ctx
+	return catalog.AllBuildings(), nil
+}
+
+func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (placed building.Building, resultErr error) {
+	totalStarted := time.Now()
+	defer func() { observability.ObservePlacement("total", totalStarted, resultErr) }()
 	spec, ok := catalog.GetBuilding(input.Type)
 	if !ok {
 		return building.Building{}, apperror.WithFields(apperror.Validation, "unknown building type", map[string]string{"type": string(input.Type)})
+	}
+	if input.Type == building.TypeStoneHouse {
+		return building.Building{}, apperror.New(apperror.Conflict, "stone house requires wooden house level 6 upgrade")
+	}
+	if _, isRuin := catalog.RuinSpecs[input.Type]; !isRuin && !catalog.CanPlaceDirectly(input.Type) {
+		return building.Building{}, apperror.New(apperror.Conflict, "building requires an upgrade from its previous type")
 	}
 	chunkCoord := world.ChunkForTile(input.Tile)
 	chunk, _, err := s.worlds.GetOrCreateChunk(ctx, DefaultWorldID, chunkCoord)
@@ -80,6 +103,8 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 	if err != nil {
 		return building.Building{}, err
 	}
+	criticalStarted := time.Now()
+	defer func() { observability.ObservePlacement("critical", criticalStarted, resultErr) }()
 	playerStats, err := s.buildings.PlayerPlacementStats(ctx, input.PlayerID)
 	if err != nil {
 		return building.Building{}, err
@@ -104,6 +129,11 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 	}
 	if err := s.validateMonsterFree(ctx, input.Tile, spec.Footprint); err != nil {
 		return building.Building{}, err
+	}
+	if input.Type == building.TypeOilWell && s.resources != nil {
+		if err := s.resources.CheckOilAvailable(ctx, input.Tile); err != nil {
+			return building.Building{}, err
+		}
 	}
 	if err := s.spendCost(ctx, input.PlayerID, spec.Cost, "building:place:"+string(input.Type)); err != nil {
 		return building.Building{}, err
@@ -139,17 +169,35 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 		CreatedAt:   now,
 		UpdatedAt:   now,
 	}
+	if building.IsTrapType(item.Type) {
+		item.TrapCharges = 3
+		if item.Type == building.TypeDefenseResinSnare {
+			item.TrapCharges = 2
+		}
+	}
 	if err := s.buildings.Create(ctx, item); err != nil {
 		s.refundCost(ctx, input.PlayerID, spec.Cost, "building:place:refund:"+string(input.Type))
 		if populationReserved {
-			s.releasePopulation(ctx, input.PlayerID, spec.Population, "building:builders:refund:"+string(input.Type))
+			_ = s.releasePopulation(ctx, input.PlayerID, spec.Population, "building:builders:refund:"+string(input.Type))
 		}
 		return building.Building{}, err
 	}
+	if item.Type == building.TypeOilWell && s.resources != nil {
+		if err := s.resources.ClaimOilWell(ctx, item); err != nil {
+			_ = s.buildings.Delete(ctx, item.ID)
+			s.refundCost(ctx, input.PlayerID, spec.Cost, "building:place:refund:"+string(input.Type))
+			if populationReserved {
+				_ = s.releasePopulation(ctx, input.PlayerID, spec.Population, "building:builders:refund:"+string(input.Type))
+			}
+			return building.Building{}, err
+		}
+	}
 	if item.CompletesAt != nil {
 		_ = s.scheduleCompletion(ctx, item)
+	} else if err := s.awardCompletionXP(ctx, item); err != nil {
+		return building.Building{}, err
 	}
-	s.publish(EventBuildingPlaced, item, BuildingPayload{Building: item})
+	s.publish(EventBuildingPlaced, item, BuildingPayload{Building: item, Reason: "placed"})
 	s.log.Info("building.placed", "event", "building.placed", "building_id", item.ID, "building_type", item.Type, "player_id", item.OwnerID, "tile_x", item.Tile.X, "tile_y", item.Tile.Y, "chunk_id", world.ChunkID(DefaultWorldID, chunkCoord))
 	return item, nil
 }
@@ -162,11 +210,64 @@ func (s *BuildingService) ListPlayer(ctx context.Context, playerID player.ID) ([
 	return s.buildings.ListByPlayer(ctx, playerID)
 }
 
+func (s *BuildingService) ListNearby(ctx context.Context, center world.ChunkCoord, radius int) ([]building.Building, error) {
+	if radius < 0 || radius > MaxChunkRadius {
+		return nil, apperror.WithFields(apperror.Validation, "invalid chunk radius", map[string]string{"radius": "must be between 0 and 3"})
+	}
+	xRanges := nearbyChunkRanges(center.X, radius)
+	yRanges := nearbyChunkRanges(center.Y, radius)
+	items := make([]building.Building, 0)
+	seen := make(map[building.ID]bool)
+	for _, yRange := range yRanges {
+		for _, xRange := range xRanges {
+			found, err := s.buildings.ListByViewport(ctx, DefaultWorldID,
+				xRange[0]*world.ChunkSize, yRange[0]*world.ChunkSize,
+				(xRange[1]+1)*world.ChunkSize-1, (yRange[1]+1)*world.ChunkSize-1)
+			if err != nil {
+				return nil, err
+			}
+			for _, item := range found {
+				if !seen[item.ID] {
+					seen[item.ID] = true
+					items = append(items, item)
+				}
+			}
+		}
+	}
+	return items, nil
+}
+
+func nearbyChunkRanges(center, radius int) [][2]int {
+	worldChunks := worldgen.WorldSizeTiles / world.ChunkSize
+	visible := make([]bool, worldChunks)
+	for offset := -radius; offset <= radius; offset++ {
+		chunk := ((center+offset)%worldChunks + worldChunks) % worldChunks
+		visible[chunk] = true
+	}
+	ranges := make([][2]int, 0, 2)
+	for start := 0; start < worldChunks; {
+		if !visible[start] {
+			start++
+			continue
+		}
+		end := start
+		for end+1 < worldChunks && visible[end+1] {
+			end++
+		}
+		ranges = append(ranges, [2]int{start, end})
+		start = end + 1
+	}
+	return ranges
+}
+
 func (s *BuildingService) ListChunk(ctx context.Context, coord world.ChunkCoord) ([]building.Building, error) {
 	return s.buildings.ListByChunk(ctx, DefaultWorldID, coord)
 }
 
 func (s *BuildingService) CompleteDue(ctx context.Context, now time.Time, limit int) (int, error) {
+	if err := s.cleanupRuinedRuins(ctx); err != nil {
+		return 0, err
+	}
 	items, err := s.buildings.ListDue(ctx, now, limit)
 	if err != nil {
 		return 0, err
@@ -182,12 +283,34 @@ func (s *BuildingService) CompleteDue(ctx context.Context, now time.Time, limit 
 		if err := s.buildings.Update(ctx, item); err != nil {
 			return completed, err
 		}
-		s.releaseConstructionPopulation(ctx, item, "building:builders:complete:"+string(item.Type))
-		s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
+		if err := s.releaseConstructionPopulation(ctx, item, "building:builders:complete:"+string(item.Type)); err != nil {
+			return completed, err
+		}
+		if err := s.awardCompletionXP(ctx, item); err != nil {
+			return completed, err
+		}
+		s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: completionReason(item)})
 		s.log.Info("simulation.building.completed", "event", "simulation.building.completed", "building_id", item.ID, "building_type", item.Type, "player_id", item.OwnerID, "chunk_id", world.ChunkID(item.MapID, world.ChunkForTile(item.Tile)))
 		completed++
 	}
 	return completed, nil
+}
+
+func (s *BuildingService) cleanupRuinedRuins(ctx context.Context) error {
+	items, err := s.buildings.ListRuinedRuins(ctx, 100)
+	if err != nil {
+		return err
+	}
+	for _, item := range items {
+		if !catalog.IsRuin(item.Type) {
+			continue
+		}
+		if err := s.buildings.Delete(ctx, item.ID); err != nil {
+			return err
+		}
+		s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "destroyed"})
+	}
+	return nil
 }
 
 func (s *BuildingService) Complete(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
@@ -203,6 +326,7 @@ func (s *BuildingService) RushComplete(ctx context.Context, id building.ID, play
 		inventory, invErr := s.currentInventory(ctx, playerID)
 		return item, inventory, 0, invErr
 	}
+	reservedBuilders := item.State == building.StateBuilding && item.CompletesAt != nil
 	now := s.now()
 	remaining := time.Duration(0)
 	if item.CompletesAt != nil {
@@ -226,15 +350,21 @@ func (s *BuildingService) RushComplete(ctx context.Context, id building.ID, play
 	item.UpdatedAt = now
 	if err := s.buildings.Update(ctx, item); err != nil {
 		if cost > 0 {
-			s.releasePopulation(ctx, playerID, 0, "")
 			_, _, _ = s.economy.Add(ctx, playerID, []economy.ResourceAmount{{Resource: economy.ResourceAeolianCrystal, Amount: cost}}, "building:rush_complete:refund:"+string(item.Type))
 		}
 		return building.Building{}, economy.Inventory{}, cost, err
 	}
-	s.releaseConstructionPopulation(ctx, item, "building:builders:rush_complete:"+string(item.Type))
+	if reservedBuilders {
+		if err := s.releaseConstructionPopulation(ctx, item, "building:builders:rush_complete:"+string(item.Type)); err != nil {
+			return building.Building{}, economy.Inventory{}, cost, err
+		}
+	}
+	if err := s.awardCompletionXP(ctx, item); err != nil {
+		return building.Building{}, economy.Inventory{}, cost, err
+	}
 	inventory, _ = s.currentInventory(ctx, playerID)
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
 	s.log.Info("building.rush_completed", "event", "building.rush_completed", "building_id", item.ID, "building_type", item.Type, "player_id", playerID, "crystal_cost", cost, "remaining_ms", remaining.Milliseconds())
+	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "rushed"})
 	return item, inventory, cost, nil
 }
 
@@ -249,15 +379,23 @@ func (s *BuildingService) CompleteAt(ctx context.Context, id building.ID, player
 	if item.CompletesAt != nil && item.CompletesAt.After(now) {
 		return building.Building{}, apperror.New(apperror.Conflict, "building is still under construction")
 	}
+	reservedBuilders := item.CompletesAt != nil
 	item.State = building.StateActive
 	item.CompletesAt = nil
 	item.UpdatedAt = now
 	if err := s.buildings.Update(ctx, item); err != nil {
 		return building.Building{}, err
 	}
-	s.releaseConstructionPopulation(ctx, item, "building:builders:complete:"+string(item.Type))
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
+	if reservedBuilders {
+		if err := s.releaseConstructionPopulation(ctx, item, "building:builders:complete:"+string(item.Type)); err != nil {
+			return building.Building{}, err
+		}
+	}
+	if err := s.awardCompletionXP(ctx, item); err != nil {
+		return building.Building{}, err
+	}
 	s.log.Info("building.completed", "event", "building.completed", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
+	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: completionReason(item)})
 	return item, nil
 }
 
@@ -269,6 +407,10 @@ func (s *BuildingService) currentInventory(ctx context.Context, playerID player.
 }
 
 func (s *BuildingService) Upgrade(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
+	return s.UpgradeTo(ctx, id, playerID, "")
+}
+
+func (s *BuildingService) UpgradeTo(ctx context.Context, id building.ID, playerID player.ID, targetType building.Type) (building.Building, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, err
@@ -276,9 +418,12 @@ func (s *BuildingService) Upgrade(ctx context.Context, id building.ID, playerID 
 	if item.State != building.StateActive {
 		return building.Building{}, apperror.New(apperror.Conflict, "only active buildings can be upgraded")
 	}
-	next, ok := nextUpgrade(item)
+	if err := s.requireIdleBuilding(ctx, item); err != nil {
+		return building.Building{}, err
+	}
+	next, ok := nextUpgradeTo(item, targetType)
 	if !ok {
-		return building.Building{}, apperror.New(apperror.Conflict, "building has no available upgrade")
+		return building.Building{}, apperror.New(apperror.Validation, "building has no available upgrade for selected target")
 	}
 	if err := s.spendCost(ctx, playerID, next.Cost, "building:upgrade:"+string(item.Type)); err != nil {
 		return building.Building{}, err
@@ -304,6 +449,9 @@ func (s *BuildingService) Upgrade(ctx context.Context, id building.ID, playerID 
 	item.State = state
 	item.Health = buildingHealth(next)
 	item.Footprint = next.Footprint
+	if item.Rotation%2 == 1 {
+		item.Footprint.Width, item.Footprint.Height = item.Footprint.Height, item.Footprint.Width
+	}
 	item.StartedAt = now
 	item.CompletesAt = completesAt
 	item.UpdatedAt = now
@@ -313,15 +461,88 @@ func (s *BuildingService) Upgrade(ctx context.Context, id building.ID, playerID 
 	if err := s.buildings.Update(ctx, item); err != nil {
 		s.refundCost(ctx, playerID, next.Cost, "building:upgrade:refund:"+string(item.Type))
 		if populationReserved {
-			s.releasePopulation(ctx, playerID, next.Population, "building:builders:upgrade:refund:"+string(item.Type))
+			_ = s.releasePopulation(ctx, playerID, next.Population, "building:builders:upgrade:refund:"+string(item.Type))
 		}
 		return building.Building{}, err
 	}
 	if item.CompletesAt != nil {
 		_ = s.scheduleCompletion(ctx, item)
+	} else if err := s.awardCompletionXP(ctx, item); err != nil {
+		return building.Building{}, err
+	}
+	s.log.Info("building.upgraded", "event", "building.upgraded", "building_id", item.ID, "building_type", item.Type, "building_level", item.Level, "player_id", playerID)
+	reason := "upgrade_started"
+	if item.CompletesAt == nil {
+		reason = "upgrade_completed"
+	}
+	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: reason})
+	return item, nil
+}
+
+func (s *BuildingService) SetCannonEnabled(ctx context.Context, id building.ID, playerID player.ID, enabled bool) (building.Building, error) {
+	item, err := s.requireOwned(ctx, id, playerID)
+	if err != nil {
+		return building.Building{}, err
+	}
+	if !catalog.IsDefenseWeapon(item.Type) {
+		return building.Building{}, apperror.New(apperror.Validation, "building is not a defense weapon")
+	}
+	if item.CannonEnabled == enabled {
+		return item, nil
+	}
+	if enabled {
+		if (item.State != building.StateActive && item.State != building.StateDamaged) || item.Health <= 0 {
+			return building.Building{}, apperror.New(apperror.Conflict, "defense weapon must be active")
+		}
+		if err := s.reservePopulation(ctx, playerID, 1, "cannon:garrison:"+string(id)); err != nil {
+			return building.Building{}, err
+		}
+	}
+	item.CannonEnabled = enabled
+	if !enabled {
+		item.CannonTargetID = ""
+	}
+	item.UpdatedAt = s.now()
+	if err := s.buildings.Update(ctx, item); err != nil {
+		if enabled {
+			_ = s.releasePopulation(ctx, playerID, 1, "cannon:garrison:refund:"+string(id))
+		}
+		return building.Building{}, err
+	}
+	if !enabled {
+		if err := s.releasePopulation(ctx, playerID, 1, "cannon:garrison:release:"+string(id)); err != nil {
+			return building.Building{}, err
+		}
 	}
 	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
-	s.log.Info("building.upgraded", "event", "building.upgraded", "building_id", item.ID, "building_type", item.Type, "building_level", item.Level, "player_id", playerID)
+	return item, nil
+}
+
+func (s *BuildingService) ReloadTrap(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
+	item, err := s.requireOwned(ctx, id, playerID)
+	if err != nil {
+		return building.Building{}, err
+	}
+	stats, ok := catalog.DefenseTrapLevel(item.Type, item.Level)
+	if !ok {
+		return building.Building{}, apperror.New(apperror.Validation, "building is not a trap")
+	}
+	if item.State != building.StateActive && item.State != building.StateDamaged {
+		return building.Building{}, apperror.New(apperror.Conflict, "trap must be active")
+	}
+	if item.TrapCharges >= stats.MaxCharges {
+		return item, nil
+	}
+	if err := s.spendCost(ctx, playerID, stats.Reload, "trap:reload:"+string(id)); err != nil {
+		return building.Building{}, err
+	}
+	item.TrapCharges = stats.MaxCharges
+	item.UpdatedAt = s.now()
+	if err := s.buildings.Update(ctx, item); err != nil {
+		s.refundCost(ctx, playerID, stats.Reload, "trap:reload:refund:"+string(id))
+		return building.Building{}, err
+	}
+	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
 	return item, nil
 }
 
@@ -351,15 +572,16 @@ func (s *BuildingService) reservePopulation(ctx context.Context, playerID player
 	return nil
 }
 
-func (s *BuildingService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) {
+func (s *BuildingService) releasePopulation(ctx context.Context, playerID player.ID, amount int, reason string) error {
 	if amount <= 0 || s.economy == nil {
-		return
+		return nil
 	}
-	_, _, _ = s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	_, _, err := s.economy.Add(withoutStarterPopulationBackfill(ctx), playerID, []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: amount}}, reason)
+	return err
 }
 
-func (s *BuildingService) releaseConstructionPopulation(ctx context.Context, item building.Building, reason string) {
-	s.releasePopulation(ctx, player.ID(item.OwnerID), buildingPopulation(item), reason)
+func (s *BuildingService) releaseConstructionPopulation(ctx context.Context, item building.Building, reason string) error {
+	return s.releasePopulation(ctx, player.ID(item.OwnerID), buildingPopulation(item), reason)
 }
 
 func toEconomyCost(cost []building.Cost) []economy.ResourceAmount {
@@ -442,11 +664,105 @@ func (s *BuildingService) Demolish(ctx context.Context, id building.ID, playerID
 	if err != nil {
 		return err
 	}
+	if catalog.IsRuin(item.Type) && item.State == building.StateRuined {
+		return apperror.New(apperror.Conflict, "разрушенная руина больше не принадлежит игроку")
+	}
+	if s.economy != nil {
+		if _, err := s.economy.Inventory(ctx, playerID); err != nil {
+			return err
+		}
+		item, err = s.requireOwned(ctx, id, playerID)
+		if err != nil {
+			return err
+		}
+		if catalog.IsRuin(item.Type) && item.State == building.StateRuined {
+			return apperror.New(apperror.Conflict, "разрушенная руина больше не принадлежит игроку")
+		}
+	}
+	releasedPopulation := 0
+	if item.State == building.StateBuilding && item.CompletesAt != nil {
+		releasedPopulation += buildingPopulation(item)
+	}
+	if item.FieldStageStartedAt != nil {
+		releasedPopulation += buildingPopulation(item)
+	}
+	if catalog.IsDefenseWeapon(item.Type) && item.CannonEnabled {
+		releasedPopulation++
+	}
+	if s.economy != nil && s.economy.repo != nil {
+		jobs, err := s.economy.repo.ListProductionJobs(ctx, playerID)
+		if err != nil {
+			return err
+		}
+		for _, job := range jobs {
+			if job.BuildingID != string(id) || (job.State != economy.ProductionRunning && job.State != economy.ProductionReady) {
+				continue
+			}
+			if job.State == economy.ProductionRunning {
+				recipe, ok := catalog.RecipeForBuildingLevel(job.RecipeID, item.Level)
+				if !ok {
+					return apperror.New(apperror.Conflict, "production recipe not found")
+				}
+				releasedPopulation += recipe.Workers
+			}
+			job.State = economy.ProductionCancelled
+			job.UpdatedAt = s.now()
+			if err := s.economy.repo.SaveProductionJob(ctx, job); err != nil {
+				return err
+			}
+		}
+	}
+	refundCoins := catalog.DemolitionRefundCoins(item.Type, item.Level)
 	if err := s.buildings.Delete(ctx, id); err != nil {
 		return err
 	}
-	s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID})
-	s.log.Info("building.demolished", "event", "building.demolished", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
+	if item.Type == building.TypeOilWell && s.resources != nil {
+		if err := s.resources.ReleaseOilWell(ctx, item.Tile, item.OwnerID); err != nil {
+			return err
+		}
+	}
+	if s.economy != nil && (releasedPopulation > 0 || refundCoins > 0) {
+		items := make([]economy.ResourceAmount, 0, 2)
+		if releasedPopulation > 0 {
+			items = append(items, economy.ResourceAmount{Resource: economy.ResourcePopulation, Amount: releasedPopulation})
+		}
+		if refundCoins > 0 {
+			items = append(items, economy.ResourceAmount{Resource: economy.ResourceCoins, Amount: refundCoins})
+		}
+		if _, _, err := s.economy.Add(withUncappedCoins(withoutStarterPopulationBackfill(ctx)), playerID, items, "building:demolish:"+string(item.ID)); err != nil {
+			return err
+		}
+	}
+	s.log.Info("building.demolished", "event", "building.demolished", "building_id", item.ID, "building_type", item.Type, "player_id", playerID, "refund_coins", refundCoins, "population_returned", releasedPopulation)
+	s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "demolished"})
+	return nil
+}
+
+func (s *BuildingService) awardCompletionXP(ctx context.Context, item building.Building) error {
+	if s.experience == nil {
+		return nil
+	}
+	reward := catalog.ExperienceForBuilding(item.Type, item.Level).Completion
+	key := fmt.Sprintf("building:%s:%s:%d:complete", item.ID, item.Type, item.Level)
+	return s.experience.Award(ctx, player.ID(item.OwnerID), reward, "building:complete", key)
+}
+
+func (s *BuildingService) requireIdleBuilding(ctx context.Context, item building.Building) error {
+	if item.FieldStage > 0 {
+		return apperror.New(apperror.Conflict, "завершите цикл выращивания перед изменением поля")
+	}
+	if s.economy == nil || s.economy.repo == nil {
+		return nil
+	}
+	jobs, err := s.economy.repo.ListProductionJobs(ctx, player.ID(item.OwnerID))
+	if err != nil {
+		return err
+	}
+	for _, job := range jobs {
+		if job.BuildingID == string(item.ID) && (job.State == economy.ProductionRunning || job.State == economy.ProductionReady) {
+			return apperror.New(apperror.Conflict, "завершите производство перед изменением постройки")
+		}
+	}
 	return nil
 }
 
@@ -461,9 +777,23 @@ func (s *BuildingService) Cancel(ctx context.Context, id building.ID, playerID p
 	if err := s.buildings.Delete(ctx, id); err != nil {
 		return err
 	}
-	s.releaseConstructionPopulation(ctx, item, "building:builders:cancel:"+string(item.Type))
-	s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID})
+	if item.Type == building.TypeOilWell && s.resources != nil {
+		if err := s.resources.ReleaseOilWell(ctx, item.Tile, item.OwnerID); err != nil {
+			return err
+		}
+	}
+	if item.State == building.StateBuilding && item.CompletesAt != nil {
+		if err := s.releaseConstructionPopulation(ctx, item, "building:builders:cancel:"+string(item.Type)); err != nil {
+			return err
+		}
+	}
+	if catalog.IsDefenseWeapon(item.Type) && item.CannonEnabled {
+		if err := s.releasePopulation(ctx, playerID, 1, "cannon:garrison:cancel:"+string(item.ID)); err != nil {
+			return err
+		}
+	}
 	s.log.Info("building.cancelled", "event", "building.cancelled", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
+	s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "cancelled"})
 	return nil
 }
 
@@ -472,20 +802,103 @@ func (s *BuildingService) Repair(ctx context.Context, id building.ID, playerID p
 	if err != nil {
 		return building.Building{}, err
 	}
-	if spec, ok := catalog.GetBuilding(item.Type); ok {
-		item.Health = buildingHealth(spec)
-	} else {
-		item.Health = 100
+	if item.State != building.StateActive && item.State != building.StateDamaged {
+		return building.Building{}, apperror.New(apperror.Conflict, "ремонтировать можно только завершённую, не разрушенную постройку")
 	}
-	if item.State == building.StateDamaged {
-		item.State = building.StateActive
+	maxHealth := buildingHealthForLevel(item.Type, item.Level)
+	if item.Health >= maxHealth {
+		return building.Building{}, apperror.New(apperror.Conflict, "постройка не нуждается в ремонте")
 	}
+	item.Health = maxHealth
+	item.State = building.StateActive
 	item.UpdatedAt = s.now()
 	if err := s.buildings.Update(ctx, item); err != nil {
 		return building.Building{}, err
 	}
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
 	s.log.Info("building.repaired", "event", "building.repaired", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
+	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "repaired"})
+	return item, nil
+}
+
+func buildingHealthForLevel(kind building.Type, level int) int {
+	spec, ok := catalog.GetBuilding(kind)
+	if !ok {
+		return 100
+	}
+	for _, upgrade := range spec.UpgradeLevels {
+		if upgrade.Level == level && upgrade.Health > 0 {
+			return upgrade.Health
+		}
+	}
+	return buildingHealth(spec)
+}
+
+func (s *BuildingService) Relocate(ctx context.Context, id building.ID, playerID player.ID, destination world.Coord, rotation int) (building.Building, error) {
+	item, err := s.requireOwned(ctx, id, playerID)
+	if err != nil {
+		return building.Building{}, err
+	}
+	if (item.Type == building.TypeOilWell || catalog.IsRuin(item.Type)) && item.Tile != destination {
+		return building.Building{}, apperror.New(apperror.Conflict, "эту постройку нельзя перенести с исходной клетки")
+	}
+	if rotation < 0 || rotation > 3 {
+		return building.Building{}, apperror.WithFields(apperror.Validation, "недопустимый поворот", map[string]string{"rotation": "допустимы значения 0–3"})
+	}
+	if item.State != building.StateActive && item.State != building.StateDamaged {
+		return building.Building{}, apperror.New(apperror.Conflict, "перемещать и поворачивать можно только завершённые постройки")
+	}
+	if item.Tile == destination && item.Rotation == rotation {
+		return item, nil
+	}
+	if err := s.requireIdleBuilding(ctx, item); err != nil {
+		return building.Building{}, err
+	}
+	width, height := item.Footprint.Width, item.Footprint.Height
+	if (rotation-item.Rotation+4)%2 == 1 {
+		width, height = height, width
+	}
+	footprint := building.Footprint{Width: width, Height: height}
+	tiles, err := s.placementTiles(ctx, destination, footprint)
+	if err != nil {
+		return building.Building{}, err
+	}
+	existing, err := s.existingBuildingsForFootprint(ctx, destination, footprint)
+	if err != nil {
+		return building.Building{}, err
+	}
+	others := make([]building.Building, 0, len(existing))
+	for _, other := range existing {
+		if other.ID != item.ID {
+			others = append(others, other)
+		}
+	}
+	if err := building.ValidatePlacement(building.PlacementInput{
+		Type: item.Type, Tile: tiles[0], Tiles: tiles, Footprint: footprint,
+		Existing: others, HasTownHall: item.Type != building.TypeTownHall,
+		BuildingLimit: 1, UsedLimit: 0, RequiresTownHall: false,
+	}); err != nil {
+		return building.Building{}, err
+	}
+	if err := s.validateMonsterFree(ctx, destination, footprint); err != nil {
+		return building.Building{}, err
+	}
+	previous := item
+	item.Tile = destination
+	item.Footprint = footprint
+	item.Rotation = rotation
+	item.UpdatedAt = s.now()
+	changed, err := s.buildings.RelocateIfCurrent(ctx, previous, item)
+	if err != nil {
+		return building.Building{}, err
+	}
+	if !changed {
+		return building.Building{}, apperror.New(apperror.Conflict, "постройка или целевые клетки изменились; попробуйте ещё раз")
+	}
+	if s.events != nil && previous.Tile != item.Tile && world.ChunkForTile(previous.Tile) != world.ChunkForTile(item.Tile) {
+		s.events.Publish(Event{Type: EventBuildingRemoved, ChunkID: world.ChunkID(previous.MapID, world.ChunkForTile(previous.Tile)), PlayerID: playerID,
+			Payload: BuildingRemovedPayload{BuildingID: item.ID, Reason: "moved"}})
+	}
+	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "relocated"})
 	return item, nil
 }
 
@@ -499,6 +912,13 @@ func (s *BuildingService) publish(eventType EventType, item building.Building, p
 		PlayerID: player.ID(item.OwnerID),
 		Payload:  payload,
 	})
+}
+
+func completionReason(item building.Building) string {
+	if item.StartedAt.After(item.CreatedAt) {
+		return "upgrade_completed"
+	}
+	return "completed"
 }
 
 func (s *BuildingService) scheduleCompletion(ctx context.Context, item building.Building) error {
@@ -543,12 +963,19 @@ func clearWindleafCycle(item *building.Building) {
 }
 
 func nextUpgrade(item building.Building) (catalog.BuildingType, bool) {
+	return nextUpgradeTo(item, "")
+}
+
+func nextUpgradeTo(item building.Building, targetType building.Type) (catalog.BuildingType, bool) {
 	spec, ok := catalog.GetBuilding(item.Type)
 	if !ok {
 		return catalog.BuildingType{}, false
 	}
 	for _, level := range spec.UpgradeLevels {
 		if level.Level == item.Level+1 {
+			if targetType != "" && targetType != item.Type {
+				return catalog.BuildingType{}, false
+			}
 			return catalog.BuildingType{
 				Type:          item.Type,
 				Name:          spec.Name,
@@ -563,11 +990,24 @@ func nextUpgrade(item building.Building) (catalog.BuildingType, bool) {
 	}
 	for _, level := range spec.UpgradeLevels {
 		if level.Level == item.Level && level.NextType != "" {
+			if targetType != "" && targetType != level.NextType {
+				return catalog.BuildingType{}, false
+			}
 			return catalog.GetBuilding(level.NextType)
 		}
 	}
 	if len(spec.UpgradeTo) > 0 {
-		return catalog.GetBuilding(spec.UpgradeTo[0])
+		if targetType == "" {
+			if len(spec.UpgradeTo) != 1 {
+				return catalog.BuildingType{}, false
+			}
+			targetType = spec.UpgradeTo[0]
+		}
+		for _, allowed := range spec.UpgradeTo {
+			if allowed == targetType {
+				return catalog.GetBuilding(targetType)
+			}
+		}
 	}
 	return catalog.BuildingType{}, false
 }

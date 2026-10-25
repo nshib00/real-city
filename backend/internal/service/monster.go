@@ -12,15 +12,17 @@ import (
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
+	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
 )
 
 type MonsterService struct {
-	repo    MonsterRepository
-	log     *slog.Logger
-	events  *EventBus
-	economy *EconomyService
-	now     func() time.Time
+	repo       MonsterRepository
+	log        *slog.Logger
+	events     *EventBus
+	economy    *EconomyService
+	experience *ExperienceService
+	now        func() time.Time
 }
 
 func NewMonsterService(repo MonsterRepository, log *slog.Logger) *MonsterService {
@@ -35,6 +37,10 @@ func (s *MonsterService) SetEconomy(economyService *EconomyService) {
 	s.economy = economyService
 }
 
+func (s *MonsterService) SetExperience(experience *ExperienceService) {
+	s.experience = experience
+}
+
 func (s *MonsterService) Catalog(ctx context.Context) ([]monster.Spec, error) {
 	_ = ctx
 	return catalog.MonsterSpecs(), nil
@@ -44,44 +50,95 @@ func (s *MonsterService) List(ctx context.Context, center world.Coord, radius in
 	if radius <= 0 {
 		radius = 24
 	}
-	return s.repo.ListByViewport(ctx, DefaultWorldID, center.X-radius, center.Y-radius, center.X+radius, center.Y+radius)
+	items, err := s.repo.ListByMap(ctx, DefaultWorldID)
+	if err != nil {
+		return nil, err
+	}
+	visible := make([]monster.Monster, 0, len(items))
+	for _, item := range items {
+		if wrappedTileDistance(item.Tile.X, center.X) <= radius && wrappedTileDistance(item.Tile.Y, center.Y) <= radius {
+			visible = append(visible, item)
+		}
+	}
+	return visible, nil
+}
+
+func wrappedTileDistance(left, right int) int {
+	distance := (left - right) % worldgen.WorldSizeTiles
+	if distance < 0 {
+		distance += worldgen.WorldSizeTiles
+	}
+	if distance > worldgen.WorldSizeTiles/2 {
+		distance = worldgen.WorldSizeTiles - distance
+	}
+	return distance
 }
 
 func (s *MonsterService) Get(ctx context.Context, id monster.ID) (monster.Monster, error) {
 	return s.repo.FindByID(ctx, id)
 }
 
-func (s *MonsterService) Attack(ctx context.Context, id monster.ID, playerID player.ID) (monster.Monster, []Reward, error) {
-	item, err := s.repo.FindByID(ctx, id)
-	if err != nil {
-		return monster.Monster{}, nil, err
-	}
-	if !item.Alive() {
-		return monster.Monster{}, nil, apperror.New(apperror.Conflict, "monster is already dead")
-	}
-	now := s.now()
-	damage := 28
-	killed := item.ApplyDamage(damage, now)
-	if err := s.repo.Update(ctx, item); err != nil {
-		return monster.Monster{}, nil, err
-	}
-	rewards := []Reward(nil)
-	if killed {
-		if err := s.createLootDrop(ctx, item, now); err != nil {
+func (s *MonsterService) Attack(ctx context.Context, id monster.ID, playerID player.ID) (monster.Monster, *monster.LootDrop, error) {
+	return s.Damage(ctx, id, playerID, 28)
+}
+
+func (s *MonsterService) Damage(ctx context.Context, id monster.ID, playerID player.ID, damage int) (monster.Monster, *monster.LootDrop, error) {
+	var item monster.Monster
+	var killed bool
+	var dealt int
+	var now time.Time
+	updated := false
+	for attempt := 0; attempt < 3; attempt++ {
+		previous, err := s.repo.FindByID(ctx, id)
+		if err != nil {
 			return monster.Monster{}, nil, err
 		}
+		if !previous.Alive() {
+			return monster.Monster{}, nil, apperror.New(apperror.Conflict, "monster is already dead")
+		}
+		now = s.now()
+		item = previous
+		killed = item.ApplyDamage(damage, now)
+		dealt = previous.Health - item.Health
+		updated, err = s.repo.UpdateIfCurrent(ctx, previous, item)
+		if err != nil {
+			return monster.Monster{}, nil, err
+		}
+		if updated {
+			break
+		}
+	}
+	if !updated {
+		return monster.Monster{}, nil, apperror.New(apperror.Conflict, "monster state changed; try again")
+	}
+	var drop *monster.LootDrop
+	if killed {
+		created, err := s.createLootDrop(ctx, item, now)
+		if err != nil {
+			return monster.Monster{}, nil, err
+		}
+		drop = &created
 		if err := s.scheduleSpawnAfterDeath(ctx, item, now); err != nil {
 			return monster.Monster{}, nil, err
+		}
+		if s.experience != nil {
+			spec, ok := catalog.MonsterSpec(item.Type)
+			if ok {
+				key := "monster:" + string(item.ID) + ":kill"
+				if err := s.experience.Award(ctx, playerID, max(1, spec.MaxHealth/10), "monster:kill", key); err != nil {
+					return monster.Monster{}, nil, err
+				}
+			}
 		}
 	}
 	eventType := EventMonsterDamaged
 	if killed {
 		eventType = EventMonsterDied
 	}
-	s.publish(eventType, item, playerID)
+	s.publish(eventType, item, playerID, dealt)
 	_ = s.repo.AddEvent(ctx, monster.Event{ID: fmt.Sprintf("monster_event_%s_%d", item.ID, now.UnixNano()), MonsterID: item.ID, Type: string(eventType), TargetID: string(playerID), Tile: item.Tile, CreatedAt: now})
 	s.log.Info("pve.monster.damaged", "event", "pve.monster.damaged", "monster_id", item.ID, "monster_type", item.Type, "player_id", playerID, "damage", damage, "dead", killed, "chunk_id", world.ChunkID(item.MapID, world.ChunkForTile(item.Tile)))
-	return item, rewards, nil
+	return item, drop, nil
 }
 
 func (s *MonsterService) SpawnFromPoint(ctx context.Context, spawn monster.SpawnPoint, now time.Time) (monster.Monster, error) {
@@ -113,7 +170,38 @@ func (s *MonsterService) ListLoot(ctx context.Context, center world.Coord, radiu
 	if radius <= 0 {
 		radius = 24
 	}
-	return s.repo.ListLootDropsByViewport(ctx, DefaultWorldID, center.X-radius, center.Y-radius, center.X+radius, center.Y+radius)
+	xRanges := lootViewportRanges(center.X, radius)
+	yRanges := lootViewportRanges(center.Y, radius)
+	items := make([]monster.LootDrop, 0)
+	seen := make(map[monster.LootDropID]bool)
+	for _, xRange := range xRanges {
+		for _, yRange := range yRanges {
+			part, err := s.repo.ListLootDropsByViewport(ctx, DefaultWorldID, xRange[0], yRange[0], xRange[1], yRange[1])
+			if err != nil {
+				return nil, err
+			}
+			for _, item := range part {
+				if !seen[item.ID] {
+					seen[item.ID] = true
+					items = append(items, item)
+				}
+			}
+		}
+	}
+	return items, nil
+}
+
+func lootViewportRanges(center, radius int) [][2]int {
+	size := worldgen.WorldSizeTiles
+	if radius >= size/2 {
+		return [][2]int{{-size, 2*size - 1}}
+	}
+	center = (center%size + size) % size
+	return [][2]int{
+		{center - radius - size, center + radius - size},
+		{center - radius, center + radius},
+		{center - radius + size, center + radius + size},
+	}
 }
 
 func (s *MonsterService) ClaimLoot(ctx context.Context, id monster.LootDropID, playerID player.ID) (monster.LootDrop, economy.Inventory, error) {
@@ -133,10 +221,10 @@ func (s *MonsterService) ClaimLoot(ctx context.Context, id monster.LootDropID, p
 	return drop, inventory, nil
 }
 
-func (s *MonsterService) createLootDrop(ctx context.Context, item monster.Monster, now time.Time) error {
+func (s *MonsterService) createLootDrop(ctx context.Context, item monster.Monster, now time.Time) (monster.LootDrop, error) {
 	loot := LootForMonster(item)
 	if len(loot) == 0 {
-		return nil
+		return monster.LootDrop{}, nil
 	}
 	drop := monster.LootDrop{
 		ID:        monster.LootDropID(fmt.Sprintf("monster_loot_%s_%d", item.ID, now.UnixNano())),
@@ -147,10 +235,10 @@ func (s *MonsterService) createLootDrop(ctx context.Context, item monster.Monste
 		CreatedAt: now,
 	}
 	if err := s.repo.CreateLootDrop(ctx, drop); err != nil {
-		return err
+		return monster.LootDrop{}, err
 	}
 	s.publishLoot(EventMonsterLootDropped, drop, "")
-	return nil
+	return drop, nil
 }
 
 func (s *MonsterService) scheduleSpawnAfterDeath(ctx context.Context, item monster.Monster, now time.Time) error {
@@ -172,15 +260,20 @@ func (s *MonsterService) scheduleSpawnAfterDeath(ctx context.Context, item monst
 	return nil
 }
 
-func (s *MonsterService) publish(eventType EventType, item monster.Monster, playerID player.ID) {
+func (s *MonsterService) publish(eventType EventType, item monster.Monster, playerID player.ID, damage ...int) {
 	if s.events == nil {
 		return
+	}
+	payload := MonsterPayload{Monster: item}
+	if len(damage) > 0 && damage[0] > 0 {
+		payload.Damage = damage[0]
+		payload.Source = "player"
 	}
 	s.events.Publish(Event{
 		Type:     eventType,
 		ChunkID:  world.ChunkID(item.MapID, world.ChunkForTile(item.Tile)),
 		PlayerID: playerID,
-		Payload:  MonsterPayload{Monster: item},
+		Payload:  payload,
 	})
 }
 
@@ -199,21 +292,9 @@ func (s *MonsterService) publishLoot(eventType EventType, item monster.LootDrop,
 func LootForMonster(item monster.Monster) []economy.ResourceAmount {
 	switch item.Type {
 	case monster.TypeRoamingMelee:
-		return rollLoot([]lootOption{
-			{resource: economy.ResourceCoins, weight: 55, min: 55, max: 75},
-			{resource: economy.ResourceWood, weight: 18, min: 18, max: 28},
-			{resource: economy.ResourceTools, weight: 14, min: 1, max: 1},
-			{resource: economy.ResourceRope, weight: 8, min: 2, max: 4},
-			{resource: economy.ResourceExplosives, weight: 5, min: 1, max: 1},
-		})
+		return rollLoot(roamingMeleeLootOptions)
 	case monster.TypeResourceGuardian:
-		return rollLoot([]lootOption{
-			{resource: economy.ResourceCoins, weight: 45, min: 100, max: 140},
-			{resource: economy.ResourceStoneBlock, weight: 20, min: 3, max: 6},
-			{resource: economy.ResourceIronIngot, weight: 15, min: 1, max: 3},
-			{resource: economy.ResourceTools, weight: 12, min: 1, max: 2},
-			{resource: economy.ResourceExplosives, weight: 8, min: 1, max: 2},
-		})
+		return rollLoot(resourceGuardianLootOptions)
 	case monster.TypeRuinsGuardian:
 		return rollLoot([]lootOption{
 			{resource: economy.ResourceCoins, weight: 50, min: 190, max: 250},
@@ -299,6 +380,24 @@ type lootOption struct {
 	weight   int
 	min      int
 	max      int
+}
+
+var roamingMeleeLootOptions = []lootOption{
+	{resource: economy.ResourceCoins, weight: 42, min: 55, max: 75},
+	{resource: economy.ResourceWood, weight: 25, min: 18, max: 28},
+	{resource: economy.ResourceRope, weight: 20, min: 2, max: 4},
+	{resource: economy.ResourceTools, weight: 8, min: 1, max: 1},
+	{resource: economy.ResourceExplosives, weight: 5, min: 1, max: 1},
+}
+
+var resourceGuardianLootOptions = []lootOption{
+	{resource: economy.ResourceCoins, weight: 30, min: 100, max: 140},
+	{resource: economy.ResourceStone, weight: 25, min: 9, max: 15},
+	{resource: economy.ResourceFiber, weight: 14, min: 3, max: 5},
+	{resource: economy.ResourceStoneBlock, weight: 10, min: 3, max: 6},
+	{resource: economy.ResourceTools, weight: 12, min: 1, max: 2},
+	{resource: economy.ResourceExplosives, weight: 7, min: 1, max: 1},
+	{resource: economy.ResourceIronIngot, weight: 2, min: 1, max: 2},
 }
 
 func rollLoot(options []lootOption) []economy.ResourceAmount {

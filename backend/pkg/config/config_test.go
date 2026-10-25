@@ -20,4 +20,7 @@ func TestLoadUsesFallbacks(t *testing.T) {
 	if cfg.Session.AccessTTL != 15*time.Minute {
 		t.Fatalf("expected default access ttl, got %s", cfg.Session.AccessTTL)
 	}
+	if cfg.Simulation.OutboxDispatchInterval != 500*time.Millisecond {
+		t.Fatalf("expected independent outbox interval, got %s", cfg.Simulation.OutboxDispatchInterval)
+	}
 }

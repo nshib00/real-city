@@ -25,12 +25,12 @@ func NewEconomyRepo() *EconomyRepo {
 	nodes := map[economy.NodeID]economy.ResourceNode{
 		"node_wood_1":  {ID: "node_wood_1", MapID: "dev-world", Type: "forest_cache", Resource: economy.ResourceWood, Amount: 80, MaxAmount: 80, Tile: world.Coord{X: 7, Y: 9}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
 		"node_stone_1": {ID: "node_stone_1", MapID: "dev-world", Type: "stone_vein", Resource: economy.ResourceStone, Amount: 55, MaxAmount: 55, Tile: world.Coord{X: 14, Y: 5}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
-		"node_oil_1":   {ID: "node_oil_1", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 36, MaxAmount: 36, Tile: world.Coord{X: 24, Y: 18}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
-		"node_oil_2":   {ID: "node_oil_2", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 28, MaxAmount: 28, Tile: world.Coord{X: 91, Y: 73}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
-		"node_oil_3":   {ID: "node_oil_3", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 32, MaxAmount: 32, Tile: world.Coord{X: 126, Y: 35}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
-		"node_oil_4":   {ID: "node_oil_4", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 30, MaxAmount: 30, Tile: world.Coord{X: 38, Y: 124}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
-		"node_oil_5":   {ID: "node_oil_5", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 34, MaxAmount: 34, Tile: world.Coord{X: 142, Y: 116}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
-		"node_oil_6":   {ID: "node_oil_6", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 26, MaxAmount: 26, Tile: world.Coord{X: 76, Y: 139}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_1":   {ID: "node_oil_1", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 100000, MaxAmount: 100000, Tile: world.Coord{X: 24, Y: 18}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_2":   {ID: "node_oil_2", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 100000, MaxAmount: 100000, Tile: world.Coord{X: 91, Y: 73}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_3":   {ID: "node_oil_3", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 100000, MaxAmount: 100000, Tile: world.Coord{X: 126, Y: 35}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_4":   {ID: "node_oil_4", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 100000, MaxAmount: 100000, Tile: world.Coord{X: 38, Y: 124}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_5":   {ID: "node_oil_5", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 100000, MaxAmount: 100000, Tile: world.Coord{X: 142, Y: 116}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
+		"node_oil_6":   {ID: "node_oil_6", MapID: "dev-world", Type: "oil_well", Resource: economy.ResourceOil, Amount: 100000, MaxAmount: 100000, Tile: world.Coord{X: 76, Y: 139}, State: economy.NodeNeutral, CreatedAt: now, UpdatedAt: now},
 	}
 	return &EconomyRepo{
 		inventories:  make(map[player.ID]economy.Inventory),

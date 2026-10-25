@@ -5,7 +5,7 @@ POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=d
 TEST_POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
 BLENDER ?= blender
 
-.PHONY: test backend-test frontend-test backend-run backend-up backend-down \
+.PHONY: test backend-test frontend-test catalog-check backend-run backend-up backend-down \
  backend-logs backend-run-local db-up \
  migrate-up migrate-down migrate-status \
  test-backend-up test-backend-down test-backend-logs test-db-up \
@@ -15,6 +15,14 @@ BLENDER ?= blender
  asset-pipeline-smoke asset-pipeline-local asset-contact-sheets asset-pipeline-blender-roundtrip
 
 test: backend-test frontend-test
+
+catalog-check:
+	python3 tools/buildings/check_balance_snapshot.py
+	python3 docs/buildings/audit-catalogs.py
+	python3 docs/buildings/check-coverage.py
+	python3 docs/buildings/sync-runtime-tables.py --check
+	cmp data/balance/v2.json backend/internal/domain/catalog/balance.v2.json
+	cd backend && GOCACHE=/tmp/real-city-go-cache go test ./internal/domain/catalog
 
 backend-test:
 	cd backend && GOCACHE=/tmp/real-city-go-cache go test ./...

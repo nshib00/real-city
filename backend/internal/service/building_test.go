@@ -27,6 +27,222 @@ func TestBuildingServiceRequiresTownHallBeforeOtherBuildings(t *testing.T) {
 	}
 }
 
+func TestStoneHouseUpgradeChainFollowsTargetLevelSpecs(t *testing.T) {
+	wood, ok := catalog.GetBuilding(building.TypeWoodHouse)
+	if !ok || len(wood.UpgradeLevels) != 6 {
+		t.Fatal("wooden house six-level catalog missing")
+	}
+	current := building.Building{Type: building.TypeWoodHouse, Level: 6}
+	for level := 1; level <= 6; level++ {
+		next, ok := nextUpgrade(current)
+		if !ok || next.Type != building.TypeStoneHouse || next.Level != level {
+			t.Fatalf("transition to stone house level %d: %#v, ok=%v", level, next, ok)
+		}
+		if next.Health <= 3310 || next.BuildDuration <= 4*time.Hour || next.Population <= 20 || len(next.Cost) == 0 {
+			t.Fatalf("incomplete balance for stone house level %d: %#v", level, next)
+		}
+		current.Type, current.Level = next.Type, next.Level
+	}
+	if _, ok := nextUpgrade(current); ok {
+		t.Fatal("stone house branch must be selected explicitly")
+	}
+	for _, branch := range []building.Type{building.TypeVilla, building.TypeApartmentHouse} {
+		next, ok := nextUpgradeTo(current, branch)
+		if !ok || next.Type != branch || next.Level != 1 {
+			t.Fatalf("stone house branch %s: %#v, ok=%v", branch, next, ok)
+		}
+	}
+	if _, ok := nextUpgradeTo(current, building.TypePalace); ok {
+		t.Fatal("stone house must reject a branch outside its catalog")
+	}
+	current.Type, current.Level = building.TypeVilla, 1
+	next, ok := nextUpgradeTo(current, building.TypeVilla)
+	if !ok || next.Type != building.TypeVilla || next.Level != 2 {
+		t.Fatalf("villa should continue within its branch: %#v, ok=%v", next, ok)
+	}
+	if _, ok := nextUpgradeTo(current, building.TypeApartmentHouse); ok {
+		t.Fatal("villa must not switch to apartment branch")
+	}
+}
+
+func TestStoneHouseUpgradeChoicePersistsAsSelectedType(t *testing.T) {
+	ctx := context.Background()
+	repo := memory.NewBuildingRepo()
+	service := NewBuildingService(repo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	item := building.Building{ID: "stone-branch", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeStoneHouse,
+		Name: "Каменный дом", Level: 6, State: building.StateActive, Health: 8700,
+		Tile: world.Coord{X: 3, Y: 3}, Footprint: building.Footprint{Width: 1, Height: 1}}
+	if err := repo.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.Upgrade(ctx, item.ID, "p1"); err == nil {
+		t.Fatal("branch selection must be required")
+	}
+	if _, err := service.UpgradeTo(ctx, item.ID, "p1", building.TypePalace); err == nil {
+		t.Fatal("unlisted target must be rejected")
+	}
+	upgraded, err := service.UpgradeTo(ctx, item.ID, "p1", building.TypeVilla)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if upgraded.Type != building.TypeVilla || upgraded.Level != 1 || upgraded.Health != 9500 {
+		t.Fatalf("selected branch was not saved: %#v", upgraded)
+	}
+	stored, err := repo.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if stored.Type != building.TypeVilla {
+		t.Fatalf("stored branch = %s", stored.Type)
+	}
+}
+
+func TestStoneHouseCannotBePlacedDirectly(t *testing.T) {
+	service := NewBuildingService(memory.NewBuildingRepo(), memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	_, err := service.Place(context.Background(), PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeStoneHouse, Tile: world.Coord{X: 4, Y: 4}})
+	if err == nil {
+		t.Fatal("stone house must be reached through wooden house level 6")
+	}
+}
+
+func TestBuildingRelocationChecksOwnershipAndFootprint(t *testing.T) {
+	ctx := context.Background()
+	repo := memory.NewBuildingRepo()
+	worlds := memory.NewWorldRepo()
+	service := NewBuildingService(repo, worlds, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	now := time.Date(2026, 10, 24, 12, 0, 0, 0, time.UTC)
+	service.SetNowForTest(func() time.Time { return now })
+	_, _, err := worlds.GetOrCreateChunk(ctx, DefaultWorldID, world.ChunkCoord{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for y := 4; y < 9; y++ {
+		for x := 4; x < 10; x++ {
+			coord := world.Coord{X: x, Y: y}
+			if err := worlds.UpdateTile(ctx, world.Tile{MapID: DefaultWorldID, Coord: coord, Chunk: world.ChunkForTile(coord), Terrain: world.TerrainGrass}); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	item := building.Building{ID: "moving", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeWoodHouse,
+		Level: 1, State: building.StateActive, Health: 200, Tile: world.Coord{X: 4, Y: 4},
+		Footprint: building.Footprint{Width: 2, Height: 1}, UpdatedAt: now.Add(-time.Second)}
+	blocker := building.Building{ID: "blocker", MapID: DefaultWorldID, OwnerID: "p2", Type: building.TypeDugout,
+		State: building.StateActive, Tile: world.Coord{X: 7, Y: 5}, Footprint: building.Footprint{Width: 1, Height: 1}}
+	for _, b := range []building.Building{item, blocker} {
+		if err := repo.Create(ctx, b); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, err := service.Relocate(ctx, item.ID, "p2", world.Coord{X: 6, Y: 5}, 0); err == nil {
+		t.Fatal("another player relocated the building")
+	}
+	if _, err := service.Relocate(ctx, item.ID, "p1", world.Coord{X: 7, Y: 5}, 0); err == nil {
+		t.Fatal("relocation overlapped another building")
+	}
+	if _, err := service.Relocate(ctx, item.ID, "p1", world.Coord{X: 4, Y: 4}, 4); err == nil {
+		t.Fatal("invalid rotation was accepted")
+	}
+	forest := world.Coord{X: 8, Y: 6}
+	if err := worlds.UpdateTile(ctx, world.Tile{MapID: DefaultWorldID, Coord: forest, Chunk: world.ChunkForTile(forest), Terrain: world.TerrainForest}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.Relocate(ctx, item.ID, "p1", forest, 0); err == nil {
+		t.Fatal("relocation onto forest was accepted")
+	}
+	moved, err := service.Relocate(ctx, item.ID, "p1", world.Coord{X: 5, Y: 5}, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if moved.Tile != (world.Coord{X: 5, Y: 5}) || moved.Rotation != 1 || moved.Footprint != (building.Footprint{Width: 1, Height: 2}) {
+		t.Fatalf("unexpected relocated building: %#v", moved)
+	}
+	stored, err := repo.FindByID(ctx, item.ID)
+	if err != nil || stored.Tile != moved.Tile || stored.Footprint != moved.Footprint {
+		t.Fatalf("relocation not persisted: %#v, %v", stored, err)
+	}
+}
+
+func TestRepairRestoresCurrentLevelHealth(t *testing.T) {
+	ctx := context.Background()
+	repo := memory.NewBuildingRepo()
+	service := NewBuildingService(repo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	item := building.Building{ID: "damaged", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeStoneHouse,
+		Level: 6, State: building.StateDamaged, Health: 100, Footprint: building.Footprint{Width: 1, Height: 1}}
+	if err := repo.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	repaired, err := service.Repair(ctx, item.ID, "p1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if repaired.Health != 8700 || repaired.State != building.StateActive {
+		t.Fatalf("incorrect level 6 repair: %#v", repaired)
+	}
+	if _, err := service.Repair(ctx, item.ID, "p1"); err == nil {
+		t.Fatal("repairing an intact building should fail")
+	}
+}
+
+func TestBuildingServiceListsNearbyBuildingsAcrossOwners(t *testing.T) {
+	ctx := context.Background()
+	repo := memory.NewBuildingRepo()
+	service := NewBuildingService(repo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	for _, item := range []building.Building{
+		{ID: "own", MapID: DefaultWorldID, OwnerID: "p1", Tile: world.Coord{X: 4, Y: 4}},
+		{ID: "foreign", MapID: DefaultWorldID, OwnerID: "p2", Tile: world.Coord{X: 34, Y: 4}},
+		{ID: "distant", MapID: DefaultWorldID, OwnerID: "p2", Tile: world.Coord{X: 96, Y: 4}},
+	} {
+		if err := repo.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	items, err := service.ListNearby(ctx, world.ChunkCoord{X: 0, Y: 0}, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(items) != 2 || items[0].ID != "own" || items[1].ID != "foreign" {
+		t.Fatalf("nearby buildings = %#v", items)
+	}
+	if _, err := service.ListNearby(ctx, world.ChunkCoord{}, 4); err == nil {
+		t.Fatal("expected radius validation error")
+	}
+}
+
+func TestBuildingServiceListsBuildingsAcrossDistrictAndWorldEdges(t *testing.T) {
+	ctx := context.Background()
+	repo := memory.NewBuildingRepo()
+	service := NewBuildingService(repo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	for _, item := range []building.Building{
+		{ID: "current", MapID: DefaultWorldID, Tile: world.Coord{X: 0, Y: 0}},
+		{ID: "west", MapID: DefaultWorldID, Tile: world.Coord{X: 159, Y: 0}},
+		{ID: "north", MapID: DefaultWorldID, Tile: world.Coord{X: 0, Y: 159}},
+		{ID: "corner", MapID: DefaultWorldID, Tile: world.Coord{X: 159, Y: 159}},
+		{ID: "next-district", MapID: DefaultWorldID, Tile: world.Coord{X: 32, Y: 0}},
+		{ID: "far", MapID: DefaultWorldID, Tile: world.Coord{X: 96, Y: 96}},
+	} {
+		if err := repo.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	items, err := service.ListNearby(ctx, world.ChunkCoord{X: 0, Y: 0}, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	seen := make(map[string]int)
+	for _, item := range items {
+		seen[string(item.ID)]++
+	}
+	for _, id := range []string{"current", "west", "north", "corner", "next-district"} {
+		if seen[id] != 1 {
+			t.Fatalf("building %s appeared %d times", id, seen[id])
+		}
+	}
+	if seen["far"] != 0 {
+		t.Fatalf("distant building appeared in viewport")
+	}
+}
+
 func TestBuildingServicePlacesTownHallAndCompletesConstruction(t *testing.T) {
 	service := NewBuildingService(memory.NewBuildingRepo(), memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
 	now := time.Date(2026, 8, 25, 10, 0, 0, 0, time.UTC)
@@ -253,6 +469,30 @@ func TestInventoryBackfillsStarterPopulationForExistingTownHall(t *testing.T) {
 	}
 }
 
+func TestTownHallDoesNotRestoreReservedPopulation(t *testing.T) {
+	ctx := context.Background()
+	buildingRepo := memory.NewBuildingRepo()
+	economyRepo := memory.NewEconomyRepo()
+	economyService := NewEconomyService(economyRepo, buildingRepo, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	buildingService := NewBuildingService(buildingRepo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	buildingService.SetEconomy(economyService)
+	if _, err := buildingService.Place(ctx, PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeTownHall, Tile: world.Coord{X: 0, Y: 0}}); err != nil {
+		t.Fatal(err)
+	}
+	for _, expected := range []int{2, 1, 0} {
+		if _, err := economyService.Spend(ctx, player.ID("p1"), []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: 1}}, "test:workers"); err != nil {
+			t.Fatal(err)
+		}
+		inventory, err := economyService.Inventory(ctx, player.ID("p1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if inventory.Items[economy.ResourcePopulation] != expected {
+			t.Fatalf("expected %d free population, got %d", expected, inventory.Items[economy.ResourcePopulation])
+		}
+	}
+}
+
 func TestCoinStorageCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	spec, ok := catalog.GetBuilding(building.TypeCoinStorage)
 	if !ok {
@@ -263,6 +503,11 @@ func TestCoinStorageCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	}
 	if len(spec.UpgradeLevels) != 12 {
 		t.Fatalf("expected 12 coin storage levels, got %d", len(spec.UpgradeLevels))
+	}
+	for _, costs := range [][]building.Cost{spec.Cost, spec.UpgradeLevels[0].Cost} {
+		if len(costs) != 3 || costs[0].Resource != "coins" || costs[0].Amount != 1500 || costs[1].Resource != "wood" || costs[1].Amount != 70 || costs[2].Resource != "planks" || costs[2].Amount != 15 {
+			t.Fatalf("unexpected first coin storage level cost: %#v", costs)
+		}
 	}
 	levelThree := spec.UpgradeLevels[2]
 	if levelThree.BuildDuration != 72*time.Minute || levelThree.Population != 12 || levelThree.Health != 1200 {
@@ -352,6 +597,29 @@ func TestMineCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	}
 }
 
+func TestClayQuarryCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
+	spec, ok := catalog.GetBuilding(building.TypeClayQuarry)
+	if !ok || spec.BuildDuration != 7*time.Minute || spec.Health != 95 || spec.Population != 3 {
+		t.Fatalf("unexpected first clay quarry level: %#v", spec)
+	}
+	if len(spec.UpgradeLevels) != 12 {
+		t.Fatalf("expected 12 clay quarry levels, got %d", len(spec.UpgradeLevels))
+	}
+	for index, level := range spec.UpgradeLevels {
+		if level.Level != index+1 {
+			t.Fatalf("unexpected clay quarry level %d: %#v", index+1, level)
+		}
+	}
+	seventh := spec.UpgradeLevels[6]
+	if seventh.BuildDuration != 6*time.Hour+45*time.Minute || seventh.Population != 13 || seventh.Health != 1190 {
+		t.Fatalf("unexpected fuel-powered clay quarry level: %#v", seventh)
+	}
+	final := spec.UpgradeLevels[11]
+	if final.BuildDuration != 28*time.Hour || final.Population != 24 || final.Health != 2780 || final.Cost[0].Amount != 2180000 {
+		t.Fatalf("unexpected final clay quarry level: %#v", final)
+	}
+}
+
 func TestGlassWorkshopCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	spec, ok := catalog.GetBuilding(building.TypeGlassWorkshop)
 	if !ok {
@@ -360,18 +628,18 @@ func TestGlassWorkshopCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	if spec.BuildDuration != 20*time.Minute || spec.Health != 436 || spec.Population != 6 {
 		t.Fatalf("unexpected first glass workshop level: %#v", spec)
 	}
-	if len(spec.UpgradeLevels) != 9 {
-		t.Fatalf("expected 9 glass workshop levels, got %d", len(spec.UpgradeLevels))
+	if len(spec.UpgradeLevels) != 12 {
+		t.Fatalf("expected 12 glass workshop levels, got %d", len(spec.UpgradeLevels))
 	}
 	levelFive := spec.UpgradeLevels[4]
 	if levelFive.BuildDuration != 5*time.Hour+14*time.Minute+20*time.Second || levelFive.Health != 1412 {
 		t.Fatalf("unexpected glass workshop level 5: %#v", levelFive)
 	}
 	final := spec.UpgradeLevels[len(spec.UpgradeLevels)-1]
-	if final.Level != 9 || final.BuildDuration != 15*time.Hour+30*time.Minute+30*time.Second || final.Health != 2810 {
+	if final.Level != 12 || final.BuildDuration != 28*time.Hour || final.Health != 4500 {
 		t.Fatalf("unexpected final glass workshop level: %#v", final)
 	}
-	if final.Cost[len(final.Cost)-1].Resource != "star_glass" || final.Cost[len(final.Cost)-1].Amount != 1 {
+	if final.Cost[len(final.Cost)-1].Resource != "star_glass" || final.Cost[len(final.Cost)-1].Amount != 4 {
 		t.Fatalf("expected star glass final cost, got %#v", final.Cost)
 	}
 }
@@ -485,6 +753,165 @@ func TestBuildingServiceReturnsPopulationAfterConstructionCompletes(t *testing.T
 	}
 	if completed.Items[economy.ResourcePopulation] != start.Items[economy.ResourcePopulation] {
 		t.Fatalf("expected population returned, got start=%d completed=%d", start.Items[economy.ResourcePopulation], completed.Items[economy.ResourcePopulation])
+	}
+}
+
+func TestBuildingServiceReturnsPopulationWhenConstructionIsDemolished(t *testing.T) {
+	ctx := context.Background()
+	buildingRepo := memory.NewBuildingRepo()
+	economyRepo := memory.NewEconomyRepo()
+	service := NewBuildingService(buildingRepo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	economyService := NewEconomyService(economyRepo, buildingRepo, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service.SetEconomy(economyService)
+	if _, err := service.Place(ctx, PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeTownHall, Tile: world.Coord{X: 0, Y: 0}}); err != nil {
+		t.Fatal(err)
+	}
+	start := grantTestResources(t, ctx, economyService, player.ID("p1"), economy.ResourceAmount{Resource: economy.ResourceWood, Amount: 3})
+	dugout, err := service.Place(ctx, PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeDugout, Tile: world.Coord{X: 4, Y: 4}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	reserved, err := economyService.Inventory(ctx, player.ID("p1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if reserved.Items[economy.ResourcePopulation] != start.Items[economy.ResourcePopulation]-1 {
+		t.Fatalf("expected one reserved builder, got %d", reserved.Items[economy.ResourcePopulation])
+	}
+	if err := service.Demolish(ctx, dugout.ID, player.ID("p1")); err != nil {
+		t.Fatal(err)
+	}
+	returned, err := economyService.Inventory(ctx, player.ID("p1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if returned.Items[economy.ResourcePopulation] != start.Items[economy.ResourcePopulation] {
+		t.Fatalf("expected builder to return after demolition, got %d", returned.Items[economy.ResourcePopulation])
+	}
+}
+
+func TestDemolishWorkingFieldReturnsWorkersAndOnlyCoins(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	repository := memory.NewEconomyRepo()
+	economyService := NewEconomyService(repository, buildings, slog.Default())
+	service := NewBuildingService(buildings, memory.NewWorldRepo(), slog.Default())
+	service.SetEconomy(economyService)
+	now := time.Now().UTC()
+	readyAt := now.Add(time.Hour)
+	item := building.Building{ID: "working-field", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeFieldBed, Level: 1, State: building.StateActive, FieldStage: 2, FieldStageStartedAt: &now, FieldStageReadyAt: &readyAt}
+	if err := buildings.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	grantTestResources(t, ctx, economyService, "p1", economy.ResourceAmount{Resource: economy.ResourcePopulation, Amount: 2}, economy.ResourceAmount{Resource: economy.ResourceWood, Amount: 10})
+	if _, err := economyService.Spend(ctx, "p1", []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: 1}}, "test:field:workers"); err != nil {
+		t.Fatal(err)
+	}
+	if err := service.Demolish(ctx, item.ID, "p1"); err != nil {
+		t.Fatal(err)
+	}
+	returned, err := economyService.Inventory(ctx, "p1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if returned.Items[economy.ResourcePopulation] != 2 || returned.Items[economy.ResourceWood] != 10 || returned.Items[economy.ResourceCoins] != 50+catalog.DemolitionRefundCoins(item.Type, item.Level) {
+		t.Fatalf("unexpected demolition refund: %#v", returned.Items)
+	}
+	if _, err := buildings.FindByID(ctx, item.ID); err == nil {
+		t.Fatal("demolished field still exists")
+	}
+}
+
+func TestDemolishRunningProductionReturnsWorkersAndCancelsJob(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	repository := memory.NewEconomyRepo()
+	economyService := NewEconomyService(repository, buildings, slog.Default())
+	service := NewBuildingService(buildings, memory.NewWorldRepo(), slog.Default())
+	service.SetEconomy(economyService)
+	item := building.Building{ID: "working-sawmill", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeLumberYard, Level: 1, State: building.StateActive}
+	if err := buildings.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	recipe, ok := catalog.RecipeForBuildingLevel("planks_from_wood", 1)
+	if !ok {
+		t.Fatal("missing sawmill recipe")
+	}
+	grantTestResources(t, ctx, economyService, "p1", economy.ResourceAmount{Resource: economy.ResourcePopulation, Amount: recipe.Workers + 1})
+	if _, err := economyService.Spend(ctx, "p1", []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: recipe.Workers}}, "test:production:workers"); err != nil {
+		t.Fatal(err)
+	}
+	job := economy.ProductionJob{ID: "job-1", PlayerID: "p1", BuildingID: string(item.ID), RecipeID: recipe.ID, State: economy.ProductionRunning}
+	if err := repository.SaveProductionJob(ctx, job); err != nil {
+		t.Fatal(err)
+	}
+	if err := service.Demolish(ctx, item.ID, "p1"); err != nil {
+		t.Fatal(err)
+	}
+	returned, err := economyService.Inventory(ctx, "p1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	storedJob, err := repository.FindProductionJob(ctx, job.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if returned.Items[economy.ResourcePopulation] != recipe.Workers+1 || storedJob.State != economy.ProductionCancelled {
+		t.Fatalf("unexpected production demolition: population=%d job=%s", returned.Items[economy.ResourcePopulation], storedJob.State)
+	}
+}
+
+func TestDemolitionRefundIsNotLostAtCoinCapacity(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	economyService := NewEconomyService(memory.NewEconomyRepo(), buildings, slog.Default())
+	service := NewBuildingService(buildings, memory.NewWorldRepo(), slog.Default())
+	service.SetEconomy(economyService)
+	item := building.Building{ID: "coin-storage-test", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeCoinStorage, Level: 1, State: building.StateActive}
+	if err := buildings.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	starting := grantTestResources(t, ctx, economyService, "p1", economy.ResourceAmount{Resource: economy.ResourceCoins, Amount: 2000})
+	if err := service.Demolish(ctx, item.ID, "p1"); err != nil {
+		t.Fatal(err)
+	}
+	returned, err := economyService.Inventory(ctx, "p1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := starting.Items[economy.ResourceCoins] + catalog.DemolitionRefundCoins(item.Type, item.Level)
+	if returned.Items[economy.ResourceCoins] != want {
+		t.Fatalf("refund was capped: got %d, want %d", returned.Items[economy.ResourceCoins], want)
+	}
+}
+
+func TestPlannedBuildingsDoNotReturnUnreservedPopulation(t *testing.T) {
+	ctx := context.Background()
+	buildingRepo := memory.NewBuildingRepo()
+	economyRepo := memory.NewEconomyRepo()
+	service := NewBuildingService(buildingRepo, memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	economyService := NewEconomyService(economyRepo, buildingRepo, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service.SetEconomy(economyService)
+	if _, err := service.Place(ctx, PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeTownHall, Tile: world.Coord{X: 0, Y: 0}}); err != nil {
+		t.Fatal(err)
+	}
+	for _, id := range []building.ID{"planned-cancel", "planned-rush"} {
+		if err := buildingRepo.Create(ctx, building.Building{ID: id, MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeDugout, Level: 1, State: building.StatePlanned}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := service.Cancel(ctx, "planned-cancel", player.ID("p1")); err != nil {
+		t.Fatal(err)
+	}
+	if _, _, _, err := service.RushComplete(ctx, "planned-rush", player.ID("p1")); err != nil {
+		t.Fatal(err)
+	}
+	inventory, err := economyService.Inventory(ctx, player.ID("p1"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if inventory.Items[economy.ResourcePopulation] != 3 {
+		t.Fatalf("planned buildings must not create free residents, got %d", inventory.Items[economy.ResourcePopulation])
 	}
 }
 

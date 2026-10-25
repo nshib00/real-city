@@ -12,6 +12,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	jwtadapter "real-city/backend/internal/adapter/jwt"
 	"real-city/backend/internal/domain/player"
@@ -24,21 +25,23 @@ const websocketGUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 var errInvalidUpgrade = errors.New("invalid websocket upgrade")
 
 type Gateway struct {
-	tokens       *jwtadapter.Manager
-	events       *service.EventBus
-	log          *slog.Logger
-	connections  map[string]*Connection
-	chunkSubs    map[string]map[string]*Connection
-	privateSubs  map[player.ID]map[string]*Connection
-	allianceSubs map[string]map[string]*Connection
-	mu           sync.RWMutex
-	seq          atomic.Uint64
-	eventsSent   atomic.Uint64
-	fanoutTotal  atomic.Uint64
-	drops        atomic.Uint64
-	transport    TransportMetrics
-	ctx          context.Context
-	cancel       context.CancelFunc
+	tokens        *jwtadapter.Manager
+	events        *service.EventBus
+	log           *slog.Logger
+	connections   map[string]*Connection
+	chunkSubs     map[string]map[string]*Connection
+	privateSubs   map[player.ID]map[string]*Connection
+	allianceSubs  map[string]map[string]*Connection
+	mu            sync.RWMutex
+	seq           atomic.Uint64
+	eventsSent    atomic.Uint64
+	fanoutTotal   atomic.Uint64
+	drops         atomic.Uint64
+	eventBusDrops atomic.Uint64
+	resyncPending atomic.Bool
+	transport     TransportMetrics
+	ctx           context.Context
+	cancel        context.CancelFunc
 }
 
 func NewGateway(tokens *jwtadapter.Manager, events *service.EventBus, log *slog.Logger) *Gateway {
@@ -54,8 +57,27 @@ func NewGateway(tokens *jwtadapter.Manager, events *service.EventBus, log *slog.
 		ctx:          ctx,
 		cancel:       cancel,
 	}
-	go g.forwardEvents()
+	stream := events.Subscribe(ctx)
+	events.SetDropHandler(g.signalResync)
+	go g.forwardEvents(stream)
 	return g
+}
+
+func (g *Gateway) signalResync(_ service.Event) {
+	g.eventBusDrops.Add(1)
+	if !g.resyncPending.CompareAndSwap(false, true) {
+		return
+	}
+	go func() {
+		defer g.resyncPending.Store(false)
+		g.mu.RLock()
+		connections := connectionSlice(g.connections)
+		g.mu.RUnlock()
+		message := EventEnvelope(service.Event{Type: "realtime.resync_required", CreatedAt: time.Now().UTC()}, g.nextSeq())
+		for _, conn := range connections {
+			conn.EnqueueEvent(message)
+		}
+	}()
 }
 
 func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -87,7 +109,7 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	g.register(client)
 	g.publishPresence(playerID, true)
 	g.log.Info("ws.connect", "event", "ws.connect", "connection_id", client.ID(), "player_id", playerID)
-	client.Enqueue(AckEnvelope(g.nextSeq(), map[string]any{"connection_id": client.ID(), "protocol_version": ProtocolVersion}))
+	client.Enqueue(AckEnvelope(0, map[string]any{"connection_id": client.ID(), "protocol_version": ProtocolVersion}))
 	go client.WriteLoop()
 	g.readLoop(client)
 }
@@ -130,19 +152,20 @@ func (g *Gateway) readLoop(client *Connection) {
 		after := client.Subscriptions()
 		g.updateIndexes(client, before, after)
 		g.log.Info("ws.command", "event", "ws.command", "connection_id", client.ID(), "player_id", client.PlayerID(), "command", command.Type, "chunks", len(command.ChunkIDs))
-		client.Enqueue(AckEnvelope(g.nextSeq(), map[string]any{"command": command.Type, "chunk_ids": command.ChunkIDs}))
+		client.Enqueue(AckEnvelope(0, map[string]any{"command": command.Type, "chunk_ids": command.ChunkIDs}))
 	}
 }
 
-func (g *Gateway) forwardEvents() {
-	for event := range g.events.Subscribe(g.ctx) {
+func (g *Gateway) forwardEvents(events <-chan service.Event) {
+	for event := range events {
+		g.transport.ObserveEventLag(event.CreatedAt)
 		envelope := EventEnvelope(event, g.nextSeq())
 		targets := g.targetConnections(event)
 		g.eventsSent.Add(1)
 		g.fanoutTotal.Add(uint64(len(targets)))
 		g.transport.ObserveFanout(len(targets))
 		for _, conn := range targets {
-			if !conn.Enqueue(envelope) {
+			if !conn.EnqueueEvent(envelope) {
 				g.drops.Add(1)
 				g.log.Warn("ws.message_dropped", "event", "ws.message_dropped", "connection_id", conn.ID(), "player_id", conn.PlayerID(), "message_type", envelope.Type)
 			}
@@ -229,6 +252,7 @@ type Stats struct {
 	EventsSent            uint64
 	FanoutTotal           uint64
 	Drops                 uint64
+	EventBusDrops         uint64
 	Transport             TransportStats
 }
 
@@ -248,6 +272,7 @@ func (g *Gateway) Stats() Stats {
 		EventsSent:            g.eventsSent.Load(),
 		FanoutTotal:           g.fanoutTotal.Load(),
 		Drops:                 g.drops.Load(),
+		EventBusDrops:         g.eventBusDrops.Load(),
 		Transport:             transport,
 	}
 }

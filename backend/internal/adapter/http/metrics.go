@@ -87,6 +87,8 @@ func writeWSMetrics(out observability.Writer, realtime *wsadapter.Gateway) {
 	out.Sample("real_city_ws_fanout_size_count", nil, float64(stats.EventsSent))
 	out.Family("real_city_ws_messages_dropped_total", "Event messages not enqueued.", "counter")
 	out.Sample("real_city_ws_messages_dropped_total", nil, float64(stats.Drops))
+	out.Family("real_city_ws_eventbus_drops_total", "Events dropped by the API EventBus before WebSocket routing.", "counter")
+	out.Sample("real_city_ws_eventbus_drops_total", nil, float64(stats.EventBusDrops))
 	t := stats.Transport
 	out.Family("real_city_ws_upgrades_total", "WebSocket upgrade attempts by bounded result.", "counter")
 	for _, entry := range []struct {
@@ -99,6 +101,15 @@ func writeWSMetrics(out observability.Writer, realtime *wsadapter.Gateway) {
 	out.Sample("real_city_ws_messages_enqueued_total", nil, float64(t.Enqueued))
 	out.Family("real_city_ws_messages_delivered_total", "Messages written successfully to a WebSocket connection.", "counter")
 	out.Sample("real_city_ws_messages_delivered_total", nil, float64(t.Delivered))
+	out.Family("real_city_ws_delivered_payload_bytes_total", "Serialized WebSocket payload bytes written to clients, excluding frame headers.", "counter")
+	out.Sample("real_city_ws_delivered_payload_bytes_total", nil, float64(t.DeliveredBytes))
+	out.Family("real_city_ws_event_lag_seconds", "Age of an event when the gateway receives it from EventBus.", "histogram")
+	for i, bound := range wsadapter.EventLagBuckets {
+		out.Sample("real_city_ws_event_lag_seconds_bucket", map[string]string{"le": strconv.FormatFloat(bound, 'g', -1, 64)}, float64(t.EventLagBuckets[i]))
+	}
+	out.Sample("real_city_ws_event_lag_seconds_bucket", map[string]string{"le": "+Inf"}, float64(t.EventLagCount))
+	out.Sample("real_city_ws_event_lag_seconds_sum", nil, t.EventLagSeconds)
+	out.Sample("real_city_ws_event_lag_seconds_count", nil, float64(t.EventLagCount))
 	out.Family("real_city_ws_write_errors_total", "WebSocket frame write errors.", "counter")
 	out.Sample("real_city_ws_write_errors_total", nil, float64(t.WriteErrors))
 	out.Family("real_city_ws_slow_consumers_total", "Connections closed because their send queue filled.", "counter")

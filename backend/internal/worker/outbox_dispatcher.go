@@ -22,8 +22,8 @@ type OutboxDispatcher struct {
 }
 
 func NewOutboxDispatcher(repo service.OutboxRepository, events *service.EventBus, log *slog.Logger, cfg config.SimulationConfig) *OutboxDispatcher {
-	if cfg.TickInterval <= 0 {
-		cfg.TickInterval = time.Second
+	if cfg.OutboxDispatchInterval <= 0 {
+		cfg.OutboxDispatchInterval = 500 * time.Millisecond
 	}
 	if cfg.BatchSize <= 0 {
 		cfg.BatchSize = 100
@@ -35,14 +35,20 @@ func NewOutboxDispatcher(repo service.OutboxRepository, events *service.EventBus
 }
 
 func (d *OutboxDispatcher) Run(ctx context.Context) error {
-	ticker := time.NewTicker(d.cfg.TickInterval)
+	ticker := time.NewTicker(d.cfg.OutboxDispatchInterval)
 	defer ticker.Stop()
+	pruneTicker := time.NewTicker(10 * time.Second)
+	defer pruneTicker.Stop()
 	for {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 		case <-ticker.C:
 			_, _ = d.Dispatch(ctx)
+		case <-pruneTicker.C:
+			if _, err := d.repo.PruneSent(ctx, d.now().Add(-time.Hour), 10000); err != nil && ctx.Err() == nil {
+				d.log.Warn("outbox.prune.failed", "event", "outbox.prune.failed", "error", err)
+			}
 		}
 	}
 }
@@ -95,13 +101,11 @@ func (d *OutboxDispatcher) Dispatch(ctx context.Context) (processed int, resultE
 }
 
 func (d *OutboxDispatcher) publish(item outbox.OutboxEvent) error {
-	payload := map[string]any{}
-	if len(item.Payload) > 0 {
-		if err := json.Unmarshal(item.Payload, &payload); err != nil {
-			return err
-		}
+	payload, err := decodePayload(item)
+	if err != nil {
+		return err
 	}
-	d.events.Publish(service.Event{
+	return d.events.Publish(service.Event{
 		Type:      service.EventType(item.Type),
 		ChunkID:   item.ChunkID,
 		PlayerID:  player.ID(item.PlayerID),
@@ -109,5 +113,66 @@ func (d *OutboxDispatcher) publish(item outbox.OutboxEvent) error {
 		Payload:   payload,
 		CreatedAt: item.CreatedAt,
 	})
-	return nil
+}
+
+func decodePayload(item outbox.OutboxEvent) (any, error) {
+	var payload any
+	switch service.EventType(item.Type) {
+	case service.EventTileChanged:
+		payload = &service.TileChangedPayload{}
+	case service.EventBuildingPlaced, service.EventBuildingUpdated:
+		payload = &service.BuildingPayload{}
+	case service.EventBuildingRemoved:
+		payload = &service.BuildingRemovedPayload{}
+	case service.EventResourceChanged:
+		payload = &service.ResourceChangedPayload{}
+	case service.EventProductionDone:
+		payload = &service.ProductionPayload{}
+	case service.EventInventoryChanged:
+		payload = &service.InventoryPayload{}
+	case service.EventPresenceChanged:
+		payload = &service.PresencePayload{}
+	case service.EventMonsterSpawned, service.EventMonsterMoved, service.EventMonsterAttacked,
+		service.EventMonsterDamaged, service.EventMonsterDied, service.EventMonsterDespawned:
+		payload = &service.MonsterPayload{}
+	case service.EventMonsterLootDropped, service.EventMonsterLootClaimed:
+		payload = &service.MonsterLootPayload{}
+	case service.EventCannonShot:
+		payload = &service.CannonShotPayload{}
+	case service.EventDefenseTriggered:
+		payload = &service.DefenseTriggeredPayload{}
+	default:
+		payload = &map[string]any{}
+	}
+	if len(item.Payload) > 0 {
+		if err := json.Unmarshal(item.Payload, payload); err != nil {
+			return nil, err
+		}
+	}
+	switch typed := payload.(type) {
+	case *service.TileChangedPayload:
+		return *typed, nil
+	case *service.BuildingPayload:
+		return *typed, nil
+	case *service.BuildingRemovedPayload:
+		return *typed, nil
+	case *service.ResourceChangedPayload:
+		return *typed, nil
+	case *service.ProductionPayload:
+		return *typed, nil
+	case *service.InventoryPayload:
+		return *typed, nil
+	case *service.PresencePayload:
+		return *typed, nil
+	case *service.MonsterPayload:
+		return *typed, nil
+	case *service.MonsterLootPayload:
+		return *typed, nil
+	case *service.CannonShotPayload:
+		return *typed, nil
+	case *service.DefenseTriggeredPayload:
+		return *typed, nil
+	default:
+		return *payload.(*map[string]any), nil
+	}
 }

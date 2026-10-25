@@ -29,10 +29,10 @@ func TestMonsterSpawnerRelocatesUnsafeSpawnAndCreatesMonster(t *testing.T) {
 		t.Fatal(err)
 	}
 	spawn := monster.SpawnPoint{
-		ID:          "spawn_roamers",
+		ID:          "spawn_generated_000",
 		MapID:       service.DefaultWorldID,
 		Type:        monster.TypeRoamingMelee,
-		Tile:        world.Coord{X: 6, Y: -7},
+		Tile:        world.Coord{X: 8, Y: 8},
 		Radius:      8,
 		MaxAlive:    1,
 		Cooldown:    90 * time.Second,
@@ -84,4 +84,34 @@ func TestMonsterSpawnerRelocatesUnsafeSpawnAndCreatesMonster(t *testing.T) {
 		return
 	}
 	t.Fatal("spawn point was not found")
+}
+
+func TestGeneratedMonsterSpawnsCoverWorld(t *testing.T) {
+	seeds := defaultSpawnSeeds(time.Now().UTC())
+	if len(seeds) != 100 {
+		t.Fatalf("spawn count = %d, want 100", len(seeds))
+	}
+	seen := make(map[world.Coord]bool)
+	for _, seed := range seeds {
+		if seen[seed.Tile] || seed.Tile.X < 0 || seed.Tile.X >= 160 || seed.Tile.Y < 0 || seed.Tile.Y >= 160 {
+			t.Fatalf("duplicate or out-of-world spawn: %+v", seed)
+		}
+		seen[seed.Tile] = true
+	}
+}
+
+func TestSpawnUnsafeWithinThreeTilesAcrossWorldEdge(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	if err := buildings.Create(ctx, building.Building{ID: "edge", MapID: service.DefaultWorldID,
+		Type: building.TypeStoneWall, State: building.StateActive, Tile: world.Coord{X: 159, Y: 10}, Health: 100}); err != nil {
+		t.Fatal(err)
+	}
+	spawner := NewMonsterSpawner(nil, nil, buildings, nil, slog.Default())
+	for _, tile := range []world.Coord{{X: 0, Y: 10}, {X: 2, Y: 13}} {
+		unsafe, err := spawner.spawnUnsafe(ctx, tile)
+		if err != nil || !unsafe {
+			t.Fatalf("spawn %+v should be unsafe: unsafe=%v err=%v", tile, unsafe, err)
+		}
+	}
 }

@@ -56,3 +56,30 @@ func TestNearbyPresenceShowsOnlyActiveNearbyPlayers(t *testing.T) {
 		t.Fatal("out-of-bounds presence was accepted")
 	}
 }
+
+func TestUpdatePresencePublishesMovementInCurrentChunk(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	repo := memory.NewPlayerRepo()
+	profile := player.DefaultProfile("Аэрон", time.Now())
+	profile.Level = 4
+	if err := repo.Create(ctx, player.Player{ID: "neighbor", Email: "neighbor@test.local", Name: "Аэрон", Status: player.StatusActive, Profile: profile}); err != nil {
+		t.Fatal(err)
+	}
+	bus := NewEventBus(2)
+	events := bus.Subscribe(ctx)
+	service := NewPlayerService(repo, memory.NewSessionStore(), slog.Default())
+	service.SetEventBus(bus)
+	if err := service.UpdatePresence(ctx, "neighbor", 33, 2); err != nil {
+		t.Fatal(err)
+	}
+	select {
+	case event := <-events:
+		movement, ok := event.Payload.(PresenceMovedPayload)
+		if !ok || event.Type != EventPresenceMoved || event.ChunkID != "dev-world:1:0" || movement.Player.PlayerID != "neighbor" || movement.Player.Name != "Аэрон" || movement.Player.Level != 4 || movement.Player.TileX != 33 {
+			t.Fatalf("unexpected movement event: %+v", event)
+		}
+	case <-time.After(time.Second):
+		t.Fatal("movement event was not published")
+	}
+}

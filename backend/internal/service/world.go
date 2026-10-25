@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/world"
+	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
 )
 
@@ -57,7 +58,7 @@ func (s *WorldService) ListChunks(ctx context.Context, center world.ChunkCoord, 
 		return nil, apperror.WithFields(apperror.Validation, "radius is too large", map[string]string{"radius": "must be <= 3"})
 	}
 	start := time.Now()
-	coords := world.ChunksAround(center, radius)
+	coords := visibleWorldChunks(center, radius)
 	chunks, err := s.repo.GetOrCreateChunks(ctx, DefaultWorldID, coords)
 	s.log.Info("world.chunks.loaded",
 		"event", "world.chunks.loaded",
@@ -69,6 +70,23 @@ func (s *WorldService) ListChunks(ctx context.Context, center world.ChunkCoord, 
 		"duration_ms", time.Since(start).Milliseconds(),
 	)
 	return chunks, err
+}
+
+func visibleWorldChunks(center world.ChunkCoord, radius int) []world.ChunkCoord {
+	worldChunks := worldgen.WorldSizeTiles / world.ChunkSize
+	coords := make([]world.ChunkCoord, 0, worldChunks*worldChunks)
+	seen := make(map[world.ChunkCoord]bool)
+	for _, coord := range world.ChunksAround(center, radius) {
+		wrapped := world.ChunkCoord{
+			X: ((coord.X % worldChunks) + worldChunks) % worldChunks,
+			Y: ((coord.Y % worldChunks) + worldChunks) % worldChunks,
+		}
+		if !seen[wrapped] {
+			seen[wrapped] = true
+			coords = append(coords, wrapped)
+		}
+	}
+	return coords
 }
 
 func (s *WorldService) LoadViewport(ctx context.Context, viewport world.Viewport) ([]world.Chunk, error) {

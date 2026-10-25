@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/player"
+	"real-city/backend/internal/domain/world"
 	"real-city/backend/pkg/apperror"
 )
 
@@ -13,6 +14,7 @@ type PlayerService struct {
 	players  PlayerRepository
 	sessions SessionStore
 	log      *slog.Logger
+	events   *EventBus
 }
 
 type UpdateProfileInput struct {
@@ -24,6 +26,10 @@ type UpdateProfileInput struct {
 
 func NewPlayerService(players PlayerRepository, sessions SessionStore, log *slog.Logger) *PlayerService {
 	return &PlayerService{players: players, sessions: sessions, log: log}
+}
+
+func (s *PlayerService) SetEventBus(events *EventBus) {
+	s.events = events
 }
 
 func (s *PlayerService) GetMe(ctx context.Context, id player.ID) (player.Player, error) {
@@ -45,7 +51,18 @@ func (s *PlayerService) UpdatePresence(ctx context.Context, id player.ID, x, y i
 	if p.Status != player.StatusActive {
 		return apperror.New(apperror.Forbidden, "player is not active")
 	}
-	return s.players.SavePresence(ctx, id, x, y, time.Now().UTC())
+	now := time.Now().UTC()
+	if err := s.players.SavePresence(ctx, id, x, y, now); err != nil {
+		return err
+	}
+	if s.events != nil {
+		coord := world.Coord{X: x, Y: y}
+		_ = s.events.Publish(Event{
+			Type: EventPresenceMoved, ChunkID: world.ChunkID(DefaultWorldID, world.ChunkForTile(coord)),
+			Payload: PresenceMovedPayload{Player: player.Presence{PlayerID: id, Name: p.Name, Level: p.Profile.Level, TileX: x, TileY: y, UpdatedAt: now}},
+		})
+	}
+	return nil
 }
 
 func (s *PlayerService) NearbyPresence(ctx context.Context, viewer player.ID, x, y, radius int) ([]player.Presence, error) {

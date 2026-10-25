@@ -47,11 +47,11 @@ func EventEnvelope(event service.Event, seq uint64) Envelope {
 func normalizePayload(payload any) any {
 	switch value := payload.(type) {
 	case service.TileChangedPayload:
-		return map[string]any{"tile": dto.Tile(value.Tile)}
+		return map[string]any{"tile": dto.Tile(value.Tile), "reason": value.Reason}
 	case service.BuildingPayload:
-		return map[string]any{"building": dto.Building(value.Building)}
+		return map[string]any{"building": dto.Building(value.Building), "reason": value.Reason, "damage": value.Damage}
 	case service.BuildingRemovedPayload:
-		return map[string]any{"building_id": string(value.BuildingID)}
+		return map[string]any{"building_id": string(value.BuildingID), "reason": value.Reason, "damage": value.Damage, "tile_x": value.TileX, "tile_y": value.TileY, "building_type": value.BuildingType}
 	case service.ResourceChangedPayload:
 		return map[string]any{"node": dto.ResourceNode(value.Node)}
 	case service.ProductionPayload:
@@ -60,6 +60,12 @@ func normalizePayload(payload any) any {
 		return map[string]any{"inventory": dto.Inventory(value.Inventory)}
 	case service.PresencePayload:
 		return map[string]any{"player_id": string(value.PlayerID), "online": value.Online}
+	case service.PresenceMovedPayload:
+		return map[string]any{"player": value.Player}
+	case service.MonsterPayload:
+		return map[string]any{"monster": dto.Monster(value.Monster), "damage": value.Damage, "source": value.Source}
+	case service.MonsterLootPayload:
+		return map[string]any{"loot": dto.LootDrop(value.Loot)}
 	default:
 		return payload
 	}

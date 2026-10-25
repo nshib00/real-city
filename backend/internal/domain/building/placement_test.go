@@ -87,6 +87,23 @@ func TestWallsDoNotUseBuildingLimit(t *testing.T) {
 	}
 }
 
+func TestTrapSharesRoadButCannotOverlapAnotherTrapOrBuilding(t *testing.T) {
+	tile := world.Tile{Coord: world.Coord{X: 4, Y: 4}, Terrain: world.TerrainGrass}
+	for _, existing := range []struct {
+		kind    Type
+		allowed bool
+	}{
+		{TypeRoad, true}, {TypeDefenseResinSnare, false}, {TypeDugout, false},
+	} {
+		err := ValidatePlacement(PlacementInput{Type: TypeDefenseStakes, Tile: tile,
+			Footprint: Footprint{Width: 1, Height: 1}, Existing: []Building{{Type: existing.kind, Tile: tile.Coord}},
+			HasTownHall: true, RequiresTownHall: true, BuildingLimit: 1, UsedLimit: 1})
+		if (err == nil) != existing.allowed {
+			t.Fatalf("existing %s: allowed=%t err=%v", existing.kind, existing.allowed, err)
+		}
+	}
+}
+
 func TestUsedBuildingLimitIgnoresRoadsWallsAndRuins(t *testing.T) {
 	buildings := []Building{
 		{Type: TypeDugout, State: StateActive},

@@ -7,6 +7,16 @@ import (
 	"real-city/backend/internal/domain/economy"
 )
 
+func TestResourceCatalogHasUniqueTypes(t *testing.T) {
+	seen := make(map[economy.ResourceType]struct{}, len(Resources))
+	for _, resource := range Resources {
+		if _, exists := seen[resource.Type]; exists {
+			t.Fatalf("duplicate resource catalog type: %s", resource.Type)
+		}
+		seen[resource.Type] = struct{}{}
+	}
+}
+
 func TestLumberYardRecipesMatchSpecification(t *testing.T) {
 	cases := []struct {
 		wood, planks, fuel, seconds int
@@ -81,7 +91,7 @@ func TestSandQuarryRecipeForBuildingLevel(t *testing.T) {
 func TestClayQuarryRecipesMatchSpecification(t *testing.T) {
 	cases := []struct {
 		clay, fuel, workers, seconds int
-		chance                     float64
+		chance                       float64
 	}{
 		{18, 0, 3, 360, 0},
 		{30, 0, 4, 450, 0},
@@ -147,6 +157,14 @@ func TestGlassWorkshopRecipeForBuildingLevel(t *testing.T) {
 	}
 	assertInput(t, levelNine.Input, economy.ResourceSand, 87)
 	assertOutput(t, levelNine.Output, economy.ResourceGlass, 7)
+	for _, tc := range []struct{ level, glass, sand int }{{10, 8, 95}, {11, 9, 105}, {12, 10, 115}} {
+		recipe, ok := RecipeForBuildingLevel("glass_batch", tc.level)
+		if !ok || recipe.RequiredLevel != tc.level {
+			t.Fatalf("glass recipe level %d unavailable: %#v", tc.level, recipe)
+		}
+		assertInput(t, recipe.Input, economy.ResourceSand, tc.sand)
+		assertOutput(t, recipe.Output, economy.ResourceGlass, tc.glass)
+	}
 }
 
 func assertOutput(t *testing.T, output []economy.ResourceAmount, resource economy.ResourceType, amount int) {

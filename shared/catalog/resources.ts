@@ -1,4 +1,4 @@
-export type ResourceCategory = 'basic' | 'raw' | 'crafted' | 'rare' | 'fuel'
+export type ResourceCategory = 'basic' | 'raw' | 'crafted' | 'rare' | 'fuel' | 'weapons'
 
 export type ResourceCatalogItem = {
   id: string
@@ -10,6 +10,15 @@ export type ResourceCatalogItem = {
 }
 
 export const resourceCatalog: ResourceCatalogItem[] = [
+  { id: 'throwing_knives', name: 'Метательные клинки', category: 'weapons', hasLimit: false, source: 'кузница', displayOrder: 100 },
+  { id: 'hunting_traps', name: 'Охотничий капкан', category: 'weapons', hasLimit: false, source: 'мастерская', displayOrder: 101 },
+  { id: 'blackpowder_bomb', name: 'Пороховая бомба', category: 'weapons', hasLimit: false, source: 'мастерская', displayOrder: 102 },
+  { id: 'shaped_charge', name: 'Направленный заряд', category: 'weapons', hasLimit: false, source: 'военный завод', displayOrder: 103 },
+  { id: 'firebomb', name: 'Огненная бомба', category: 'weapons', hasLimit: false, source: 'химическая мастерская', displayOrder: 104 },
+  { id: 'shock_charge', name: 'Импульсный заряд', category: 'weapons', hasLimit: false, source: 'электронная мастерская', displayOrder: 105 },
+  { id: 'siege_mine', name: 'Осадная мина', category: 'weapons', hasLimit: false, source: 'осадный двор', displayOrder: 106 },
+  { id: 'breach_bomb', name: 'Проломная бомба', category: 'weapons', hasLimit: false, source: 'осадный двор', displayOrder: 107 },
+  { id: 'resonance_charge', name: 'Резонансный заряд', category: 'weapons', hasLimit: false, source: 'резонансная лаборатория', displayOrder: 108 },
   { id: 'coins', name: 'Монеты', category: 'basic', hasLimit: true, source: 'поля, грядки, задания, рынки' },
   { id: 'population', name: 'Жители', category: 'basic', hasLimit: false, source: 'жилые дома' },
   { id: 'aeolian-crystal', name: 'Эолийские кристаллы', category: 'basic', hasLimit: false, source: 'события, премиум' },
@@ -39,6 +48,7 @@ export const resourceCatalog: ResourceCatalogItem[] = [
   { id: 'paper', name: 'Бумага', category: 'crafted', hasLimit: false, source: 'бумажная мастерская', displayOrder: 21.1 },
   { id: 'tile', name: 'Черепица', category: 'crafted', hasLimit: false, source: 'черепичный завод', displayOrder: 21.2 },
   { id: 'quiet_powder', name: 'Тихий порошок', category: 'rare', hasLimit: false, source: 'поздние находки', displayOrder: 54.1 },
+  { id: 'amber_essence', name: 'Янтарная эссенция', category: 'rare', hasLimit: false, source: 'нефтяные вышки', displayOrder: 54.15 },
   { id: 'memory_shard', name: 'Осколок памяти', category: 'rare', hasLimit: false, source: 'поздние находки', displayOrder: 54.2 },
   { id: 'glass', name: 'Стекло', category: 'crafted', hasLimit: false, source: 'стекольная мастерская', displayOrder: 22 },
   { id: 'metal', name: 'Металл', category: 'crafted', hasLimit: false, source: 'литейная', displayOrder: 23 },
@@ -78,5 +88,4 @@ export const resourceCatalog: ResourceCatalogItem[] = [
   { id: 'super_mechanism', name: 'Супер-механизм', category: 'rare', hasLimit: false, source: 'поздняя мастерская механизмов', displayOrder: 52 },
   { id: 'elderwood-heart', name: 'Сердцевина древня', category: 'rare', hasLimit: false, source: 'редкая находка при рубке леса', displayOrder: 53 },
   { id: 'rune_tile', name: 'Руническая черепица', category: 'rare', hasLimit: false, source: 'поздняя промышленность', displayOrder: 54 },
-  { id: 'influence_seal', name: 'Печать влияния', category: 'rare', hasLimit: false, source: 'союзы, руины и поздняя экономика', displayOrder: 55 },
 ]

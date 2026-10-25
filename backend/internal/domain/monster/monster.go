@@ -55,6 +55,7 @@ type Monster struct {
 	AttackRange    int
 	AttackCooldown time.Duration
 	NextAttackAt   time.Time
+	ShockUntil     time.Time
 	LastMovedAt    time.Time
 	LootCoins      int
 	CreatedAt      time.Time
@@ -128,7 +129,7 @@ func (m Monster) DistanceTo(tile world.Coord) int {
 }
 
 func (m Monster) CanAttack(now time.Time, target world.Coord) bool {
-	return m.Alive() && m.DistanceTo(target) <= m.AttackRange && !m.NextAttackAt.After(now)
+	return m.Alive() && m.DistanceTo(target) <= m.AttackRange && !m.NextAttackAt.After(now) && !m.ShockUntil.After(now)
 }
 
 func (m *Monster) ApplyDamage(amount int, now time.Time) bool {

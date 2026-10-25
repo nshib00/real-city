@@ -15,6 +15,15 @@ type ResourceSpec struct {
 }
 
 var Resources = []ResourceSpec{
+	{Type: economy.ResourceThrowingKnives, Name: "Метательные клинки", Category: "weapons"},
+	{Type: economy.ResourceHuntingTraps, Name: "Охотничий капкан", Category: "weapons"},
+	{Type: economy.ResourceBlackpowderBomb, Name: "Пороховая бомба", Category: "weapons"},
+	{Type: economy.ResourceShapedCharge, Name: "Направленный заряд", Category: "weapons"},
+	{Type: economy.ResourceFirebomb, Name: "Огненная бомба", Category: "weapons"},
+	{Type: economy.ResourceShockCharge, Name: "Импульсный заряд", Category: "weapons"},
+	{Type: economy.ResourceSiegeMine, Name: "Осадная мина", Category: "weapons"},
+	{Type: economy.ResourceBreachBomb, Name: "Проломная бомба", Category: "weapons"},
+	{Type: economy.ResourceResonanceCharge, Name: "Резонансный заряд", Category: "weapons"},
 	{Type: economy.ResourceCoins, Name: "Монеты", Category: "basic", HasLimit: true, Description: "Базовая валюта, лимит задают хранилища монет."},
 	{Type: economy.ResourcePopulation, Name: "Жители", Category: "basic", Description: "Рабочая сила для стройки, полей, заводов и ремонта."},
 	{Type: economy.ResourceAeolianCrystal, Name: "Эолийские кристаллы", Category: "basic", Description: "Премиумный ресурс: тонкие вытянутые шестиугольные аметистовые кристаллы."},
@@ -59,9 +68,11 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceArmorPlates, Name: "Защитные пластины", Category: "crafted"},
 	{Type: economy.ResourceFabric, Name: "Ткань", Category: "crafted"},
 	{Type: economy.ResourceMechanism, Name: "Механизм", Category: "crafted"},
+	{Type: economy.ResourceSuperMechanism, Name: "Супер-механизм", Category: "rare"},
 	{Type: economy.ResourcePaper, Name: "Бумага", Category: "crafted"},
 	{Type: economy.ResourceTile, Name: "Черепица", Category: "crafted"},
 	{Type: economy.ResourceQuietPowder, Name: "Тихий порошок", Category: "rare"},
+	{Type: economy.ResourceAmberEssence, Name: "Янтарная эссенция", Category: "rare"},
 	{Type: economy.ResourceMemoryShard, Name: "Осколок памяти", Category: "rare"},
 	{Type: economy.ResourceElectronics, Name: "Электроника", Category: "crafted"},
 	{Type: economy.ResourceSulfur, Name: "Сера", Category: "crafted"},
@@ -73,7 +84,6 @@ var Resources = []ResourceSpec{
 	{Type: economy.ResourceAeolianAlloy, Name: "Эолиевый сплав", Category: "rare"},
 	{Type: economy.ResourceFuel, Name: "Бензин", Category: "fuel"},
 	{Type: economy.ResourceSuperSeeds, Name: "Супер-семена", Category: "rare"},
-	{Type: economy.ResourceSuperFiber, Name: "Супер-волокно", Category: "rare"},
 	{Type: economy.ResourceSuperFiber, Name: "Супер-волокно", Category: "rare"},
 	{Type: economy.ResourceSuperMushrooms, Name: "Супер-грибы", Category: "rare"},
 	{Type: economy.ResourceSuperWindleaf, Name: "Супер-ветролист", Category: "rare"},
@@ -150,6 +160,9 @@ var ProductionRecipes = []economy.ProductionRecipe{
 }
 
 func RecipeByID(id string) (economy.ProductionRecipe, bool) {
+	if id == OilExtractionRecipeID {
+		return OilExtractionRecipe(1), true
+	}
 	for _, recipe := range ProductionRecipes {
 		if recipe.ID == id {
 			return recipe, true
@@ -159,6 +172,21 @@ func RecipeByID(id string) (economy.ProductionRecipe, bool) {
 }
 
 func RecipeForBuildingLevel(id string, level int) (economy.ProductionRecipe, bool) {
+	if id == OilExtractionRecipeID {
+		if level < 1 || level > 3 {
+			return economy.ProductionRecipe{}, false
+		}
+		return OilExtractionRecipe(level), true
+	}
+	if levels, exists := recipeLevels[id]; exists {
+		if level < 1 {
+			level = 1
+		}
+		if level > len(levels) {
+			level = len(levels)
+		}
+		return levels[level-1], true
+	}
 	recipe, ok := RecipeByID(id)
 	if !ok {
 		return economy.ProductionRecipe{}, false

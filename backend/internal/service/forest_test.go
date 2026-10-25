@@ -51,6 +51,40 @@ func TestForestServiceChopAddsElderwoodHeartWhenDropSucceeds(t *testing.T) {
 	}
 }
 
+func TestForestChopPublishesOneAudibleResultWithCoordinateAndReason(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	coord := world.Coord{X: 2, Y: 3}
+	chunkCoord := world.ChunkForTile(coord)
+	worlds := &forestWorldRepo{chunk: world.Chunk{MapID: DefaultWorldID, Coord: chunkCoord, Tiles: []world.Tile{{
+		MapID: DefaultWorldID, Coord: coord, Chunk: chunkCoord, Terrain: world.TerrainForest, ForestDensity: 2,
+	}}}}
+	economyService := NewEconomyService(memory.NewEconomyRepo(), nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service := NewForestService(worlds, economyService, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	service.rareDrop = func() bool { return false }
+	bus := NewEventBus(4)
+	service.SetEventBus(bus)
+	events := bus.Subscribe(ctx)
+
+	if _, err := service.Chop(ctx, "p1", coord); err != nil {
+		t.Fatal(err)
+	}
+	select {
+	case event := <-events:
+		payload, ok := event.Payload.(TileChangedPayload)
+		if !ok || event.Type != EventTileChanged || event.PlayerID != "p1" || event.ChunkID != world.ChunkID(DefaultWorldID, chunkCoord) || payload.Reason != "forest_cut" || payload.Tile.Coord != coord || event.CreatedAt.IsZero() {
+			t.Fatalf("unexpected forest event: %#v", event)
+		}
+	default:
+		t.Fatal("expected forest event")
+	}
+	select {
+	case event := <-events:
+		t.Fatalf("duplicate forest event: %#v", event)
+	default:
+	}
+}
+
 func TestForestServiceChopAddsCoinsOnEachStage(t *testing.T) {
 	ctx := context.Background()
 	coord := world.Coord{X: 1, Y: 1}
@@ -239,6 +273,32 @@ func TestForestServiceRegrowsOnlyOnFreeGrassTile(t *testing.T) {
 	}
 }
 
+func TestForestServiceRegrowthReadsFreshTerrain(t *testing.T) {
+	ctx := context.Background()
+	source := world.Coord{X: 8, Y: 8}
+	staleGrass := world.Coord{X: 9, Y: 8}
+	freshGrass := world.Coord{X: 10, Y: 8}
+	chunkCoord := world.ChunkForTile(source)
+	worlds := &forestFreshWorldRepo{forestWorldRepo: forestWorldRepo{chunk: world.Chunk{
+		MapID: DefaultWorldID,
+		Coord: chunkCoord,
+		Tiles: []world.Tile{
+			{MapID: DefaultWorldID, Coord: source, Chunk: chunkCoord, Terrain: world.TerrainGrass},
+			{MapID: DefaultWorldID, Coord: staleGrass, Chunk: chunkCoord, Terrain: world.TerrainWater},
+			{MapID: DefaultWorldID, Coord: freshGrass, Chunk: chunkCoord, Terrain: world.TerrainGrass},
+		},
+	}}}
+	service := NewForestService(worlds, nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
+
+	regrown, ok, err := service.RegrowAround(ctx, source, time.Now().UTC())
+	if err != nil || !ok {
+		t.Fatalf("regrow: tile=%#v ok=%t err=%v", regrown, ok, err)
+	}
+	if regrown.Coord != freshGrass {
+		t.Fatalf("expected current grass tile %v, got %v", freshGrass, regrown.Coord)
+	}
+}
+
 func TestForestChopRewardsCanIncludeElderwoodHeart(t *testing.T) {
 	rewards := forestChopRewards(true)
 
@@ -283,6 +343,17 @@ type forestWorldRepo struct {
 	chunk world.Chunk
 }
 
+type forestFreshWorldRepo struct {
+	forestWorldRepo
+}
+
+func (r *forestFreshWorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	stale := r.chunk
+	stale.Tiles = append([]world.Tile(nil), stale.Tiles...)
+	stale.Tiles[1].Terrain = world.TerrainGrass
+	return []world.Chunk{stale}, nil
+}
+
 func (r *forestWorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, error) {
 	_ = ctx
 	return world.WorldMap{ID: id}, nil
@@ -300,6 +371,10 @@ func (r *forestWorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, c
 	_ = mapID
 	_ = coords
 	return []world.Chunk{r.chunk}, nil
+}
+
+func (r *forestWorldRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	return r.GetOrCreateChunks(ctx, mapID, coords)
 }
 
 func (r *forestWorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
@@ -352,6 +427,10 @@ func (r *forestMultiChunkRepo) GetOrCreateChunks(ctx context.Context, mapID stri
 		}
 	}
 	return chunks, nil
+}
+
+func (r *forestMultiChunkRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	return r.GetOrCreateChunks(ctx, mapID, coords)
 }
 
 func (r *forestMultiChunkRepo) UpdateTile(ctx context.Context, tile world.Tile) error {

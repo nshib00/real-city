@@ -6,7 +6,9 @@ export type WorldEventType =
   | 'world.building.updated'
   | 'world.building.removed'
   | 'world.resource.changed'
+  | 'economy.inventory.changed'
   | 'presence.changed'
+  | 'presence.moved'
   | 'combat.resolved'
   | 'monster.spawned'
   | 'monster.moved'
@@ -16,6 +18,8 @@ export type WorldEventType =
   | 'monster.despawned'
   | 'monster.loot.dropped'
   | 'monster.loot.claimed'
+  | 'cannon.shot'
+  | 'defense.triggered'
   | 'alliance.created'
   | 'alliance.invite.created'
   | 'alliance.invite.accepted'
@@ -29,6 +33,7 @@ export type WorldEventType =
   | 'market.order.created'
   | 'market.order.filled'
   | 'market.order.cancelled'
+  | 'realtime.resync_required'
 
 export type RealtimeEnvelope<TPayload = unknown> = {
   type: WorldEventType | 'ack' | 'error'
@@ -44,9 +49,12 @@ export type RealtimeEnvelope<TPayload = unknown> = {
 
 export type TileChangedPayload = {
   tile: WorldTile
+  reason?: 'forest_cut' | 'forest_regrown'
 }
 
 export type BuildingPayload = {
+  reason?: 'placed' | 'completed' | 'upgrade_started' | 'upgrade_completed' | 'rushed' | 'repaired' | 'relocated' | 'monster_attack'
+  damage?: number
   building: {
     id: string
     owner_id: string
@@ -57,6 +65,7 @@ export type BuildingPayload = {
     health: number
     tile_x: number
     tile_y: number
+    rotation?: number
     started_at: string
     completes_at: string | null
   }
@@ -64,6 +73,11 @@ export type BuildingPayload = {
 
 export type BuildingRemovedPayload = {
   building_id: string
+  reason?: 'cancelled' | 'demolished' | 'ruined' | 'moved' | 'monster_attack'
+  damage?: number
+  tile_x?: number
+  tile_y?: number
+  building_type?: string
 }
 
 export type ResourceChangedPayload = {
@@ -84,4 +98,35 @@ export type ResourceChangedPayload = {
 export type PresencePayload = {
   player_id: string
   online: boolean
+}
+
+export type PresenceMovedPayload = {
+  player: {
+    player_id: string
+    name: string
+    level: number
+    tile_x: number
+    tile_y: number
+  }
+}
+
+export type CannonShotPayload = {
+  building_id: string
+  building_type?: string
+  monster_id: string
+  damage: number
+  damage_type?: string
+  ammo: string
+  tile_x?: number
+  tile_y?: number
+  target_tile_x?: number
+  target_tile_y?: number
+}
+
+export type DefenseTriggeredPayload = {
+  building_id: string
+  building_type: string
+  monster_id: string
+  tile_x: number
+  tile_y: number
 }

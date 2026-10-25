@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log/slog"
 	"sync"
 	"time"
 )
@@ -12,6 +13,21 @@ type EventBus struct {
 	nextID      uint64
 	buffer      int
 	logDropped  func(Event)
+	forward     func(Event) error
+}
+
+// SetForwarder sends published events to a shared transport before local delivery.
+// It is used by the standalone simulation worker; API buses have no forwarder.
+func (b *EventBus) SetForwarder(forward func(Event) error) {
+	b.mu.Lock()
+	b.forward = forward
+	b.mu.Unlock()
+}
+
+func (b *EventBus) SetDropHandler(handler func(Event)) {
+	b.mu.Lock()
+	b.logDropped = handler
+	b.mu.Unlock()
 }
 
 func NewEventBus(buffer int) *EventBus {
@@ -38,9 +54,18 @@ func (b *EventBus) Subscribe(ctx context.Context) <-chan Event {
 	return ch
 }
 
-func (b *EventBus) Publish(event Event) {
+func (b *EventBus) Publish(event Event) error {
 	if event.CreatedAt.IsZero() {
 		event.CreatedAt = time.Now().UTC()
+	}
+	b.mu.RLock()
+	forward := b.forward
+	b.mu.RUnlock()
+	if forward != nil {
+		if err := forward(event); err != nil {
+			slog.Error("event.forward.failed", "event", "event.forward.failed", "event_type", event.Type, "error", err)
+			return err
+		}
 	}
 	b.mu.RLock()
 	defer b.mu.RUnlock()
@@ -53,4 +78,5 @@ func (b *EventBus) Publish(event Event) {
 			}
 		}
 	}
+	return nil
 }

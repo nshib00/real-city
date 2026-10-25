@@ -93,6 +93,26 @@ func (r *OutboxRepo) MarkDead(ctx context.Context, id outbox.ID, message string,
 	`, outbox.StatusDead, message, now)
 }
 
+func (r *OutboxRepo) PruneSent(ctx context.Context, before time.Time, limit int) (int, error) {
+	if limit <= 0 {
+		return 0, nil
+	}
+	result, err := r.db.ExecContext(ctx, `
+		WITH old AS (
+			SELECT id FROM outbox_events
+			WHERE status = $1 AND updated_at < $2
+			ORDER BY updated_at, id
+			LIMIT $3
+		)
+		DELETE FROM outbox_events WHERE id IN (SELECT id FROM old)
+	`, outbox.StatusSent, before, limit)
+	if err != nil {
+		return 0, err
+	}
+	count, err := result.RowsAffected()
+	return int(count), err
+}
+
 func (r *OutboxRepo) update(ctx context.Context, id outbox.ID, query string, args ...any) error {
 	params := append([]any{id}, args...)
 	result, err := execer(ctx, r.db).ExecContext(ctx, query, params...)

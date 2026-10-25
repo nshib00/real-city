@@ -9,6 +9,8 @@ export type MonsterEventType =
   | 'monster.loot.claimed'
 
 export type MonsterPayload = {
+  damage?: number
+  source?: 'player' | 'cannon'
   monster: {
     id: string
     type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'

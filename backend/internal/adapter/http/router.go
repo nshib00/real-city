@@ -15,25 +15,27 @@ import (
 )
 
 type RouterDeps struct {
-	Auth       *service.AuthService
-	Players    *service.PlayerService
-	Worlds     *service.WorldService
-	Forests    *service.ForestService
-	Buildings  *service.BuildingService
-	Economy    *service.EconomyService
-	Resources  *service.ResourceService
-	Production *service.ProductionService
-	Fields     *service.FieldService
-	Population *service.PopulationService
-	Monsters   *service.MonsterService
-	Combat     *service.CombatService
-	Threats    *service.ThreatService
-	Alliances  *service.AllianceService
-	Chat       *service.ChatService
-	Market     *service.MarketService
-	Tokens     *jwtadapter.Manager
-	Realtime   *wsadapter.Gateway
-	DBPool     *sql.DB
+	Auth        *service.AuthService
+	Players     *service.PlayerService
+	Worlds      *service.WorldService
+	Forests     *service.ForestService
+	Buildings   *service.BuildingService
+	Economy     *service.EconomyService
+	Resources   *service.ResourceService
+	Production  *service.ProductionService
+	Fields      *service.FieldService
+	Population  *service.PopulationService
+	Monsters    *service.MonsterService
+	Combat      *service.CombatService
+	Raids       *service.RaidService
+	Threats     *service.ThreatService
+	Alliances   *service.AllianceService
+	Chat        *service.ChatService
+	Market      *service.MarketService
+	Tokens      *jwtadapter.Manager
+	Realtime    *wsadapter.Gateway
+	DBPool      *sql.DB
+	Idempotency middleware.IdempotencyStore
 }
 
 func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
@@ -44,10 +46,14 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	buildingHandler := handler.NewBuildingHandler(deps.Buildings)
 	economyHandler := handler.NewEconomyHandler(deps.Economy, deps.Resources, deps.Production, deps.Fields, deps.Population)
 	monsterHandler := handler.NewMonsterHandler(deps.Monsters, deps.Combat, deps.Threats)
+	raidHandler := handler.NewRaidHandler(deps.Raids)
 	allianceHandler := handler.NewAllianceHandler(deps.Alliances)
 	chatHandler := handler.NewChatHandler(deps.Chat)
 	marketHandler := handler.NewMarketHandler(deps.Market)
 	httpMetrics := middleware.NewHTTPMetrics()
+	idempotentAuth := func(next http.HandlerFunc) http.Handler {
+		return middleware.Auth(deps.Tokens, middleware.Idempotency(deps.Idempotency, 24*time.Hour)(next))
+	}
 
 	health := func(w http.ResponseWriter, r *http.Request) {
 		JSON(w, http.StatusOK, Envelope{
@@ -69,9 +75,8 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.HandleFunc("GET /api/v1/monsters", monsterHandler.List)
 	mux.HandleFunc("GET /api/v1/monster-loot", monsterHandler.Loot)
 	mux.HandleFunc("GET /api/v1/threats", monsterHandler.Threats)
-	mux.HandleFunc("GET /api/v1/raids", func(w http.ResponseWriter, r *http.Request) {
-		JSON(w, http.StatusOK, Envelope{"raids": []any{}, "status": "placeholder"})
-	})
+	mux.Handle("GET /api/v1/raids", middleware.Auth(deps.Tokens, http.HandlerFunc(raidHandler.List)))
+	mux.Handle("POST /api/v1/raids", idempotentAuth(raidHandler.Start))
 	mux.HandleFunc("GET /api/v1/admin/status", func(w http.ResponseWriter, r *http.Request) {
 		JSON(w, http.StatusOK, Envelope{"status": "placeholder"})
 	})
@@ -91,7 +96,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("DELETE /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.DeleteMe)))
 	mux.Handle("GET /api/v1/buildings", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.List)))
 	mux.Handle("POST /api/v1/world/tiles/chop-forest", middleware.Auth(deps.Tokens, http.HandlerFunc(worldHandler.ChopForest)))
-	mux.Handle("POST /api/v1/buildings", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Place)))
+	mux.Handle("POST /api/v1/buildings", idempotentAuth(buildingHandler.Place))
 	mux.Handle("GET /api/v1/buildings/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Get)))
 	mux.Handle("PATCH /api/v1/buildings/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Patch)))
 	mux.Handle("DELETE /api/v1/buildings/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Delete)))
@@ -107,11 +112,12 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("POST /api/v1/fields/windleaf/advance", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
 	mux.Handle("POST /api/v1/fields/windleaf/harvest", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
 	mux.Handle("GET /api/v1/monsters/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.Get)))
-	mux.Handle("POST /api/v1/monsters/{id}/attack", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.Attack)))
+	mux.Handle("POST /api/v1/monsters/{id}/weapons", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.UseWeapon)))
+	mux.Handle("GET /api/v1/combat/attacks", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.PendingWeapons)))
 	mux.Handle("POST /api/v1/monster-loot/{id}/claim", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.ClaimLoot)))
 	mux.Handle("GET /api/v1/alliances/me", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Profile)))
 	mux.Handle("POST /api/v1/alliances", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Create)))
-	mux.Handle("POST /api/v1/alliances/invites", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Invite)))
+	mux.Handle("POST /api/v1/alliances/invites", idempotentAuth(allianceHandler.Invite))
 	mux.Handle("PATCH /api/v1/alliances/invites/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.RespondInvite)))
 	mux.Handle("PATCH /api/v1/alliances/roles", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.SetRole)))
 	mux.Handle("POST /api/v1/alliances/treasury/donations", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Donate)))
@@ -120,7 +126,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("GET /api/v1/chat/messages", middleware.Auth(deps.Tokens, http.HandlerFunc(chatHandler.List)))
 	mux.Handle("POST /api/v1/chat/messages", middleware.Auth(deps.Tokens, http.HandlerFunc(chatHandler.Send)))
 	mux.HandleFunc("GET /api/v1/market/orders", marketHandler.List)
-	mux.Handle("POST /api/v1/market/orders", middleware.Auth(deps.Tokens, http.HandlerFunc(marketHandler.Create)))
+	mux.Handle("POST /api/v1/market/orders", idempotentAuth(marketHandler.Create))
 	mux.Handle("DELETE /api/v1/market/orders/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(marketHandler.Cancel)))
 	return middleware.Chain(
 		mux,
@@ -134,7 +140,6 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 		middleware.BodyLimit(1<<20),
 		middleware.Timeout(5*time.Second),
 		middleware.RateLimit(nil, middleware.DefaultRateLimitRules()),
-		middleware.Idempotency(nil, 24*time.Hour),
 	)
 }
 

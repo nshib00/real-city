@@ -48,13 +48,14 @@ type WebSocketConfig struct {
 }
 
 type SimulationConfig struct {
-	Embedded        bool
-	TickInterval    time.Duration
-	BatchSize       int
-	WorkerCount     int
-	LockTTL         time.Duration
-	CatchUpLimit    time.Duration
-	ShutdownTimeout time.Duration
+	Embedded               bool
+	TickInterval           time.Duration
+	OutboxDispatchInterval time.Duration
+	BatchSize              int
+	WorkerCount            int
+	LockTTL                time.Duration
+	CatchUpLimit           time.Duration
+	ShutdownTimeout        time.Duration
 }
 
 type StorageConfig struct {
@@ -94,13 +95,14 @@ func Load() Config {
 			WriteTimeout: duration("WS_WRITE_TIMEOUT", 5*time.Second),
 		},
 		Simulation: SimulationConfig{
-			Embedded:        boolean("SIMULATION_EMBEDDED", true),
-			TickInterval:    duration("SIMULATION_TICK_INTERVAL", time.Second),
-			BatchSize:       integer("SIMULATION_BATCH_SIZE", 100),
-			WorkerCount:     integer("SIMULATION_WORKER_COUNT", 1),
-			LockTTL:         duration("SIMULATION_LOCK_TTL", 15*time.Second),
-			CatchUpLimit:    duration("SIMULATION_CATCH_UP_LIMIT", 10*time.Minute),
-			ShutdownTimeout: duration("SIMULATION_SHUTDOWN_TIMEOUT", 5*time.Second),
+			Embedded:               boolean("SIMULATION_EMBEDDED", true),
+			TickInterval:           duration("SIMULATION_TICK_INTERVAL", time.Second),
+			OutboxDispatchInterval: duration("OUTBOX_DISPATCH_INTERVAL", 500*time.Millisecond),
+			BatchSize:              integer("SIMULATION_BATCH_SIZE", 100),
+			WorkerCount:            integer("SIMULATION_WORKER_COUNT", 1),
+			LockTTL:                duration("SIMULATION_LOCK_TTL", 15*time.Second),
+			CatchUpLimit:           duration("SIMULATION_CATCH_UP_LIMIT", 10*time.Minute),
+			ShutdownTimeout:        duration("SIMULATION_SHUTDOWN_TIMEOUT", 5*time.Second),
 		},
 		Storage: StorageConfig{
 			PublicURL: env("STORAGE_PUBLIC_URL", "http://localhost:8080/assets"),

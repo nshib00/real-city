@@ -44,7 +44,8 @@ func (r *MonsterRepo) ListByMap(ctx context.Context, mapID string) ([]monster.Mo
 	return scanMonsters(rows)
 }
 
-func (r *MonsterRepo) ListActiveForTick(ctx context.Context, mapID string, limit int) ([]monster.Monster, error) {
+func (r *MonsterRepo) ListActiveForTick(ctx context.Context, mapID string, limit int) (items []monster.Monster, resultErr error) {
+	defer observe("monster.list_active_for_tick", time.Now(), &resultErr)
 	if limit <= 0 {
 		limit = 100
 	}
@@ -76,7 +77,25 @@ func (r *MonsterRepo) Update(ctx context.Context, item monster.Monster) error {
 	return r.upsert(ctx, item)
 }
 
-func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (map[monster.SpawnID]int, error) {
+func (r *MonsterRepo) UpdateIfCurrent(ctx context.Context, previous, next monster.Monster) (bool, error) {
+	result, err := execer(ctx, r.db).ExecContext(ctx, `
+		UPDATE monsters
+		SET state = $2, tile_x = $3, tile_y = $4, target_id = $5, target_type = $6,
+			health = $7, next_attack_at = $8, last_moved_at = $9, updated_at = $10, shock_until = $17
+		WHERE id = $1 AND state = $11 AND state <> $12 AND health = $13
+			AND tile_x = $14 AND tile_y = $15 AND updated_at = $16
+	`, next.ID, next.State, next.Tile.X, next.Tile.Y, next.TargetID, next.TargetType,
+		next.Health, nullTime(next.NextAttackAt), next.LastMovedAt, next.UpdatedAt,
+		previous.State, monster.StateDead, previous.Health, previous.Tile.X, previous.Tile.Y, previous.UpdatedAt, nullTime(next.ShockUntil))
+	if err != nil {
+		return false, err
+	}
+	affected, err := result.RowsAffected()
+	return affected == 1, err
+}
+
+func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (result map[monster.SpawnID]int, resultErr error) {
+	defer observe("monster.count_alive_by_spawn", time.Now(), &resultErr)
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT spawn_id, COUNT(*)
 		FROM monsters
@@ -210,15 +229,15 @@ func (r *MonsterRepo) AddEvent(ctx context.Context, item monster.Event) error {
 
 func (r *MonsterRepo) upsert(ctx context.Context, item monster.Monster) error {
 	_, err := execer(ctx, r.db).ExecContext(ctx, `
-		INSERT INTO monsters (id, map_id, spawn_id, type, state, tile_x, tile_y, home_tile_x, home_tile_y, target_id, target_type, health, max_health, damage, speed_tiles, aggro_radius, attack_range, attack_cooldown_ms, next_attack_at, last_moved_at, loot_coins, created_at, updated_at)
-		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23)
-		ON CONFLICT (id) DO UPDATE SET spawn_id = EXCLUDED.spawn_id, state = EXCLUDED.state, tile_x = EXCLUDED.tile_x, tile_y = EXCLUDED.tile_y, target_id = EXCLUDED.target_id, target_type = EXCLUDED.target_type, health = EXCLUDED.health, next_attack_at = EXCLUDED.next_attack_at, last_moved_at = EXCLUDED.last_moved_at, updated_at = EXCLUDED.updated_at
-	`, item.ID, item.MapID, item.SpawnID, item.Type, item.State, item.Tile.X, item.Tile.Y, item.HomeTile.X, item.HomeTile.Y, item.TargetID, item.TargetType, item.Health, item.MaxHealth, item.Damage, item.SpeedTiles, item.AggroRadius, item.AttackRange, int(item.AttackCooldown/time.Millisecond), nullTime(item.NextAttackAt), item.LastMovedAt, item.LootCoins, item.CreatedAt, item.UpdatedAt)
+		INSERT INTO monsters (id, map_id, spawn_id, type, state, tile_x, tile_y, home_tile_x, home_tile_y, target_id, target_type, health, max_health, damage, speed_tiles, aggro_radius, attack_range, attack_cooldown_ms, next_attack_at, last_moved_at, loot_coins, created_at, updated_at, shock_until)
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
+		ON CONFLICT (id) DO UPDATE SET spawn_id = EXCLUDED.spawn_id, state = EXCLUDED.state, tile_x = EXCLUDED.tile_x, tile_y = EXCLUDED.tile_y, target_id = EXCLUDED.target_id, target_type = EXCLUDED.target_type, health = EXCLUDED.health, next_attack_at = EXCLUDED.next_attack_at, last_moved_at = EXCLUDED.last_moved_at, updated_at = EXCLUDED.updated_at, shock_until = EXCLUDED.shock_until
+	`, item.ID, item.MapID, item.SpawnID, item.Type, item.State, item.Tile.X, item.Tile.Y, item.HomeTile.X, item.HomeTile.Y, item.TargetID, item.TargetType, item.Health, item.MaxHealth, item.Damage, item.SpeedTiles, item.AggroRadius, item.AttackRange, int(item.AttackCooldown/time.Millisecond), nullTime(item.NextAttackAt), item.LastMovedAt, item.LootCoins, item.CreatedAt, item.UpdatedAt, nullTime(item.ShockUntil))
 	return err
 }
 
 func monsterSelect() string {
-	return `SELECT id, map_id, spawn_id, type, state, tile_x, tile_y, home_tile_x, home_tile_y, target_id, target_type, health, max_health, damage, speed_tiles, aggro_radius, attack_range, attack_cooldown_ms, next_attack_at, last_moved_at, loot_coins, created_at, updated_at FROM monsters`
+	return `SELECT id, map_id, spawn_id, type, state, tile_x, tile_y, home_tile_x, home_tile_y, target_id, target_type, health, max_health, damage, speed_tiles, aggro_radius, attack_range, attack_cooldown_ms, next_attack_at, last_moved_at, loot_coins, created_at, updated_at, shock_until FROM monsters`
 }
 
 func scanMonsters(rows *sql.Rows) ([]monster.Monster, error) {
@@ -239,7 +258,8 @@ func scanMonster(row monsterScanner) (monster.Monster, error) {
 	var item monster.Monster
 	var tileX, tileY, homeX, homeY, cooldownMS int
 	var nextAttack sql.NullTime
-	if err := row.Scan(&item.ID, &item.MapID, &item.SpawnID, &item.Type, &item.State, &tileX, &tileY, &homeX, &homeY, &item.TargetID, &item.TargetType, &item.Health, &item.MaxHealth, &item.Damage, &item.SpeedTiles, &item.AggroRadius, &item.AttackRange, &cooldownMS, &nextAttack, &item.LastMovedAt, &item.LootCoins, &item.CreatedAt, &item.UpdatedAt); err != nil {
+	var shockUntil sql.NullTime
+	if err := row.Scan(&item.ID, &item.MapID, &item.SpawnID, &item.Type, &item.State, &tileX, &tileY, &homeX, &homeY, &item.TargetID, &item.TargetType, &item.Health, &item.MaxHealth, &item.Damage, &item.SpeedTiles, &item.AggroRadius, &item.AttackRange, &cooldownMS, &nextAttack, &item.LastMovedAt, &item.LootCoins, &item.CreatedAt, &item.UpdatedAt, &shockUntil); err != nil {
 		return monster.Monster{}, err
 	}
 	item.Tile = world.Coord{X: tileX, Y: tileY}
@@ -247,6 +267,9 @@ func scanMonster(row monsterScanner) (monster.Monster, error) {
 	item.AttackCooldown = time.Duration(cooldownMS) * time.Millisecond
 	if nextAttack.Valid {
 		item.NextAttackAt = nextAttack.Time
+	}
+	if shockUntil.Valid {
+		item.ShockUntil = shockUntil.Time
 	}
 	return item, nil
 }

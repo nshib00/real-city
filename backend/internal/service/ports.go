@@ -54,10 +54,13 @@ type BuildingRepository interface {
 	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
 	ListIntersectingFootprint(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error)
 	ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error)
+	ListRuinedRuins(ctx context.Context, limit int) ([]building.Building, error)
 	ListReadyCannons(ctx context.Context, mapID string, now time.Time, afterID building.ID, limit int) ([]building.Building, error)
 	ClaimCannonShot(ctx context.Context, id building.ID, now, next time.Time, targetID string, expectedHealth int) (bool, error)
 	ConsumeTrapCharge(ctx context.Context, id building.ID, expectedHealth int) (bool, error)
+	DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time) (building.Building, bool, error)
 	Update(ctx context.Context, b building.Building) error
+	RelocateIfCurrent(ctx context.Context, previous, next building.Building) (bool, error)
 	Delete(ctx context.Context, id building.ID) error
 }
 
@@ -128,6 +131,11 @@ type MonsterRepository interface {
 
 type ActionRepository interface {
 	Append(ctx context.Context, item action.GameAction) error
+	AppendUnique(ctx context.Context, item action.GameAction) (bool, error)
+	HasIdempotencyKey(ctx context.Context, key string) (bool, error)
+	ListPendingWeapons(ctx context.Context, playerID player.ID) ([]action.GameAction, error)
+	ListRaids(ctx context.Context, playerID player.ID) ([]action.GameAction, error)
+	HasRecentRaid(ctx context.Context, playerID player.ID, targetID building.ID, since time.Time) (bool, error)
 	FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) ([]action.GameAction, error)
 	MarkDone(ctx context.Context, id action.ID, now time.Time) error
 	MarkFailed(ctx context.Context, id action.ID, message string, retryAt time.Time, now time.Time) error
@@ -139,6 +147,7 @@ type OutboxRepository interface {
 	MarkSent(ctx context.Context, id outbox.ID, now time.Time) error
 	MarkFailed(ctx context.Context, id outbox.ID, message string, retryAt time.Time, now time.Time) error
 	MarkDead(ctx context.Context, id outbox.ID, message string, now time.Time) error
+	PruneSent(ctx context.Context, before time.Time, limit int) (int, error)
 }
 
 type UnitOfWork interface {

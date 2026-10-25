@@ -13,12 +13,14 @@ import (
 	"time"
 
 	_ "github.com/lib/pq"
+	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 )
 
 // Keep below the historical INT maximum so normal game additions remain safe.
 const testBalance = int64(2_000_000_000)
+const testWeaponBalance = int64(1<<31 - 1)
 
 func main() {
 	if err := run(); err != nil {
@@ -89,20 +91,27 @@ func run() error {
 	}
 
 	resources := economy.AllResourceTypes()
+	weaponCount := 0
 	for _, resource := range resources {
+		amount := testBalance
+		if spec, ok := catalog.ResourceByType(resource); ok && spec.Category == "weapons" {
+			amount = testWeaponBalance
+			weaponCount++
+		}
 		if _, err := tx.ExecContext(ctx, `
 			INSERT INTO player_inventories (player_id, resource, amount, updated_at)
 			VALUES ($1, $2, $3, now())
 			ON CONFLICT (player_id, resource)
 			DO UPDATE SET amount = GREATEST(player_inventories.amount, EXCLUDED.amount), updated_at = now()
-		`, id, resource, testBalance); err != nil {
+		`, id, resource, amount); err != nil {
 			return fmt.Errorf("set %s balance: %w", resource, err)
 		}
 	}
 	if err := tx.Commit(); err != nil {
 		return err
 	}
-	fmt.Printf("Test admin ready: %s (%d resources, %d each, including coins)\n", email, len(resources), testBalance)
+	fmt.Printf("Test admin ready: %s (%d resources at least %d each, including coins; %d weapons at least %d each)\n",
+		email, len(resources), testBalance, weaponCount, testWeaponBalance)
 	return nil
 }
 

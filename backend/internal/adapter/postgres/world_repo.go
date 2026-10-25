@@ -5,10 +5,12 @@ import (
 	"database/sql"
 	"errors"
 	"sync"
+	"time"
 
 	"github.com/lib/pq"
 
 	"real-city/backend/internal/domain/world"
+	"real-city/backend/internal/observability"
 	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
 )
@@ -52,10 +54,14 @@ func (r *WorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, erro
 	return worldMap, err
 }
 
-func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, bool, error) {
+func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (chunkResult world.Chunk, cached bool, resultErr error) {
+	started := time.Now()
+	defer func() { observability.ObserveWorld("world.get_or_create_chunk", started, resultErr) }()
 	if chunk, ok := r.cachedChunk(mapID, coord); ok {
+		observability.CacheLookup(true)
 		return chunk, true, nil
 	}
+	observability.CacheLookup(false)
 	chunk, err := r.findChunk(ctx, mapID, coord)
 	if err == nil {
 		return chunk, true, nil
@@ -68,7 +74,9 @@ func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord wo
 	return chunk, false, err
 }
 
-func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) (result []world.Chunk, resultErr error) {
+	started := time.Now()
+	defer func() { observability.ObserveWorld("world.get_or_create_chunks", started, resultErr) }()
 	if len(coords) == 0 {
 		return []world.Chunk{}, nil
 	}
@@ -76,9 +84,11 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 	missing := make([]world.ChunkCoord, 0, len(coords))
 	for _, coord := range coords {
 		if chunk, ok := r.cachedChunk(mapID, coord); ok {
+			observability.CacheLookup(true)
 			chunksByCoord[coord] = chunk
 			continue
 		}
+		observability.CacheLookup(false)
 		missing = append(missing, coord)
 	}
 	if len(missing) == 0 {
@@ -114,6 +124,32 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 	return chunks, nil
 }
 
+func (r *WorldRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	if len(coords) == 0 {
+		return []world.Chunk{}, nil
+	}
+	if err := r.ensureMap(ctx); err != nil {
+		return nil, err
+	}
+	existing, err := r.findChunks(ctx, mapID, coords)
+	if err != nil {
+		return nil, err
+	}
+	chunks := make([]world.Chunk, 0, len(coords))
+	for _, coord := range coords {
+		if chunk, ok := existing[coord]; ok {
+			chunks = append(chunks, chunk)
+			continue
+		}
+		chunk, err := r.createChunk(ctx, mapID, coord)
+		if err != nil {
+			return nil, err
+		}
+		chunks = append(chunks, chunk)
+	}
+	return chunks, nil
+}
+
 func (r *WorldRepo) ensureMap(ctx context.Context) error {
 	worldMap := r.generator.Map()
 	_, err := r.db.ExecContext(ctx, `
@@ -124,7 +160,8 @@ func (r *WorldRepo) ensureMap(ctx context.Context) error {
 	return err
 }
 
-func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, error) {
+func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (found world.Chunk, resultErr error) {
+	defer observe("world.find_chunk", time.Now(), &resultErr)
 	if err := r.ensureMap(ctx); err != nil {
 		return world.Chunk{}, err
 	}
@@ -141,7 +178,7 @@ func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.Chu
 	}
 
 	rows, err := r.db.QueryContext(ctx, `
-		SELECT tile_x, tile_y, terrain, elevation, safe_zone, forest_density
+		SELECT tile_x, tile_y, terrain, ruin_type, elevation, safe_zone, forest_density
 		FROM world_tiles
 		WHERE map_id = $1 AND chunk_x = $2 AND chunk_y = $3
 		ORDER BY tile_y, tile_x
@@ -153,7 +190,7 @@ func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.Chu
 
 	for rows.Next() {
 		tile := world.Tile{MapID: mapID, Chunk: coord}
-		if err := rows.Scan(&tile.Coord.X, &tile.Coord.Y, &tile.Terrain, &tile.Elevation, &tile.SafeZone, &tile.ForestDensity); err != nil {
+		if err := rows.Scan(&tile.Coord.X, &tile.Coord.Y, &tile.Terrain, &tile.RuinType, &tile.Elevation, &tile.SafeZone, &tile.ForestDensity); err != nil {
 			return world.Chunk{}, err
 		}
 		chunk.Tiles = append(chunk.Tiles, tile)
@@ -165,7 +202,8 @@ func (r *WorldRepo) findChunk(ctx context.Context, mapID string, coord world.Chu
 	return cloneChunk(chunk), nil
 }
 
-func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) (map[world.ChunkCoord]world.Chunk, error) {
+func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) (result map[world.ChunkCoord]world.Chunk, resultErr error) {
+	defer observe("world.find_chunks", time.Now(), &resultErr)
 	minX, maxX, minY, maxY := coords[0].X, coords[0].X, coords[0].Y, coords[0].Y
 	wanted := make(map[world.ChunkCoord]bool, len(coords))
 	for _, coord := range coords {
@@ -215,7 +253,7 @@ func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world
 	}
 
 	tileRows, err := r.db.QueryContext(ctx, `
-		SELECT chunk_x, chunk_y, tile_x, tile_y, terrain, elevation, safe_zone, forest_density
+		SELECT chunk_x, chunk_y, tile_x, tile_y, terrain, ruin_type, elevation, safe_zone, forest_density
 		FROM world_tiles
 		WHERE map_id = $1
 		  AND chunk_x BETWEEN $2 AND $3
@@ -229,7 +267,7 @@ func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world
 
 	for tileRows.Next() {
 		var tile world.Tile
-		if err := tileRows.Scan(&tile.Chunk.X, &tile.Chunk.Y, &tile.Coord.X, &tile.Coord.Y, &tile.Terrain, &tile.Elevation, &tile.SafeZone, &tile.ForestDensity); err != nil {
+		if err := tileRows.Scan(&tile.Chunk.X, &tile.Chunk.Y, &tile.Coord.X, &tile.Coord.Y, &tile.Terrain, &tile.RuinType, &tile.Elevation, &tile.SafeZone, &tile.ForestDensity); err != nil {
 			return nil, err
 		}
 		chunk, ok := chunks[tile.Chunk]
@@ -249,11 +287,15 @@ func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world
 	return cloneChunkMap(chunks), nil
 }
 
-func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, error) {
+func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (created world.Chunk, resultErr error) {
+	started := time.Now()
+	defer func() { observability.ObserveWorld("world.create_chunk", started, resultErr) }()
 	if err := r.ensureMap(ctx); err != nil {
 		return world.Chunk{}, err
 	}
+	generationStarted := time.Now()
 	chunk := r.generator.Chunk(coord)
+	observability.ObserveWorld("world.generate_chunk", generationStarted, nil)
 	tx, err := r.db.BeginTx(ctx, nil)
 	if err != nil {
 		return world.Chunk{}, err
@@ -282,12 +324,14 @@ func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.C
 		}
 		return r.findChunk(ctx, mapID, coord)
 	}
-	stmt, err := tx.Prepare(pq.CopyIn("world_tiles", "map_id", "tile_x", "tile_y", "chunk_x", "chunk_y", "terrain", "elevation", "safe_zone", "forest_density"))
+	copyStarted := time.Now()
+	defer func() { observability.ObserveDB("world.copy_tiles", copyStarted, resultErr) }()
+	stmt, err := tx.Prepare(pq.CopyIn("world_tiles", "map_id", "tile_x", "tile_y", "chunk_x", "chunk_y", "terrain", "ruin_type", "elevation", "safe_zone", "forest_density"))
 	if err != nil {
 		return world.Chunk{}, err
 	}
 	for _, tile := range chunk.Tiles {
-		if _, err = stmt.Exec(mapID, tile.Coord.X, tile.Coord.Y, coord.X, coord.Y, tile.Terrain, tile.Elevation, tile.SafeZone, tile.ForestDensity); err != nil {
+		if _, err = stmt.Exec(mapID, tile.Coord.X, tile.Coord.Y, coord.X, coord.Y, tile.Terrain, tile.RuinType, tile.Elevation, tile.SafeZone, tile.ForestDensity); err != nil {
 			_ = stmt.Close()
 			return world.Chunk{}, err
 		}
@@ -302,16 +346,18 @@ func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.C
 	if err = tx.Commit(); err != nil {
 		return world.Chunk{}, err
 	}
+	observability.ChunkCreated()
 	r.storeChunk(chunk)
 	return cloneChunk(chunk), nil
 }
 
-func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
+func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) (resultErr error) {
+	defer observe("world.update_tile", time.Now(), &resultErr)
 	result, err := r.db.ExecContext(ctx, `
 		UPDATE world_tiles
-		SET terrain = $4, elevation = $5, safe_zone = $6, forest_density = $7, updated_at = now()
+		SET terrain = $4, ruin_type = $5, elevation = $6, safe_zone = $7, forest_density = $8, updated_at = now()
 		WHERE map_id = $1 AND tile_x = $2 AND tile_y = $3
-	`, tile.MapID, tile.Coord.X, tile.Coord.Y, tile.Terrain, tile.Elevation, tile.SafeZone, tile.ForestDensity)
+	`, tile.MapID, tile.Coord.X, tile.Coord.Y, tile.Terrain, tile.RuinType, tile.Elevation, tile.SafeZone, tile.ForestDensity)
 	if err != nil {
 		return err
 	}
@@ -351,6 +397,7 @@ func (r *WorldRepo) storeChunk(chunk world.Chunk) {
 		r.cache = make(map[worldChunkCacheKey]world.Chunk)
 	}
 	r.cache[worldChunkCacheKey{mapID: chunk.MapID, coord: chunk.Coord}] = cloneChunk(chunk)
+	observability.SetCacheEntries(len(r.cache))
 }
 
 func (r *WorldRepo) patchCachedTile(tile world.Tile) {

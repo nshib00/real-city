@@ -122,6 +122,18 @@ func (r *MonsterRepo) Update(ctx context.Context, item monster.Monster) error {
 	return nil
 }
 
+func (r *MonsterRepo) UpdateIfCurrent(ctx context.Context, previous, next monster.Monster) (bool, error) {
+	_ = ctx
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	current, ok := r.items[previous.ID]
+	if !ok || !current.Alive() || current.UpdatedAt != previous.UpdatedAt || current.Health != previous.Health || current.State != previous.State || current.Tile != previous.Tile {
+		return false, nil
+	}
+	r.items[previous.ID] = next
+	return true, nil
+}
+
 func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (map[monster.SpawnID]int, error) {
 	_ = ctx
 	r.mu.RLock()

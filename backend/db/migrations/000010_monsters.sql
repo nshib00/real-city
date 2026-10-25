@@ -63,13 +63,6 @@ INSERT INTO monsters (
     ('monster_ruins_1', 'dev-world', 'ruins_guardian', 'wandering', -8, 12, -8, 12, 210, 210, 18, 1, 6, 1, 12000, now(), 58)
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO monster_spawn_points (
-    id, map_id, type, tile_x, tile_y, radius, max_alive, cooldown_ms, next_spawn_at
-) VALUES
-    ('spawn_roamers', 'dev-world', 'roaming_melee', 6, -7, 8, 4, 600000, now() + interval '2 minutes'),
-    ('spawn_ruins', 'dev-world', 'ruins_guardian', -8, 12, 4, 2, 1080000, now() + interval '4 minutes')
-ON CONFLICT (id) DO NOTHING;
-
 -- +goose Down
 DROP TABLE IF EXISTS monster_events;
 DROP TABLE IF EXISTS monster_spawn_points;

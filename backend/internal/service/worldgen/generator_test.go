@@ -58,8 +58,8 @@ func TestTerrainPlacesSixOilWellsOnWrappedWorld(t *testing.T) {
 	generator := New("test-world", 20260727, 10)
 	var oilWells []world.Coord
 
-	for y := 0; y < worldSizeTiles; y++ {
-		for x := 0; x < worldSizeTiles; x++ {
+	for y := 0; y < WorldSizeTiles; y++ {
+		for x := 0; x < WorldSizeTiles; x++ {
 			tile := generator.Tile(world.Coord{X: x, Y: y})
 			if tile.Terrain == world.TerrainOilWell {
 				oilWells = append(oilWells, tile.Coord)

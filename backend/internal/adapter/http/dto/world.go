@@ -24,6 +24,7 @@ type TileResponse struct {
 	ChunkX        int    `json:"chunk_x"`
 	ChunkY        int    `json:"chunk_y"`
 	Terrain       string `json:"terrain"`
+	RuinType      string `json:"ruin_type"`
 	Elevation     int    `json:"elevation"`
 	SafeZone      bool   `json:"safe_zone"`
 	ForestDensity int    `json:"forest_density"`
@@ -73,6 +74,7 @@ func Tile(tile world.Tile) TileResponse {
 		ChunkX:        tile.Chunk.X,
 		ChunkY:        tile.Chunk.Y,
 		Terrain:       string(tile.Terrain),
+		RuinType:      tile.RuinType,
 		Elevation:     tile.Elevation,
 		SafeZone:      tile.SafeZone,
 		ForestDensity: tile.ForestDensity,

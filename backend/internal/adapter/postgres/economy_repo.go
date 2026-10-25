@@ -163,7 +163,7 @@ func (r *EconomyRepo) SaveResourceNode(ctx context.Context, node economy.Resourc
 		INSERT INTO resource_nodes (id, map_id, type, resource, amount, max_amount, state, owner_id, tile_x, tile_y, respawn_at, created_at, updated_at)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, NULLIF($8, ''), $9, $10, $11, $12, $13)
 		ON CONFLICT (id)
-		DO UPDATE SET amount = EXCLUDED.amount, state = EXCLUDED.state, owner_id = EXCLUDED.owner_id, respawn_at = EXCLUDED.respawn_at, updated_at = EXCLUDED.updated_at
+		DO UPDATE SET amount = EXCLUDED.amount, state = EXCLUDED.state, owner_id = EXCLUDED.owner_id, tile_x = EXCLUDED.tile_x, tile_y = EXCLUDED.tile_y, respawn_at = EXCLUDED.respawn_at, updated_at = EXCLUDED.updated_at
 	`, node.ID, node.MapID, node.Type, node.Resource, node.Amount, node.MaxAmount, node.State, node.OwnerID, node.Tile.X, node.Tile.Y, node.RespawnAt, node.CreatedAt, node.UpdatedAt)
 	return err
 }

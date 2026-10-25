@@ -23,11 +23,11 @@ func TestResourceServicePublishesResourceChunk(t *testing.T) {
 	defer cancel()
 	events := bus.Subscribe(ctx)
 
-	node, err := service.Claim(ctx, economy.NodeID("node_oil_2"), player.ID("p1"))
+	node, err := service.Claim(ctx, economy.NodeID("node_wood_1"), player.ID("p1"))
 	if err != nil {
 		t.Fatalf("claim node: %v", err)
 	}
-	if node.Tile.X != 91 || node.Tile.Y != 73 {
+	if node.Tile.X != 7 || node.Tile.Y != 9 {
 		t.Fatalf("unexpected fixture tile: %#v", node.Tile)
 	}
 
@@ -36,7 +36,7 @@ func TestResourceServicePublishesResourceChunk(t *testing.T) {
 		if event.Type != EventResourceChanged {
 			t.Fatalf("event type = %q", event.Type)
 		}
-		if event.ChunkID != "dev-world:2:2" {
+		if event.ChunkID != "dev-world:0:0" {
 			t.Fatalf("chunk id = %q", event.ChunkID)
 		}
 		if event.PlayerID != player.ID("p1") {

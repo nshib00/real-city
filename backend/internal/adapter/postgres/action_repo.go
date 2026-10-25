@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/action"
+	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/player"
 	"real-city/backend/pkg/apperror"
 )
 
@@ -30,6 +32,77 @@ func (r *ActionRepo) Append(ctx context.Context, item action.GameAction) error {
 	return err
 }
 
+func (r *ActionRepo) AppendUnique(ctx context.Context, item action.GameAction) (bool, error) {
+	result, err := execer(ctx, r.db).ExecContext(ctx, `
+		INSERT INTO game_actions (id, type, status, idempotency_key, actor_id, actor_type, target_id, target_type,
+			payload, due_at, locked_until, attempts, last_error, created_at, updated_at)
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+		ON CONFLICT (idempotency_key) DO NOTHING
+	`, item.ID, item.Type, item.Status, item.IdempotencyKey, item.Actor.ID, item.Actor.Type, item.Target.ID, item.Target.Type, item.Payload, item.DueAt, item.LockedUntil, item.Attempts, item.LastError, item.CreatedAt, item.UpdatedAt)
+	if err != nil {
+		return false, err
+	}
+	affected, err := result.RowsAffected()
+	return affected == 1, err
+}
+
+func (r *ActionRepo) HasIdempotencyKey(ctx context.Context, key string) (bool, error) {
+	var exists bool
+	err := execer(ctx, r.db).QueryRowContext(ctx, `SELECT EXISTS (SELECT 1 FROM game_actions WHERE idempotency_key = $1)`, key).Scan(&exists)
+	return exists, err
+}
+
+func (r *ActionRepo) ListPendingWeapons(ctx context.Context, playerID player.ID) ([]action.GameAction, error) {
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
+		SELECT id, type, status, idempotency_key, actor_id, actor_type, target_id, target_type,
+			payload, due_at, locked_until, attempts, last_error, created_at, updated_at
+		FROM game_actions
+		WHERE actor_id = $1 AND type = $2 AND status IN ('pending', 'running')
+		ORDER BY due_at, id LIMIT 200
+	`, playerID, action.TypeDetonateWeapon)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := make([]action.GameAction, 0)
+	for rows.Next() {
+		item, err := scanAction(rows)
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	return items, rows.Err()
+}
+
+func (r *ActionRepo) ListRaids(ctx context.Context, playerID player.ID) ([]action.GameAction, error) {
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `
+		SELECT id, type, status, idempotency_key, actor_id, actor_type, target_id, target_type,
+			payload, due_at, locked_until, attempts, last_error, created_at, updated_at
+		FROM game_actions WHERE actor_id = $1 AND type = $2
+		ORDER BY created_at DESC, id DESC LIMIT 200
+	`, playerID, action.TypeResolveRaid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := make([]action.GameAction, 0)
+	for rows.Next() {
+		item, err := scanAction(rows)
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	return items, rows.Err()
+}
+
+func (r *ActionRepo) HasRecentRaid(ctx context.Context, playerID player.ID, targetID building.ID, since time.Time) (bool, error) {
+	var exists bool
+	err := execer(ctx, r.db).QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM game_actions WHERE type=$1 AND actor_id=$2 AND target_id=$3 AND created_at >= $4)`, action.TypeResolveRaid, playerID, targetID, since).Scan(&exists)
+	return exists, err
+}
+
 func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) (items []action.GameAction, resultErr error) {
 	defer observe("action.fetch_due", time.Now(), &resultErr)
 	if limit <= 0 {
@@ -39,7 +112,7 @@ func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, loc
 		WITH due AS (
 			SELECT id
 			FROM game_actions
-			WHERE status = $1
+			WHERE (status = $1 OR (status = 'running' AND locked_until <= $2))
 			  AND due_at <= $2
 			  AND (locked_until IS NULL OR locked_until <= $2)
 			ORDER BY due_at, id

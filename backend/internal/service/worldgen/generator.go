@@ -7,7 +7,22 @@ import (
 	"real-city/backend/internal/domain/world"
 )
 
-const worldSizeTiles = 160
+const WorldSizeTiles = 160
+
+var ruinTypes = [...]string{
+	"ruins_town_square",
+	"ruins_archive",
+	"ruins_mint",
+	"ruins_storage",
+	"ruins_greenhouse",
+	"ruins_water_station",
+	"ruins_bastion",
+	"ruins_mechanic_workshop",
+	"ruins_wind_shrine",
+	"ruins_ore_obelisk",
+	"ruins_rift_watch",
+	"ruins_river_lighthouse",
+}
 
 var oilWellTiles = []world.Coord{
 	{X: 24, Y: 18},
@@ -61,11 +76,16 @@ func (g Generator) Tile(coord world.Coord) world.Tile {
 	if terrain == world.TerrainForest {
 		forestDensity = world.MaxForestDensity
 	}
+	ruinType := ""
+	if terrain == world.TerrainRuins {
+		ruinType = ruinTypes[g.noiseModulo(coord, 271, uint32(len(ruinTypes)))]
+	}
 	return world.Tile{
 		MapID:         g.mapID,
 		Coord:         coord,
 		Chunk:         chunk,
 		Terrain:       terrain,
+		RuinType:      ruinType,
 		Elevation:     g.elevation(coord),
 		SafeZone:      safeZone,
 		ForestDensity: forestDensity,
@@ -96,7 +116,7 @@ func (g Generator) terrain(coord world.Coord, distance float64, safeZone bool) w
 }
 
 func (g Generator) isOilWellTile(coord world.Coord) bool {
-	wrapped := world.Coord{X: positiveModulo(coord.X, worldSizeTiles), Y: positiveModulo(coord.Y, worldSizeTiles)}
+	wrapped := world.Coord{X: positiveModulo(coord.X, WorldSizeTiles), Y: positiveModulo(coord.Y, WorldSizeTiles)}
 	for _, tile := range oilWellTiles {
 		if wrapped == tile {
 			return true

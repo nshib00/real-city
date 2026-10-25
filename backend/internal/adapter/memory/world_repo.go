@@ -72,6 +72,10 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 	return chunks, nil
 }
 
+func (r *WorldRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	return r.GetOrCreateChunks(ctx, mapID, coords)
+}
+
 func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
 	_ = ctx
 	key := world.ChunkID(tile.MapID, tile.Chunk)

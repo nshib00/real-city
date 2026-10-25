@@ -24,6 +24,7 @@ export type WorldTile = {
   chunk_x: number
   chunk_y: number
   terrain: TerrainType
+  ruin_type?: string
   elevation: number
   safe_zone: boolean
   forest_density: number

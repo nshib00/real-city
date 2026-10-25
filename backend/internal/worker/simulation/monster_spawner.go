@@ -2,19 +2,22 @@ package simulation
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
-	"math/rand"
+	"math"
+	"sort"
+	"strconv"
+	"strings"
 	"time"
 
-	"real-city/backend/internal/domain/building"
-	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
+	"real-city/backend/internal/service/worldgen"
 )
 
 const (
-	monsterSpawnPointCount = 10
+	monsterSpawnPointCount = 100
 	monsterSpawnSafeRange  = 3
 )
 
@@ -48,12 +51,19 @@ func (s *MonsterSpawner) Tick(ctx context.Context, now time.Time, limit int) (in
 			break
 		}
 		spawn = normalizeSpawnPoint(spawn, now)
+		if spawn.NextSpawnAt.After(now) || aliveBySpawn[spawn.ID] >= spawn.MaxAlive {
+			continue
+		}
 		relocated, err := s.relocateIfUnsafe(ctx, spawn, now)
 		if err != nil {
 			return spawned, err
 		}
 		spawn = relocated
-		if spawn.NextSpawnAt.After(now) || aliveBySpawn[spawn.ID] >= spawn.MaxAlive {
+		unsafe, err := s.spawnUnsafe(ctx, spawn.Tile)
+		if err != nil {
+			return spawned, err
+		}
+		if unsafe {
 			continue
 		}
 		if _, err := s.service.SpawnFromPoint(ctx, spawn, now); err != nil {
@@ -73,7 +83,9 @@ func (s *MonsterSpawner) ensureSpawnPoints(ctx context.Context, now time.Time) (
 	}
 	byID := make(map[monster.SpawnID]monster.SpawnPoint, len(spawns))
 	for _, spawn := range spawns {
-		byID[spawn.ID] = spawn
+		if _, generated := generatedSpawnIndex(spawn.ID); generated {
+			byID[spawn.ID] = spawn
+		}
 	}
 	for _, seed := range defaultSpawnSeeds(now) {
 		if _, ok := byID[seed.ID]; ok {
@@ -92,6 +104,7 @@ func (s *MonsterSpawner) ensureSpawnPoints(ctx context.Context, now time.Time) (
 	for _, item := range byID {
 		spawns = append(spawns, normalizeSpawnPoint(item, now))
 	}
+	sort.Slice(spawns, func(i, j int) bool { return spawns[i].ID < spawns[j].ID })
 	return spawns, nil
 }
 
@@ -103,8 +116,9 @@ func (s *MonsterSpawner) relocateIfUnsafe(ctx context.Context, spawn monster.Spa
 	if !unsafe {
 		return spawn, nil
 	}
-	for ring := monsterSpawnSafeRange; ring <= spawn.Radius+12; ring++ {
+	for ring := monsterSpawnSafeRange + 1; ring <= spawn.Radius+12; ring++ {
 		for _, candidate := range ringCandidates(spawn.Tile, ring) {
+			candidate = wrappedCoord(candidate)
 			unsafe, err := s.spawnUnsafe(ctx, candidate)
 			if err != nil {
 				return monster.SpawnPoint{}, err
@@ -131,28 +145,35 @@ func (s *MonsterSpawner) spawnUnsafe(ctx context.Context, tile world.Coord) (boo
 	if s.buildings == nil {
 		return false, nil
 	}
-	buildings, err := s.buildings.ListByViewport(
-		ctx,
-		service.DefaultWorldID,
-		tile.X-monsterSpawnSafeRange,
-		tile.Y-monsterSpawnSafeRange,
-		tile.X+monsterSpawnSafeRange,
-		tile.Y+monsterSpawnSafeRange,
-	)
-	if err != nil {
-		return false, err
-	}
-	for _, item := range buildings {
-		if item.State == building.StateRuined {
-			continue
-		}
-		for _, occupied := range item.OccupiedTiles() {
-			if manhattan(tile, occupied) < monsterSpawnSafeRange {
-				return true, nil
+	for _, offsetX := range spawnOffsets(tile.X) {
+		for _, offsetY := range spawnOffsets(tile.Y) {
+			buildings, err := s.buildings.ListIntersectingFootprint(ctx, service.DefaultWorldID,
+				tile.X+offsetX-monsterSpawnSafeRange, tile.Y+offsetY-monsterSpawnSafeRange,
+				tile.X+offsetX+monsterSpawnSafeRange, tile.Y+offsetY+monsterSpawnSafeRange)
+			if err != nil {
+				return false, err
+			}
+			for _, item := range buildings {
+				for _, occupied := range item.OccupiedTiles() {
+					if wrappedChebyshev(tile, occupied) <= monsterSpawnSafeRange {
+						return true, nil
+					}
+				}
 			}
 		}
 	}
 	return false, nil
+}
+
+func spawnOffsets(coordinate int) []int {
+	offsets := []int{0}
+	if coordinate < monsterSpawnSafeRange {
+		offsets = append(offsets, worldgen.WorldSizeTiles)
+	}
+	if coordinate >= worldgen.WorldSizeTiles-monsterSpawnSafeRange {
+		offsets = append(offsets, -worldgen.WorldSizeTiles)
+	}
+	return offsets
 }
 
 func (s *MonsterSpawner) tilePassable(ctx context.Context, tile world.Coord) (bool, error) {
@@ -165,49 +186,66 @@ func (s *MonsterSpawner) tilePassable(ctx context.Context, tile world.Coord) (bo
 	}
 	for _, item := range chunk.Tiles {
 		if item.Coord == tile {
-			return item.Terrain == world.TerrainForest || item.Terrain == world.TerrainGrass, nil
+			return item.Terrain == world.TerrainGrass && !item.SafeZone, nil
 		}
 	}
 	return false, nil
 }
 
 func defaultSpawnSeeds(now time.Time) []monster.SpawnPoint {
-	specs := catalog.MonsterSpecs()
-	defaultType := monster.TypeRoamingMelee
-	if len(specs) > 0 {
-		defaultType = specs[rand.Intn(len(specs))].Type
-	}
-	coords := []struct {
-		id   monster.SpawnID
-		tile world.Coord
-	}{
-		{"spawn_roamers", world.Coord{X: 6, Y: -7}},
-		{"spawn_resources", world.Coord{X: 14, Y: 6}},
-		{"spawn_ruins", world.Coord{X: -8, Y: 12}},
-		{"spawn_north_forest", world.Coord{X: -16, Y: -18}},
-		{"spawn_east_grove", world.Coord{X: 24, Y: -9}},
-		{"spawn_south_meadow", world.Coord{X: 8, Y: 22}},
-		{"spawn_west_ruins", world.Coord{X: -24, Y: 8}},
-		{"spawn_far_north", world.Coord{X: 3, Y: -29}},
-		{"spawn_far_east", world.Coord{X: 31, Y: 13}},
-		{"spawn_far_south", world.Coord{X: -11, Y: 30}},
-	}
 	items := make([]monster.SpawnPoint, 0, monsterSpawnPointCount)
-	for i, seed := range coords {
+	columns := int(math.Ceil(math.Sqrt(float64(monsterSpawnPointCount))))
+	rows := (monsterSpawnPointCount + columns - 1) / columns
+	for index := 0; index < monsterSpawnPointCount; index++ {
+		// Spread points across the wrapped map. Stored positions can move when
+		// terrain or nearby construction makes a cell unsafe.
+		x, y := index%columns, index/columns
+		seed := world.Coord{
+			X: (2*x + 1) * worldgen.WorldSizeTiles / (2 * columns),
+			Y: (2*y + 1) * worldgen.WorldSizeTiles / (2 * rows),
+		}
 		items = append(items, monster.SpawnPoint{
-			ID:          seed.id,
+			ID:          monster.SpawnID(fmt.Sprintf("spawn_generated_%03d", index)),
 			MapID:       service.DefaultWorldID,
-			Type:        defaultType,
-			Tile:        seed.tile,
+			Type:        monster.TypeRoamingMelee,
+			Tile:        seed,
 			Radius:      8,
 			MaxAlive:    1,
 			Cooldown:    90 * time.Second,
-			NextSpawnAt: now.Add(time.Duration(i+1) * 10 * time.Second),
+			NextSpawnAt: now.Add(time.Duration(index+1) * time.Second),
 			CreatedAt:   now,
 			UpdatedAt:   now,
 		})
 	}
 	return items
+}
+
+func generatedSpawnIndex(id monster.SpawnID) (int, bool) {
+	part, ok := strings.CutPrefix(string(id), "spawn_generated_")
+	if !ok || len(part) != 3 {
+		return 0, false
+	}
+	index, err := strconv.Atoi(part)
+	return index, err == nil && index >= 0 && index < monsterSpawnPointCount
+}
+
+func wrappedCoord(tile world.Coord) world.Coord {
+	size := worldgen.WorldSizeTiles
+	return world.Coord{X: (tile.X%size + size) % size, Y: (tile.Y%size + size) % size}
+}
+
+func wrappedChebyshev(a, b world.Coord) int {
+	a, b = wrappedCoord(a), wrappedCoord(b)
+	dx, dy := absInt(a.X-b.X), absInt(a.Y-b.Y)
+	size := worldgen.WorldSizeTiles
+	return max(min(dx, size-dx), min(dy, size-dy))
+}
+
+func absInt(value int) int {
+	if value < 0 {
+		return -value
+	}
+	return value
 }
 
 func normalizeSpawnPoint(spawn monster.SpawnPoint, now time.Time) monster.SpawnPoint {

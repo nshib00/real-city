@@ -9,6 +9,7 @@ import (
 
 	"real-city/backend/internal/adapter/memory"
 	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
@@ -66,6 +67,18 @@ func TestRunnerCompletesQueuedBuildingAction(t *testing.T) {
 	if updated.State != building.StateActive || updated.CompletesAt != nil {
 		t.Fatalf("building was not completed: %#v", updated)
 	}
+	for range 2 {
+		if _, err := runner.Tick(ctx); err != nil {
+			t.Fatal(err)
+		}
+		inventory, err := economyService.Inventory(ctx, player.ID("p1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if inventory.Items[economy.ResourcePopulation] != 3 {
+			t.Fatalf("expected three free residents after construction, got %d", inventory.Items[economy.ResourcePopulation])
+		}
+	}
 }
 
 func TestRunnerCompletesDueProduction(t *testing.T) {
@@ -75,6 +88,10 @@ func TestRunnerCompletesDueProduction(t *testing.T) {
 	economyRepo := memory.NewEconomyRepo()
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, log)
 	production := service.NewProductionService(economyRepo, economyService, log)
+	recipe, ok := catalog.RecipeByID("planks_from_wood")
+	if !ok {
+		t.Fatal("missing production recipe")
+	}
 	now := time.Date(2026, 8, 25, 10, 0, 0, 0, time.UTC)
 	job := economy.ProductionJob{
 		ID:          "job_due",
@@ -106,5 +123,17 @@ func TestRunnerCompletesDueProduction(t *testing.T) {
 	}
 	if updated.State != economy.ProductionReady {
 		t.Fatalf("job was not marked ready: %#v", updated)
+	}
+	for range 2 {
+		if _, err := runner.Tick(ctx); err != nil {
+			t.Fatal(err)
+		}
+		inventory, err := economyService.Inventory(ctx, player.ID("p1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if inventory.Items[economy.ResourcePopulation] != recipe.Workers {
+			t.Fatalf("expected %d workers to be released only once, got %d", recipe.Workers, inventory.Items[economy.ResourcePopulation])
+		}
 	}
 }

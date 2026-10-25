@@ -28,5 +28,5 @@ export const monsterCatalog: MonsterSpec[] = [
   { type: 'spore_beast', name: 'Споровый зверь', maxHealth: 320, damage: 22, speedTiles: 1, aggroRadius: 4, attackRange: 1, lootCoins: 130, spawnWeight: 20 },
   { type: 'ironback_brute', name: 'Железоспин', maxHealth: 620, damage: 44, speedTiles: 1, aggroRadius: 5, attackRange: 1, lootCoins: 320, spawnWeight: 8 },
   { type: 'ember_wisp', name: 'Тлеющий огонек', maxHealth: 240, damage: 16, speedTiles: 1, aggroRadius: 7, attackRange: 3, lootCoins: 180, spawnWeight: 12 },
-  { type: 'ancient_colossus', name: 'Древний колосс', maxHealth: 2400, damage: 120, speedTiles: 1, aggroRadius: 8, attackRange: 1, lootCoins: 2200, spawnWeight: 1 },
+  { type: 'ancient_colossus', name: 'Древний колосс', maxHealth: 300000, damage: 2400, speedTiles: 1, aggroRadius: 8, attackRange: 1, lootCoins: 2200, spawnWeight: 1 },
 ]

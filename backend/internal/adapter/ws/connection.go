@@ -25,6 +25,8 @@ type Connection struct {
 	conn          net.Conn
 	reader        *bufio.Reader
 	send          chan Envelope
+	sendMu        sync.Mutex
+	nextEventSeq  uint64
 	subs          SubscriptionSet
 	rate          *RateLimiter
 	mu            sync.RWMutex
@@ -59,21 +61,39 @@ func (c *Connection) PlayerID() player.ID {
 }
 
 func (c *Connection) Enqueue(message Envelope) bool {
+	return c.enqueue(message, false)
+}
+
+func (c *Connection) EnqueueEvent(message Envelope) bool {
+	return c.enqueue(message, true)
+}
+
+func (c *Connection) enqueue(message Envelope, event bool) bool {
+	c.sendMu.Lock()
+	if event {
+		message.Seq = c.nextEventSeq + 1
+	}
+	var queued bool
 	select {
 	case <-c.closed:
-		return false
 	case c.send <- message:
+		queued = true
+		if event {
+			c.nextEventSeq++
+		}
 		if c.transport != nil {
 			c.transport.enqueued.Add(1)
 		}
-		return true
 	default:
 		if c.transport != nil {
 			c.transport.slowConsumers.Add(1)
 		}
-		c.Close("send_queue_full")
-		return false
 	}
+	c.sendMu.Unlock()
+	if !queued {
+		c.Close("send_queue_full")
+	}
+	return queued
 }
 
 func (c *Connection) Matches(eventPlayerID player.ID, chunkID string, alliance string) bool {
@@ -137,6 +157,7 @@ func (c *Connection) WriteLoop() {
 			}
 			if c.transport != nil {
 				c.transport.delivered.Add(1)
+				c.transport.deliveredBytes.Add(uint64(len(data)))
 			}
 		case <-c.closed:
 			return

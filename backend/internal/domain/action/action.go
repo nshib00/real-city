@@ -16,6 +16,8 @@ const (
 	TypeCompleteProduction Type = "complete_production"
 	TypeRespawnResource    Type = "respawn_resource"
 	TypeRegrowForest       Type = "regrow_forest"
+	TypeDetonateWeapon     Type = "detonate_weapon"
+	TypeResolveRaid        Type = "resolve_raid"
 )
 
 type ObjectRef struct {
