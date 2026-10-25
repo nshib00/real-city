@@ -1,0 +1,614 @@
+{
+  "asset_id": "glass_workshop",
+  "category": "industry",
+  "kind": "building",
+  "display_name": "Стекольная мастерская",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 1 добавляет основной корпус. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "planks",
+        "stone",
+        "sand"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 4500
+      },
+      "adds": [
+        "основной_корпус",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 2 добавляет дополнительная опора. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "stone",
+        "clay",
+        "rope"
+      ],
+      "triangle_budget": {
+        "min": 800,
+        "max": 5000
+      },
+      "adds": [
+        "дополнительная_опора",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 3 добавляет рабочий навес. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "clay",
+        "stone_block",
+        "rope",
+        "tools"
+      ],
+      "triangle_budget": {
+        "min": 900,
+        "max": 5500
+      },
+      "adds": [
+        "рабочий_навес",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 4 добавляет защищённый склад. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "stone_block",
+        "tools",
+        "brick"
+      ],
+      "triangle_budget": {
+        "min": 1000,
+        "max": 6000
+      },
+      "adds": [
+        "защищённый_склад",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 5 добавляет механический узел. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "brick",
+        "copper_parts",
+        "glass"
+      ],
+      "triangle_budget": {
+        "min": 1100,
+        "max": 6500
+      },
+      "adds": [
+        "механический_узел",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 6 добавляет второй объём. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "copper_parts",
+        "mechanism",
+        "iron_ingot",
+        "glass"
+      ],
+      "triangle_budget": {
+        "min": 1200,
+        "max": 7000
+      },
+      "adds": [
+        "второй_объём",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 7 добавляет каменная секция. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "mechanism",
+        "iron_ingot",
+        "glass"
+      ],
+      "triangle_budget": {
+        "min": 1300,
+        "max": 7500
+      },
+      "adds": [
+        "каменная_секция",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 8 добавляет усиленный портал. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "mechanism",
+        "iron_ingot",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 1400,
+        "max": 8000
+      },
+      "adds": [
+        "усиленный_портал",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Светлая печь, стойки охлаждения и голубоватые листы стекла; уровень 9 добавляет приборная зона. Крупные детали: тигель, вытяжка, сортировочный стол.",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "reinforced_beams",
+        "mechanism",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "приборная_зона",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 10,
+      "visual_goal": "Поздняя стекольная мастерская: защищённая горячая зона, крупная печь, охлаждающие стойки и листы стекла.",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "reinforced_beams",
+        "mechanism",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "защищённая_горячая_зона",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 11,
+      "visual_goal": "Поздняя стекольная мастерская: расширенная линия охлаждения, крупная печь, охлаждающие стойки и листы стекла.",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "reinforced_beams",
+        "mechanism",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "расширенная_линия_охлаждения",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 12,
+      "visual_goal": "Поздняя стекольная мастерская: точный операторский пост, крупная печь, охлаждающие стойки и листы стекла.",
+      "cost_resources": [
+        "coins",
+        "reinforced_concrete",
+        "reinforced_beams",
+        "mechanism",
+        "star_glass"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "точный_операторский_пост",
+        "тигель"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "material_map": {
+    "coins": {
+      "visible_as": "аккуратность фасада и защищённый учёт вложений",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "accent"
+    },
+    "planks": {
+      "visible_as": "дощатые настилы, стойки и рабочие поверхности",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    },
+    "stone": {
+      "visible_as": "крупные камни фундамента и низкие стены",
+      "levels": [
+        1,
+        2
+      ],
+      "priority": "secondary"
+    },
+    "sand": {
+      "visible_as": "светлый песок и заполненные сырьевые ящики",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    },
+    "clay": {
+      "visible_as": "глиняные формы и сырьевые лотки",
+      "levels": [
+        2,
+        3
+      ],
+      "priority": "secondary"
+    },
+    "rope": {
+      "visible_as": "натянутые стяжки и подъёмные канаты",
+      "levels": [
+        2,
+        3
+      ],
+      "priority": "secondary"
+    },
+    "stone_block": {
+      "visible_as": "тёсаные блоки цоколя и силовых опор",
+      "levels": [
+        3,
+        4
+      ],
+      "priority": "secondary"
+    },
+    "tools": {
+      "visible_as": "малый читаемый акцент ресурса tools в конструкции или продукции",
+      "levels": [
+        3,
+        4
+      ],
+      "priority": "secondary"
+    },
+    "brick": {
+      "visible_as": "кирпичная кладка и дымоход",
+      "levels": [
+        4,
+        5
+      ],
+      "priority": "secondary"
+    },
+    "copper_parts": {
+      "visible_as": "малый читаемый акцент ресурса copper_parts в конструкции или продукции",
+      "levels": [
+        5,
+        6
+      ],
+      "priority": "secondary"
+    },
+    "glass": {
+      "visible_as": "крупные окна и защищённые стеклянные панели",
+      "levels": [
+        5,
+        6,
+        7
+      ],
+      "priority": "secondary"
+    },
+    "mechanism": {
+      "visible_as": "видимый зубчатый привод",
+      "levels": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "iron_ingot": {
+      "visible_as": "железные крепления, петли и рабочий привод",
+      "levels": [
+        6,
+        7,
+        8
+      ],
+      "priority": "secondary"
+    },
+    "reinforced_concrete": {
+      "visible_as": "железобетонное основание и несущие узлы",
+      "levels": [
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "star_glass": {
+      "visible_as": "малый читаемый акцент ресурса star_glass в конструкции или продукции",
+      "levels": [
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "reinforced_beams": {
+      "visible_as": "толстые несущие поперечины",
+      "levels": [
+        9
+      ],
+      "priority": "secondary"
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Сохранять силуэт «Светлая печь, стойки охлаждения и голубоватые листы стекла»; каждый следующий уровень добавляет реальный объём или узел."
+    },
+    "height": {
+      "rule": "Высота растет постепенно и остается читаемой в 1x1 footprint."
+    },
+    "materials": {
+      "rule": "Материалы появляются не раньше уровня, где они есть в цене строительства."
+    },
+    "props": {
+      "rule": "Крупные детали семейства: тигель, вытяжка, сортировочный стол; мелкий шум не маскирует вход."
+    },
+    "late_elements": {
+      "rule": "Поздние узлы усиливают основную функцию, не меняя идентичность семейства."
+    },
+    "constraints": [
+      "Сохранять ориентацию входа.",
+      "Сохранять основной силуэт между active/construction/damaged."
+    ]
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Готовый объект: Светлая печь, стойки охлаждения и голубоватые листы стекла; рабочие детали чисты и читаемы."
+    },
+    "construction": {
+      "rule": "Незавершённый каркас целевого уровня, не установлен один крупный функциональный узел.",
+      "required_elements": [
+        "scaffolding",
+        "unfinished_frame",
+        "stacked_materials"
+      ]
+    },
+    "damaged": {
+      "rule": "Сломан крупный функциональный узел, силуэт и ориентация входа сохраняются.",
+      "required_elements": [
+        "broken_roof_edges",
+        "cracks",
+        "debris"
+      ],
+      "forbidden_elements": [
+        "full_collapse"
+      ]
+    },
+    "ruined": {
+      "rule": "Остатки корпуса и материалов читаются как тот же объект, не активная постройка."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "isometric-style",
+      "fantasy-worlds",
+      "stylized-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "environment-artist"
+    ],
+    "production": [
+      "materials",
+      "texture-workflow",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 8500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 4200
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 150,
+          "max": 2100
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "footprint",
+      "primary silhouette",
+      "entrance orientation",
+      "largest readable props"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "atlas_policy": {
+    "enabled": true,
+    "image_format": "webp",
+    "json_naming": "{asset_id}.atlas.json",
+    "image_naming": "{asset_id}.webp",
+    "padding_px": 2,
+    "max_texture_size": 4096,
+    "include_static_sprites": true,
+    "include_animation_frames": true
+  },
+  "animation_policy": {
+    "frame_size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ],
+    "frame_naming": "{asset_id}_l{level:02d}_{animation}_{frame:04d}.png",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 8,
+      "output_name": "animation-contact-sheet.png"
+    },
+    "building_overlays": [
+      {
+        "id": "working",
+        "type": "overlay",
+        "fps": 8,
+        "frames": 12,
+        "loop": true,
+        "frame_prefix": "{asset_id}_l{level:02d}_working_",
+        "states": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/industry/glass_workshop",
+    "source_dir": "frontend/src/assets/buildings/industry/glass_workshop",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/industry/glass-workshop.md"
+    ],
+    "art_guide": "docs/art/visual-style-guide.md",
+    "existing_generators": [],
+    "existing_assets": []
+  },
+  "notes": [
+    "Первичная visual-spec по действующему каталогу; художественную приёмку и генерацию выполнять по контракту 22.2."
+  ],
+  "catalog_status": "registered"
+}

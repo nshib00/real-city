@@ -76,6 +76,24 @@ frontend/public/assets/**/work/
 *.fbx
 *.glb
 *.gltf
+# Authored inventory weapons and their editable master scene.
+!frontend/public/assets/resources/icons/weapon_resources.blend
+!frontend/public/assets/resources/icons/throwing_knives.glb
+!frontend/public/assets/resources/icons/hunting_traps.glb
+!frontend/public/assets/resources/icons/blackpowder_bomb.glb
+!frontend/public/assets/resources/icons/shaped_charge.glb
+!frontend/public/assets/resources/icons/firebomb.glb
+!frontend/public/assets/resources/icons/shock_charge.glb
+!frontend/public/assets/resources/icons/siege_mine.glb
+!frontend/public/assets/resources/icons/breach_bomb.glb
+!frontend/public/assets/resources/icons/resonance_charge.glb
+# Production stone-house models and their editable Blender sources.
+!frontend/public/assets/buildings/housing/stone_house/*.glb
+!frontend/public/assets/buildings/housing/stone_house/*.blend
+!frontend/public/assets/buildings/housing/villa/*.glb
+# Monster master files and animated runtime previews.
+!frontend/public/assets/monsters/*/*.blend
+!frontend/public/assets/monsters/*/*.glb
 *.obj
 *.mtl
 *.dae
@@ -134,6 +152,7 @@ frontend/public/assets/**/work/
 !tools/audio/master/*.wav
 !frontend/public/assets/audio/build/
 !frontend/public/assets/audio/**/*.mp3
+tools/audio/review/
 *.zip
 *.tar
 *.tar.gz

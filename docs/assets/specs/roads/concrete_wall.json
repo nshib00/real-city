@@ -1,0 +1,41 @@
+{
+  "asset_id": "concrete_wall",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Бетонная стена",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 8, "visual_goal": "Широкий бетонный сердечник, каменная подошва и открытая стальная арматура.", "cost_resources": ["coins", "concrete", "steel", "stone_block"], "triangle_budget": {"min": 800, "max": 18000}, "adds": ["concrete_core", "stone_block_footing", "steel_coping"]},
+    {"level": 9, "visual_goal": "Двухслойные железобетонные панели и защищённые броненакладками швы.", "cost_resources": ["coins", "reinforced_concrete", "steel", "armor_plates"], "triangle_budget": {"min": 900, "max": 18000}, "adds": ["reinforced_concrete_panel", "armor_joint_plate"]},
+    {"level": 10, "visual_goal": "Массивные пилоны, усиленные балки верхнего пояса и стальные анкеры.", "cost_resources": ["coins", "reinforced_concrete", "steel", "reinforced_beams", "armor_plates"], "triangle_budget": {"min": 1000, "max": 18000}, "adds": ["heavy_pylon_crown", "reinforced_beam_crown", "steel_anchor"]}
+  ],
+  "states": ["active", "construction", "damaged", "ruined"],
+  "material_map": {
+    "stone_block": {"visible_as": "непрерывная подошва под бетонным ядром", "priority": "secondary", "levels": [8, 9, 10]},
+    "concrete": {"visible_as": "несущий сердечник и широкие фасадные панели", "priority": "primary", "levels": [8, 9, 10]},
+    "steel": {"visible_as": "верхний пояс, анкеры и открытая арматура на стройке и в проломах", "priority": "secondary", "levels": [8, 9, 10]},
+    "reinforced_concrete": {"visible_as": "двухслойные фасадные панели", "priority": "primary", "levels": [9, 10]},
+    "armor_plates": {"visible_as": "темные накладки на стыках и пилонах", "priority": "secondary", "levels": [9, 10]},
+    "reinforced_beams": {"visible_as": "толстый силовой верхний пояс", "priority": "secondary", "levels": [10]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Ширина, высота и толщина пилонов растут на уровнях 8–10."},
+    "height": {"rule": "Высота надземной конструкции растет от 1.78 до 2.10 при неизменной камере."},
+    "materials": {"rule": "Уровень 8 — бетон и сталь; 9 — железобетонные панели и броня; 10 — усиленные балки."},
+    "props": {"rule": "Арматура видна в незавершенных и разрушенных секциях; декоративного оружия нет."},
+    "constraints": {"rule": "Все 16 ортогональных форм стыкуются на границе клетки; земля одинакова для состояний."}
+  },
+  "state_policy": {
+    "active": {"rule": "Цельная высокая секция с защитными стыками и уровневым силовым поясом."},
+    "construction": {"rule": "Построена примерно половина стены, видны арматура и леса."},
+    "damaged": {"rule": "Верхняя половина разрушена, обнажена арматура, крупные обломки у основания."},
+    "ruined": {"rule": "Осталась низкая подошва и рассыпанные бетонные обломки."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 800, "max": 18000}, "export": true}, {"name": "LOD1", "ratio": 0.65, "triangle_budget": {"min": 400, "max": 12000}, "export": true}, {"name": "LOD2", "ratio": 0.35, "triangle_budget": {"min": 150, "max": 7000}, "export": true}], "preserve": ["ground", "concrete_core", "junction_pylon", "level_upgrades"], "exports": {"naming": "{asset_id}_l{level:02d}_{shape}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 512], "camera_profile": "real_city_modular_wall", "transparent_background": true, "anchor": [256, 320], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 4, "include_states": ["active", "construction", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/roads/concrete_wall", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/defense/concrete-wall.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/generate_roads_and_walls_models.py"], "existing_assets": ["frontend/public/assets/buildings/roads/stone_wall", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Баланс в shared/catalog/buildings.ts: уровни 8–10, 2300/3100/4200 HP. Модели не меняют игровую стоимость или характеристики.", "16 форм × 3 уровня × 4 состояния."]
+}

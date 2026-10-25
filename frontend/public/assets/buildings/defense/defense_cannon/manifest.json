@@ -1,0 +1,2206 @@
+{
+  "asset_id": "defense_cannon",
+  "display_name": "Пушка",
+  "category": "defense",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_levels.glb",
+  "material_map": {
+    "planks": {
+      "visible_as": "лафет, направляющие и колесные детали",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "rope": {
+      "visible_as": "стяжки раннего лафета и строительные материалы",
+      "priority": "secondary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "stone_block": {
+      "visible_as": "опоры и укрепленная платформа",
+      "priority": "primary",
+      "levels": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "ствол, скобы и затвор",
+      "priority": "primary",
+      "levels": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "mechanism": {
+      "visible_as": "привод наведения и механизмы отдачи",
+      "priority": "primary",
+      "levels": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "armor_plate": {
+      "visible_as": "щит и боковые панели турели",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "electronics": {
+      "visible_as": "бирюзовый прицел и управляющий узел",
+      "priority": "accent",
+      "levels": [
+        10,
+        11,
+        12
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "defense_cannon_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1080,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0540000200271606
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_active_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_active_LOD1.glb",
+          "triangles": 584
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_active_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_active.png"
+    },
+    {
+      "id": "defense_cannon_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1124,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8140000104904175
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_construction_LOD0.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_construction_LOD1.glb",
+          "triangles": 608
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_construction_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_construction.png"
+    },
+    {
+      "id": "defense_cannon_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1376,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0540000200271606
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_damaged_LOD0.glb",
+          "triangles": 1376
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_damaged_LOD1.glb",
+          "triangles": 744
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_damaged_LOD2.glb",
+          "triangles": 364
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1316,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5139999985694885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_ruined_LOD0.glb",
+          "triangles": 1316
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_ruined_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_ruined_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l01_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 2112,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0579999685287476
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_active_LOD0.glb",
+          "triangles": 2112
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_active_LOD1.glb",
+          "triangles": 1144
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_active_LOD2.glb",
+          "triangles": 564
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_active.png"
+    },
+    {
+      "id": "defense_cannon_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1640,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8179999589920044
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_construction_LOD0.glb",
+          "triangles": 1640
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_construction_LOD1.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_construction_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_construction.png"
+    },
+    {
+      "id": "defense_cannon_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1892,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0579999685287476
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_damaged_LOD0.glb",
+          "triangles": 1892
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_damaged_LOD1.glb",
+          "triangles": 1024
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_damaged_LOD2.glb",
+          "triangles": 504
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 1316,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5180000066757202
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_ruined_LOD0.glb",
+          "triangles": 1316
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_ruined_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_ruined_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l02_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2200,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.062000036239624
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_active_LOD0.glb",
+          "triangles": 2200
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_active_LOD1.glb",
+          "triangles": 1192
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_active_LOD2.glb",
+          "triangles": 588
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_active.png"
+    },
+    {
+      "id": "defense_cannon_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1728,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8219999670982361
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_construction_LOD0.glb",
+          "triangles": 1728
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_construction_LOD1.glb",
+          "triangles": 936
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_construction_LOD2.glb",
+          "triangles": 460
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_construction.png"
+    },
+    {
+      "id": "defense_cannon_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1980,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.062000036239624
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_damaged_LOD0.glb",
+          "triangles": 1980
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_damaged_LOD1.glb",
+          "triangles": 1072
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_damaged_LOD2.glb",
+          "triangles": 528
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 1404,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5219999551773071
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_ruined_LOD0.glb",
+          "triangles": 1404
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_ruined_LOD1.glb",
+          "triangles": 760
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_ruined_LOD2.glb",
+          "triangles": 372
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l03_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 2420,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_active_LOD0.glb",
+          "triangles": 2420
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_active_LOD1.glb",
+          "triangles": 1312
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_active_LOD2.glb",
+          "triangles": 648
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_active.png"
+    },
+    {
+      "id": "defense_cannon_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1772,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8259999752044678
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_construction_LOD0.glb",
+          "triangles": 1772
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_construction_LOD1.glb",
+          "triangles": 960
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_construction_LOD2.glb",
+          "triangles": 472
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_construction.png"
+    },
+    {
+      "id": "defense_cannon_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 2024,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.065999984741211
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_damaged_LOD0.glb",
+          "triangles": 2024
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_damaged_LOD1.glb",
+          "triangles": 1096
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_damaged_LOD2.glb",
+          "triangles": 540
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 1448,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5260000228881836
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_ruined_LOD0.glb",
+          "triangles": 1448
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_ruined_LOD1.glb",
+          "triangles": 784
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_ruined_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l04_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 2508,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_active_LOD0.glb",
+          "triangles": 2508
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_active_LOD1.glb",
+          "triangles": 1360
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_active_LOD2.glb",
+          "triangles": 672
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_active.png"
+    },
+    {
+      "id": "defense_cannon_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1816,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8299999833106995
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_construction_LOD0.glb",
+          "triangles": 1816
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_construction_LOD1.glb",
+          "triangles": 984
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_construction_LOD2.glb",
+          "triangles": 484
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_construction.png"
+    },
+    {
+      "id": "defense_cannon_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 2068,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0699999332427979
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_damaged_LOD0.glb",
+          "triangles": 2068
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_damaged_LOD1.glb",
+          "triangles": 1120
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_damaged_LOD2.glb",
+          "triangles": 552
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 1448,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5299999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_ruined_LOD0.glb",
+          "triangles": 1448
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_ruined_LOD1.glb",
+          "triangles": 784
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_ruined_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l05_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 2596,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_active_LOD0.glb",
+          "triangles": 2596
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_active_LOD1.glb",
+          "triangles": 1408
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_active_LOD2.glb",
+          "triangles": 696
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_active.png"
+    },
+    {
+      "id": "defense_cannon_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1904,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8339999914169312
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_construction_LOD0.glb",
+          "triangles": 1904
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_construction_LOD1.glb",
+          "triangles": 1032
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_construction_LOD2.glb",
+          "triangles": 508
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_construction.png"
+    },
+    {
+      "id": "defense_cannon_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 2156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0740000009536743
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_damaged_LOD0.glb",
+          "triangles": 2156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_damaged_LOD2.glb",
+          "triangles": 576
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 1536,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5339999794960022
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_ruined_LOD0.glb",
+          "triangles": 1536
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_ruined_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_ruined_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l06_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 3096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_active_LOD0.glb",
+          "triangles": 3096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_active_LOD1.glb",
+          "triangles": 1680
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_active_LOD2.glb",
+          "triangles": 832
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_active.png"
+    },
+    {
+      "id": "defense_cannon_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1904,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8379999399185181
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_construction_LOD0.glb",
+          "triangles": 1904
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_construction_LOD1.glb",
+          "triangles": 1032
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_construction_LOD2.glb",
+          "triangles": 508
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_construction.png"
+    },
+    {
+      "id": "defense_cannon_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 2156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0779999494552612
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_damaged_LOD0.glb",
+          "triangles": 2156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_damaged_LOD2.glb",
+          "triangles": 576
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "triangles": 1536,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5379999876022339
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_ruined_LOD0.glb",
+          "triangles": 1536
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_ruined_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_ruined_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l07_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 3272,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_active_LOD0.glb",
+          "triangles": 3272
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_active_LOD1.glb",
+          "triangles": 1776
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_active_LOD2.glb",
+          "triangles": 880
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_active.png"
+    },
+    {
+      "id": "defense_cannon_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1904,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8420000076293945
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_construction_LOD0.glb",
+          "triangles": 1904
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_construction_LOD1.glb",
+          "triangles": 1032
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_construction_LOD2.glb",
+          "triangles": 508
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_construction.png"
+    },
+    {
+      "id": "defense_cannon_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 2156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0820000171661377
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_damaged_LOD0.glb",
+          "triangles": 2156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_damaged_LOD2.glb",
+          "triangles": 576
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "triangles": 1536,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5419999957084656
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_ruined_LOD0.glb",
+          "triangles": 1536
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_ruined_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_ruined_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l08_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 3448,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_active_LOD0.glb",
+          "triangles": 3448
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_active_LOD1.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_active_LOD2.glb",
+          "triangles": 928
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_active.png"
+    },
+    {
+      "id": "defense_cannon_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1904,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8459999561309814
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_construction_LOD0.glb",
+          "triangles": 1904
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_construction_LOD1.glb",
+          "triangles": 1032
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_construction_LOD2.glb",
+          "triangles": 508
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_construction.png"
+    },
+    {
+      "id": "defense_cannon_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 2156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0859999656677246
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_damaged_LOD0.glb",
+          "triangles": 2156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_damaged_LOD2.glb",
+          "triangles": 576
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l09_ruined",
+      "level": 9,
+      "state": "ruined",
+      "triangles": 1536,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5460000038146973
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_ruined_LOD0.glb",
+          "triangles": 1536
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_ruined_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_ruined_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l09_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 3580,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_active_LOD0.glb",
+          "triangles": 3580
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_active_LOD1.glb",
+          "triangles": 1944
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_active_LOD2.glb",
+          "triangles": 964
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_active.png"
+    },
+    {
+      "id": "defense_cannon_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1948,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_construction_LOD0.glb",
+          "triangles": 1948
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_construction_LOD1.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_construction_LOD2.glb",
+          "triangles": 520
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_construction.png"
+    },
+    {
+      "id": "defense_cannon_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 2200,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0899999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_damaged_LOD0.glb",
+          "triangles": 2200
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_damaged_LOD1.glb",
+          "triangles": 1192
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_damaged_LOD2.glb",
+          "triangles": 588
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l10_ruined",
+      "level": 10,
+      "state": "ruined",
+      "triangles": 1580,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5499999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_ruined_LOD0.glb",
+          "triangles": 1580
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_ruined_LOD1.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_ruined_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l10_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l11_active",
+      "level": 11,
+      "state": "active",
+      "triangles": 4108,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_active_LOD0.glb",
+          "triangles": 4108
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_active_LOD1.glb",
+          "triangles": 2232
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_active_LOD2.glb",
+          "triangles": 1108
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_active.png"
+    },
+    {
+      "id": "defense_cannon_l11_construction",
+      "level": 11,
+      "state": "construction",
+      "triangles": 1948,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8539999723434448
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_construction_LOD0.glb",
+          "triangles": 1948
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_construction_LOD1.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_construction_LOD2.glb",
+          "triangles": 520
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_construction.png"
+    },
+    {
+      "id": "defense_cannon_l11_damaged",
+      "level": 11,
+      "state": "damaged",
+      "triangles": 2200,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.093999981880188
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_damaged_LOD0.glb",
+          "triangles": 2200
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_damaged_LOD1.glb",
+          "triangles": 1192
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_damaged_LOD2.glb",
+          "triangles": 588
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l11_ruined",
+      "level": 11,
+      "state": "ruined",
+      "triangles": 1580,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5540000200271606
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_ruined_LOD0.glb",
+          "triangles": 1580
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_ruined_LOD1.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_ruined_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l11_ruined.png"
+    },
+    {
+      "id": "defense_cannon_l12_active",
+      "level": 12,
+      "state": "active",
+      "triangles": 4432,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_active_LOD0.glb",
+          "triangles": 4432
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_active_LOD1.glb",
+          "triangles": 2408
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_active_LOD2.glb",
+          "triangles": 1196
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_active.png"
+    },
+    {
+      "id": "defense_cannon_l12_construction",
+      "level": 12,
+      "state": "construction",
+      "triangles": 1948,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8579999804496765
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_construction_LOD0.glb",
+          "triangles": 1948
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_construction_LOD1.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_construction_LOD2.glb",
+          "triangles": 520
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_construction.png"
+    },
+    {
+      "id": "defense_cannon_l12_damaged",
+      "level": 12,
+      "state": "damaged",
+      "triangles": 2200,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0980000495910645
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_damaged_LOD0.glb",
+          "triangles": 2200
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_damaged_LOD1.glb",
+          "triangles": 1192
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_damaged_LOD2.glb",
+          "triangles": 588
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_damaged.png"
+    },
+    {
+      "id": "defense_cannon_l12_ruined",
+      "level": 12,
+      "state": "ruined",
+      "triangles": 1580,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5579999685287476
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_ruined_LOD0.glb",
+          "triangles": 1580
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_ruined_LOD1.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_ruined_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_cannon/defense_cannon_l12_ruined.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\defense\\defense_cannon.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 600,
+          "max": 9800
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 300,
+          "max": 5400
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 150,
+          "max": 2800
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "barrel",
+      "carriage",
+      "level_silhouette"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged",
+        "ruined"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1000,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "asset_id": "chemical_workshop",
+  "category": "industry",
+  "kind": "building",
+  "display_name": "Химическая мастерская",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Химическая мастерская с закрытыми реакторами, вытяжкой и малым огнестойким столом сборки огненных бомб.",
+      "cost_resources": [
+        "coins",
+        "sulfur",
+        "glass"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 4500
+      },
+      "adds": [
+        "основной_корпус",
+        "вытяжка",
+        "стол_огненных_бомб"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "material_map": {
+    "coins": {
+      "visible_as": "аккуратность фасада и защищённый учёт вложений",
+      "levels": [
+        1
+      ],
+      "priority": "accent"
+    },
+    "sulfur": {
+      "visible_as": "малый читаемый акцент ресурса sulfur в конструкции или продукции",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    },
+    "glass": {
+      "visible_as": "крупные окна и защищённые стеклянные панели",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Единственный уровень сохраняет закрытые реакторы как главный силуэт; стол бомб остаётся вторичным."
+    },
+    "height": {
+      "rule": "Вытяжка выше корпуса, но не выходит за читабельный объём клетки 1×1."
+    },
+    "materials": {
+      "rule": "Материалы появляются не раньше уровня, где они есть в цене строительства."
+    },
+    "props": {
+      "rule": "Крупные детали семейства: вытяжка, защитный экран, сосуды; мелкий шум не маскирует вход."
+    },
+    "late_elements": {
+      "rule": "Апгрейдов в текущем каталоге нет; будущие детали не добавлять."
+    },
+    "constraints": [
+      "Сохранять ориентацию входа.",
+      "Сохранять основной силуэт между active/construction/damaged."
+    ]
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Готовый объект: Химическая мастерская с закрытыми реакторами и трубками; рабочие детали чисты и читаемы."
+    },
+    "construction": {
+      "rule": "Незавершённый каркас целевого уровня, не установлен один крупный функциональный узел.",
+      "required_elements": [
+        "scaffolding",
+        "unfinished_frame",
+        "stacked_materials"
+      ]
+    },
+    "damaged": {
+      "rule": "Сломан крупный функциональный узел, силуэт и ориентация входа сохраняются.",
+      "required_elements": [
+        "broken_roof_edges",
+        "cracks",
+        "debris"
+      ],
+      "forbidden_elements": [
+        "full_collapse"
+      ]
+    },
+    "ruined": {
+      "rule": "Остатки корпуса и материалов читаются как тот же объект, не активная постройка."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "isometric-style",
+      "fantasy-worlds",
+      "stylized-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "environment-artist"
+    ],
+    "production": [
+      "materials",
+      "texture-workflow",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 4500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 2200
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 150,
+          "max": 1100
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "footprint",
+      "primary silhouette",
+      "entrance orientation",
+      "largest readable props"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "atlas_policy": {
+    "enabled": true,
+    "image_format": "webp",
+    "json_naming": "{asset_id}.atlas.json",
+    "image_naming": "{asset_id}.webp",
+    "padding_px": 2,
+    "max_texture_size": 4096,
+    "include_static_sprites": true,
+    "include_animation_frames": true
+  },
+  "animation_policy": {
+    "frame_size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ],
+    "frame_naming": "{asset_id}_l{level:02d}_{animation}_{frame:04d}.png",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 8,
+      "output_name": "animation-contact-sheet.png"
+    },
+    "building_overlays": [
+      {
+        "id": "working",
+        "type": "overlay",
+        "fps": 8,
+        "frames": 12,
+        "loop": true,
+        "frame_prefix": "{asset_id}_l{level:02d}_working_",
+        "states": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/industry/chemical_workshop",
+    "source_dir": "frontend/src/assets/buildings/industry/chemical_workshop",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/industry/chemical-workshop.md"
+    ],
+    "art_guide": "docs/art/visual-style-guide.md",
+    "existing_generators": [],
+    "existing_assets": []
+  },
+  "notes": [
+    "Огненная колба видна у выхода, но реакторы и вытяжка остаются главным силуэтом мастерской.",
+    "Готовность огненной бомбы и активный рецепт показываются в UI, а не отдельными GLB-состояниями."
+  ],
+  "catalog_status": "registered"
+}

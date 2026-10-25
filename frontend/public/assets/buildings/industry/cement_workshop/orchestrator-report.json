@@ -1,0 +1,1301 @@
+{
+  "asset_id": "cement_workshop",
+  "display_name": "Цементный цех",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "cement_workshop_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1888,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0899999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_active_LOD0.glb",
+          "triangles": 1888
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_active_LOD1.glb",
+          "triangles": 1026
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_active_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_active.png"
+    },
+    {
+      "id": "cement_workshop_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 992,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_construction_LOD0.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_construction_LOD1.glb",
+          "triangles": 540
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_construction_LOD2.glb",
+          "triangles": 270
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_construction.png"
+    },
+    {
+      "id": "cement_workshop_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1176,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_damaged_LOD0.glb",
+          "triangles": 1176
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_damaged_LOD1.glb",
+          "triangles": 640
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_damaged_LOD2.glb",
+          "triangles": 320
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l01_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 2504,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_active_LOD0.glb",
+          "triangles": 2504
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_active_LOD1.glb",
+          "triangles": 1362
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_active_LOD2.glb",
+          "triangles": 684
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_active.png"
+    },
+    {
+      "id": "cement_workshop_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1168,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_construction_LOD0.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_construction_LOD1.glb",
+          "triangles": 636
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_construction_LOD2.glb",
+          "triangles": 318
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_construction.png"
+    },
+    {
+      "id": "cement_workshop_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1484,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_damaged_LOD0.glb",
+          "triangles": 1484
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_damaged_LOD1.glb",
+          "triangles": 808
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_damaged_LOD2.glb",
+          "triangles": 404
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l02_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2548,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2349998950958252
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_active_LOD0.glb",
+          "triangles": 2548
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_active_LOD1.glb",
+          "triangles": 1386
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_active_LOD2.glb",
+          "triangles": 696
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_active.png"
+    },
+    {
+      "id": "cement_workshop_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1168,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_construction_LOD0.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_construction_LOD1.glb",
+          "triangles": 636
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_construction_LOD2.glb",
+          "triangles": 318
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_construction.png"
+    },
+    {
+      "id": "cement_workshop_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1484,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_damaged_LOD0.glb",
+          "triangles": 1484
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_damaged_LOD1.glb",
+          "triangles": 808
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_damaged_LOD2.glb",
+          "triangles": 404
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l03_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 3548,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2150001525878906
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_active_LOD0.glb",
+          "triangles": 3548
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_active_LOD1.glb",
+          "triangles": 1930
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_active_LOD2.glb",
+          "triangles": 968
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_active.png"
+    },
+    {
+      "id": "cement_workshop_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_construction.png"
+    },
+    {
+      "id": "cement_workshop_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1588,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_damaged_LOD0.glb",
+          "triangles": 1588
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_damaged_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_damaged_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l04_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3900,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.325000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_active_LOD0.glb",
+          "triangles": 3900
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_active_LOD1.glb",
+          "triangles": 2118
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_active_LOD2.glb",
+          "triangles": 1062
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_active.png"
+    },
+    {
+      "id": "cement_workshop_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_construction.png"
+    },
+    {
+      "id": "cement_workshop_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1588,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_damaged_LOD0.glb",
+          "triangles": 1588
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_damaged_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_damaged_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l05_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 4348,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.43500018119812
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_active_LOD0.glb",
+          "triangles": 4348
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_active_LOD1.glb",
+          "triangles": 2358
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_active_LOD2.glb",
+          "triangles": 1182
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_active.png"
+    },
+    {
+      "id": "cement_workshop_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_construction.png"
+    },
+    {
+      "id": "cement_workshop_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 1656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_damaged_LOD0.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_damaged_LOD1.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_damaged_LOD2.glb",
+          "triangles": 450
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l06_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 4436,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.5450000762939453
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_active_LOD0.glb",
+          "triangles": 4436
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_active_LOD1.glb",
+          "triangles": 2406
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_active_LOD2.glb",
+          "triangles": 1206
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_active.png"
+    },
+    {
+      "id": "cement_workshop_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_construction.png"
+    },
+    {
+      "id": "cement_workshop_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 1656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_damaged_LOD0.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_damaged_LOD1.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_damaged_LOD2.glb",
+          "triangles": 450
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l07_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 4568,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.6549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_active_LOD0.glb",
+          "triangles": 4568
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_active_LOD1.glb",
+          "triangles": 2478
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_active_LOD2.glb",
+          "triangles": 1242
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_active.png"
+    },
+    {
+      "id": "cement_workshop_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_construction.png"
+    },
+    {
+      "id": "cement_workshop_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 1656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_damaged_LOD0.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_damaged_LOD1.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_damaged_LOD2.glb",
+          "triangles": 450
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l08_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 4972,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.765000104904175
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_active_LOD0.glb",
+          "triangles": 4972
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_active_LOD1.glb",
+          "triangles": 2694
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_active_LOD2.glb",
+          "triangles": 1350
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_active.png"
+    },
+    {
+      "id": "cement_workshop_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_construction.png"
+    },
+    {
+      "id": "cement_workshop_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 1656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_damaged_LOD0.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_damaged_LOD1.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_damaged_LOD2.glb",
+          "triangles": 450
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l09_damaged.png"
+    },
+    {
+      "id": "cement_workshop_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 5076,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_active_LOD0.glb",
+          "triangles": 5076
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_active_LOD1.glb",
+          "triangles": 2750
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_active_LOD2.glb",
+          "triangles": 1378
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_active.png"
+    },
+    {
+      "id": "cement_workshop_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3224999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_construction.png"
+    },
+    {
+      "id": "cement_workshop_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 1656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8849999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_damaged_LOD0.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_damaged_LOD1.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_damaged_LOD2.glb",
+          "triangles": 450
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_l10_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/cement_workshop/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/cement_workshop/cement_workshop_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\industry\\cement_workshop.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: cement_workshop\ndisplay_name: Цементный цех\ncategory/kind: industry/building\nlevels: 1-10\nstates: active, construction, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: planks, stone, brick, clay, iron_ingot, mechanism, reinforced_concrete, reinforced_beams\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, environment-artist, hard-surface, materials, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

@@ -59,6 +59,13 @@ ALLOWED_RUNTIME_STATES = {
     "damaged",
     "ruined",
     "upgrading",
+    "armed",
+    "triggered",
+    "empty",
+    "no_crew",
+    "no_mechanic",
+    "no_keeper",
+    "no_fuel",
 }
 ALLOWED_ANIMATION_DIRECTIONS = {"n", "ne", "e", "se", "s", "sw", "w", "nw"}
 ALLOWED_BUILDING_ANIMATION_TYPES = {"overlay", "shared_overlay"}
@@ -273,10 +280,13 @@ def validate_asset_spec_dict(data: dict[str, Any]) -> list[str]:
     if not isinstance(png_policy, dict):
         errors.append("png_policy must be an object")
     else:
-        if tuple(png_policy.get("sprite_size", ())) != SPRITE_SIZE:
-            errors.append(f"png_policy.sprite_size must be {list(SPRITE_SIZE)}")
-        if tuple(png_policy.get("anchor", ())) != ANCHOR:
-            errors.append(f"png_policy.anchor must be {list(ANCHOR)}")
+        square_sprite = data.get("asset_id") in ("wooden_wall", "stone_wall", "concrete_wall", "modern_wall", "copper_mine")
+        expected_size = (512, 512) if square_sprite else SPRITE_SIZE
+        expected_anchor = (256, 320) if square_sprite else ANCHOR
+        if tuple(png_policy.get("sprite_size", ())) != expected_size:
+            errors.append(f"png_policy.sprite_size must be {list(expected_size)}")
+        if tuple(png_policy.get("anchor", ())) != expected_anchor:
+            errors.append(f"png_policy.anchor must be {list(expected_anchor)}")
         if png_policy.get("transparent_background") is not True:
             errors.append("png_policy.transparent_background must be true")
 

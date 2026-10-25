@@ -1,0 +1,594 @@
+{
+  "asset_id": "sugar_bed",
+  "category": "fields",
+  "kind": "building",
+  "display_name": "Сахарная грядка",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 1 добавляет первый ряд. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "planks",
+        "reed",
+        "fabric",
+        "clay"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 4500
+      },
+      "adds": [
+        "первый_ряд",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 2 добавляет дополнительные секции. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "planks",
+        "reed",
+        "fabric",
+        "clay",
+        "brick"
+      ],
+      "triangle_budget": {
+        "min": 800,
+        "max": 5000
+      },
+      "adds": [
+        "дополнительные_секции",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 3 добавляет крупные ростки. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "planks",
+        "reed",
+        "fabric",
+        "brick",
+        "stone_block"
+      ],
+      "triangle_budget": {
+        "min": 900,
+        "max": 5500
+      },
+      "adds": [
+        "крупные_ростки",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 4 добавляет разделитель рядов. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "planks",
+        "reed",
+        "fabric",
+        "brick",
+        "stone_block"
+      ],
+      "triangle_budget": {
+        "min": 1000,
+        "max": 6000
+      },
+      "adds": [
+        "разделитель_рядов",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 5 добавляет сортировочная зона. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "premium_planks",
+        "reed",
+        "fabric",
+        "stone_block",
+        "iron_ingot"
+      ],
+      "triangle_budget": {
+        "min": 1100,
+        "max": 6500
+      },
+      "adds": [
+        "сортировочная_зона",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 6 добавляет усиленный бортик. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "premium_planks",
+        "reed",
+        "fabric",
+        "stone_block",
+        "iron_ingot",
+        "blue_salt"
+      ],
+      "triangle_budget": {
+        "min": 1200,
+        "max": 7000
+      },
+      "adds": [
+        "усиленный_бортик",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 7 добавляет дополнительные опоры. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "premium_planks",
+        "reed",
+        "fabric",
+        "stone_block",
+        "iron_ingot",
+        "blue_salt"
+      ],
+      "triangle_budget": {
+        "min": 1300,
+        "max": 7500
+      },
+      "adds": [
+        "дополнительные_опоры",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 8 добавляет поливная линия. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "premium_planks",
+        "reed",
+        "fabric",
+        "stone_block",
+        "iron_ingot",
+        "gold_ingot"
+      ],
+      "triangle_budget": {
+        "min": 1400,
+        "max": 8000
+      },
+      "adds": [
+        "поливная_линия",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Грядка сахарного тростника с высокими перевязанными стеблями; уровень 9 добавляет контрольная стойка. Крупные детали: связки, подпорки, корзина урожая.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "premium_planks",
+        "reed",
+        "fabric",
+        "stone_block",
+        "iron_ingot",
+        "gold_ingot",
+        "super-seeds"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "контрольная_стойка",
+        "связки"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "stage01",
+    "stage02",
+    "stage03",
+    "stage04",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "material_map": {
+    "coins": {
+      "visible_as": "аккуратность фасада и защищённый учёт вложений",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "accent"
+    },
+    "seeds": {
+      "visible_as": "малый читаемый акцент ресурса seeds в конструкции или продукции",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "planks": {
+      "visible_as": "дощатые настилы, стойки и рабочие поверхности",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "priority": "secondary"
+    },
+    "reed": {
+      "visible_as": "малый читаемый акцент ресурса reed в конструкции или продукции",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "fabric": {
+      "visible_as": "тканевый навес и функциональные тенты",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "clay": {
+      "visible_as": "глиняные формы и сырьевые лотки",
+      "levels": [
+        1,
+        2
+      ],
+      "priority": "secondary"
+    },
+    "brick": {
+      "visible_as": "кирпичная кладка и дымоход",
+      "levels": [
+        2,
+        3,
+        4
+      ],
+      "priority": "secondary"
+    },
+    "stone_block": {
+      "visible_as": "тёсаные блоки цоколя и силовых опор",
+      "levels": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "premium_planks": {
+      "visible_as": "малый читаемый акцент ресурса premium_planks в конструкции или продукции",
+      "levels": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "iron_ingot": {
+      "visible_as": "железные крепления, петли и рабочий привод",
+      "levels": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "blue_salt": {
+      "visible_as": "малый читаемый акцент ресурса blue_salt в конструкции или продукции",
+      "levels": [
+        6,
+        7
+      ],
+      "priority": "secondary"
+    },
+    "gold_ingot": {
+      "visible_as": "малый читаемый акцент ресурса gold_ingot в конструкции или продукции",
+      "levels": [
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "super-seeds": {
+      "visible_as": "малый читаемый акцент ресурса super-seeds в конструкции или продукции",
+      "levels": [
+        9
+      ],
+      "priority": "secondary"
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Сохранять силуэт «Грядка сахарного тростника с высокими перевязанными стеблями»; каждый следующий уровень добавляет реальный объём или узел."
+    },
+    "height": {
+      "rule": "Высота растет постепенно и остается читаемой в 1x1 footprint."
+    },
+    "materials": {
+      "rule": "Материалы появляются не раньше уровня, где они есть в цене строительства."
+    },
+    "props": {
+      "rule": "Крупные детали семейства: связки, подпорки, корзина урожая; мелкий шум не маскирует вход."
+    },
+    "late_elements": {
+      "rule": "Поздние узлы усиливают основную функцию, не меняя идентичность семейства."
+    },
+    "constraints": [
+      "Сохранять ориентацию входа.",
+      "Сохранять основной силуэт между active/construction/damaged."
+    ]
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Готовый объект: Грядка сахарного тростника с высокими перевязанными стеблями; рабочие детали чисты и читаемы."
+    },
+    "construction": {
+      "rule": "Незавершённый каркас целевого уровня, не установлен один крупный функциональный узел.",
+      "required_elements": [
+        "scaffolding",
+        "unfinished_frame",
+        "stacked_materials"
+      ]
+    },
+    "damaged": {
+      "rule": "Сломан крупный функциональный узел, силуэт и ориентация входа сохраняются.",
+      "required_elements": [
+        "broken_roof_edges",
+        "cracks",
+        "debris"
+      ],
+      "forbidden_elements": [
+        "full_collapse"
+      ]
+    },
+    "ruined": {
+      "rule": "Остатки корпуса и материалов читаются как тот же объект, не активная постройка."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "isometric-style",
+      "fantasy-worlds",
+      "stylized-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "environment-artist"
+    ],
+    "production": [
+      "materials",
+      "texture-workflow",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 8500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 4200
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 150,
+          "max": 2100
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "footprint",
+      "primary silhouette",
+      "entrance orientation",
+      "largest readable props"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "atlas_policy": {
+    "enabled": true,
+    "image_format": "webp",
+    "json_naming": "{asset_id}.atlas.json",
+    "image_naming": "{asset_id}.webp",
+    "padding_px": 2,
+    "max_texture_size": 4096,
+    "include_static_sprites": true,
+    "include_animation_frames": true
+  },
+  "animation_policy": {
+    "frame_size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ],
+    "frame_naming": "{asset_id}_l{level:02d}_{animation}_{frame:04d}.png",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 8,
+      "output_name": "animation-contact-sheet.png"
+    },
+    "building_overlays": [
+      {
+        "id": "working",
+        "type": "overlay",
+        "fps": 8,
+        "frames": 12,
+        "loop": true,
+        "frame_prefix": "{asset_id}_l{level:02d}_working_",
+        "states": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/fields/sugar_bed",
+    "source_dir": "frontend/src/assets/buildings/fields/sugar_bed",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/fields/sugar-bed.md"
+    ],
+    "art_guide": "docs/art/visual-style-guide.md",
+    "existing_generators": [],
+    "existing_assets": []
+  },
+  "notes": [
+    "Первичная visual-spec по действующему каталогу; художественную приёмку и генерацию выполнять по контракту 22.2."
+  ],
+  "catalog_status": "registered"
+}

@@ -1,0 +1,187 @@
+asset_id: villa
+category: housing
+kind: building
+display_name: Вилла
+style_profile: aeolian_fantasy_midpoly
+footprint:
+  width: 1
+  height: 1
+states:
+- active
+- construction
+- damaged
+levels:
+- level: 1
+  visual_goal: Компактная вилла с парадным входом и садом; первый вариант престижной ветки.
+  cost_resources: [stone, glass]
+  triangle_budget: {min: 1800, max: 16000}
+  adds: [marble_shell, tiled_roof, entrance, garden]
+- level: 2
+  visual_goal: Более широкий портик, терраса и мансарда.
+  cost_resources: [coins, stone_block, glass]
+  triangle_budget: {min: 1800, max: 28000}
+  adds: [portico, terrace, attic]
+- level: 3
+  visual_goal: Второй этаж и балкон с плоской крышей.
+  cost_resources: [coins, stone_block, glass]
+  triangle_budget: {min: 1800, max: 36000}
+  adds: [second_floor, balcony]
+- level: 4
+  visual_goal: 'Игровая вилла уровня 4: мраморный жилой корпус, читаемый вход, крытая терраса, крупные окна, сад
+    и богатый двор; состояние active соответствует утверждённой production-семье.'
+  cost_resources:
+  - stone
+  - glass
+  triangle_budget:
+    min: 1800
+    max: 16000
+  adds:
+  - marble_shell
+  - tiled_roof
+  - enlarged_glazed_windows
+  - grand_portico
+  - gilded_entrance
+  - decorated_yard
+- level: 5
+  visual_goal: Расширенный боковой павильон и богатая кровля перед переходом к дворцу.
+  cost_resources: [coins, brick, glass]
+  triangle_budget: {min: 1800, max: 45000}
+  adds: [side_pavilion, gilded_roof, decorated_yard]
+material_map:
+  stone:
+    visible_as: белый мрамор корпуса, колонн и портика, цоколь, ступени и садовые бордюры
+    priority: primary
+    levels:
+    - 4
+  glass:
+    visible_as: увеличенные окна и фрамуга над главным входом
+    priority: secondary
+    levels:
+    - 4
+  gold:
+    visible_as: тонкие обрамления окон и двери, капители, вазоны и мозаика двора
+    priority: accent
+    levels:
+    - 4
+level_progression:
+  mass:
+    rule: Поздние варианты должны развивать жилой объём
+    сохраняя одну клетку.: null
+  height:
+    rule: Рост высоты не должен скрывать вход и террасу.
+  materials:
+    rule: Камень и стекло остаются видимыми в самом доме.
+  props:
+    rule: Декор подчёркивает состоятельность владельца
+    оставляя вход и окна открытыми с изометрической камеры.: null
+  late_elements:
+    rule: Вода и балкон появляются только в старших визуальных вариантах.
+  constraints:
+  - Этот уровень является проектным визуальным вариантом; числовой баланс и число игровых уровней не утверждены.
+  - Тестовый корпус занимает 23,57% площади клетки 3,6 × 3,6 после увеличения площади на 20% относительно предыдущих
+    19,64%; форму и палитру черепичной крыши сохранить, меняется только её масштаб.
+  - Не копировать композицию и формы визуальных референсов.
+state_policy:
+  active:
+    rule: Завершённая жилая вилла с видимым широким входом, неизменной по форме и палитре кровлей, мрамором, крупным
+      стеклом и богатым садовым декором.
+  construction:
+    rule: Незавершённый каркас со снятой частью стен и крыши.
+    required_elements:
+    - unfinished_frame
+    - materials
+  damaged:
+    rule: Крупная потеря стен и кровли с опирающимися на землю обломками.
+    required_elements:
+    - broken_walls
+    - broken_roof
+    - debris
+    forbidden_elements:
+    - floating_parts
+skill_profile:
+  base:
+  - blender-director
+  - genre-strategy-sim
+  - isometric-style
+  - fantasy-worlds
+  - stylized-style
+  - hand-painted-style
+  asset_type:
+  - environment-artist
+  - prop-artist
+  - vegetation-artist
+  production:
+  - materials
+  - texture-workflow
+  - lookdev
+  - lod-pipeline
+  - asset-optimization
+  - export-pipeline
+  validation:
+  - qa-review
+lod_policy:
+  chain:
+  - name: LOD0
+    ratio: 1.0
+    triangle_budget:
+      min: 1800
+      max: 16000
+    export: true
+  - name: LOD1
+    ratio: 0.48
+    triangle_budget:
+      min: 850
+      max: 8000
+    export: true
+  - name: LOD2
+    ratio: 0.22
+    triangle_budget:
+      min: 400
+      max: 4100
+    export: true
+  preserve:
+  - marble_shell
+  - tiled_roof
+  - enlarged_glazed_windows
+  - grand_portico
+  exports:
+    naming: '{asset_id}_l{level:02d}_{state}_{lod}.glb'
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+png_policy:
+  sprite_size:
+  - 512
+  - 384
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor:
+  - 256
+  - 292
+  render_lod: LOD0
+  contact_sheet:
+    enabled: true
+    columns: 3
+    include_states:
+    - active
+    - construction
+    - damaged
+  alpha_bounds:
+    min_opaque_pixels: 1200
+    max_crop_margin_px: 10
+    bottom_anchor_tolerance_px: 10
+output:
+  runtime_dir: frontend/public/assets/buildings/housing/villa
+  source_dir: frontend/src/assets/buildings/housing/villa
+  use_public_glb: true
+references:
+  docs:
+  - docs/buildings/houses/villa.md
+  - docs/assets/villa-modeling-guide.md
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators:
+  - tools/assets/blender/build_villa_levels_test.py
+  existing_assets: []
+notes:
+- Единственный текущий игровой уровень villa — 4. Тестовые визуальные уровни 1–5 не являются игровыми апгрейдами.
+- Production active уже опубликован, construction и damaged требуют отдельной геометрии.

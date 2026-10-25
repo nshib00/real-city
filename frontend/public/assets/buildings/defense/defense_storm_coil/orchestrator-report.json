@@ -1,0 +1,1552 @@
+{
+  "asset_id": "defense_storm_coil",
+  "display_name": "Грозовая катушка",
+  "category": "defense",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "states": [
+    "construction",
+    "active",
+    "no_fuel",
+    "no_crew",
+    "damaged",
+    "ruined"
+  ],
+  "items": [
+    {
+      "id": "defense_storm_coil_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1280,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8899999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_construction_LOD0.glb",
+          "triangles": 1280
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_construction_LOD1.glb",
+          "triangles": 678
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_construction_LOD2.glb",
+          "triangles": 320
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_construction.png"
+    },
+    {
+      "id": "defense_storm_coil_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 3340,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5399999618530273
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_active_LOD0.glb",
+          "triangles": 3340
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_active_LOD1.glb",
+          "triangles": 1734
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_active_LOD2.glb",
+          "triangles": 774
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_active.png"
+    },
+    {
+      "id": "defense_storm_coil_l01_no_fuel",
+      "level": 1,
+      "state": "no_fuel",
+      "triangles": 3428,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5399999618530273
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_fuel_LOD0.glb",
+          "triangles": 3428
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_fuel_LOD1.glb",
+          "triangles": 1782
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_fuel_LOD2.glb",
+          "triangles": 798
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_fuel.png"
+    },
+    {
+      "id": "defense_storm_coil_l01_no_crew",
+      "level": 1,
+      "state": "no_crew",
+      "triangles": 3472,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5399999618530273
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_crew_LOD0.glb",
+          "triangles": 3472
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_crew_LOD1.glb",
+          "triangles": 1806
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_crew_LOD2.glb",
+          "triangles": 810
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_no_crew.png"
+    },
+    {
+      "id": "defense_storm_coil_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 2096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_damaged_LOD0.glb",
+          "triangles": 2096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_damaged_LOD1.glb",
+          "triangles": 1106
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_damaged_LOD2.glb",
+          "triangles": 536
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_damaged.png"
+    },
+    {
+      "id": "defense_storm_coil_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1400,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7800000309944153
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_ruined_LOD0.glb",
+          "triangles": 1400
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_ruined_LOD1.glb",
+          "triangles": 760
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_ruined_LOD2.glb",
+          "triangles": 380
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l01_ruined.png"
+    },
+    {
+      "id": "defense_storm_coil_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1368,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8899999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_construction_LOD0.glb",
+          "triangles": 1368
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_construction_LOD1.glb",
+          "triangles": 726
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_construction.png"
+    },
+    {
+      "id": "defense_storm_coil_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 3836,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6399999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_active_LOD0.glb",
+          "triangles": 3836
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_active_LOD1.glb",
+          "triangles": 1998
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_active_LOD2.glb",
+          "triangles": 898
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_active.png"
+    },
+    {
+      "id": "defense_storm_coil_l02_no_fuel",
+      "level": 2,
+      "state": "no_fuel",
+      "triangles": 3924,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6399999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_fuel_LOD0.glb",
+          "triangles": 3924
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_fuel_LOD1.glb",
+          "triangles": 2046
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_fuel_LOD2.glb",
+          "triangles": 922
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_fuel.png"
+    },
+    {
+      "id": "defense_storm_coil_l02_no_crew",
+      "level": 2,
+      "state": "no_crew",
+      "triangles": 3968,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6399999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_crew_LOD0.glb",
+          "triangles": 3968
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_crew_LOD1.glb",
+          "triangles": 2070
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_crew_LOD2.glb",
+          "triangles": 934
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_no_crew.png"
+    },
+    {
+      "id": "defense_storm_coil_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 2272,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_damaged_LOD0.glb",
+          "triangles": 2272
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_damaged_LOD1.glb",
+          "triangles": 1202
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_damaged_LOD2.glb",
+          "triangles": 584
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_damaged.png"
+    },
+    {
+      "id": "defense_storm_coil_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 1488,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7800000309944153
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_ruined_LOD0.glb",
+          "triangles": 1488
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_ruined_LOD1.glb",
+          "triangles": 808
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_ruined_LOD2.glb",
+          "triangles": 404
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l02_ruined.png"
+    },
+    {
+      "id": "defense_storm_coil_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1512,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8899999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_construction_LOD0.glb",
+          "triangles": 1512
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_construction_LOD1.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_construction.png"
+    },
+    {
+      "id": "defense_storm_coil_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 4988,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7400000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_active_LOD0.glb",
+          "triangles": 4988
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_active_LOD1.glb",
+          "triangles": 2572
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_active_LOD2.glb",
+          "triangles": 1138
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_active.png"
+    },
+    {
+      "id": "defense_storm_coil_l03_no_fuel",
+      "level": 3,
+      "state": "no_fuel",
+      "triangles": 5076,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7400000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_fuel_LOD0.glb",
+          "triangles": 5076
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_fuel_LOD1.glb",
+          "triangles": 2620
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_fuel_LOD2.glb",
+          "triangles": 1162
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_fuel.png"
+    },
+    {
+      "id": "defense_storm_coil_l03_no_crew",
+      "level": 3,
+      "state": "no_crew",
+      "triangles": 5120,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7400000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_crew_LOD0.glb",
+          "triangles": 5120
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_crew_LOD1.glb",
+          "triangles": 2644
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_crew_LOD2.glb",
+          "triangles": 1174
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_no_crew.png"
+    },
+    {
+      "id": "defense_storm_coil_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 2416,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_damaged_LOD0.glb",
+          "triangles": 2416
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_damaged_LOD1.glb",
+          "triangles": 1280
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_damaged_LOD2.glb",
+          "triangles": 620
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_damaged.png"
+    },
+    {
+      "id": "defense_storm_coil_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 1632,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7800000309944153
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_ruined_LOD0.glb",
+          "triangles": 1632
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_ruined_LOD1.glb",
+          "triangles": 878
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_ruined_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l03_ruined.png"
+    },
+    {
+      "id": "defense_storm_coil_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1556,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8899999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_construction_LOD0.glb",
+          "triangles": 1556
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_construction_LOD1.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_construction_LOD2.glb",
+          "triangles": 388
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_construction.png"
+    },
+    {
+      "id": "defense_storm_coil_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 5836,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8399999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_active_LOD0.glb",
+          "triangles": 5836
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_active_LOD1.glb",
+          "triangles": 2994
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_active_LOD2.glb",
+          "triangles": 1284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_active.png"
+    },
+    {
+      "id": "defense_storm_coil_l04_no_fuel",
+      "level": 4,
+      "state": "no_fuel",
+      "triangles": 5924,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8399999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_fuel_LOD0.glb",
+          "triangles": 5924
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_fuel_LOD1.glb",
+          "triangles": 3042
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_fuel_LOD2.glb",
+          "triangles": 1308
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_fuel.png"
+    },
+    {
+      "id": "defense_storm_coil_l04_no_crew",
+      "level": 4,
+      "state": "no_crew",
+      "triangles": 5968,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8399999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_crew_LOD0.glb",
+          "triangles": 5968
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_crew_LOD1.glb",
+          "triangles": 3066
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_crew_LOD2.glb",
+          "triangles": 1320
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_no_crew.png"
+    },
+    {
+      "id": "defense_storm_coil_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 2504,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_damaged_LOD0.glb",
+          "triangles": 2504
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_damaged_LOD1.glb",
+          "triangles": 1328
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_damaged_LOD2.glb",
+          "triangles": 644
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_damaged.png"
+    },
+    {
+      "id": "defense_storm_coil_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 1720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7800000309944153
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_ruined_LOD0.glb",
+          "triangles": 1720
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_ruined_LOD1.glb",
+          "triangles": 926
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_ruined_LOD2.glb",
+          "triangles": 456
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l04_ruined.png"
+    },
+    {
+      "id": "defense_storm_coil_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1748,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8899999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_construction_LOD0.glb",
+          "triangles": 1748
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_construction_LOD1.glb",
+          "triangles": 918
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_construction_LOD2.glb",
+          "triangles": 422
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_construction.png"
+    },
+    {
+      "id": "defense_storm_coil_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 6492,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0299999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_active_LOD0.glb",
+          "triangles": 6492
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_active_LOD1.glb",
+          "triangles": 3316
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_active_LOD2.glb",
+          "triangles": 1422
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_active.png"
+    },
+    {
+      "id": "defense_storm_coil_l05_no_fuel",
+      "level": 5,
+      "state": "no_fuel",
+      "triangles": 6580,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0299999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_fuel_LOD0.glb",
+          "triangles": 6580
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_fuel_LOD1.glb",
+          "triangles": 3364
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_fuel_LOD2.glb",
+          "triangles": 1446
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_fuel.png"
+    },
+    {
+      "id": "defense_storm_coil_l05_no_crew",
+      "level": 5,
+      "state": "no_crew",
+      "triangles": 6624,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0299999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_crew_LOD0.glb",
+          "triangles": 6624
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_crew_LOD1.glb",
+          "triangles": 3388
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_crew_LOD2.glb",
+          "triangles": 1458
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_no_crew.png"
+    },
+    {
+      "id": "defense_storm_coil_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 2696,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_damaged_LOD0.glb",
+          "triangles": 2696
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_damaged_LOD1.glb",
+          "triangles": 1422
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_damaged_LOD2.glb",
+          "triangles": 676
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_damaged.png"
+    },
+    {
+      "id": "defense_storm_coil_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 1912,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7800000309944153
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_ruined_LOD0.glb",
+          "triangles": 1912
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_ruined_LOD1.glb",
+          "triangles": 1026
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_ruined_LOD2.glb",
+          "triangles": 482
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l05_ruined.png"
+    },
+    {
+      "id": "defense_storm_coil_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1808,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8899999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_construction_LOD0.glb",
+          "triangles": 1808
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_construction_LOD1.glb",
+          "triangles": 948
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_construction_LOD2.glb",
+          "triangles": 450
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_construction.png"
+    },
+    {
+      "id": "defense_storm_coil_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 7068,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.130000114440918
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_active_LOD0.glb",
+          "triangles": 7068
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_active_LOD1.glb",
+          "triangles": 3598
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_active_LOD2.glb",
+          "triangles": 1610
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_active.png"
+    },
+    {
+      "id": "defense_storm_coil_l06_no_fuel",
+      "level": 6,
+      "state": "no_fuel",
+      "triangles": 7156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.130000114440918
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_fuel_LOD0.glb",
+          "triangles": 7156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_fuel_LOD1.glb",
+          "triangles": 3646
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_fuel_LOD2.glb",
+          "triangles": 1634
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_fuel.png"
+    },
+    {
+      "id": "defense_storm_coil_l06_no_crew",
+      "level": 6,
+      "state": "no_crew",
+      "triangles": 7200,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.130000114440918
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_crew_LOD0.glb",
+          "triangles": 7200
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_crew_LOD1.glb",
+          "triangles": 3670
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_crew_LOD2.glb",
+          "triangles": 1646
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_no_crew.png"
+    },
+    {
+      "id": "defense_storm_coil_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 2756,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_damaged_LOD0.glb",
+          "triangles": 2756
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_damaged_LOD1.glb",
+          "triangles": 1452
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_damaged_LOD2.glb",
+          "triangles": 704
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_damaged.png"
+    },
+    {
+      "id": "defense_storm_coil_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 1972,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7800000309944153
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_ruined_LOD0.glb",
+          "triangles": 1972
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_ruined_LOD1.glb",
+          "triangles": 1058
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_ruined_LOD2.glb",
+          "triangles": 498
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_l06_ruined.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_levels.glb",
+    "manifest": "frontend/public/assets/buildings/defense/defense_storm_coil/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/defense/defense_storm_coil/defense_storm_coil_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\defense\\defense_storm_coil.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: defense_storm_coil\ndisplay_name: Грозовая катушка\ncategory/kind: defense/prop\nlevels: 1-6\nstates: construction, active, no_fuel, no_crew, damaged, ruined\nstyle: aeolian_fantasy_midpoly\nmaterials: copper_parts, mechanism, electronics, steel, reinforced_concrete, armor_plates\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, prop-artist, hard-surface, materials, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

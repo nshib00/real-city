@@ -198,7 +198,10 @@ def _copy_collection_for_lod(collection, name: str, ratio: float):
         clone.data = obj.data.copy()
         clone.name = f"{obj.name}_{name}"
         temp.objects.link(clone)
-        if ratio < 0.999:
+        # Decimating tiny closed meshes (roof wedges, five-sided stems) can
+        # collapse their caps and produce invalid glTF primitives. They are
+        # already cheaper than the decimator's overhead in the final LOD.
+        if ratio < 0.999 and len(obj.data.polygons) > 16:
             modifier = clone.modifiers.new("real_city_lod_decimate", "DECIMATE")
             modifier.ratio = max(0.05, min(1.0, ratio))
             bpy.context.view_layer.objects.active = clone

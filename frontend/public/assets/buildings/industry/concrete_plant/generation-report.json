@@ -1,0 +1,1312 @@
+{
+  "asset_id": "concrete_plant",
+  "display_name": "Бетонный завод",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "concrete_plant_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 3056,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.281999945640564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_active_LOD0.glb",
+          "triangles": 3056
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_active_LOD1.glb",
+          "triangles": 1666
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_active_LOD2.glb",
+          "triangles": 826
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_active.png"
+    },
+    {
+      "id": "concrete_plant_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1592,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_construction_LOD0.glb",
+          "triangles": 1592
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_construction_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_construction_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_construction.png"
+    },
+    {
+      "id": "concrete_plant_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 2084,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_damaged_LOD0.glb",
+          "triangles": 2084
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_damaged_LOD1.glb",
+          "triangles": 1134
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_damaged_LOD2.glb",
+          "triangles": 564
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l01_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 3100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2939999103546143
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_active_LOD0.glb",
+          "triangles": 3100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_active_LOD1.glb",
+          "triangles": 1690
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_active_LOD2.glb",
+          "triangles": 838
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_active.png"
+    },
+    {
+      "id": "concrete_plant_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1592,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_construction_LOD0.glb",
+          "triangles": 1592
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_construction_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_construction_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_construction.png"
+    },
+    {
+      "id": "concrete_plant_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 2084,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_damaged_LOD0.glb",
+          "triangles": 2084
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_damaged_LOD1.glb",
+          "triangles": 1134
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_damaged_LOD2.glb",
+          "triangles": 564
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l02_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 3320,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.305999994277954
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_active_LOD0.glb",
+          "triangles": 3320
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_active_LOD1.glb",
+          "triangles": 1810
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_active_LOD2.glb",
+          "triangles": 898
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_active.png"
+    },
+    {
+      "id": "concrete_plant_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1416,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_construction_LOD0.glb",
+          "triangles": 1416
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_construction_LOD1.glb",
+          "triangles": 768
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_construction_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_construction.png"
+    },
+    {
+      "id": "concrete_plant_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1908,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_damaged_LOD0.glb",
+          "triangles": 1908
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_damaged_LOD1.glb",
+          "triangles": 1038
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_damaged_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l03_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 3564,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3179999589920044
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_active_LOD0.glb",
+          "triangles": 3564
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_active_LOD1.glb",
+          "triangles": 1942
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_active_LOD2.glb",
+          "triangles": 964
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_active.png"
+    },
+    {
+      "id": "concrete_plant_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1460,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_construction_LOD0.glb",
+          "triangles": 1460
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_construction_LOD1.glb",
+          "triangles": 792
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_construction_LOD2.glb",
+          "triangles": 396
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_construction.png"
+    },
+    {
+      "id": "concrete_plant_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1952,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_damaged_LOD0.glb",
+          "triangles": 1952
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_damaged_LOD1.glb",
+          "triangles": 1062
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_damaged_LOD2.glb",
+          "triangles": 528
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l04_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3904,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.649999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_active_LOD0.glb",
+          "triangles": 3904
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_active_LOD1.glb",
+          "triangles": 2128
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_active_LOD2.glb",
+          "triangles": 1054
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_active.png"
+    },
+    {
+      "id": "concrete_plant_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1624,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_construction_LOD0.glb",
+          "triangles": 1624
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_construction_LOD1.glb",
+          "triangles": 880
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_construction_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_construction.png"
+    },
+    {
+      "id": "concrete_plant_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 2028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_damaged_LOD0.glb",
+          "triangles": 2028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_damaged_LOD1.glb",
+          "triangles": 1102
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_damaged_LOD2.glb",
+          "triangles": 548
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l05_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 4256,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7450000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_active_LOD0.glb",
+          "triangles": 4256
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_active_LOD1.glb",
+          "triangles": 2320
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_active_LOD2.glb",
+          "triangles": 1150
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_active.png"
+    },
+    {
+      "id": "concrete_plant_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1624,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_construction_LOD0.glb",
+          "triangles": 1624
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_construction_LOD1.glb",
+          "triangles": 880
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_construction_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_construction.png"
+    },
+    {
+      "id": "concrete_plant_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 2028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_damaged_LOD0.glb",
+          "triangles": 2028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_damaged_LOD1.glb",
+          "triangles": 1102
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_damaged_LOD2.glb",
+          "triangles": 548
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l06_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 4300,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8399999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_active_LOD0.glb",
+          "triangles": 4300
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_active_LOD1.glb",
+          "triangles": 2344
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_active_LOD2.glb",
+          "triangles": 1162
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_active.png"
+    },
+    {
+      "id": "concrete_plant_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1624,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_construction_LOD0.glb",
+          "triangles": 1624
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_construction_LOD1.glb",
+          "triangles": 880
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_construction_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_construction.png"
+    },
+    {
+      "id": "concrete_plant_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 2028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_damaged_LOD0.glb",
+          "triangles": 2028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_damaged_LOD1.glb",
+          "triangles": 1102
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_damaged_LOD2.glb",
+          "triangles": 548
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l07_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 4564,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.015000104904175
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_active_LOD0.glb",
+          "triangles": 4564
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_active_LOD1.glb",
+          "triangles": 2488
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_active_LOD2.glb",
+          "triangles": 1234
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_active.png"
+    },
+    {
+      "id": "concrete_plant_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_construction_LOD0.glb",
+          "triangles": 1712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_construction_LOD1.glb",
+          "triangles": 928
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_construction_LOD2.glb",
+          "triangles": 464
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_construction.png"
+    },
+    {
+      "id": "concrete_plant_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 2072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_damaged_LOD0.glb",
+          "triangles": 2072
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_damaged_LOD1.glb",
+          "triangles": 1126
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l08_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 4948,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0299999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_active_LOD0.glb",
+          "triangles": 4948
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_active_LOD1.glb",
+          "triangles": 2698
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_active_LOD2.glb",
+          "triangles": 1336
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_active.png"
+    },
+    {
+      "id": "concrete_plant_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_construction_LOD0.glb",
+          "triangles": 1712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_construction_LOD1.glb",
+          "triangles": 928
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_construction_LOD2.glb",
+          "triangles": 464
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_construction.png"
+    },
+    {
+      "id": "concrete_plant_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 2072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_damaged_LOD0.glb",
+          "triangles": 2072
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_damaged_LOD1.glb",
+          "triangles": 1126
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l09_damaged.png"
+    },
+    {
+      "id": "concrete_plant_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 5052,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.125
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_active_LOD0.glb",
+          "triangles": 5052
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_active_LOD1.glb",
+          "triangles": 2754
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_active_LOD2.glb",
+          "triangles": 1364
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_active.png"
+    },
+    {
+      "id": "concrete_plant_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_construction_LOD0.glb",
+          "triangles": 1712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_construction_LOD1.glb",
+          "triangles": 928
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_construction_LOD2.glb",
+          "triangles": 464
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_construction.png"
+    },
+    {
+      "id": "concrete_plant_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 2072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8100000023841858
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_damaged_LOD0.glb",
+          "triangles": 2072
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_damaged_LOD1.glb",
+          "triangles": 1126
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_l10_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/concrete_plant/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/concrete_plant/concrete_plant_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\industry\\concrete_plant.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: concrete_plant\ndisplay_name: Бетонный завод\ncategory/kind: industry/building\nlevels: 1-10\nstates: active, construction, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: brick, cement, glass, iron_ingot, mechanism, steel, reinforced_concrete, reinforced_beams\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, environment-artist, hard-surface, materials, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none",
+  "material_to_detail": {
+    "brick": "ранняя кладка технических оснований и отсека смесителя",
+    "cement": "белый порошок в отдельном бункере и бетонная продукция",
+    "sand": "светлый песок в отдельном сырьевом бункере",
+    "glass": "стеклянная шкала водяного бака",
+    "iron_ingot": "закрытые желоба, рама и топливный бак",
+    "mechanism": "привод барабана, тележка и точный контроль",
+    "steel": "силос, защитные стойки и рама",
+    "reinforced_concrete": "плита, закрытый кожух и силосы",
+    "reinforced_beams": "крановая балка и несущие опоры"
+  }
+}

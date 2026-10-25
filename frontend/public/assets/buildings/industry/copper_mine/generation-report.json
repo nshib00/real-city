@@ -1,0 +1,145 @@
+{
+  "asset_id": "copper_mine",
+  "generated": 30,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "triangle_range": [
+    5252,
+    12084
+  ],
+  "material_map": {
+    "planks": {
+      "visible_as": "крепь, настилы, вагонетка и строительные штабели",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "stone": {
+      "visible_as": "скальный вход и каменная масса штольни",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "stone_block": {
+      "visible_as": "тёсаные опоры портала",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "rope": {
+      "visible_as": "тросы, растяжки и привод",
+      "priority": "secondary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "brick": {
+      "visible_as": "обкладка портала",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "mechanism": {
+      "visible_as": "лебёдка, привод и сортировщик",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "защищённые щёки штольни",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "steel": {
+      "visible_as": "фермы, рельсы и броневые панели",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "copper": {
+      "visible_as": "крупные медные рудные прожилки и груз вагонетки",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "assets": [
+    "copper_mine_l01_active",
+    "copper_mine_l01_construction",
+    "copper_mine_l01_damaged",
+    "copper_mine_l02_active",
+    "copper_mine_l02_construction",
+    "copper_mine_l02_damaged",
+    "copper_mine_l03_active",
+    "copper_mine_l03_construction",
+    "copper_mine_l03_damaged",
+    "copper_mine_l04_active",
+    "copper_mine_l04_construction",
+    "copper_mine_l04_damaged",
+    "copper_mine_l05_active",
+    "copper_mine_l05_construction",
+    "copper_mine_l05_damaged",
+    "copper_mine_l06_active",
+    "copper_mine_l06_construction",
+    "copper_mine_l06_damaged",
+    "copper_mine_l07_active",
+    "copper_mine_l07_construction",
+    "copper_mine_l07_damaged",
+    "copper_mine_l08_active",
+    "copper_mine_l08_construction",
+    "copper_mine_l08_damaged",
+    "copper_mine_l09_active",
+    "copper_mine_l09_construction",
+    "copper_mine_l09_damaged",
+    "copper_mine_l10_active",
+    "copper_mine_l10_construction",
+    "copper_mine_l10_damaged"
+  ],
+  "roundtrip_validated": 2,
+  "roundtrip_scope": "sampled_LOD0_l01_active_l10_damaged"
+}

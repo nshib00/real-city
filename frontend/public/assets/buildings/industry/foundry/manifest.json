@@ -1,0 +1,1457 @@
+{
+  "asset_id": "foundry",
+  "display_name": "Литейная",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/foundry/foundry_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/foundry/foundry_levels.glb",
+  "material_map": {
+    "iron_ore": {
+      "visible_as": "куски руды в отдельном лотке",
+      "priority": "primary",
+      "levels": [
+        1,
+        3,
+        4
+      ]
+    },
+    "coal": {
+      "visible_as": "уголь в топливном лотке",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "stone": {
+      "visible_as": "раннее основание чана и печной камень",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "brick": {
+      "visible_as": "теплостойкий цоколь и печная кладка",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "stone_block": {
+      "visible_as": "каменные курсы основания чана",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "железные рёбра чана и литые формы",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "mechanism": {
+      "visible_as": "привод мехов и подвес подъёмной балки",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "steel": {
+      "visible_as": "стальная оболочка чана и несущая балка",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "железобетонная опорная плита",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "gold_ingot": {
+      "visible_as": "позолоченные нити и кант чана как декоративный поздний апгрейд",
+      "priority": "secondary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "foundry_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 3956,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_active_LOD0.glb",
+          "triangles": 3956
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_active_LOD1.glb",
+          "triangles": 2155
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_active_LOD2.glb",
+          "triangles": 1079
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l01_active.png"
+    },
+    {
+      "id": "foundry_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6499999761581421
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l01_construction.png"
+    },
+    {
+      "id": "foundry_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 2100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0399999618530273
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_damaged_LOD0.glb",
+          "triangles": 2100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_damaged_LOD1.glb",
+          "triangles": 1144
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_damaged_LOD2.glb",
+          "triangles": 574
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l01_damaged.png"
+    },
+    {
+      "id": "foundry_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 4000,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1269999742507935
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_active_LOD0.glb",
+          "triangles": 4000
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_active_LOD1.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_active_LOD2.glb",
+          "triangles": 1091
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l02_active.png"
+    },
+    {
+      "id": "foundry_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6893600225448608
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l02_construction.png"
+    },
+    {
+      "id": "foundry_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 2100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.121999979019165
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_damaged_LOD0.glb",
+          "triangles": 2100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_damaged_LOD1.glb",
+          "triangles": 1145
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_damaged_LOD2.glb",
+          "triangles": 574
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l02_damaged.png"
+    },
+    {
+      "id": "foundry_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 4000,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2089999914169312
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_active_LOD0.glb",
+          "triangles": 4000
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_active_LOD1.glb",
+          "triangles": 2179
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_active_LOD2.glb",
+          "triangles": 1092
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l03_active.png"
+    },
+    {
+      "id": "foundry_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7287200093269348
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l03_construction.png"
+    },
+    {
+      "id": "foundry_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 2100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2039999961853027
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_damaged_LOD0.glb",
+          "triangles": 2100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_damaged_LOD1.glb",
+          "triangles": 1144
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_damaged_LOD2.glb",
+          "triangles": 574
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l03_damaged.png"
+    },
+    {
+      "id": "foundry_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 4412,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2910000085830688
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_active_LOD0.glb",
+          "triangles": 4412
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_active_LOD1.glb",
+          "triangles": 2405
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_active_LOD2.glb",
+          "triangles": 1199
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l04_active.png"
+    },
+    {
+      "id": "foundry_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7680799961090088
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_construction_LOD2.glb",
+          "triangles": 421
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l04_construction.png"
+    },
+    {
+      "id": "foundry_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 2100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2860000133514404
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_damaged_LOD0.glb",
+          "triangles": 2100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_damaged_LOD1.glb",
+          "triangles": 1145
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_damaged_LOD2.glb",
+          "triangles": 574
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l04_damaged.png"
+    },
+    {
+      "id": "foundry_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 4672,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3730000257492065
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_active_LOD0.glb",
+          "triangles": 4672
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_active_LOD1.glb",
+          "triangles": 2545
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_active_LOD2.glb",
+          "triangles": 1271
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l05_active.png"
+    },
+    {
+      "id": "foundry_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8074399828910828
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_construction_LOD2.glb",
+          "triangles": 421
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l05_construction.png"
+    },
+    {
+      "id": "foundry_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 2100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3680000305175781
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_damaged_LOD0.glb",
+          "triangles": 2100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_damaged_LOD1.glb",
+          "triangles": 1144
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_damaged_LOD2.glb",
+          "triangles": 573
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l05_damaged.png"
+    },
+    {
+      "id": "foundry_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 4716,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4550000429153442
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_active_LOD0.glb",
+          "triangles": 4716
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_active_LOD1.glb",
+          "triangles": 2567
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_active_LOD2.glb",
+          "triangles": 1281
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l06_active.png"
+    },
+    {
+      "id": "foundry_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8468000292778015
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l06_construction.png"
+    },
+    {
+      "id": "foundry_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 2100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4500000476837158
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_damaged_LOD0.glb",
+          "triangles": 2100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_damaged_LOD1.glb",
+          "triangles": 1144
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_damaged_LOD2.glb",
+          "triangles": 574
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l06_damaged.png"
+    },
+    {
+      "id": "foundry_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 5068,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_active_LOD0.glb",
+          "triangles": 5068
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_active_LOD1.glb",
+          "triangles": 2759
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_active_LOD2.glb",
+          "triangles": 1377
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l07_active.png"
+    },
+    {
+      "id": "foundry_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8861600160598755
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l07_construction.png"
+    },
+    {
+      "id": "foundry_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 2144,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.531999945640564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_damaged_LOD0.glb",
+          "triangles": 2144
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_damaged_LOD2.glb",
+          "triangles": 586
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l07_damaged.png"
+    },
+    {
+      "id": "foundry_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 5636,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_active_LOD0.glb",
+          "triangles": 5636
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_active_LOD1.glb",
+          "triangles": 3067
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_active_LOD2.glb",
+          "triangles": 1530
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l08_active.png"
+    },
+    {
+      "id": "foundry_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9255200028419495
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l08_construction.png"
+    },
+    {
+      "id": "foundry_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 2144,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6139999628067017
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_damaged_LOD0.glb",
+          "triangles": 2144
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_damaged_LOD2.glb",
+          "triangles": 585
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l08_damaged.png"
+    },
+    {
+      "id": "foundry_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 6076,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_active_LOD0.glb",
+          "triangles": 6076
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_active_LOD1.glb",
+          "triangles": 3307
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_active_LOD2.glb",
+          "triangles": 1650
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l09_active.png"
+    },
+    {
+      "id": "foundry_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9648799896240234
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_construction_LOD2.glb",
+          "triangles": 421
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l09_construction.png"
+    },
+    {
+      "id": "foundry_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 2144,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6959999799728394
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_damaged_LOD0.glb",
+          "triangles": 2144
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_damaged_LOD2.glb",
+          "triangles": 586
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l09_damaged.png"
+    },
+    {
+      "id": "foundry_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 6076,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_active_LOD0.glb",
+          "triangles": 6076
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_active_LOD1.glb",
+          "triangles": 3306
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_active_LOD2.glb",
+          "triangles": 1648
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l10_active.png"
+    },
+    {
+      "id": "foundry_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0042400360107422
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_construction_LOD0.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_construction_LOD1.glb",
+          "triangles": 842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l10_construction.png"
+    },
+    {
+      "id": "foundry_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 2144,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.777999997138977
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_damaged_LOD0.glb",
+          "triangles": 2144
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_damaged_LOD1.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_damaged_LOD2.glb",
+          "triangles": 585
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/foundry/foundry_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/foundry/foundry_l10_damaged.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\industry\\foundry.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 900,
+          "max": 11500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 400,
+          "max": 6500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 200,
+          "max": 3500
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "vat",
+      "molten_iron",
+      "bellows",
+      "fuel",
+      "ore",
+      "casting_bench"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

@@ -1,0 +1,1228 @@
+{
+  "asset_id": "defense_guardian_enclosure",
+  "display_name": "Вольер союзников",
+  "category": "defense",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "states": [
+    "construction",
+    "active",
+    "no_keeper",
+    "damaged",
+    "ruined"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_levels.glb",
+  "material_map": {
+    "premium_planks": {
+      "visible_as": "несущий настил, резные стойки и крыши навесов",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "stone_block": {
+      "visible_as": "блоки основания и ограждение с третьего уровня",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "herbs": {
+      "visible_as": "пучки трав, лечебные лотки и зелёные связки",
+      "priority": "secondary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "низкие устойчивые опоры и борта ранних уровней",
+      "priority": "secondary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "reinforced_beams": {
+      "visible_as": "силовые поперечины и крепления ограды",
+      "priority": "secondary",
+      "levels": [
+        3,
+        4,
+        5
+      ]
+    },
+    "ancient_core": {
+      "visible_as": "малые янтарные эмблемы у гнёзд и у входа",
+      "priority": "accent",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "light_crystal": {
+      "visible_as": "два тонких аметистовых светокристалла на стойках",
+      "priority": "accent",
+      "levels": [
+        5
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "defense_guardian_enclosure_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 4232,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2200000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_construction_LOD0.glb",
+          "triangles": 4232
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_construction_LOD1.glb",
+          "triangles": 2306
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_construction_LOD2.glb",
+          "triangles": 1154
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_construction.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 6892,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_active_LOD0.glb",
+          "triangles": 6892
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_active_LOD1.glb",
+          "triangles": 3748
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_active_LOD2.glb",
+          "triangles": 1876
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_active.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l01_no_keeper",
+      "level": 1,
+      "state": "no_keeper",
+      "triangles": 6352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_no_keeper_LOD0.glb",
+          "triangles": 6352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_no_keeper_LOD1.glb",
+          "triangles": 3460
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_no_keeper_LOD2.glb",
+          "triangles": 1732
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_no_keeper_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_no_keeper.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 4672,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_damaged_LOD0.glb",
+          "triangles": 4672
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_damaged_LOD1.glb",
+          "triangles": 2546
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_damaged_LOD2.glb",
+          "triangles": 1274
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_damaged.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 2728,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6950000524520874
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_ruined_LOD0.glb",
+          "triangles": 2728
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_ruined_LOD1.glb",
+          "triangles": 1488
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_ruined_LOD2.glb",
+          "triangles": 744
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l01_ruined.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 4364,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2200000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_construction_LOD0.glb",
+          "triangles": 4364
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_construction_LOD1.glb",
+          "triangles": 2378
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_construction_LOD2.glb",
+          "triangles": 1190
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_construction.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 7868,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_active_LOD0.glb",
+          "triangles": 7868
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_active_LOD1.glb",
+          "triangles": 4278
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_active_LOD2.glb",
+          "triangles": 2142
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_active.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l02_no_keeper",
+      "level": 2,
+      "state": "no_keeper",
+      "triangles": 7328,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_no_keeper_LOD0.glb",
+          "triangles": 7328
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_no_keeper_LOD1.glb",
+          "triangles": 3990
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_no_keeper_LOD2.glb",
+          "triangles": 1998
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_no_keeper_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_no_keeper.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 5340,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_damaged_LOD0.glb",
+          "triangles": 5340
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_damaged_LOD1.glb",
+          "triangles": 2908
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_damaged_LOD2.glb",
+          "triangles": 1456
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_damaged.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 3036,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6950000524520874
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_ruined_LOD0.glb",
+          "triangles": 3036
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_ruined_LOD1.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_ruined_LOD2.glb",
+          "triangles": 828
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l02_ruined.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 5120,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2200000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_construction_LOD0.glb",
+          "triangles": 5120
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_construction_LOD1.glb",
+          "triangles": 2788
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_construction_LOD2.glb",
+          "triangles": 1396
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_construction.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 8844,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_active_LOD0.glb",
+          "triangles": 8844
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_active_LOD1.glb",
+          "triangles": 4808
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_active_LOD2.glb",
+          "triangles": 2408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_active.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l03_no_keeper",
+      "level": 3,
+      "state": "no_keeper",
+      "triangles": 8304,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_no_keeper_LOD0.glb",
+          "triangles": 8304
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_no_keeper_LOD1.glb",
+          "triangles": 4520
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_no_keeper_LOD2.glb",
+          "triangles": 2264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_no_keeper_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_no_keeper.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 5648,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2865921258926392
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_damaged_LOD0.glb",
+          "triangles": 5648
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_damaged_LOD1.glb",
+          "triangles": 3076
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_damaged_LOD2.glb",
+          "triangles": 1540
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_damaged.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 3344,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7024999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_ruined_LOD0.glb",
+          "triangles": 3344
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_ruined_LOD1.glb",
+          "triangles": 1824
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_ruined_LOD2.glb",
+          "triangles": 912
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l03_ruined.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 5788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_construction_LOD0.glb",
+          "triangles": 5788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_construction_LOD1.glb",
+          "triangles": 3150
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_construction_LOD2.glb",
+          "triangles": 1578
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_construction.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 10448,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4265921115875244
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_active_LOD0.glb",
+          "triangles": 10448
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_active_LOD1.glb",
+          "triangles": 5674
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_active_LOD2.glb",
+          "triangles": 2842
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_active.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l04_no_keeper",
+      "level": 4,
+      "state": "no_keeper",
+      "triangles": 9236,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4265921115875244
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_no_keeper_LOD0.glb",
+          "triangles": 9236
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_no_keeper_LOD1.glb",
+          "triangles": 5026
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_no_keeper_LOD2.glb",
+          "triangles": 2518
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_no_keeper_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_no_keeper.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 6360,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4265921115875244
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_damaged_LOD0.glb",
+          "triangles": 6360
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_damaged_LOD1.glb",
+          "triangles": 3462
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_damaged_LOD2.glb",
+          "triangles": 1734
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_damaged.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 3652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7024999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_ruined_LOD0.glb",
+          "triangles": 3652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_ruined_LOD1.glb",
+          "triangles": 1992
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_ruined_LOD2.glb",
+          "triangles": 996
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l04_ruined.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 6500,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_construction_LOD0.glb",
+          "triangles": 6500
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_construction_LOD1.glb",
+          "triangles": 3536
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_construction_LOD2.glb",
+          "triangles": 1772
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_construction.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 11308,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4265921115875244
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_active_LOD0.glb",
+          "triangles": 11308
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_active_LOD1.glb",
+          "triangles": 6136
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_active_LOD2.glb",
+          "triangles": 3066
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_active.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l05_no_keeper",
+      "level": 5,
+      "state": "no_keeper",
+      "triangles": 10096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4265921115875244
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_no_keeper_LOD0.glb",
+          "triangles": 10096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_no_keeper_LOD1.glb",
+          "triangles": 5488
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_no_keeper_LOD2.glb",
+          "triangles": 2742
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_no_keeper_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_no_keeper.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 6668,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4265921115875244
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_damaged_LOD0.glb",
+          "triangles": 6668
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_damaged_LOD1.glb",
+          "triangles": 3630
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_damaged_LOD2.glb",
+          "triangles": 1818
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_damaged.png"
+    },
+    {
+      "id": "defense_guardian_enclosure_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 3916,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.7024999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_ruined_LOD0.glb",
+          "triangles": 3916
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_ruined_LOD1.glb",
+          "triangles": 2136
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_ruined_LOD2.glb",
+          "triangles": 1068
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_l05_ruined.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\defense\\defense_guardian_enclosure.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 600,
+          "max": 12500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 300,
+          "max": 7000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 150,
+          "max": 3800
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "nest_count",
+      "fence",
+      "healing_station"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 5,
+      "include_states": [
+        "construction",
+        "active",
+        "no_keeper",
+        "damaged",
+        "ruined"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1000,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

@@ -1,0 +1,1313 @@
+{
+  "asset_id": "brick_yard",
+  "display_name": "Кирпичный двор",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "brick_yard_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1232,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.215000033378601
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_active_LOD0.glb",
+          "triangles": 1232
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_active_LOD1.glb",
+          "triangles": 672
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_active_LOD2.glb",
+          "triangles": 336
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_active.png"
+    },
+    {
+      "id": "brick_yard_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1320,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_construction_LOD0.glb",
+          "triangles": 1320
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_construction_LOD1.glb",
+          "triangles": 720
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_construction_LOD2.glb",
+          "triangles": 360
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_construction.png"
+    },
+    {
+      "id": "brick_yard_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1012,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8613499999046326
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_damaged_LOD0.glb",
+          "triangles": 1012
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_damaged_LOD1.glb",
+          "triangles": 552
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_damaged_LOD2.glb",
+          "triangles": 276
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l01_damaged.png"
+    },
+    {
+      "id": "brick_yard_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 1892,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3370000123977661
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_active_LOD0.glb",
+          "triangles": 1892
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_active_LOD1.glb",
+          "triangles": 1032
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_active_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_active.png"
+    },
+    {
+      "id": "brick_yard_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1408,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_construction_LOD0.glb",
+          "triangles": 1408
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_construction_LOD1.glb",
+          "triangles": 768
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_construction_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_construction.png"
+    },
+    {
+      "id": "brick_yard_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1012,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9036999940872192
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_damaged_LOD0.glb",
+          "triangles": 1012
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_damaged_LOD1.glb",
+          "triangles": 552
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_damaged_LOD2.glb",
+          "triangles": 276
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l02_damaged.png"
+    },
+    {
+      "id": "brick_yard_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2332,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.11899995803833
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_active_LOD0.glb",
+          "triangles": 2332
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_active_LOD1.glb",
+          "triangles": 1272
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_active_LOD2.glb",
+          "triangles": 636
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_active.png"
+    },
+    {
+      "id": "brick_yard_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1408,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_construction_LOD0.glb",
+          "triangles": 1408
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_construction_LOD1.glb",
+          "triangles": 768
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_construction_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_construction.png"
+    },
+    {
+      "id": "brick_yard_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1056,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9460500478744507
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_damaged_LOD0.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_damaged_LOD1.glb",
+          "triangles": 576
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_damaged_LOD2.glb",
+          "triangles": 288
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l03_damaged.png"
+    },
+    {
+      "id": "brick_yard_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 3080,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.253999948501587
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_active_LOD0.glb",
+          "triangles": 3080
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_active_LOD1.glb",
+          "triangles": 1680
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_active_LOD2.glb",
+          "triangles": 840
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_active.png"
+    },
+    {
+      "id": "brick_yard_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1496,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_construction_LOD0.glb",
+          "triangles": 1496
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_construction_LOD1.glb",
+          "triangles": 816
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_construction_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_construction.png"
+    },
+    {
+      "id": "brick_yard_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1056,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9883999824523926
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_damaged_LOD0.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_damaged_LOD1.glb",
+          "triangles": 576
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_damaged_LOD2.glb",
+          "triangles": 288
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l04_damaged.png"
+    },
+    {
+      "id": "brick_yard_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3644,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.389000177383423
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_active_LOD0.glb",
+          "triangles": 3644
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_active_LOD1.glb",
+          "triangles": 1986
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_active_LOD2.glb",
+          "triangles": 994
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_active.png"
+    },
+    {
+      "id": "brick_yard_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1848,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_construction_LOD0.glb",
+          "triangles": 1848
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_construction_LOD1.glb",
+          "triangles": 1008
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_construction_LOD2.glb",
+          "triangles": 504
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_construction.png"
+    },
+    {
+      "id": "brick_yard_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1408,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.030750036239624
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_damaged_LOD0.glb",
+          "triangles": 1408
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_damaged_LOD1.glb",
+          "triangles": 768
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_damaged_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l05_damaged.png"
+    },
+    {
+      "id": "brick_yard_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 3908,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.5240001678466797
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_active_LOD0.glb",
+          "triangles": 3908
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_active_LOD1.glb",
+          "triangles": 2130
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_active_LOD2.glb",
+          "triangles": 1066
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_active.png"
+    },
+    {
+      "id": "brick_yard_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1980,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_construction_LOD0.glb",
+          "triangles": 1980
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_construction_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_construction_LOD2.glb",
+          "triangles": 540
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_construction.png"
+    },
+    {
+      "id": "brick_yard_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 1452,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.073099970817566
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_damaged_LOD0.glb",
+          "triangles": 1452
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_damaged_LOD1.glb",
+          "triangles": 792
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_damaged_LOD2.glb",
+          "triangles": 396
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l06_damaged.png"
+    },
+    {
+      "id": "brick_yard_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 4216,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.6590001583099365
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_active_LOD0.glb",
+          "triangles": 4216
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_active_LOD1.glb",
+          "triangles": 2298
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_active_LOD2.glb",
+          "triangles": 1150
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_active.png"
+    },
+    {
+      "id": "brick_yard_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1980,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_construction_LOD0.glb",
+          "triangles": 1980
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_construction_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_construction_LOD2.glb",
+          "triangles": 540
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_construction.png"
+    },
+    {
+      "id": "brick_yard_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 1496,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1154500246047974
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_damaged_LOD0.glb",
+          "triangles": 1496
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_damaged_LOD1.glb",
+          "triangles": 816
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_damaged_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l07_damaged.png"
+    },
+    {
+      "id": "brick_yard_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 4716,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.7940001487731934
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_active_LOD0.glb",
+          "triangles": 4716
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_active_LOD1.glb",
+          "triangles": 2570
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_active_LOD2.glb",
+          "triangles": 1286
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_active.png"
+    },
+    {
+      "id": "brick_yard_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 2172,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_construction_LOD0.glb",
+          "triangles": 2172
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_construction_LOD1.glb",
+          "triangles": 1184
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_construction_LOD2.glb",
+          "triangles": 592
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_construction.png"
+    },
+    {
+      "id": "brick_yard_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 1600,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1577999591827393
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_damaged_LOD0.glb",
+          "triangles": 1600
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_damaged_LOD1.glb",
+          "triangles": 872
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l08_damaged.png"
+    },
+    {
+      "id": "brick_yard_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 4804,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.92900013923645
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_active_LOD0.glb",
+          "triangles": 4804
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_active_LOD1.glb",
+          "triangles": 2618
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_active_LOD2.glb",
+          "triangles": 1310
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_active.png"
+    },
+    {
+      "id": "brick_yard_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 2172,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_construction_LOD0.glb",
+          "triangles": 2172
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_construction_LOD1.glb",
+          "triangles": 1184
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_construction_LOD2.glb",
+          "triangles": 592
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_construction.png"
+    },
+    {
+      "id": "brick_yard_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 1600,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2001500129699707
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_damaged_LOD0.glb",
+          "triangles": 1600
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_damaged_LOD1.glb",
+          "triangles": 872
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l09_damaged.png"
+    },
+    {
+      "id": "brick_yard_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 4892,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.064000129699707
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_active_LOD0.glb",
+          "triangles": 4892
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_active_LOD1.glb",
+          "triangles": 2666
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_active_LOD2.glb",
+          "triangles": 1334
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_active.png"
+    },
+    {
+      "id": "brick_yard_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 2260,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.252500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_construction_LOD0.glb",
+          "triangles": 2260
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_construction_LOD1.glb",
+          "triangles": 1232
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_construction_LOD2.glb",
+          "triangles": 616
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_construction.png"
+    },
+    {
+      "id": "brick_yard_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 1600,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2424999475479126
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_damaged_LOD0.glb",
+          "triangles": 1600
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_damaged_LOD1.glb",
+          "triangles": 872
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_l10_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/brick_yard/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/brick_yard/brick_yard_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\industry\\brick_yard.json",
+  "token_budget_policy": {
+    "read_files": [
+      "docs/assets/specs/industry/brick_yard.json",
+      "docs/buildings/industry/brick-yard.md",
+      "docs/art/visual-style-guide.md"
+    ],
+    "skill_files": [
+      "skills/blender-skills/blender-director/SKILL.md",
+      "skills/blender-skills/genre-strategy-sim/SKILL.md",
+      "skills/blender-skills/fantasy-worlds/SKILL.md",
+      "skills/blender-skills/stylized-style/SKILL.md",
+      "skills/blender-skills/isometric-style/SKILL.md",
+      "skills/blender-skills/hand-painted-style/SKILL.md",
+      "skills/blender-skills/asset-optimization/SKILL.md"
+    ],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: brick_yard\ndisplay_name: Кирпичный двор\ncategory/kind: industry/building\nlevels: 1-10\nstates: active, construction, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: clay, planks, stone, stone_block, brick, iron_ingot, reinforced_concrete, mechanism\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, environment-artist, hard-surface, materials, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: docs/assets/specs/industry/brick_yard.json, docs/buildings/industry/brick-yard.md, docs/art/visual-style-guide.md\nskill_files: skills/blender-skills/blender-director/SKILL.md, skills/blender-skills/genre-strategy-sim/SKILL.md, skills/blender-skills/fantasy-worlds/SKILL.md, skills/blender-skills/stylized-style/SKILL.md, skills/blender-skills/isometric-style/SKILL.md, skills/blender-skills/hand-painted-style/SKILL.md, skills/blender-skills/asset-optimization/SKILL.md"
+}

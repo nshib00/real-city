@@ -1,0 +1,1299 @@
+{
+  "asset_id": "defense_automaton_bay",
+  "display_name": "Мастерская автоматонов",
+  "category": "defense",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "states": [
+    "construction",
+    "active",
+    "no_mechanic",
+    "no_fuel",
+    "damaged",
+    "ruined"
+  ],
+  "items": [
+    {
+      "id": "defense_automaton_bay_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8999999761581421
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_construction_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_construction_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_construction_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_construction.png"
+    },
+    {
+      "id": "defense_automaton_bay_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 2040,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_active_LOD0.glb",
+          "triangles": 2040
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_active_LOD1.glb",
+          "triangles": 1112
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_active_LOD2.glb",
+          "triangles": 556
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_active.png"
+    },
+    {
+      "id": "defense_automaton_bay_l01_no_mechanic",
+      "level": 1,
+      "state": "no_mechanic",
+      "triangles": 2172,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_mechanic_LOD0.glb",
+          "triangles": 2172
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_mechanic_LOD1.glb",
+          "triangles": 1184
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_mechanic_LOD2.glb",
+          "triangles": 592
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_mechanic_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_mechanic.png"
+    },
+    {
+      "id": "defense_automaton_bay_l01_no_fuel",
+      "level": 1,
+      "state": "no_fuel",
+      "triangles": 2040,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_fuel_LOD0.glb",
+          "triangles": 2040
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_fuel_LOD1.glb",
+          "triangles": 1112
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_fuel_LOD2.glb",
+          "triangles": 556
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_no_fuel.png"
+    },
+    {
+      "id": "defense_automaton_bay_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6000000238418579
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_damaged_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_damaged_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_damaged_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_damaged.png"
+    },
+    {
+      "id": "defense_automaton_bay_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.30000001192092896
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_ruined_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_ruined_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_ruined_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l01_ruined.png"
+    },
+    {
+      "id": "defense_automaton_bay_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1584,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8999999761581421
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_construction_LOD0.glb",
+          "triangles": 1584
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_construction_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_construction_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_construction.png"
+    },
+    {
+      "id": "defense_automaton_bay_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 2496,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_active_LOD0.glb",
+          "triangles": 2496
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_active_LOD1.glb",
+          "triangles": 1360
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_active_LOD2.glb",
+          "triangles": 680
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_active.png"
+    },
+    {
+      "id": "defense_automaton_bay_l02_no_mechanic",
+      "level": 2,
+      "state": "no_mechanic",
+      "triangles": 2628,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_mechanic_LOD0.glb",
+          "triangles": 2628
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_mechanic_LOD1.glb",
+          "triangles": 1432
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_mechanic_LOD2.glb",
+          "triangles": 716
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_mechanic_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_mechanic.png"
+    },
+    {
+      "id": "defense_automaton_bay_l02_no_fuel",
+      "level": 2,
+      "state": "no_fuel",
+      "triangles": 2496,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_fuel_LOD0.glb",
+          "triangles": 2496
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_fuel_LOD1.glb",
+          "triangles": 1360
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_fuel_LOD2.glb",
+          "triangles": 680
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_no_fuel.png"
+    },
+    {
+      "id": "defense_automaton_bay_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6000000238418579
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_damaged_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_damaged_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_damaged_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_damaged.png"
+    },
+    {
+      "id": "defense_automaton_bay_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.30000001192092896
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_ruined_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_ruined_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_ruined_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l02_ruined.png"
+    },
+    {
+      "id": "defense_automaton_bay_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1672,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8999999761581421
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_construction_LOD0.glb",
+          "triangles": 1672
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_construction_LOD1.glb",
+          "triangles": 912
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_construction_LOD2.glb",
+          "triangles": 456
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_construction.png"
+    },
+    {
+      "id": "defense_automaton_bay_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2704,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_active_LOD0.glb",
+          "triangles": 2704
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_active_LOD1.glb",
+          "triangles": 1472
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_active_LOD2.glb",
+          "triangles": 736
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_active.png"
+    },
+    {
+      "id": "defense_automaton_bay_l03_no_mechanic",
+      "level": 3,
+      "state": "no_mechanic",
+      "triangles": 2836,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_mechanic_LOD0.glb",
+          "triangles": 2836
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_mechanic_LOD1.glb",
+          "triangles": 1544
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_mechanic_LOD2.glb",
+          "triangles": 772
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_mechanic_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_mechanic.png"
+    },
+    {
+      "id": "defense_automaton_bay_l03_no_fuel",
+      "level": 3,
+      "state": "no_fuel",
+      "triangles": 2704,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4424999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_fuel_LOD0.glb",
+          "triangles": 2704
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_fuel_LOD1.glb",
+          "triangles": 1472
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_fuel_LOD2.glb",
+          "triangles": 736
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_no_fuel.png"
+    },
+    {
+      "id": "defense_automaton_bay_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6000000238418579
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_damaged_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_damaged_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_damaged_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_damaged.png"
+    },
+    {
+      "id": "defense_automaton_bay_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 1336,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.30000001192092896
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_ruined_LOD0.glb",
+          "triangles": 1336
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_ruined_LOD1.glb",
+          "triangles": 728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_ruined_LOD2.glb",
+          "triangles": 364
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l03_ruined.png"
+    },
+    {
+      "id": "defense_automaton_bay_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9281232357025146
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_construction_LOD0.glb",
+          "triangles": 1820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_construction_LOD2.glb",
+          "triangles": 496
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_construction.png"
+    },
+    {
+      "id": "defense_automaton_bay_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 3044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4689834117889404
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_active_LOD0.glb",
+          "triangles": 3044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_active_LOD1.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_active_LOD2.glb",
+          "triangles": 828
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_active.png"
+    },
+    {
+      "id": "defense_automaton_bay_l04_no_mechanic",
+      "level": 4,
+      "state": "no_mechanic",
+      "triangles": 3176,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4689834117889404
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_mechanic_LOD0.glb",
+          "triangles": 3176
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_mechanic_LOD1.glb",
+          "triangles": 1728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_mechanic_LOD2.glb",
+          "triangles": 864
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_mechanic_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_mechanic.png"
+    },
+    {
+      "id": "defense_automaton_bay_l04_no_fuel",
+      "level": 4,
+      "state": "no_fuel",
+      "triangles": 3044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4689834117889404
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_fuel_LOD0.glb",
+          "triangles": 3044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_fuel_LOD1.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_fuel_LOD2.glb",
+          "triangles": 828
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_no_fuel.png"
+    },
+    {
+      "id": "defense_automaton_bay_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1276,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6000000238418579
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_damaged_LOD0.glb",
+          "triangles": 1276
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_damaged_LOD1.glb",
+          "triangles": 696
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_damaged_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_damaged.png"
+    },
+    {
+      "id": "defense_automaton_bay_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 1336,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.30000001192092896
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_ruined_LOD0.glb",
+          "triangles": 1336
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_ruined_LOD1.glb",
+          "triangles": 728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_ruined_LOD2.glb",
+          "triangles": 364
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l04_ruined.png"
+    },
+    {
+      "id": "defense_automaton_bay_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5899999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_construction_LOD0.glb",
+          "triangles": 1820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_construction_LOD2.glb",
+          "triangles": 496
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_construction.png"
+    },
+    {
+      "id": "defense_automaton_bay_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3460,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_active_LOD0.glb",
+          "triangles": 3460
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_active_LOD1.glb",
+          "triangles": 1880
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_active_LOD2.glb",
+          "triangles": 940
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_active.png"
+    },
+    {
+      "id": "defense_automaton_bay_l05_no_mechanic",
+      "level": 5,
+      "state": "no_mechanic",
+      "triangles": 3592,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_mechanic_LOD0.glb",
+          "triangles": 3592
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_mechanic_LOD1.glb",
+          "triangles": 1952
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_mechanic_LOD2.glb",
+          "triangles": 976
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_mechanic_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_mechanic.png"
+    },
+    {
+      "id": "defense_automaton_bay_l05_no_fuel",
+      "level": 5,
+      "state": "no_fuel",
+      "triangles": 3460,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_fuel_LOD0.glb",
+          "triangles": 3460
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_fuel_LOD1.glb",
+          "triangles": 1880
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_fuel_LOD2.glb",
+          "triangles": 940
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_fuel_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_no_fuel.png"
+    },
+    {
+      "id": "defense_automaton_bay_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1364,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1200000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_damaged_LOD0.glb",
+          "triangles": 1364
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_damaged_LOD1.glb",
+          "triangles": 744
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_damaged_LOD2.glb",
+          "triangles": 372
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_damaged.png"
+    },
+    {
+      "id": "defense_automaton_bay_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 1468,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.30000001192092896
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_ruined_LOD0.glb",
+          "triangles": 1468
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_ruined_LOD1.glb",
+          "triangles": 800
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_ruined_LOD2.glb",
+          "triangles": 400
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_l05_ruined.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_levels.glb",
+    "manifest": "frontend/public/assets/buildings/defense/defense_automaton_bay/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/defense/defense_automaton_bay/defense_automaton_bay_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\defense\\defense_automaton_bay.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: defense_automaton_bay\ndisplay_name: Мастерская автоматонов\ncategory/kind: defense/building\nlevels: 1-5\nstates: construction, active, no_mechanic, no_fuel, damaged, ruined\nstyle: aeolian_fantasy_midpoly\nmaterials: mechanism, electronics, steel, reinforced_concrete, armor_plates, reinforced_beams, super_mechanism\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, hard-surface, prop-artist, materials, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

@@ -31,6 +31,7 @@ def main() -> int:
     parser.add_argument("specs", nargs="*", help="Spec files or directories. Defaults to docs/assets/specs/**/*.yaml")
     parser.add_argument("--reports-root", default=str(ROOT / "frontend" / "public" / "assets" / "buildings"), help="Root that contains generation-report.json files.")
     parser.add_argument("--require-generation-report", action="store_true", help="Fail when a spec has no generation-report.json yet.")
+    parser.add_argument("--skip-generation-report", action="store_true", help="Validate authoring specs before asset generation, without comparing old reports.")
     args = parser.parse_args()
 
     specs = collect_specs(args.specs)
@@ -38,13 +39,14 @@ def main() -> int:
         print("No asset specs found.", file=sys.stderr)
         return 2
 
-    catalog = parse_catalog(ROOT / "shared" / "catalog" / "buildings.ts")
+    catalog = parse_catalog(ROOT / "data" / "buildings" / "catalog-v2.json")
     failures = 0
     for path in specs:
         try:
             spec = load_asset_spec(path)
             errors = validate_against_project(spec, catalog)
-            errors.extend(validate_generation_report(spec, Path(args.reports_root), require=args.require_generation_report))
+            if not args.skip_generation_report:
+                errors.extend(validate_generation_report(spec, Path(args.reports_root), require=args.require_generation_report))
         except AssetSpecError as exc:
             errors = [str(exc)]
         if errors:
@@ -64,9 +66,9 @@ def collect_specs(inputs: list[str]) -> list[Path]:
     for raw in inputs:
         path = Path(raw)
         if path.is_dir():
-            result.extend(sorted(path.glob("**/*.yaml")))
+            result.extend(sorted(file for file in path.glob("**/*.yaml") if file.name != "template.yaml"))
             result.extend(sorted(path.glob("**/*.yml")))
-            result.extend(sorted(path.glob("**/*.json")))
+            result.extend(sorted(file for file in path.glob("**/*.json") if file.name != "schema.json"))
         else:
             result.append(path)
     return result
@@ -77,13 +79,17 @@ def validate_against_project(spec: AssetSpec, catalog: dict[str, CatalogEntry]) 
     if spec.kind == "building":
         entry = catalog.get(spec.asset_id)
         if entry is None:
-            errors.append(f"asset_id '{spec.asset_id}' is missing from shared/catalog/buildings.ts")
+            if spec.raw.get("catalog_status") != "planned":
+                errors.append(f"asset_id '{spec.asset_id}' is missing from shared/catalog/buildings.ts")
         else:
             if spec.category != entry.category:
                 errors.append(f"category mismatch: spec={spec.category}, catalog={entry.category}")
             if spec.footprint != entry.footprint:
                 errors.append(f"footprint mismatch: spec={spec.footprint}, catalog={entry.footprint}")
-            if spec.level_numbers != entry.levels:
+            documented_future_levels = spec.raw.get("catalog_level_policy") == "documented_future_levels" and set(entry.levels).issubset(spec.level_numbers)
+            visual_prototype = (spec.raw.get("catalog_level_policy") == "visual_prototype"
+                                and spec.raw.get("output", {}).get("runtime_dir", "").endswith("_test"))
+            if spec.level_numbers != entry.levels and not documented_future_levels and not visual_prototype:
                 errors.append(f"levels mismatch: spec={spec.level_numbers}, catalog={entry.levels}")
             missing_resources = sorted(set(entry.cost_resources) - set(spec.material_map))
             optional_missing = {"coins"}
@@ -106,13 +112,14 @@ def validate_against_project(spec: AssetSpec, catalog: dict[str, CatalogEntry]) 
     if not checklist.exists():
         errors.append("style validation checklist is missing: docs/assets/blender-generation-checklist.md")
     profile = spec.png_policy
-    if profile.get("camera_profile") != "real_city_isometric":
-        errors.append("png_policy.camera_profile must be real_city_isometric")
+    expected_camera = "real_city_modular_wall" if spec.asset_id in ("wooden_wall", "stone_wall", "concrete_wall", "modern_wall") else "real_city_isometric"
+    if profile.get("camera_profile") != expected_camera:
+        errors.append(f"png_policy.camera_profile must be {expected_camera}")
     return errors
 
 
 def validate_generation_report(spec: AssetSpec, reports_root: Path, *, require: bool = False) -> list[str]:
-    output_dir = spec.output.get("directory") or spec.output.get("dir")
+    output_dir = spec.output.get("runtime_dir") or spec.output.get("directory") or spec.output.get("dir")
     candidates = []
     if output_dir:
         candidates.append(ROOT / str(output_dir) / "generation-report.json")
@@ -142,6 +149,18 @@ def validate_generation_report(spec: AssetSpec, reports_root: Path, *, require: 
 
 
 def parse_catalog(path: Path) -> dict[str, CatalogEntry]:
+    if path.suffix == ".json":
+        data = json.loads(path.read_text(encoding="utf-8"))
+        entries = {}
+        for item in data["buildings"]:
+            levels = item.get("upgradeLevels") or [item]
+            entries[item["type"]] = CatalogEntry(
+                item["type"], item["category"],
+                (item["footprint"]["width"], item["footprint"]["height"]),
+                tuple(level["level"] for level in levels),
+                tuple(sorted({cost["resource"] for level in levels for cost in level["cost"]})),
+            )
+        return entries
     text = path.read_text(encoding="utf-8")
     entries: dict[str, CatalogEntry] = {}
     for match in re.finditer(r"type:\s*'([^']+)'", text):

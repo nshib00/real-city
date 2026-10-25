@@ -1,0 +1,158 @@
+{
+  "asset_id": "tower",
+  "display_name": "Сторожевая башня",
+  "category": "defense",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1
+  ],
+  "states": [
+    "construction",
+    "active",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "tower_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 2288,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0999999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD0.glb",
+          "triangles": 2288
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD1.glb",
+          "triangles": 1248
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD2.glb",
+          "triangles": 624
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/tower/tower_l01_construction.png"
+    },
+    {
+      "id": "tower_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 4680,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.8949999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD0.glb",
+          "triangles": 4680
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD1.glb",
+          "triangles": 2540
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD2.glb",
+          "triangles": 1260
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/tower/tower_l01_active.png"
+    },
+    {
+      "id": "tower_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 3688,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.242999792098999
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD0.glb",
+          "triangles": 3688
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD1.glb",
+          "triangles": 2004
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD2.glb",
+          "triangles": 996
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/defense/tower/tower_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/defense/tower/tower_levels.glb",
+    "manifest": "frontend/public/assets/buildings/defense/tower/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/defense/tower/tower_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\defense\\tower.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: tower\ndisplay_name: Сторожевая башня\ncategory/kind: defense/building\nlevels: 1\nstates: construction, active, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: wood, stone, planks, iron_ingot\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, prop-artist, hard-surface, materials, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

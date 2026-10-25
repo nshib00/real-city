@@ -1,0 +1,38 @@
+{
+  "asset_id": "resonance_laboratory",
+  "kind": "building",
+  "category": "industry",
+  "catalog_status": "registered",
+  "catalog_level_policy": "single_level",
+  "display_name": "Резонансная лаборатория",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Бронированный лабораторный корпус с открытой кольцевой калибровочной рамой.", "cost_resources": ["coins", "reinforced_concrete", "steel", "electronics", "mechanism", "star_glass"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["calibration_ring", "armored_core"]}
+  ],
+  "states": ["active", "construction", "damaged", "ruined"],
+  "material_map": {
+    "coins": {"visible_as": "плотная точная компоновка поздней мастерской", "levels": [1], "priority": "accent"},
+    "reinforced_concrete": {"visible_as": "защитный фундамент и корпус", "levels": [1], "priority": "primary"},
+    "steel": {"visible_as": "силовая рама и бронированный сердечник", "levels": [1], "priority": "primary"},
+    "electronics": {"visible_as": "контактные панели и калибровочные приборы", "levels": [1], "priority": "secondary"},
+    "mechanism": {"visible_as": "привод калибровочного кольца", "levels": [1], "priority": "secondary"},
+    "star_glass": {"visible_as": "малые фиолетово-золотые вставки в центральном столе", "levels": [1], "priority": "accent"}
+  },
+  "level_progression": {
+    "mass": {"rule": "Единственный уровень; корпус и рама должны быть крупными, но оставаться в клетке 1×1."},
+    "height": {"rule": "Кольцо выше корпуса, но не закрывает соседние здания из изометрической камеры."},
+    "materials": {"rule": "Железобетон и сталь доминируют; стекло и электроника читаются как точные акценты."},
+    "props": {"rule": "Крупный стол настройки, два прибора и защищённый шкаф зарядов; мелкий декор не заслоняет кольцо."},
+    "late_elements": {"rule": "Все поздние элементы доступны на единственном уровне; последующих апгрейдов нет."},
+    "constraints": ["Не делать магическую башню или копию Осадного двора.", "Сохранять силуэт кольца в любом состоянии."]
+  },
+  "state_policy": {
+    "active": {"rule": "Замкнутое кольцо, целый корпус и слабое свечение сердечника."},
+    "construction": {"rule": "Фундамент и неполное кольцо с открытыми кабелями; готового заряда нет."},
+    "damaged": {"rule": "Разорванный сегмент кольца, треснувший экран и потускневший сердечник."},
+    "ruined": {"rule": "Отключённый стол и крупные обломки корпуса; форма кольца узнаваема."}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/resonance_laboratory", "source_dir": "frontend/src/assets/buildings/industry/resonance_laboratory", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/industry/resonance-laboratory.md"], "art_guide": "docs/art/visual-style-guide.md"}
+}

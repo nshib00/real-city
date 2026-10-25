@@ -61,7 +61,8 @@ def ground_signature(path, pattern=GROUND):
 
 def sprite_alignment(active_path, state_path):
     with Image.open(active_path) as active, Image.open(state_path) as state:
-        assert active.size == state.size == (512, 384)
+        assert active.size == state.size and active.size in ((512, 384), (512, 512))
+        width = active.size[0]
         assert active.mode == state.mode == 'RGBA'
         a = active.getchannel('A').point(lambda v: 255 if v >= 128 else 0)
         b = state.getchannel('A').point(lambda v: 255 if v >= 128 else 0)
@@ -71,8 +72,8 @@ def sprite_alignment(active_path, state_path):
             return False
         # The front edge is unobscured by the building in these centered tiles.
         for y in range(ab[3] - 12, ab[3] - 1):
-            row_a = a.crop((0, y, 512, y + 1)).getbbox()
-            row_b = b.crop((0, y, 512, y + 1)).getbbox()
+            row_a = a.crop((0, y, width, y + 1)).getbbox()
+            row_b = b.crop((0, y, width, y + 1)).getbbox()
             if not row_a or not row_b or any(abs(row_a[i] - row_b[i]) > 1 for i in (0, 2)):
                 return False
         return True

@@ -1,0 +1,38 @@
+{
+  "asset_id": "siege_yard",
+  "kind": "building",
+  "category": "industry",
+  "catalog_status": "registered",
+  "catalog_level_policy": "implemented_two_levels",
+  "display_name": "Осадный двор",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Низкий укреплённый сборочный двор с навесом и тяжёлым прессом.", "cost_resources": ["coins", "steel", "reinforced_concrete", "mechanism", "armor_plates"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["assembly_press", "mine_rack"]},
+    {"level": 2, "visual_goal": "Бронированный двор с закрытой камерой сборки проломных бомб.", "cost_resources": ["coins", "steel", "reinforced_concrete", "armor_plates", "mechanism"], "triangle_budget": {"min": 700, "max": 9000}, "adds": ["armored_assembly_chamber"]}
+  ],
+  "states": ["active", "construction", "damaged", "ruined"],
+  "material_map": {
+    "coins": {"visible_as": "масштаб мастерской", "levels": [1, 2], "priority": "accent"},
+    "steel": {"visible_as": "силовой каркас", "levels": [1, 2], "priority": "primary"},
+    "reinforced_concrete": {"visible_as": "укреплённое основание", "levels": [1, 2], "priority": "primary"},
+    "mechanism": {"visible_as": "сборочный станок", "levels": [1, 2], "priority": "secondary"},
+    "armor_plates": {"visible_as": "защитная обшивка", "levels": [1, 2], "priority": "secondary"}
+  },
+  "level_progression": {
+    "mass": {"rule": "Уровень 2 расширяет пресс и бронированную камеру внутри той же клетки 1×1."},
+    "height": {"rule": "Над прессом вырастает закрытый навес; соседние клетки остаются видимыми."},
+    "materials": {"rule": "На втором уровне заметнее стальная и броневая обшивка поверх железобетона."},
+    "props": {"rule": "Уровень 1 показывает корпус мины, уровень 2 добавляет отдельный корпус проломной бомбы."},
+    "late_elements": {"rule": "Вторая сборочная камера появляется только на уровне 2."},
+    "constraints": ["Не смешивать силуэт с Военным заводом.", "Сохранять пресс узнаваемым при повреждении."]
+  },
+  "state_policy": {
+    "active": {"rule": "Исправный пресс, целый навес и закрытые ящики боеприпасов."},
+    "construction": {"rule": "Фундамент, недостроенный навес и неустановленные детали пресса; готовых зарядов нет."},
+    "damaged": {"rule": "Деформированный пресс, пролом навеса и трещины основания; основные формы сохранены."},
+    "ruined": {"rule": "Заваленный навес и разрушенный пресс без признаков работы."}
+  },
+  "output": {"runtime_dir": "frontend/public/assets/buildings/industry/siege_yard", "source_dir": "frontend/src/assets/buildings/industry/siege_yard", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/industry/siege-yard.md"], "art_guide": "docs/art/visual-style-guide.md"}
+}

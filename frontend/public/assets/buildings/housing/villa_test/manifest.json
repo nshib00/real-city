@@ -1,0 +1,99 @@
+{
+  "asset_id": "villa",
+  "display_name": "Вилла (тест)",
+  "category": "housing",
+  "levels": [
+    1
+  ],
+  "states": [
+    "active"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/housing/villa_test/villa_l01_active.blend",
+  "combined_glb": null,
+  "material_map": {
+    "marble": "корпус, облицовка, колонны и портик",
+    "glass": "увеличенные фасадные и боковое окна, фрамуга",
+    "gold": "обрамления, колонны, дверь, вазоны и мозаика"
+  },
+  "items": [
+    {
+      "id": "villa_l01_active",
+      "level": 1,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/housing/villa_test/villa_l01_active.png",
+      "glb": "frontend/public/assets/buildings/housing/villa_test/villa_l01_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/housing/villa_test/villa_l01_active_LOD0.glb",
+          "triangles": 15872
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.48,
+          "glb": "frontend/public/assets/buildings/housing/villa_test/villa_l01_active_LOD1.glb",
+          "triangles": 7376
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/housing/villa_test/villa_l01_active_LOD2.glb",
+          "triangles": 3160
+        }
+      ],
+      "triangles": 15872,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1439366340637207
+        ]
+      ]
+    }
+  ],
+  "prototype": true,
+  "component_library_version": "2026.10.phase3.v11",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "triangle_budget": {
+          "min": 1800,
+          "max": 16000
+        }
+      },
+      {
+        "name": "LOD1",
+        "triangle_budget": {
+          "min": 850,
+          "max": 8000
+        }
+      },
+      {
+        "name": "LOD2",
+        "triangle_budget": {
+          "min": 400,
+          "max": 4100
+        }
+      }
+    ]
+  }
+}

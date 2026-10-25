@@ -1,0 +1,1163 @@
+{
+  "asset_id": "defense_resin_snare",
+  "display_name": "Смоляная западня",
+  "category": "defense",
+  "levels": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "states": [
+    "construction",
+    "armed",
+    "triggered",
+    "empty",
+    "damaged",
+    "ruined"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_levels.glb",
+  "material_map": {
+    "planks": {
+      "visible_as": "дощатые борта, настил и створки",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "resin": {
+      "visible_as": "глянцевые тёмно-янтарные каналы и потёки",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "петли, заклёпки, тяги и рамка",
+      "priority": "secondary",
+      "levels": [
+        1,
+        2,
+        3
+      ]
+    },
+    "stone_block": {
+      "visible_as": "низкие каменные опоры и канальная облицовка",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "steel": {
+      "visible_as": "усиленные балки и накладки двойного канала",
+      "priority": "primary",
+      "levels": [
+        4
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "defense_resin_snare_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 748,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2944999933242798
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_construction_LOD0.glb",
+          "triangles": 748
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_construction_LOD1.glb",
+          "triangles": 408
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_construction_LOD2.glb",
+          "triangles": 204
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_construction.png"
+    },
+    {
+      "id": "defense_resin_snare_l01_armed",
+      "level": 1,
+      "state": "armed",
+      "triangles": 1168,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3534935712814331
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_armed_LOD0.glb",
+          "triangles": 1168
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_armed_LOD1.glb",
+          "triangles": 632
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_armed_LOD2.glb",
+          "triangles": 312
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_armed.png"
+    },
+    {
+      "id": "defense_resin_snare_l01_triggered",
+      "level": 1,
+      "state": "triggered",
+      "triangles": 1344,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.36896252632141113
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_triggered_LOD0.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_triggered_LOD1.glb",
+          "triangles": 728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_triggered_LOD2.glb",
+          "triangles": 360
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_triggered.png"
+    },
+    {
+      "id": "defense_resin_snare_l01_empty",
+      "level": 1,
+      "state": "empty",
+      "triangles": 1212,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_empty_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_empty_LOD1.glb",
+          "triangles": 656
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_empty_LOD2.glb",
+          "triangles": 324
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_empty.png"
+    },
+    {
+      "id": "defense_resin_snare_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1068,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.25999999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_damaged_LOD0.glb",
+          "triangles": 1068
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_damaged_LOD1.glb",
+          "triangles": 580
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_damaged_LOD2.glb",
+          "triangles": 288
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_damaged.png"
+    },
+    {
+      "id": "defense_resin_snare_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 704,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.1599999964237213
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_ruined_LOD0.glb",
+          "triangles": 704
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_ruined_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_ruined_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l01_ruined.png"
+    },
+    {
+      "id": "defense_resin_snare_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 748,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2944999933242798
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_construction_LOD0.glb",
+          "triangles": 748
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_construction_LOD1.glb",
+          "triangles": 408
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_construction_LOD2.glb",
+          "triangles": 204
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_construction.png"
+    },
+    {
+      "id": "defense_resin_snare_l02_armed",
+      "level": 2,
+      "state": "armed",
+      "triangles": 1432,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3534935712814331
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_armed_LOD0.glb",
+          "triangles": 1432
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_armed_LOD1.glb",
+          "triangles": 776
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_armed_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_armed.png"
+    },
+    {
+      "id": "defense_resin_snare_l02_triggered",
+      "level": 2,
+      "state": "triggered",
+      "triangles": 1608,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.36896252632141113
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_triggered_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_triggered_LOD1.glb",
+          "triangles": 872
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_triggered_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_triggered.png"
+    },
+    {
+      "id": "defense_resin_snare_l02_empty",
+      "level": 2,
+      "state": "empty",
+      "triangles": 1388,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_empty_LOD0.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_empty_LOD1.glb",
+          "triangles": 752
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_empty_LOD2.glb",
+          "triangles": 372
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_empty.png"
+    },
+    {
+      "id": "defense_resin_snare_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1288,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.32199910283088684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_damaged_LOD0.glb",
+          "triangles": 1288
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_damaged_LOD1.glb",
+          "triangles": 700
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_damaged_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_damaged.png"
+    },
+    {
+      "id": "defense_resin_snare_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 704,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.1599999964237213
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_ruined_LOD0.glb",
+          "triangles": 704
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_ruined_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_ruined_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l02_ruined.png"
+    },
+    {
+      "id": "defense_resin_snare_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1100,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2944999933242798
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_construction_LOD0.glb",
+          "triangles": 1100
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_construction_LOD1.glb",
+          "triangles": 600
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_construction_LOD2.glb",
+          "triangles": 300
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_construction.png"
+    },
+    {
+      "id": "defense_resin_snare_l03_armed",
+      "level": 3,
+      "state": "armed",
+      "triangles": 1960,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3534935712814331
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_armed_LOD0.glb",
+          "triangles": 1960
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_armed_LOD1.glb",
+          "triangles": 1064
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_armed_LOD2.glb",
+          "triangles": 528
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_armed.png"
+    },
+    {
+      "id": "defense_resin_snare_l03_triggered",
+      "level": 3,
+      "state": "triggered",
+      "triangles": 2136,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.36896252632141113
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_triggered_LOD0.glb",
+          "triangles": 2136
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_triggered_LOD1.glb",
+          "triangles": 1160
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_triggered_LOD2.glb",
+          "triangles": 576
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_triggered.png"
+    },
+    {
+      "id": "defense_resin_snare_l03_empty",
+      "level": 3,
+      "state": "empty",
+      "triangles": 1916,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_empty_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_empty_LOD1.glb",
+          "triangles": 1040
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_empty_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_empty.png"
+    },
+    {
+      "id": "defense_resin_snare_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1640,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.32199910283088684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_damaged_LOD0.glb",
+          "triangles": 1640
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_damaged_LOD1.glb",
+          "triangles": 892
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_damaged_LOD2.glb",
+          "triangles": 444
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_damaged.png"
+    },
+    {
+      "id": "defense_resin_snare_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 704,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.1599999964237213
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_ruined_LOD0.glb",
+          "triangles": 704
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_ruined_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_ruined_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l03_ruined.png"
+    },
+    {
+      "id": "defense_resin_snare_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1540,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2944999933242798
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_construction_LOD0.glb",
+          "triangles": 1540
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_construction_LOD1.glb",
+          "triangles": 840
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_construction.png"
+    },
+    {
+      "id": "defense_resin_snare_l04_armed",
+      "level": 4,
+      "state": "armed",
+      "triangles": 3392,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3534935712814331
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_armed_LOD0.glb",
+          "triangles": 3392
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_armed_LOD1.glb",
+          "triangles": 1840
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_armed_LOD2.glb",
+          "triangles": 912
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_armed.png"
+    },
+    {
+      "id": "defense_resin_snare_l04_triggered",
+      "level": 4,
+      "state": "triggered",
+      "triangles": 3568,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.36896252632141113
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_triggered_LOD0.glb",
+          "triangles": 3568
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_triggered_LOD1.glb",
+          "triangles": 1936
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_triggered_LOD2.glb",
+          "triangles": 960
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_triggered.png"
+    },
+    {
+      "id": "defense_resin_snare_l04_empty",
+      "level": 4,
+      "state": "empty",
+      "triangles": 3216,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_empty_LOD0.glb",
+          "triangles": 3216
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_empty_LOD1.glb",
+          "triangles": 1744
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_empty_LOD2.glb",
+          "triangles": 864
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_empty.png"
+    },
+    {
+      "id": "defense_resin_snare_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 2576,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.32199910283088684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_damaged_LOD0.glb",
+          "triangles": 2576
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_damaged_LOD1.glb",
+          "triangles": 1400
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_damaged_LOD2.glb",
+          "triangles": 696
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_damaged.png"
+    },
+    {
+      "id": "defense_resin_snare_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 836,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.1599999964237213
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_ruined_LOD0.glb",
+          "triangles": 836
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_ruined_LOD1.glb",
+          "triangles": 456
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_ruined_LOD2.glb",
+          "triangles": 228
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_resin_snare/defense_resin_snare_l04_ruined.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\defense\\defense_resin_snare.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 7500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 350,
+          "max": 4200
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 180,
+          "max": 2200
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "channels",
+      "shutters",
+      "material_progression"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 6,
+      "include_states": [
+        "construction",
+        "armed",
+        "triggered",
+        "empty",
+        "damaged",
+        "ruined"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1000,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "asset_id": "workshop",
+  "category": "industry",
+  "kind": "building",
+  "display_name": "Мастерская",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Крытый ремесленный двор: широкий верстак, малая кирпичная печь, сложенный капкан и закрытый ящик пороховых бомб.",
+      "cost_resources": [
+        "wood",
+        "stone"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 4500
+      },
+      "adds": [
+        "основной_корпус",
+        "производственный_стол",
+        "малая_печь",
+        "капкан_и_закрытый_ящик_бомб"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "material_map": {
+    "wood": {
+      "visible_as": "деревянные опоры, брусья и склад материала",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    },
+    "stone": {
+      "visible_as": "крупные камни фундамента и низкие стены",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "У мастерской один уровень: сохранить навес, верстак и малую печь без проектных пристроек."
+    },
+    "height": {
+      "rule": "Низкий навес и дымоход остаются внутри одной клетки и не закрывают верстак."
+    },
+    "materials": {
+      "rule": "Материалы появляются не раньше уровня, где они есть в цене строительства."
+    },
+    "props": {
+      "rule": "Крупные детали семейства: производственный стол, склад заготовок, дымоход; мелкий шум не маскирует вход."
+    },
+    "late_elements": {
+      "rule": "Поздних уровней нет; рецепты капканов и бомб доступны на уровне 1."
+    },
+    "constraints": [
+      "Сохранять ориентацию входа.",
+      "Сохранять основной силуэт между active/construction/damaged."
+    ]
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Готовый объект: Небольшая ремесленная мастерская с рабочим столом и навесом; рабочие детали чисты и читаемы."
+    },
+    "construction": {
+      "rule": "Незавершённый каркас целевого уровня, не установлен один крупный функциональный узел.",
+      "required_elements": [
+        "scaffolding",
+        "unfinished_frame",
+        "stacked_materials"
+      ]
+    },
+    "damaged": {
+      "rule": "Сломан крупный функциональный узел, силуэт и ориентация входа сохраняются.",
+      "required_elements": [
+        "broken_roof_edges",
+        "cracks",
+        "debris"
+      ],
+      "forbidden_elements": [
+        "full_collapse"
+      ]
+    },
+    "ruined": {
+      "rule": "Остатки корпуса и материалов читаются как тот же объект, не активная постройка."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "isometric-style",
+      "fantasy-worlds",
+      "stylized-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "environment-artist"
+    ],
+    "production": [
+      "materials",
+      "texture-workflow",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 4500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 2200
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 150,
+          "max": 1100
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "footprint",
+      "primary silhouette",
+      "entrance orientation",
+      "largest readable props"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "atlas_policy": {
+    "enabled": true,
+    "image_format": "webp",
+    "json_naming": "{asset_id}.atlas.json",
+    "image_naming": "{asset_id}.webp",
+    "padding_px": 2,
+    "max_texture_size": 4096,
+    "include_static_sprites": true,
+    "include_animation_frames": true
+  },
+  "animation_policy": {
+    "frame_size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ],
+    "frame_naming": "{asset_id}_l{level:02d}_{animation}_{frame:04d}.png",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 8,
+      "output_name": "animation-contact-sheet.png"
+    },
+    "building_overlays": [
+      {
+        "id": "working",
+        "type": "overlay",
+        "fps": 8,
+        "frames": 12,
+        "loop": true,
+        "frame_prefix": "{asset_id}_l{level:02d}_working_",
+        "states": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/industry/workshop",
+    "source_dir": "frontend/src/assets/buildings/industry/workshop",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/industry/workshop.md"
+    ],
+    "art_guide": "docs/art/visual-style-guide.md",
+    "existing_generators": [],
+    "existing_assets": []
+  },
+  "notes": [
+    "Оставить узнаваемыми все три действующих рецепта: кирпич, охотничьи капканы и пороховые бомбы.",
+    "Боевые предметы показать как малый вторичный реквизит; активный рецепт и готовность показываются в UI."
+  ],
+  "catalog_status": "registered"
+}

@@ -1,0 +1,1532 @@
+{
+  "asset_id": "crystal_greenhouse",
+  "display_name": "Кристальная оранжерея",
+  "category": "fields",
+  "levels": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "states": [
+    "construction",
+    "stage01",
+    "stage02",
+    "stage03",
+    "stage04",
+    "active",
+    "damaged",
+    "ruined"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_levels.glb",
+  "material_map": {
+    "glass": {
+      "visible_as": "прозрачные секции стен и купола",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "star_glass": {
+      "visible_as": "фиолетовые сегменты фонаря и верхнего кольца",
+      "priority": "accent",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "copper_parts": {
+      "visible_as": "несущие ребра купола, кольца, крепеж и линзы",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "stone_block": {
+      "visible_as": "кладка цоколя, угловые опоры и контрфорсы",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "light_crystal": {
+      "visible_as": "тонкие угловые светокристаллы и плоды",
+      "priority": "accent",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "mechanism": {
+      "visible_as": "вентиляционный привод и механический блок",
+      "priority": "secondary",
+      "levels": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "emerald_dust": {
+      "visible_as": "изумрудные метки в рассаде и на цоколе",
+      "priority": "accent",
+      "levels": [
+        2,
+        3,
+        4
+      ]
+    },
+    "aeolian-crystal": {
+      "visible_as": "центральный вытянутый аметистовый кристалл",
+      "priority": "accent",
+      "levels": [
+        4
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "crystal_greenhouse_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1178,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.925000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_construction_LOD0.glb",
+          "triangles": 1178
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_construction_LOD1.glb",
+          "triangles": 644
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_construction_LOD2.glb",
+          "triangles": 324
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_construction.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "triangles": 3940,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage01_LOD0.glb",
+          "triangles": 3940
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage01_LOD1.glb",
+          "triangles": 2152
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage01_LOD2.glb",
+          "triangles": 1102
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage01.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "triangles": 4356,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage02_LOD0.glb",
+          "triangles": 4356
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage02_LOD1.glb",
+          "triangles": 2376
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage02_LOD2.glb",
+          "triangles": 1208
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage02.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "triangles": 4600,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage03_LOD0.glb",
+          "triangles": 4600
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage03_LOD1.glb",
+          "triangles": 2506
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage03_LOD2.glb",
+          "triangles": 1268
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage03.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_stage04",
+      "level": 1,
+      "state": "stage04",
+      "triangles": 4640,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage04_LOD0.glb",
+          "triangles": 4640
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage04_LOD1.glb",
+          "triangles": 2526
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage04_LOD2.glb",
+          "triangles": 1276
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_stage04.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 4640,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.684999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_active_LOD0.glb",
+          "triangles": 4640
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_active_LOD1.glb",
+          "triangles": 2526
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_active_LOD2.glb",
+          "triangles": 1276
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_active.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 3187,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.602500081062317
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_damaged_LOD0.glb",
+          "triangles": 3187
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_damaged_LOD1.glb",
+          "triangles": 1739
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_damaged_LOD2.glb",
+          "triangles": 879
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_damaged.png"
+    },
+    {
+      "id": "crystal_greenhouse_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1451,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5852800011634827
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_ruined_LOD0.glb",
+          "triangles": 1451
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_ruined_LOD1.glb",
+          "triangles": 793
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_ruined_LOD2.glb",
+          "triangles": 397
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l01_ruined.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1178,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0099999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_construction_LOD0.glb",
+          "triangles": 1178
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_construction_LOD1.glb",
+          "triangles": 644
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_construction_LOD2.glb",
+          "triangles": 324
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_construction.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "triangles": 4072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage01_LOD0.glb",
+          "triangles": 4072
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage01_LOD1.glb",
+          "triangles": 2224
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage01_LOD2.glb",
+          "triangles": 1138
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage01.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "triangles": 4488,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage02_LOD0.glb",
+          "triangles": 4488
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage02_LOD1.glb",
+          "triangles": 2448
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage02_LOD2.glb",
+          "triangles": 1244
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage02.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "triangles": 5352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage03_LOD0.glb",
+          "triangles": 5352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage03_LOD1.glb",
+          "triangles": 2912
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage03_LOD2.glb",
+          "triangles": 1462
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage03.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_stage04",
+      "level": 2,
+      "state": "stage04",
+      "triangles": 5604,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage04_LOD0.glb",
+          "triangles": 5604
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage04_LOD1.glb",
+          "triangles": 3046
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage04_LOD2.glb",
+          "triangles": 1522
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_stage04.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 5604,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_active_LOD0.glb",
+          "triangles": 5604
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_active_LOD1.glb",
+          "triangles": 3046
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_active_LOD2.glb",
+          "triangles": 1522
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_active.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 3443,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7825000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_damaged_LOD0.glb",
+          "triangles": 3443
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_damaged_LOD1.glb",
+          "triangles": 1877
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_damaged_LOD2.glb",
+          "triangles": 945
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_damaged.png"
+    },
+    {
+      "id": "crystal_greenhouse_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 1451,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5960000157356262
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_ruined_LOD0.glb",
+          "triangles": 1451
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_ruined_LOD1.glb",
+          "triangles": 793
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_ruined_LOD2.glb",
+          "triangles": 397
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l02_ruined.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1354,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0950000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_construction_LOD0.glb",
+          "triangles": 1354
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_construction_LOD1.glb",
+          "triangles": 740
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_construction_LOD2.glb",
+          "triangles": 372
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_construction.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "triangles": 4380,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0450000762939453
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage01_LOD0.glb",
+          "triangles": 4380
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage01_LOD1.glb",
+          "triangles": 2392
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage01_LOD2.glb",
+          "triangles": 1222
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage01.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "triangles": 4796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0450000762939453
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage02_LOD0.glb",
+          "triangles": 4796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage02_LOD1.glb",
+          "triangles": 2616
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage02_LOD2.glb",
+          "triangles": 1328
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage02.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "triangles": 6096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0450000762939453
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage03_LOD0.glb",
+          "triangles": 6096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage03_LOD1.glb",
+          "triangles": 3314
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage03_LOD2.glb",
+          "triangles": 1656
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage03.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_stage04",
+      "level": 3,
+      "state": "stage04",
+      "triangles": 6396,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0450000762939453
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage04_LOD0.glb",
+          "triangles": 6396
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage04_LOD1.glb",
+          "triangles": 3474
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage04_LOD2.glb",
+          "triangles": 1728
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_stage04.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 6396,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0450000762939453
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_active_LOD0.glb",
+          "triangles": 6396
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_active_LOD1.glb",
+          "triangles": 3474
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_active_LOD2.glb",
+          "triangles": 1728
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_active.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 3875,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.962499976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_damaged_LOD0.glb",
+          "triangles": 3875
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_damaged_LOD1.glb",
+          "triangles": 2111
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_damaged_LOD2.glb",
+          "triangles": 1059
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_damaged.png"
+    },
+    {
+      "id": "crystal_greenhouse_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 1627,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.699999988079071
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_ruined_LOD0.glb",
+          "triangles": 1627
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_ruined_LOD1.glb",
+          "triangles": 889
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_ruined_LOD2.glb",
+          "triangles": 445
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l03_ruined.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1706,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1799999475479126
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_construction_LOD0.glb",
+          "triangles": 1706
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_construction_LOD1.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_construction_LOD2.glb",
+          "triangles": 468
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_construction.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "triangles": 4776,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2249999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage01_LOD0.glb",
+          "triangles": 4776
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage01_LOD1.glb",
+          "triangles": 2608
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage01_LOD2.glb",
+          "triangles": 1330
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage01.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "triangles": 5212,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2249999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage02_LOD0.glb",
+          "triangles": 5212
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage02_LOD1.glb",
+          "triangles": 2842
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage02_LOD2.glb",
+          "triangles": 1440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage02.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "triangles": 7408,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2249999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage03_LOD0.glb",
+          "triangles": 7408
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage03_LOD1.glb",
+          "triangles": 4024
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage03_LOD2.glb",
+          "triangles": 1998
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage03.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_stage04",
+      "level": 4,
+      "state": "stage04",
+      "triangles": 7816,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2249999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage04_LOD0.glb",
+          "triangles": 7816
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage04_LOD1.glb",
+          "triangles": 4240
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage04_LOD2.glb",
+          "triangles": 2094
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_stage04.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 7816,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2249999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_active_LOD0.glb",
+          "triangles": 7816
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_active_LOD1.glb",
+          "triangles": 4240
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_active_LOD2.glb",
+          "triangles": 2094
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_active.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 4503,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1424999237060547
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_damaged_LOD0.glb",
+          "triangles": 4503
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_damaged_LOD1.glb",
+          "triangles": 2451
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_damaged_LOD2.glb",
+          "triangles": 1225
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_damaged.png"
+    },
+    {
+      "id": "crystal_greenhouse_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 1647,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.699999988079071
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_ruined_LOD0.glb",
+          "triangles": 1647
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_ruined_LOD1.glb",
+          "triangles": 899
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_ruined_LOD2.glb",
+          "triangles": 449
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/crystal_greenhouse/crystal_greenhouse_l04_ruined.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\fields\\crystal_greenhouse.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 13500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 350,
+          "max": 7500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 150,
+          "max": 4000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "stone_plinth",
+      "glass_dome",
+      "copper_ribs",
+      "crystal_fruit"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "construction",
+        "active",
+        "damaged",
+        "ruined"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1000,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "oil_well_l01_active",
+    "triangles": 3520,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l01_construction",
+    "triangles": 2940,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l01_damaged",
+    "triangles": 3860,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l01_ruined",
+    "triangles": 2252,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l02_active",
+    "triangles": 3732,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l02_construction",
+    "triangles": 3212,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l02_damaged",
+    "triangles": 4084,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l02_ruined",
+    "triangles": 2484,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l03_active",
+    "triangles": 4816,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l03_construction",
+    "triangles": 3920,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l03_damaged",
+    "triangles": 5308,
+    "loose_vertices": 0
+  },
+  {
+    "name": "oil_well_l03_ruined",
+    "triangles": 3544,
+    "loose_vertices": 0
+  }
+]

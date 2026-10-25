@@ -1,0 +1,93 @@
+{
+  "asset_id": "stone_house",
+  "display_name": "Каменный дом",
+  "category": "housing",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "component_library_version": "2026.10.phase3.v10",
+  "visible_materials": ["stone", "stone_block", "brick", "tile", "glass"],
+  "footprint_area_multiplier": 1.1,
+  "footprint_scale": 1.0488088481701516,
+  "generator": "tools/assets/blender/generate_stone_house_models.py",
+  "outputs": {
+    "source_blends": [
+      "frontend/public/assets/buildings/housing/stone_house/stone_house_levels.blend",
+      "frontend/public/assets/buildings/housing/stone_house/stone_house_l02_states.blend",
+      "frontend/public/assets/buildings/housing/stone_house/stone_house_l03_states.blend",
+      "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_states.blend",
+      "frontend/public/assets/buildings/housing/stone_house/stone_house_l05_states.blend",
+      "frontend/public/assets/buildings/housing/stone_house/stone_house_l06_states.blend"
+    ],
+    "manifest": "frontend/public/assets/buildings/housing/stone_house/manifest.json"
+  },
+  "item_count": 18,
+  "triangles": {
+    "stone_house_l01_active": 26869,
+    "stone_house_l01_construction": 2316,
+    "stone_house_l01_damaged": 28137,
+    "stone_house_l02_active": 28327,
+    "stone_house_l02_construction": 2404,
+    "stone_house_l02_damaged": 29551,
+    "stone_house_l03_active": 38159,
+    "stone_house_l03_construction": 2800,
+    "stone_house_l03_damaged": 39427,
+    "stone_house_l04_active": 45043,
+    "stone_house_l04_construction": 3108,
+    "stone_house_l04_damaged": 46267,
+    "stone_house_l05_active": 58527,
+    "stone_house_l05_construction": 3240,
+    "stone_house_l05_damaged": 59751,
+    "stone_house_l06_active": 54039,
+    "stone_house_l06_construction": 35516,
+    "stone_house_l06_damaged": 45589
+  },
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "components": [
+    "ground.add_ground_tile",
+    "housing.add_stone_house_shell",
+    "stone_house_pilot.add_full_stone_cladding",
+    "stone_house_pilot.add_green_tiled_roof",
+    "stone_house_pilot.add_level_six_wood_yard",
+    "stone_house_decor.add_keystone_sun",
+    "stone_house_decor.add_window_drain_lip",
+    "stone_house_decor.add_ridge_copper_clasp",
+    "stone_house_decor.add_roof_leaf_finial",
+    "stone_house_decor.add_chimney_copper_crown",
+    "stone_house_decor.add_dormer_side_fins",
+    "stone_house_decor.add_paved_stone_sun",
+    "stone_house_decor.add_courtyard_moss_slab",
+    "stone_house_decor.add_stone_seed_planter",
+    "stone_house_variants.add_progression",
+    "stone_house_variants.add_construction",
+    "stone_house_variants.add_damage",
+    "stone_house_architecture.add_triangular_side_dormer",
+    "stone_house_architecture.add_round_attic_window",
+    "stone_house_architecture.add_right_stone_annex",
+    "stone_house_architecture.add_second_storey_details",
+    "stone_house_architecture.add_stone_entrance_porch",
+    "stone_house_architecture.add_upper_annex_storey",
+    "stone_house_architecture.add_annex_entry_door",
+    "stone_house_architecture.add_planted_flower_beds",
+    "stone_house_architecture.add_level_six_house"
+  ]
+}

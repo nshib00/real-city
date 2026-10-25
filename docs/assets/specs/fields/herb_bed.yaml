@@ -43,7 +43,7 @@ levels:
     triangle_budget: { min: 4400, max: 9800 }
   - level: 9
     visual_goal: Финальная травяная грядка с высоким плетеным бортом, резными листовыми узорами, центральным редким цветком и супер-семенным акцентом.
-    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, emerald_dust, super_seeds]
+    cost_resources: [seeds, premium_planks, fabric, stone_block, iron_ingot, emerald_dust, super-seeds]
     triangle_budget: { min: 4700, max: 10500 }
 
 states: [active, construction, damaged]
@@ -89,6 +89,18 @@ material_map:
     visible_as: редкие изумрудные точки на колпаках и вокруг поздних цветков
     priority: accent
     levels: [7, 8, 9]
+  brick:
+    visible_as: кирпичная кромка поздней аптекарской грядки
+    priority: secondary
+    levels: [2]
+  rare_flowers:
+    visible_as: отдельные яркие цветки в защищённой секции
+    priority: accent
+    levels: [8]
+  super-seeds:
+    visible_as: закрытый контейнер редких семян
+    priority: accent
+    levels: [9]
 
 level_progression:
   mass:

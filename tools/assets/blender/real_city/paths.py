@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 
@@ -21,12 +22,13 @@ def project_root(start: Path | None = None) -> Path:
 def blender_path(path: str | Path) -> str:
     """Return a path Blender can write to when it runs on Windows.
 
-    Windows Blender cannot write to Linux paths like ``/home/...`` directly.
-    In that case use the WSL UNC path. On non-WSL systems the original path is
-    returned.
+    Windows Blender cannot write to Linux paths like ``/home/...`` directly,
+    so it uses the WSL UNC path. Native Linux Blender keeps the original path.
     """
 
     value = str(Path(path))
+    if sys.platform != "win32":
+        return value
     if value.startswith("/mnt/"):
         drive = value[5]
         rest = value[7:].replace("/", "\\")

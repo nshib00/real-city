@@ -1,0 +1,1721 @@
+{
+  "asset_id": "defense_bolt_thrower",
+  "display_name": "Болтомёт",
+  "category": "defense",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "states": [
+    "construction",
+    "active",
+    "no_crew",
+    "damaged",
+    "ruined"
+  ],
+  "items": [
+    {
+      "id": "defense_bolt_thrower_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 632,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5699999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_construction_LOD0.glb",
+          "triangles": 632
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_construction_LOD1.glb",
+          "triangles": 344
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_construction_LOD2.glb",
+          "triangles": 172
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1380,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9100000262260437
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_active_LOD0.glb",
+          "triangles": 1380
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_active_LOD1.glb",
+          "triangles": 750
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_active_LOD2.glb",
+          "triangles": 374
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l01_no_crew",
+      "level": 1,
+      "state": "no_crew",
+      "triangles": 1220,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9100000262260437
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_no_crew_LOD0.glb",
+          "triangles": 1220
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_no_crew_LOD1.glb",
+          "triangles": 664
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_no_crew_LOD2.glb",
+          "triangles": 332
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 940,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8883702754974365
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_damaged_LOD0.glb",
+          "triangles": 940
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_damaged_LOD1.glb",
+          "triangles": 512
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_damaged_LOD2.glb",
+          "triangles": 256
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_ruined_LOD0.glb",
+          "triangles": 720
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_ruined_LOD1.glb",
+          "triangles": 392
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_ruined_LOD2.glb",
+          "triangles": 196
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l01_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6089999675750732
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_construction_LOD0.glb",
+          "triangles": 720
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_construction_LOD1.glb",
+          "triangles": 392
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_construction_LOD2.glb",
+          "triangles": 196
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 1644,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.925000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_active_LOD0.glb",
+          "triangles": 1644
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_active_LOD1.glb",
+          "triangles": 894
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_active_LOD2.glb",
+          "triangles": 446
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l02_no_crew",
+      "level": 2,
+      "state": "no_crew",
+      "triangles": 1484,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.925000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_no_crew_LOD0.glb",
+          "triangles": 1484
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_no_crew_LOD1.glb",
+          "triangles": 808
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_no_crew_LOD2.glb",
+          "triangles": 404
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8883702754974365
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_damaged_LOD0.glb",
+          "triangles": 1028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_damaged_LOD1.glb",
+          "triangles": 560
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_damaged_LOD2.glb",
+          "triangles": 280
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_ruined_LOD0.glb",
+          "triangles": 720
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_ruined_LOD1.glb",
+          "triangles": 392
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_ruined_LOD2.glb",
+          "triangles": 196
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l02_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6089999675750732
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_construction_LOD0.glb",
+          "triangles": 720
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_construction_LOD1.glb",
+          "triangles": 392
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_construction_LOD2.glb",
+          "triangles": 196
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2444,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.963446855545044
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_active_LOD0.glb",
+          "triangles": 2444
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_active_LOD1.glb",
+          "triangles": 1318
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_active_LOD2.glb",
+          "triangles": 650
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l03_no_crew",
+      "level": 3,
+      "state": "no_crew",
+      "triangles": 2284,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.963446855545044
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_no_crew_LOD0.glb",
+          "triangles": 2284
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_no_crew_LOD1.glb",
+          "triangles": 1232
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_no_crew_LOD2.glb",
+          "triangles": 608
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1388,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8883702754974365
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_damaged_LOD0.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_damaged_LOD1.glb",
+          "triangles": 744
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_damaged_LOD2.glb",
+          "triangles": 364
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 764,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_ruined_LOD0.glb",
+          "triangles": 764
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_ruined_LOD1.glb",
+          "triangles": 416
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_ruined_LOD2.glb",
+          "triangles": 208
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l03_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 808,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_construction_LOD0.glb",
+          "triangles": 808
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_construction_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_construction_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 2796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_active_LOD0.glb",
+          "triangles": 2796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_active_LOD1.glb",
+          "triangles": 1510
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_active_LOD2.glb",
+          "triangles": 746
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l04_no_crew",
+      "level": 4,
+      "state": "no_crew",
+      "triangles": 2636,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_no_crew_LOD0.glb",
+          "triangles": 2636
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_no_crew_LOD1.glb",
+          "triangles": 1424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_no_crew_LOD2.glb",
+          "triangles": 704
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1388,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8883702754974365
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_damaged_LOD0.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_damaged_LOD1.glb",
+          "triangles": 744
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_damaged_LOD2.glb",
+          "triangles": 364
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 764,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2800000011920929
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_ruined_LOD0.glb",
+          "triangles": 764
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_ruined_LOD1.glb",
+          "triangles": 416
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_ruined_LOD2.glb",
+          "triangles": 208
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l04_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 984,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_construction_LOD0.glb",
+          "triangles": 984
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_construction_LOD1.glb",
+          "triangles": 536
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_construction_LOD2.glb",
+          "triangles": 268
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3060,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_active_LOD0.glb",
+          "triangles": 3060
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_active_LOD1.glb",
+          "triangles": 1654
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_active_LOD2.glb",
+          "triangles": 818
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l05_no_crew",
+      "level": 5,
+      "state": "no_crew",
+      "triangles": 2900,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_no_crew_LOD0.glb",
+          "triangles": 2900
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_no_crew_LOD1.glb",
+          "triangles": 1568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_no_crew_LOD2.glb",
+          "triangles": 776
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8883702754974365
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_damaged_LOD0.glb",
+          "triangles": 1652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_damaged_LOD1.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 1028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_ruined_LOD0.glb",
+          "triangles": 1028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_ruined_LOD1.glb",
+          "triangles": 560
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_ruined_LOD2.glb",
+          "triangles": 280
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l05_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 984,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_construction_LOD0.glb",
+          "triangles": 984
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_construction_LOD1.glb",
+          "triangles": 536
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_construction_LOD2.glb",
+          "triangles": 268
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 3164,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_active_LOD0.glb",
+          "triangles": 3164
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_active_LOD1.glb",
+          "triangles": 1710
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_active_LOD2.glb",
+          "triangles": 846
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l06_no_crew",
+      "level": 6,
+      "state": "no_crew",
+      "triangles": 3004,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_no_crew_LOD0.glb",
+          "triangles": 3004
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_no_crew_LOD1.glb",
+          "triangles": 1624
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_no_crew_LOD2.glb",
+          "triangles": 804
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 1652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8887618780136108
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_damaged_LOD0.glb",
+          "triangles": 1652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_damaged_LOD1.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 1028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_ruined_LOD0.glb",
+          "triangles": 1028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_ruined_LOD1.glb",
+          "triangles": 560
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_ruined_LOD2.glb",
+          "triangles": 280
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l06_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 984,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_construction_LOD0.glb",
+          "triangles": 984
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_construction_LOD1.glb",
+          "triangles": 536
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_construction_LOD2.glb",
+          "triangles": 268
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 3356,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_active_LOD0.glb",
+          "triangles": 3356
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_active_LOD1.glb",
+          "triangles": 1814
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_active_LOD2.glb",
+          "triangles": 898
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l07_no_crew",
+      "level": 7,
+      "state": "no_crew",
+      "triangles": 3196,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_no_crew_LOD0.glb",
+          "triangles": 3196
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_no_crew_LOD1.glb",
+          "triangles": 1728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_no_crew_LOD2.glb",
+          "triangles": 856
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 1652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8887618780136108
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_damaged_LOD0.glb",
+          "triangles": 1652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_damaged_LOD1.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l07_ruined",
+      "level": 7,
+      "state": "ruined",
+      "triangles": 1028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_ruined_LOD0.glb",
+          "triangles": 1028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_ruined_LOD1.glb",
+          "triangles": 560
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_ruined_LOD2.glb",
+          "triangles": 280
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l07_ruined.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 984,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8600000143051147
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_construction_LOD0.glb",
+          "triangles": 984
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_construction_LOD1.glb",
+          "triangles": 536
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_construction_LOD2.glb",
+          "triangles": 268
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_construction.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 3488,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_active_LOD0.glb",
+          "triangles": 3488
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_active_LOD1.glb",
+          "triangles": 1886
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_active_LOD2.glb",
+          "triangles": 934
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_active.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l08_no_crew",
+      "level": 8,
+      "state": "no_crew",
+      "triangles": 3328,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4140846729278564
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_no_crew_LOD0.glb",
+          "triangles": 3328
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_no_crew_LOD1.glb",
+          "triangles": 1800
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_no_crew_LOD2.glb",
+          "triangles": 892
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_no_crew_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_no_crew.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 1652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8887618780136108
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_damaged_LOD0.glb",
+          "triangles": 1652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_damaged_LOD1.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_damaged_LOD2.glb",
+          "triangles": 436
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_damaged.png"
+    },
+    {
+      "id": "defense_bolt_thrower_l08_ruined",
+      "level": 8,
+      "state": "ruined",
+      "triangles": 1028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.3700000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_ruined_LOD0.glb",
+          "triangles": 1028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_ruined_LOD1.glb",
+          "triangles": 560
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_ruined_LOD2.glb",
+          "triangles": 280
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_l08_ruined.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_levels.glb",
+    "manifest": "frontend/public/assets/buildings/defense/defense_bolt_thrower/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/defense/defense_bolt_thrower/defense_bolt_thrower_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\defense\\defense_bolt_thrower.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: defense_bolt_thrower\ndisplay_name: Болтомёт\ncategory/kind: defense/prop\nlevels: 1-8\nstates: construction, active, no_crew, damaged, ruined\nstyle: aeolian_fantasy_midpoly\nmaterials: planks, iron_ingot, rope, stone_block, mechanism, steel, protective_plate\nskills: blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style, prop-artist, hard-surface, materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

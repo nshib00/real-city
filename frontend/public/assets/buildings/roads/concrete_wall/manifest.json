@@ -1,0 +1,5089 @@
+{
+  "id": "concrete_wall",
+  "display_name": "Бетонная стена",
+  "building_type": "wall",
+  "style": "continuous concrete rampart with steel reinforcement, armoured joints and heavy terminal pylons",
+  "size": [
+    512,
+    512
+  ],
+  "footprint": 3.6,
+  "anchor": [
+    256,
+    320
+  ],
+  "levels": [
+    8,
+    9,
+    10
+  ],
+  "shapes": [
+    "single",
+    "end_n",
+    "end_e",
+    "end_s",
+    "end_w",
+    "straight_ns",
+    "straight_ew",
+    "corner_ne",
+    "corner_es",
+    "corner_sw",
+    "corner_wn",
+    "t_nes",
+    "t_esw",
+    "t_swn",
+    "t_wne",
+    "cross"
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "materials": {
+    "concrete": "широкий бетонный сердечник и цоколь уровня 8",
+    "stone_block": "каменные блоки подошвы уровня 8",
+    "steel": "силовые ребра, арматура и стальные анкеры",
+    "reinforced_concrete": "двухслойные панели уровней 9-10",
+    "armor_plates": "защитные накладки швов уровней 9-10",
+    "reinforced_beams": "верхний пояс и пилоны уровня 10"
+  },
+  "assets": {
+    "concrete_wall_l08_single_active": {
+      "shape": "single",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_single_active.png",
+      "glb": "concrete_wall_l08_single_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_single_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_single_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_single_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_single_construction": {
+      "shape": "single",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1388,
+      "objects": 33,
+      "png": "concrete_wall_l08_single_construction.png",
+      "glb": "concrete_wall_l08_single_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_single_construction_LOD0.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_single_construction_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_single_construction_LOD2.glb",
+          "triangles": 596
+        }
+      ]
+    },
+    "concrete_wall_l08_single_damaged": {
+      "shape": "single",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_single_damaged.png",
+      "glb": "concrete_wall_l08_single_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_single_damaged_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_single_damaged_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_single_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_single_ruined": {
+      "shape": "single",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_single_ruined.png",
+      "glb": "concrete_wall_l08_single_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_single_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_single_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_single_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_end_n_active": {
+      "shape": "end_n",
+      "state": "active",
+      "level": 8,
+      "triangles": 1124,
+      "objects": 27,
+      "png": "concrete_wall_l08_end_n_active.png",
+      "glb": "concrete_wall_l08_end_n_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_n_active_LOD0.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_n_active_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_n_active_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_end_n_construction": {
+      "shape": "end_n",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l08_end_n_construction.png",
+      "glb": "concrete_wall_l08_end_n_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_n_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_n_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_n_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_end_n_damaged": {
+      "shape": "end_n",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l08_end_n_damaged.png",
+      "glb": "concrete_wall_l08_end_n_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_n_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_n_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_n_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_n_ruined": {
+      "shape": "end_n",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l08_end_n_ruined.png",
+      "glb": "concrete_wall_l08_end_n_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_n_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_n_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_n_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_e_active": {
+      "shape": "end_e",
+      "state": "active",
+      "level": 8,
+      "triangles": 1124,
+      "objects": 27,
+      "png": "concrete_wall_l08_end_e_active.png",
+      "glb": "concrete_wall_l08_end_e_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_e_active_LOD0.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_e_active_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_e_active_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_end_e_construction": {
+      "shape": "end_e",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l08_end_e_construction.png",
+      "glb": "concrete_wall_l08_end_e_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_e_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_e_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_e_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_end_e_damaged": {
+      "shape": "end_e",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l08_end_e_damaged.png",
+      "glb": "concrete_wall_l08_end_e_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_e_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_e_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_e_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_e_ruined": {
+      "shape": "end_e",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l08_end_e_ruined.png",
+      "glb": "concrete_wall_l08_end_e_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_e_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_e_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_e_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_s_active": {
+      "shape": "end_s",
+      "state": "active",
+      "level": 8,
+      "triangles": 1124,
+      "objects": 27,
+      "png": "concrete_wall_l08_end_s_active.png",
+      "glb": "concrete_wall_l08_end_s_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_s_active_LOD0.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_s_active_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_s_active_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_end_s_construction": {
+      "shape": "end_s",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l08_end_s_construction.png",
+      "glb": "concrete_wall_l08_end_s_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_s_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_s_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_s_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_end_s_damaged": {
+      "shape": "end_s",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l08_end_s_damaged.png",
+      "glb": "concrete_wall_l08_end_s_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_s_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_s_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_s_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_s_ruined": {
+      "shape": "end_s",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l08_end_s_ruined.png",
+      "glb": "concrete_wall_l08_end_s_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_s_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_s_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_s_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_w_active": {
+      "shape": "end_w",
+      "state": "active",
+      "level": 8,
+      "triangles": 1124,
+      "objects": 27,
+      "png": "concrete_wall_l08_end_w_active.png",
+      "glb": "concrete_wall_l08_end_w_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_w_active_LOD0.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_w_active_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_w_active_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_end_w_construction": {
+      "shape": "end_w",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l08_end_w_construction.png",
+      "glb": "concrete_wall_l08_end_w_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_w_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_w_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_w_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_end_w_damaged": {
+      "shape": "end_w",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l08_end_w_damaged.png",
+      "glb": "concrete_wall_l08_end_w_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_w_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_w_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_w_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_end_w_ruined": {
+      "shape": "end_w",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l08_end_w_ruined.png",
+      "glb": "concrete_wall_l08_end_w_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_end_w_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_end_w_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_end_w_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ns_active": {
+      "shape": "straight_ns",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_straight_ns_active.png",
+      "glb": "concrete_wall_l08_straight_ns_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ns_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ns_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ns_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ns_construction": {
+      "shape": "straight_ns",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_straight_ns_construction.png",
+      "glb": "concrete_wall_l08_straight_ns_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ns_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ns_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ns_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ns_damaged": {
+      "shape": "straight_ns",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l08_straight_ns_damaged.png",
+      "glb": "concrete_wall_l08_straight_ns_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ns_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ns_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ns_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ns_ruined": {
+      "shape": "straight_ns",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_straight_ns_ruined.png",
+      "glb": "concrete_wall_l08_straight_ns_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ns_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ns_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ns_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ew_active": {
+      "shape": "straight_ew",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_straight_ew_active.png",
+      "glb": "concrete_wall_l08_straight_ew_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ew_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ew_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ew_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ew_construction": {
+      "shape": "straight_ew",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_straight_ew_construction.png",
+      "glb": "concrete_wall_l08_straight_ew_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ew_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ew_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ew_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ew_damaged": {
+      "shape": "straight_ew",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l08_straight_ew_damaged.png",
+      "glb": "concrete_wall_l08_straight_ew_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ew_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ew_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ew_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_straight_ew_ruined": {
+      "shape": "straight_ew",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_straight_ew_ruined.png",
+      "glb": "concrete_wall_l08_straight_ew_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_straight_ew_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_straight_ew_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_straight_ew_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_ne_active": {
+      "shape": "corner_ne",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_corner_ne_active.png",
+      "glb": "concrete_wall_l08_corner_ne_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_ne_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_ne_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_ne_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_ne_construction": {
+      "shape": "corner_ne",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_corner_ne_construction.png",
+      "glb": "concrete_wall_l08_corner_ne_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_ne_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_ne_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_ne_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_ne_damaged": {
+      "shape": "corner_ne",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l08_corner_ne_damaged.png",
+      "glb": "concrete_wall_l08_corner_ne_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_ne_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_ne_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_ne_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_ne_ruined": {
+      "shape": "corner_ne",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_corner_ne_ruined.png",
+      "glb": "concrete_wall_l08_corner_ne_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_ne_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_ne_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_ne_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_es_active": {
+      "shape": "corner_es",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_corner_es_active.png",
+      "glb": "concrete_wall_l08_corner_es_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_es_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_es_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_es_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_es_construction": {
+      "shape": "corner_es",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_corner_es_construction.png",
+      "glb": "concrete_wall_l08_corner_es_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_es_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_es_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_es_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_es_damaged": {
+      "shape": "corner_es",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l08_corner_es_damaged.png",
+      "glb": "concrete_wall_l08_corner_es_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_es_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_es_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_es_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_es_ruined": {
+      "shape": "corner_es",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_corner_es_ruined.png",
+      "glb": "concrete_wall_l08_corner_es_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_es_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_es_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_es_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_sw_active": {
+      "shape": "corner_sw",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_corner_sw_active.png",
+      "glb": "concrete_wall_l08_corner_sw_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_sw_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_sw_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_sw_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_sw_construction": {
+      "shape": "corner_sw",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_corner_sw_construction.png",
+      "glb": "concrete_wall_l08_corner_sw_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_sw_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_sw_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_sw_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_sw_damaged": {
+      "shape": "corner_sw",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l08_corner_sw_damaged.png",
+      "glb": "concrete_wall_l08_corner_sw_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_sw_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_sw_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_sw_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_sw_ruined": {
+      "shape": "corner_sw",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_corner_sw_ruined.png",
+      "glb": "concrete_wall_l08_corner_sw_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_sw_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_sw_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_sw_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_wn_active": {
+      "shape": "corner_wn",
+      "state": "active",
+      "level": 8,
+      "triangles": 1608,
+      "objects": 38,
+      "png": "concrete_wall_l08_corner_wn_active.png",
+      "glb": "concrete_wall_l08_corner_wn_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_wn_active_LOD0.glb",
+          "triangles": 1608
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_wn_active_LOD1.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_wn_active_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_wn_construction": {
+      "shape": "corner_wn",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l08_corner_wn_construction.png",
+      "glb": "concrete_wall_l08_corner_wn_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_wn_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_wn_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_wn_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_wn_damaged": {
+      "shape": "corner_wn",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l08_corner_wn_damaged.png",
+      "glb": "concrete_wall_l08_corner_wn_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_wn_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_wn_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_wn_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_corner_wn_ruined": {
+      "shape": "corner_wn",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l08_corner_wn_ruined.png",
+      "glb": "concrete_wall_l08_corner_wn_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_corner_wn_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_corner_wn_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_corner_wn_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l08_t_nes_active": {
+      "shape": "t_nes",
+      "state": "active",
+      "level": 8,
+      "triangles": 2092,
+      "objects": 49,
+      "png": "concrete_wall_l08_t_nes_active.png",
+      "glb": "concrete_wall_l08_t_nes_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_nes_active_LOD0.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_nes_active_LOD1.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_nes_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l08_t_nes_construction": {
+      "shape": "t_nes",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l08_t_nes_construction.png",
+      "glb": "concrete_wall_l08_t_nes_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_nes_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_nes_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_nes_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l08_t_nes_damaged": {
+      "shape": "t_nes",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l08_t_nes_damaged.png",
+      "glb": "concrete_wall_l08_t_nes_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_nes_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_nes_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_nes_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_nes_ruined": {
+      "shape": "t_nes",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l08_t_nes_ruined.png",
+      "glb": "concrete_wall_l08_t_nes_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_nes_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_nes_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_nes_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_esw_active": {
+      "shape": "t_esw",
+      "state": "active",
+      "level": 8,
+      "triangles": 2092,
+      "objects": 49,
+      "png": "concrete_wall_l08_t_esw_active.png",
+      "glb": "concrete_wall_l08_t_esw_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_esw_active_LOD0.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_esw_active_LOD1.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_esw_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l08_t_esw_construction": {
+      "shape": "t_esw",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l08_t_esw_construction.png",
+      "glb": "concrete_wall_l08_t_esw_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_esw_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_esw_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_esw_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l08_t_esw_damaged": {
+      "shape": "t_esw",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l08_t_esw_damaged.png",
+      "glb": "concrete_wall_l08_t_esw_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_esw_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_esw_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_esw_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_esw_ruined": {
+      "shape": "t_esw",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l08_t_esw_ruined.png",
+      "glb": "concrete_wall_l08_t_esw_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_esw_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_esw_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_esw_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_swn_active": {
+      "shape": "t_swn",
+      "state": "active",
+      "level": 8,
+      "triangles": 2092,
+      "objects": 49,
+      "png": "concrete_wall_l08_t_swn_active.png",
+      "glb": "concrete_wall_l08_t_swn_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_swn_active_LOD0.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_swn_active_LOD1.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_swn_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l08_t_swn_construction": {
+      "shape": "t_swn",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l08_t_swn_construction.png",
+      "glb": "concrete_wall_l08_t_swn_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_swn_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_swn_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_swn_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l08_t_swn_damaged": {
+      "shape": "t_swn",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l08_t_swn_damaged.png",
+      "glb": "concrete_wall_l08_t_swn_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_swn_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_swn_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_swn_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_swn_ruined": {
+      "shape": "t_swn",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l08_t_swn_ruined.png",
+      "glb": "concrete_wall_l08_t_swn_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_swn_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_swn_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_swn_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_wne_active": {
+      "shape": "t_wne",
+      "state": "active",
+      "level": 8,
+      "triangles": 2092,
+      "objects": 49,
+      "png": "concrete_wall_l08_t_wne_active.png",
+      "glb": "concrete_wall_l08_t_wne_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_wne_active_LOD0.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_wne_active_LOD1.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_wne_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l08_t_wne_construction": {
+      "shape": "t_wne",
+      "state": "construction",
+      "level": 8,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l08_t_wne_construction.png",
+      "glb": "concrete_wall_l08_t_wne_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_wne_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_wne_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_wne_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l08_t_wne_damaged": {
+      "shape": "t_wne",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l08_t_wne_damaged.png",
+      "glb": "concrete_wall_l08_t_wne_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_wne_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_wne_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_wne_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_t_wne_ruined": {
+      "shape": "t_wne",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l08_t_wne_ruined.png",
+      "glb": "concrete_wall_l08_t_wne_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_t_wne_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_t_wne_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_t_wne_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l08_cross_active": {
+      "shape": "cross",
+      "state": "active",
+      "level": 8,
+      "triangles": 2576,
+      "objects": 60,
+      "png": "concrete_wall_l08_cross_active.png",
+      "glb": "concrete_wall_l08_cross_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_cross_active_LOD0.glb",
+          "triangles": 2576
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_cross_active_LOD1.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_cross_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l08_cross_construction": {
+      "shape": "cross",
+      "state": "construction",
+      "level": 8,
+      "triangles": 2356,
+      "objects": 55,
+      "png": "concrete_wall_l08_cross_construction.png",
+      "glb": "concrete_wall_l08_cross_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_cross_construction_LOD0.glb",
+          "triangles": 2356
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_cross_construction_LOD1.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_cross_construction_LOD2.glb",
+          "triangles": 1300
+        }
+      ]
+    },
+    "concrete_wall_l08_cross_damaged": {
+      "shape": "cross",
+      "state": "damaged",
+      "level": 8,
+      "triangles": 2532,
+      "objects": 59,
+      "png": "concrete_wall_l08_cross_damaged.png",
+      "glb": "concrete_wall_l08_cross_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_cross_damaged_LOD0.glb",
+          "triangles": 2532
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_cross_damaged_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_cross_damaged_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l08_cross_ruined": {
+      "shape": "cross",
+      "state": "ruined",
+      "level": 8,
+      "triangles": 1828,
+      "objects": 43,
+      "png": "concrete_wall_l08_cross_ruined.png",
+      "glb": "concrete_wall_l08_cross_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l08_cross_ruined_LOD0.glb",
+          "triangles": 1828
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l08_cross_ruined_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l08_cross_ruined_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l09_single_active": {
+      "shape": "single",
+      "state": "active",
+      "level": 9,
+      "triangles": 1784,
+      "objects": 42,
+      "png": "concrete_wall_l09_single_active.png",
+      "glb": "concrete_wall_l09_single_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_single_active_LOD0.glb",
+          "triangles": 1784
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_single_active_LOD1.glb",
+          "triangles": 1256
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_single_active_LOD2.glb",
+          "triangles": 552
+        }
+      ]
+    },
+    "concrete_wall_l09_single_construction": {
+      "shape": "single",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1388,
+      "objects": 33,
+      "png": "concrete_wall_l09_single_construction.png",
+      "glb": "concrete_wall_l09_single_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_single_construction_LOD0.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_single_construction_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_single_construction_LOD2.glb",
+          "triangles": 596
+        }
+      ]
+    },
+    "concrete_wall_l09_single_damaged": {
+      "shape": "single",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_single_damaged.png",
+      "glb": "concrete_wall_l09_single_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_single_damaged_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_single_damaged_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_single_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_single_ruined": {
+      "shape": "single",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_single_ruined.png",
+      "glb": "concrete_wall_l09_single_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_single_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_single_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_single_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_end_n_active": {
+      "shape": "end_n",
+      "state": "active",
+      "level": 9,
+      "triangles": 1300,
+      "objects": 31,
+      "png": "concrete_wall_l09_end_n_active.png",
+      "glb": "concrete_wall_l09_end_n_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_n_active_LOD0.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_n_active_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_n_active_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l09_end_n_construction": {
+      "shape": "end_n",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l09_end_n_construction.png",
+      "glb": "concrete_wall_l09_end_n_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_n_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_n_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_n_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l09_end_n_damaged": {
+      "shape": "end_n",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l09_end_n_damaged.png",
+      "glb": "concrete_wall_l09_end_n_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_n_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_n_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_n_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_n_ruined": {
+      "shape": "end_n",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l09_end_n_ruined.png",
+      "glb": "concrete_wall_l09_end_n_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_n_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_n_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_n_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_e_active": {
+      "shape": "end_e",
+      "state": "active",
+      "level": 9,
+      "triangles": 1300,
+      "objects": 31,
+      "png": "concrete_wall_l09_end_e_active.png",
+      "glb": "concrete_wall_l09_end_e_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_e_active_LOD0.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_e_active_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_e_active_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l09_end_e_construction": {
+      "shape": "end_e",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l09_end_e_construction.png",
+      "glb": "concrete_wall_l09_end_e_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_e_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_e_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_e_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l09_end_e_damaged": {
+      "shape": "end_e",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l09_end_e_damaged.png",
+      "glb": "concrete_wall_l09_end_e_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_e_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_e_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_e_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_e_ruined": {
+      "shape": "end_e",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l09_end_e_ruined.png",
+      "glb": "concrete_wall_l09_end_e_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_e_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_e_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_e_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_s_active": {
+      "shape": "end_s",
+      "state": "active",
+      "level": 9,
+      "triangles": 1300,
+      "objects": 31,
+      "png": "concrete_wall_l09_end_s_active.png",
+      "glb": "concrete_wall_l09_end_s_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_s_active_LOD0.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_s_active_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_s_active_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l09_end_s_construction": {
+      "shape": "end_s",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l09_end_s_construction.png",
+      "glb": "concrete_wall_l09_end_s_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_s_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_s_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_s_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l09_end_s_damaged": {
+      "shape": "end_s",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l09_end_s_damaged.png",
+      "glb": "concrete_wall_l09_end_s_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_s_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_s_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_s_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_s_ruined": {
+      "shape": "end_s",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l09_end_s_ruined.png",
+      "glb": "concrete_wall_l09_end_s_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_s_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_s_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_s_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_w_active": {
+      "shape": "end_w",
+      "state": "active",
+      "level": 9,
+      "triangles": 1300,
+      "objects": 31,
+      "png": "concrete_wall_l09_end_w_active.png",
+      "glb": "concrete_wall_l09_end_w_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_w_active_LOD0.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_w_active_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_w_active_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l09_end_w_construction": {
+      "shape": "end_w",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l09_end_w_construction.png",
+      "glb": "concrete_wall_l09_end_w_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_w_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_w_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_w_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l09_end_w_damaged": {
+      "shape": "end_w",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l09_end_w_damaged.png",
+      "glb": "concrete_wall_l09_end_w_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_w_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_w_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_w_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_end_w_ruined": {
+      "shape": "end_w",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l09_end_w_ruined.png",
+      "glb": "concrete_wall_l09_end_w_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_end_w_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_end_w_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_end_w_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ns_active": {
+      "shape": "straight_ns",
+      "state": "active",
+      "level": 9,
+      "triangles": 1872,
+      "objects": 44,
+      "png": "concrete_wall_l09_straight_ns_active.png",
+      "glb": "concrete_wall_l09_straight_ns_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ns_active_LOD0.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ns_active_LOD1.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ns_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ns_construction": {
+      "shape": "straight_ns",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_straight_ns_construction.png",
+      "glb": "concrete_wall_l09_straight_ns_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ns_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ns_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ns_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ns_damaged": {
+      "shape": "straight_ns",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l09_straight_ns_damaged.png",
+      "glb": "concrete_wall_l09_straight_ns_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ns_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ns_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ns_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ns_ruined": {
+      "shape": "straight_ns",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_straight_ns_ruined.png",
+      "glb": "concrete_wall_l09_straight_ns_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ns_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ns_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ns_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ew_active": {
+      "shape": "straight_ew",
+      "state": "active",
+      "level": 9,
+      "triangles": 1872,
+      "objects": 44,
+      "png": "concrete_wall_l09_straight_ew_active.png",
+      "glb": "concrete_wall_l09_straight_ew_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ew_active_LOD0.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ew_active_LOD1.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ew_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ew_construction": {
+      "shape": "straight_ew",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_straight_ew_construction.png",
+      "glb": "concrete_wall_l09_straight_ew_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ew_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ew_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ew_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ew_damaged": {
+      "shape": "straight_ew",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l09_straight_ew_damaged.png",
+      "glb": "concrete_wall_l09_straight_ew_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ew_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ew_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ew_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_straight_ew_ruined": {
+      "shape": "straight_ew",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_straight_ew_ruined.png",
+      "glb": "concrete_wall_l09_straight_ew_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_straight_ew_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_straight_ew_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_straight_ew_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_ne_active": {
+      "shape": "corner_ne",
+      "state": "active",
+      "level": 9,
+      "triangles": 1872,
+      "objects": 44,
+      "png": "concrete_wall_l09_corner_ne_active.png",
+      "glb": "concrete_wall_l09_corner_ne_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_ne_active_LOD0.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_ne_active_LOD1.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_ne_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_ne_construction": {
+      "shape": "corner_ne",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_corner_ne_construction.png",
+      "glb": "concrete_wall_l09_corner_ne_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_ne_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_ne_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_ne_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_ne_damaged": {
+      "shape": "corner_ne",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l09_corner_ne_damaged.png",
+      "glb": "concrete_wall_l09_corner_ne_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_ne_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_ne_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_ne_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_ne_ruined": {
+      "shape": "corner_ne",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_corner_ne_ruined.png",
+      "glb": "concrete_wall_l09_corner_ne_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_ne_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_ne_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_ne_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_es_active": {
+      "shape": "corner_es",
+      "state": "active",
+      "level": 9,
+      "triangles": 1872,
+      "objects": 44,
+      "png": "concrete_wall_l09_corner_es_active.png",
+      "glb": "concrete_wall_l09_corner_es_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_es_active_LOD0.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_es_active_LOD1.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_es_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_es_construction": {
+      "shape": "corner_es",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_corner_es_construction.png",
+      "glb": "concrete_wall_l09_corner_es_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_es_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_es_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_es_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_es_damaged": {
+      "shape": "corner_es",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l09_corner_es_damaged.png",
+      "glb": "concrete_wall_l09_corner_es_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_es_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_es_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_es_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_es_ruined": {
+      "shape": "corner_es",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_corner_es_ruined.png",
+      "glb": "concrete_wall_l09_corner_es_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_es_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_es_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_es_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_sw_active": {
+      "shape": "corner_sw",
+      "state": "active",
+      "level": 9,
+      "triangles": 1872,
+      "objects": 44,
+      "png": "concrete_wall_l09_corner_sw_active.png",
+      "glb": "concrete_wall_l09_corner_sw_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_sw_active_LOD0.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_sw_active_LOD1.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_sw_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_sw_construction": {
+      "shape": "corner_sw",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_corner_sw_construction.png",
+      "glb": "concrete_wall_l09_corner_sw_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_sw_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_sw_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_sw_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_sw_damaged": {
+      "shape": "corner_sw",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l09_corner_sw_damaged.png",
+      "glb": "concrete_wall_l09_corner_sw_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_sw_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_sw_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_sw_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_sw_ruined": {
+      "shape": "corner_sw",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_corner_sw_ruined.png",
+      "glb": "concrete_wall_l09_corner_sw_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_sw_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_sw_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_sw_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_wn_active": {
+      "shape": "corner_wn",
+      "state": "active",
+      "level": 9,
+      "triangles": 1872,
+      "objects": 44,
+      "png": "concrete_wall_l09_corner_wn_active.png",
+      "glb": "concrete_wall_l09_corner_wn_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_wn_active_LOD0.glb",
+          "triangles": 1872
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_wn_active_LOD1.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_wn_active_LOD2.glb",
+          "triangles": 640
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_wn_construction": {
+      "shape": "corner_wn",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l09_corner_wn_construction.png",
+      "glb": "concrete_wall_l09_corner_wn_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_wn_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_wn_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_wn_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_wn_damaged": {
+      "shape": "corner_wn",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l09_corner_wn_damaged.png",
+      "glb": "concrete_wall_l09_corner_wn_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_wn_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_wn_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_wn_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_corner_wn_ruined": {
+      "shape": "corner_wn",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l09_corner_wn_ruined.png",
+      "glb": "concrete_wall_l09_corner_wn_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_corner_wn_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_corner_wn_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_corner_wn_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l09_t_nes_active": {
+      "shape": "t_nes",
+      "state": "active",
+      "level": 9,
+      "triangles": 2444,
+      "objects": 57,
+      "png": "concrete_wall_l09_t_nes_active.png",
+      "glb": "concrete_wall_l09_t_nes_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_nes_active_LOD0.glb",
+          "triangles": 2444
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_nes_active_LOD1.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_nes_active_LOD2.glb",
+          "triangles": 860
+        }
+      ]
+    },
+    "concrete_wall_l09_t_nes_construction": {
+      "shape": "t_nes",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l09_t_nes_construction.png",
+      "glb": "concrete_wall_l09_t_nes_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_nes_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_nes_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_nes_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l09_t_nes_damaged": {
+      "shape": "t_nes",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l09_t_nes_damaged.png",
+      "glb": "concrete_wall_l09_t_nes_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_nes_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_nes_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_nes_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_nes_ruined": {
+      "shape": "t_nes",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l09_t_nes_ruined.png",
+      "glb": "concrete_wall_l09_t_nes_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_nes_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_nes_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_nes_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_esw_active": {
+      "shape": "t_esw",
+      "state": "active",
+      "level": 9,
+      "triangles": 2444,
+      "objects": 57,
+      "png": "concrete_wall_l09_t_esw_active.png",
+      "glb": "concrete_wall_l09_t_esw_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_esw_active_LOD0.glb",
+          "triangles": 2444
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_esw_active_LOD1.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_esw_active_LOD2.glb",
+          "triangles": 860
+        }
+      ]
+    },
+    "concrete_wall_l09_t_esw_construction": {
+      "shape": "t_esw",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l09_t_esw_construction.png",
+      "glb": "concrete_wall_l09_t_esw_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_esw_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_esw_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_esw_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l09_t_esw_damaged": {
+      "shape": "t_esw",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l09_t_esw_damaged.png",
+      "glb": "concrete_wall_l09_t_esw_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_esw_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_esw_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_esw_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_esw_ruined": {
+      "shape": "t_esw",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l09_t_esw_ruined.png",
+      "glb": "concrete_wall_l09_t_esw_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_esw_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_esw_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_esw_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_swn_active": {
+      "shape": "t_swn",
+      "state": "active",
+      "level": 9,
+      "triangles": 2444,
+      "objects": 57,
+      "png": "concrete_wall_l09_t_swn_active.png",
+      "glb": "concrete_wall_l09_t_swn_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_swn_active_LOD0.glb",
+          "triangles": 2444
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_swn_active_LOD1.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_swn_active_LOD2.glb",
+          "triangles": 860
+        }
+      ]
+    },
+    "concrete_wall_l09_t_swn_construction": {
+      "shape": "t_swn",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l09_t_swn_construction.png",
+      "glb": "concrete_wall_l09_t_swn_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_swn_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_swn_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_swn_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l09_t_swn_damaged": {
+      "shape": "t_swn",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l09_t_swn_damaged.png",
+      "glb": "concrete_wall_l09_t_swn_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_swn_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_swn_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_swn_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_swn_ruined": {
+      "shape": "t_swn",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l09_t_swn_ruined.png",
+      "glb": "concrete_wall_l09_t_swn_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_swn_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_swn_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_swn_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_wne_active": {
+      "shape": "t_wne",
+      "state": "active",
+      "level": 9,
+      "triangles": 2444,
+      "objects": 57,
+      "png": "concrete_wall_l09_t_wne_active.png",
+      "glb": "concrete_wall_l09_t_wne_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_wne_active_LOD0.glb",
+          "triangles": 2444
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_wne_active_LOD1.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_wne_active_LOD2.glb",
+          "triangles": 860
+        }
+      ]
+    },
+    "concrete_wall_l09_t_wne_construction": {
+      "shape": "t_wne",
+      "state": "construction",
+      "level": 9,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l09_t_wne_construction.png",
+      "glb": "concrete_wall_l09_t_wne_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_wne_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_wne_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_wne_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l09_t_wne_damaged": {
+      "shape": "t_wne",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l09_t_wne_damaged.png",
+      "glb": "concrete_wall_l09_t_wne_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_wne_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_wne_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_wne_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_t_wne_ruined": {
+      "shape": "t_wne",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l09_t_wne_ruined.png",
+      "glb": "concrete_wall_l09_t_wne_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_t_wne_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_t_wne_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_t_wne_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l09_cross_active": {
+      "shape": "cross",
+      "state": "active",
+      "level": 9,
+      "triangles": 3016,
+      "objects": 70,
+      "png": "concrete_wall_l09_cross_active.png",
+      "glb": "concrete_wall_l09_cross_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_cross_active_LOD0.glb",
+          "triangles": 3016
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_cross_active_LOD1.glb",
+          "triangles": 2488
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_cross_active_LOD2.glb",
+          "triangles": 1080
+        }
+      ]
+    },
+    "concrete_wall_l09_cross_construction": {
+      "shape": "cross",
+      "state": "construction",
+      "level": 9,
+      "triangles": 2356,
+      "objects": 55,
+      "png": "concrete_wall_l09_cross_construction.png",
+      "glb": "concrete_wall_l09_cross_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_cross_construction_LOD0.glb",
+          "triangles": 2356
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_cross_construction_LOD1.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_cross_construction_LOD2.glb",
+          "triangles": 1300
+        }
+      ]
+    },
+    "concrete_wall_l09_cross_damaged": {
+      "shape": "cross",
+      "state": "damaged",
+      "level": 9,
+      "triangles": 2532,
+      "objects": 59,
+      "png": "concrete_wall_l09_cross_damaged.png",
+      "glb": "concrete_wall_l09_cross_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_cross_damaged_LOD0.glb",
+          "triangles": 2532
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_cross_damaged_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_cross_damaged_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l09_cross_ruined": {
+      "shape": "cross",
+      "state": "ruined",
+      "level": 9,
+      "triangles": 1828,
+      "objects": 43,
+      "png": "concrete_wall_l09_cross_ruined.png",
+      "glb": "concrete_wall_l09_cross_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l09_cross_ruined_LOD0.glb",
+          "triangles": 1828
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l09_cross_ruined_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l09_cross_ruined_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l10_single_active": {
+      "shape": "single",
+      "state": "active",
+      "level": 10,
+      "triangles": 2004,
+      "objects": 47,
+      "png": "concrete_wall_l10_single_active.png",
+      "glb": "concrete_wall_l10_single_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_single_active_LOD0.glb",
+          "triangles": 2004
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_single_active_LOD1.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_single_active_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_single_construction": {
+      "shape": "single",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1388,
+      "objects": 33,
+      "png": "concrete_wall_l10_single_construction.png",
+      "glb": "concrete_wall_l10_single_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_single_construction_LOD0.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_single_construction_LOD1.glb",
+          "triangles": 596
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_single_construction_LOD2.glb",
+          "triangles": 596
+        }
+      ]
+    },
+    "concrete_wall_l10_single_damaged": {
+      "shape": "single",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_single_damaged.png",
+      "glb": "concrete_wall_l10_single_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_single_damaged_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_single_damaged_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_single_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_single_ruined": {
+      "shape": "single",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_single_ruined.png",
+      "glb": "concrete_wall_l10_single_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_single_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_single_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_single_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_end_n_active": {
+      "shape": "end_n",
+      "state": "active",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_end_n_active.png",
+      "glb": "concrete_wall_l10_end_n_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_n_active_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_n_active_LOD1.glb",
+          "triangles": 860
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_n_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l10_end_n_construction": {
+      "shape": "end_n",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l10_end_n_construction.png",
+      "glb": "concrete_wall_l10_end_n_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_n_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_n_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_n_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l10_end_n_damaged": {
+      "shape": "end_n",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l10_end_n_damaged.png",
+      "glb": "concrete_wall_l10_end_n_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_n_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_n_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_n_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_n_ruined": {
+      "shape": "end_n",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l10_end_n_ruined.png",
+      "glb": "concrete_wall_l10_end_n_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_n_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_n_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_n_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_e_active": {
+      "shape": "end_e",
+      "state": "active",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_end_e_active.png",
+      "glb": "concrete_wall_l10_end_e_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_e_active_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_e_active_LOD1.glb",
+          "triangles": 860
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_e_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l10_end_e_construction": {
+      "shape": "end_e",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l10_end_e_construction.png",
+      "glb": "concrete_wall_l10_end_e_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_e_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_e_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_e_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l10_end_e_damaged": {
+      "shape": "end_e",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l10_end_e_damaged.png",
+      "glb": "concrete_wall_l10_end_e_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_e_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_e_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_e_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_e_ruined": {
+      "shape": "end_e",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l10_end_e_ruined.png",
+      "glb": "concrete_wall_l10_end_e_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_e_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_e_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_e_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_s_active": {
+      "shape": "end_s",
+      "state": "active",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_end_s_active.png",
+      "glb": "concrete_wall_l10_end_s_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_s_active_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_s_active_LOD1.glb",
+          "triangles": 860
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_s_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l10_end_s_construction": {
+      "shape": "end_s",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l10_end_s_construction.png",
+      "glb": "concrete_wall_l10_end_s_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_s_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_s_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_s_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l10_end_s_damaged": {
+      "shape": "end_s",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l10_end_s_damaged.png",
+      "glb": "concrete_wall_l10_end_s_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_s_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_s_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_s_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_s_ruined": {
+      "shape": "end_s",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l10_end_s_ruined.png",
+      "glb": "concrete_wall_l10_end_s_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_s_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_s_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_s_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_w_active": {
+      "shape": "end_w",
+      "state": "active",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_end_w_active.png",
+      "glb": "concrete_wall_l10_end_w_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_w_active_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_w_active_LOD1.glb",
+          "triangles": 860
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_w_active_LOD2.glb",
+          "triangles": 508
+        }
+      ]
+    },
+    "concrete_wall_l10_end_w_construction": {
+      "shape": "end_w",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1036,
+      "objects": 25,
+      "png": "concrete_wall_l10_end_w_construction.png",
+      "glb": "concrete_wall_l10_end_w_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_w_construction_LOD0.glb",
+          "triangles": 1036
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_w_construction_LOD1.glb",
+          "triangles": 376
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_w_construction_LOD2.glb",
+          "triangles": 376
+        }
+      ]
+    },
+    "concrete_wall_l10_end_w_damaged": {
+      "shape": "end_w",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1080,
+      "objects": 26,
+      "png": "concrete_wall_l10_end_w_damaged.png",
+      "glb": "concrete_wall_l10_end_w_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_w_damaged_LOD0.glb",
+          "triangles": 1080
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_w_damaged_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_w_damaged_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_end_w_ruined": {
+      "shape": "end_w",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 904,
+      "objects": 22,
+      "png": "concrete_wall_l10_end_w_ruined.png",
+      "glb": "concrete_wall_l10_end_w_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_end_w_ruined_LOD0.glb",
+          "triangles": 904
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_end_w_ruined_LOD1.glb",
+          "triangles": 156
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_end_w_ruined_LOD2.glb",
+          "triangles": 156
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ns_active": {
+      "shape": "straight_ns",
+      "state": "active",
+      "level": 10,
+      "triangles": 2180,
+      "objects": 51,
+      "png": "concrete_wall_l10_straight_ns_active.png",
+      "glb": "concrete_wall_l10_straight_ns_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ns_active_LOD0.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ns_active_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ns_active_LOD2.glb",
+          "triangles": 772
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ns_construction": {
+      "shape": "straight_ns",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_straight_ns_construction.png",
+      "glb": "concrete_wall_l10_straight_ns_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ns_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ns_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ns_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ns_damaged": {
+      "shape": "straight_ns",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l10_straight_ns_damaged.png",
+      "glb": "concrete_wall_l10_straight_ns_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ns_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ns_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ns_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ns_ruined": {
+      "shape": "straight_ns",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_straight_ns_ruined.png",
+      "glb": "concrete_wall_l10_straight_ns_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ns_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ns_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ns_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ew_active": {
+      "shape": "straight_ew",
+      "state": "active",
+      "level": 10,
+      "triangles": 2180,
+      "objects": 51,
+      "png": "concrete_wall_l10_straight_ew_active.png",
+      "glb": "concrete_wall_l10_straight_ew_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ew_active_LOD0.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ew_active_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ew_active_LOD2.glb",
+          "triangles": 772
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ew_construction": {
+      "shape": "straight_ew",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_straight_ew_construction.png",
+      "glb": "concrete_wall_l10_straight_ew_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ew_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ew_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ew_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ew_damaged": {
+      "shape": "straight_ew",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l10_straight_ew_damaged.png",
+      "glb": "concrete_wall_l10_straight_ew_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ew_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ew_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ew_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_straight_ew_ruined": {
+      "shape": "straight_ew",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_straight_ew_ruined.png",
+      "glb": "concrete_wall_l10_straight_ew_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_straight_ew_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_straight_ew_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_straight_ew_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_ne_active": {
+      "shape": "corner_ne",
+      "state": "active",
+      "level": 10,
+      "triangles": 2180,
+      "objects": 51,
+      "png": "concrete_wall_l10_corner_ne_active.png",
+      "glb": "concrete_wall_l10_corner_ne_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_ne_active_LOD0.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_ne_active_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_ne_active_LOD2.glb",
+          "triangles": 772
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_ne_construction": {
+      "shape": "corner_ne",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_corner_ne_construction.png",
+      "glb": "concrete_wall_l10_corner_ne_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_ne_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_ne_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_ne_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_ne_damaged": {
+      "shape": "corner_ne",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l10_corner_ne_damaged.png",
+      "glb": "concrete_wall_l10_corner_ne_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_ne_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_ne_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_ne_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_ne_ruined": {
+      "shape": "corner_ne",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_corner_ne_ruined.png",
+      "glb": "concrete_wall_l10_corner_ne_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_ne_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_ne_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_ne_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_es_active": {
+      "shape": "corner_es",
+      "state": "active",
+      "level": 10,
+      "triangles": 2180,
+      "objects": 51,
+      "png": "concrete_wall_l10_corner_es_active.png",
+      "glb": "concrete_wall_l10_corner_es_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_es_active_LOD0.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_es_active_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_es_active_LOD2.glb",
+          "triangles": 772
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_es_construction": {
+      "shape": "corner_es",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_corner_es_construction.png",
+      "glb": "concrete_wall_l10_corner_es_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_es_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_es_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_es_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_es_damaged": {
+      "shape": "corner_es",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l10_corner_es_damaged.png",
+      "glb": "concrete_wall_l10_corner_es_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_es_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_es_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_es_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_es_ruined": {
+      "shape": "corner_es",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_corner_es_ruined.png",
+      "glb": "concrete_wall_l10_corner_es_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_es_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_es_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_es_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_sw_active": {
+      "shape": "corner_sw",
+      "state": "active",
+      "level": 10,
+      "triangles": 2180,
+      "objects": 51,
+      "png": "concrete_wall_l10_corner_sw_active.png",
+      "glb": "concrete_wall_l10_corner_sw_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_sw_active_LOD0.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_sw_active_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_sw_active_LOD2.glb",
+          "triangles": 772
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_sw_construction": {
+      "shape": "corner_sw",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_corner_sw_construction.png",
+      "glb": "concrete_wall_l10_corner_sw_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_sw_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_sw_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_sw_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_sw_damaged": {
+      "shape": "corner_sw",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l10_corner_sw_damaged.png",
+      "glb": "concrete_wall_l10_corner_sw_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_sw_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_sw_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_sw_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_sw_ruined": {
+      "shape": "corner_sw",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_corner_sw_ruined.png",
+      "glb": "concrete_wall_l10_corner_sw_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_sw_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_sw_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_sw_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_wn_active": {
+      "shape": "corner_wn",
+      "state": "active",
+      "level": 10,
+      "triangles": 2180,
+      "objects": 51,
+      "png": "concrete_wall_l10_corner_wn_active.png",
+      "glb": "concrete_wall_l10_corner_wn_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_wn_active_LOD0.glb",
+          "triangles": 2180
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_wn_active_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_wn_active_LOD2.glb",
+          "triangles": 772
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_wn_construction": {
+      "shape": "corner_wn",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1476,
+      "objects": 35,
+      "png": "concrete_wall_l10_corner_wn_construction.png",
+      "glb": "concrete_wall_l10_corner_wn_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_wn_construction_LOD0.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_wn_construction_LOD1.glb",
+          "triangles": 684
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_wn_construction_LOD2.glb",
+          "triangles": 684
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_wn_damaged": {
+      "shape": "corner_wn",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 1564,
+      "objects": 37,
+      "png": "concrete_wall_l10_corner_wn_damaged.png",
+      "glb": "concrete_wall_l10_corner_wn_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_wn_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_wn_damaged_LOD1.glb",
+          "triangles": 772
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_wn_damaged_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_corner_wn_ruined": {
+      "shape": "corner_wn",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1212,
+      "objects": 29,
+      "png": "concrete_wall_l10_corner_wn_ruined.png",
+      "glb": "concrete_wall_l10_corner_wn_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_corner_wn_ruined_LOD0.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_corner_wn_ruined_LOD1.glb",
+          "triangles": 244
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_corner_wn_ruined_LOD2.glb",
+          "triangles": 244
+        }
+      ]
+    },
+    "concrete_wall_l10_t_nes_active": {
+      "shape": "t_nes",
+      "state": "active",
+      "level": 10,
+      "triangles": 2884,
+      "objects": 67,
+      "png": "concrete_wall_l10_t_nes_active.png",
+      "glb": "concrete_wall_l10_t_nes_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_nes_active_LOD0.glb",
+          "triangles": 2884
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_nes_active_LOD1.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_nes_active_LOD2.glb",
+          "triangles": 1036
+        }
+      ]
+    },
+    "concrete_wall_l10_t_nes_construction": {
+      "shape": "t_nes",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l10_t_nes_construction.png",
+      "glb": "concrete_wall_l10_t_nes_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_nes_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_nes_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_nes_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l10_t_nes_damaged": {
+      "shape": "t_nes",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l10_t_nes_damaged.png",
+      "glb": "concrete_wall_l10_t_nes_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_nes_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_nes_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_nes_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_nes_ruined": {
+      "shape": "t_nes",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l10_t_nes_ruined.png",
+      "glb": "concrete_wall_l10_t_nes_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_nes_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_nes_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_nes_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_esw_active": {
+      "shape": "t_esw",
+      "state": "active",
+      "level": 10,
+      "triangles": 2884,
+      "objects": 67,
+      "png": "concrete_wall_l10_t_esw_active.png",
+      "glb": "concrete_wall_l10_t_esw_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_esw_active_LOD0.glb",
+          "triangles": 2884
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_esw_active_LOD1.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_esw_active_LOD2.glb",
+          "triangles": 1036
+        }
+      ]
+    },
+    "concrete_wall_l10_t_esw_construction": {
+      "shape": "t_esw",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l10_t_esw_construction.png",
+      "glb": "concrete_wall_l10_t_esw_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_esw_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_esw_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_esw_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l10_t_esw_damaged": {
+      "shape": "t_esw",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l10_t_esw_damaged.png",
+      "glb": "concrete_wall_l10_t_esw_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_esw_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_esw_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_esw_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_esw_ruined": {
+      "shape": "t_esw",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l10_t_esw_ruined.png",
+      "glb": "concrete_wall_l10_t_esw_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_esw_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_esw_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_esw_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_swn_active": {
+      "shape": "t_swn",
+      "state": "active",
+      "level": 10,
+      "triangles": 2884,
+      "objects": 67,
+      "png": "concrete_wall_l10_t_swn_active.png",
+      "glb": "concrete_wall_l10_t_swn_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_swn_active_LOD0.glb",
+          "triangles": 2884
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_swn_active_LOD1.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_swn_active_LOD2.glb",
+          "triangles": 1036
+        }
+      ]
+    },
+    "concrete_wall_l10_t_swn_construction": {
+      "shape": "t_swn",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l10_t_swn_construction.png",
+      "glb": "concrete_wall_l10_t_swn_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_swn_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_swn_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_swn_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l10_t_swn_damaged": {
+      "shape": "t_swn",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l10_t_swn_damaged.png",
+      "glb": "concrete_wall_l10_t_swn_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_swn_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_swn_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_swn_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_swn_ruined": {
+      "shape": "t_swn",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l10_t_swn_ruined.png",
+      "glb": "concrete_wall_l10_t_swn_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_swn_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_swn_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_swn_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_wne_active": {
+      "shape": "t_wne",
+      "state": "active",
+      "level": 10,
+      "triangles": 2884,
+      "objects": 67,
+      "png": "concrete_wall_l10_t_wne_active.png",
+      "glb": "concrete_wall_l10_t_wne_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_wne_active_LOD0.glb",
+          "triangles": 2884
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_wne_active_LOD1.glb",
+          "triangles": 2092
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_wne_active_LOD2.glb",
+          "triangles": 1036
+        }
+      ]
+    },
+    "concrete_wall_l10_t_wne_construction": {
+      "shape": "t_wne",
+      "state": "construction",
+      "level": 10,
+      "triangles": 1916,
+      "objects": 45,
+      "png": "concrete_wall_l10_t_wne_construction.png",
+      "glb": "concrete_wall_l10_t_wne_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_wne_construction_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_wne_construction_LOD1.glb",
+          "triangles": 992
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_wne_construction_LOD2.glb",
+          "triangles": 992
+        }
+      ]
+    },
+    "concrete_wall_l10_t_wne_damaged": {
+      "shape": "t_wne",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 2048,
+      "objects": 48,
+      "png": "concrete_wall_l10_t_wne_damaged.png",
+      "glb": "concrete_wall_l10_t_wne_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_wne_damaged_LOD0.glb",
+          "triangles": 2048
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_wne_damaged_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_wne_damaged_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_t_wne_ruined": {
+      "shape": "t_wne",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1520,
+      "objects": 36,
+      "png": "concrete_wall_l10_t_wne_ruined.png",
+      "glb": "concrete_wall_l10_t_wne_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_t_wne_ruined_LOD0.glb",
+          "triangles": 1520
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_t_wne_ruined_LOD1.glb",
+          "triangles": 332
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_t_wne_ruined_LOD2.glb",
+          "triangles": 332
+        }
+      ]
+    },
+    "concrete_wall_l10_cross_active": {
+      "shape": "cross",
+      "state": "active",
+      "level": 10,
+      "triangles": 3588,
+      "objects": 83,
+      "png": "concrete_wall_l10_cross_active.png",
+      "glb": "concrete_wall_l10_cross_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_cross_active_LOD0.glb",
+          "triangles": 3588
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_cross_active_LOD1.glb",
+          "triangles": 2708
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_cross_active_LOD2.glb",
+          "triangles": 1300
+        }
+      ]
+    },
+    "concrete_wall_l10_cross_construction": {
+      "shape": "cross",
+      "state": "construction",
+      "level": 10,
+      "triangles": 2356,
+      "objects": 55,
+      "png": "concrete_wall_l10_cross_construction.png",
+      "glb": "concrete_wall_l10_cross_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_cross_construction_LOD0.glb",
+          "triangles": 2356
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_cross_construction_LOD1.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_cross_construction_LOD2.glb",
+          "triangles": 1300
+        }
+      ]
+    },
+    "concrete_wall_l10_cross_damaged": {
+      "shape": "cross",
+      "state": "damaged",
+      "level": 10,
+      "triangles": 2532,
+      "objects": 59,
+      "png": "concrete_wall_l10_cross_damaged.png",
+      "glb": "concrete_wall_l10_cross_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_cross_damaged_LOD0.glb",
+          "triangles": 2532
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_cross_damaged_LOD1.glb",
+          "triangles": 1476
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_cross_damaged_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    },
+    "concrete_wall_l10_cross_ruined": {
+      "shape": "cross",
+      "state": "ruined",
+      "level": 10,
+      "triangles": 1828,
+      "objects": 43,
+      "png": "concrete_wall_l10_cross_ruined.png",
+      "glb": "concrete_wall_l10_cross_ruined_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "concrete_wall_l10_cross_ruined_LOD0.glb",
+          "triangles": 1828
+        },
+        {
+          "name": "LOD1",
+          "glb": "concrete_wall_l10_cross_ruined_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "glb": "concrete_wall_l10_cross_ruined_LOD2.glb",
+          "triangles": 420
+        }
+      ]
+    }
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 800,
+          "max": 18000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.65,
+        "triangle_budget": {
+          "min": 400,
+          "max": 12000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.35,
+        "triangle_budget": {
+          "min": 150,
+          "max": 7000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "concrete_core",
+      "junction_pylon",
+      "level_upgrades"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{shape}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  }
+}

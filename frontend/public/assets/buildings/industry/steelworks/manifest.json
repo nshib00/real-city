@@ -1,0 +1,1452 @@
+{
+  "asset_id": "steelworks",
+  "display_name": "Сталеплавильный завод",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/steelworks/steelworks_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_levels.glb",
+  "material_map": {
+    "iron": {
+      "visible_as": "входные железные заготовки",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "coal": {
+      "visible_as": "угольный топливный лоток",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "огнестойкий цоколь и щиты",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "brick": {
+      "visible_as": "кладка высокой печи",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "mechanism": {
+      "visible_as": "воздушный привод и тележка",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "заготовки у входа",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "steel": {
+      "visible_as": "пояса, ковш и тележка",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "armor_plates": {
+      "visible_as": "жарозащитный экран",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_beams": {
+      "visible_as": "силовые опоры поздней печи",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "super_mechanism": {
+      "visible_as": "точный привод наддува",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "steelworks_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1460,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5825001001358032
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_active_LOD0.glb",
+          "triangles": 1460
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_active_LOD1.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_active_LOD2.glb",
+          "triangles": 398
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_active.png"
+    },
+    {
+      "id": "steelworks_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 620,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_construction_LOD0.glb",
+          "triangles": 620
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_construction_LOD1.glb",
+          "triangles": 338
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_construction_LOD2.glb",
+          "triangles": 168
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_construction.png"
+    },
+    {
+      "id": "steelworks_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 620,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_damaged_LOD0.glb",
+          "triangles": 620
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_damaged_LOD1.glb",
+          "triangles": 338
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_damaged_LOD2.glb",
+          "triangles": 168
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l01_damaged.png"
+    },
+    {
+      "id": "steelworks_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 1548,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.652500033378601
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_active_LOD0.glb",
+          "triangles": 1548
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_active_LOD1.glb",
+          "triangles": 836
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_active_LOD2.glb",
+          "triangles": 422
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_active.png"
+    },
+    {
+      "id": "steelworks_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 620,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_construction_LOD0.glb",
+          "triangles": 620
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_construction_LOD1.glb",
+          "triangles": 338
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_construction_LOD2.glb",
+          "triangles": 168
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_construction.png"
+    },
+    {
+      "id": "steelworks_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 620,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_damaged_LOD0.glb",
+          "triangles": 620
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_damaged_LOD1.glb",
+          "triangles": 338
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_damaged_LOD2.glb",
+          "triangles": 168
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l02_damaged.png"
+    },
+    {
+      "id": "steelworks_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2064,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7225000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_active_LOD0.glb",
+          "triangles": 2064
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_active_LOD1.glb",
+          "triangles": 1116
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_active_LOD2.glb",
+          "triangles": 562
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_active.png"
+    },
+    {
+      "id": "steelworks_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_construction.png"
+    },
+    {
+      "id": "steelworks_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l03_damaged.png"
+    },
+    {
+      "id": "steelworks_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 2152,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7925000190734863
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_active_LOD0.glb",
+          "triangles": 2152
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_active_LOD1.glb",
+          "triangles": 1164
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_active_LOD2.glb",
+          "triangles": 586
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_active.png"
+    },
+    {
+      "id": "steelworks_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_construction.png"
+    },
+    {
+      "id": "steelworks_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l04_damaged.png"
+    },
+    {
+      "id": "steelworks_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 2240,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8625000715255737
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_active_LOD0.glb",
+          "triangles": 2240
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_active_LOD1.glb",
+          "triangles": 1212
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_active_LOD2.glb",
+          "triangles": 610
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_active.png"
+    },
+    {
+      "id": "steelworks_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_construction.png"
+    },
+    {
+      "id": "steelworks_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l05_damaged.png"
+    },
+    {
+      "id": "steelworks_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 2392,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9325000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_active_LOD0.glb",
+          "triangles": 2392
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_active_LOD1.glb",
+          "triangles": 1292
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_active_LOD2.glb",
+          "triangles": 650
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_active.png"
+    },
+    {
+      "id": "steelworks_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_construction.png"
+    },
+    {
+      "id": "steelworks_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l06_damaged.png"
+    },
+    {
+      "id": "steelworks_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 2480,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.002500057220459
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_active_LOD0.glb",
+          "triangles": 2480
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_active_LOD1.glb",
+          "triangles": 1340
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_active_LOD2.glb",
+          "triangles": 674
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_active.png"
+    },
+    {
+      "id": "steelworks_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_construction.png"
+    },
+    {
+      "id": "steelworks_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l07_damaged.png"
+    },
+    {
+      "id": "steelworks_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 2568,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.072499990463257
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_active_LOD0.glb",
+          "triangles": 2568
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_active_LOD1.glb",
+          "triangles": 1388
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_active_LOD2.glb",
+          "triangles": 698
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_active.png"
+    },
+    {
+      "id": "steelworks_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_construction.png"
+    },
+    {
+      "id": "steelworks_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l08_damaged.png"
+    },
+    {
+      "id": "steelworks_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 2700,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.142500162124634
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_active_LOD0.glb",
+          "triangles": 2700
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_active_LOD1.glb",
+          "triangles": 1460
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_active_LOD2.glb",
+          "triangles": 734
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_active.png"
+    },
+    {
+      "id": "steelworks_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_construction.png"
+    },
+    {
+      "id": "steelworks_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l09_damaged.png"
+    },
+    {
+      "id": "steelworks_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 2760,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2125000953674316
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_active_LOD0.glb",
+          "triangles": 2760
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_active_LOD1.glb",
+          "triangles": 1492
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_active_LOD2.glb",
+          "triangles": 750
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_active.png"
+    },
+    {
+      "id": "steelworks_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9650000333786011
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_construction_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_construction_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_construction_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_construction.png"
+    },
+    {
+      "id": "steelworks_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9249999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_damaged_LOD0.glb",
+          "triangles": 796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_damaged_LOD1.glb",
+          "triangles": 434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_damaged_LOD2.glb",
+          "triangles": 216
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/steelworks/steelworks_l10_damaged.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\industry\\steelworks.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1,
+        "triangle_budget": {
+          "min": 500,
+          "max": 10000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 220,
+          "max": 5500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 100,
+          "max": 3000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "blast_furnace",
+      "coal_feed",
+      "ingots",
+      "ladle"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

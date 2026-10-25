@@ -1,322 +1,1282 @@
 [
   {
-    "asset": "stone_wall_single_active",
-    "triangles": 948,
+    "asset": "stone_wall_l04_single_active",
+    "triangles": 4600,
     "nonmanifold_edges": 0
   },
   {
-    "asset": "stone_wall_single_construction",
-    "triangles": 1256,
+    "asset": "stone_wall_l04_single_construction",
+    "triangles": 3148,
     "nonmanifold_edges": 0
   },
   {
-    "asset": "stone_wall_single_damaged",
-    "triangles": 1388,
+    "asset": "stone_wall_l04_single_damaged",
+    "triangles": 3236,
     "nonmanifold_edges": 0
   },
   {
-    "asset": "stone_wall_single_ruined",
-    "triangles": 1564,
+    "asset": "stone_wall_l04_single_ruined",
+    "triangles": 2444,
     "nonmanifold_edges": 0
   },
   {
-    "asset": "stone_wall_end_n_active",
-    "triangles": 948,
+    "asset": "stone_wall_l04_end_n_active",
+    "triangles": 2620,
     "nonmanifold_edges": 0
   },
   {
-    "asset": "stone_wall_end_n_construction",
-    "triangles": 1256,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_n_damaged",
-    "triangles": 1388,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_n_ruined",
-    "triangles": 1564,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_e_active",
-    "triangles": 948,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_e_construction",
-    "triangles": 1256,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_e_damaged",
-    "triangles": 1388,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_e_ruined",
-    "triangles": 1564,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_s_active",
-    "triangles": 948,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_s_construction",
-    "triangles": 1256,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_s_damaged",
-    "triangles": 1388,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_s_ruined",
-    "triangles": 1564,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_w_active",
-    "triangles": 948,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_w_construction",
-    "triangles": 1256,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_w_damaged",
-    "triangles": 1388,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_end_w_ruined",
-    "triangles": 1564,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ns_active",
-    "triangles": 1212,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ns_construction",
-    "triangles": 1520,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ns_damaged",
-    "triangles": 1652,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ns_ruined",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ew_active",
-    "triangles": 1212,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ew_construction",
-    "triangles": 1520,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ew_damaged",
-    "triangles": 1652,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_straight_ew_ruined",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_ne_active",
-    "triangles": 1212,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_ne_construction",
-    "triangles": 1520,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_ne_damaged",
-    "triangles": 1652,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_ne_ruined",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_es_active",
-    "triangles": 1212,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_es_construction",
-    "triangles": 1520,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_es_damaged",
-    "triangles": 1652,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_es_ruined",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_sw_active",
-    "triangles": 1212,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_sw_construction",
-    "triangles": 1520,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_sw_damaged",
-    "triangles": 1652,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_sw_ruined",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_wn_active",
-    "triangles": 1212,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_wn_construction",
-    "triangles": 1520,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_wn_damaged",
-    "triangles": 1652,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_corner_wn_ruined",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_nes_active",
-    "triangles": 1476,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_nes_construction",
-    "triangles": 1784,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_nes_damaged",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_nes_ruined",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_esw_active",
-    "triangles": 1476,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_esw_construction",
-    "triangles": 1784,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_esw_damaged",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_esw_ruined",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_swn_active",
-    "triangles": 1476,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_swn_construction",
-    "triangles": 1784,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_swn_damaged",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_swn_ruined",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_wne_active",
-    "triangles": 1476,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_wne_construction",
-    "triangles": 1784,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_wne_damaged",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_t_wne_ruined",
-    "triangles": 1916,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_cross_active",
-    "triangles": 1740,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_cross_construction",
-    "triangles": 2004,
-    "nonmanifold_edges": 0
-  },
-  {
-    "asset": "stone_wall_cross_damaged",
+    "asset": "stone_wall_l04_end_n_construction",
     "triangles": 2180,
     "nonmanifold_edges": 0
   },
   {
-    "asset": "stone_wall_cross_ruined",
-    "triangles": 2092,
+    "asset": "stone_wall_l04_end_n_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_n_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_e_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_e_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_e_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_e_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_s_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_s_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_s_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_s_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_w_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_w_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_w_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_end_w_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ns_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ns_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ns_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ns_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ew_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ew_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ew_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_straight_ew_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_ne_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_ne_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_ne_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_ne_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_es_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_es_construction",
+    "triangles": 2532,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_es_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_es_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_sw_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_sw_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_sw_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_sw_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_wn_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_wn_construction",
+    "triangles": 3764,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_wn_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_corner_wn_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_nes_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_nes_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_nes_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_nes_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_esw_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_esw_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_esw_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_esw_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_swn_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_swn_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_swn_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_swn_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_wne_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_wne_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_wne_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_t_wne_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_cross_active",
+    "triangles": 8560,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_cross_construction",
+    "triangles": 5700,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_cross_damaged",
+    "triangles": 5876,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l04_cross_ruined",
+    "triangles": 4292,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_single_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_single_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_single_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_single_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_n_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_n_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_n_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_n_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_e_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_e_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_e_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_e_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_s_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_s_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_s_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_s_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_w_active",
+    "triangles": 2620,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_w_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_w_damaged",
+    "triangles": 1916,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_end_w_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ns_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ns_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ns_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ns_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ew_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ew_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ew_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_straight_ew_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_ne_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_ne_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_ne_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_ne_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_es_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_es_construction",
+    "triangles": 2532,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_es_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_es_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_sw_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_sw_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_sw_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_sw_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_wn_active",
+    "triangles": 4600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_wn_construction",
+    "triangles": 3764,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_wn_damaged",
+    "triangles": 3236,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_corner_wn_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_nes_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_nes_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_nes_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_nes_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_esw_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_esw_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_esw_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_esw_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_swn_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_swn_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_swn_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_swn_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_wne_active",
+    "triangles": 6580,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_wne_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_wne_damaged",
+    "triangles": 4556,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_t_wne_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_cross_active",
+    "triangles": 8560,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_cross_construction",
+    "triangles": 5700,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_cross_damaged",
+    "triangles": 5876,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l05_cross_ruined",
+    "triangles": 4292,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_single_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_single_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_single_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_single_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_n_active",
+    "triangles": 3456,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_n_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_n_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_n_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_e_active",
+    "triangles": 3456,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_e_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_e_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_e_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_s_active",
+    "triangles": 3456,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_s_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_s_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_s_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_w_active",
+    "triangles": 3456,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_w_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_w_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_end_w_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ns_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ns_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ns_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ns_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ew_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ew_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ew_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_straight_ew_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_ne_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_ne_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_ne_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_ne_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_es_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_es_construction",
+    "triangles": 2532,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_es_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_es_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_sw_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_sw_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_sw_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_sw_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_wn_active",
+    "triangles": 6272,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_wn_construction",
+    "triangles": 3764,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_wn_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_corner_wn_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_nes_active",
+    "triangles": 9088,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_nes_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_nes_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_nes_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_esw_active",
+    "triangles": 9088,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_esw_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_esw_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_esw_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_swn_active",
+    "triangles": 9088,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_swn_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_swn_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_swn_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_wne_active",
+    "triangles": 9088,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_wne_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_wne_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_t_wne_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_cross_active",
+    "triangles": 11904,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_cross_construction",
+    "triangles": 5700,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_cross_damaged",
+    "triangles": 6228,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l06_cross_ruined",
+    "triangles": 4292,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_single_active",
+    "triangles": 6448,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_single_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_single_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_single_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_n_active",
+    "triangles": 3632,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_n_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_n_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_n_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_e_active",
+    "triangles": 3632,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_e_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_e_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_e_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_s_active",
+    "triangles": 3632,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_s_construction",
+    "triangles": 1564,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_s_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_s_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_w_active",
+    "triangles": 3632,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_w_construction",
+    "triangles": 2180,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_w_damaged",
+    "triangles": 2004,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_end_w_ruined",
+    "triangles": 1520,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ns_active",
+    "triangles": 6536,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ns_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ns_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ns_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ew_active",
+    "triangles": 6536,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ew_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ew_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_straight_ew_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_ne_active",
+    "triangles": 6536,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_ne_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_ne_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_ne_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_es_active",
+    "triangles": 6536,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_es_construction",
+    "triangles": 2532,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_es_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_es_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_sw_active",
+    "triangles": 6536,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_sw_construction",
+    "triangles": 3148,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_sw_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_sw_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_wn_active",
+    "triangles": 6536,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_wn_construction",
+    "triangles": 3764,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_wn_damaged",
+    "triangles": 3412,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_corner_wn_ruined",
+    "triangles": 2444,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_nes_active",
+    "triangles": 9440,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_nes_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_nes_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_nes_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_esw_active",
+    "triangles": 9440,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_esw_construction",
+    "triangles": 4116,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_esw_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_esw_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_swn_active",
+    "triangles": 9440,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_swn_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_swn_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_swn_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_wne_active",
+    "triangles": 9440,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_wne_construction",
+    "triangles": 4732,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_wne_damaged",
+    "triangles": 4820,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_t_wne_ruined",
+    "triangles": 3368,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_cross_active",
+    "triangles": 12344,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_cross_construction",
+    "triangles": 5700,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_cross_damaged",
+    "triangles": 6228,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "stone_wall_l07_cross_ruined",
+    "triangles": 4292,
     "nonmanifold_edges": 0
   }
 ]

@@ -1,0 +1,586 @@
+{
+  "asset_id": "field_bed",
+  "category": "fields",
+  "kind": "building",
+  "display_name": "Грядка ветролиста",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 1 добавляет первый ряд. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "wood"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 4500
+      },
+      "adds": [
+        "первый_ряд",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 2 добавляет дополнительные секции. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "wood",
+        "flax"
+      ],
+      "triangle_budget": {
+        "min": 800,
+        "max": 5000
+      },
+      "adds": [
+        "дополнительные_секции",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 3 добавляет крупные ростки. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "wood",
+        "flax",
+        "planks"
+      ],
+      "triangle_budget": {
+        "min": 900,
+        "max": 5500
+      },
+      "adds": [
+        "крупные_ростки",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 4 добавляет разделитель рядов. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "flax",
+        "windleaf",
+        "planks"
+      ],
+      "triangle_budget": {
+        "min": 1000,
+        "max": 6000
+      },
+      "adds": [
+        "разделитель_рядов",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 5 добавляет сортировочная зона. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "windleaf",
+        "planks",
+        "rope"
+      ],
+      "triangle_budget": {
+        "min": 1100,
+        "max": 6500
+      },
+      "adds": [
+        "сортировочная_зона",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 6 добавляет усиленный бортик. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "planks",
+        "stone",
+        "rope",
+        "windleaf"
+      ],
+      "triangle_budget": {
+        "min": 1200,
+        "max": 7000
+      },
+      "adds": [
+        "усиленный_бортик",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 7 добавляет дополнительные опоры. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "planks",
+        "stone",
+        "rope",
+        "fabric"
+      ],
+      "triangle_budget": {
+        "min": 1300,
+        "max": 7500
+      },
+      "adds": [
+        "дополнительные_опоры",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 8 добавляет поливная линия. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "stone_block",
+        "rope",
+        "fabric"
+      ],
+      "triangle_budget": {
+        "min": 1400,
+        "max": 8000
+      },
+      "adds": [
+        "поливная_линия",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 9 добавляет контрольная стойка. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "stone_block",
+        "fabric",
+        "iron_ingot"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "контрольная_стойка",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 10,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 10 добавляет редкий акцент. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "stone_block",
+        "iron_ingot"
+      ],
+      "triangle_budget": {
+        "min": 1600,
+        "max": 9000
+      },
+      "adds": [
+        "редкий_акцент",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 11,
+      "visual_goal": "Грядка ветролиста с резными опорами и широкими листьями; уровень 11 добавляет финальная садовая секция. Крупные детали: ростовые ряды, цветовая метка, редкий лист.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "iron_ingot",
+        "gold_ingot",
+        "emerald_dust"
+      ],
+      "triangle_budget": {
+        "min": 1700,
+        "max": 9500
+      },
+      "adds": [
+        "финальная_садовая_секция",
+        "ростовые_ряды"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "stage01",
+    "stage02",
+    "stage03",
+    "stage04",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "material_map": {
+    "coins": {
+      "visible_as": "аккуратность фасада и защищённый учёт вложений",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "priority": "accent"
+    },
+    "wood": {
+      "visible_as": "деревянные опоры, брусья и склад материала",
+      "levels": [
+        1,
+        2,
+        3
+      ],
+      "priority": "secondary"
+    },
+    "flax": {
+      "visible_as": "малый читаемый акцент ресурса flax в конструкции или продукции",
+      "levels": [
+        2,
+        3,
+        4
+      ],
+      "priority": "secondary"
+    },
+    "planks": {
+      "visible_as": "дощатые настилы, стойки и рабочие поверхности",
+      "levels": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "priority": "secondary"
+    },
+    "windleaf": {
+      "visible_as": "малый читаемый акцент ресурса windleaf в конструкции или продукции",
+      "levels": [
+        4,
+        5,
+        6
+      ],
+      "priority": "secondary"
+    },
+    "rope": {
+      "visible_as": "натянутые стяжки и подъёмные канаты",
+      "levels": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "priority": "secondary"
+    },
+    "stone": {
+      "visible_as": "крупные камни фундамента и низкие стены",
+      "levels": [
+        6,
+        7
+      ],
+      "priority": "secondary"
+    },
+    "fabric": {
+      "visible_as": "тканевый навес и функциональные тенты",
+      "levels": [
+        7,
+        8,
+        9
+      ],
+      "priority": "secondary"
+    },
+    "premium_planks": {
+      "visible_as": "малый читаемый акцент ресурса premium_planks в конструкции или продукции",
+      "levels": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "priority": "secondary"
+    },
+    "stone_block": {
+      "visible_as": "тёсаные блоки цоколя и силовых опор",
+      "levels": [
+        8,
+        9,
+        10
+      ],
+      "priority": "secondary"
+    },
+    "iron_ingot": {
+      "visible_as": "железные крепления, петли и рабочий привод",
+      "levels": [
+        9,
+        10,
+        11
+      ],
+      "priority": "secondary"
+    },
+    "gold_ingot": {
+      "visible_as": "малый читаемый акцент ресурса gold_ingot в конструкции или продукции",
+      "levels": [
+        11
+      ],
+      "priority": "secondary"
+    },
+    "emerald_dust": {
+      "visible_as": "малый читаемый акцент ресурса emerald_dust в конструкции или продукции",
+      "levels": [
+        11
+      ],
+      "priority": "secondary"
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Сохранять силуэт «Грядка ветролиста с резными опорами и широкими листьями»; каждый следующий уровень добавляет реальный объём или узел."
+    },
+    "height": {
+      "rule": "Высота растет постепенно и остается читаемой в 1x1 footprint."
+    },
+    "materials": {
+      "rule": "Материалы появляются не раньше уровня, где они есть в цене строительства."
+    },
+    "props": {
+      "rule": "Крупные детали семейства: ростовые ряды, цветовая метка, редкий лист; мелкий шум не маскирует вход."
+    },
+    "late_elements": {
+      "rule": "Поздние узлы усиливают основную функцию, не меняя идентичность семейства."
+    },
+    "constraints": [
+      "Сохранять ориентацию входа.",
+      "Сохранять основной силуэт между active/construction/damaged."
+    ]
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Готовый объект: Грядка ветролиста с резными опорами и широкими листьями; рабочие детали чисты и читаемы."
+    },
+    "construction": {
+      "rule": "Незавершённый каркас целевого уровня, не установлен один крупный функциональный узел.",
+      "required_elements": [
+        "scaffolding",
+        "unfinished_frame",
+        "stacked_materials"
+      ]
+    },
+    "damaged": {
+      "rule": "Сломан крупный функциональный узел, силуэт и ориентация входа сохраняются.",
+      "required_elements": [
+        "broken_roof_edges",
+        "cracks",
+        "debris"
+      ],
+      "forbidden_elements": [
+        "full_collapse"
+      ]
+    },
+    "ruined": {
+      "rule": "Остатки корпуса и материалов читаются как тот же объект, не активная постройка."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "isometric-style",
+      "fantasy-worlds",
+      "stylized-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "environment-artist"
+    ],
+    "production": [
+      "materials",
+      "texture-workflow",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 9500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 4700
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 150,
+          "max": 2350
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "footprint",
+      "primary silhouette",
+      "entrance orientation",
+      "largest readable props"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "atlas_policy": {
+    "enabled": true,
+    "image_format": "webp",
+    "json_naming": "{asset_id}.atlas.json",
+    "image_naming": "{asset_id}.webp",
+    "padding_px": 2,
+    "max_texture_size": 4096,
+    "include_static_sprites": true,
+    "include_animation_frames": true
+  },
+  "animation_policy": {
+    "frame_size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ],
+    "frame_naming": "{asset_id}_l{level:02d}_{animation}_{frame:04d}.png",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 8,
+      "output_name": "animation-contact-sheet.png"
+    },
+    "building_overlays": [
+      {
+        "id": "working",
+        "type": "overlay",
+        "fps": 8,
+        "frames": 12,
+        "loop": true,
+        "frame_prefix": "{asset_id}_l{level:02d}_working_",
+        "states": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/fields/windleaf_bed",
+    "source_dir": "frontend/src/assets/buildings/fields/windleaf_bed",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/fields/windleaf-bed.md"
+    ],
+    "art_guide": "docs/art/visual-style-guide.md",
+    "existing_generators": [],
+    "existing_assets": []
+  },
+  "notes": [
+    "Первичная visual-spec по действующему каталогу; художественную приёмку и генерацию выполнять по контракту 22.2."
+  ],
+  "catalog_status": "registered"
+}

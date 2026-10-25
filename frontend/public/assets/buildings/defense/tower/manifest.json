@@ -1,0 +1,257 @@
+{
+  "asset_id": "tower",
+  "display_name": "Сторожевая башня",
+  "category": "defense",
+  "levels": [
+    1
+  ],
+  "states": [
+    "construction",
+    "active",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/defense/tower/tower_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/defense/tower/tower_levels.glb",
+  "material_map": {
+    "wood": {
+      "visible_as": "четыре опорных столба, раскосы, перила и лестница",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "stone": {
+      "visible_as": "кладка цоколя и четыре башмака опор",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "planks": {
+      "visible_as": "дощатый настил, ступени и лёгкий навес",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "железные обоймы, заклёпки и каркас фонаря",
+      "priority": "secondary",
+      "levels": [
+        1
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "tower_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 2288,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0999999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD0.glb",
+          "triangles": 2288
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD1.glb",
+          "triangles": 1248
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD2.glb",
+          "triangles": 624
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/tower/tower_l01_construction.png"
+    },
+    {
+      "id": "tower_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 4680,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.8949999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD0.glb",
+          "triangles": 4680
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD1.glb",
+          "triangles": 2540
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD2.glb",
+          "triangles": 1260
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/tower/tower_l01_active.png"
+    },
+    {
+      "id": "tower_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 3688,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.242999792098999
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD0.glb",
+          "triangles": 3688
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD1.glb",
+          "triangles": 2004
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD2.glb",
+          "triangles": 996
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/tower/tower_l01_damaged.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\defense\\tower.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 500,
+          "max": 5000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 250,
+          "max": 3200
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 120,
+          "max": 1900
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "plinth",
+      "legs",
+      "deck",
+      "lantern"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "construction",
+        "active",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1000,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

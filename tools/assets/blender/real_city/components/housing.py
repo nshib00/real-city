@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from .. import geometry
-from . import foundations, landscaping, props, roofs
+from . import foundations, landscaping, props, roofs, stone_house_pilot
 from .common import add_chimney, add_door, add_path, add_window, add_wood_house_chimney, mat
 from .walls import add_corner_piers, add_plank_wall, add_readable_stone_wall, add_stone_block_wall, add_wood_house_wall_set
 
@@ -64,21 +64,25 @@ def add_wood_house_shell(name: str, collection, mats: dict, *, level=1, damaged=
     add_wood_house_chimney(f"{name}_chimney", collection, mats, (-width * 0.40, depth * 0.24, roof_z + 0.12), level=level, smoke=True, damaged=damaged)
 
 
-def add_stone_house_shell(name: str, collection, mats: dict, *, level=1, damaged=False, rune_roof=False):
-    width = 1.42 + level * 0.05
-    depth = 1.12 + level * 0.03
-    height = 0.88 + level * 0.06
+def add_stone_house_shell(name: str, collection, mats: dict, *, level=1, damaged=False, rune_roof=False, detailed_pilot=False, footprint_scale=1.0, height_override=None, window_scale=1.0):
+    width = (1.42 + level * 0.05) * footprint_scale
+    depth = (1.12 + level * 0.03) * footprint_scale
+    height = height_override if height_override is not None else 0.88 + level * 0.06
     foundation_h = 0.22
     foundations.add_foundation(f"{name}_spec", collection, mats, width=width, depth=depth, height="medium", thickness="medium", material="stone_block", loc=(0, 0, 0), damaged=damaged)
     add_stone_block_wall(f"{name}_stone_body", collection, mats, (0, 0, foundation_h + height / 2), (width, depth, height), rows=3 + level // 2, damaged=damaged)
+    if detailed_pilot:
+        stone_house_pilot.add_full_stone_cladding(f"{name}_masonry", collection, mats, width=width, depth=depth, height=height, base_z=foundation_h)
     roof_loc = (0, 0, foundation_h + height)
-    if rune_roof:
+    if detailed_pilot:
+        stone_house_pilot.add_green_tiled_roof(f"{name}_roof", collection, mats, width=width, depth=depth, roof_z=roof_loc[2], level=level)
+    elif rune_roof:
         roofs.add_rune_tile_roof(f"{name}_rune", collection, mats, roof_loc, (width + 0.24, depth + 0.18, 0.36), damaged=damaged)
     else:
         roofs.add_gable_roof(f"{name}_stone", collection, mats, roof_loc, (width + 0.24, depth + 0.18, 0.36), color_role="brick_warm", damaged=damaged)
     add_door(f"{name}_stone", collection, mats, (0, -depth / 2 - 0.060, foundation_h + 0.32), (0.44, 0.050, 0.64), material_role="wood_dark", reinforced=True, damaged=damaged)
-    add_window(f"{name}_stone_l", collection, mats, (-width * 0.28, -depth / 2 - 0.060, foundation_h + 0.66), (0.28, 0.034, 0.28), frame_role="metal_worn", damaged=damaged)
-    add_window(f"{name}_stone_r", collection, mats, (width * 0.28, -depth / 2 - 0.060, foundation_h + 0.66), (0.28, 0.034, 0.28), frame_role="metal_worn", damaged=damaged)
+    add_window(f"{name}_stone_l", collection, mats, (-width * 0.28, -depth / 2 - 0.060, foundation_h + 0.66), (0.28 * window_scale, 0.034, 0.28 * window_scale), frame_role="metal_worn", damaged=damaged)
+    add_window(f"{name}_stone_r", collection, mats, (width * 0.28, -depth / 2 - 0.060, foundation_h + 0.66), (0.28 * window_scale, 0.034, 0.28 * window_scale), frame_role="metal_worn", damaged=damaged)
     add_chimney(f"{name}_stone_chimney", collection, mats, (-width * 0.34, depth * 0.20, foundation_h + height + 0.14), height=0.42, damaged=damaged)
 
 

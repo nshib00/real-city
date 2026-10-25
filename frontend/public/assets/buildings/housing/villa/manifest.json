@@ -1,0 +1,306 @@
+{
+  "asset_id": "villa",
+  "display_name": "Вилла",
+  "category": "housing",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "states": [
+    "active"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blends": {
+    "1": "frontend/public/assets/buildings/housing/villa_v2_test/villa_l01_active_v2.blend",
+    "2": "frontend/public/assets/buildings/housing/villa_levels_test/villa_l02_active.blend",
+    "3": "frontend/public/assets/buildings/housing/villa_levels_test/villa_l03_active.blend",
+    "4": "frontend/public/assets/buildings/housing/villa_levels_test/villa_l04_active.blend",
+    "5": "frontend/public/assets/buildings/housing/villa_levels_test/villa_l05_active.blend"
+  },
+  "material_map": {
+    "stone": "мраморный корпус, колонны, портик, террасы",
+    "glass": "окна и балконная дверь",
+    "gold": "обрамления, кровельный декор и колонны"
+  },
+  "items": [
+    {
+      "id": "villa_l01_active",
+      "level": 1,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/housing/villa/villa_l01_active.png",
+      "glb": "frontend/public/assets/buildings/housing/villa/villa_l01_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l01_active_LOD0.glb",
+          "triangles": 15872
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.48,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l01_active_LOD1.glb",
+          "triangles": 7376
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l01_active_LOD2.glb",
+          "triangles": 3160
+        }
+      ],
+      "triangles": 15872,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.348565101623535
+        ]
+      ]
+    },
+    {
+      "id": "villa_l02_active",
+      "level": 2,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/housing/villa/villa_l02_active.png",
+      "glb": "frontend/public/assets/buildings/housing/villa/villa_l02_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l02_active_LOD0.glb",
+          "triangles": 18320
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.48,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l02_active_LOD1.glb",
+          "triangles": 8640
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l02_active_LOD2.glb",
+          "triangles": 3842
+        }
+      ],
+      "triangles": 18320,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.7300000190734863
+        ]
+      ],
+      "body_footprint": {
+        "width": 2.0639999999999996,
+        "depth": 1.7759999999999998,
+        "area": 3.6656639999999987,
+        "factor_from_level_2": 1.0
+      }
+    },
+    {
+      "id": "villa_l03_active",
+      "level": 3,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/housing/villa/villa_l03_active.png",
+      "glb": "frontend/public/assets/buildings/housing/villa/villa_l03_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l03_active_LOD0.glb",
+          "triangles": 23896
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.48,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l03_active_LOD1.glb",
+          "triangles": 11176
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l03_active_LOD2.glb",
+          "triangles": 4874
+        }
+      ],
+      "triangles": 23896,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.010999917984009
+        ]
+      ],
+      "body_footprint": {
+        "width": 2.1149706380940607,
+        "depth": 1.8198584560344246,
+        "area": 3.8489471999999987,
+        "factor_from_level_2": 1.05
+      }
+    },
+    {
+      "id": "villa_l04_active",
+      "level": 4,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/housing/villa/villa_l04_active.png",
+      "glb": "frontend/public/assets/buildings/housing/villa/villa_l04_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l04_active_LOD0.glb",
+          "triangles": 26388
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.48,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l04_active_LOD1.glb",
+          "triangles": 12352
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l04_active_LOD2.glb",
+          "triangles": 5392
+        }
+      ],
+      "triangles": 26388,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.180999994277954
+        ]
+      ],
+      "body_footprint": {
+        "width": 2.1464607669370523,
+        "depth": 1.8469546134109522,
+        "area": 3.9644156159999993,
+        "factor_from_level_2": 1.0815000000000001
+      }
+    },
+    {
+      "id": "villa_l05_active",
+      "level": 5,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/housing/villa/villa_l05_active.png",
+      "glb": "frontend/public/assets/buildings/housing/villa/villa_l05_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l05_active_LOD0.glb",
+          "triangles": 34496
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.48,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l05_active_LOD1.glb",
+          "triangles": 16128
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/housing/villa/villa_l05_active_LOD2.glb",
+          "triangles": 7012
+        }
+      ],
+      "triangles": 34496,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.432499885559082
+        ]
+      ],
+      "body_footprint": {
+        "width": 2.1784197572368824,
+        "depth": 1.8744542097154573,
+        "area": 4.083348084479999,
+        "factor_from_level_2": 1.1139450000000002
+      }
+    }
+  ],
+  "source_visual_variants": {
+    "1": "villa_l01_active_v2",
+    "2": "villa_l02_active",
+    "3": "villa_l03_active",
+    "4": "villa_l04_active",
+    "5": "villa_l05_active"
+  },
+  "component_library_version": "2026.10.phase3.v11",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "triangle_budget": {
+          "min": 1800,
+          "max": 38000
+        }
+      },
+      {
+        "name": "LOD1",
+        "triangle_budget": {
+          "min": 850,
+          "max": 20000
+        }
+      },
+      {
+        "name": "LOD2",
+        "triangle_budget": {
+          "min": 400,
+          "max": 10000
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "revision": "wooden-wall-levels-2-3-2026-10-18",
+  "mode": "sampled Blender MCP GLB reimport",
+  "lod": "LOD0",
+  "samples": [
+    {
+      "asset": "wooden_wall_l02_single_active",
+      "triangles": 2070,
+      "matched_manifest": true
+    },
+    {
+      "asset": "wooden_wall_l03_cross_damaged",
+      "triangles": 4636,
+      "matched_manifest": true
+    }
+  ]
+}

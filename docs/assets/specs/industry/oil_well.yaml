@@ -17,6 +17,16 @@ levels:
     constraints:
       - Сохранять яркую плоскую ground-клетку Real City, а нефтяное пятно делать локальным акцентом.
       - Не делать вышку мрачной, грязной или реалистично-индустриальной; стиль остается светлой эолийской стратегической диорамой.
+  - level: 2
+    visual_goal: Усиленная буровая рама с дополнительными насосами, трубами и резервуаром.
+    cost_resources: [coins, reinforced_concrete, mechanism, iron_ingot, premium_planks]
+    triangle_budget: { min: 1800, max: 5000 }
+    adds: [reinforced_derrick, additional_pump, pipes, tank]
+  - level: 3
+    visual_goal: Тяжёлая защищённая рама, мощный насос и сервисные площадки.
+    cost_resources: [coins, super_mechanism, iron_ingot, reinforced_beams, light_crystal, aeolian_alloy]
+    triangle_budget: { min: 1800, max: 7000 }
+    adds: [heavy_derrick, protected_tanks, service_platforms]
 states: [active, construction, damaged, ruined]
 
 material_map:

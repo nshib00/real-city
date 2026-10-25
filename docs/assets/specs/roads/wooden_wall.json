@@ -1,0 +1,38 @@
+{
+  "asset_id": "wooden_wall",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Деревянная стена",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 1, "visual_goal": "Высокий сплошной частокол с остриями, двумя поясами балок и внутренними подпорками.", "cost_resources": ["coins", "wood"], "triangle_budget": {"min": 800, "max": 6500}, "adds": ["dense_palisade", "pointed_tops", "inner_braces"]},
+    {"level": 2, "visual_goal": "Частокол выше, появляется дощатый защитный пояс и более мощные торцевые стойки.", "cost_resources": ["coins", "wood", "planks"], "triangle_budget": {"min": 1000, "max": 7500}, "adds": ["plank_shield", "higher_posts", "third_rail"]},
+    {"level": 3, "visual_goal": "Самый высокий частокол с каменной подошвой, утолщёнными стойками и двойным верхним поясом.", "cost_resources": ["coins", "wood", "stone", "planks"], "triangle_budget": {"min": 1200, "max": 9000}, "adds": ["stone_footing", "heavy_posts", "upper_belt"]}
+  ],
+  "states": ["active", "construction", "damaged", "ruined"],
+  "material_map": {
+    "wood": {"visible_as": "плотные заострённые бревна и несущие стойки", "priority": "primary", "levels": [1, 2, 3]},
+    "planks": {"visible_as": "поперечные балки и защитный дощатый пояс", "priority": "primary", "levels": [2, 3]},
+    "stone": {"visible_as": "низкая каменная подошва и опоры стоек", "priority": "secondary", "levels": [3]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Плотность частокола сохраняется; защитные пояса и опоры нарастают по уровням."},
+    "height": {"rule": "Высота бревен растёт от 1.30 до 1.85 единицы модели без изменения камеры и клетки."},
+    "materials": {"rule": "Доски впервые появляются в несущем поясе уровня 2, камень — в подошве уровня 3."},
+    "props": {"rule": "Подпорки и крепления читаются на игровом масштабе; оружие не добавляется."},
+    "constraints": {"rule": "Все 16 ортогональных форм стыкуются вплотную у границы клетки; земля плоская и общая для состояний."}
+  },
+  "state_policy": {
+    "active": {"rule": "Полная непрерывная преграда с опирающимися подпорками."},
+    "construction": {"rule": "Возведено около половины бревен; верхние пояса отсутствуют, материалы лежат на земле."},
+    "damaged": {"rule": "Крупные проломы и сломанные верхние части примерно у половины секций; обломки на земле."},
+    "ruined": {"rule": "Низкие пеньки и лежащие брёвна; верхняя конструкция полностью утрачена."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 800, "max": 9000}, "export": true}, {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 400, "max": 5000}, "export": true}, {"name": "LOD2", "ratio": 0.50, "triangle_budget": {"min": 180, "max": 3800}, "export": true}], "preserve": ["ground", "palisade", "junctions", "level_upgrades"], "exports": {"naming": "{asset_id}_l{level:02d}_{shape}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 512], "camera_profile": "real_city_modular_wall", "transparent_background": true, "anchor": [256, 320], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 4, "include_states": ["active", "construction", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/roads/wooden_wall", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/roads/wooden-wall.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/generate_roads_and_walls_models.py"], "existing_assets": ["frontend/public/assets/buildings/roads/wooden_wall", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Баланс остаётся в shared/catalog/buildings.ts: 120/200/320 HP, 1/3/7 минут; ни стоимость, ни игровые правила не изменены.", "16 форм × 3 уровня × 4 состояния."]
+}

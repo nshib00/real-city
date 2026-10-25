@@ -1,0 +1,1445 @@
+{
+  "asset_id": "sulfur_spring",
+  "display_name": "Серный источник",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_levels.glb",
+  "material_map": {
+    "stone": {
+      "visible_as": "ограда и каменные опоры природного выхода",
+      "priority": "primary",
+      "levels": [
+        1
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "опорная плита и закрытый банк",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "steel": {
+      "visible_as": "сборные трубы",
+      "priority": "primary",
+      "levels": [
+        2
+      ]
+    },
+    "mechanism": {
+      "visible_as": "насосная передача",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "glass": {
+      "visible_as": "индикатор давления",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "armor_plates": {
+      "visible_as": "герметичный кожух",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "electronics": {
+      "visible_as": "панель контроля",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "aeolian_alloy": {
+      "visible_as": "поздние усиленные стойки",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "light_crystal": {
+      "visible_as": "малый светокристалл прибора",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "sulfur_spring_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1272,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_active_LOD0.glb",
+          "triangles": 1272
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_active_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_active_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_active.png"
+    },
+    {
+      "id": "sulfur_spring_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 780,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_construction_LOD0.glb",
+          "triangles": 780
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 824,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_damaged_LOD0.glb",
+          "triangles": 824
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_damaged_LOD1.glb",
+          "triangles": 448
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_damaged_LOD2.glb",
+          "triangles": 224
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l01_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 1316,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_active_LOD0.glb",
+          "triangles": 1316
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_active_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_active_LOD2.glb",
+          "triangles": 356
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_active.png"
+    },
+    {
+      "id": "sulfur_spring_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 780,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_construction_LOD0.glb",
+          "triangles": 780
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 824,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_damaged_LOD0.glb",
+          "triangles": 824
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_damaged_LOD1.glb",
+          "triangles": 448
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_damaged_LOD2.glb",
+          "triangles": 224
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l02_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 1900,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_active_LOD0.glb",
+          "triangles": 1900
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_active_LOD1.glb",
+          "triangles": 1028
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_active_LOD2.glb",
+          "triangles": 514
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_active.png"
+    },
+    {
+      "id": "sulfur_spring_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1000,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_construction_LOD0.glb",
+          "triangles": 1000
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_construction_LOD1.glb",
+          "triangles": 544
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_construction_LOD2.glb",
+          "triangles": 272
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_damaged_LOD0.glb",
+          "triangles": 1044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_damaged_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_damaged_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l03_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 1988,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_active_LOD0.glb",
+          "triangles": 1988
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_active_LOD1.glb",
+          "triangles": 1076
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_active_LOD2.glb",
+          "triangles": 538
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_active.png"
+    },
+    {
+      "id": "sulfur_spring_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1000,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_construction_LOD0.glb",
+          "triangles": 1000
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_construction_LOD1.glb",
+          "triangles": 544
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_construction_LOD2.glb",
+          "triangles": 272
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_damaged_LOD0.glb",
+          "triangles": 1044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_damaged_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_damaged_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l04_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 2076,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_active_LOD0.glb",
+          "triangles": 2076
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_active_LOD1.glb",
+          "triangles": 1124
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_active_LOD2.glb",
+          "triangles": 562
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_active.png"
+    },
+    {
+      "id": "sulfur_spring_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1000,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_construction_LOD0.glb",
+          "triangles": 1000
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_construction_LOD1.glb",
+          "triangles": 544
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_construction_LOD2.glb",
+          "triangles": 272
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_damaged_LOD0.glb",
+          "triangles": 1044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_damaged_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_damaged_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l05_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 2208,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_active_LOD0.glb",
+          "triangles": 2208
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_active_LOD1.glb",
+          "triangles": 1196
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_active_LOD2.glb",
+          "triangles": 598
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_active.png"
+    },
+    {
+      "id": "sulfur_spring_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_construction_LOD0.glb",
+          "triangles": 1044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_construction_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_construction_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 1088,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_damaged_LOD0.glb",
+          "triangles": 1088
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_damaged_LOD1.glb",
+          "triangles": 592
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_damaged_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l06_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 2344,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_active_LOD0.glb",
+          "triangles": 2344
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_active_LOD1.glb",
+          "triangles": 1268
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_active_LOD2.glb",
+          "triangles": 634
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_active.png"
+    },
+    {
+      "id": "sulfur_spring_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_construction_LOD0.glb",
+          "triangles": 1044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_construction_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_construction_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 1088,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_damaged_LOD0.glb",
+          "triangles": 1088
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_damaged_LOD1.glb",
+          "triangles": 592
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_damaged_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l07_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 2432,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4300000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_active_LOD0.glb",
+          "triangles": 2432
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_active_LOD1.glb",
+          "triangles": 1316
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_active_LOD2.glb",
+          "triangles": 658
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_active.png"
+    },
+    {
+      "id": "sulfur_spring_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_construction_LOD0.glb",
+          "triangles": 1044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_construction_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_construction_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 1088,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_damaged_LOD0.glb",
+          "triangles": 1088
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_damaged_LOD1.glb",
+          "triangles": 592
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_damaged_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l08_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 2540,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5950000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_active_LOD0.glb",
+          "triangles": 2540
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_active_LOD1.glb",
+          "triangles": 1374
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_active_LOD2.glb",
+          "triangles": 684
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_active.png"
+    },
+    {
+      "id": "sulfur_spring_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1088,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_construction_LOD0.glb",
+          "triangles": 1088
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_construction_LOD1.glb",
+          "triangles": 592
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_construction_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 1132,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_damaged_LOD0.glb",
+          "triangles": 1132
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_damaged_LOD1.glb",
+          "triangles": 616
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_damaged_LOD2.glb",
+          "triangles": 308
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l09_damaged.png"
+    },
+    {
+      "id": "sulfur_spring_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 2672,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5950000286102295
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_active_LOD0.glb",
+          "triangles": 2672
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_active_LOD1.glb",
+          "triangles": 1446
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_active_LOD2.glb",
+          "triangles": 720
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_active.png"
+    },
+    {
+      "id": "sulfur_spring_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1088,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_construction_LOD0.glb",
+          "triangles": 1088
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_construction_LOD1.glb",
+          "triangles": 592
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_construction_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_construction.png"
+    },
+    {
+      "id": "sulfur_spring_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 1132,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_damaged_LOD0.glb",
+          "triangles": 1132
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_damaged_LOD1.glb",
+          "triangles": 616
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_damaged_LOD2.glb",
+          "triangles": 308
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/sulfur_spring/sulfur_spring_l10_damaged.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\industry\\sulfur_spring.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1,
+        "triangle_budget": {
+          "min": 500,
+          "max": 10000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 220,
+          "max": 5500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 100,
+          "max": 3000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "fissure",
+      "collector",
+      "pump",
+      "sulfur_cases"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

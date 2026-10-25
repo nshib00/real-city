@@ -128,7 +128,7 @@
       "visual_goal": "Усиленные балки, электроника и дистанционный пульт.",
       "cost_resources": [
         "coins",
-        "reinforced_beam",
+        "reinforced_beams",
         "electronics"
       ],
       "triangle_budget": {
@@ -144,7 +144,7 @@
       "visual_goal": "Защищённое хранение готовой продукции и точные приборы.",
       "cost_resources": [
         "coins",
-        "reinforced_beam",
+        "reinforced_beams",
         "electronics"
       ],
       "triangle_budget": {
@@ -160,7 +160,7 @@
       "visual_goal": "Максимально усиленный корпус с плотной бронёй и полной автоматизацией.",
       "cost_resources": [
         "coins",
-        "reinforced_beam",
+        "reinforced_beams",
         "electronics"
       ],
       "triangle_budget": {
@@ -233,7 +233,7 @@
         7
       ]
     },
-    "reinforced_beam": {
+    "reinforced_beams": {
       "visible_as": "усиленные балки и рёбра крыши",
       "priority": "primary",
       "levels": [

@@ -1,0 +1,77 @@
+{
+  "level": 4,
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "stone_house_l04_active",
+      "glb": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_active.glb",
+      "png": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_active.png",
+      "triangles": 45043,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.6449999809265137
+        ]
+      ],
+      "level": 4,
+      "state": "active"
+    },
+    {
+      "id": "stone_house_l04_construction",
+      "glb": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_construction.glb",
+      "png": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_construction.png",
+      "triangles": 3108,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2825000286102295
+        ]
+      ],
+      "level": 4,
+      "state": "construction"
+    },
+    {
+      "id": "stone_house_l04_damaged",
+      "glb": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_damaged.glb",
+      "png": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_damaged.png",
+      "triangles": 46267,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.6449999809265137
+        ]
+      ],
+      "level": 4,
+      "state": "damaged"
+    }
+  ],
+  "source_blend": "frontend/public/assets/buildings/housing/stone_house/stone_house_l04_states.blend"
+}

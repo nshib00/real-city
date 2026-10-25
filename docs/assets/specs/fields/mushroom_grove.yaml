@@ -27,27 +27,27 @@ levels:
     triangle_budget: { min: 3200, max: 7400 }
   - level: 5
     visual_goal: Грибница расширяется по площади; низ забора становится каменным, верх остается деревянным; высокий полупрозрачный тонкий тканевый навес на прутьях покрывает весь овал, но не перекрывает грибы сверху.
-    cost_resources: [premium_planks, stone, resin, stone_blocks, fabric]
+    cost_resources: [premium_planks, stone, resin, stone_block, fabric]
     triangle_budget: { min: 3500, max: 7800 }
   - level: 6
     visual_goal: Расширенная грибница с полностью каменным забором, каменными пластинами и первой калиткой под цвет стен; высокий полупрозрачный толстый навес на премиум-балках покрывает всю грядку, оставляя грибы видимыми сверху.
-    cost_resources: [premium_planks, stone, resin, stone_blocks, iron_ingot, blue_salt]
+    cost_resources: [premium_planks, stone, resin, stone_block, iron_ingot, blue_salt]
     triangle_budget: { min: 3800, max: 8200 }
   - level: 7
     visual_goal: Забор становится ниже прежнего варианта для читаемости грибов, получает больше декора, каменные столбики и нижние 15% фундамента из каменных блоков; калитка остается каменной.
-    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, blue_salt]
+    cost_resources: [premium_planks, resin, stone_block, iron_ingot, blue_salt]
     triangle_budget: { min: 4000, max: 8600 }
   - level: 8
     visual_goal: Низкий богато украшенный забор делится на 40% кирпича и 60% камня, есть кирпично-каменная калитка; высокий скатный навес закрывает весь овал, но поднят над грибами.
-    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, blue_salt, emerald_dust]
+    cost_resources: [premium_planks, resin, stone_block, iron_ingot, blue_salt, emerald_dust]
     triangle_budget: { min: 4200, max: 9000 }
   - level: 9
     visual_goal: Почти весь низкий забор из каменных блоков, больше премиум-досок, настенного декора и металла; калитка заменяется металлической дверью с декоративными накладками.
-    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, emerald_dust, super_mushrooms]
+    cost_resources: [premium_planks, resin, stone_block, iron_ingot, emerald_dust, super-mushrooms]
     triangle_budget: { min: 4500, max: 9500 }
   - level: 10
     visual_goal: Низкий забор на 100% из каменных блоков, столбы металлические, металлическая дверь с декором; высокий плотный сложный навес покрывает всю площадь и оставляет вид сверху на грибы, в дизайне участвуют премиум-доски, шляпки супер-грибов и изумрудная пыль.
-    cost_resources: [premium_planks, resin, stone_blocks, iron_ingot, emerald_dust, super_mushrooms, super_seeds]
+    cost_resources: [premium_planks, resin, stone_block, iron_ingot, emerald_dust, super-mushrooms, super-seeds]
     triangle_budget: { min: 4800, max: 10000 }
 
 states: [active, construction, damaged]
@@ -69,7 +69,7 @@ material_map:
     visible_as: влажные камни, каменные курсы забора, каменные столбики и поздний цоколь круглого контура
     priority: secondary
     levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  stone_blocks:
+  stone_block:
     visible_as: блочная кладка фундамента, поздние курсы стен и весь забор 10 уровня
     priority: primary
     levels: [5, 6, 7, 8, 9, 10]
@@ -93,10 +93,22 @@ material_map:
     visible_as: поздние споровые узлы, редкие светлые грибы и изумрудные вкрапления в фундаменте 10 уровня
     priority: accent
     levels: [8, 9, 10]
-  super_mushrooms:
+  super-mushrooms:
     visible_as: светящиеся шляпки супер-грибов, крупная центральная группа и детали плотного навеса 10 уровня
     priority: accent
     levels: [9, 10]
+  planks:
+    visible_as: дощатые полки и настил у влажной грядки
+    priority: secondary
+    levels: [1, 2, 3, 4]
+  super-seeds:
+    visible_as: закрытый лоток редкого посева
+    priority: accent
+    levels: [10]
+  windleaf:
+    visible_as: крупные листья на теневом крае грядки
+    priority: accent
+    levels: [3]
 
 level_progression:
   mass:

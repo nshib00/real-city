@@ -7,11 +7,11 @@
   "footprint": {"width": 1, "height": 1},
   "states": ["construction", "active", "no_keeper", "damaged", "ruined"],
   "levels": [
-    {"level": 1, "visual_goal": "Открытая площадка с двумя гнёздами, деревянным настилом и кормушками.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_concrete", "ancient_core"], "triangle_budget": {"min": 600, "max": 7000}, "adds": ["two_nests", "low_shelter"]},
-    {"level": 2, "visual_goal": "Третий навес и третье гнездо, более плотный плетень.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_concrete", "ancient_core"], "triangle_budget": {"min": 800, "max": 8000}, "adds": ["third_nest", "third_canopy"]},
-    {"level": 3, "visual_goal": "Каменное ограждение, четыре места для защитников и укреплённые опоры.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "ancient_core"], "triangle_budget": {"min": 1000, "max": 9500}, "adds": ["stone_fence", "fourth_nest", "reinforced_beams"]},
-    {"level": 4, "visual_goal": "Травяная лечебница с лотками и тканевым навесом, пять мест.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "ancient_core"], "triangle_budget": {"min": 1200, "max": 11000}, "adds": ["healing_station", "fifth_nest"]},
-    {"level": 5, "visual_goal": "Многосекционный вольер на шесть мест с дорогими материалами и двумя светокристаллами.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "ancient_core", "light_crystal"], "triangle_budget": {"min": 1400, "max": 12500}, "adds": ["sixth_nest", "divided_yard", "light_crystals"]}
+    {"level": 1, "visual_goal": "Открытая площадка с двумя гнёздами, деревянным настилом и кормушками.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_concrete", "elderwood-heart"], "triangle_budget": {"min": 600, "max": 7000}, "adds": ["two_nests", "low_shelter"]},
+    {"level": 2, "visual_goal": "Третий навес и третье гнездо, более плотный плетень.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_concrete", "elderwood-heart"], "triangle_budget": {"min": 800, "max": 8000}, "adds": ["third_nest", "third_canopy"]},
+    {"level": 3, "visual_goal": "Каменное ограждение, четыре места для защитников и укреплённые опоры.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "elderwood-heart"], "triangle_budget": {"min": 1000, "max": 9500}, "adds": ["stone_fence", "fourth_nest", "reinforced_beams"]},
+    {"level": 4, "visual_goal": "Травяная лечебница с лотками и тканевым навесом, пять мест.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "elderwood-heart"], "triangle_budget": {"min": 1200, "max": 11000}, "adds": ["healing_station", "fifth_nest"]},
+    {"level": 5, "visual_goal": "Многосекционный вольер на шесть мест с дорогими материалами и двумя светокристаллами.", "cost_resources": ["coins", "premium_planks", "stone_block", "herbs", "reinforced_beams", "elderwood-heart", "light_crystal"], "triangle_budget": {"min": 1400, "max": 12500}, "adds": ["sixth_nest", "divided_yard", "light_crystals"]}
   ],
   "material_map": {
     "premium_planks": {"visible_as": "несущий настил, резные стойки и крыши навесов", "priority": "primary", "levels": [1, 2, 3, 4, 5]},
@@ -19,7 +19,7 @@
     "herbs": {"visible_as": "пучки трав, лечебные лотки и зелёные связки", "priority": "secondary", "levels": [1, 2, 3, 4, 5]},
     "reinforced_concrete": {"visible_as": "низкие устойчивые опоры и борта ранних уровней", "priority": "secondary", "levels": [1, 2]},
     "reinforced_beams": {"visible_as": "силовые поперечины и крепления ограды", "priority": "secondary", "levels": [3, 4, 5]},
-    "ancient_core": {"visible_as": "малые янтарные эмблемы у гнёзд и у входа", "priority": "accent", "levels": [1, 2, 3, 4, 5]},
+    "elderwood-heart": {"visible_as": "малые янтарные эмблемы у гнёзд и у входа", "priority": "accent", "levels": [1, 2, 3, 4, 5]},
     "light_crystal": {"visible_as": "два тонких аметистовых светокристалла на стойках", "priority": "accent", "levels": [5]}
   },
   "level_progression": {

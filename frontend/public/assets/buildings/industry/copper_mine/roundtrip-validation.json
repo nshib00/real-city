@@ -1,0 +1,15 @@
+{
+  "scope": "sampled_LOD0",
+  "checks": [
+    {
+      "asset": "copper_mine_l01_active",
+      "triangles": 5252,
+      "matched": true
+    },
+    {
+      "asset": "copper_mine_l10_damaged",
+      "triangles": 12048,
+      "matched": true
+    }
+  ]
+}

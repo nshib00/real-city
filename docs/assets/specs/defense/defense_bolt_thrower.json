@@ -13,8 +13,8 @@
     {"level": 4, "visual_goal": "Небольшой дощатый навес над местом расчёта.", "cost_resources": ["coins", "stone_block", "iron_ingot", "mechanism"], "triangle_budget": {"min": 700, "max": 4900}, "adds": ["crew_canopy"]},
     {"level": 5, "visual_goal": "Низкий каменный цоколь и стальные боковые усилители.", "cost_resources": ["coins", "stone_block", "steel", "mechanism"], "triangle_budget": {"min": 800, "max": 5400}, "adds": ["stone_base", "steel_battens"]},
     {"level": 6, "visual_goal": "Удлинённые плечи и металлический прицел.", "cost_resources": ["coins", "stone_block", "steel", "mechanism"], "triangle_budget": {"min": 850, "max": 5900}, "adds": ["long_bow", "sight"]},
-    {"level": 7, "visual_goal": "Латунный привод поворота и боковые защитные пластины.", "cost_resources": ["coins", "steel", "mechanism", "protective_plate"], "triangle_budget": {"min": 900, "max": 6400}, "adds": ["turning_drive", "guard_plates"]},
-    {"level": 8, "visual_goal": "Защищённый механизм натяжения с видимыми вентиляционными прорезями.", "cost_resources": ["coins", "steel", "mechanism", "protective_plate"], "triangle_budget": {"min": 950, "max": 6900}, "adds": ["covered_drive"]}
+    {"level": 7, "visual_goal": "Латунный привод поворота и боковые защитные пластины.", "cost_resources": ["coins", "steel", "mechanism", "armor_plates"], "triangle_budget": {"min": 900, "max": 6400}, "adds": ["turning_drive", "guard_plates"]},
+    {"level": 8, "visual_goal": "Защищённый механизм натяжения с видимыми вентиляционными прорезями.", "cost_resources": ["coins", "steel", "mechanism", "armor_plates"], "triangle_budget": {"min": 950, "max": 6900}, "adds": ["covered_drive"]}
   ],
   "material_map": {
     "planks": {"visible_as": "несущая дощатая рама, направляющая и навес", "priority": "primary", "levels": [1, 2, 3, 4, 5, 6, 7, 8]},
@@ -23,7 +23,7 @@
     "stone_block": {"visible_as": "поворотная опора и низкий каменный цоколь", "priority": "secondary", "levels": [3, 4, 5, 6]},
     "mechanism": {"visible_as": "храповик и лебёдка натяжения", "priority": "primary", "levels": [3, 4, 5, 6, 7, 8]},
     "steel": {"visible_as": "боковые усилители и поздние плечи", "priority": "primary", "levels": [5, 6, 7, 8]},
-    "protective_plate": {"visible_as": "защита расчёта и кожух привода", "priority": "primary", "levels": [7, 8]}
+    "armor_plates": {"visible_as": "защита расчёта и кожух привода", "priority": "primary", "levels": [7, 8]}
   },
   "level_progression": {
     "mass": {"rule": "Рама укрепляется, но основание поворотной головы остаётся внутри одной клетки."},

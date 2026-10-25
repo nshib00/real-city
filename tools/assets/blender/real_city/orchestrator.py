@@ -62,7 +62,80 @@ def generate_batch(config: BatchConfig) -> dict[str, Any]:
     asset_scene.name = f"{spec.asset_id}_{config.mode}_scene"
     profile = _render_profile(spec)
     scene.configure_asset_scene(asset_scene, profile, light_prefix=spec.asset_id)
-    mats = materials.create_palette(f"MAT_{spec.asset_id}")
+    palette_overrides = (
+        {
+            "dark_metal": (0.13, 0.23, 0.25),
+            "metal_worn": (0.34, 0.44, 0.43),
+            "armor": (0.29, 0.43, 0.43),
+            "wood_pale": (0.79, 0.46, 0.19),
+            "copper": (0.78, 0.36, 0.12),
+        }
+        if spec.asset_id == "defense_cannon"
+        else {
+            "wood_beam": (0.36, 0.20, 0.10),
+            "wood_pale": (0.66, 0.42, 0.21),
+            "rope": (0.85, 0.80, 0.65),
+            "metal_worn": (0.35, 0.40, 0.39),
+            "dark_metal": (0.20, 0.27, 0.28),
+            "copper": (0.70, 0.46, 0.22),
+        } if spec.asset_id == "defense_bolt_thrower"
+        else {
+            "wood_beam": (0.55, 0.29, 0.13),
+            "wood_pale": (0.77, 0.47, 0.23),
+            "roof_teal": (0.13, 0.54, 0.57),
+        } if spec.asset_id == "tower"
+        else {
+            "dark_metal": (0.13, 0.20, 0.23),
+            "steel_light": (0.48, 0.58, 0.59),
+            "copper": (0.76, 0.39, 0.16),
+            "armor": (0.27, 0.40, 0.43),
+            "glass_cyan": (0.32, 0.73, 0.84),
+        } if spec.asset_id == "defense_storm_coil"
+        else {
+            "resin_amber": (0.24, 0.095, 0.025),
+            "resin_highlight": (0.58, 0.30, 0.075),
+            "wood_pale": (0.76, 0.48, 0.24),
+            "wood_dark": (0.34, 0.20, 0.09),
+            "metal_worn": (0.43, 0.44, 0.40),
+        } if spec.asset_id == "defense_resin_snare"
+        else {
+            "dark_metal": (0.14, 0.20, 0.23),
+            "steel_light": (0.52, 0.62, 0.64),
+            "armor": (0.29, 0.42, 0.46),
+            "copper": (0.80, 0.43, 0.18),
+            "glass_cyan": (0.38, 0.76, 0.83),
+            "reinforced_concrete": (0.61, 0.64, 0.62),
+        } if spec.asset_id == "defense_automaton_bay"
+        else {
+            "concrete": (0.49, 0.62, 0.58),
+            "reinforced_concrete": (0.36, 0.52, 0.52),
+            "steel_light": (0.37, 0.57, 0.61),
+            "dark_metal": (0.12, 0.24, 0.28),
+            "armor": (0.22, 0.42, 0.46),
+            "brick_warm": (0.68, 0.34, 0.21),
+        } if spec.asset_id == "military_factory"
+        else {
+            "reinforced_concrete": (0.64, 0.70, 0.70),
+            "steel_light": (0.40, 0.55, 0.60),
+            "dark_metal": (0.08, 0.20, 0.24),
+            "armor": (0.17, 0.36, 0.42),
+            "roof_teal": (0.06, 0.43, 0.50),
+            "glass_cyan": (0.21, 0.78, 0.91),
+            "copper": (0.86, 0.45, 0.17),
+        } if spec.asset_id == "electronics_workshop"
+        else {
+            "brick_warm": (0.67, 0.32, 0.18),
+            "wood_beam": (0.52, 0.29, 0.13),
+            "wood_pale": (0.77, 0.52, 0.25),
+            "copper": (0.84, 0.43, 0.17),
+            "steel_light": (0.56, 0.61, 0.60),
+            "dark_metal": (0.19, 0.25, 0.27),
+            "roof_teal": (0.15, 0.44, 0.48),
+            "armor": (0.34, 0.42, 0.42),
+        } if spec.asset_id == "mechanical_workshop"
+        else None
+    )
+    mats = materials.create_palette(f"MAT_{spec.asset_id}", overrides=palette_overrides)
 
     collections = {}
     items: list[dict[str, Any]] = []
@@ -188,6 +261,116 @@ def _build_state_model(spec: AssetSpec, collection, mats: dict, *, level: int, s
         civic.add_plaza(f"{spec.asset_id}_plaza", collection, mats)
         civic.add_town_hall_core(spec.asset_id, collection, mats, level=level, damaged=damaged)
         civic.add_notice_board(f"{spec.asset_id}_notice", collection, mats)
+    elif spec.asset_id == "defense_cannon":
+        from .components import cannon
+
+        cannon.add_cannon(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "defense_stakes":
+        from .components import stakes
+
+        stakes.add_stakes(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "defense_bolt_thrower":
+        from .components import bolt_thrower
+
+        bolt_thrower.add_bolt_thrower(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "tower":
+        from .components import watchtower
+
+        watchtower.add_watchtower(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "defense_storm_coil":
+        from .components import storm_coil
+
+        storm_coil.add_storm_coil(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "defense_resin_snare":
+        from .components import resin_snare
+
+        resin_snare.add_resin_snare(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "defense_automaton_bay":
+        from .components import automaton_bay
+
+        automaton_bay.add_automaton_bay(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "defense_guardian_enclosure":
+        from .components import guardian_enclosure
+
+        guardian_enclosure.add_guardian_enclosure(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "crystal_greenhouse":
+        from .components import crystal_greenhouse
+
+        crystal_greenhouse.add_crystal_greenhouse(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "dye_garden":
+        from .components import dye_garden
+
+        dye_garden.add_dye_garden(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "brick_yard":
+        from .components import brick_yard
+
+        brick_yard.add_brick_yard(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "cement_workshop":
+        from .components import cement_workshop
+
+        cement_workshop.add_cement_workshop(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "concrete_plant":
+        from .components import concrete_plant
+
+        concrete_plant.add_concrete_plant(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "foundry":
+        from .components import foundry
+
+        foundry.add_foundry(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "military_factory":
+        from .components import military_factory
+
+        military_factory.add_military_factory(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "paper_workshop":
+        from .components import paper_workshop
+
+        paper_workshop.add_paper_workshop(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "tile_factory":
+        from .components import tile_factory
+
+        tile_factory.add_tile_factory(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "weaving_yard":
+        from .components import weaving_yard
+
+        weaving_yard.add_weaving_yard(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "paint_workshop":
+        from .components import paint_workshop
+
+        paint_workshop.add_paint_workshop(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "electronics_workshop":
+        from .components import electronics_workshop
+
+        electronics_workshop.add_electronics_workshop(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "mechanical_workshop":
+        from .components import mechanical_workshop
+
+        mechanical_workshop.add_mechanical_workshop(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id in {"oil_press", "oil_refinery", "resin_kiln", "steelworks", "sulfur_spring"}:
+        from .components import process_industry
+
+        getattr(process_industry, f"add_{spec.asset_id}")(collection, mats, level=level, state=state)
+        return
     else:
         raise ValueError(f"Unsupported asset_id for phase-4 component orchestrator: {spec.asset_id}")
 

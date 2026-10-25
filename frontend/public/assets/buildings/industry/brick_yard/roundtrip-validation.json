@@ -1,0 +1,152 @@
+[
+  {
+    "asset": "brick_yard_l01_active",
+    "triangles": 1232,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l01_construction",
+    "triangles": 1320,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l01_damaged",
+    "triangles": 1012,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l02_active",
+    "triangles": 1892,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l02_construction",
+    "triangles": 1408,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l02_damaged",
+    "triangles": 1012,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l03_active",
+    "triangles": 2332,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l03_construction",
+    "triangles": 1408,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l03_damaged",
+    "triangles": 1056,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l04_active",
+    "triangles": 3080,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l04_construction",
+    "triangles": 1496,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l04_damaged",
+    "triangles": 1056,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l05_active",
+    "triangles": 3644,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l05_construction",
+    "triangles": 1848,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l05_damaged",
+    "triangles": 1408,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l06_active",
+    "triangles": 3908,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l06_construction",
+    "triangles": 1980,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l06_damaged",
+    "triangles": 1452,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l07_active",
+    "triangles": 4216,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l07_construction",
+    "triangles": 1980,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l07_damaged",
+    "triangles": 1496,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l08_active",
+    "triangles": 4716,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l08_construction",
+    "triangles": 2172,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l08_damaged",
+    "triangles": 1600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l09_active",
+    "triangles": 4804,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l09_construction",
+    "triangles": 2172,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l09_damaged",
+    "triangles": 1600,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l10_active",
+    "triangles": 4892,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l10_construction",
+    "triangles": 2260,
+    "nonmanifold_edges": 0
+  },
+  {
+    "asset": "brick_yard_l10_damaged",
+    "triangles": 1600,
+    "nonmanifold_edges": 0
+  }
+]

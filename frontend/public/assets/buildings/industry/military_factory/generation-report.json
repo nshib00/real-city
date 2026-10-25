@@ -1,0 +1,1312 @@
+{
+  "asset_id": "military_factory",
+  "display_name": "Военный завод",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "military_factory_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 2336,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7425000667572021
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_active_LOD0.glb",
+          "triangles": 2336
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_active_LOD1.glb",
+          "triangles": 1268
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_active_LOD2.glb",
+          "triangles": 632
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_active.png"
+    },
+    {
+      "id": "military_factory_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3135645389556885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_construction.png"
+    },
+    {
+      "id": "military_factory_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1396,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4100000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_damaged_LOD0.glb",
+          "triangles": 1396
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_damaged_LOD1.glb",
+          "triangles": 760
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_damaged_LOD2.glb",
+          "triangles": 380
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l01_damaged.png"
+    },
+    {
+      "id": "military_factory_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 2380,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8174999952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_active_LOD0.glb",
+          "triangles": 2380
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_active_LOD1.glb",
+          "triangles": 1292
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_active_LOD2.glb",
+          "triangles": 644
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_active.png"
+    },
+    {
+      "id": "military_factory_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3880759477615356
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_construction_LOD0.glb",
+          "triangles": 1264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_construction.png"
+    },
+    {
+      "id": "military_factory_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1396,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4849998950958252
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_damaged_LOD0.glb",
+          "triangles": 1396
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_damaged_LOD1.glb",
+          "triangles": 760
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_damaged_LOD2.glb",
+          "triangles": 380
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l02_damaged.png"
+    },
+    {
+      "id": "military_factory_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2688,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8925000429153442
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_active_LOD0.glb",
+          "triangles": 2688
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_active_LOD1.glb",
+          "triangles": 1460
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_active_LOD2.glb",
+          "triangles": 728
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_active.png"
+    },
+    {
+      "id": "military_factory_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1308,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4626258611679077
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_construction_LOD0.glb",
+          "triangles": 1308
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_construction_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_construction_LOD2.glb",
+          "triangles": 356
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_construction.png"
+    },
+    {
+      "id": "military_factory_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1440,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.559999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_damaged_LOD0.glb",
+          "triangles": 1440
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_damaged_LOD1.glb",
+          "triangles": 784
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_damaged_LOD2.glb",
+          "triangles": 392
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l03_damaged.png"
+    },
+    {
+      "id": "military_factory_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 2868,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0874998569488525
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_active_LOD0.glb",
+          "triangles": 2868
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_active_LOD1.glb",
+          "triangles": 1556
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_active_LOD2.glb",
+          "triangles": 776
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_active.png"
+    },
+    {
+      "id": "military_factory_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1308,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5372095108032227
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_construction_LOD0.glb",
+          "triangles": 1308
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_construction_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_construction_LOD2.glb",
+          "triangles": 356
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_construction.png"
+    },
+    {
+      "id": "military_factory_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1440,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6349999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_damaged_LOD0.glb",
+          "triangles": 1440
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_damaged_LOD1.glb",
+          "triangles": 784
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_damaged_LOD2.glb",
+          "triangles": 392
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l04_damaged.png"
+    },
+    {
+      "id": "military_factory_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3616,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1624999046325684
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_active_LOD0.glb",
+          "triangles": 3616
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_active_LOD1.glb",
+          "triangles": 1964
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_active_LOD2.glb",
+          "triangles": 980
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_active.png"
+    },
+    {
+      "id": "military_factory_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6118237972259521
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_construction_LOD0.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_construction.png"
+    },
+    {
+      "id": "military_factory_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1528,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7100000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_damaged_LOD0.glb",
+          "triangles": 1528
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_damaged_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_damaged_LOD2.glb",
+          "triangles": 416
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l05_damaged.png"
+    },
+    {
+      "id": "military_factory_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 3748,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.237499952316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_active_LOD0.glb",
+          "triangles": 3748
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_active_LOD1.glb",
+          "triangles": 2036
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_active_LOD2.glb",
+          "triangles": 1016
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_active.png"
+    },
+    {
+      "id": "military_factory_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6864655017852783
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_construction_LOD0.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_construction.png"
+    },
+    {
+      "id": "military_factory_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 1528,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7850000858306885
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_damaged_LOD0.glb",
+          "triangles": 1528
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_damaged_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_damaged_LOD2.glb",
+          "triangles": 416
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l06_damaged.png"
+    },
+    {
+      "id": "military_factory_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 4332,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.4524998664855957
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_active_LOD0.glb",
+          "triangles": 4332
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_active_LOD1.glb",
+          "triangles": 2348
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_active_LOD2.glb",
+          "triangles": 1172
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_active.png"
+    },
+    {
+      "id": "military_factory_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7606606483459473
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_construction_LOD0.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_construction.png"
+    },
+    {
+      "id": "military_factory_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 1528,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8599998950958252
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_damaged_LOD0.glb",
+          "triangles": 1528
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_damaged_LOD1.glb",
+          "triangles": 832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_damaged_LOD2.glb",
+          "triangles": 416
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l07_damaged.png"
+    },
+    {
+      "id": "military_factory_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 4772,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.5274999141693115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_active_LOD0.glb",
+          "triangles": 4772
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_active_LOD1.glb",
+          "triangles": 2588
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_active_LOD2.glb",
+          "triangles": 1292
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_active.png"
+    },
+    {
+      "id": "military_factory_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8348772525787354
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_construction_LOD0.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_construction.png"
+    },
+    {
+      "id": "military_factory_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 1572,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.934999942779541
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_damaged_LOD0.glb",
+          "triangles": 1572
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_damaged_LOD1.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_damaged_LOD2.glb",
+          "triangles": 428
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l08_damaged.png"
+    },
+    {
+      "id": "military_factory_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 4948,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.6024999618530273
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_active_LOD0.glb",
+          "triangles": 4948
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_active_LOD1.glb",
+          "triangles": 2684
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_active_LOD2.glb",
+          "triangles": 1340
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_active.png"
+    },
+    {
+      "id": "military_factory_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9091160297393799
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_construction_LOD0.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_construction.png"
+    },
+    {
+      "id": "military_factory_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 1572,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.009999990463257
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_damaged_LOD0.glb",
+          "triangles": 1572
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_damaged_LOD1.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_damaged_LOD2.glb",
+          "triangles": 428
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l09_damaged.png"
+    },
+    {
+      "id": "military_factory_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 5080,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.759999990463257
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_active_LOD0.glb",
+          "triangles": 5080
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_active_LOD1.glb",
+          "triangles": 2756
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_active_LOD2.glb",
+          "triangles": 1376
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_active.png"
+    },
+    {
+      "id": "military_factory_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.983377456665039
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_construction_LOD0.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_construction.png"
+    },
+    {
+      "id": "military_factory_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 1572,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0850000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_damaged_LOD0.glb",
+          "triangles": 1572
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_damaged_LOD1.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_damaged_LOD2.glb",
+          "triangles": 428
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/military_factory/military_factory_l10_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/military_factory/military_factory_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/military_factory/military_factory_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/military_factory/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/military_factory/military_factory_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\industry\\military_factory.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: military_factory\ndisplay_name: Военный завод\ncategory/kind: industry/building\nlevels: 1-10\nstates: active, construction, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: fuel, steel, concrete, armor_plates, brick, mechanism, reinforced_concrete, reinforced_beam, electronics\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, hard-surface, prop-artist, materials, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none",
+  "material_to_detail": {
+    "fuel": "отдельный закрытый топливный бак с маркировкой",
+    "steel": "каркас, бронеполосы, дверь и крышка смесителя",
+    "concrete": "ранний защитный корпус и пол",
+    "armor_plates": "накладная броня и защитный экран",
+    "brick": "кирпичная облицовка топливного разделителя и корпуса",
+    "mechanism": "привод смесителя и герметичный перенос",
+    "reinforced_concrete": "несущая оболочка цеха и крыша хранилища",
+    "reinforced_beam": "усиленные балки и рёбра крыши",
+    "electronics": "дистанционный пульт, приборы и световые панели"
+  }
+}

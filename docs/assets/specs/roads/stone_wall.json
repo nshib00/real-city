@@ -1,0 +1,40 @@
+{
+  "asset_id": "stone_wall",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Каменная стена",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 4, "visual_goal": "Непрерывная каменная кладка с крупными блоками, кирпичным поясом и торцевыми опорами.", "cost_resources": ["stone", "brick"], "triangle_budget": {"min": 900, "max": 18000}, "adds": ["stone_core", "brick_course", "stone_piers"]},
+    {"level": 5, "visual_goal": "Более высокая и толстая стена с поднятым кирпичным поясом.", "cost_resources": ["coins", "stone", "brick"], "triangle_budget": {"min": 1000, "max": 18000}, "adds": ["thicker_masonry", "raised_brick_course"]},
+    {"level": 6, "visual_goal": "Тесаные каменные блоки, мощные контрфорсы и зубчатый парапет.", "cost_resources": ["coins", "stone_block", "brick"], "triangle_budget": {"min": 1100, "max": 18000}, "adds": ["cut_stone", "buttresses", "parapet"]},
+    {"level": 7, "visual_goal": "Высшая каменная линия со стальными скобами и усиленным узловым пилоном.", "cost_resources": ["coins", "stone_block", "steel"], "triangle_budget": {"min": 1200, "max": 18000}, "adds": ["steel_ties", "heavy_pier"]}
+  ],
+  "states": ["active", "construction", "damaged", "ruined"],
+  "material_map": {
+    "stone": {"visible_as": "непрерывное ядро и рельефная кладка", "priority": "primary", "levels": [4, 5, 6, 7]},
+    "brick": {"visible_as": "кирпичные пояса и ремонтные вставки", "priority": "secondary", "levels": [4, 5, 6, 7]},
+    "stone_block": {"visible_as": "тесаные блоки, контрфорсы и парапет", "priority": "primary", "levels": [6, 7]},
+    "steel": {"visible_as": "силовые скобы и связи на каменной конструкции", "priority": "secondary", "levels": [7]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Толщина и высота кладки последовательно растут на уровнях 4-7."},
+    "height": {"rule": "Надземная высота растет от 1.18 до 1.68 единицы при общей камере и клетке."},
+    "materials": {"rule": "Кирпич виден с уровня 4, тесаный блок с уровня 6, стальные связи с уровня 7."},
+    "props": {"rule": "Каменные сколы и пыль используются лишь в нарушенных состояниях; оружия нет."},
+    "constraints": {"rule": "Все 16 ортогональных форм стыкуются на границе клетки; земля едина для состояний."}
+  },
+  "state_policy": {
+    "active": {"rule": "Цельная оборонительная кладка с верхним каменным покрытием."},
+    "construction": {"rule": "Построено около половины надземной кладки; материалы лежат на земле."},
+    "damaged": {"rule": "Верхние ряды обрушены, крупные проломы, каменные обломки на земле."},
+    "ruined": {"rule": "Остался низкий фундамент и отдельные обломки."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 900, "max": 18000}, "export": true}, {"name": "LOD1", "ratio": 0.65, "triangle_budget": {"min": 400, "max": 12000}, "export": true}, {"name": "LOD2", "ratio": 0.35, "triangle_budget": {"min": 180, "max": 7000}, "export": true}], "preserve": ["ground", "masonry_core", "junction_pier", "level_upgrades"], "exports": {"naming": "{asset_id}_l{level:02d}_{shape}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 512], "camera_profile": "real_city_modular_wall", "transparent_background": true, "anchor": [256, 320], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 4, "include_states": ["active", "construction", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/roads/stone_wall", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/roads/stone-wall.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/generate_roads_and_walls_models.py"], "existing_assets": ["frontend/public/assets/buildings/roads/wooden_wall", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Баланс хранится в shared/catalog/buildings.ts: уровни 4-7, 600/850/1150/1550 HP; стоимость и игровые правила не меняются.", "16 форм × 4 уровня × 4 состояния."]
+}

@@ -1,0 +1,1668 @@
+{
+  "asset_id": "defense_stakes",
+  "display_name": "Колья",
+  "category": "defense",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "states": [
+    "construction",
+    "armed",
+    "triggered",
+    "empty",
+    "damaged",
+    "ruined"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_levels.glb",
+  "material_map": {
+    "wood": {
+      "visible_as": "несущие колы ранних уровней",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "rope": {
+      "visible_as": "нижние обвязки кольев и узлы на стяжках",
+      "priority": "secondary",
+      "levels": [
+        2,
+        3,
+        4
+      ]
+    },
+    "planks": {
+      "visible_as": "поперечины и жёсткая рама",
+      "priority": "primary",
+      "levels": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "наконечники, кольца и усиленные стяжки",
+      "priority": "primary",
+      "levels": [
+        4,
+        5,
+        6
+      ]
+    },
+    "stone_block": {
+      "visible_as": "низкие каменные опоры шестого уровня",
+      "priority": "secondary",
+      "levels": [
+        6
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "defense_stakes_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5140239596366882
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_construction_LOD0.glb",
+          "triangles": 656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_construction_LOD1.glb",
+          "triangles": 352
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_construction_LOD2.glb",
+          "triangles": 176
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_construction.png"
+    },
+    {
+      "id": "defense_stakes_l01_armed",
+      "level": 1,
+      "state": "armed",
+      "triangles": 676,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5137360095977783
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_armed_LOD0.glb",
+          "triangles": 676
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_armed_LOD1.glb",
+          "triangles": 360
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_armed_LOD2.glb",
+          "triangles": 180
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_armed.png"
+    },
+    {
+      "id": "defense_stakes_l01_triggered",
+      "level": 1,
+      "state": "triggered",
+      "triangles": 764,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5120077729225159
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_triggered_LOD0.glb",
+          "triangles": 764
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_triggered_LOD1.glb",
+          "triangles": 408
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_triggered_LOD2.glb",
+          "triangles": 204
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_triggered.png"
+    },
+    {
+      "id": "defense_stakes_l01_empty",
+      "level": 1,
+      "state": "empty",
+      "triangles": 676,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.35842400789260864
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_empty_LOD0.glb",
+          "triangles": 676
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_empty_LOD1.glb",
+          "triangles": 360
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_empty_LOD2.glb",
+          "triangles": 180
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_empty.png"
+    },
+    {
+      "id": "defense_stakes_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 764,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5134005546569824
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_damaged_LOD0.glb",
+          "triangles": 764
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_damaged_LOD1.glb",
+          "triangles": 408
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_damaged_LOD2.glb",
+          "triangles": 204
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_damaged.png"
+    },
+    {
+      "id": "defense_stakes_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 568,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2150000035762787
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_ruined_LOD0.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_ruined_LOD1.glb",
+          "triangles": 306
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_ruined_LOD2.glb",
+          "triangles": 150
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l01_ruined.png"
+    },
+    {
+      "id": "defense_stakes_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 844,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.53302401304245
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_construction_LOD0.glb",
+          "triangles": 844
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_construction_LOD1.glb",
+          "triangles": 448
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_construction_LOD2.glb",
+          "triangles": 228
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_construction.png"
+    },
+    {
+      "id": "defense_stakes_l02_armed",
+      "level": 2,
+      "state": "armed",
+      "triangles": 900,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.53273606300354
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_armed_LOD0.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_armed_LOD1.glb",
+          "triangles": 474
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_armed_LOD2.glb",
+          "triangles": 242
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_armed.png"
+    },
+    {
+      "id": "defense_stakes_l02_triggered",
+      "level": 2,
+      "state": "triggered",
+      "triangles": 988,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5310078263282776
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_triggered_LOD0.glb",
+          "triangles": 988
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_triggered_LOD1.glb",
+          "triangles": 522
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_triggered_LOD2.glb",
+          "triangles": 266
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_triggered.png"
+    },
+    {
+      "id": "defense_stakes_l02_empty",
+      "level": 2,
+      "state": "empty",
+      "triangles": 792,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.36982399225234985
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_empty_LOD0.glb",
+          "triangles": 792
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_empty_LOD1.glb",
+          "triangles": 420
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_empty_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_empty.png"
+    },
+    {
+      "id": "defense_stakes_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 988,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5324005484580994
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_damaged_LOD0.glb",
+          "triangles": 988
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_damaged_LOD1.glb",
+          "triangles": 522
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_damaged_LOD2.glb",
+          "triangles": 266
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_damaged.png"
+    },
+    {
+      "id": "defense_stakes_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 568,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2150000035762787
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_ruined_LOD0.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_ruined_LOD1.glb",
+          "triangles": 306
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_ruined_LOD2.glb",
+          "triangles": 150
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l02_ruined.png"
+    },
+    {
+      "id": "defense_stakes_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 860,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5520240068435669
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_construction_LOD0.glb",
+          "triangles": 860
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_construction_LOD1.glb",
+          "triangles": 460
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_construction_LOD2.glb",
+          "triangles": 232
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_construction.png"
+    },
+    {
+      "id": "defense_stakes_l03_armed",
+      "level": 3,
+      "state": "armed",
+      "triangles": 960,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.551736056804657
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_armed_LOD0.glb",
+          "triangles": 960
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_armed_LOD1.glb",
+          "triangles": 510
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_armed_LOD2.glb",
+          "triangles": 258
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_armed.png"
+    },
+    {
+      "id": "defense_stakes_l03_triggered",
+      "level": 3,
+      "state": "triggered",
+      "triangles": 1048,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5500078201293945
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_triggered_LOD0.glb",
+          "triangles": 1048
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_triggered_LOD1.glb",
+          "triangles": 558
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_triggered_LOD2.glb",
+          "triangles": 282
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_triggered.png"
+    },
+    {
+      "id": "defense_stakes_l03_empty",
+      "level": 3,
+      "state": "empty",
+      "triangles": 852,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.38122400641441345
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_empty_LOD0.glb",
+          "triangles": 852
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_empty_LOD1.glb",
+          "triangles": 456
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_empty_LOD2.glb",
+          "triangles": 228
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_empty.png"
+    },
+    {
+      "id": "defense_stakes_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1048,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5514005422592163
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_damaged_LOD0.glb",
+          "triangles": 1048
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_damaged_LOD1.glb",
+          "triangles": 558
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_damaged_LOD2.glb",
+          "triangles": 282
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_damaged.png"
+    },
+    {
+      "id": "defense_stakes_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 568,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2150000035762787
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_ruined_LOD0.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_ruined_LOD1.glb",
+          "triangles": 306
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_ruined_LOD2.glb",
+          "triangles": 150
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l03_ruined.png"
+    },
+    {
+      "id": "defense_stakes_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5710240006446838
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_construction_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_construction_LOD1.glb",
+          "triangles": 496
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_construction_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_construction.png"
+    },
+    {
+      "id": "defense_stakes_l04_armed",
+      "level": 4,
+      "state": "armed",
+      "triangles": 1068,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5707360506057739
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_armed_LOD0.glb",
+          "triangles": 1068
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_armed_LOD1.glb",
+          "triangles": 564
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_armed_LOD2.glb",
+          "triangles": 288
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_armed.png"
+    },
+    {
+      "id": "defense_stakes_l04_triggered",
+      "level": 4,
+      "state": "triggered",
+      "triangles": 1156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5690078139305115
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_triggered_LOD0.glb",
+          "triangles": 1156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_triggered_LOD1.glb",
+          "triangles": 612
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_triggered_LOD2.glb",
+          "triangles": 312
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_triggered.png"
+    },
+    {
+      "id": "defense_stakes_l04_empty",
+      "level": 4,
+      "state": "empty",
+      "triangles": 960,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.39262399077415466
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_empty_LOD0.glb",
+          "triangles": 960
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_empty_LOD1.glb",
+          "triangles": 510
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_empty_LOD2.glb",
+          "triangles": 258
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_empty.png"
+    },
+    {
+      "id": "defense_stakes_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1156,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5704005360603333
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_damaged_LOD0.glb",
+          "triangles": 1156
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_damaged_LOD1.glb",
+          "triangles": 612
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_damaged_LOD2.glb",
+          "triangles": 312
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_damaged.png"
+    },
+    {
+      "id": "defense_stakes_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 700,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2150000035762787
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_ruined_LOD0.glb",
+          "triangles": 700
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_ruined_LOD1.glb",
+          "triangles": 378
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_ruined_LOD2.glb",
+          "triangles": 186
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l04_ruined.png"
+    },
+    {
+      "id": "defense_stakes_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1424,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5900239944458008
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_construction_LOD0.glb",
+          "triangles": 1424
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_construction_LOD1.glb",
+          "triangles": 752
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_construction_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_construction.png"
+    },
+    {
+      "id": "defense_stakes_l05_armed",
+      "level": 5,
+      "state": "armed",
+      "triangles": 1828,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5897360444068909
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_armed_LOD0.glb",
+          "triangles": 1828
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_armed_LOD1.glb",
+          "triangles": 960
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_armed_LOD2.glb",
+          "triangles": 492
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_armed.png"
+    },
+    {
+      "id": "defense_stakes_l05_triggered",
+      "level": 5,
+      "state": "triggered",
+      "triangles": 1916,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5880078077316284
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_triggered_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_triggered_LOD1.glb",
+          "triangles": 1008
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_triggered_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_triggered.png"
+    },
+    {
+      "id": "defense_stakes_l05_empty",
+      "level": 5,
+      "state": "empty",
+      "triangles": 1612,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.40402400493621826
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_empty_LOD0.glb",
+          "triangles": 1612
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_empty_LOD1.glb",
+          "triangles": 852
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_empty_LOD2.glb",
+          "triangles": 432
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_empty.png"
+    },
+    {
+      "id": "defense_stakes_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1916,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5894005298614502
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_damaged_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_damaged_LOD1.glb",
+          "triangles": 1008
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_damaged_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_damaged.png"
+    },
+    {
+      "id": "defense_stakes_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 1048,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2150000035762787
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_ruined_LOD0.glb",
+          "triangles": 1048
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_ruined_LOD1.glb",
+          "triangles": 564
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_ruined_LOD2.glb",
+          "triangles": 276
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l05_ruined.png"
+    },
+    {
+      "id": "defense_stakes_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1512,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6090239882469177
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_construction_LOD0.glb",
+          "triangles": 1512
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_construction_LOD1.glb",
+          "triangles": 800
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_construction_LOD2.glb",
+          "triangles": 408
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_construction.png"
+    },
+    {
+      "id": "defense_stakes_l06_armed",
+      "level": 6,
+      "state": "armed",
+      "triangles": 1916,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6087360382080078
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_armed_LOD0.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_armed_LOD1.glb",
+          "triangles": 1008
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_armed_LOD2.glb",
+          "triangles": 516
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_armed_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_armed.png"
+    },
+    {
+      "id": "defense_stakes_l06_triggered",
+      "level": 6,
+      "state": "triggered",
+      "triangles": 2004,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6070078015327454
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_triggered_LOD0.glb",
+          "triangles": 2004
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_triggered_LOD1.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_triggered_LOD2.glb",
+          "triangles": 540
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_triggered_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_triggered.png"
+    },
+    {
+      "id": "defense_stakes_l06_empty",
+      "level": 6,
+      "state": "empty",
+      "triangles": 1700,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.4154239892959595
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_empty_LOD0.glb",
+          "triangles": 1700
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_empty_LOD1.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_empty_LOD2.glb",
+          "triangles": 456
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_empty_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_empty.png"
+    },
+    {
+      "id": "defense_stakes_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 2004,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6084005236625671
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_damaged_LOD0.glb",
+          "triangles": 2004
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_damaged_LOD1.glb",
+          "triangles": 1056
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_damaged_LOD2.glb",
+          "triangles": 540
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_damaged.png"
+    },
+    {
+      "id": "defense_stakes_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 1136,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.2150000035762787
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_ruined_LOD0.glb",
+          "triangles": 1136
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_ruined_LOD1.glb",
+          "triangles": 612
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_ruined_LOD2.glb",
+          "triangles": 300
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/defense/defense_stakes/defense_stakes_l06_ruined.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\defense\\defense_stakes.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 300,
+          "max": 5500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 160,
+          "max": 3000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 80,
+          "max": 1550
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "stake_count",
+      "frame",
+      "material_progression"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 6,
+      "include_states": [
+        "construction",
+        "armed",
+        "triggered",
+        "empty",
+        "damaged",
+        "ruined"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1000,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

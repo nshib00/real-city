@@ -1,0 +1,2058 @@
+{
+  "asset_id": "dye_garden",
+  "display_name": "Красильный сад",
+  "category": "fields",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "states": [
+    "construction",
+    "stage01",
+    "stage02",
+    "stage03",
+    "stage04",
+    "active",
+    "damaged",
+    "ruined"
+  ],
+  "items": [
+    {
+      "id": "dye_garden_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 900,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_construction_LOD0.glb",
+          "triangles": 900
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_construction_LOD1.glb",
+          "triangles": 486
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_construction_LOD2.glb",
+          "triangles": 246
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_construction.png"
+    },
+    {
+      "id": "dye_garden_l01_stage01",
+      "level": 1,
+      "state": "stage01",
+      "triangles": 1656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8324999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage01_LOD0.glb",
+          "triangles": 1656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage01_LOD1.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage01_LOD2.glb",
+          "triangles": 426
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage01.png"
+    },
+    {
+      "id": "dye_garden_l01_stage02",
+      "level": 1,
+      "state": "stage02",
+      "triangles": 3556,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9770600199699402
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage02_LOD0.glb",
+          "triangles": 3556
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage02_LOD1.glb",
+          "triangles": 1916
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage02_LOD2.glb",
+          "triangles": 900
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage02.png"
+    },
+    {
+      "id": "dye_garden_l01_stage03",
+      "level": 1,
+      "state": "stage03",
+      "triangles": 5940,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1055799722671509
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage03_LOD0.glb",
+          "triangles": 5940
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage03_LOD1.glb",
+          "triangles": 3198
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage03_LOD2.glb",
+          "triangles": 1488
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage03.png"
+    },
+    {
+      "id": "dye_garden_l01_stage04",
+      "level": 1,
+      "state": "stage04",
+      "triangles": 6072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1855800151824951
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage04_LOD0.glb",
+          "triangles": 6072
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage04_LOD1.glb",
+          "triangles": 3270
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage04_LOD2.glb",
+          "triangles": 1518
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_stage04.png"
+    },
+    {
+      "id": "dye_garden_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 6072,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1855800151824951
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_active_LOD0.glb",
+          "triangles": 6072
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_active_LOD1.glb",
+          "triangles": 3270
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_active_LOD2.glb",
+          "triangles": 1518
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_active.png"
+    },
+    {
+      "id": "dye_garden_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 3916,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8705799579620361
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_damaged_LOD0.glb",
+          "triangles": 3916
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_damaged_LOD1.glb",
+          "triangles": 2116
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_damaged_LOD2.glb",
+          "triangles": 984
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_damaged.png"
+    },
+    {
+      "id": "dye_garden_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1236,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_ruined_LOD0.glb",
+          "triangles": 1236
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_ruined_LOD1.glb",
+          "triangles": 664
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_ruined_LOD2.glb",
+          "triangles": 324
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l01_ruined.png"
+    },
+    {
+      "id": "dye_garden_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 944,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_construction_LOD0.glb",
+          "triangles": 944
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_construction_LOD1.glb",
+          "triangles": 510
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_construction_LOD2.glb",
+          "triangles": 258
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_construction.png"
+    },
+    {
+      "id": "dye_garden_l02_stage01",
+      "level": 2,
+      "state": "stage01",
+      "triangles": 1900,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8324999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage01_LOD0.glb",
+          "triangles": 1900
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage01_LOD1.glb",
+          "triangles": 1016
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage01_LOD2.glb",
+          "triangles": 486
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage01.png"
+    },
+    {
+      "id": "dye_garden_l02_stage02",
+      "level": 2,
+      "state": "stage02",
+      "triangles": 4376,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.005060076713562
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage02_LOD0.glb",
+          "triangles": 4376
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage02_LOD1.glb",
+          "triangles": 2356
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage02_LOD2.glb",
+          "triangles": 1104
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage02.png"
+    },
+    {
+      "id": "dye_garden_l02_stage03",
+      "level": 2,
+      "state": "stage03",
+      "triangles": 7172,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1373000144958496
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage03_LOD0.glb",
+          "triangles": 7172
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage03_LOD1.glb",
+          "triangles": 3860
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage03_LOD2.glb",
+          "triangles": 1794
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage03.png"
+    },
+    {
+      "id": "dye_garden_l02_stage04",
+      "level": 2,
+      "state": "stage04",
+      "triangles": 7436,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2173000574111938
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage04_LOD0.glb",
+          "triangles": 7436
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage04_LOD1.glb",
+          "triangles": 4004
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage04_LOD2.glb",
+          "triangles": 1854
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_stage04.png"
+    },
+    {
+      "id": "dye_garden_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 7436,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2173000574111938
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_active_LOD0.glb",
+          "triangles": 7436
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_active_LOD1.glb",
+          "triangles": 4004
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_active_LOD2.glb",
+          "triangles": 1854
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_active.png"
+    },
+    {
+      "id": "dye_garden_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 4620,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9023000001907349
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_damaged_LOD0.glb",
+          "triangles": 4620
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_damaged_LOD1.glb",
+          "triangles": 2496
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_damaged_LOD2.glb",
+          "triangles": 1158
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_damaged.png"
+    },
+    {
+      "id": "dye_garden_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 1280,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_ruined_LOD0.glb",
+          "triangles": 1280
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_ruined_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_ruined_LOD2.glb",
+          "triangles": 336
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l02_ruined.png"
+    },
+    {
+      "id": "dye_garden_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1120,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_construction_LOD0.glb",
+          "triangles": 1120
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_construction_LOD1.glb",
+          "triangles": 606
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_construction_LOD2.glb",
+          "triangles": 300
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_construction.png"
+    },
+    {
+      "id": "dye_garden_l03_stage01",
+      "level": 3,
+      "state": "stage01",
+      "triangles": 2340,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8324999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage01_LOD0.glb",
+          "triangles": 2340
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage01_LOD1.glb",
+          "triangles": 1256
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage01_LOD2.glb",
+          "triangles": 606
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage01.png"
+    },
+    {
+      "id": "dye_garden_l03_stage02",
+      "level": 3,
+      "state": "stage02",
+      "triangles": 4816,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.033060073852539
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage02_LOD0.glb",
+          "triangles": 4816
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage02_LOD1.glb",
+          "triangles": 2596
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage02_LOD2.glb",
+          "triangles": 1224
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage02.png"
+    },
+    {
+      "id": "dye_garden_l03_stage03",
+      "level": 3,
+      "state": "stage03",
+      "triangles": 8492,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1690199375152588
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage03_LOD0.glb",
+          "triangles": 8492
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage03_LOD1.glb",
+          "triangles": 4572
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage03_LOD2.glb",
+          "triangles": 2130
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage03.png"
+    },
+    {
+      "id": "dye_garden_l03_stage04",
+      "level": 3,
+      "state": "stage04",
+      "triangles": 8888,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.249019980430603
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage04_LOD0.glb",
+          "triangles": 8888
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage04_LOD1.glb",
+          "triangles": 4788
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage04_LOD2.glb",
+          "triangles": 2220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_stage04.png"
+    },
+    {
+      "id": "dye_garden_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 8888,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.249019980430603
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_active_LOD0.glb",
+          "triangles": 8888
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_active_LOD1.glb",
+          "triangles": 4788
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_active_LOD2.glb",
+          "triangles": 2220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_active.png"
+    },
+    {
+      "id": "dye_garden_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 5544,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9340200424194336
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_damaged_LOD0.glb",
+          "triangles": 5544
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_damaged_LOD1.glb",
+          "triangles": 2996
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_damaged_LOD2.glb",
+          "triangles": 1392
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_damaged.png"
+    },
+    {
+      "id": "dye_garden_l03_ruined",
+      "level": 3,
+      "state": "ruined",
+      "triangles": 1280,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5789999961853027
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_ruined_LOD0.glb",
+          "triangles": 1280
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_ruined_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_ruined_LOD2.glb",
+          "triangles": 336
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l03_ruined.png"
+    },
+    {
+      "id": "dye_garden_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1208,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_construction_LOD0.glb",
+          "triangles": 1208
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_construction_LOD1.glb",
+          "triangles": 654
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_construction_LOD2.glb",
+          "triangles": 324
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_construction.png"
+    },
+    {
+      "id": "dye_garden_l04_stage01",
+      "level": 4,
+      "state": "stage01",
+      "triangles": 2892,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8324999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage01_LOD0.glb",
+          "triangles": 2892
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage01_LOD1.glb",
+          "triangles": 1552
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage01_LOD2.glb",
+          "triangles": 750
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage01.png"
+    },
+    {
+      "id": "dye_garden_l04_stage02",
+      "level": 4,
+      "state": "stage02",
+      "triangles": 5944,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0610599517822266
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage02_LOD0.glb",
+          "triangles": 5944
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage02_LOD1.glb",
+          "triangles": 3204
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage02_LOD2.glb",
+          "triangles": 1512
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage02.png"
+    },
+    {
+      "id": "dye_garden_l04_stage03",
+      "level": 4,
+      "state": "stage03",
+      "triangles": 10032,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2007399797439575
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage03_LOD0.glb",
+          "triangles": 10032
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage03_LOD1.glb",
+          "triangles": 5402
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage03_LOD2.glb",
+          "triangles": 2520
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage03.png"
+    },
+    {
+      "id": "dye_garden_l04_stage04",
+      "level": 4,
+      "state": "stage04",
+      "triangles": 10428,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2807400226593018
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage04_LOD0.glb",
+          "triangles": 10428
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage04_LOD1.glb",
+          "triangles": 5618
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage04_LOD2.glb",
+          "triangles": 2610
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_stage04.png"
+    },
+    {
+      "id": "dye_garden_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 10428,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2807400226593018
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_active_LOD0.glb",
+          "triangles": 10428
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_active_LOD1.glb",
+          "triangles": 5618
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_active_LOD2.glb",
+          "triangles": 2610
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_active.png"
+    },
+    {
+      "id": "dye_garden_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 6028,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9657400250434875
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_damaged_LOD0.glb",
+          "triangles": 6028
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_damaged_LOD1.glb",
+          "triangles": 3256
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_damaged_LOD2.glb",
+          "triangles": 1512
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_damaged.png"
+    },
+    {
+      "id": "dye_garden_l04_ruined",
+      "level": 4,
+      "state": "ruined",
+      "triangles": 1324,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6069999933242798
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_ruined_LOD0.glb",
+          "triangles": 1324
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_ruined_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_ruined_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l04_ruined.png"
+    },
+    {
+      "id": "dye_garden_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1300,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_construction_LOD0.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_construction_LOD1.glb",
+          "triangles": 704
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_construction_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_construction.png"
+    },
+    {
+      "id": "dye_garden_l05_stage01",
+      "level": 5,
+      "state": "stage01",
+      "triangles": 3260,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8324999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage01_LOD0.glb",
+          "triangles": 3260
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage01_LOD1.glb",
+          "triangles": 1752
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage01_LOD2.glb",
+          "triangles": 846
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage01.png"
+    },
+    {
+      "id": "dye_garden_l05_stage02",
+      "level": 5,
+      "state": "stage02",
+      "triangles": 6312,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0890599489212036
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage02_LOD0.glb",
+          "triangles": 6312
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage02_LOD1.glb",
+          "triangles": 3404
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage02_LOD2.glb",
+          "triangles": 1608
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage02.png"
+    },
+    {
+      "id": "dye_garden_l05_stage03",
+      "level": 5,
+      "state": "stage03",
+      "triangles": 11280,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2324600219726562
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage03_LOD0.glb",
+          "triangles": 11280
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage03_LOD1.glb",
+          "triangles": 6074
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage03_LOD2.glb",
+          "triangles": 2832
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage03.png"
+    },
+    {
+      "id": "dye_garden_l05_stage04",
+      "level": 5,
+      "state": "stage04",
+      "triangles": 11852,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3124600648880005
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage04_LOD0.glb",
+          "triangles": 11852
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage04_LOD1.glb",
+          "triangles": 6386
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage04_LOD2.glb",
+          "triangles": 2970
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_stage04.png"
+    },
+    {
+      "id": "dye_garden_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 11852,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3124600648880005
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_active_LOD0.glb",
+          "triangles": 11852
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_active_LOD1.glb",
+          "triangles": 6386
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_active_LOD2.glb",
+          "triangles": 2970
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_active.png"
+    },
+    {
+      "id": "dye_garden_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 6836,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9974600076675415
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_damaged_LOD0.glb",
+          "triangles": 6836
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_damaged_LOD1.glb",
+          "triangles": 3692
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_damaged_LOD2.glb",
+          "triangles": 1716
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_damaged.png"
+    },
+    {
+      "id": "dye_garden_l05_ruined",
+      "level": 5,
+      "state": "ruined",
+      "triangles": 1326,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6349999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_ruined_LOD0.glb",
+          "triangles": 1326
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_ruined_LOD1.glb",
+          "triangles": 714
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_ruined_LOD2.glb",
+          "triangles": 350
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l05_ruined.png"
+    },
+    {
+      "id": "dye_garden_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1300,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.5550000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_construction_LOD0.glb",
+          "triangles": 1300
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_construction_LOD1.glb",
+          "triangles": 704
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_construction_LOD2.glb",
+          "triangles": 348
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_construction.png"
+    },
+    {
+      "id": "dye_garden_l06_stage01",
+      "level": 6,
+      "state": "stage01",
+      "triangles": 3416,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8324999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage01_LOD0.glb",
+          "triangles": 3416
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage01_LOD1.glb",
+          "triangles": 1832
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage01_LOD2.glb",
+          "triangles": 882
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage01_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage01.png"
+    },
+    {
+      "id": "dye_garden_l06_stage02",
+      "level": 6,
+      "state": "stage02",
+      "triangles": 7044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1170599460601807
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage02_LOD0.glb",
+          "triangles": 7044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage02_LOD1.glb",
+          "triangles": 3796
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage02_LOD2.glb",
+          "triangles": 1788
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage02_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage02.png"
+    },
+    {
+      "id": "dye_garden_l06_stage03",
+      "level": 6,
+      "state": "stage03",
+      "triangles": 12424,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2641799449920654
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage03_LOD0.glb",
+          "triangles": 12424
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage03_LOD1.glb",
+          "triangles": 6688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage03_LOD2.glb",
+          "triangles": 3114
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage03_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage03.png"
+    },
+    {
+      "id": "dye_garden_l06_stage04",
+      "level": 6,
+      "state": "stage04",
+      "triangles": 12996,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3441799879074097
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage04_LOD0.glb",
+          "triangles": 12996
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage04_LOD1.glb",
+          "triangles": 7000
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage04_LOD2.glb",
+          "triangles": 3252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage04_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_stage04.png"
+    },
+    {
+      "id": "dye_garden_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 12996,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.3441799879074097
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_active_LOD0.glb",
+          "triangles": 12996
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_active_LOD1.glb",
+          "triangles": 7000
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_active_LOD2.glb",
+          "triangles": 3252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_active.png"
+    },
+    {
+      "id": "dye_garden_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 7320,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0291800498962402
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_damaged_LOD0.glb",
+          "triangles": 7320
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_damaged_LOD1.glb",
+          "triangles": 3952
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_damaged_LOD2.glb",
+          "triangles": 1836
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_damaged.png"
+    },
+    {
+      "id": "dye_garden_l06_ruined",
+      "level": 6,
+      "state": "ruined",
+      "triangles": 1326,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.6629999876022339
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_ruined_LOD0.glb",
+          "triangles": 1326
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_ruined_LOD1.glb",
+          "triangles": 714
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_ruined_LOD2.glb",
+          "triangles": 350
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_l06_ruined.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_levels.glb",
+    "manifest": "frontend/public/assets/buildings/fields/dye_garden/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/fields/dye_garden/dye_garden_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\fields\\dye_garden.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: dye_garden\ndisplay_name: Красильный сад\ncategory/kind: fields/building\nlevels: 1-6\nstates: construction, stage01, stage02, stage03, stage04, active, damaged, ruined\nstyle: aeolian_fantasy_midpoly\nmaterials: herbs, dyes, fabric, stone_block, gold_ingot, rare_flowers, premium_planks, emerald_dust, mechanism, star_glass\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, environment-artist, vegetation-artist, prop-artist, materials, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

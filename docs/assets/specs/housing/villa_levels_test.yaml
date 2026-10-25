@@ -1,0 +1,102 @@
+asset_id: villa
+category: housing
+kind: building
+display_name: Вилла — тестовая визуальная линейка
+style_profile: aeolian_fantasy_midpoly
+catalog_level_policy: visual_prototype
+
+footprint: { width: 1, height: 1 }
+states: [active, construction, damaged]
+levels:
+  - level: 2
+    visual_goal: Прежний тестовый вариант уровня 3 — широкий мраморный портик, боковая терраса, мансарда с окном и садовая ограда.
+    cost_resources: [stone, glass]
+    triangle_budget: { min: 1800, max: 30000 }
+    adds: [wide_portico, supported_side_terrace, attic_volume, attic_window, garden_fence]
+  - level: 3
+    visual_goal: Основной корпус на 5% больше по площади, чем на уровне 2; задняя половина кровли превращена во второй этаж. Колонны правого балкона исходят из его плиты и держат плоскую крышу; колонны входа шире.
+    cost_resources: [stone, glass]
+    triangle_budget: { min: 1800, max: 32000 }
+    adds: [rear_second_floor, separate_gable_roof, supported_balcony, flat_balcony_roof]
+  - level: 4
+    visual_goal: Основной корпус на 3% больше по площади, чем на уровне 3; полный мраморный второй этаж. Балкон с колоннами от его плиты придвинут к новой боковой стене и поднят; у него треугольная черепичная крыша с окошком. Колонны входа шире.
+    cost_resources: [stone, glass]
+    triangle_budget: { min: 1800, max: 36000 }
+    adds: [full_second_floor, upper_windows, gabled_balcony_roof, balcony_roof_window, fountain, courtyard_lanterns]
+  - level: 5
+    visual_goal: Основной корпус на 3% больше по площади, чем на уровне 4; двухэтажный боковой павильон усиливает дворцовый силуэт. Балкон придвинут к новой стене и поднят, колонны исходят из его плиты. Колонны входа шире и обрамлены тонкими золотыми полосками; на крыше позолоченные швы, гребни, мансардное окно и каменная труба.
+    cost_resources: [stone, glass]
+    triangle_budget: { min: 1800, max: 38000 }
+    adds: [two_storey_side_pavilion, pavilion_roof, roof_dormer, gilded_roof_seams, roof_crests, chimney]
+
+material_map:
+  stone:
+    visible_as: белые мраморные стены, колонны, терраса, балкон и садовая ограда
+    priority: primary
+    levels: [2, 3, 4, 5]
+  glass:
+    visible_as: окна корпуса и мансарды, стеклянная балконная дверь
+    priority: secondary
+    levels: [2, 3, 4, 5]
+
+level_progression:
+  mass: { rule: Площадь основного жилого корпуса растёт ровно на 5% от уровня 2 к 3, затем на 3% к уровню 4 и ещё на 3% к уровню 5; задний, полный второй этаж и боковой павильон усиливают силуэт. }
+  height: { rule: Два варианта второго этажа и боковой павильон повышают силуэт без смены камеры. }
+  materials: { rule: Мрамор и стекло видны в самом доме. }
+  props: { rule: Сад и декор оставляют главный вход и окна открытыми. }
+  late_elements: { rule: Балкон появляется на уровне 3, фонтан и дворовые фонари на уровне 4, дворцовый декор крыши на уровне 5. }
+  constraints:
+    - Проценты площади относятся к основному прямоугольному жилому корпусу без террасы, балкона, ступеней и бокового павильона; ширина и глубина растут равномерно на квадратный корень из коэффициента площади.
+    - Колонны балкона начинаются на его плите и несут крышу; сама плита опирается на настенные кронштейны.
+    - Варианты 2–5 созданы как тестовая визуальная линейка и скопированы в игровой runtime; числовая цепочка уровней виллы по-прежнему не утверждена.
+    - База каждого варианта — увеличенная тестовая вилла villa_l01_active_v2; исходный тест сохраняется отдельно, игровой villa_l04_active теперь соответствует четвёртому варианту.
+    - На этом этапе собраны завершённые варианты active; construction и damaged требуют отдельного моделирования.
+
+state_policy:
+  active:
+    rule: Завершённый дом, открытый вход, мрамор, стекло и читаемый архитектурный апгрейд.
+  construction:
+    rule: Планируемое состояние с незакрытыми стенами и неполной кровлей; модель пока не собрана.
+    required_elements: [unfinished_frame, materials]
+  damaged:
+    rule: Планируемое состояние с крупной потерей стен и кровли; модель пока не собрана.
+    required_elements: [broken_walls, broken_roof, debris]
+    forbidden_elements: [floating_parts]
+
+skill_profile:
+  base: [blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style]
+  asset_type: [environment-artist, prop-artist, vegetation-artist]
+  production: [materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline]
+  validation: [qa-review]
+
+lod_policy:
+  chain:
+    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 1800, max: 38000 }, export: true }
+    - { name: LOD1, ratio: 0.48, triangle_budget: { min: 850, max: 20000 }, export: true }
+    - { name: LOD2, ratio: 0.22, triangle_budget: { min: 400, max: 10000 }, export: true }
+  preserve: [marble_shell, tiled_roof, windows, portico, level_architecture]
+  exports:
+    naming: "{asset_id}_l{level:02d}_{state}_{lod}.glb"
+    include_lod0: true
+    include_lod1: true
+    include_lod2: true
+
+png_policy:
+  sprite_size: [512, 384]
+  camera_profile: real_city_isometric
+  transparent_background: true
+  anchor: [256, 292]
+  render_lod: LOD0
+  contact_sheet: { enabled: true, columns: 4, include_states: [active] }
+  alpha_bounds: { min_opaque_pixels: 1200, max_crop_margin_px: 10, bottom_anchor_tolerance_px: 10 }
+
+output:
+  runtime_dir: frontend/public/assets/buildings/housing/villa_levels_test
+  source_dir: frontend/public/assets/buildings/housing/villa_levels_test
+  use_public_glb: true
+
+references:
+  docs: [docs/buildings/houses/villa.md, docs/assets/villa-modeling-guide.md]
+  art_guide: docs/art/visual-style-guide.md
+  existing_generators: [tools/assets/blender/build_villa_levels_test.py]
+  existing_assets: [frontend/public/assets/buildings/housing/villa_v2_test/villa_l01_active_v2.blend]

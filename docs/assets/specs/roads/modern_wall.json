@@ -1,0 +1,41 @@
+{
+  "asset_id": "modern_wall",
+  "category": "defense",
+  "kind": "building",
+  "display_name": "Современная стена",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {"width": 1, "height": 1},
+  "levels": [
+    {"level": 11, "visual_goal": "Стройный стальной пилон, светлая сегментированная броня, медные трассы и бирюзовые диагностические окна на железобетонном ядре.", "cost_resources": ["coins", "steel", "electronics", "reinforced_concrete", "armor_plates"], "triangle_budget": {"min": 900, "max": 24000}, "adds": ["sculpted_steel_pylon", "porcelain_armor_plate", "electronics_lens", "copper_circuit_inlay"]},
+    {"level": 12, "visual_goal": "Двойной силовой верхний пояс, более высокий пилон и дополнительная перламутровая корона.", "cost_resources": ["coins", "steel", "electronics", "reinforced_concrete", "armor_plates", "reinforced_beams"], "triangle_budget": {"min": 1000, "max": 24000}, "adds": ["reinforced_beam_crown", "double_crown"]},
+    {"level": 13, "visual_goal": "Парадный бронированный гребень и защищенный узел супер-механизма над центральным пилоном; самый высокий силуэт ветки.", "cost_resources": ["coins", "steel", "electronics", "reinforced_concrete", "armor_plates", "reinforced_beams", "super_mechanism"], "triangle_budget": {"min": 1100, "max": 24000}, "adds": ["ceremonial_armor_spine", "super_mechanism_housing", "super_mechanism_core"]}
+  ],
+  "states": ["active", "construction", "damaged", "ruined"],
+  "material_map": {
+    "steel": {"visible_as": "темно-синий силовой каркас и скульптурные пилоны", "priority": "primary", "levels": [11, 12, 13]},
+    "electronics": {"visible_as": "встроенные бирюзовые линзы диагностики и медные цепи", "priority": "secondary", "levels": [11, 12, 13]},
+    "reinforced_concrete": {"visible_as": "непрерывное внутреннее ядро", "priority": "primary", "levels": [11, 12, 13]},
+    "armor_plates": {"visible_as": "светлые фасеточные бронепанели на фасадах и пилонах", "priority": "primary", "levels": [11, 12, 13]},
+    "reinforced_beams": {"visible_as": "двойной стальной верхний пояс", "priority": "secondary", "levels": [12, 13]},
+    "super_mechanism": {"visible_as": "защищенный центральный диагностический узел", "priority": "secondary", "levels": [13]}
+  },
+  "level_progression": {
+    "mass": {"rule": "Объем и высота пилонов возрастают при сохранении footprint и непрерывной стыковки."},
+    "height": {"rule": "Высота несущей части растет от 2.25 до 2.35; верхние пояса создают заметный рост общего силуэта без смены камеры."},
+    "materials": {"rule": "11 — сталь, электроника, железобетон и светлая броня; 12 — усиленные балки; 13 — видимый супер-механизм."},
+    "props": {"rule": "Диагностические окна, медные трассы и перламутровая отделка делают секцию богатой и технологичной; оружия нет."},
+    "constraints": {"rule": "16 ортогональных форм, единая плоская земля для состояний, никакой визуальной копии бетонной стены."}
+  },
+  "state_policy": {
+    "active": {"rule": "Целый высокий панцирь с несколькими рядами декора и работающими диагностическими окнами."},
+    "construction": {"rule": "Менее половины высоты ядра, открытые стойки и снятые бронепанели на земле; верхняя корона отсутствует."},
+    "damaged": {"rule": "Потеряна большая часть верхней структуры, броня сорвана, каркас погнут, обломки лежат на земле."},
+    "ruined": {"rule": "Низкая непрерывная подошва, остаток пилона и рассыпанные детали брони."}
+  },
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "lod_policy": {"chain": [{"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 900, "max": 24000}, "export": true}, {"name": "LOD1", "ratio": 0.7, "triangle_budget": {"min": 450, "max": 19000}, "export": true}, {"name": "LOD2", "ratio": 0.4, "triangle_budget": {"min": 150, "max": 14000}, "export": true}], "preserve": ["ground", "reinforced_concrete_core", "sculpted_steel_pylon", "porcelain_armor_plate", "level_upgrades"], "exports": {"naming": "{asset_id}_l{level:02d}_{shape}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  "png_policy": {"sprite_size": [512, 512], "camera_profile": "real_city_modular_wall", "transparent_background": true, "anchor": [256, 320], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 4, "include_states": ["active", "construction", "damaged", "ruined"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
+  "output": {"runtime_dir": "frontend/public/assets/buildings/roads/modern_wall", "use_public_glb": true},
+  "references": {"docs": ["docs/buildings/defense/modern-wall.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/generate_roads_and_walls_models.py"], "existing_assets": ["frontend/public/assets/buildings/roads/concrete_wall", "frontend/public/assets/terrain/tiles/grass.png"]},
+  "notes": ["Баланс каталога: уровни 11–13, 6200/7600/9200 HP; визуальная работа его не меняет.", "16 форм × 3 уровня × 4 состояния."]
+}

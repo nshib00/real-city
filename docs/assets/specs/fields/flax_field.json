@@ -1,0 +1,591 @@
+{
+  "asset_id": "flax_field",
+  "category": "fields",
+  "kind": "building",
+  "display_name": "Льняное поле",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "footprint": {
+    "width": 1,
+    "height": 1
+  },
+  "levels": [
+    {
+      "level": 1,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 1 добавляет первый ряд. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "wood",
+        "seeds",
+        "windleaf"
+      ],
+      "triangle_budget": {
+        "min": 700,
+        "max": 4500
+      },
+      "adds": [
+        "первый_ряд",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 2,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 2 добавляет дополнительные секции. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "wood",
+        "windleaf",
+        "rope"
+      ],
+      "triangle_budget": {
+        "min": 800,
+        "max": 5000
+      },
+      "adds": [
+        "дополнительные_секции",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 3,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 3 добавляет крупные ростки. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "windleaf",
+        "rope",
+        "planks"
+      ],
+      "triangle_budget": {
+        "min": 900,
+        "max": 5500
+      },
+      "adds": [
+        "крупные_ростки",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 4,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 4 добавляет разделитель рядов. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "planks",
+        "rope",
+        "windleaf"
+      ],
+      "triangle_budget": {
+        "min": 1000,
+        "max": 6000
+      },
+      "adds": [
+        "разделитель_рядов",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 5,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 5 добавляет сортировочная зона. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "seeds",
+        "planks",
+        "rope",
+        "windleaf",
+        "stone"
+      ],
+      "triangle_budget": {
+        "min": 1100,
+        "max": 6500
+      },
+      "adds": [
+        "сортировочная_зона",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 6,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 6 добавляет усиленный бортик. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "planks",
+        "rope",
+        "fabric",
+        "stone",
+        "brick",
+        "stone_block"
+      ],
+      "triangle_budget": {
+        "min": 1200,
+        "max": 7000
+      },
+      "adds": [
+        "усиленный_бортик",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 7,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 7 добавляет дополнительные опоры. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "planks",
+        "rope",
+        "fabric",
+        "brick",
+        "stone_block"
+      ],
+      "triangle_budget": {
+        "min": 1300,
+        "max": 7500
+      },
+      "adds": [
+        "дополнительные_опоры",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 8,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 8 добавляет поливная линия. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "brick",
+        "stone_block",
+        "fabric",
+        "iron_ingot"
+      ],
+      "triangle_budget": {
+        "min": 1400,
+        "max": 8000
+      },
+      "adds": [
+        "поливная_линия",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 9,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 9 добавляет контрольная стойка. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "stone_block",
+        "fabric",
+        "iron_ingot",
+        "gold_ingot"
+      ],
+      "triangle_budget": {
+        "min": 1500,
+        "max": 8500
+      },
+      "adds": [
+        "контрольная_стойка",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    },
+    {
+      "level": 10,
+      "visual_goal": "Льняное поле с прямыми узкими рядами и светлым волокном; уровень 10 добавляет редкий акцент. Крупные детали: опоры для льна, связки, сушильная стойка.",
+      "cost_resources": [
+        "coins",
+        "premium_planks",
+        "stone_block",
+        "fabric",
+        "iron_ingot",
+        "gold_ingot",
+        "super-seeds"
+      ],
+      "triangle_budget": {
+        "min": 1600,
+        "max": 9000
+      },
+      "adds": [
+        "редкий_акцент",
+        "опоры_для_льна"
+      ],
+      "constraints": [
+        "Все элементы остаются внутри игрового footprint; камера и основание постоянны."
+      ]
+    }
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined",
+    "stage01",
+    "stage02",
+    "stage03",
+    "stage04",
+    "super_stage01",
+    "super_stage02",
+    "super_stage03",
+    "super_stage04",
+    "super_stage05",
+    "super_stage06"
+  ],
+  "material_map": {
+    "coins": {
+      "visible_as": "аккуратность фасада и защищённый учёт вложений",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "priority": "accent"
+    },
+    "wood": {
+      "visible_as": "деревянные опоры, брусья и склад материала",
+      "levels": [
+        1,
+        2
+      ],
+      "priority": "secondary"
+    },
+    "seeds": {
+      "visible_as": "малый читаемый акцент ресурса seeds в конструкции или продукции",
+      "levels": [
+        1,
+        5
+      ],
+      "priority": "secondary"
+    },
+    "windleaf": {
+      "visible_as": "малый читаемый акцент ресурса windleaf в конструкции или продукции",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "priority": "secondary"
+    },
+    "rope": {
+      "visible_as": "натянутые стяжки и подъёмные канаты",
+      "levels": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "priority": "secondary"
+    },
+    "planks": {
+      "visible_as": "дощатые настилы, стойки и рабочие поверхности",
+      "levels": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "priority": "secondary"
+    },
+    "stone": {
+      "visible_as": "крупные камни фундамента и низкие стены",
+      "levels": [
+        5,
+        6
+      ],
+      "priority": "secondary"
+    },
+    "fabric": {
+      "visible_as": "тканевый навес и функциональные тенты",
+      "levels": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "priority": "secondary"
+    },
+    "brick": {
+      "visible_as": "кирпичная кладка и дымоход",
+      "levels": [
+        6,
+        7,
+        8
+      ],
+      "priority": "secondary"
+    },
+    "stone_block": {
+      "visible_as": "тёсаные блоки цоколя и силовых опор",
+      "levels": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "priority": "secondary"
+    },
+    "premium_planks": {
+      "visible_as": "малый читаемый акцент ресурса premium_planks в конструкции или продукции",
+      "levels": [
+        8,
+        9,
+        10
+      ],
+      "priority": "secondary"
+    },
+    "iron_ingot": {
+      "visible_as": "железные крепления, петли и рабочий привод",
+      "levels": [
+        8,
+        9,
+        10
+      ],
+      "priority": "secondary"
+    },
+    "gold_ingot": {
+      "visible_as": "малый читаемый акцент ресурса gold_ingot в конструкции или продукции",
+      "levels": [
+        9,
+        10
+      ],
+      "priority": "secondary"
+    },
+    "super-seeds": {
+      "visible_as": "малый читаемый акцент ресурса super-seeds в конструкции или продукции",
+      "levels": [
+        10
+      ],
+      "priority": "secondary"
+    }
+  },
+  "level_progression": {
+    "mass": {
+      "rule": "Сохранять силуэт «Льняное поле с прямыми узкими рядами и светлым волокном»; каждый следующий уровень добавляет реальный объём или узел."
+    },
+    "height": {
+      "rule": "Высота растет постепенно и остается читаемой в 1x1 footprint."
+    },
+    "materials": {
+      "rule": "Материалы появляются не раньше уровня, где они есть в цене строительства."
+    },
+    "props": {
+      "rule": "Крупные детали семейства: опоры для льна, связки, сушильная стойка; мелкий шум не маскирует вход."
+    },
+    "late_elements": {
+      "rule": "Поздние узлы усиливают основную функцию, не меняя идентичность семейства."
+    },
+    "constraints": [
+      "Сохранять ориентацию входа.",
+      "Сохранять основной силуэт между active/construction/damaged."
+    ]
+  },
+  "state_policy": {
+    "active": {
+      "rule": "Готовый объект: Льняное поле с прямыми узкими рядами и светлым волокном; рабочие детали чисты и читаемы."
+    },
+    "construction": {
+      "rule": "Незавершённый каркас целевого уровня, не установлен один крупный функциональный узел.",
+      "required_elements": [
+        "scaffolding",
+        "unfinished_frame",
+        "stacked_materials"
+      ]
+    },
+    "damaged": {
+      "rule": "Сломан крупный функциональный узел, силуэт и ориентация входа сохраняются.",
+      "required_elements": [
+        "broken_roof_edges",
+        "cracks",
+        "debris"
+      ],
+      "forbidden_elements": [
+        "full_collapse"
+      ]
+    },
+    "ruined": {
+      "rule": "Остатки корпуса и материалов читаются как тот же объект, не активная постройка."
+    }
+  },
+  "skill_profile": {
+    "base": [
+      "blender-director",
+      "genre-strategy-sim",
+      "isometric-style",
+      "fantasy-worlds",
+      "stylized-style",
+      "hand-painted-style"
+    ],
+    "asset_type": [
+      "environment-artist"
+    ],
+    "production": [
+      "materials",
+      "texture-workflow",
+      "lookdev",
+      "lod-pipeline",
+      "asset-optimization",
+      "export-pipeline"
+    ],
+    "validation": [
+      "qa-review"
+    ]
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 9000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 4450
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 150,
+          "max": 2225
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "footprint",
+      "primary silhouette",
+      "entrance orientation",
+      "largest readable props"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  },
+  "atlas_policy": {
+    "enabled": true,
+    "image_format": "webp",
+    "json_naming": "{asset_id}.atlas.json",
+    "image_naming": "{asset_id}.webp",
+    "padding_px": 2,
+    "max_texture_size": 4096,
+    "include_static_sprites": true,
+    "include_animation_frames": true
+  },
+  "animation_policy": {
+    "frame_size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ],
+    "frame_naming": "{asset_id}_l{level:02d}_{animation}_{frame:04d}.png",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 8,
+      "output_name": "animation-contact-sheet.png"
+    },
+    "building_overlays": [
+      {
+        "id": "working",
+        "type": "overlay",
+        "fps": 8,
+        "frames": 12,
+        "loop": true,
+        "frame_prefix": "{asset_id}_l{level:02d}_working_",
+        "states": [
+          "active"
+        ]
+      }
+    ]
+  },
+  "output": {
+    "runtime_dir": "frontend/public/assets/buildings/fields/flax_field",
+    "source_dir": "frontend/src/assets/buildings/fields/flax_field",
+    "use_public_glb": true
+  },
+  "references": {
+    "docs": [
+      "docs/buildings/fields/flax-field.md"
+    ],
+    "art_guide": "docs/art/visual-style-guide.md",
+    "existing_generators": [],
+    "existing_assets": []
+  },
+  "notes": [
+    "Первичная visual-spec по действующему каталогу; художественную приёмку и генерацию выполнять по контракту 22.2."
+  ],
+  "catalog_status": "registered"
+}

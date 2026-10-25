@@ -1,0 +1,1301 @@
+{
+  "asset_id": "paint_workshop",
+  "display_name": "Красильная мастерская",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "paint_workshop_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1960,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1399999856948853
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_active_LOD0.glb",
+          "triangles": 1960
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_active_LOD1.glb",
+          "triangles": 1064
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_active_LOD2.glb",
+          "triangles": 528
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_active.png"
+    },
+    {
+      "id": "paint_workshop_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 856,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_construction_LOD0.glb",
+          "triangles": 856
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_construction_LOD1.glb",
+          "triangles": 464
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_construction_LOD2.glb",
+          "triangles": 232
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_construction.png"
+    },
+    {
+      "id": "paint_workshop_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 1104,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8075000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_damaged_LOD0.glb",
+          "triangles": 1104
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_damaged_LOD1.glb",
+          "triangles": 600
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_damaged_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 2756,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.1749999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_active_LOD0.glb",
+          "triangles": 2756
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_active_LOD1.glb",
+          "triangles": 1496
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_active_LOD2.glb",
+          "triangles": 740
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_active.png"
+    },
+    {
+      "id": "paint_workshop_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1052,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_construction_LOD0.glb",
+          "triangles": 1052
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_construction_LOD1.glb",
+          "triangles": 568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_construction_LOD2.glb",
+          "triangles": 284
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_construction.png"
+    },
+    {
+      "id": "paint_workshop_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 1344,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8424999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_damaged_LOD0.glb",
+          "triangles": 1344
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_damaged_LOD1.glb",
+          "triangles": 728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_damaged_LOD2.glb",
+          "triangles": 360
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l02_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 3184,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2100000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_active_LOD0.glb",
+          "triangles": 3184
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_active_LOD1.glb",
+          "triangles": 1728
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_active_LOD2.glb",
+          "triangles": 856
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_active.png"
+    },
+    {
+      "id": "paint_workshop_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 1272,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_construction_LOD0.glb",
+          "triangles": 1272
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_construction.png"
+    },
+    {
+      "id": "paint_workshop_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 1564,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8774999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_damaged_LOD1.glb",
+          "triangles": 848
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_damaged_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l03_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 3272,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.244999885559082
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_active_LOD0.glb",
+          "triangles": 3272
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_active_LOD1.glb",
+          "triangles": 1776
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_active_LOD2.glb",
+          "triangles": 880
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_active.png"
+    },
+    {
+      "id": "paint_workshop_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 1272,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_construction_LOD0.glb",
+          "triangles": 1272
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_construction_LOD1.glb",
+          "triangles": 688
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_construction_LOD2.glb",
+          "triangles": 344
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_construction.png"
+    },
+    {
+      "id": "paint_workshop_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 1564,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9124999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_damaged_LOD0.glb",
+          "triangles": 1564
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_damaged_LOD1.glb",
+          "triangles": 848
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_damaged_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l04_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 3552,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_active_LOD0.glb",
+          "triangles": 3552
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_active_LOD1.glb",
+          "triangles": 1928
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_active_LOD2.glb",
+          "triangles": 956
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_active.png"
+    },
+    {
+      "id": "paint_workshop_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 1360,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_construction_LOD0.glb",
+          "triangles": 1360
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_construction.png"
+    },
+    {
+      "id": "paint_workshop_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 1652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9474999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_damaged_LOD0.glb",
+          "triangles": 1652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_damaged_LOD1.glb",
+          "triangles": 896
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_damaged_LOD2.glb",
+          "triangles": 444
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l05_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 3728,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_active_LOD0.glb",
+          "triangles": 3728
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_active_LOD1.glb",
+          "triangles": 2024
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_active_LOD2.glb",
+          "triangles": 1004
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_active.png"
+    },
+    {
+      "id": "paint_workshop_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 1360,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_construction_LOD0.glb",
+          "triangles": 1360
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_construction_LOD1.glb",
+          "triangles": 736
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_construction_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_construction.png"
+    },
+    {
+      "id": "paint_workshop_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 1652,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9825000166893005
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_damaged_LOD0.glb",
+          "triangles": 1652
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_damaged_LOD1.glb",
+          "triangles": 896
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_damaged_LOD2.glb",
+          "triangles": 444
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l06_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 4348,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_active_LOD0.glb",
+          "triangles": 4348
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_active_LOD1.glb",
+          "triangles": 2360
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_active_LOD2.glb",
+          "triangles": 1168
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_active.png"
+    },
+    {
+      "id": "paint_workshop_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 1556,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_construction_LOD0.glb",
+          "triangles": 1556
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_construction_LOD1.glb",
+          "triangles": 840
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_construction.png"
+    },
+    {
+      "id": "paint_workshop_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 2096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0175000429153442
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_damaged_LOD0.glb",
+          "triangles": 2096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_damaged_LOD1.glb",
+          "triangles": 1136
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l07_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 4644,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_active_LOD0.glb",
+          "triangles": 4644
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_active_LOD1.glb",
+          "triangles": 2520
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_active_LOD2.glb",
+          "triangles": 1248
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_active.png"
+    },
+    {
+      "id": "paint_workshop_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 1556,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_construction_LOD0.glb",
+          "triangles": 1556
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_construction_LOD1.glb",
+          "triangles": 840
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_construction.png"
+    },
+    {
+      "id": "paint_workshop_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 2096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0525000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_damaged_LOD0.glb",
+          "triangles": 2096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_damaged_LOD1.glb",
+          "triangles": 1136
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l08_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 4708,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_active_LOD0.glb",
+          "triangles": 4708
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_active_LOD1.glb",
+          "triangles": 2554
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_active_LOD2.glb",
+          "triangles": 1264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_active.png"
+    },
+    {
+      "id": "paint_workshop_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 1556,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_construction_LOD0.glb",
+          "triangles": 1556
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_construction_LOD1.glb",
+          "triangles": 840
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_construction.png"
+    },
+    {
+      "id": "paint_workshop_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 2096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0525000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_damaged_LOD0.glb",
+          "triangles": 2096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_damaged_LOD1.glb",
+          "triangles": 1136
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l09_damaged.png"
+    },
+    {
+      "id": "paint_workshop_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 4796,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_active_LOD0.glb",
+          "triangles": 4796
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_active_LOD1.glb",
+          "triangles": 2602
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_active_LOD2.glb",
+          "triangles": 1288
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_active.png"
+    },
+    {
+      "id": "paint_workshop_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 1556,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0449999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_construction_LOD0.glb",
+          "triangles": 1556
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_construction_LOD1.glb",
+          "triangles": 840
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_construction_LOD2.glb",
+          "triangles": 420
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_construction.png"
+    },
+    {
+      "id": "paint_workshop_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 2096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.0525000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_damaged_LOD0.glb",
+          "triangles": 2096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_damaged_LOD1.glb",
+          "triangles": 1136
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_damaged_LOD2.glb",
+          "triangles": 560
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l10_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/paint_workshop/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\industry\\paint_workshop.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: paint_workshop\ndisplay_name: Красильная мастерская\ncategory/kind: industry/building\nlevels: 1-10\nstates: active, construction, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: herbs, oil, steel, glass, mechanism, fabric, electronics, reinforced_concrete, reinforced_beams, light_crystals\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, prop-artist, hard-surface, materials, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none"
+}

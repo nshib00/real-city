@@ -1,0 +1,1440 @@
+{
+  "asset_id": "oil_refinery",
+  "display_name": "Нефтеперерабатывающий завод",
+  "category": "industry",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_levels.glb",
+  "material_map": {
+    "brick": {
+      "visible_as": "ранняя перегонная колонна",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "metal": {
+      "visible_as": "обручи и сырьевой бак",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "iron_ingot": {
+      "visible_as": "железный кожух колонны",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "glass": {
+      "visible_as": "секция охлаждения",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "mechanism": {
+      "visible_as": "насос и привод",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "steel": {
+      "visible_as": "трубная арматура и закрытый бак топлива",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "фундамент поздней линии",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "reinforced_beams": {
+      "visible_as": "силовая рама труб",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "oil_refinery_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1672,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.630000114440918
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_active_LOD0.glb",
+          "triangles": 1672
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_active_LOD1.glb",
+          "triangles": 898
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_active_LOD2.glb",
+          "triangles": 444
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_active.png"
+    },
+    {
+      "id": "oil_refinery_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 612,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_construction_LOD0.glb",
+          "triangles": 612
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_construction_LOD1.glb",
+          "triangles": 328
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_construction_LOD2.glb",
+          "triangles": 164
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_construction.png"
+    },
+    {
+      "id": "oil_refinery_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 644,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_damaged_LOD0.glb",
+          "triangles": 644
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_damaged_LOD1.glb",
+          "triangles": 344
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_damaged_LOD2.glb",
+          "triangles": 172
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l01_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 1760,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6949999332427979
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_active_LOD0.glb",
+          "triangles": 1760
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_active_LOD1.glb",
+          "triangles": 946
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_active_LOD2.glb",
+          "triangles": 468
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_active.png"
+    },
+    {
+      "id": "oil_refinery_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 612,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_construction_LOD0.glb",
+          "triangles": 612
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_construction_LOD1.glb",
+          "triangles": 328
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_construction_LOD2.glb",
+          "triangles": 164
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_construction.png"
+    },
+    {
+      "id": "oil_refinery_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 644,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_damaged_LOD0.glb",
+          "triangles": 644
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_damaged_LOD1.glb",
+          "triangles": 344
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_damaged_LOD2.glb",
+          "triangles": 172
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l02_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 2496,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7599999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_active_LOD0.glb",
+          "triangles": 2496
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_active_LOD1.glb",
+          "triangles": 1346
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_active_LOD2.glb",
+          "triangles": 668
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_active.png"
+    },
+    {
+      "id": "oil_refinery_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_construction.png"
+    },
+    {
+      "id": "oil_refinery_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l03_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 2616,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8250000476837158
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_active_LOD0.glb",
+          "triangles": 2616
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_active_LOD1.glb",
+          "triangles": 1410
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_active_LOD2.glb",
+          "triangles": 700
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_active.png"
+    },
+    {
+      "id": "oil_refinery_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_construction.png"
+    },
+    {
+      "id": "oil_refinery_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l04_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 2660,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.8900001049041748
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_active_LOD0.glb",
+          "triangles": 2660
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_active_LOD1.glb",
+          "triangles": 1434
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_active_LOD2.glb",
+          "triangles": 712
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_active.png"
+    },
+    {
+      "id": "oil_refinery_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_construction.png"
+    },
+    {
+      "id": "oil_refinery_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l05_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 3008,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9549999237060547
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_active_LOD0.glb",
+          "triangles": 3008
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_active_LOD1.glb",
+          "triangles": 1618
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_active_LOD2.glb",
+          "triangles": 804
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_active.png"
+    },
+    {
+      "id": "oil_refinery_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_construction.png"
+    },
+    {
+      "id": "oil_refinery_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l06_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 3052,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0199999809265137
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_active_LOD0.glb",
+          "triangles": 3052
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_active_LOD1.glb",
+          "triangles": 1642
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_active_LOD2.glb",
+          "triangles": 816
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_active.png"
+    },
+    {
+      "id": "oil_refinery_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_construction.png"
+    },
+    {
+      "id": "oil_refinery_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l07_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 3096,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0850000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_active_LOD0.glb",
+          "triangles": 3096
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_active_LOD1.glb",
+          "triangles": 1666
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_active_LOD2.glb",
+          "triangles": 828
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_active.png"
+    },
+    {
+      "id": "oil_refinery_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_construction.png"
+    },
+    {
+      "id": "oil_refinery_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l08_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 3208,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1500000953674316
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_active_LOD0.glb",
+          "triangles": 3208
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_active_LOD1.glb",
+          "triangles": 1726
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_active_LOD2.glb",
+          "triangles": 858
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_active.png"
+    },
+    {
+      "id": "oil_refinery_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_construction.png"
+    },
+    {
+      "id": "oil_refinery_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l09_damaged.png"
+    },
+    {
+      "id": "oil_refinery_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 3252,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.2150001525878906
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_active_LOD0.glb",
+          "triangles": 3252
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_active_LOD1.glb",
+          "triangles": 1750
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_active_LOD2.glb",
+          "triangles": 870
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_active.png"
+    },
+    {
+      "id": "oil_refinery_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 788,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8499999642372131
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_construction_LOD0.glb",
+          "triangles": 788
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_construction_LOD1.glb",
+          "triangles": 424
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_construction_LOD2.glb",
+          "triangles": 212
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_construction.png"
+    },
+    {
+      "id": "oil_refinery_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 820,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8650000095367432
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_damaged_LOD0.glb",
+          "triangles": 820
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_damaged_LOD1.glb",
+          "triangles": 440
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_damaged_LOD2.glb",
+          "triangles": 220
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/oil_refinery/oil_refinery_l10_damaged.png"
+    }
+  ],
+  "spec_path": "docs\\assets\\specs\\industry\\oil_refinery.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v5",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1,
+        "triangle_budget": {
+          "min": 500,
+          "max": 10000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.55,
+        "triangle_budget": {
+          "min": 220,
+          "max": 5500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.28,
+        "triangle_budget": {
+          "min": 100,
+          "max": 3000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "distillation_column",
+      "raw_oil",
+      "fuel_tank",
+      "condenser"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 3,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

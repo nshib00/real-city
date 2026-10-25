@@ -1,0 +1,1312 @@
+{
+  "asset_id": "resin_kiln",
+  "display_name": "Смолокурня",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "items": [
+    {
+      "id": "resin_kiln_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 1320,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.2899999618530273
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_active_LOD0.glb",
+          "triangles": 1320
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_active_LOD1.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_active_LOD2.glb",
+          "triangles": 352
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_active.png"
+    },
+    {
+      "id": "resin_kiln_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_construction_LOD0.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_construction_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_construction_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_construction.png"
+    },
+    {
+      "id": "resin_kiln_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_damaged_LOD0.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_damaged_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_damaged_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l01_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 1452,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.34499990940094
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_active_LOD0.glb",
+          "triangles": 1452
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_active_LOD1.glb",
+          "triangles": 784
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_active_LOD2.glb",
+          "triangles": 388
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_active.png"
+    },
+    {
+      "id": "resin_kiln_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_construction_LOD0.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_construction_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_construction_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_construction.png"
+    },
+    {
+      "id": "resin_kiln_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 712,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_damaged_LOD0.glb",
+          "triangles": 712
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_damaged_LOD1.glb",
+          "triangles": 384
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_damaged_LOD2.glb",
+          "triangles": 192
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l02_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l03_active",
+      "level": 3,
+      "state": "active",
+      "triangles": 1716,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.399999976158142
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_active_LOD0.glb",
+          "triangles": 1716
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_active_LOD1.glb",
+          "triangles": 928
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_active_LOD2.glb",
+          "triangles": 460
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_active.png"
+    },
+    {
+      "id": "resin_kiln_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "triangles": 888,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_construction_LOD0.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_construction_LOD1.glb",
+          "triangles": 480
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_construction_LOD2.glb",
+          "triangles": 240
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_construction.png"
+    },
+    {
+      "id": "resin_kiln_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "triangles": 888,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_damaged_LOD0.glb",
+          "triangles": 888
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_damaged_LOD1.glb",
+          "triangles": 480
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_damaged_LOD2.glb",
+          "triangles": 240
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l03_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l04_active",
+      "level": 4,
+      "state": "active",
+      "triangles": 2064,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.4549999237060547
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_active_LOD0.glb",
+          "triangles": 2064
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_active_LOD1.glb",
+          "triangles": 1112
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_active_LOD2.glb",
+          "triangles": 552
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_active.png"
+    },
+    {
+      "id": "resin_kiln_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_construction_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_construction_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_construction_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_construction.png"
+    },
+    {
+      "id": "resin_kiln_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_damaged_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_damaged_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_damaged_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l04_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l05_active",
+      "level": 5,
+      "state": "active",
+      "triangles": 2404,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5099999904632568
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_active_LOD0.glb",
+          "triangles": 2404
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_active_LOD1.glb",
+          "triangles": 1296
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_active_LOD2.glb",
+          "triangles": 644
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_active.png"
+    },
+    {
+      "id": "resin_kiln_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_construction_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_construction_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_construction_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_construction.png"
+    },
+    {
+      "id": "resin_kiln_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_damaged_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_damaged_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_damaged_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l05_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l06_active",
+      "level": 6,
+      "state": "active",
+      "triangles": 2448,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.5649999380111694
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_active_LOD0.glb",
+          "triangles": 2448
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_active_LOD1.glb",
+          "triangles": 1320
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_active_LOD2.glb",
+          "triangles": 656
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_active.png"
+    },
+    {
+      "id": "resin_kiln_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_construction_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_construction_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_construction_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_construction.png"
+    },
+    {
+      "id": "resin_kiln_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_damaged_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_damaged_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_damaged_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l06_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l07_active",
+      "level": 7,
+      "state": "active",
+      "triangles": 2508,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6200000047683716
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_active_LOD0.glb",
+          "triangles": 2508
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_active_LOD1.glb",
+          "triangles": 1352
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_active_LOD2.glb",
+          "triangles": 672
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_active.png"
+    },
+    {
+      "id": "resin_kiln_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_construction_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_construction_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_construction_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_construction.png"
+    },
+    {
+      "id": "resin_kiln_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "triangles": 932,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_damaged_LOD0.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_damaged_LOD1.glb",
+          "triangles": 504
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_damaged_LOD2.glb",
+          "triangles": 252
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l07_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l08_active",
+      "level": 8,
+      "state": "active",
+      "triangles": 2596,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.6749999523162842
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_active_LOD0.glb",
+          "triangles": 2596
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_active_LOD1.glb",
+          "triangles": 1400
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_active_LOD2.glb",
+          "triangles": 696
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_active.png"
+    },
+    {
+      "id": "resin_kiln_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "triangles": 976,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_construction_LOD0.glb",
+          "triangles": 976
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_construction_LOD1.glb",
+          "triangles": 528
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_construction_LOD2.glb",
+          "triangles": 264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_construction.png"
+    },
+    {
+      "id": "resin_kiln_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "triangles": 976,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_damaged_LOD0.glb",
+          "triangles": 976
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_damaged_LOD1.glb",
+          "triangles": 528
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_damaged_LOD2.glb",
+          "triangles": 264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l08_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l09_active",
+      "level": 9,
+      "state": "active",
+      "triangles": 2664,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7299998998641968
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_active_LOD0.glb",
+          "triangles": 2664
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_active_LOD1.glb",
+          "triangles": 1436
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_active_LOD2.glb",
+          "triangles": 714
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_active.png"
+    },
+    {
+      "id": "resin_kiln_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "triangles": 976,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_construction_LOD0.glb",
+          "triangles": 976
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_construction_LOD1.glb",
+          "triangles": 528
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_construction_LOD2.glb",
+          "triangles": 264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_construction.png"
+    },
+    {
+      "id": "resin_kiln_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "triangles": 976,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_damaged_LOD0.glb",
+          "triangles": 976
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_damaged_LOD1.glb",
+          "triangles": 528
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_damaged_LOD2.glb",
+          "triangles": 264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l09_damaged.png"
+    },
+    {
+      "id": "resin_kiln_l10_active",
+      "level": 10,
+      "state": "active",
+      "triangles": 2708,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.784999966621399
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_active_LOD0.glb",
+          "triangles": 2708
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_active_LOD1.glb",
+          "triangles": 1460
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_active_LOD2.glb",
+          "triangles": 726
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_active.png"
+    },
+    {
+      "id": "resin_kiln_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "triangles": 976,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8050000071525574
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_construction_LOD0.glb",
+          "triangles": 976
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_construction_LOD1.glb",
+          "triangles": 528
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_construction_LOD2.glb",
+          "triangles": 264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_construction.png"
+    },
+    {
+      "id": "resin_kiln_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "triangles": 976,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.8199999928474426
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_damaged_LOD0.glb",
+          "triangles": 976
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_damaged_LOD1.glb",
+          "triangles": 528
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_damaged_LOD2.glb",
+          "triangles": 264
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_l10_damaged.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/resin_kiln/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/resin_kiln/resin_kiln_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v5",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "\\\\wsl.localhost\\Debian\\home\\nshib\\projects\\real-city\\docs\\assets\\specs\\industry\\resin_kiln.json",
+  "token_budget_policy": {
+    "read_files": [],
+    "skill_files": [],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: resin_kiln\ndisplay_name: Смолокурня\ncategory/kind: industry/building\nlevels: 1-10\nstates: active, construction, damaged\nstyle: aeolian_fantasy_midpoly\nmaterials: wood, stone, planks, brick, rope, iron_ingot, mechanism, reinforced_concrete, steel\nskills: blender-director, genre-strategy-sim, fantasy-worlds, stylized-style, isometric-style, hand-painted-style, prop-artist, hard-surface, materials, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: none\nskill_files: none",
+  "material_to_detail": {
+    "wood": "сухие поленья у входа",
+    "stone": "основание печи",
+    "planks": "площадка и навес сырья",
+    "brick": "теплостойкая реторта",
+    "rope": "обвязка сырьевого штабеля",
+    "iron_ingot": "обручи реторты и трубка",
+    "mechanism": "привод тяги",
+    "reinforced_concrete": "плита и защищённое хранение",
+    "steel": "герметичный охладитель и бочка"
+  }
+}

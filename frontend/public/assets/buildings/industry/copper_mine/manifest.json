@@ -1,0 +1,882 @@
+{
+  "id": "copper_mine",
+  "display_name": "Медный рудник",
+  "building_type": "industry",
+  "size": [
+    512,
+    512
+  ],
+  "anchor": [
+    256,
+    320
+  ],
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "material_map": {
+    "planks": {
+      "visible_as": "крепь, настилы, вагонетка и строительные штабели",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "stone": {
+      "visible_as": "скальный вход и каменная масса штольни",
+      "priority": "primary",
+      "levels": [
+        1,
+        2
+      ]
+    },
+    "stone_block": {
+      "visible_as": "тёсаные опоры портала",
+      "priority": "primary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "rope": {
+      "visible_as": "тросы, растяжки и привод",
+      "priority": "secondary",
+      "levels": [
+        3,
+        4
+      ]
+    },
+    "brick": {
+      "visible_as": "обкладка портала",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "mechanism": {
+      "visible_as": "лебёдка, привод и сортировщик",
+      "priority": "primary",
+      "levels": [
+        5,
+        6,
+        7
+      ]
+    },
+    "reinforced_concrete": {
+      "visible_as": "защищённые щёки штольни",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "steel": {
+      "visible_as": "фермы, рельсы и броневые панели",
+      "priority": "primary",
+      "levels": [
+        8,
+        9,
+        10
+      ]
+    },
+    "copper": {
+      "visible_as": "крупные медные рудные прожилки и груз вагонетки",
+      "priority": "primary",
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 1800,
+          "max": 14000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.7,
+        "triangle_budget": {
+          "min": 900,
+          "max": 12000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.4,
+        "triangle_budget": {
+          "min": 450,
+          "max": 10000
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground",
+      "copper_veins",
+      "portal",
+      "ore_cart",
+      "level_upgrades"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "assets": {
+    "copper_mine_l01_active": {
+      "level": 1,
+      "state": "active",
+      "triangles": 5252,
+      "png": "copper_mine_l01_active.png",
+      "glb": "copper_mine_l01_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l01_active_LOD0.glb",
+          "triangles": 5252
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l01_active_LOD1.glb",
+          "triangles": 5076
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l01_active_LOD2.glb",
+          "triangles": 3880
+        }
+      ]
+    },
+    "copper_mine_l01_construction": {
+      "level": 1,
+      "state": "construction",
+      "triangles": 5396,
+      "png": "copper_mine_l01_construction.png",
+      "glb": "copper_mine_l01_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l01_construction_LOD0.glb",
+          "triangles": 5396
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l01_construction_LOD1.glb",
+          "triangles": 5220
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l01_construction_LOD2.glb",
+          "triangles": 4024
+        }
+      ]
+    },
+    "copper_mine_l01_damaged": {
+      "level": 1,
+      "state": "damaged",
+      "triangles": 5612,
+      "png": "copper_mine_l01_damaged.png",
+      "glb": "copper_mine_l01_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l01_damaged_LOD0.glb",
+          "triangles": 5612
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l01_damaged_LOD1.glb",
+          "triangles": 5480
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l01_damaged_LOD2.glb",
+          "triangles": 4372
+        }
+      ]
+    },
+    "copper_mine_l02_active": {
+      "level": 2,
+      "state": "active",
+      "triangles": 5836,
+      "png": "copper_mine_l02_active.png",
+      "glb": "copper_mine_l02_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l02_active_LOD0.glb",
+          "triangles": 5836
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l02_active_LOD1.glb",
+          "triangles": 5660
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l02_active_LOD2.glb",
+          "triangles": 4420
+        }
+      ]
+    },
+    "copper_mine_l02_construction": {
+      "level": 2,
+      "state": "construction",
+      "triangles": 6056,
+      "png": "copper_mine_l02_construction.png",
+      "glb": "copper_mine_l02_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l02_construction_LOD0.glb",
+          "triangles": 6056
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l02_construction_LOD1.glb",
+          "triangles": 5880
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l02_construction_LOD2.glb",
+          "triangles": 4640
+        }
+      ]
+    },
+    "copper_mine_l02_damaged": {
+      "level": 2,
+      "state": "damaged",
+      "triangles": 6020,
+      "png": "copper_mine_l02_damaged.png",
+      "glb": "copper_mine_l02_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l02_damaged_LOD0.glb",
+          "triangles": 6020
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l02_damaged_LOD1.glb",
+          "triangles": 5888
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l02_damaged_LOD2.glb",
+          "triangles": 4736
+        }
+      ]
+    },
+    "copper_mine_l03_active": {
+      "level": 3,
+      "state": "active",
+      "triangles": 6588,
+      "png": "copper_mine_l03_active.png",
+      "glb": "copper_mine_l03_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l03_active_LOD0.glb",
+          "triangles": 6588
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l03_active_LOD1.glb",
+          "triangles": 6412
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l03_active_LOD2.glb",
+          "triangles": 5172
+        }
+      ]
+    },
+    "copper_mine_l03_construction": {
+      "level": 3,
+      "state": "construction",
+      "triangles": 6820,
+      "png": "copper_mine_l03_construction.png",
+      "glb": "copper_mine_l03_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l03_construction_LOD0.glb",
+          "triangles": 6820
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l03_construction_LOD1.glb",
+          "triangles": 6644
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l03_construction_LOD2.glb",
+          "triangles": 5404
+        }
+      ]
+    },
+    "copper_mine_l03_damaged": {
+      "level": 3,
+      "state": "damaged",
+      "triangles": 6640,
+      "png": "copper_mine_l03_damaged.png",
+      "glb": "copper_mine_l03_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l03_damaged_LOD0.glb",
+          "triangles": 6640
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l03_damaged_LOD1.glb",
+          "triangles": 6508
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l03_damaged_LOD2.glb",
+          "triangles": 5356
+        }
+      ]
+    },
+    "copper_mine_l04_active": {
+      "level": 4,
+      "state": "active",
+      "triangles": 7336,
+      "png": "copper_mine_l04_active.png",
+      "glb": "copper_mine_l04_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l04_active_LOD0.glb",
+          "triangles": 7336
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l04_active_LOD1.glb",
+          "triangles": 7160
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l04_active_LOD2.glb",
+          "triangles": 5304
+        }
+      ]
+    },
+    "copper_mine_l04_construction": {
+      "level": 4,
+      "state": "construction",
+      "triangles": 7468,
+      "png": "copper_mine_l04_construction.png",
+      "glb": "copper_mine_l04_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l04_construction_LOD0.glb",
+          "triangles": 7468
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l04_construction_LOD1.glb",
+          "triangles": 7292
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l04_construction_LOD2.glb",
+          "triangles": 5876
+        }
+      ]
+    },
+    "copper_mine_l04_damaged": {
+      "level": 4,
+      "state": "damaged",
+      "triangles": 7300,
+      "png": "copper_mine_l04_damaged.png",
+      "glb": "copper_mine_l04_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l04_damaged_LOD0.glb",
+          "triangles": 7300
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l04_damaged_LOD1.glb",
+          "triangles": 7168
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l04_damaged_LOD2.glb",
+          "triangles": 5488
+        }
+      ]
+    },
+    "copper_mine_l05_active": {
+      "level": 5,
+      "state": "active",
+      "triangles": 8372,
+      "png": "copper_mine_l05_active.png",
+      "glb": "copper_mine_l05_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l05_active_LOD0.glb",
+          "triangles": 8372
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l05_active_LOD1.glb",
+          "triangles": 7908
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l05_active_LOD2.glb",
+          "triangles": 5656
+        }
+      ]
+    },
+    "copper_mine_l05_construction": {
+      "level": 5,
+      "state": "construction",
+      "triangles": 8568,
+      "png": "copper_mine_l05_construction.png",
+      "glb": "copper_mine_l05_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l05_construction_LOD0.glb",
+          "triangles": 8568
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l05_construction_LOD1.glb",
+          "triangles": 8392
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l05_construction_LOD2.glb",
+          "triangles": 6228
+        }
+      ]
+    },
+    "copper_mine_l05_damaged": {
+      "level": 5,
+      "state": "damaged",
+      "triangles": 8292,
+      "png": "copper_mine_l05_damaged.png",
+      "glb": "copper_mine_l05_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l05_damaged_LOD0.glb",
+          "triangles": 8292
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l05_damaged_LOD1.glb",
+          "triangles": 7872
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l05_damaged_LOD2.glb",
+          "triangles": 5796
+        }
+      ]
+    },
+    "copper_mine_l06_active": {
+      "level": 6,
+      "state": "active",
+      "triangles": 8852,
+      "png": "copper_mine_l06_active.png",
+      "glb": "copper_mine_l06_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l06_active_LOD0.glb",
+          "triangles": 8852
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l06_active_LOD1.glb",
+          "triangles": 8300
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l06_active_LOD2.glb",
+          "triangles": 5960
+        }
+      ]
+    },
+    "copper_mine_l06_construction": {
+      "level": 6,
+      "state": "construction",
+      "triangles": 9572,
+      "png": "copper_mine_l06_construction.png",
+      "glb": "copper_mine_l06_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l06_construction_LOD0.glb",
+          "triangles": 9572
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l06_construction_LOD1.glb",
+          "triangles": 9020
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l06_construction_LOD2.glb",
+          "triangles": 6768
+        }
+      ]
+    },
+    "copper_mine_l06_damaged": {
+      "level": 6,
+      "state": "damaged",
+      "triangles": 9080,
+      "png": "copper_mine_l06_damaged.png",
+      "glb": "copper_mine_l06_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l06_damaged_LOD0.glb",
+          "triangles": 9080
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l06_damaged_LOD1.glb",
+          "triangles": 8572
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l06_damaged_LOD2.glb",
+          "triangles": 6408
+        }
+      ]
+    },
+    "copper_mine_l07_active": {
+      "level": 7,
+      "state": "active",
+      "triangles": 9380,
+      "png": "copper_mine_l07_active.png",
+      "glb": "copper_mine_l07_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l07_active_LOD0.glb",
+          "triangles": 9380
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l07_active_LOD1.glb",
+          "triangles": 8608
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l07_active_LOD2.glb",
+          "triangles": 6224
+        }
+      ]
+    },
+    "copper_mine_l07_construction": {
+      "level": 7,
+      "state": "construction",
+      "triangles": 9440,
+      "png": "copper_mine_l07_construction.png",
+      "glb": "copper_mine_l07_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l07_construction_LOD0.glb",
+          "triangles": 9440
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l07_construction_LOD1.glb",
+          "triangles": 8844
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l07_construction_LOD2.glb",
+          "triangles": 6548
+        }
+      ]
+    },
+    "copper_mine_l07_damaged": {
+      "level": 7,
+      "state": "damaged",
+      "triangles": 9388,
+      "png": "copper_mine_l07_damaged.png",
+      "glb": "copper_mine_l07_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l07_damaged_LOD0.glb",
+          "triangles": 9388
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l07_damaged_LOD1.glb",
+          "triangles": 8836
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l07_damaged_LOD2.glb",
+          "triangles": 6628
+        }
+      ]
+    },
+    "copper_mine_l08_active": {
+      "level": 8,
+      "state": "active",
+      "triangles": 10540,
+      "png": "copper_mine_l08_active.png",
+      "glb": "copper_mine_l08_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l08_active_LOD0.glb",
+          "triangles": 10540
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l08_active_LOD1.glb",
+          "triangles": 9508
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l08_active_LOD2.glb",
+          "triangles": 6860
+        }
+      ]
+    },
+    "copper_mine_l08_construction": {
+      "level": 8,
+      "state": "construction",
+      "triangles": 10776,
+      "png": "copper_mine_l08_construction.png",
+      "glb": "copper_mine_l08_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l08_construction_LOD0.glb",
+          "triangles": 10776
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l08_construction_LOD1.glb",
+          "triangles": 9920
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l08_construction_LOD2.glb",
+          "triangles": 7536
+        }
+      ]
+    },
+    "copper_mine_l08_damaged": {
+      "level": 8,
+      "state": "damaged",
+      "triangles": 10548,
+      "png": "copper_mine_l08_damaged.png",
+      "glb": "copper_mine_l08_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l08_damaged_LOD0.glb",
+          "triangles": 10548
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l08_damaged_LOD1.glb",
+          "triangles": 9736
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l08_damaged_LOD2.glb",
+          "triangles": 7264
+        }
+      ]
+    },
+    "copper_mine_l09_active": {
+      "level": 9,
+      "state": "active",
+      "triangles": 11152,
+      "png": "copper_mine_l09_active.png",
+      "glb": "copper_mine_l09_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l09_active_LOD0.glb",
+          "triangles": 11152
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l09_active_LOD1.glb",
+          "triangles": 10076
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l09_active_LOD2.glb",
+          "triangles": 7168
+        }
+      ]
+    },
+    "copper_mine_l09_construction": {
+      "level": 9,
+      "state": "construction",
+      "triangles": 11216,
+      "png": "copper_mine_l09_construction.png",
+      "glb": "copper_mine_l09_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l09_construction_LOD0.glb",
+          "triangles": 11216
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l09_construction_LOD1.glb",
+          "triangles": 10316
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l09_construction_LOD2.glb",
+          "triangles": 7712
+        }
+      ]
+    },
+    "copper_mine_l09_damaged": {
+      "level": 9,
+      "state": "damaged",
+      "triangles": 11116,
+      "png": "copper_mine_l09_damaged.png",
+      "glb": "copper_mine_l09_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l09_damaged_LOD0.glb",
+          "triangles": 11116
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l09_damaged_LOD1.glb",
+          "triangles": 10260
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l09_damaged_LOD2.glb",
+          "triangles": 7528
+        }
+      ]
+    },
+    "copper_mine_l10_active": {
+      "level": 10,
+      "state": "active",
+      "triangles": 12084,
+      "png": "copper_mine_l10_active.png",
+      "glb": "copper_mine_l10_active_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l10_active_LOD0.glb",
+          "triangles": 12084
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l10_active_LOD1.glb",
+          "triangles": 11008
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l10_active_LOD2.glb",
+          "triangles": 8056
+        }
+      ]
+    },
+    "copper_mine_l10_construction": {
+      "level": 10,
+      "state": "construction",
+      "triangles": 11816,
+      "png": "copper_mine_l10_construction.png",
+      "glb": "copper_mine_l10_construction_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l10_construction_LOD0.glb",
+          "triangles": 11816
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l10_construction_LOD1.glb",
+          "triangles": 10916
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l10_construction_LOD2.glb",
+          "triangles": 8052
+        }
+      ]
+    },
+    "copper_mine_l10_damaged": {
+      "level": 10,
+      "state": "damaged",
+      "triangles": 12048,
+      "png": "copper_mine_l10_damaged.png",
+      "glb": "copper_mine_l10_damaged_LOD0.glb",
+      "lods": [
+        {
+          "name": "LOD0",
+          "glb": "copper_mine_l10_damaged_LOD0.glb",
+          "triangles": 12048
+        },
+        {
+          "name": "LOD1",
+          "glb": "copper_mine_l10_damaged_LOD1.glb",
+          "triangles": 11192
+        },
+        {
+          "name": "LOD2",
+          "glb": "copper_mine_l10_damaged_LOD2.glb",
+          "triangles": 8416
+        }
+      ]
+    }
+  }
+}
