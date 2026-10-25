@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "profiles": {
+    "leaf": {"variants": [{"pitch": 0.95, "attack": 0.9, "texture": 0.9}, {"pitch": 1.02, "attack": 1.05, "texture": 1.05}, {"pitch": 0.98, "attack": 1.1, "texture": 1.12}, {"pitch": 1.05, "attack": 0.95, "texture": 0.95}], "candidates": {"a": {"duration": 0.42, "layers": [{"wave": "noise", "gain": 0.43, "lowpass": 0.045, "duration": 0.27, "adsr": [0.025, 0.075, 0.3, 0.15]}, {"wave": "triangle", "frequency": 440, "sweep": -160, "gain": 0.14, "start": 0.13, "duration": 0.25, "adsr": [0.003, 0.05, 0.28, 0.17]}]}}},
+    "crop": {"variants": [{"pitch": 0.97}, {"pitch": 1.03}], "candidates": {"a": {"duration": 0.32, "layers": [{"wave": "noise", "gain": 0.18, "lowpass": 0.025, "duration": 0.2, "adsr": [0.03, 0.06, 0.2, 0.1]}, {"wave": "sine", "frequency": 610, "sweep": 210, "gain": 0.19, "duration": 0.23, "adsr": [0.025, 0.06, 0.33, 0.11]}]}}},
+    "mushroom": {"variants": [{"pitch": 0.95}, {"pitch": 1.02}, {"pitch": 0.98}, {"pitch": 1.05}], "candidates": {"a": {"duration": 0.38, "layers": [{"wave": "noise", "gain": 0.38, "lowpass": 0.018, "duration": 0.24, "adsr": [0.006, 0.05, 0.25, 0.17]}, {"wave": "sine", "frequency": 220, "sweep": -260, "gain": 0.22, "start": 0.09, "duration": 0.24, "adsr": [0.003, 0.045, 0.2, 0.17]}]}}},
+    "cane": {"variants": [{"pitch": 0.95}, {"pitch": 1.02}, {"pitch": 0.98}, {"pitch": 1.05}], "candidates": {"a": {"duration": 0.39, "layers": [{"wave": "noise", "gain": 0.38, "lowpass": 0.075, "duration": 0.14, "adsr": [0.001, 0.025, 0.15, 0.09]}, {"wave": "triangle", "frequency": 390, "sweep": -440, "gain": 0.26, "start": 0.08, "duration": 0.25, "adsr": [0.001, 0.035, 0.2, 0.18]}]}}},
+    "crystal": {"variants": [{"pitch": 0.95}, {"pitch": 1.02}, {"pitch": 0.98}, {"pitch": 1.05}], "candidates": {"a": {"duration": 0.48, "echo": {"delay": 0.065, "gain": 0.16}, "layers": [{"wave": "noise", "gain": 0.17, "lowpass": 0.06, "duration": 0.12, "adsr": [0.001, 0.025, 0.12, 0.08]}, {"wave": "sine", "frequency": 920, "sweep": 170, "gain": 0.22, "start": 0.08, "duration": 0.32, "adsr": [0.002, 0.07, 0.22, 0.22]}, {"wave": "sine", "frequency": 1520, "gain": 0.13, "start": 0.12, "duration": 0.28, "adsr": [0.001, 0.045, 0.16, 0.21]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "economy.crop.ready", "profile": "crop", "seed": 3201},
+    {"sound_id": "economy.crop.expired", "profile": "crop", "seed": 3202, "tuning": 0.63},
+    {"sound_id": "economy.harvest.mushroom", "profile": "mushroom", "seed": 3203},
+    {"sound_id": "economy.harvest.cane", "profile": "cane", "seed": 3204},
+    {"sound_id": "economy.harvest.crystal", "profile": "crystal", "seed": 3205}
+  ]
+}

@@ -19,7 +19,7 @@
     },
     {
       "sound_id": "economy.harvest.field", "seed": 3101,
-      "variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.05, "attack": 1.1, "texture": 0.9}],
+      "variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.05, "attack": 1.1, "texture": 0.9}, {"pitch": 0.98, "attack": 1.05, "texture": 1.13}, {"pitch": 1.03, "attack": 0.95, "texture": 0.86}],
       "candidates": {
         "a": {"duration": 0.42, "layers": [{"wave": "noise", "gain": 0.45, "lowpass": 0.05, "duration": 0.3, "adsr": [0.035, 0.11, 0.3, 0.13]}, {"wave": "triangle", "frequency": 430, "sweep": -180, "gain": 0.12, "start": 0.13, "duration": 0.25, "adsr": [0.01, 0.06, 0.3, 0.16]}]},
         "b": {"duration": 0.46, "layers": [{"wave": "noise", "gain": 0.42, "lowpass": 0.025, "duration": 0.34, "adsr": [0.06, 0.1, 0.32, 0.15]}, {"wave": "sine", "frequency": 550, "sweep": -330, "gain": 0.11, "start": 0.16, "duration": 0.23, "adsr": [0.005, 0.045, 0.24, 0.15]}]}

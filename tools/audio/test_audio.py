@@ -14,12 +14,15 @@ from validate_audio import validate_wav
 class AudioRecipesTest(unittest.TestCase):
     def test_all_candidates_are_deterministic_and_valid(self) -> None:
         recipes = load_recipes()
-        self.assertEqual(len(recipes), 6)
+        self.assertTrue({
+            "combat.weapon.cannon", "combat.weapon.storm_coil", "combat.defense.stakes",
+            "combat.monster.ancient_colossus.death", "combat.loot.claimed",
+        }.issubset(recipes))
         with tempfile.TemporaryDirectory() as directory:
             for sound_id, recipe in recipes.items():
-                self.assertGreaterEqual(len(recipe["variants"]), 2)
+                self.assertGreaterEqual(len(recipe["variants"]), 1 if sound_id.startswith("ambience.") else 2)
                 self.assertLessEqual(len(recipe["variants"]), 5)
-                for candidate in ("a", "b"):
+                for candidate in recipe["candidates"]:
                     self.assertIn(candidate, recipe["candidates"])
                     hashes = set()
                     for variant in range(len(recipe["variants"])):

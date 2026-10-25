@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import math
 import random
@@ -19,6 +20,21 @@ def load_recipes() -> dict[str, dict]:
     for path in sorted((ROOT / "recipes").glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
         for recipe in data.get("sounds", []):
+            if "profile" in recipe:
+                profile = copy.deepcopy(data["profiles"][recipe["profile"]])
+                tuning = recipe.get("tuning", 1)
+                for settings in profile["candidates"].values():
+                    for layer in settings["layers"]:
+                        if "frequency" in layer:
+                            layer["frequency"] *= tuning
+                        if "sweep" in layer:
+                            layer["sweep"] *= tuning
+                        if layer["wave"] == "noise":
+                            layer["lowpass"] = min(1, layer.get("lowpass", 1) * recipe.get("noise_color", 1))
+                            layer["gain"] *= recipe.get("noise_gain", 1)
+                        elif "tone_wave" in recipe:
+                            layer["wave"] = recipe["tone_wave"]
+                recipe = {**profile, **recipe}
             sound_id = recipe["sound_id"]
             if sound_id in recipes:
                 raise ValueError(f"Повторный sound_id: {sound_id}")
@@ -85,7 +101,7 @@ def render(recipe: dict, candidate: str, variant: int) -> list[float]:
             output[i] += output[i - delay] * echo["gain"]
     peak = max((abs(value) for value in output), default=0)
     if peak:
-        scale = min(1, 0.7 / peak)
+        scale = 0.7 / peak
         output = [value * scale for value in output]
     return output
 

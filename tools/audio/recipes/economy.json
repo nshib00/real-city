@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "profiles": {
+    "coin": {"variants": [{"pitch": 0.96, "texture": 0.9}, {"pitch": 1.04, "texture": 1.1}], "candidates": {"a": {"duration": 0.32, "echo": {"delay": 0.065, "gain": 0.18}, "layers": [{"wave": "sine", "frequency": 950, "sweep": -260, "gain": 0.28, "duration": 0.21, "adsr": [0.002, 0.04, 0.25, 0.15]}, {"wave": "triangle", "frequency": 1430, "gain": 0.13, "start": 0.07, "duration": 0.2, "adsr": [0.002, 0.04, 0.2, 0.14]}]}}},
+    "crate": {"variants": [{"pitch": 0.96, "texture": 0.9}, {"pitch": 1.04, "texture": 1.1}], "candidates": {"a": {"duration": 0.31, "layers": [{"wave": "noise", "gain": 0.35, "lowpass": 0.055, "duration": 0.19, "adsr": [0.002, 0.035, 0.25, 0.13]}, {"wave": "triangle", "frequency": 280, "sweep": -320, "gain": 0.15, "start": 0.04, "duration": 0.22, "adsr": [0.002, 0.05, 0.2, 0.16]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "economy.coin.spent", "profile": "coin", "seed": 2201, "tuning": 0.78},
+    {"sound_id": "economy.coin.insufficient", "profile": "coin", "seed": 2202, "tuning": 0.53},
+    {"sound_id": "economy.storage.deposit", "profile": "crate", "seed": 2203},
+    {"sound_id": "economy.storage.withdraw", "profile": "crate", "seed": 2204, "tuning": 1.19},
+    {"sound_id": "economy.storage.full", "profile": "crate", "seed": 2205, "tuning": 0.68}
+  ]
+}

@@ -1,0 +1,605 @@
+{
+  "ambience.field": [
+    ".cache/audio-sources/park-birds.wav"
+  ],
+  "ambience.forest": [
+    ".cache/audio-sources/park-birds.wav"
+  ],
+  "ambience.grass": [
+    ".cache/audio-sources/park-wind.wav"
+  ],
+  "ambience.mountain": [
+    ".cache/audio-sources/park-wind.wav"
+  ],
+  "ambience.oil_well": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - machine.wav"
+  ],
+  "ambience.river": [
+    ".cache/audio-sources/park-river.wav"
+  ],
+  "ambience.ruins": [
+    ".cache/audio-sources/park-wind.wav"
+  ],
+  "ambience.town": [
+    ".cache/audio-sources/park-birds.wav"
+  ],
+  "ambience.workshop": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - machine.wav"
+  ],
+  "build.cancelled": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
+  ],
+  "build.completed": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav"
+  ],
+  "build.damaged.heavy": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - thuds.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
+  ],
+  "build.damaged.light": [
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour6.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour7.wav"
+  ],
+  "build.damaged.ruined": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop 3.wav"
+  ],
+  "build.demolished": [
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour8.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour9.wav"
+  ],
+  "build.placed": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood clap.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood 2.wav"
+  ],
+  "build.repair.started": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 4_2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 5.wav"
+  ],
+  "build.repaired": [
+    ".cache/audio-sources/extracted/rubberduck/bell_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/bell_03.ogg"
+  ],
+  "build.road.placed": [
+    ".cache/audio-sources/extracted/rubberduck/wooden_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/wooden_03.ogg"
+  ],
+  "build.rushed": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 3.wav"
+  ],
+  "build.started": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
+  ],
+  "build.upgrade.completed": [
+    ".cache/audio-sources/extracted/rubberduck/bell_03.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull ping.wav"
+  ],
+  "build.upgrade.started": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 5.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 5_2.wav"
+  ],
+  "build.wall.placed": [
+    ".cache/audio-sources/extracted/rubberduck/hit_03.ogg",
+    ".cache/audio-sources/extracted/rubberduck/hit_04.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on concrete.wav"
+  ],
+  "combat.defense.automaton_bay": [
+    ".cache/audio-sources/extracted/rubberduck/metal_12.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - clink thud.wav"
+  ],
+  "combat.defense.guardian_enclosure": [
+    ".cache/audio-sources/extracted/rubberduck/metal_03.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_04.ogg"
+  ],
+  "combat.defense.resin_snare": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - more metal hammering.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood hammering.wav"
+  ],
+  "combat.defense.stakes": [
+    ".cache/audio-sources/extracted/rubberduck/wooden_01.ogg",
+    ".cache/audio-sources/extracted/rubberduck/wooden_02.ogg"
+  ],
+  "combat.impact.flesh": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe2.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav"
+  ],
+  "combat.impact.stone": [
+    ".cache/audio-sources/extracted/rubberduck/metal_08.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_09.ogg"
+  ],
+  "combat.impact.wood": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
+  ],
+  "combat.loot.claimed": [
+    ".cache/audio-sources/extracted/more/Money/Money_05.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_08.wav"
+  ],
+  "combat.loot.dropped": [
+    ".cache/audio-sources/extracted/more/Money/Money_08.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_09.wav"
+  ],
+  "combat.monster.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+  ],
+  "combat.monster.ancient_colossus.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav",
+    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav"
+  ],
+  "combat.monster.ancient_colossus.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop 3.wav"
+  ],
+  "combat.monster.ancient_colossus.death": [
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour6.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour7.wav"
+  ],
+  "combat.monster.ancient_colossus.hit": [
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour10.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour11.wav"
+  ],
+  "combat.monster.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - more metal hammering.wav"
+  ],
+  "combat.monster.death": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
+  ],
+  "combat.monster.ember_wisp.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+  ],
+  "combat.monster.ember_wisp.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 4.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav"
+  ],
+  "combat.monster.ember_wisp.death": [
+    ".cache/audio-sources/extracted/rubberduck/glass_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/glass_03.ogg"
+  ],
+  "combat.monster.ember_wisp.hit": [
+    ".cache/audio-sources/extracted/rubberduck/glass_04.ogg",
+    ".cache/audio-sources/extracted/rubberduck/glass_05.ogg"
+  ],
+  "combat.monster.forest_stalker.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav",
+    ".cache/audio-sources/extracted/owlish/Human/breath-male.wav"
+  ],
+  "combat.monster.forest_stalker.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 4.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 4_2.wav"
+  ],
+  "combat.monster.forest_stalker.death": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav"
+  ],
+  "combat.monster.forest_stalker.hit": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
+  ],
+  "combat.monster.hit": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav"
+  ],
+  "combat.monster.idle": [
+    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+  ],
+  "combat.monster.ironback_brute.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav",
+    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav"
+  ],
+  "combat.monster.ironback_brute.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - thuds.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
+  ],
+  "combat.monster.ironback_brute.death": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop 2.wav"
+  ],
+  "combat.monster.ironback_brute.hit": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour1.wav"
+  ],
+  "combat.monster.resource_guardian.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav",
+    ".cache/audio-sources/extracted/owlish/Human/breath-male.wav"
+  ],
+  "combat.monster.resource_guardian.attack": [
+    ".cache/audio-sources/extracted/rubberduck/metal_10.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_11.ogg"
+  ],
+  "combat.monster.resource_guardian.death": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav",
+    ".cache/audio-sources/extracted/rubberduck/metal_01.ogg"
+  ],
+  "combat.monster.resource_guardian.hit": [
+    ".cache/audio-sources/extracted/rubberduck/metal_01.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_02.ogg"
+  ],
+  "combat.monster.roaming_melee.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav",
+    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav"
+  ],
+  "combat.monster.roaming_melee.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ratchet2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull hammering.wav"
+  ],
+  "combat.monster.roaming_melee.death": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
+  ],
+  "combat.monster.roaming_melee.hit": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
+  ],
+  "combat.monster.ruins_guardian.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
+    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+  ],
+  "combat.monster.ruins_guardian.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - clink1.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - clink2.wav"
+  ],
+  "combat.monster.ruins_guardian.death": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav",
+    ".cache/audio-sources/extracted/rubberduck/metal_01.ogg"
+  ],
+  "combat.monster.ruins_guardian.hit": [
+    ".cache/audio-sources/extracted/rubberduck/metal_06.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_07.ogg"
+  ],
+  "combat.monster.spore_beast.aggro": [
+    ".cache/audio-sources/extracted/owlish/Human/breath-male.wav",
+    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav"
+  ],
+  "combat.monster.spore_beast.attack": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe2.wav"
+  ],
+  "combat.monster.spore_beast.death": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe2.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav"
+  ],
+  "combat.monster.spore_beast.hit": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
+  ],
+  "combat.monster.step": [
+    ".cache/audio-sources/extracted/owlish/Footsteps/grassy-footstep3.wav",
+    ".cache/audio-sources/extracted/owlish/Footsteps/grassy-footstep4.wav"
+  ],
+  "combat.player.attack": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 5_2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 6.wav"
+  ],
+  "combat.player.hit": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav"
+  ],
+  "combat.raid.started": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - thuds.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
+  ],
+  "combat.retreat": [
+    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav",
+    ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav"
+  ],
+  "combat.threat.nearby": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 3.wav"
+  ],
+  "combat.victory": [
+    ".cache/audio-sources/extracted/more/Money/Money_02.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_05.wav"
+  ],
+  "combat.weapon.bolt_thrower": [
+    ".cache/audio-sources/extracted/rubberduck/wooden_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/wooden_03.ogg"
+  ],
+  "combat.weapon.cannon": [
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour5.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/clamour6.wav"
+  ],
+  "combat.weapon.storm_coil": [
+    ".cache/audio-sources/extracted/rubberduck/glass_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/glass_03.ogg"
+  ],
+  "combat.weapon.tower": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav",
+    ".cache/audio-sources/extracted/rubberduck/metal_01.ogg"
+  ],
+  "economy.coin.earned": [
+    ".cache/audio-sources/extracted/more/Money/Money_29.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_02.wav"
+  ],
+  "economy.coin.insufficient": [
+    ".cache/audio-sources/extracted/more/Money/Money_02.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_05.wav"
+  ],
+  "economy.coin.spent": [
+    ".cache/audio-sources/extracted/more/Money/Money_27.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_29.wav"
+  ],
+  "economy.crop.expired": [
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320141__owlstorm__blanket-movement-3.wav",
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320142__owlstorm__blanket-movement-4.wav"
+  ],
+  "economy.crop.ready": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ping.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ping2.wav"
+  ],
+  "economy.gather.clay": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit2.wav"
+  ],
+  "economy.gather.crystal": [
+    ".cache/audio-sources/extracted/rubberduck/glass_04.ogg",
+    ".cache/audio-sources/extracted/rubberduck/glass_05.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull ping.wav"
+  ],
+  "economy.gather.oil": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe2.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav"
+  ],
+  "economy.gather.ore": [
+    ".cache/audio-sources/extracted/rubberduck/metal_06.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_07.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_08.ogg"
+  ],
+  "economy.gather.rare": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 4.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/rubberduck/glass_01.ogg"
+  ],
+  "economy.gather.resin": [
+    ".cache/audio-sources/extracted/rubberduck/wooden_03.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood clap 2.wav"
+  ],
+  "economy.gather.sand": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit2.wav"
+  ],
+  "economy.gather.stone": [
+    ".cache/audio-sources/extracted/rubberduck/metal_08.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_09.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_10.ogg"
+  ],
+  "economy.gather.wood": [
+    ".cache/audio-sources/extracted/rubberduck/wooden_01.ogg",
+    ".cache/audio-sources/extracted/rubberduck/wooden_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/wooden_03.ogg"
+  ],
+  "economy.harvest.cane": [
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320143__owlstorm__blanket-movement-5.wav",
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320144__owlstorm__blanket-movement-6.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_01.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_02.wav"
+  ],
+  "economy.harvest.crystal": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/rubberduck/glass_01.ogg",
+    ".cache/audio-sources/extracted/rubberduck/glass_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/glass_03.ogg"
+  ],
+  "economy.harvest.field": [
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320143__owlstorm__blanket-movement-5.wav",
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320144__owlstorm__blanket-movement-6.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_01.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_02.wav"
+  ],
+  "economy.harvest.mushroom": [
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit2.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/fruit3.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
+  ],
+  "economy.level.up": [
+    ".cache/audio-sources/extracted/rubberduck/glass_05.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull ping.wav"
+  ],
+  "economy.market.bought": [
+    ".cache/audio-sources/extracted/more/Money/Money_15.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_25.wav"
+  ],
+  "economy.market.cancelled": [
+    ".cache/audio-sources/extracted/more/Money/Money_27.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_29.wav"
+  ],
+  "economy.market.listed": [
+    ".cache/audio-sources/extracted/more/Money/Money_02.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_05.wav"
+  ],
+  "economy.market.sold": [
+    ".cache/audio-sources/extracted/more/Money/Money_14.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_15.wav"
+  ],
+  "economy.node.claimed": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ping.wav"
+  ],
+  "economy.node.depleted": [
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_07.wav",
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320137__owlstorm__blanket-movement-1.wav"
+  ],
+  "economy.node.respawned": [
+    ".cache/audio-sources/extracted/rubberduck/bell_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/bell_03.ogg"
+  ],
+  "economy.production.collected": [
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_04.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_05.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_06.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_07.wav",
+    ".cache/audio-sources/extracted/owlish/Cloth, Rustle/320137__owlstorm__blanket-movement-1.wav"
+  ],
+  "economy.production.ready": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 3.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 4.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ping.wav"
+  ],
+  "economy.production.started": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ratchet1.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - ratchet2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull hammering.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - hammering on plastic.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - low hammering.wav"
+  ],
+  "economy.reward.rare": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/rubberduck/glass_01.ogg"
+  ],
+  "economy.storage.deposit": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull hammering.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - hammering on plastic.wav"
+  ],
+  "economy.storage.full": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 4.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 4_2.wav"
+  ],
+  "economy.storage.withdraw": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 5_2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 6.wav"
+  ],
+  "social.alliance.accepted": [
+    ".cache/audio-sources/extracted/rubberduck/bell_01.ogg",
+    ".cache/audio-sources/extracted/rubberduck/bell_02.ogg"
+  ],
+  "social.alliance.declined": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_03.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_04.wav"
+  ],
+  "social.alliance.invite": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_05.wav",
+    ".cache/audio-sources/extracted/owlish/Paper/pageturn1.wav"
+  ],
+  "social.alliance.treasury": [
+    ".cache/audio-sources/extracted/more/Money/Money_08.wav",
+    ".cache/audio-sources/extracted/more/Money/Money_09.wav"
+  ],
+  "social.chat.mention": [
+    ".cache/audio-sources/extracted/rubberduck/bell_02.ogg",
+    ".cache/audio-sources/extracted/rubberduck/bell_03.ogg"
+  ],
+  "social.chat.received": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_03.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_04.wav"
+  ],
+  "social.chat.sent": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_05.wav",
+    ".cache/audio-sources/extracted/owlish/Paper/pageturn1.wav"
+  ],
+  "ui.action.invalid": [
+    ".cache/audio-sources/extracted/rubberduck/metal_12.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - clink thud.wav"
+  ],
+  "ui.cancel": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_01.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_03.wav"
+  ],
+  "ui.click": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_16.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_17.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_19.wav"
+  ],
+  "ui.confirm": [
+    ".cache/audio-sources/extracted/rubberduck/bell_03.ogg",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull ping.wav"
+  ],
+  "ui.dialog.open": [
+    ".cache/audio-sources/extracted/owlish/Paper/pageturn1.wav",
+    ".cache/audio-sources/extracted/owlish/Paper/pageturn2.wav"
+  ],
+  "ui.panel.close": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_05.wav",
+    ".cache/audio-sources/extracted/owlish/Paper/pageturn1.wav"
+  ],
+  "ui.panel.open": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_01.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_03.wav"
+  ],
+  "ui.place.cancel": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_04.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_05.wav"
+  ],
+  "ui.place.preview": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_16.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_17.wav"
+  ],
+  "ui.place.rotate": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_17.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_19.wav"
+  ],
+  "ui.resource.insufficient": [
+    ".cache/audio-sources/extracted/rubberduck/metal_10.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_11.ogg"
+  ],
+  "ui.select.building": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood clap.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood 2.wav"
+  ],
+  "ui.select.monster": [
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe2.wav",
+    ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav"
+  ],
+  "ui.select.tile": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_17.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_19.wav"
+  ],
+  "ui.tab": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_17.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_19.wav"
+  ],
+  "ui.toast.error": [
+    ".cache/audio-sources/extracted/rubberduck/metal_10.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_11.ogg"
+  ],
+  "ui.toast.info": [
+    ".cache/audio-sources/extracted/rubberduck/bell_01.ogg",
+    ".cache/audio-sources/extracted/rubberduck/bell_02.ogg"
+  ],
+  "ui.toast.warning": [
+    ".cache/audio-sources/extracted/rubberduck/metal_09.ogg",
+    ".cache/audio-sources/extracted/rubberduck/metal_10.ogg"
+  ],
+  "ui.toggle.off": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_19.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_23.wav"
+  ],
+  "ui.toggle.on": [
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_17.wav",
+    ".cache/audio-sources/extracted/more/Paper & Stationery/Stationery_19.wav"
+  ],
+  "world.forest.cut": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav",
+    ".cache/audio-sources/extracted/rubberduck/wooden_01.ogg"
+  ],
+  "world.forest.explore": [
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_02.wav",
+    ".cache/audio-sources/extracted/more/Cloth/Cloth_03.wav"
+  ],
+  "world.resource.discovered": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 4.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav"
+  ],
+  "world.ruin.captured": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 2.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 3.wav"
+  ],
+  "world.ruin.discovered": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav"
+  ],
+  "world.territory.claimed": [
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings.wav",
+    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav"
+  ]
+}

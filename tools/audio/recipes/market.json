@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "profiles": {
+    "trade": {"variants": [{"pitch": 0.96, "texture": 0.9}, {"pitch": 1.04, "texture": 1.1}], "candidates": {"a": {"duration": 0.4, "layers": [{"wave": "noise", "gain": 0.28, "lowpass": 0.045, "duration": 0.22, "adsr": [0.008, 0.05, 0.3, 0.14]}, {"wave": "sine", "frequency": 780, "sweep": -100, "gain": 0.21, "start": 0.12, "duration": 0.22, "adsr": [0.002, 0.045, 0.22, 0.15]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "economy.market.listed", "profile": "trade", "seed": 3601},
+    {"sound_id": "economy.market.bought", "profile": "trade", "seed": 3602, "tuning": 1.12},
+    {"sound_id": "economy.market.sold", "profile": "trade", "seed": 3603, "tuning": 1.3},
+    {"sound_id": "economy.market.cancelled", "profile": "trade", "seed": 3604, "tuning": 0.7}
+  ]
+}

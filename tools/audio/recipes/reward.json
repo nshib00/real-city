@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "profiles": {
+    "reward": {"variants": [{"pitch": 0.97}, {"pitch": 1.03}], "candidates": {"a": {"duration": 0.94, "echo": {"delay": 0.14, "gain": 0.15}, "layers": [{"wave": "sine", "frequency": 480, "gain": 0.18, "duration": 0.36, "adsr": [0.015, 0.08, 0.33, 0.22]}, {"wave": "triangle", "frequency": 610, "gain": 0.16, "start": 0.22, "duration": 0.43, "adsr": [0.012, 0.1, 0.3, 0.25]}, {"wave": "sine", "frequency": 810, "gain": 0.14, "start": 0.48, "duration": 0.39, "adsr": [0.015, 0.08, 0.26, 0.28]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "economy.level.up", "profile": "reward", "seed": 3701},
+    {"sound_id": "economy.reward.rare", "profile": "reward", "seed": 3702, "tuning": 1.25}
+  ]
+}

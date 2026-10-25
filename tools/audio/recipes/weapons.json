@@ -1,0 +1,507 @@
+{
+  "version": 1,
+  "profiles": {
+    "stone": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.32,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 300,
+              "gain": 0.65,
+              "duration": 0.25,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.1125
+              ],
+              "lowpass": 0.05
+            },
+            {
+              "wave": "triangle",
+              "frequency": 180,
+              "gain": 0.25,
+              "duration": 0.3,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.135
+              ],
+              "sweep": -280
+            }
+          ]
+        }
+      }
+    },
+    "wood": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.28,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 400,
+              "gain": 0.47,
+              "duration": 0.2,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.09000000000000001
+              ],
+              "lowpass": 0.09
+            },
+            {
+              "wave": "triangle",
+              "frequency": 340,
+              "gain": 0.25,
+              "duration": 0.22,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.099
+              ],
+              "sweep": -500
+            }
+          ]
+        }
+      }
+    },
+    "flesh": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.25,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 320,
+              "gain": 0.55,
+              "duration": 0.19,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.0855
+              ],
+              "lowpass": 0.035
+            },
+            {
+              "wave": "sine",
+              "frequency": 140,
+              "gain": 0.25,
+              "duration": 0.22,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.099
+              ],
+              "sweep": -180
+            }
+          ]
+        }
+      }
+    },
+    "tower": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.35,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 250,
+              "gain": 0.4,
+              "duration": 0.15,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.0675
+              ],
+              "lowpass": 0.12
+            },
+            {
+              "wave": "triangle",
+              "frequency": 450,
+              "gain": 0.34,
+              "duration": 0.27,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.12150000000000001
+              ],
+              "sweep": -1400
+            }
+          ]
+        }
+      }
+    },
+    "bolt": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.42,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 290,
+              "gain": 0.65,
+              "duration": 0.24,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.108
+              ],
+              "lowpass": 0.11
+            },
+            {
+              "wave": "triangle",
+              "frequency": 210,
+              "gain": 0.35,
+              "duration": 0.36,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.162
+              ],
+              "sweep": -620
+            }
+          ]
+        }
+      }
+    },
+    "coil": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.4,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 900,
+              "gain": 0.48,
+              "duration": 0.27,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.12150000000000001
+              ],
+              "lowpass": 0.4
+            },
+            {
+              "wave": "sine",
+              "frequency": 780,
+              "gain": 0.28,
+              "duration": 0.32,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.14400000000000002
+              ],
+              "sweep": -1100
+            }
+          ]
+        }
+      }
+    },
+    "stakes": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.22,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 200,
+              "gain": 0.65,
+              "duration": 0.14,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.06300000000000001
+              ],
+              "lowpass": 0.13
+            },
+            {
+              "wave": "triangle",
+              "frequency": 530,
+              "gain": 0.22,
+              "duration": 0.18,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.081
+              ],
+              "sweep": -900
+            }
+          ]
+        }
+      }
+    },
+    "resin": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.34,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 240,
+              "gain": 0.5,
+              "duration": 0.27,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.12150000000000001
+              ],
+              "lowpass": 0.025
+            },
+            {
+              "wave": "sine",
+              "frequency": 160,
+              "gain": 0.25,
+              "duration": 0.29,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.1305
+              ],
+              "sweep": -220
+            }
+          ]
+        }
+      }
+    },
+    "guardian": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.43,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 230,
+              "gain": 0.6,
+              "duration": 0.31,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.1395
+              ],
+              "lowpass": 0.06
+            },
+            {
+              "wave": "triangle",
+              "frequency": 190,
+              "gain": 0.3,
+              "duration": 0.38,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.171
+              ],
+              "sweep": -300
+            }
+          ]
+        }
+      }
+    },
+    "automaton": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.42,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 320,
+              "gain": 0.65,
+              "duration": 0.26,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.117
+              ],
+              "lowpass": 0.1
+            },
+            {
+              "wave": "triangle",
+              "frequency": 260,
+              "gain": 0.28,
+              "duration": 0.36,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.162
+              ],
+              "sweep": -390
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sounds": [
+    {
+      "sound_id": "combat.impact.stone",
+      "profile": "stone",
+      "seed": 5201
+    },
+    {
+      "sound_id": "combat.impact.wood",
+      "profile": "wood",
+      "seed": 5202
+    },
+    {
+      "sound_id": "combat.impact.flesh",
+      "profile": "flesh",
+      "seed": 5203
+    },
+    {
+      "sound_id": "combat.weapon.tower",
+      "profile": "tower",
+      "seed": 5204
+    },
+    {
+      "sound_id": "combat.weapon.bolt_thrower",
+      "profile": "bolt",
+      "seed": 5205
+    },
+    {
+      "sound_id": "combat.weapon.storm_coil",
+      "profile": "coil",
+      "seed": 5206
+    },
+    {
+      "sound_id": "combat.defense.stakes",
+      "profile": "stakes",
+      "seed": 5207
+    },
+    {
+      "sound_id": "combat.defense.resin_snare",
+      "profile": "resin",
+      "seed": 5208
+    },
+    {
+      "sound_id": "combat.defense.guardian_enclosure",
+      "profile": "guardian",
+      "seed": 5209
+    },
+    {
+      "sound_id": "combat.defense.automaton_bay",
+      "profile": "automaton",
+      "seed": 5210
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "profiles": {
+    "tab": {"variants": [{"pitch": 0.96, "attack": 0.9, "texture": 0.9}, {"pitch": 1.04, "attack": 1.1, "texture": 1.1}], "candidates": {"a": {"duration": 0.105, "layers": [{"wave": "noise", "gain": 0.2, "lowpass": 0.08, "duration": 0.04, "adsr": [0.001, 0.012, 0.15, 0.02]}, {"wave": "sine", "frequency": 530, "sweep": 140, "gain": 0.17, "duration": 0.09, "adsr": [0.004, 0.02, 0.24, 0.06]}]}}},
+    "panel": {"variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.04, "attack": 1.1, "texture": 0.9}], "candidates": {"a": {"duration": 0.19, "layers": [{"wave": "noise", "gain": 0.27, "lowpass": 0.025, "duration": 0.16, "adsr": [0.02, 0.05, 0.33, 0.08]}, {"wave": "triangle", "frequency": 410, "sweep": 210, "gain": 0.1, "duration": 0.17, "adsr": [0.025, 0.05, 0.24, 0.08]}]}}},
+    "select": {"variants": [{"pitch": 0.97, "attack": 0.9, "texture": 0.9}, {"pitch": 1.03, "attack": 1.1, "texture": 1.1}], "candidates": {"a": {"duration": 0.12, "layers": [{"wave": "noise", "gain": 0.19, "lowpass": 0.07, "duration": 0.06, "adsr": [0.001, 0.018, 0.1, 0.035]}, {"wave": "triangle", "frequency": 520, "sweep": -280, "gain": 0.16, "duration": 0.1, "adsr": [0.003, 0.02, 0.2, 0.07]}]}}},
+    "place": {"variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.04, "attack": 1.1, "texture": 0.9}], "candidates": {"a": {"duration": 0.14, "layers": [{"wave": "noise", "gain": 0.28, "lowpass": 0.09, "duration": 0.11, "adsr": [0.002, 0.027, 0.2, 0.07]}, {"wave": "triangle", "frequency": 620, "sweep": -380, "gain": 0.1, "duration": 0.12, "adsr": [0.002, 0.02, 0.2, 0.085]}]}}},
+    "invalid": {"variants": [{"pitch": 0.97, "attack": 1, "texture": 1}, {"pitch": 1.03, "attack": 1, "texture": 1}], "candidates": {"a": {"duration": 0.22, "layers": [{"wave": "sine", "frequency": 320, "sweep": -250, "gain": 0.25, "duration": 0.09, "adsr": [0.006, 0.018, 0.3, 0.055]}, {"wave": "sine", "frequency": 285, "sweep": -230, "gain": 0.22, "start": 0.1, "duration": 0.1, "adsr": [0.006, 0.018, 0.3, 0.06]}]}}},
+    "confirm": {"variants": [{"pitch": 0.96, "attack": 0.9, "texture": 1}, {"pitch": 1.04, "attack": 1.1, "texture": 1}], "candidates": {"a": {"duration": 0.25, "layers": [{"wave": "sine", "frequency": 520, "sweep": 60, "gain": 0.22, "duration": 0.12, "adsr": [0.008, 0.03, 0.3, 0.075]}, {"wave": "sine", "frequency": 660, "sweep": 80, "gain": 0.22, "start": 0.09, "duration": 0.13, "adsr": [0.008, 0.025, 0.3, 0.08]}]}}},
+    "toast": {"variants": [{"pitch": 0.97, "attack": 0.9, "texture": 1}, {"pitch": 1.03, "attack": 1.1, "texture": 1}], "candidates": {"a": {"duration": 0.32, "echo": {"delay": 0.075, "gain": 0.13}, "layers": [{"wave": "triangle", "frequency": 570, "sweep": 100, "gain": 0.16, "duration": 0.23, "adsr": [0.012, 0.06, 0.3, 0.14]}, {"wave": "sine", "frequency": 760, "gain": 0.13, "start": 0.07, "duration": 0.17, "adsr": [0.007, 0.035, 0.2, 0.11]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "ui.tab", "profile": "tab", "seed": 1201},
+    {"sound_id": "ui.toggle.on", "profile": "tab", "seed": 1202, "tuning": 1.12},
+    {"sound_id": "ui.toggle.off", "profile": "tab", "seed": 1203, "tuning": 0.88},
+    {"sound_id": "ui.panel.open", "profile": "panel", "seed": 1204},
+    {"sound_id": "ui.panel.close", "profile": "panel", "seed": 1205, "tuning": 0.82},
+    {"sound_id": "ui.dialog.open", "profile": "panel", "seed": 1206, "tuning": 1.18},
+    {"sound_id": "ui.select.tile", "profile": "select", "seed": 1207, "tuning": 0.7},
+    {"sound_id": "ui.select.building", "profile": "select", "seed": 1208, "tuning": 1.08},
+    {"sound_id": "ui.select.monster", "profile": "select", "seed": 1209, "tuning": 0.58},
+    {"sound_id": "ui.place.preview", "profile": "place", "seed": 1210, "tuning": 0.9},
+    {"sound_id": "ui.place.rotate", "profile": "place", "seed": 1211, "tuning": 1.2},
+    {"sound_id": "ui.place.cancel", "profile": "place", "seed": 1212, "tuning": 0.72},
+    {"sound_id": "ui.action.invalid", "profile": "invalid", "seed": 1213},
+    {"sound_id": "ui.resource.insufficient", "profile": "invalid", "seed": 1214, "tuning": 0.82},
+    {"sound_id": "ui.confirm", "profile": "confirm", "seed": 1215},
+    {"sound_id": "ui.cancel", "profile": "panel", "seed": 1216, "tuning": 0.65},
+    {"sound_id": "ui.toast.info", "profile": "toast", "seed": 1217},
+    {"sound_id": "ui.toast.warning", "profile": "toast", "seed": 1218, "tuning": 0.8},
+    {"sound_id": "ui.toast.error", "profile": "invalid", "seed": 1219, "tuning": 0.7}
+  ]
+}

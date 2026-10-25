@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import shutil
 import subprocess
@@ -21,9 +22,11 @@ def run(command: list[str]) -> None:
     subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
 
 
-def build(sound_ids: list[str], ffmpeg: str, candidate: str, recordings: dict[str, Path]) -> None:
-    if not shutil.which(ffmpeg):
+def build(sound_ids: list[str], ffmpeg: str, candidate: str, recordings: dict[str, Path], wav_only: bool = False, bitrate: str = "64k") -> None:
+    if not wav_only and not shutil.which(ffmpeg):
         raise SystemExit(f"FFmpeg не найден: {ffmpeg}. См. docs/audio/production-guide.md")
+    if wav_only and recordings:
+        raise SystemExit("Режим --wav-only поддерживает только синтезированные рецепты")
     recipes = load_recipes()
     current = {}
     if MANIFEST.exists():
@@ -40,6 +43,18 @@ def build(sound_ids: list[str], ffmpeg: str, candidate: str, recordings: dict[st
             for index in range(len(recipe["variants"])):
                 raw = temporary / "raw.wav"
                 processed = temporary / "processed.wav"
+                name = f"{sound_id}.{index}"
+                master = ROOT / "master" / f"{name}.wav"
+                master.parent.mkdir(parents=True, exist_ok=True)
+                if wav_only:
+                    write_wav(master, render(recipe, candidate, index))
+                    validate_wav(master)
+                    target = PUBLIC / family / f"{name}.wav"
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(master, target)
+                    digest = hashlib.sha256(target.read_bytes()).hexdigest()[:12]
+                    variants.append(f"/assets/audio/{family}/{name}.wav?v={digest}")
+                    continue
                 if sound_id in recordings:
                     recording = recordings[sound_id]
                     if not recording.is_file():
@@ -54,19 +69,22 @@ def build(sound_ids: list[str], ffmpeg: str, candidate: str, recordings: dict[st
                 # Trim/fades and a ceiling of −3 dBFS; sample rate and channel count are explicit.
                 duration = recipe["candidates"][candidate]["duration"]
                 fade_out = max(0, duration - 0.018)
-                filters = f"highpass=f=35,afade=t=in:st=0:d=0.004,afade=t=out:st={fade_out:.4f}:d=0.018,alimiter=limit=0.7079"
+                filters = (f"highpass=f=35,afade=t=in:st=0:d=0.004,"
+                           f"afade=t=out:st={fade_out:.4f}:d=0.018,"
+                           "acompressor=threshold=0.35:ratio=1.5:attack=3:release=60,"
+                           "alimiter=limit=0.7079:level=0")
                 run([ffmpeg, "-v", "error", "-y", "-i", str(raw), "-af", filters,
                      "-ar", "48000", "-ac", "1", "-c:a", "pcm_s16le", str(processed)])
                 validate_wav(processed)
-                name = f"{sound_id}.{index}"
-                master = ROOT / "master" / f"{name}.wav"
                 target = PUBLIC / family / f"{name}.mp3"
                 target.parent.mkdir(parents=True, exist_ok=True)
                 master.parent.mkdir(parents=True, exist_ok=True)
                 run([ffmpeg, "-v", "error", "-y", "-i", str(processed), "-ar", "48000", "-ac", "1",
-                     "-c:a", "libmp3lame", "-b:a", "64k", str(target)])
+                     "-c:a", "libmp3lame", "-b:a", bitrate, str(target)])
+                run([ffmpeg, "-v", "error", "-xerror", "-i", str(target), "-f", "null", "-"])
                 shutil.copyfile(processed, master)
-                variants.append(f"/assets/audio/{family}/{name}.mp3")
+                digest = hashlib.sha256(target.read_bytes()).hexdigest()[:12]
+                variants.append(f"/assets/audio/{family}/{name}.mp3?v={digest}")
             current[sound_id] = variants
     data = json.dumps(dict(sorted(current.items())), ensure_ascii=False, separators=(",", ":"))
     MANIFEST.write_text(
@@ -85,6 +103,8 @@ def main() -> None:
     parser.add_argument("--all", action="store_true")
     parser.add_argument("--candidate", choices=("a", "b"), default="a")
     parser.add_argument("--ffmpeg", default="ffmpeg")
+    parser.add_argument("--wav-only", action="store_true", help="Собрать синтезированные WAV без FFmpeg")
+    parser.add_argument("--bitrate", choices=("32k", "48k", "64k"), default="64k")
     parser.add_argument("--recording", action="append", default=[], metavar="SOUND_ID=PATH")
     args = parser.parse_args()
     recipes = load_recipes()
@@ -97,7 +117,7 @@ def main() -> None:
             parser.error("--recording требует SOUND_ID=PATH")
         sound_id, path = item.split("=", 1)
         recordings[sound_id] = Path(path)
-    build(ids, args.ffmpeg, args.candidate, recordings)
+    build(ids, args.ffmpeg, args.candidate, recordings, args.wav_only, args.bitrate)
 
 
 if __name__ == "__main__":

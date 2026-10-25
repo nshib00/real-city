@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "profiles": {
+    "nearby": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.55,
+          "layers": [
+            {
+              "wave": "triangle",
+              "frequency": 410,
+              "gain": 0.27,
+              "duration": 0.47,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": -180
+            },
+            {
+              "wave": "noise",
+              "frequency": 260,
+              "gain": 0.27,
+              "duration": 0.3,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.135
+              ],
+              "lowpass": 0.05
+            }
+          ]
+        }
+      }
+    },
+    "raid": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.58,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 230,
+              "gain": 0.55,
+              "duration": 0.4,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "lowpass": 0.04
+            },
+            {
+              "wave": "sine",
+              "frequency": 130,
+              "gain": 0.3,
+              "duration": 0.49,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": -170
+            }
+          ]
+        }
+      }
+    },
+    "victory": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.62,
+          "layers": [
+            {
+              "wave": "triangle",
+              "frequency": 410,
+              "gain": 0.22,
+              "duration": 0.5,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": 130
+            },
+            {
+              "wave": "sine",
+              "frequency": 640,
+              "gain": 0.23,
+              "duration": 0.5,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": 180
+            }
+          ]
+        }
+      }
+    },
+    "retreat": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.48,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 250,
+              "gain": 0.3,
+              "duration": 0.34,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.15300000000000002
+              ],
+              "lowpass": 0.03
+            },
+            {
+              "wave": "sine",
+              "frequency": 400,
+              "gain": 0.25,
+              "duration": 0.4,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": -310
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sounds": [
+    {
+      "sound_id": "combat.threat.nearby",
+      "profile": "nearby",
+      "seed": 6301
+    },
+    {
+      "sound_id": "combat.raid.started",
+      "profile": "raid",
+      "seed": 6302
+    },
+    {
+      "sound_id": "combat.victory",
+      "profile": "victory",
+      "seed": 6303
+    },
+    {
+      "sound_id": "combat.retreat",
+      "profile": "retreat",
+      "seed": 6304
+    }
+  ]
+}

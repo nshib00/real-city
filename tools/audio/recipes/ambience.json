@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "profiles": {
+    "air": {"variants": [{"pitch": 0.98}], "candidates": {"a": {"duration": 1.8, "layers": [{"wave": "noise", "gain": 0.19, "lowpass": 0.012, "duration": 1.8, "adsr": [0.28, 0.2, 0.48, 0.34]}, {"wave": "sine", "frequency": 100, "gain": 0.035, "duration": 1.8, "adsr": [0.3, 0.2, 0.4, 0.36]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "ambience.grass", "profile": "air", "seed": 6601, "tuning": 1.05},
+    {"sound_id": "ambience.forest", "profile": "air", "seed": 6602, "tuning": 0.8, "noise_color": 0.7},
+    {"sound_id": "ambience.river", "profile": "air", "seed": 6603, "tuning": 1.25, "noise_color": 2},
+    {"sound_id": "ambience.mountain", "profile": "air", "seed": 6604, "tuning": 0.55, "noise_color": 0.45},
+    {"sound_id": "ambience.ruins", "profile": "air", "seed": 6605, "tuning": 0.68, "noise_gain": 0.8},
+    {"sound_id": "ambience.town", "profile": "air", "seed": 6606, "tuning": 1.7, "noise_color": 0.55},
+    {"sound_id": "ambience.workshop", "profile": "air", "seed": 6607, "tuning": 1.9, "noise_gain": 0.65},
+    {"sound_id": "ambience.field", "profile": "air", "seed": 6608, "tuning": 1.35, "noise_gain": 0.5},
+    {"sound_id": "ambience.oil_well", "profile": "air", "seed": 6609, "tuning": 0.65, "noise_gain": 0.8}
+  ]
+}

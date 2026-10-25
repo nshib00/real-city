@@ -1,0 +1,595 @@
+{
+  "version": 1,
+  "profiles": {
+    "aggro": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.48,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 220,
+              "gain": 0.38,
+              "duration": 0.33,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.14850000000000002
+              ],
+              "lowpass": 0.07
+            },
+            {
+              "wave": "triangle",
+              "frequency": 300,
+              "gain": 0.3,
+              "duration": 0.4,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": 220
+            }
+          ]
+        }
+      }
+    },
+    "attack": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.31,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 350,
+              "gain": 0.58,
+              "duration": 0.22,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.099
+              ],
+              "lowpass": 0.13
+            },
+            {
+              "wave": "triangle",
+              "frequency": 280,
+              "gain": 0.27,
+              "duration": 0.26,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.117
+              ],
+              "sweep": -570
+            }
+          ]
+        }
+      }
+    },
+    "hit": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.23,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 300,
+              "gain": 0.56,
+              "duration": 0.18,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.081
+              ],
+              "lowpass": 0.08
+            },
+            {
+              "wave": "sine",
+              "frequency": 180,
+              "gain": 0.22,
+              "duration": 0.2,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.09000000000000001
+              ],
+              "sweep": -280
+            }
+          ]
+        }
+      }
+    },
+    "death": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.65,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 230,
+              "gain": 0.48,
+              "duration": 0.53,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "lowpass": 0.04
+            },
+            {
+              "wave": "triangle",
+              "frequency": 230,
+              "gain": 0.3,
+              "duration": 0.55,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.18
+              ],
+              "sweep": -240
+            }
+          ]
+        }
+      }
+    },
+    "step": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.17,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 200,
+              "gain": 0.25,
+              "duration": 0.13,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.0585
+              ],
+              "lowpass": 0.04
+            },
+            {
+              "wave": "triangle",
+              "frequency": 180,
+              "gain": 0.12,
+              "duration": 0.14,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.06300000000000001
+              ],
+              "sweep": -100
+            }
+          ]
+        }
+      }
+    },
+    "idle": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.3,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 200,
+              "gain": 0.18,
+              "duration": 0.25,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.1125
+              ],
+              "lowpass": 0.03
+            },
+            {
+              "wave": "sine",
+              "frequency": 220,
+              "gain": 0.12,
+              "duration": 0.26,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.117
+              ],
+              "sweep": -70
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sounds": [
+    {
+      "sound_id": "combat.monster.aggro",
+      "profile": "aggro",
+      "seed": 5300
+    },
+    {
+      "sound_id": "combat.monster.attack",
+      "profile": "attack",
+      "seed": 5301
+    },
+    {
+      "sound_id": "combat.monster.hit",
+      "profile": "hit",
+      "seed": 5302
+    },
+    {
+      "sound_id": "combat.monster.death",
+      "profile": "death",
+      "seed": 5303
+    },
+    {
+      "sound_id": "combat.monster.step",
+      "profile": "step",
+      "seed": 5304
+    },
+    {
+      "sound_id": "combat.monster.idle",
+      "profile": "idle",
+      "seed": 5305
+    },
+    {
+      "sound_id": "combat.monster.roaming_melee.aggro",
+      "profile": "aggro",
+      "seed": 5400,
+      "tuning": 1,
+      "noise_color": 0.9,
+      "noise_gain": 1.05,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.roaming_melee.attack",
+      "profile": "attack",
+      "seed": 5401,
+      "tuning": 1,
+      "noise_color": 0.9,
+      "noise_gain": 1.05,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.roaming_melee.hit",
+      "profile": "hit",
+      "seed": 5402,
+      "tuning": 1,
+      "noise_color": 0.9,
+      "noise_gain": 1.05,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.roaming_melee.death",
+      "profile": "death",
+      "seed": 5403,
+      "tuning": 1,
+      "noise_color": 0.9,
+      "noise_gain": 1.05,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.resource_guardian.aggro",
+      "profile": "aggro",
+      "seed": 5404,
+      "tuning": 0.82,
+      "noise_color": 0.43,
+      "noise_gain": 1.25,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.resource_guardian.attack",
+      "profile": "attack",
+      "seed": 5405,
+      "tuning": 0.82,
+      "noise_color": 0.43,
+      "noise_gain": 1.25,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.resource_guardian.hit",
+      "profile": "hit",
+      "seed": 5406,
+      "tuning": 0.82,
+      "noise_color": 0.43,
+      "noise_gain": 1.25,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.resource_guardian.death",
+      "profile": "death",
+      "seed": 5407,
+      "tuning": 0.82,
+      "noise_color": 0.43,
+      "noise_gain": 1.25,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ruins_guardian.aggro",
+      "profile": "aggro",
+      "seed": 5408,
+      "tuning": 0.68,
+      "noise_color": 0.58,
+      "noise_gain": 0.82,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ruins_guardian.attack",
+      "profile": "attack",
+      "seed": 5409,
+      "tuning": 0.68,
+      "noise_color": 0.58,
+      "noise_gain": 0.82,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ruins_guardian.hit",
+      "profile": "hit",
+      "seed": 5410,
+      "tuning": 0.68,
+      "noise_color": 0.58,
+      "noise_gain": 0.82,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ruins_guardian.death",
+      "profile": "death",
+      "seed": 5411,
+      "tuning": 0.68,
+      "noise_color": 0.58,
+      "noise_gain": 0.82,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.forest_stalker.aggro",
+      "profile": "aggro",
+      "seed": 5412,
+      "tuning": 1.28,
+      "noise_color": 1.8,
+      "noise_gain": 0.8,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.forest_stalker.attack",
+      "profile": "attack",
+      "seed": 5413,
+      "tuning": 1.28,
+      "noise_color": 1.8,
+      "noise_gain": 0.8,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.forest_stalker.hit",
+      "profile": "hit",
+      "seed": 5414,
+      "tuning": 1.28,
+      "noise_color": 1.8,
+      "noise_gain": 0.8,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.forest_stalker.death",
+      "profile": "death",
+      "seed": 5415,
+      "tuning": 1.28,
+      "noise_color": 1.8,
+      "noise_gain": 0.8,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.spore_beast.aggro",
+      "profile": "aggro",
+      "seed": 5416,
+      "tuning": 0.92,
+      "noise_color": 0.2,
+      "noise_gain": 1.15,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.spore_beast.attack",
+      "profile": "attack",
+      "seed": 5417,
+      "tuning": 0.92,
+      "noise_color": 0.2,
+      "noise_gain": 1.15,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.spore_beast.hit",
+      "profile": "hit",
+      "seed": 5418,
+      "tuning": 0.92,
+      "noise_color": 0.2,
+      "noise_gain": 1.15,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.spore_beast.death",
+      "profile": "death",
+      "seed": 5419,
+      "tuning": 0.92,
+      "noise_color": 0.2,
+      "noise_gain": 1.15,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ironback_brute.aggro",
+      "profile": "aggro",
+      "seed": 5420,
+      "tuning": 0.63,
+      "noise_color": 2.1,
+      "noise_gain": 1.35,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ironback_brute.attack",
+      "profile": "attack",
+      "seed": 5421,
+      "tuning": 0.63,
+      "noise_color": 2.1,
+      "noise_gain": 1.35,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ironback_brute.hit",
+      "profile": "hit",
+      "seed": 5422,
+      "tuning": 0.63,
+      "noise_color": 2.1,
+      "noise_gain": 1.35,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ironback_brute.death",
+      "profile": "death",
+      "seed": 5423,
+      "tuning": 0.63,
+      "noise_color": 2.1,
+      "noise_gain": 1.35,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ember_wisp.aggro",
+      "profile": "aggro",
+      "seed": 5424,
+      "tuning": 1.55,
+      "noise_color": 3.4,
+      "noise_gain": 0.65,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ember_wisp.attack",
+      "profile": "attack",
+      "seed": 5425,
+      "tuning": 1.55,
+      "noise_color": 3.4,
+      "noise_gain": 0.65,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ember_wisp.hit",
+      "profile": "hit",
+      "seed": 5426,
+      "tuning": 1.55,
+      "noise_color": 3.4,
+      "noise_gain": 0.65,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ember_wisp.death",
+      "profile": "death",
+      "seed": 5427,
+      "tuning": 1.55,
+      "noise_color": 3.4,
+      "noise_gain": 0.65,
+      "tone_wave": "sine"
+    },
+    {
+      "sound_id": "combat.monster.ancient_colossus.aggro",
+      "profile": "aggro",
+      "seed": 5428,
+      "tuning": 0.43,
+      "noise_color": 0.32,
+      "noise_gain": 1.4,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ancient_colossus.attack",
+      "profile": "attack",
+      "seed": 5429,
+      "tuning": 0.43,
+      "noise_color": 0.32,
+      "noise_gain": 1.4,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ancient_colossus.hit",
+      "profile": "hit",
+      "seed": 5430,
+      "tuning": 0.43,
+      "noise_color": 0.32,
+      "noise_gain": 1.4,
+      "tone_wave": "triangle"
+    },
+    {
+      "sound_id": "combat.monster.ancient_colossus.death",
+      "profile": "death",
+      "seed": 5431,
+      "tuning": 0.43,
+      "noise_color": 0.32,
+      "noise_gain": 1.4,
+      "tone_wave": "triangle"
+    }
+  ]
+}

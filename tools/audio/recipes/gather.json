@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "profiles": {
+    "strike": {"variants": [{"pitch": 0.96, "texture": 0.9}, {"pitch": 1.04, "texture": 1.1}, {"pitch": 1, "texture": 1}], "candidates": {"a": {"duration": 0.36, "layers": [{"wave": "noise", "gain": 0.5, "lowpass": 0.065, "duration": 0.21, "adsr": [0.001, 0.035, 0.2, 0.16]}, {"wave": "triangle", "frequency": 340, "sweep": -430, "gain": 0.22, "duration": 0.3, "adsr": [0.001, 0.045, 0.25, 0.21]}]}}},
+    "soft": {"variants": [{"pitch": 0.96, "texture": 0.9}, {"pitch": 1.04, "texture": 1.1}], "candidates": {"a": {"duration": 0.43, "layers": [{"wave": "noise", "gain": 0.45, "lowpass": 0.026, "duration": 0.34, "adsr": [0.012, 0.08, 0.3, 0.18]}, {"wave": "sine", "frequency": 250, "sweep": -150, "gain": 0.16, "start": 0.06, "duration": 0.31, "adsr": [0.005, 0.06, 0.25, 0.2]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "economy.gather.wood", "profile": "strike", "seed": 3301, "tuning": 0.78},
+    {"sound_id": "economy.gather.stone", "profile": "strike", "seed": 3302, "tuning": 1.16},
+    {"sound_id": "economy.gather.ore", "profile": "strike", "seed": 3303, "tuning": 1.51},
+    {"sound_id": "economy.gather.clay", "profile": "soft", "seed": 3304, "tuning": 0.81},
+    {"sound_id": "economy.gather.sand", "profile": "soft", "seed": 3305, "tuning": 1.13},
+    {"sound_id": "economy.gather.oil", "profile": "soft", "seed": 3306, "tuning": 0.63},
+    {"sound_id": "economy.gather.resin", "profile": "soft", "seed": 3307, "tuning": 0.9},
+    {"sound_id": "economy.gather.crystal", "profile": "strike", "seed": 3308, "tuning": 2.04},
+    {"sound_id": "economy.gather.rare", "profile": "strike", "seed": 3309, "tuning": 2.55}
+  ]
+}

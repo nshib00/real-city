@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "profiles": {
+    "mechanism": {"variants": [{"pitch": 0.83, "texture": 1.15}, {"pitch": 0.94, "attack": 0.82, "texture": 1.25}, {"pitch": 1.07, "attack": 0.75, "texture": 0.82}, {"pitch": 1.19, "attack": 1.24, "texture": 0.72}, {"pitch": 1.31, "attack": 1.1, "texture": 1.04}], "candidates": {"a": {"duration": 0.42, "layers": [{"wave": "noise", "gain": 0.34, "lowpass": 0.06, "duration": 0.26, "adsr": [0.003, 0.045, 0.28, 0.17]}, {"wave": "triangle", "frequency": 350, "sweep": 260, "gain": 0.22, "start": 0.05, "duration": 0.3, "adsr": [0.007, 0.06, 0.3, 0.19]}]}}}
+  },
+  "sounds": [
+    {"sound_id": "economy.production.started", "profile": "mechanism", "seed": 3501},
+    {"sound_id": "economy.production.ready", "profile": "mechanism", "seed": 3502, "tuning": 1.7},
+    {"sound_id": "economy.production.collected", "profile": "mechanism", "seed": 3503, "tuning": 1.2}
+  ]
+}

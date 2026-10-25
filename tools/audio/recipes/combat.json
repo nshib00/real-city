@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "profiles": {
+    "attack": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.29,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 400,
+              "gain": 0.45,
+              "duration": 0.21,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.0945
+              ],
+              "lowpass": 0.1
+            },
+            {
+              "wave": "triangle",
+              "frequency": 520,
+              "gain": 0.23,
+              "duration": 0.22,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.099
+              ],
+              "sweep": -900
+            }
+          ]
+        }
+      }
+    },
+    "lootDrop": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.43,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 310,
+              "gain": 0.36,
+              "duration": 0.19,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.0855
+              ],
+              "lowpass": 0.09
+            },
+            {
+              "wave": "sine",
+              "frequency": 470,
+              "gain": 0.23,
+              "duration": 0.35,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.1575
+              ],
+              "sweep": -300
+            }
+          ]
+        }
+      }
+    },
+    "lootClaim": {
+      "variants": [
+        {
+          "pitch": 0.96,
+          "texture": 0.94
+        },
+        {
+          "pitch": 1.04,
+          "texture": 1.07
+        }
+      ],
+      "candidates": {
+        "a": {
+          "duration": 0.35,
+          "layers": [
+            {
+              "wave": "noise",
+              "frequency": 510,
+              "gain": 0.25,
+              "duration": 0.13,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.0585
+              ],
+              "lowpass": 0.14
+            },
+            {
+              "wave": "sine",
+              "frequency": 630,
+              "gain": 0.22,
+              "duration": 0.29,
+              "adsr": [
+                0.003,
+                0.045,
+                0.26,
+                0.1305
+              ],
+              "sweep": 130
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sounds": [
+    {
+      "sound_id": "combat.player.attack",
+      "profile": "attack",
+      "seed": 6201
+    },
+    {
+      "sound_id": "combat.loot.dropped",
+      "profile": "lootDrop",
+      "seed": 6202
+    },
+    {
+      "sound_id": "combat.loot.claimed",
+      "profile": "lootClaim",
+      "seed": 6203
+    }
+  ]
+}
