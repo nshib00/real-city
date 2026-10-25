@@ -1,0 +1,16 @@
+{
+  "id": "ironback_brute",
+  "triangles": 7958,
+  "meshes": 61,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "ironback_brute.blend",
+  "glb": "ironback_brute_preview.glb",
+  "preview": "ironback_brute_preview.png"
+}

@@ -26,6 +26,10 @@ blender --background --python tools/assets/blender/generate_terrain_tile_models.
 Blender-рендеры сохраняются рядом как `grass.png`, `forest.png`, `water.png`, `mountain.png`, `road.png`, `oil_well.png`, `ruins.png` и две плотности леса.
 Идентификаторы совпадают с terrain API, поэтому эти PNG можно подключать без переименования.
 
+Горы (`mountain`) на карте используют три варианта из `mountain_detail_staging/`:
+`mountain_detail_ridge.png`, `mountain_detail_spire.png` и `mountain_detail_snowcap.png`.
+Вариант определяется координатами клетки, поэтому не меняется при перерисовке или перезагрузке.
+
 Проверка: `python3 tools/assets/validate_terrain_models.py`.
 Предпросмотр: `terrain_tiles_contact_sheet.png`; отчеты: `validation.json`
 и `roundtrip-validation.json`.
@@ -34,8 +38,8 @@ Blender-рендеры сохраняются рядом как `grass.png`, `fo
 
 Захватываемые руины с разными визуальными ролями лежат в
 `ruins_variants/` и продублированы в корне этой папки как
-`ruins_<type>.png/.glb` для прямого подключения в terrain renderer или
-будущую механику подтипов руин.
+`ruins_<type>.png/.glb`. Генератор мира выбирает подтип для каждой клетки
+`ruins` и сохраняет его в `ruin_type`; карта показывает соответствующий PNG-рендер модели.
 
 Генерация:
 

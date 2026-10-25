@@ -1,0 +1,101 @@
+[
+  {
+    "id": "throwing_knives",
+    "triangles": 1554,
+    "alpha_bounds": [
+      22,
+      61,
+      234,
+      195
+    ],
+    "glb_bytes": 139936
+  },
+  {
+    "id": "hunting_traps",
+    "triangles": 4780,
+    "alpha_bounds": [
+      22,
+      57,
+      234,
+      198
+    ],
+    "glb_bytes": 417676
+  },
+  {
+    "id": "blackpowder_bomb",
+    "triangles": 1540,
+    "alpha_bounds": [
+      27,
+      22,
+      229,
+      234
+    ],
+    "glb_bytes": 136260
+  },
+  {
+    "id": "shaped_charge",
+    "triangles": 1612,
+    "alpha_bounds": [
+      25,
+      22,
+      231,
+      234
+    ],
+    "glb_bytes": 142352
+  },
+  {
+    "id": "firebomb",
+    "triangles": 2828,
+    "alpha_bounds": [
+      43,
+      22,
+      213,
+      234
+    ],
+    "glb_bytes": 248340
+  },
+  {
+    "id": "shock_charge",
+    "triangles": 2976,
+    "alpha_bounds": [
+      64,
+      22,
+      192,
+      234
+    ],
+    "glb_bytes": 260488
+  },
+  {
+    "id": "siege_mine",
+    "triangles": 2104,
+    "alpha_bounds": [
+      22,
+      54,
+      234,
+      202
+    ],
+    "glb_bytes": 186852
+  },
+  {
+    "id": "breach_bomb",
+    "triangles": 2076,
+    "alpha_bounds": [
+      34,
+      22,
+      222,
+      234
+    ],
+    "glb_bytes": 184940
+  },
+  {
+    "id": "resonance_charge",
+    "triangles": 2900,
+    "alpha_bounds": [
+      22,
+      36,
+      234,
+      221
+    ],
+    "glb_bytes": 253964
+  }
+]

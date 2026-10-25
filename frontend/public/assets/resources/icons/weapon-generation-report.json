@@ -1,0 +1,128 @@
+[
+  {
+    "id": "throwing_knives",
+    "name": "Метательные клинки",
+    "category": "weapons",
+    "file": "throwing_knives.png",
+    "model": "throwing_knives.glb",
+    "triangles": 1554,
+    "ortho_scale": 1.3491023778915405,
+    "camera_location": [
+      2.8303134441375732,
+      -4.176833629608154,
+      3.2495148181915283
+    ]
+  },
+  {
+    "id": "hunting_traps",
+    "name": "Охотничий капкан",
+    "category": "weapons",
+    "file": "hunting_traps.png",
+    "model": "hunting_traps.glb",
+    "triangles": 4780,
+    "ortho_scale": 1.5336381196975708,
+    "camera_location": [
+      2.902085781097412,
+      -4.072879314422607,
+      3.316572904586792
+    ]
+  },
+  {
+    "id": "blackpowder_bomb",
+    "name": "Пороховая бомба",
+    "category": "weapons",
+    "file": "blackpowder_bomb.png",
+    "model": "blackpowder_bomb.glb",
+    "triangles": 1540,
+    "ortho_scale": 1.117814540863037,
+    "camera_location": [
+      2.8169233798980713,
+      -3.943692445755005,
+      3.558413028717041
+    ]
+  },
+  {
+    "id": "shaped_charge",
+    "name": "Направленный заряд",
+    "category": "weapons",
+    "file": "shaped_charge.png",
+    "model": "shaped_charge.glb",
+    "triangles": 1612,
+    "ortho_scale": 1.1278564929962158,
+    "camera_location": [
+      2.8017802238464355,
+      -3.9803547859191895,
+      3.5255181789398193
+    ]
+  },
+  {
+    "id": "firebomb",
+    "name": "Огненная бомба",
+    "category": "weapons",
+    "file": "firebomb.png",
+    "model": "firebomb.glb",
+    "triangles": 2828,
+    "ortho_scale": 1.3471003770828247,
+    "camera_location": [
+      2.7928903102874756,
+      -3.910046100616455,
+      3.6230835914611816
+    ]
+  },
+  {
+    "id": "shock_charge",
+    "name": "Импульсный заряд",
+    "category": "weapons",
+    "file": "shock_charge.png",
+    "model": "shock_charge.glb",
+    "triangles": 2976,
+    "ortho_scale": 1.389689564704895,
+    "camera_location": [
+      2.8136982917785645,
+      -3.9391772747039795,
+      3.567091226577759
+    ]
+  },
+  {
+    "id": "siege_mine",
+    "name": "Осадная мина",
+    "category": "weapons",
+    "file": "siege_mine.png",
+    "model": "siege_mine.glb",
+    "triangles": 2104,
+    "ortho_scale": 1.3786014318466187,
+    "camera_location": [
+      2.897149085998535,
+      -4.056008338928223,
+      3.3425328731536865
+    ]
+  },
+  {
+    "id": "breach_bomb",
+    "name": "Проломная бомба",
+    "category": "weapons",
+    "file": "breach_bomb.png",
+    "model": "breach_bomb.glb",
+    "triangles": 2076,
+    "ortho_scale": 1.4258333444595337,
+    "camera_location": [
+      2.8275718688964844,
+      -3.98722505569458,
+      3.4933276176452637
+    ]
+  },
+  {
+    "id": "resonance_charge",
+    "name": "Резонансный заряд",
+    "category": "weapons",
+    "file": "resonance_charge.png",
+    "model": "resonance_charge.glb",
+    "triangles": 2900,
+    "ortho_scale": 1.3978508710861206,
+    "camera_location": [
+      2.8212802410125732,
+      -3.9497921466827393,
+      3.5466887950897217
+    ]
+  }
+]

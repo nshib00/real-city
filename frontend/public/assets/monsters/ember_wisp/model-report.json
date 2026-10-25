@@ -1,0 +1,16 @@
+{
+  "id": "ember_wisp",
+  "triangles": 3752,
+  "meshes": 25,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "ember_wisp.blend",
+  "glb": "ember_wisp_preview.glb",
+  "preview": "ember_wisp_preview.png"
+}

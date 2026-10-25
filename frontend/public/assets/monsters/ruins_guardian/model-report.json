@@ -1,0 +1,16 @@
+{
+  "id": "ruins_guardian",
+  "triangles": 6088,
+  "meshes": 43,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "ruins_guardian.blend",
+  "glb": "ruins_guardian_preview.glb",
+  "preview": "ruins_guardian_preview.png"
+}

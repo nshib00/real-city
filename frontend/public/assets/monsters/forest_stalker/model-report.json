@@ -1,0 +1,16 @@
+{
+  "id": "forest_stalker",
+  "triangles": 4708,
+  "meshes": 45,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "forest_stalker.blend",
+  "glb": "forest_stalker_preview.glb",
+  "preview": "forest_stalker_preview.png"
+}

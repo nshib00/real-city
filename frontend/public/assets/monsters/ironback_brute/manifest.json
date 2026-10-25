@@ -1,0 +1,67 @@
+{
+  "kind": "monster",
+  "monster_id": "ironback_brute",
+  "anchor": [
+    72,
+    130
+  ],
+  "directions": [
+    "se",
+    "sw",
+    "ne",
+    "nw"
+  ],
+  "render": {
+    "mode": "atlas",
+    "size": [
+      144,
+      144
+    ],
+    "preferredFormat": "webp"
+  },
+  "atlas": {
+    "image": "ironback_brute.webp",
+    "json": "ironback_brute.atlas.json",
+    "revision": "blender-rig-v1"
+  },
+  "animations": {
+    "idle": {
+      "type": "sprite",
+      "fps": 6,
+      "frames": 8,
+      "loop": true,
+      "framePrefix": "ironback_brute_idle_{direction}_"
+    },
+    "walk": {
+      "type": "sprite",
+      "fps": 10,
+      "frames": 12,
+      "loop": true,
+      "framePrefix": "ironback_brute_walk_{direction}_"
+    },
+    "attack": {
+      "type": "sprite",
+      "fps": 12,
+      "frames": 10,
+      "loop": false,
+      "framePrefix": "ironback_brute_attack_{direction}_"
+    },
+    "hit": {
+      "type": "sprite",
+      "fps": 10,
+      "frames": 5,
+      "loop": false,
+      "framePrefix": "ironback_brute_hit_{direction}_"
+    },
+    "death": {
+      "type": "sprite",
+      "fps": 10,
+      "frames": 14,
+      "loop": false,
+      "framePrefix": "ironback_brute_death_{direction}_"
+    }
+  },
+  "glb": {
+    "preview": "ironback_brute_preview.glb"
+  }
+}

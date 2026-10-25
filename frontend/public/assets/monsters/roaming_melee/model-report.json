@@ -1,0 +1,16 @@
+{
+  "id": "roaming_melee",
+  "triangles": 4370,
+  "meshes": 44,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "roaming_melee.blend",
+  "glb": "roaming_melee_preview.glb",
+  "preview": "roaming_melee_preview.png"
+}

@@ -13,13 +13,12 @@
     <path d="M22 102 120 154 120 165 22 113Z" fill="#2a372d"/>
     <path d="M218 102 120 154 120 165 218 113Z" fill="#202b25"/>
     <path d="M120 44 218 96 120 148 22 96Z" fill="url(#oilGround)" stroke="#c9d991" stroke-opacity=".26" stroke-width="2"/>
-    <ellipse cx="123" cy="121" rx="38" ry="14" fill="#07080a" opacity=".86"/>
-    <ellipse cx="127" cy="117" rx="24" ry="7" fill="#233345" opacity=".86"/>
-    <path d="M96 113 127 44 158 113Z" fill="none" stroke="#2c2f33" stroke-width="8" stroke-linejoin="round"/>
-    <path d="M108 86h38M102 100h50M116 70h22" stroke="#6b6f6d" stroke-width="5" stroke-linecap="round"/>
-    <path d="M126 44c16 4 27 14 34 30" fill="none" stroke="#30343a" stroke-width="7" stroke-linecap="round"/>
-    <rect x="158" y="73" width="10" height="42" rx="3" fill="#22272c"/>
-    <circle cx="163" cy="72" r="8" fill="#565b5b"/>
-    <path d="M73 126c17-5 35-4 52 2 20 7 37 5 51-4" fill="none" stroke="#16191b" stroke-width="5" stroke-linecap="round" opacity=".5"/>
+    <path d="M79 108c9-9 27-16 47-15 17 1 35 8 45 18l-6 15c-15 8-33 12-50 9-17-2-30-9-36-18Z" fill="#755539"/>
+    <path d="M85 109c11-8 26-12 41-11 17 0 30 5 39 13l-6 12c-14 6-29 8-45 6-15-2-25-7-30-14Z" fill="#11171a"/>
+    <path d="M99 109c11-7 25-8 40-5m-32 12c14 6 29 5 43-1" fill="none" stroke="#425158" stroke-opacity=".65" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="119" cy="111" r="3" fill="#7b8a90" opacity=".8"/>
+    <circle cx="138" cy="119" r="2" fill="#7b8a90" opacity=".7"/>
+    <ellipse cx="83" cy="111" rx="5" ry="3" fill="#999b8d"/>
+    <ellipse cx="165" cy="110" rx="6" ry="4" fill="#999b8d"/>
   </g>
 </svg>

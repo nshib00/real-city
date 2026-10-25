@@ -1,0 +1,16 @@
+{
+  "id": "resource_guardian",
+  "triangles": 7018,
+  "meshes": 54,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "resource_guardian.blend",
+  "glb": "resource_guardian_preview.glb",
+  "preview": "resource_guardian_preview.png"
+}

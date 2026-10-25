@@ -1,0 +1,16 @@
+{
+  "id": "spore_beast",
+  "triangles": 7508,
+  "meshes": 68,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "spore_beast.blend",
+  "glb": "spore_beast_preview.glb",
+  "preview": "spore_beast_preview.png"
+}

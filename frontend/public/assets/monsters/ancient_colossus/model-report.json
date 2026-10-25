@@ -1,0 +1,17 @@
+{
+  "id": "ancient_colossus",
+  "triangles": 6622,
+  "meshes": 52,
+  "bones": 8,
+  "actions": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death"
+  ],
+  "blend": "ancient_colossus.blend",
+  "glb": "ancient_colossus_preview.glb",
+  "preview": "ancient_colossus_preview.png",
+  "uniform_scale": 2.0
+}
