@@ -3,6 +3,21 @@ export type TileCoord = {
   y: number
 }
 
+// Terrain is drawn at its nearest wrapped screen position. Resolve clicks back
+// to the coordinates of the tile that was actually loaded from the server.
+export function createRenderedTileLookup<TTile extends TileCoord>(tiles: readonly TTile[], worldSize: number) {
+  const wrapped = new Map<string, TTile>()
+  for (const tile of tiles) {
+    const key = `${modulo(tile.x, worldSize)}:${modulo(tile.y, worldSize)}`
+    if (!wrapped.has(key) || (tile.x >= 0 && tile.x < worldSize && tile.y >= 0 && tile.y < worldSize)) wrapped.set(key, tile)
+  }
+  return (coord: TileCoord): TTile | null => wrapped.get(`${modulo(coord.x, worldSize)}:${modulo(coord.y, worldSize)}`) ?? null
+}
+
+function modulo(value: number, divisor: number) {
+  return ((value % divisor) + divisor) % divisor
+}
+
 export type BuildingTileHit<TBuilding extends { tile: TileCoord }> = {
   building: TBuilding
   sortKey: number

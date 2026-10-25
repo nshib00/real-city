@@ -1,16 +1,16 @@
 import { Application, Assets, Container, Graphics, Sprite, Texture } from 'pixi.js'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
 
 import type { WorldTile } from '../../shared/contracts'
-import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH } from '../coordinates/iso'
+import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, WORLD_WRAP_TILES } from '../coordinates/iso'
 import type { MonsterEntity, PlacedBuilding, ResourceNode } from '../state/useGameStore'
 import { buildingOverlayDrawCommands, type BuildingOverlayDrawCommand } from './objectLayer/buildingOverlayDrawData'
 import { monsterDrawCommands, nextMonsterRenderMemory, type MonsterDrawCommand, type MonsterRenderMemory } from './objectLayer/monsterDrawData'
 import { buildingDrawCommands, type BuildingDrawCommand } from './objectLayer/objectDrawData'
 import { objectLayerSortKey } from './objectLayer/objectDepth'
 import { resourceDrawCommands, type ResourceDrawCommand } from './objectLayer/resourceDrawData'
-import { buildingHitAtTile } from './mapHitTarget'
+import { buildingHitAtTile, createRenderedTileLookup } from './mapHitTarget'
 import { recordPixiFrame, registerPixiContext } from './renderPerformanceMetrics'
 import { preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
 import { tileOccupancyKey } from './visibleObjects'
@@ -106,6 +106,8 @@ export function PixiStage({
   onSelectBuilding,
   onSelectMonster,
 }: PixiStageProps) {
+  const renderedTileAtCoord = useMemo(() => createRenderedTileLookup(tiles, WORLD_WRAP_TILES), [tiles])
+  const renderedTiles = useMemo(() => tiles.filter((tile) => renderedTileAtCoord(tile) === tile), [tiles, renderedTileAtCoord])
   const hostRef = useRef<HTMLDivElement | null>(null)
   const appRef = useRef<Application | null>(null)
   const terrainSpritesRef = useRef<Container | null>(null)
@@ -118,7 +120,7 @@ export function PixiStage({
   const buildingOverlayCacheRef = useRef<RetainedChildCache>(new Map())
   const terrainRef = useRef<Graphics | null>(null)
   const overlayRef = useRef<Graphics | null>(null)
-  const tilesRef = useRef<WorldTile[]>(tiles)
+  const tilesRef = useRef<WorldTile[]>(renderedTiles)
   const occupiedTilesRef = useRef<Set<string>>(occupiedTiles)
   const buildingsRef = useRef<PlacedBuilding[]>(buildings)
   const allBuildingsRef = useRef<PlacedBuilding[]>(allBuildings)
@@ -278,7 +280,7 @@ export function PixiStage({
   }, [])
 
   useEffect(() => {
-    tilesRef.current = tiles
+    tilesRef.current = renderedTiles
     occupiedTilesRef.current = occupiedTiles
     buildingsRef.current = buildings
     allBuildingsRef.current = allBuildings
@@ -299,7 +301,7 @@ export function PixiStage({
     if (app && terrainSprites && objectSprites && monsterSprites && buildingAnimationOverlays && terrain && overlay) {
       redraw()
     }
-  }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, resources, selectedBuildingId, selectedMonsterId, selectedTile, tiles])
+  }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, resources, selectedBuildingId, selectedMonsterId, selectedTile, renderedTiles])
 
   return (
     <div
@@ -308,7 +310,8 @@ export function PixiStage({
       ref={hostRef}
       role="presentation"
       onClick={(event) => {
-        const tile = eventToTile(event, hostRef.current, cameraRef.current)
+        const rawTile = eventToTile(event, hostRef.current, cameraRef.current)
+        const tile = rawTile ? renderedTileAtCoord(rawTile) : null
         const buildingOnTile = buildingHitAtTile(tile, buildingHitAreasRef.current)
         if (buildingOnTile) {
           onSelectBuilding?.(buildingOnTile)
@@ -339,7 +342,8 @@ export function PixiStage({
         if (event.buttons === 1) {
           return
         }
-        onHoverTile(eventToTile(event, hostRef.current, cameraRef.current))
+        const rawTile = eventToTile(event, hostRef.current, cameraRef.current)
+        onHoverTile(rawTile ? renderedTileAtCoord(rawTile) : null)
       }}
       onPointerLeave={() => onHoverTile(null)}
     />
