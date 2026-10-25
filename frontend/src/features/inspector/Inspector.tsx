@@ -1,28 +1,41 @@
 import { useEffect, useState } from 'react'
-import { Box, Gem, Hammer, Route, Sprout, Swords, Trash2, TrendingUp } from 'lucide-react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createPortal } from 'react-dom'
+import { Box, Gem, Hammer, Move, RotateCw, Route, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from 'lucide-react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { tileToChunk } from '../../game/coordinates/iso'
+import { playUiSound } from '../../audio/playUiSound'
+import { playCombatSound } from '../../audio/voiceManager'
+import { cellLabel, districtFromTile, districtLabel } from '../../game/coordinates/district'
+import { HealthBar } from '../../game/HealthBar'
+import { maxHealthForBuilding } from '../../game/health'
 import { BuildingModelPreview } from '../../game/renderers/BuildingModelPreview'
 import { canResolveBuildingModelAsset } from '../../game/renderers/buildingRegistry'
 import { buildingSpriteAsset } from '../../game/renderers/buildingSpriteAssets'
 import { useGameStore, type BuildingKind, type PlacedBuilding } from '../../game/state/useGameStore'
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
-import { deleteBuilding as deleteBuildingRequest, patchBuilding, toPlacedBuilding } from '../../shared/api/buildings'
+import { resourceCatalog } from '../../../../shared/catalog/resources'
+import { deleteBuilding as deleteBuildingRequest, patchBuilding, placeBuilding, relocateBuilding, toPlacedBuilding, type BuildingResponse } from '../../shared/api/buildings'
+import { ruinRestoration } from './ruinRestoration'
+import { playBuildingSound } from '../buildings/buildingAudio'
 import { ApiClientError } from '../../shared/api/client'
-import { advanceField, harvestField } from '../../shared/api/economy'
-import { attackMonster, toMonster } from '../../shared/api/monsters'
+import { advanceField, harvestField, listProductionJobs, patchResourceNode, type InventoryResponse } from '../../shared/api/economy'
+import { listPendingWeaponAttacks, useWeaponOnMonster, toMonster, type MonsterLootResponse, type MonsterResponse, type PendingWeaponAttack } from '../../shared/api/monsters'
+import { weaponFuseLabel } from './weaponFuse'
 import { IconButton, Modal, SegmentedControl, Tabs } from '../../shared/ui'
+import { formatRemaining } from '../../shared/time/formatRemaining'
 import { useAuthStore } from '../auth/useAuthStore'
+import { getPublicPlayer } from '../auth/api'
 import { inventoryAmount, useInventory } from '../economy/useInventory'
+import { fieldHarvestSound, playConfirmedCoinChange, playConfirmedRareReward, resourceGatherSound } from '../economy/economyAudio'
 import { fieldCropSpec } from '../fields/fieldGrowth'
 import { ResourceIcon } from '../resources/ResourceIcon'
 import { useThreatLevel } from '../threat/ThreatPanel'
+import { showToast } from '../notifications/toast'
 
 type InspectorTab = 'tile' | 'object' | 'player'
 
 const tabs = [
-  { id: 'tile', label: 'Тайл' },
+  { id: 'tile', label: 'Клетка' },
   { id: 'object', label: 'Объект' },
   { id: 'player', label: 'Игрок' },
 ] as const
@@ -38,11 +51,17 @@ export function Inspector() {
   const [modelPreviewOpen, setModelPreviewOpen] = useState(false)
   const [upgradeError, setUpgradeError] = useState('')
   const [constructionError, setConstructionError] = useState('')
+  const [cannonError, setCannonError] = useState('')
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [selectedWeapon, setSelectedWeapon] = useState('throwing_knives')
+  const [weaponMenuOpen, setWeaponMenuOpen] = useState(false)
   const selectedTile = useGameStore((state) => state.selectedTile)
   const hoveredTile = useGameStore((state) => state.hoveredTile)
   const buildings = useGameStore((state) => state.buildings)
   const resourceNodes = useGameStore((state) => state.resourceNodes)
   const selectedBuildingId = useGameStore((state) => state.selectedBuildingId)
+  const relocatingBuildingId = useGameStore((state) => state.relocatingBuildingId)
+  const setRelocatingBuildingId = useGameStore((state) => state.setRelocatingBuildingId)
   const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
   const constructionNow = useGameStore((state) => state.constructionNow)
   const tool = useGameStore((state) => state.tool)
@@ -50,25 +69,53 @@ export function Inspector() {
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const deleteBuilding = useGameStore((state) => state.deleteBuilding)
   const addBuilding = useGameStore((state) => state.addBuilding)
+  const upsertResourceNode = useGameStore((state) => state.upsertResourceNode)
   const upsertMonster = useGameStore((state) => state.upsertMonster)
   const worldTiles = useGameStore((state) => state.worldTiles)
   const queryClient = useQueryClient()
   const inventoryQuery = useInventory()
-  const activeTile = selectedTile ?? hoveredTile
-  const chunk = activeTile ? tileToChunk(activeTile) : null
-  const selectedBuilding = buildings.find((building) => building.id === selectedBuildingId) ?? null
   const player = useAuthStore((state) => state.player)
+  const pendingWeaponsQuery = useQuery({
+    queryKey: ['combat', 'attacks'],
+    queryFn: listPendingWeaponAttacks,
+    enabled: Boolean(player),
+    refetchInterval: 5000,
+  })
+  const oilJobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, enabled: Boolean(player), refetchInterval: 5000 })
+  const activeTile = selectedTile ?? hoveredTile
+  const selectedBuilding = buildings.find((building) => building.id === selectedBuildingId) ?? null
   const canManageSelectedBuilding = Boolean(selectedBuilding && player && selectedBuilding.owner === player.id)
+  const ownerQuery = useQuery({
+    queryKey: ['players', 'public', selectedBuilding?.owner],
+    queryFn: () => getPublicPlayer(selectedBuilding!.owner),
+    enabled: Boolean(selectedBuilding?.owner && selectedBuilding.owner !== player?.id),
+    staleTime: 60_000,
+    retry: false,
+  })
+  const ownerName = canManageSelectedBuilding ? player?.profile.display_name || player?.name : ownerQuery.data?.display_name
+  const ownerLevel = canManageSelectedBuilding ? player?.profile.level : ownerQuery.data?.level
   const selectedMonster = useGameStore((state) => state.monsters.find((monster) => monster.id === selectedMonsterId) ?? null)
   const threat = useThreatLevel()
-  const nextUpgrade = selectedBuilding && canManageSelectedBuilding ? getNextUpgrade(selectedBuilding) : null
+  const nextUpgrades = selectedBuilding && canManageSelectedBuilding ? getNextUpgrades(selectedBuilding) : []
   const selectedBuildingHasModel = selectedBuilding ? canResolveBuildingModelAsset(selectedBuilding) : false
   const selectedBuildingMaxHealth = selectedBuilding ? maxHealthForBuilding(selectedBuilding) : 100
   const rushCost = selectedBuilding?.status === 'construction' && selectedBuilding.completesAt ? rushCompletionCrystalCost(selectedBuilding.completesAt - constructionNow) : 0
   const crystals = inventoryAmount(inventoryQuery.data?.inventory.items, 'aeolian-crystal')
+  const cannonCharges = selectedBuilding?.cannonAmmo ? inventoryAmount(inventoryQuery.data?.inventory.items, selectedBuilding.cannonAmmo) : 0
+  const cannonIdleReason = selectedBuilding && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) && selectedBuilding.cannonEnabled
+    ? selectedBuilding.state === 'ruined' || selectedBuilding.status === 'construction' ? 'Стройка или разрушение'
+      : selectedBuilding.health * 4 < selectedBuildingMaxHealth ? 'Повреждена: HP ниже 25%'
+        : selectedBuilding.cannonAmmo && cannonCharges < 1 ? 'Нет зарядов' : null
+    : null
   const selectedWorldTile = activeTile ? worldTiles.find((tile) => tile.x === activeTile.x && tile.y === activeTile.y) ?? null : null
-  const terrainLabel = selectedWorldTile ? terrainLabels[selectedWorldTile.terrain] : activeTile ? getTerrainLabel(activeTile.x, activeTile.y) : 'Не выбран'
-  const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y) ?? null : null
+  const selectedRuin = selectedWorldTile?.terrain === 'ruins' && selectedWorldTile.ruin_type ? ruinRestoration[selectedWorldTile.ruin_type] : null
+  const ruinOccupied = selectedWorldTile ? buildings.some((item) => item.state !== 'ruined' && item.tile.x === selectedWorldTile.x && item.tile.y === selectedWorldTile.y) : false
+  const terrainLabel = selectedWorldTile
+    ? selectedWorldTile.terrain === 'ruins' ? ruinTypeLabels[selectedWorldTile.ruin_type ?? ''] ?? 'руины' : terrainLabels[selectedWorldTile.terrain] ?? 'луг'
+    : activeTile ? 'Загрузка...' : 'Не выбран'
+  const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y && (node.resource !== 'oil' || node.state !== 'depleted')) ?? null : null
+  const selectedOilNode = selectedBuilding?.kind === 'oil_well' ? resourceNodes.find((node) => node.resource === 'oil' && node.tile.x === selectedBuilding.tile.x && node.tile.y === selectedBuilding.tile.y) : null
+  const selectedOilJob = selectedBuilding?.kind === 'oil_well' ? oilJobsQuery.data?.jobs.find((job) => job.building_id === selectedBuilding.id && (job.state === 'running' || job.state === 'ready')) : null
   const selectedFieldSpec = selectedBuilding ? fieldCropSpec(selectedBuilding.kind) : null
   const selectedFieldMaxStage = selectedFieldSpec && selectedBuilding?.isSuperCrop ? selectedFieldSpec.superStages : selectedFieldSpec?.stages ?? 0
   const selectedFieldStageReady = selectedFieldSpec && selectedBuilding?.fieldStageReadyAt ? selectedBuilding.fieldStageReadyAt <= constructionNow : Boolean(selectedBuilding?.fieldStageReady)
@@ -77,8 +124,9 @@ export function Inspector() {
   const selectedFieldReadyToAdvance = Boolean(selectedFieldSpec && selectedFieldStage > 0 && selectedFieldStage < selectedFieldMaxStage && selectedFieldStageReady)
   const selectedFieldNextAt = selectedFieldSpec ? selectedBuilding?.fieldStageReadyAt : null
   const upgradeMutation = useMutation({
-    mutationFn: (buildingId: string) => patchBuilding(buildingId, 'upgrade'),
+    mutationFn: ({ buildingId, targetType }: { buildingId: string; targetType?: BuildingKind }) => patchBuilding(buildingId, 'upgrade', targetType),
     onSuccess: (result) => {
+      if (result.building) playBuildingSound(result.building.state === 'active' ? 'build.upgrade.completed' : 'build.upgrade.started', result.building.id, result.building.state === 'active' ? 'completion' : 'upgrade_started')
       if (result.building) {
         addBuilding(toPlacedBuilding(result.building))
       }
@@ -88,6 +136,7 @@ export function Inspector() {
       setUpgradeError('')
     },
     onError: (error) => {
+      playUiSound(error instanceof ApiClientError && error.apiError.fields?.coins ? 'economy.coin.insufficient' : 'ui.action.invalid')
       setUpgradeError(error instanceof Error ? error.message : 'Не удалось улучшить постройку')
     },
   })
@@ -102,14 +151,34 @@ export function Inspector() {
   const harvestFieldMutation = useMutation({
     mutationFn: (buildingId: string) => harvestField(buildingId),
     onSuccess: (result) => {
+      playUiSound(fieldHarvestSound(result.building.type))
+      playConfirmedRareReward(queryClient.getQueryData<{ inventory: InventoryResponse }>(['economy', 'inventory'])?.inventory, result.inventory)
+      playConfirmedCoinChange(queryClient.getQueryData<{ inventory: InventoryResponse }>(['economy', 'inventory'])?.inventory, result.inventory)
       addBuilding(toPlacedBuilding(result.building))
       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
     },
   })
+  const resourceMutation = useMutation({
+    mutationFn: ({ id, action }: { id: string; action: 'claim' | 'harvest' }) => patchResourceNode(id, action),
+    onSuccess: (result, variables) => {
+      const node = result.node
+      upsertResourceNode({ id: node.id, type: node.type, resource: node.resource, amount: node.amount,
+        maxAmount: node.max_amount, state: node.state, ownerId: node.owner_id,
+        tile: { x: node.tile_x, y: node.tile_y }, respawnAt: node.respawn_at ? Date.parse(node.respawn_at) : null })
+      playUiSound(variables.action === 'claim' ? 'economy.node.claimed' : resourceGatherSound(node.resource))
+      playConfirmedRareReward(queryClient.getQueryData<{ inventory: InventoryResponse }>(['economy', 'inventory'])?.inventory, result.inventory)
+      if (variables.action === 'harvest' && node.state === 'depleted') playUiSound('economy.node.depleted')
+      playConfirmedCoinChange(queryClient.getQueryData<{ inventory: InventoryResponse }>(['economy', 'inventory'])?.inventory, result.inventory)
+      void queryClient.invalidateQueries({ queryKey: ['resources', 'nodes'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: () => playUiSound('ui.action.invalid'),
+  })
   const rushMutation = useMutation({
     mutationFn: (buildingId: string) => patchBuilding(buildingId, 'rush_complete'),
     onSuccess: (result) => {
+      if (result.building) playBuildingSound('build.rushed', result.building.id, 'rushed')
       if (result.building) {
         addBuilding(toPlacedBuilding(result.building))
       }
@@ -118,13 +187,119 @@ export function Inspector() {
       setConstructionError('')
     },
     onError: (error) => {
+      playUiSound('ui.action.invalid')
       setConstructionError(formatActionError(error))
     },
   })
-  const attackMonsterMutation = useMutation({
-    mutationFn: (monsterId: string) => attackMonster(monsterId),
+  const repairMutation = useMutation({
+    mutationFn: (buildingId: string) => patchBuilding(buildingId, 'repair'),
     onSuccess: (result) => {
-      upsertMonster(toMonster(result.monster))
+      if (result.building) {
+        playBuildingSound('build.repaired', result.building.id, 'repaired')
+        addBuilding(toPlacedBuilding(result.building))
+      }
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+    },
+    onError: (error) => { playUiSound('ui.action.invalid'); showToast('warning', formatActionError(error)) },
+  })
+  const rotateMutation = useMutation({
+    mutationFn: (item: PlacedBuilding) => relocateBuilding(item.id, item.tile, ((item.rotation ?? 0) + 1) % 4),
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+    },
+    onError: (error) => { playUiSound('ui.action.invalid'); showToast('warning', formatActionError(error)) },
+  })
+  const cancelConstructionMutation = useMutation({
+    mutationFn: (buildingId: string) => patchBuilding(buildingId, 'cancel'),
+    onSuccess: (_result, buildingId) => {
+      playBuildingSound('build.cancelled', buildingId, 'cancelled')
+      deleteBuilding(buildingId)
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: () => playUiSound('ui.action.invalid'),
+  })
+  const cannonMutation = useMutation({
+    mutationFn: ({ id, enabled }: { id: string; enabled: boolean }) => patchBuilding(id, enabled ? 'enable_cannon' : 'disable_cannon'),
+    onSuccess: (result) => {
+      if (result.building) addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      setCannonError('')
+    },
+    onError: (error) => { playUiSound('ui.action.invalid'); setCannonError(formatActionError(error)) },
+  })
+  const trapMutation = useMutation({
+    mutationFn: (id: string) => patchBuilding(id, 'reload_trap'),
+    onSuccess: (result) => {
+      if (result.building) addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      setCannonError('')
+    },
+    onError: (error) => { playUiSound('ui.action.invalid'); setCannonError(formatActionError(error)) },
+  })
+  const deleteMutation = useMutation({
+    mutationFn: deleteBuildingRequest,
+    onSuccess: (_result, buildingId) => {
+      playBuildingSound('build.demolished', buildingId, 'demolished')
+      queryClient.setQueriesData<{ buildings: BuildingResponse[] }>({ queryKey: ['buildings'] }, (current) => current
+        ? { ...current, buildings: current.buildings.filter((building) => building.id !== buildingId) }
+        : current)
+      deleteBuilding(buildingId)
+      setDeleteOpen(false)
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['production', 'jobs'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+  })
+  const ruinMutation = useMutation({
+    mutationFn: () => placeBuilding({ type: selectedWorldTile!.ruin_type as BuildingKind, tile_x: selectedWorldTile!.x, tile_y: selectedWorldTile!.y }),
+    onSuccess: ({ building }) => {
+      addBuilding(toPlacedBuilding(building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      showToast('info', 'Восстановление руины началось')
+    },
+    onError: (error) => showToast('error', error instanceof Error ? error.message : 'Не удалось захватить руину'),
+  })
+  const availableWeapons = resourceCatalog.filter((resource) => resource.category === 'weapons' && inventoryAmount(inventoryQuery.data?.inventory.items, resource.id) > 0)
+  const weaponCatalog = resourceCatalog.filter((resource) => resource.category === 'weapons')
+  const selectedMonsterAttacks = pendingWeaponsQuery.data?.attacks.filter((attack) => attack.monster_id === selectedMonsterId) ?? []
+  const attackMonsterMutation = useMutation({
+    mutationFn: ({ monsterId, weaponId }: { monsterId: string; weaponId: string }) => useWeaponOnMonster(monsterId, weaponId),
+    onSuccess: (result, variables) => {
+      setWeaponMenuOpen(false)
+      if (result.monster) {
+        playCombatSound('combat.player.attack')
+        playCombatSound('combat.player.hit')
+        const monster = result.monster
+        queryClient.setQueriesData<{ monsters: MonsterResponse[] }>({ queryKey: ['monsters'] }, (current) => current
+          ? { ...current, monsters: monster.state === 'dead'
+            ? current.monsters.filter((item) => item.id !== monster.id)
+            : current.monsters.map((item) => item.id === monster.id ? monster : item) }
+          : current)
+        upsertMonster(toMonster(monster))
+      } else {
+        queryClient.setQueryData<{ attacks: PendingWeaponAttack[] }>(['combat', 'attacks'], (current) => ({
+          attacks: [...(current?.attacks ?? []), { ...result.attack, monster_id: variables.monsterId }],
+        }))
+        showToast('info', 'Заряд установлен. Время срабатывания показано в карточке монстра.')
+      }
+      void queryClient.invalidateQueries({ queryKey: ['monsters'] })
+      if (result.loot) {
+        const drop = result.loot
+        queryClient.setQueriesData<{ loot: MonsterLootResponse[] }>({ queryKey: ['monster-loot'] }, (current) => current
+          ? { loot: current.loot.some((item) => item.id === drop.id) ? current.loot : [...current.loot, drop] }
+          : current)
+      }
+      if (result.monster?.state === 'dead' && !result.loot) void queryClient.invalidateQueries({ queryKey: ['monster-loot'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      void queryClient.invalidateQueries({ queryKey: ['combat', 'attacks'] })
+    },
+    onError: (error) => {
+      showToast('error', error instanceof Error ? error.message : 'Не удалось применить оружие')
       void queryClient.invalidateQueries({ queryKey: ['monsters'] })
       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
     },
@@ -135,21 +310,28 @@ export function Inspector() {
       setActiveTab('object')
     }
     setModelPreviewOpen(false)
+    setDeleteOpen(false)
+    setCannonError('')
   }, [selectedBuildingId])
 
+  useEffect(() => {
+    setWeaponMenuOpen(false)
+    if (selectedMonsterId) setActiveTab('object')
+  }, [selectedMonsterId])
+
   return (
-    <aside className="inspector" aria-label="Инспектор">
-      <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Тайл ${activeTile.x}:${activeTile.y}` : 'Карта мира'}</h2>
+    <aside className={`inspector${selectedMonster ? ' inspector-monster' : ''}`} aria-label="Инспектор">
+      <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Клетка ${cellLabel(activeTile)}` : 'Карта мира'}</h2>
       <Tabs items={tabs} active={activeTab} onChange={setActiveTab}>
         {activeTab === 'tile' ? (
           <>
             <dl>
-              <dt>Выбранный тайл</dt>
-              <dd>{selectedTile ? `${selectedTile.x}, ${selectedTile.y}` : 'Нет'}</dd>
+              <dt>Выбранная клетка</dt>
+              <dd>{selectedTile ? cellLabel(selectedTile) : 'Нет'}</dd>
               <dt>Наведение</dt>
-              <dd>{hoveredTile ? `${hoveredTile.x}, ${hoveredTile.y}` : 'Нет'}</dd>
-              <dt>Чанк</dt>
-              <dd>{chunk ? `${chunk.x}, ${chunk.y}` : 'Нет'}</dd>
+              <dd>{hoveredTile ? cellLabel(hoveredTile) : 'Нет'}</dd>
+              <dt>Район</dt>
+              <dd>{activeTile ? districtLabel(districtFromTile(activeTile)) : 'Нет'}</dd>
               <dt>Поверхность</dt>
               <dd>{terrainLabel}</dd>
               <dt>Статус</dt>
@@ -160,12 +342,24 @@ export function Inspector() {
                   <dd>{selectedWorldTile.forest_density}/3</dd>
                 </>
               ) : null}
+              {selectedRuin ? (
+                <>
+                  <dt>Восстановление</dt>
+                  <dd>{selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет</dd>
+                  <dt>Владение</dt>
+                  <dd>{ruinOccupied ? 'Руина занята' : 'Свободна'}</dd>
+                  {!ruinOccupied ? <dd><button type="button" disabled={ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>Захватить и восстановить</button></dd> : null}
+                </>
+              ) : null}
               {selectedResourceNode ? (
                 <>
                   <dt>Ресурсный узел</dt>
                   <dd>{resourceLabel(selectedResourceNode.resource)} · {selectedResourceNode.amount}/{selectedResourceNode.maxAmount}</dd>
                   <dt>Состояние узла</dt>
                   <dd>{resourceStateLabel[selectedResourceNode.state]}</dd>
+                  {selectedResourceNode.resource === 'oil' && selectedResourceNode.state === 'neutral' ? <dd>Постройте нефтяную вышку, чтобы занять месторождение.</dd> : null}
+                  {selectedResourceNode.resource !== 'oil' && selectedResourceNode.state === 'neutral' ? <dd><button type="button" disabled={resourceMutation.isPending} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: 'claim' })}>Захватить узел</button></dd> : null}
+                  {selectedResourceNode.resource !== 'oil' && selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId === player?.id && selectedResourceNode.amount > 0 ? <dd><button type="button" disabled={resourceMutation.isPending} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: 'harvest' })}>Собрать ресурс</button></dd> : null}
                 </>
               ) : null}
               {threat ? (
@@ -182,12 +376,16 @@ export function Inspector() {
           selectedMonster ? (
             <div className="inspector-card inspector-card-threat">
               <strong>{monsterName(selectedMonster.type)}</strong>
+              <IconButton label="Выбрать оружие" icon={Swords} active onClick={() => setWeaponMenuOpen(true)} />
               <span>Состояние: {monsterStateLabel[selectedMonster.state]}</span>
               <span>Здоровье {selectedMonster.health}/{selectedMonster.maxHealth}</span>
               <span>Урон: {selectedMonster.damage}</span>
               <span>Агро-радиус: {selectedMonster.aggroRadius}</span>
               {selectedMonster.targetId ? <span>Цель: {selectedMonster.targetType} {selectedMonster.targetId}</span> : null}
-              <meter min={0} max={selectedMonster.maxHealth} value={selectedMonster.health} />
+              <HealthBar health={selectedMonster.health} maxHealth={selectedMonster.maxHealth} />
+              {selectedMonsterAttacks.map((attack) => (
+                <span key={attack.id}>До срабатывания — {resourceCatalog.find((item) => item.id === attack.weapon)?.name ?? attack.weapon}: {formatRemaining(Math.max(0, Date.parse(attack.due_at) - constructionNow))}</span>
+              ))}
             </div>
           ) : selectedBuilding ? (
             <div className="inspector-card">
@@ -195,9 +393,47 @@ export function Inspector() {
                 {selectedBuilding.name}, уровень {selectedBuilding.level}
               </strong>
               <span>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}</span>
-              <span>Владелец: {selectedBuilding.owner}</span>
+              <span>Поворот: {(selectedBuilding.rotation ?? 0) * 90}°</span>
+              <span className="building-owner">Владелец: <Star size={15} aria-label="Уровень" /> {ownerLevel ?? '—'} · {ownerName ?? 'Игрок'}</span>
               {!canManageSelectedBuilding ? <span>Чужая постройка: управление недоступно</span> : null}
-              <span>Состояние: {selectedBuilding.status === 'active' ? 'работает' : 'строится'}</span>
+              <span>Состояние: {selectedBuilding.state === 'ruined' ? 'разрушена' : selectedBuilding.status === 'construction' ? 'строится' : selectedBuilding.state === 'damaged' ? 'повреждена' : 'работает'}</span>
+              {selectedBuilding.kind === 'oil_well' ? (
+                <>
+                  <span>Запас нефти: {selectedOilNode ? `${selectedOilNode.amount.toLocaleString('ru-RU')}/${selectedOilNode.maxAmount.toLocaleString('ru-RU')}` : 'загрузка'}</span>
+                  <span>Добыча: {selectedBuilding.level === 1 ? '100 нефти за 30 мин. · 15 рабочих' : selectedBuilding.level === 2 ? '250 нефти за 25 мин. · 21 рабочий' : '400 нефти за 60 мин. · 27 рабочих'}</span>
+                  {selectedOilJob ? <span>{selectedOilJob.state === 'ready' ? 'Добыча завершена — соберите нефть' : `До конца добычи: ${formatRemaining(Math.max(0, Date.parse(selectedOilJob.completes_at) - constructionNow))}`}</span> : null}
+                  {canManageSelectedBuilding && selectedBuilding.status === 'active' ? <span>Запустить добычу или собрать нефть можно нажатием на вышку либо в панели «Производство».</span> : null}
+                </>
+              ) : null}
+              {['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) ? (
+                <>
+                  <span>Радиус: {selectedBuilding.cannonRange ?? '—'} кл. · Урон: {selectedBuilding.cannonDamage ?? '—'}</span>
+                  {canManageSelectedBuilding ? (
+                    <>
+                      <span>Перезарядка: {selectedBuilding.cannonCooldownSeconds ?? 12} с · Гарнизон: {selectedBuilding.cannonEnabled ? '1 житель' : 'нет'}</span>
+                      {selectedBuilding.cannonAmmo ? <span>Заряды: {cannonCharges} ({selectedBuilding.cannonAmmo === 'explosives' ? 'взрывчатка' : selectedBuilding.cannonAmmo === 'fuel' ? 'бензин' : 'камень'})</span> : <span>Боеприпасы не требуются</span>}
+                      <span>Автоатака: {selectedBuilding.cannonEnabled ? cannonIdleReason ?? 'включена' : 'выключена'}</span>
+                      {selectedBuilding.cannonTargetId ? <span>Последняя цель: {selectedBuilding.cannonTargetId}</span> : null}
+                      {selectedBuilding.cannonEnabled && selectedBuilding.cannonNextAttackAt && selectedBuilding.cannonNextAttackAt > constructionNow ? <span>До выстрела: {formatRemaining(selectedBuilding.cannonNextAttackAt - constructionNow)}</span> : null}
+                    </>
+                  ) : null}
+                </>
+              ) : null}
+              {['defense_stakes', 'defense_resin_snare'].includes(selectedBuilding.kind) ? (
+                <>
+                  <span>Урон при входе: {selectedBuilding.trapDamage ?? '—'}</span>
+                  <span>Заряды: {selectedBuilding.trapCharges ?? 0}/{selectedBuilding.trapMaxCharges ?? '—'}</span>
+                  {selectedBuilding.kind === 'defense_resin_snare' ? <span>Замедляет следующий шаг монстра в 1,5 раза</span> : null}
+                </>
+              ) : null}
+              {['defense_automaton_bay', 'defense_guardian_enclosure'].includes(selectedBuilding.kind) ? (
+                <>
+                  <span>Слотов защитников: {selectedBuilding.defenseSlots ?? '—'}</span>
+                  <span>Радиус патруля: {selectedBuilding.defensePatrolRadius ?? '—'} кл.</span>
+                  <span>Для работы нужен {selectedBuilding.defenseStaffRole === 'mechanic' ? 'механик' : 'смотритель'}</span>
+                  <span>Создание защитников пока недоступно</span>
+                </>
+              ) : null}
               {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>До завершения: {formatRemaining(selectedBuilding.completesAt - constructionNow)}</span> : null}
               {selectedFieldSpec && selectedBuilding.status === 'active' && selectedFieldStage > 0 ? (
                 <>
@@ -207,12 +443,13 @@ export function Inspector() {
                   {!selectedFieldStageReady && selectedFieldNextAt ? <span>До конца фазы: {formatRemaining(selectedFieldNextAt - constructionNow)}</span> : null}
                 </>
               ) : null}
-              {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
-              {selectedBuilding.status === 'construction' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
-              <span>Улучшение выполняется из меню этой постройки.</span>
-              <meter min={0} max={selectedBuildingMaxHealth} value={selectedBuilding.health} />
+              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
+              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
+              {canManageSelectedBuilding && !selectedBuilding.kind.startsWith('ruins_') ? <span>Улучшение выполняется из меню этой постройки.</span> : null}
+              <HealthBar health={selectedBuilding.health} maxHealth={selectedBuildingMaxHealth} />
               {modelPreviewOpen ? <BuildingModelPreview building={selectedBuilding} className="inspector-model-preview" /> : null}
               {constructionError ? <small className="upgrade-error" role="alert">{constructionError}</small> : null}
+              {cannonError ? <small className="upgrade-error" role="alert">{cannonError}</small> : null}
             </div>
           ) : (
             <div className="inspector-card">
@@ -232,7 +469,23 @@ export function Inspector() {
       <div className="inspector-actions">
         {selectedBuilding ? (
           <>
-            {canManageSelectedBuilding ? <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || !nextUpgrade} onClick={() => setUpgradeOpen(true)} /> : null}
+            {canManageSelectedBuilding ? <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || nextUpgrades.length === 0} onClick={() => setUpgradeOpen(true)} /> : null}
+            {canManageSelectedBuilding && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) ? (
+              <IconButton
+                label={selectedBuilding.kind === 'defense_cannon'
+                  ? selectedBuilding.cannonEnabled ? 'Выключить пушку' : 'Включить пушку'
+                  : selectedBuilding.cannonEnabled ? 'Выключить орудие' : 'Включить орудие'}
+                icon={Shield}
+                active={Boolean(selectedBuilding.cannonEnabled)}
+                disabled={cannonMutation.isPending || (!selectedBuilding.cannonEnabled && (selectedBuilding.status !== 'active' || selectedBuilding.state === 'ruined'))}
+                onClick={() => { setCannonError(''); cannonMutation.mutate({ id: selectedBuilding.id, enabled: !selectedBuilding.cannonEnabled }) }}
+              />
+            ) : null}
+            {canManageSelectedBuilding && ['defense_stakes', 'defense_resin_snare'].includes(selectedBuilding.kind) ? (
+              <IconButton label="Перезарядить ловушку" icon={Shield}
+                disabled={trapMutation.isPending || selectedBuilding.status !== 'active' || selectedBuilding.state === 'ruined' || (selectedBuilding.trapCharges ?? 0) >= (selectedBuilding.trapMaxCharges ?? 0)}
+                onClick={() => { setCannonError(''); trapMutation.mutate(selectedBuilding.id) }} />
+            ) : null}
             {canManageSelectedBuilding && selectedBuilding.status === 'construction' ? (
               <IconButton
                 label={`Завершить за ${rushCost} крист.`}
@@ -243,6 +496,23 @@ export function Inspector() {
                   rushMutation.mutate(selectedBuilding.id)
                 }}
               />
+            ) : null}
+            {canManageSelectedBuilding && selectedBuilding.status === 'construction' ? (
+              <IconButton label="Отменить строительство" icon={Trash2} disabled={cancelConstructionMutation.isPending}
+                onClick={() => cancelConstructionMutation.mutate(selectedBuilding.id)} />
+            ) : null}
+            {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && selectedBuilding.health < selectedBuildingMaxHealth ? (
+              <IconButton label="Починить" icon={Hammer} disabled={repairMutation.isPending}
+                onClick={() => repairMutation.mutate(selectedBuilding.id)} />
+            ) : null}
+            {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && !selectedBuilding.kind.startsWith('ruins_') && selectedBuilding.kind !== 'oil_well' ? (
+              <>
+                <IconButton label={relocatingBuildingId === selectedBuilding.id ? 'Отменить перенос' : 'Переместить'} icon={Move}
+                  active={relocatingBuildingId === selectedBuilding.id}
+                  onClick={() => setRelocatingBuildingId(relocatingBuildingId === selectedBuilding.id ? null : selectedBuilding.id)} />
+                <IconButton label="Повернуть на 90°" icon={RotateCw} disabled={rotateMutation.isPending}
+                  onClick={() => rotateMutation.mutate(selectedBuilding)} />
+              </>
             ) : null}
             {canManageSelectedBuilding && selectedFieldSpec && selectedFieldStage < selectedFieldMaxStage ? (
               <IconButton
@@ -262,12 +532,9 @@ export function Inspector() {
             ) : null}
             {canManageSelectedBuilding ? (
               <IconButton
-                label="Удалить"
+                label={selectedBuilding.kind === 'oil_well' || selectedBuilding.kind.startsWith('ruins_') ? 'Продать' : 'Удалить'}
                 icon={Trash2}
-                onClick={() => {
-                  deleteBuilding(selectedBuilding.id)
-                  void deleteBuildingRequest(selectedBuilding.id).catch(() => undefined)
-                }}
+                onClick={() => { deleteMutation.reset(); setDeleteOpen(true) }}
               />
             ) : null}
             {selectedBuildingHasModel ? (
@@ -275,21 +542,42 @@ export function Inspector() {
                 label={modelPreviewOpen ? 'Скрыть 3D' : '3D preview'}
                 icon={Box}
                 active={modelPreviewOpen}
+                sound={modelPreviewOpen ? 'ui.toggle.off' : 'ui.toggle.on'}
                 onClick={() => setModelPreviewOpen((current) => !current)}
               />
             ) : null}
           </>
         ) : null}
-        <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} onClick={() => setBuildMenuOpen(true)} />
-        {selectedMonster ? (
-          <IconButton label="Атаковать" icon={Swords} active disabled={attackMonsterMutation.isPending} onClick={() => attackMonsterMutation.mutate(selectedMonster.id)} />
-        ) : null}
+        <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} sound="ui.panel.open" onClick={() => setBuildMenuOpen(true)} />
         <IconButton label="Маршрут" icon={Route} active={tool === 'road'} disabled={!activeTile} onClick={() => setTool('road')} />
         <IconButton label="Рейд" icon={Swords} active={tool === 'raid'} disabled={!activeTile} onClick={() => setTool('raid')} />
       </div>
+      {createPortal(<Modal title="Оружие против монстра" open={weaponMenuOpen && Boolean(selectedMonster)} onClose={() => { if (!attackMonsterMutation.isPending) setWeaponMenuOpen(false) }} className="weapon-menu-modal">
+        <div className="weapon-menu-list" role="radiogroup" aria-label="Выбрать оружие">
+          {weaponCatalog.map((item) => {
+            const count = inventoryAmount(inventoryQuery.data?.inventory.items, item.id)
+            const selected = item.id === (availableWeapons.some((weapon) => weapon.id === selectedWeapon) ? selectedWeapon : availableWeapons[0]?.id)
+            return (
+              <button key={item.id} type="button" role="radio" aria-checked={selected} className={`weapon-menu-item${selected ? ' weapon-menu-item-selected' : ''}`} disabled={count === 0 || attackMonsterMutation.isPending} onClick={() => setSelectedWeapon(item.id)}>
+                <ResourceIcon id={item.id} label={item.name} />
+                <span className="weapon-menu-name">{item.name}</span>
+                <span className="weapon-menu-time">{weaponFuseLabel(item.id)}</span>
+                <span className="weapon-menu-count">×{count}</span>
+              </button>
+            )
+          })}
+        </div>
+        {availableWeapons.length === 0 ? <p>В инвентаре нет оружия. Его можно изготовить в производственных постройках.</p> : null}
+        <div className="weapon-menu-actions">
+          <button className="text-button" type="button" disabled={attackMonsterMutation.isPending} onClick={() => setWeaponMenuOpen(false)}>Отмена</button>
+          <button className="text-button text-button-primary" type="button" disabled={attackMonsterMutation.isPending || availableWeapons.length === 0 || !selectedMonster} onClick={() => {
+            if (selectedMonster) attackMonsterMutation.mutate({ monsterId: selectedMonster.id, weaponId: availableWeapons.some((item) => item.id === selectedWeapon) ? selectedWeapon : availableWeapons[0]!.id })
+          }}>Применить оружие</button>
+        </div>
+      </Modal>, document.body)}
       <UpgradeModal
         building={selectedBuilding}
-        nextUpgrade={nextUpgrade}
+        upgrades={nextUpgrades}
         open={upgradeOpen}
         pending={upgradeMutation.isPending}
         error={upgradeError}
@@ -297,20 +585,31 @@ export function Inspector() {
           setUpgradeOpen(false)
           setUpgradeError('')
         }}
-        onUpgrade={() => {
+        onUpgrade={(targetType) => {
           if (selectedBuilding) {
             setUpgradeError('')
-            upgradeMutation.mutate(selectedBuilding.id)
+            upgradeMutation.mutate({ buildingId: selectedBuilding.id, targetType })
           }
         }}
       />
+      <Modal title={selectedBuilding?.kind === 'oil_well' ? 'Продать нефтяную вышку' : selectedBuilding?.kind.startsWith('ruins_') ? 'Продать руину' : 'Подтвердите снос'} open={deleteOpen && canManageSelectedBuilding} onClose={() => { if (!deleteMutation.isPending) setDeleteOpen(false) }}>
+        <div className="upgrade-dialog">
+          <p>{selectedBuilding?.kind === 'oil_well' || selectedBuilding?.kind.startsWith('ruins_') ? 'Продать' : 'Удалить'} «{selectedBuilding?.name}»? Действие нельзя отменить. Текущая работа прекратится.</p>
+          <p>Возврат: {selectedBuilding?.demolitionRefundCoins ?? 0} монет. Другие ресурсы не возвращаются.</p>
+          <div className="upgrade-actions">
+            <button className="text-button" type="button" disabled={deleteMutation.isPending} onClick={() => setDeleteOpen(false)}>Отмена</button>
+            <button className="text-button text-button-primary" type="button" disabled={deleteMutation.isPending || !selectedBuilding} onClick={() => { if (selectedBuilding) deleteMutation.mutate(selectedBuilding.id) }}>{selectedBuilding?.kind === 'oil_well' ? 'Продать вышку' : selectedBuilding?.kind.startsWith('ruins_') ? 'Продать руину' : 'Удалить постройку'}</button>
+          </div>
+          {deleteMutation.isError ? <p className="upgrade-error" role="alert">{deleteMutation.error instanceof Error ? deleteMutation.error.message : 'Не удалось удалить постройку'}</p> : null}
+        </div>
+      </Modal>
     </aside>
   )
 }
 
 function UpgradeModal({
   building,
-  nextUpgrade,
+  upgrades,
   open,
   pending,
   error,
@@ -318,16 +617,39 @@ function UpgradeModal({
   onUpgrade,
 }: {
   building: PlacedBuilding | null
-  nextUpgrade: UpgradeInfo | null
+  upgrades: UpgradeInfo[]
   open: boolean
   pending: boolean
   error: string
   onClose: () => void
-  onUpgrade: () => void
+  onUpgrade: (targetType?: BuildingKind) => void
 }) {
-  if (!building || !nextUpgrade) {
+  if (!building || upgrades.length === 0) {
     return null
   }
+  if (upgrades.length > 1) {
+    return (
+      <Modal title="Выбор ветки улучшения" open={open} onClose={onClose} className="upgrade-branch-modal">
+        <p>Каменный дом уровня 6 можно улучшить по одной из двух веток. Выбранный дом продолжит развиваться только в своей ветке.</p>
+        <div className="upgrade-branch-options">
+          {upgrades.map((option) => {
+            const preview = upgradePreviewAsset(building, option)
+            return <article className="upgrade-branch-card" key={option.type}>
+              <div className={`upgrade-preview build-icon-${option.type}`}>
+                {preview ? <img src={preview} alt={`Модель: ${option.name}, уровень ${option.level}`} draggable={false} /> : <TrendingUp size={34} aria-hidden="true" />}
+              </div>
+              <h3>{option.name}</h3>
+              <span>Уровень {option.level} · HP {option.health} · {formatDuration(option.buildSeconds)}</span>
+              <div className="upgrade-branch-cost">{option.cost.map((cost) => <em key={cost.resource}><ResourceIcon id={cost.resource} label={resourceLabel(cost.resource)} />{cost.amount}</em>)}</div>
+              <button className="text-button text-button-primary" type="button" disabled={pending} onClick={() => onUpgrade(option.type)}>Улучшить до {option.name}</button>
+            </article>
+          })}
+        </div>
+        {error ? <p className="upgrade-error" role="alert">{error}</p> : null}
+      </Modal>
+    )
+  }
+  const nextUpgrade = upgrades[0]!
   const previewAsset = upgradePreviewAsset(building, nextUpgrade)
   return (
     <Modal title="Улучшение постройки" open={open} onClose={onClose}>
@@ -374,7 +696,7 @@ function UpgradeModal({
           <button className="text-button" type="button" onClick={onClose}>
             Отмена
           </button>
-          <button className="text-button text-button-primary" type="button" disabled={pending} onClick={onUpgrade}>
+          <button className="text-button text-button-primary" type="button" disabled={pending} onClick={() => onUpgrade()}>
             Улучшить
           </button>
         </div>
@@ -397,13 +719,6 @@ function upgradePreviewAsset(building: PlacedBuilding, nextUpgrade: UpgradeInfo)
     maxHealth: nextUpgrade.health,
     completesAt: null,
   })
-}
-
-function formatRemaining(ms: number) {
-	const totalSeconds = Math.max(0, Math.ceil(ms / 1000))
-	const minutes = Math.floor(totalSeconds / 60)
-	const seconds = totalSeconds % 60
-	return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }
 
 function rushCompletionCrystalCost(ms: number) {
@@ -429,11 +744,6 @@ function formatActionError(error: unknown) {
 	return error instanceof Error ? error.message : 'Не удалось выполнить действие'
 }
 
-function getTerrainLabel(x: number, y: number) {
-  const marker = Math.abs((x * 17 + y * 31) % 7)
-  return ['луг', 'редколесье', 'каменистый склон', 'руины', 'нефтяная скважина', 'песчаная почва', 'дорога'][marker]
-}
-
 function resourceLabel(resource: string) {
   const labels: Record<string, string> = {
     wood: 'Древесина',
@@ -455,6 +765,7 @@ function resourceLabel(resource: string) {
     glass: 'Стекло',
     premium_planks: 'Премиум-доски',
     rope: 'Веревка',
+    fiber: 'Волокно',
     iron_ingot: 'Железный слиток',
     gold_ingot: 'Золотой слиток',
     'super-mushrooms': 'Супер-грибы',
@@ -484,14 +795,14 @@ type UpgradeComparison = {
   after: string
 }
 
-function getNextUpgrade(building: PlacedBuilding): UpgradeInfo | null {
+function getNextUpgrades(building: PlacedBuilding): UpgradeInfo[] {
   const spec = buildingCatalog.find((item) => item.type === building.kind)
   if (!spec) {
-    return null
+    return []
   }
   const nextLevel = spec.upgradeLevels?.find((level) => level.level === building.level + 1)
   if (nextLevel) {
-    return {
+    return [{
       type: spec.type as BuildingKind,
       name: spec.name,
       level: nextLevel.level,
@@ -500,33 +811,18 @@ function getNextUpgrade(building: PlacedBuilding): UpgradeInfo | null {
       health: nextLevel.health,
       footprint: spec.footprint,
       cost: [...nextLevel.cost],
-    }
+    }]
   }
   const finalLevel = spec.upgradeLevels?.find((level) => level.level === building.level && level.nextType)
-  const nextType = finalLevel?.nextType ?? spec.upgradeTo[0]
-  const nextSpec = nextType ? buildingCatalog.find((item) => item.type === nextType) : null
-  if (!nextSpec) {
-    return null
-  }
-  return {
-    type: nextSpec.type as BuildingKind,
-    name: nextSpec.name,
-    level: nextSpec.level,
-    buildSeconds: nextSpec.buildSeconds,
-    population: nextSpec.population,
-    health: nextSpec.health ?? 100,
-    footprint: nextSpec.footprint,
-    cost: [...nextSpec.cost],
-  }
-}
-
-function maxHealthForBuilding(building: PlacedBuilding) {
-  if (building.maxHealth && building.maxHealth > 0) {
-    return building.maxHealth
-  }
-  const spec = buildingCatalog.find((item) => item.type === building.kind)
-  const levelHealth = spec?.upgradeLevels?.find((level) => level.level === building.level)?.health
-  return levelHealth ?? spec?.health ?? 100
+  const nextTypes = finalLevel?.nextType ? [finalLevel.nextType] : spec.upgradeTo
+  return nextTypes.flatMap((nextType) => {
+    const nextSpec = buildingCatalog.find((item) => item.type === nextType)
+    return nextSpec ? [{
+      type: nextSpec.type as BuildingKind, name: nextSpec.name, level: nextSpec.level,
+      buildSeconds: nextSpec.buildSeconds, population: nextSpec.population,
+      health: nextSpec.health ?? 100, footprint: nextSpec.footprint, cost: [...nextSpec.cost],
+    }] : []
+  })
 }
 
 function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo): UpgradeComparison[] {
@@ -539,7 +835,7 @@ function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo):
   if (building.kind === 'town_hall') {
     comparisons.push({ label: 'Лимит построек', before: String(buildingLimitForLevel(building.level)), after: String(buildingLimitForLevel(nextUpgrade.level)) })
   } else if (current.population > 0 || nextUpgrade.population > 0) {
-    comparisons.push({ label: 'Население', before: String(current.population), after: String(nextUpgrade.population) })
+    comparisons.push({ label: 'Строители', before: String(current.population), after: String(nextUpgrade.population) })
   }
   return comparisons
 }
@@ -589,6 +885,21 @@ const terrainLabels = {
   oil_well: 'нефтяная скважина',
   ruins: 'руины',
 } as const
+
+const ruinTypeLabels: Record<string, string> = {
+  ruins_town_square: 'Старая ратушная площадь',
+  ruins_archive: 'Архив чертежей',
+  ruins_mint: 'Монетный двор',
+  ruins_storage: 'Старый складской узел',
+  ruins_greenhouse: 'Заросшая оранжерея',
+  ruins_water_station: 'Водяная станция',
+  ruins_bastion: 'Каменный бастион',
+  ruins_mechanic_workshop: 'Мастерская механизмов',
+  ruins_wind_shrine: 'Святилище ветра',
+  ruins_ore_obelisk: 'Залежный обелиск',
+  ruins_rift_watch: 'Разломная сторожевая',
+  ruins_river_lighthouse: 'Речной маяк',
+}
 
 function monsterName(type: string) {
   const names: Record<string, string> = {

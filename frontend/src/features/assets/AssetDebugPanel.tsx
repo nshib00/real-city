@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { audioManager } from '../../audio/AudioManager'
 
 import { BuildingModelPreview } from '../../game/renderers/BuildingModelPreview'
 import type { PlacedBuilding } from '../../game/state/useGameStore'
@@ -18,6 +19,11 @@ export function shouldShowAssetDebugPanel(search = typeof window === 'undefined'
 }
 
 export function AssetDebugPanel() {
+  const [audioStatus, setAudioStatus] = useState(audioManager.diagnostics())
+  useEffect(() => {
+    const timer = window.setInterval(() => setAudioStatus(audioManager.diagnostics()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
   const rows = useMemo(() => registeredBuildingAssetFamilies().map((manifest) => {
     const previewBuilding = previewBuildingFor(manifest.kind)
     const shape = manifest.shapeDefault ? 'straight_ew' : undefined
@@ -63,6 +69,11 @@ export function AssetDebugPanel() {
 
   return (
     <aside className="asset-debug-panel" aria-label="Asset debug">
+      <section aria-label="Audio debug">
+        <strong>Audio</strong> {audioStatus.state} · {audioStatus.voices} voices · {Math.round(audioStatus.cacheBytes / 1024)} KB cache
+        <div>Last: {audioStatus.lastSound ?? '—'} · limited: {audioStatus.limited}</div>
+        {audioStatus.errors.map((error, index) => <div key={`${index}:${error}`}>{error}</div>)}
+      </section>
       <header>
         <strong>Asset registry</strong>
         <span>{rows.length} families</span>

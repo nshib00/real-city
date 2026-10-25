@@ -84,10 +84,9 @@ async function loadObjectAtlasUncached(source: ObjectAtlasSource, cacheKey: stri
   }
 
   try {
-    const [jsonResource] = await Promise.all([
-      Assets.load(urls.jsonUrl),
-      Assets.load(urls.imageUrl),
-    ])
+    // Pixi's spritesheet loader fetches the image declared in meta.image.
+    // Loading it separately here duplicates a large GPU texture.
+    const jsonResource = await Assets.load(urls.jsonUrl)
     const frameNames = extractAtlasFrameNames(jsonResource)
     return {
       status: 'atlas',

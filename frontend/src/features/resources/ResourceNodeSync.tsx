@@ -6,11 +6,12 @@ import { listResourceNodes } from '../../shared/api/economy'
 
 export function ResourceNodeSync() {
   const setResourceNodes = useGameStore((state) => state.setResourceNodes)
+  const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const query = useQuery({
     queryKey: ['resources', 'nodes'],
     queryFn: listResourceNodes,
     retry: false,
-    refetchInterval: 15000,
+    refetchInterval: realtimeStatus === 'connected' ? 30_000 : 15000,
   })
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { useInventory } from '../economy/useInventory'
 import { ResourceIcon } from './ResourceIcon'
 import { resourceValue } from './resourceAmounts'
 
-type ResourceCategory = 'basic' | 'raw' | 'crafted' | 'rare' | 'fuel'
+type ResourceCategory = 'basic' | 'raw' | 'crafted' | 'rare' | 'fuel' | 'weapons'
 
 const categories = [
   { id: 'basic', label: 'База' },
@@ -16,6 +16,7 @@ const categories = [
   { id: 'crafted', label: 'Производство' },
   { id: 'rare', label: 'Редкие' },
   { id: 'fuel', label: 'Топливо' },
+  { id: 'weapons', label: 'Оружие и бомбы' },
 ] as const
 
 const fallbackAmounts: Record<string, number> = {

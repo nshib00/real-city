@@ -1,4 +1,4 @@
-import { readdir, stat } from 'node:fs/promises'
+import { readFile, readdir, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -6,6 +6,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const assetsDir = path.join(root, 'public', 'assets')
 const maxTotalBytes = Number(process.env.ASSET_BUDGET_TOTAL_MB ?? 1200) * 1024 * 1024
 const maxFileBytes = Number(process.env.ASSET_BUDGET_FILE_MB ?? 25) * 1024 * 1024
+const audioDir = path.join(assetsDir, 'audio')
+const audioFamilies = new Set(['ui', 'economy', 'build', 'world', 'combat', 'social', 'ambience', 'music'])
+const audioFamilyLimit = 150 * 1024
+const audioTotalLimit = 5 * 1024 * 1024
+const audioPreloadLimit = 300 * 1024
 
 const files = (await walk(assetsDir)).filter((file) => isRuntimeAsset(path.relative(assetsDir, file.path)))
 const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
@@ -20,6 +25,52 @@ if (totalBytes > maxTotalBytes || oversized.length > 0) {
 }
 
 console.log(`Runtime asset budget ok: ${formatBytes(totalBytes)} across ${files.length} files.`)
+
+const audioFiles = (await walk(audioDir)).filter((file) => /\.(mp3|m4a|ogg|opus|wav)$/i.test(file.path))
+const audioByPath = new Map(audioFiles.map((file) => [path.relative(audioDir, file.path).split(path.sep).join('/'), file]))
+const audioTotal = audioFiles.reduce((sum, file) => sum + file.size, 0)
+const familySizes = new Map()
+const audioErrors = []
+for (const [relativePath, file] of audioByPath) {
+  const family = relativePath.split('/')[0].split('.')[0]
+  if (!audioFamilies.has(family)) {
+    audioErrors.push(`Unknown audio family: ${relativePath}`)
+    continue
+  }
+  if (family !== 'ambience' && family !== 'music') {
+    const soundGroup = path.basename(relativePath).split('.').slice(0, 2).join('.')
+    familySizes.set(soundGroup, (familySizes.get(soundGroup) ?? 0) + file.size)
+  }
+}
+for (const [family, bytes] of familySizes) {
+  const limit = family === 'combat.monster' ? 600 * 1024 : audioFamilyLimit
+  if (bytes > limit) audioErrors.push(`${family}: ${formatBytes(bytes)} / ${formatBytes(limit)}`)
+}
+const musicBytes = [...audioByPath].filter(([name]) => name.startsWith('music/')).reduce((sum, [, file]) => sum + file.size, 0)
+if (musicBytes > 2 * 1024 * 1024) audioErrors.push(`Music: ${formatBytes(musicBytes)} / 2 MB`)
+if (audioTotal > audioTotalLimit) audioErrors.push(`Audio catalog: ${formatBytes(audioTotal)} / ${formatBytes(audioTotalLimit)}`)
+
+const preloadManifest = JSON.parse(await readFile(path.join(audioDir, 'preload.json'), 'utf8'))
+if (!Array.isArray(preloadManifest.files) || !preloadManifest.files.every((file) => typeof file === 'string')) {
+  audioErrors.push('audio/preload.json must contain a files array of relative paths')
+}
+const preloadPaths = Array.isArray(preloadManifest.files) ? preloadManifest.files : []
+const uniquePreloadPaths = new Set(preloadPaths)
+if (uniquePreloadPaths.size !== preloadPaths.length) audioErrors.push('audio/preload.json has duplicate paths')
+let preloadBytes = 0
+for (const relativePath of uniquePreloadPaths) {
+  if (typeof relativePath !== 'string' || !audioByPath.has(relativePath)) {
+    audioErrors.push(`Missing audio preload asset: ${String(relativePath)}`)
+    continue
+  }
+  preloadBytes += audioByPath.get(relativePath).size
+}
+if (preloadBytes > audioPreloadLimit) audioErrors.push(`Audio preload: ${formatBytes(preloadBytes)} / ${formatBytes(audioPreloadLimit)}`)
+if (audioErrors.length) {
+  for (const error of audioErrors) console.error(error)
+  process.exit(1)
+}
+console.log(`Audio budget ok: ${formatBytes(audioTotal)} total; ${formatBytes(preloadBytes)} preload; ${audioFiles.length} files.`)
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true })
@@ -48,11 +99,18 @@ function formatBytes(bytes) {
 
 function isRuntimeAsset(relativePath) {
   const normalized = relativePath.split(path.sep).join('/')
+  if (normalized.split('/').some((segment) => segment === 'preview' || segment.startsWith('backup_') || segment.endsWith('_test'))) {
+    return false
+  }
   const fileName = path.basename(normalized).toLowerCase()
   if (normalized.includes('.backup-')) {
     return false
   }
-  if (fileName.endsWith('.blend') || fileName.endsWith('.blend1') || fileName.endsWith('.glb')) {
+  if (fileName.endsWith('.blend') || fileName.endsWith('.blend1')) {
+    return false
+  }
+  if (fileName.endsWith('.glb') && !['buildings/housing/stone_house/', 'buildings/housing/villa/', 'buildings/industry/']
+    .some((directory) => normalized.startsWith(directory))) {
     return false
   }
   if (fileName.includes('contact_sheet') || fileName.includes('review') || fileName.includes('preview')) {

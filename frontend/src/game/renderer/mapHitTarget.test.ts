@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildingHitAtTile, createRenderedTileLookup } from './mapHitTarget'
+import { buildingHitAtClick, buildingHitAtTile, createRenderedTileLookup } from './mapHitTarget'
 
 describe('map hit target', () => {
   it('resolves a click across the wrapped edge to the loaded terrain tile', () => {
@@ -37,5 +37,11 @@ describe('map hit target', () => {
       { building: lower, sortKey: 10 },
       { building: upper, sortKey: 20 },
     ])).toBe(upper)
+  })
+
+  it('selects a visible building even when its sprite extends above an empty neighboring tile', () => {
+    const building = { id: 'town-hall', tile: { x: 4, y: 2 } }
+    expect(buildingHitAtClick({ x: 4, y: 1 }, [{ building, sortKey: 10 }], building)).toBe(building)
+    expect(buildingHitAtClick({ x: 4, y: 1 }, [{ building, sortKey: 10 }], null)).toBeNull()
   })
 })

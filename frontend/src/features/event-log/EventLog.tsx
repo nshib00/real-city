@@ -19,6 +19,7 @@ const tabs = [
 export function EventLog() {
   const [activeTab, setActiveTab] = useState<'events' | 'chat'>('events')
   const isChatCollapsed = useGameStore((state) => state.uiPreferences.isChatCollapsed)
+  const cannonShots = useGameStore((state) => state.cannonShots)
   const setChatCollapsed = useGameStore((state) => state.setChatCollapsed)
   const collapsedLabel = activeTab === 'chat' ? 'Чат свернут' : 'Журнал свернут'
 
@@ -33,13 +34,19 @@ export function EventLog() {
           label={isChatCollapsed ? 'Развернуть чат и события' : 'Свернуть чат и события'}
           icon={isChatCollapsed ? ChevronUp : ChevronDown}
           active={isChatCollapsed}
+          sound={isChatCollapsed ? 'ui.toggle.on' : 'ui.toggle.off'}
           onClick={() => setChatCollapsed(!isChatCollapsed)}
         />
       </div>
       {isChatCollapsed ? null : (
         <Tabs items={tabs} active={activeTab} onChange={setActiveTab}>
           {activeTab === 'events'
-            ? events.map((event) => <p key={event}>{event}</p>)
+            ? <>
+                {cannonShots.map((shot) => <p key={shot.id}>
+                  Попадание ({shot.kind === 'defense_bolt_thrower' ? 'болтомёт' : shot.kind === 'defense_storm_coil' ? 'грозовая катушка' : 'пушка'} {shot.buildingId}) по монстру {shot.monsterId}: {shot.damage} урона{shot.ammo ? `, израсходовано: ${shot.ammo === 'explosives' ? '1 заряд взрывчатки' : shot.ammo === 'fuel' ? '1 ед. бензина' : '1 камень'}` : ''}.
+                </p>)}
+                {events.map((event) => <p key={event}>{event}</p>)}
+              </>
             : <ChatPanel />}
         </Tabs>
       )}

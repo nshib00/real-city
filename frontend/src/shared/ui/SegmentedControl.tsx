@@ -1,3 +1,5 @@
+import { playUiSound } from '../../audio/playUiSound'
+
 type SegmentItem<T extends string> = {
   id: T
   label: string
@@ -19,7 +21,8 @@ export function SegmentedControl<T extends string>({ items, value, onChange, lab
           key={item.id}
           type="button"
           aria-pressed={item.id === value}
-          onClick={() => onChange(item.id)}
+          data-audio-handled="true"
+          onClick={() => { if (item.id !== value) { playUiSound('ui.tab'); onChange(item.id) } }}
         >
           {item.label}
         </button>

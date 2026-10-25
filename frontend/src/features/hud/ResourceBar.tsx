@@ -6,7 +6,7 @@ import { useGameStore } from '../../game/state/useGameStore'
 import { useAuthStore } from '../auth/useAuthStore'
 import { IconButton } from '../../shared/ui'
 import { availablePopulation, useInventory } from '../economy/useInventory'
-import { resourceIconUrl } from '../resources/ResourceIcon'
+import { ResourceIcon, resourceIconUrl } from '../resources/ResourceIcon'
 import { buildingCapacityValue, resourceAmount, resourceLimit } from '../resources/resourceAmounts'
 
 type ResourceBarItem = {
@@ -26,9 +26,11 @@ const pinnedResources = [
 ] satisfies ResourceBarItem[]
 
 const orderedPanelResources = resourceCatalog
-  .filter((resource): resource is ResourceCatalogItem & { displayOrder: number } => !pinnedResourceIds.has(resource.id) && typeof resource.displayOrder === 'number' && Number.isInteger(resource.displayOrder) && resource.displayOrder >= 0)
+  .filter((resource): resource is ResourceCatalogItem & { displayOrder: number } => !pinnedResourceIds.has(resource.id) && resource.category !== 'weapons' && typeof resource.displayOrder === 'number' && Number.isInteger(resource.displayOrder) && resource.displayOrder >= 0)
   .slice()
   .sort((left, right) => left.displayOrder - right.displayOrder)
+
+const weaponResources = resourceCatalog.filter((resource) => resource.category === 'weapons')
 
 export function ResourceBar() {
   const toggleResourceRegistry = useGameStore((state) => state.toggleResourceRegistry)
@@ -49,6 +51,8 @@ export function ResourceBar() {
       amount: resourceAmount(items, resource.id, 0),
     }))
     .filter((resource) => resource.amount > 0)
+  const visibleWeapons = weaponResources
+    .map((resource) => ({ ...resource, amount: resourceAmount(items, resource.id, 0) }))
 
   return (
     <header className="resource-bar" aria-label="Ресурсы">
@@ -83,6 +87,14 @@ export function ResourceBar() {
           </div>
         )
       })}
+      <div className="resource-weapon-group" role="group" aria-label="Оружие и бомбы">
+        {visibleWeapons.map(({ id, name, amount }) => (
+          <div className="resource-chip" key={id} title={`${name}: ${amount}`} aria-label={`${name}: ${amount}`}>
+            <ResourceIcon id={id} label={name} className="resource-icon-topbar" />
+            <strong>{amount}</strong>
+          </div>
+        ))}
+      </div>
       <IconButton label="Реестр ресурсов" icon={HandCoins} onClick={toggleResourceRegistry} />
       <IconButton label="Союз" icon={UsersRound} onClick={() => setAlliancePanelOpen(true)} />
     </header>

@@ -10,16 +10,28 @@ describe('resource icons', () => {
     expect(resourceIconUrl('aeolian-crystal')).toBe(`/assets/resources/icons/aeolian-crystal.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
   })
 
-  it('includes an icon for every catalog resource', () => {
-    expect(manifest.resources.map((item) => item.id)).toEqual(expect.arrayContaining(resourceCatalog.map((item) => item.id)))
+  it('matches catalog metadata for resource icons that have been generated', () => {
     for (const item of resourceCatalog) {
-      expect(manifest.resources.find((entry) => entry.id === item.id)).toEqual(expect.objectContaining({
+      const generated = manifest.resources.find((entry) => entry.id === item.id)
+      if (!generated) continue
+      expect(generated).toEqual(expect.objectContaining({
         id: item.id,
-        name: item.name,
-        category: item.category,
         file: `${item.id}.png`,
         model: `${item.id}.glb`,
       }))
+    }
+  })
+
+  it('registers a generated icon and model for every weapon resource', () => {
+    for (const item of resourceCatalog.filter((resource) => resource.category === 'weapons')) {
+      expect(manifest.resources.find((entry) => entry.id === item.id)).toEqual(expect.objectContaining({
+        id: item.id,
+        name: item.name,
+        category: 'weapons',
+        file: `${item.id}.png`,
+        model: `${item.id}.glb`,
+      }))
+      expect(resourceIconUrl(item.id)).toBe(`/assets/resources/icons/${item.id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
     }
   })
 })

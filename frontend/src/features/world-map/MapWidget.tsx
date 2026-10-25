@@ -1,18 +1,20 @@
 import { Landmark, Map as MapIcon, X } from 'lucide-react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { PointerEvent } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
 import type { BuildingCatalogItem } from '../../../../shared/catalog/buildings'
-import { WORLD_WRAP_TILES } from '../../game/coordinates/iso'
+import { cellLabel, DISTRICT_COUNT, DISTRICT_SIZE, districtFromTile, districtLabel } from '../../game/coordinates/district'
+import { tileToChunk, WORLD_WRAP_TILES, wrapGridCoord } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
 import type { BuildingKind, PlacedBuilding } from '../../game/state/useGameStore'
 import { IconButton } from '../../shared/ui'
+import { useAuthStore } from '../auth/useAuthStore'
+import { visibleChunksQueryOptions } from '../world/useVisibleChunks'
+import { showToast } from '../notifications/toast'
 
-const DISTRICT_COUNT = 5
-const DISTRICT_SIZE = WORLD_WRAP_TILES / DISTRICT_COUNT
-const DISTRICT_LABELS = 'ABCDEFGHIJKLMNOPQRSTUVWXY'.split('')
-const buildingCategoryByKind = new Map(buildingCatalog.map((item) => [item.type, item.category]))
+const buildingCategoryByKind = new Map<string, BuildingCatalogItem['category']>(buildingCatalog.map((item) => [item.type, item.category]))
 
 type BuildingCategory = BuildingCatalogItem['category']
 
@@ -30,7 +32,10 @@ const markerClassByCategory: Record<BuildingCategory, string> = {
 
 export function MapWidget() {
   const [open, setOpen] = useState(false)
-  const buildings = useGameStore((state) => state.buildings)
+  const queryClient = useQueryClient()
+  const navigationRequestRef = useRef(0)
+  const player = useAuthStore((state) => state.player)
+  const buildings = useGameStore((state) => state.buildings).filter((building) => building.owner === player?.id)
   const selectedTile = useGameStore((state) => state.selectedTile)
   const viewport = useGameStore((state) => state.viewport)
   const focusTile = useGameStore((state) => state.focusTile)
@@ -38,7 +43,21 @@ export function MapWidget() {
   const townHall = buildings.find((building) => building.kind === 'town_hall' && building.status === 'active')
   const activeTile = selectedTile ?? viewport.center
   const activeDistrict = districtFromTile(activeTile)
-  const activeDistrictLabel = districtLabel(activeDistrict.x, activeDistrict.y)
+  const activeDistrictLabel = districtLabel(activeDistrict)
+
+  async function navigateTo(tile: { x: number; y: number }, buildingId?: string) {
+    const requestId = ++navigationRequestRef.current
+    const startingCamera = useGameStore.getState().camera
+    try {
+      await queryClient.ensureQueryData(visibleChunksQueryOptions(tileToChunk(wrapGridCoord(tile)), viewport.radius))
+      if (requestId !== navigationRequestRef.current || useGameStore.getState().camera !== startingCamera) return
+      focusTile({ tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight })
+      if (buildingId) selectBuilding(buildingId)
+      setOpen(false)
+    } catch {
+      if (requestId === navigationRequestRef.current) showToast('warning', 'Не удалось загрузить район карты')
+    }
+  }
 
   return (
     <aside className="map-widget" aria-label="Мини-карта мира">
@@ -50,8 +69,7 @@ export function MapWidget() {
           if (!townHall) {
             return
           }
-          focusTile({ tile: townHall.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight })
-          selectBuilding(townHall.id)
+          void navigateTo(townHall.tile, townHall.id)
         }}
       />
       <IconButton label="Карта мира" icon={MapIcon} active={open} onClick={() => setOpen(!open)} />
@@ -66,7 +84,7 @@ export function MapWidget() {
               {Array.from({ length: DISTRICT_COUNT * DISTRICT_COUNT }, (_, index) => {
                 const districtX = index % DISTRICT_COUNT
                 const districtY = Math.floor(index / DISTRICT_COUNT)
-                const label = districtLabel(districtX, districtY)
+                const label = districtLabel({ x: districtX, y: districtY })
                 const active = activeDistrict.x === districtX && activeDistrict.y === districtY
                 return (
                   <button
@@ -76,8 +94,7 @@ export function MapWidget() {
                     type="button"
                     onPointerDown={(event) => {
                       const tile = tileFromDistrictClick(event, districtX, districtY)
-                      focusTile({ tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight })
-                      setOpen(false)
+                      void navigateTo(tile)
                     }}
                   >
                     <span aria-hidden="true" className="world-district-label">
@@ -88,7 +105,7 @@ export function MapWidget() {
               })}
             </div>
             <div
-              aria-label={`Текущая позиция: район ${activeDistrictLabel}, тайл ${activeTile.x}:${activeTile.y}`}
+              aria-label={`Текущая позиция: клетка ${cellLabel(activeTile)}`}
               className="world-position-marker"
               style={tileMarkerStyle(activeTile)}
             />
@@ -102,16 +119,14 @@ export function MapWidget() {
                   title={building.name}
                   type="button"
                   onClick={() => {
-                    focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight })
-                    selectBuilding(building.id)
-                    setOpen(false)
+                    void navigateTo(building.tile, building.id)
                   }}
                 />
               ))}
             </div>
           </div>
           <footer>
-            <span>{`Район ${activeDistrictLabel} · ${activeTile.x}:${activeTile.y}`}</span>
+            <span>{`Район ${activeDistrictLabel} · клетка ${cellLabel(activeTile)}`}</span>
           </footer>
         </section>
       ) : null}
@@ -156,18 +171,6 @@ function hashString(value: string) {
     hash = (hash * 31 + value.charCodeAt(index)) | 0
   }
   return hash
-}
-
-function districtFromTile(tile: { x: number; y: number }) {
-  const wrapped = wrappedTile(tile)
-  return {
-    x: Math.min(DISTRICT_COUNT - 1, Math.floor(wrapped.x / DISTRICT_SIZE)),
-    y: Math.min(DISTRICT_COUNT - 1, Math.floor(wrapped.y / DISTRICT_SIZE)),
-  }
-}
-
-function districtLabel(districtX: number, districtY: number) {
-  return DISTRICT_LABELS[districtY * DISTRICT_COUNT + districtX] ?? '?'
 }
 
 function wrappedTile(tile: { x: number; y: number }) {

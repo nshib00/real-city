@@ -1,18 +1,21 @@
-import { Application, Assets, Container, Graphics, Sprite, Texture } from 'pixi.js'
+import { Application, Assets, Container, Graphics, Sprite, Spritesheet, Texture } from 'pixi.js'
 import { useEffect, useMemo, useRef } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
 
 import type { WorldTile } from '../../shared/contracts'
-import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, WORLD_WRAP_TILES } from '../coordinates/iso'
+import { healthBarColor, healthRatio, maxHealthForBuilding } from '../health'
+import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, WORLD_WRAP_TILES, wrappedGridDistance } from '../coordinates/iso'
 import type { MonsterEntity, PlacedBuilding, ResourceNode } from '../state/useGameStore'
+import { resolveMonsterAtlasSource } from '../renderers/monsterAssetRegistry'
 import { buildingOverlayDrawCommands, type BuildingOverlayDrawCommand } from './objectLayer/buildingOverlayDrawData'
 import { monsterDrawCommands, nextMonsterRenderMemory, type MonsterDrawCommand, type MonsterRenderMemory } from './objectLayer/monsterDrawData'
+import { loadObjectAtlas } from './objectLayer/objectTextureCache'
 import { buildingDrawCommands, type BuildingDrawCommand } from './objectLayer/objectDrawData'
-import { objectLayerSortKey } from './objectLayer/objectDepth'
+import { projectedObjectSortKey } from './objectLayer/objectDepth'
 import { resourceDrawCommands, type ResourceDrawCommand } from './objectLayer/resourceDrawData'
-import { buildingHitAtTile, createRenderedTileLookup } from './mapHitTarget'
-import { recordPixiFrame, registerPixiContext } from './renderPerformanceMetrics'
-import { preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
+import { buildingHitAtClick, createRenderedTileLookup } from './mapHitTarget'
+import { pixiMutationCounts, recordPixiChildMutation, recordPixiFrame, recordPixiRedraw, registerPixiContext } from './renderPerformanceMetrics'
+import { isRaisedTerrain, preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
 import { tileOccupancyKey } from './visibleObjects'
 
 type Camera = {
@@ -38,10 +41,12 @@ type PixiStageProps = {
   hoveredTile: TileCoord | null
   selectedBuildingId?: string | null
   selectedMonsterId?: string | null
+  viewerId?: string | null
   onSelectTile: (tile: TileCoord) => void
   onHoverTile: (tile: TileCoord | null) => void
   onSelectBuilding?: (building: PlacedBuilding) => void
   onSelectMonster?: (monster: MonsterEntity) => void
+  targetTileOnly?: boolean
 }
 
 const TERRAIN_COLORS: Record<string, number> = {
@@ -63,6 +68,7 @@ type BuildingHitArea = {
   top: number
   bottom: number
   sortKey: number
+  texture: Texture | null
 }
 
 type MonsterHitArea = {
@@ -88,6 +94,7 @@ type RetainedChildCache = Map<string, RetainedChild>
 type TextureLoadState = 'loading' | 'loaded' | 'failed'
 
 const textureLoadStates = new Map<string, TextureLoadState>()
+const monsterAtlasTextures = new Map<MonsterEntity['type'], 'loading' | Record<string, Texture> | null>()
 
 export function PixiStage({
   tiles,
@@ -101,10 +108,12 @@ export function PixiStage({
   hoveredTile,
   selectedBuildingId = null,
   selectedMonsterId = null,
+  viewerId = null,
   onSelectTile,
   onHoverTile,
   onSelectBuilding,
   onSelectMonster,
+  targetTileOnly = false,
 }: PixiStageProps) {
   const renderedTileAtCoord = useMemo(() => createRenderedTileLookup(tiles, WORLD_WRAP_TILES), [tiles])
   const renderedTiles = useMemo(() => tiles.filter((tile) => renderedTileAtCoord(tile) === tile), [tiles, renderedTileAtCoord])
@@ -112,8 +121,6 @@ export function PixiStage({
   const appRef = useRef<Application | null>(null)
   const terrainSpritesRef = useRef<Container | null>(null)
   const objectSpritesRef = useRef<Container | null>(null)
-  const monsterSpritesRef = useRef<Container | null>(null)
-  const buildingAnimationOverlaysRef = useRef<Container | null>(null)
   const terrainSpriteCacheRef = useRef<RetainedChildCache>(new Map())
   const buildingSpriteCacheRef = useRef<RetainedChildCache>(new Map())
   const resourceSpriteCacheRef = useRef<RetainedChildCache>(new Map())
@@ -127,12 +134,15 @@ export function PixiStage({
   const resourcesRef = useRef<ResourceNode[]>(resources)
   const monstersRef = useRef<MonsterEntity[]>(monsters)
   const buildingDrawCommandsRef = useRef<BuildingDrawCommand[]>([])
+  const visibleTileCountRef = useRef(0)
   const monsterRenderMemoryRef = useRef<Map<string, MonsterRenderMemory>>(new Map())
+  const monsterGroupsRef = useRef<Map<string, MonsterGroup>>(new Map())
   const cameraRef = useRef<Camera>(camera)
   const selectedTileRef = useRef<TileCoord | null>(selectedTile)
   const hoveredTileRef = useRef<TileCoord | null>(hoveredTile)
   const selectedBuildingIdRef = useRef<string | null>(selectedBuildingId)
   const selectedMonsterIdRef = useRef<string | null>(selectedMonsterId)
+  const viewerIdRef = useRef<string | null>(viewerId)
   const buildingHitAreasRef = useRef<BuildingHitArea[]>([])
   const resourceHitAreasRef = useRef<ResourceHitArea[]>([])
   const monsterHitAreasRef = useRef<MonsterHitArea[]>([])
@@ -142,19 +152,16 @@ export function PixiStage({
     const app = appRef.current
     const terrainSprites = terrainSpritesRef.current
     const objectSprites = objectSpritesRef.current
-    const monsterSprites = monsterSpritesRef.current
-    const buildingAnimationOverlays = buildingAnimationOverlaysRef.current
     const terrain = terrainRef.current
     const overlay = overlayRef.current
-    if (!app || !terrainSprites || !objectSprites || !monsterSprites || !buildingAnimationOverlays || !terrain || !overlay) {
+    if (!app || !terrainSprites || !objectSprites || !terrain || !overlay) {
       return
     }
-    buildingDrawCommandsRef.current = drawStage(
+    const before = import.meta.env.DEV ? pixiMutationCounts() : null
+    const drawn = drawStage(
       app,
       terrainSprites,
       objectSprites,
-      monsterSprites,
-      buildingAnimationOverlays,
       terrainSpriteCacheRef.current,
       buildingSpriteCacheRef.current,
       resourceSpriteCacheRef.current,
@@ -172,12 +179,31 @@ export function PixiStage({
       hoveredTileRef.current,
       selectedBuildingIdRef.current,
       selectedMonsterIdRef.current,
+      viewerIdRef.current,
       buildingHitAreasRef.current,
       resourceHitAreasRef.current,
       monsterHitAreasRef.current,
       monsterRenderMemoryRef.current,
+      monsterGroupsRef.current,
       () => redrawRef.current?.(),
     )
+    buildingDrawCommandsRef.current = drawn.buildingCommands
+    visibleTileCountRef.current = drawn.visibleTiles
+    if (before) recordPixiRedraw({
+      visible: {
+        tiles: visibleTileCountRef.current,
+        buildings: buildingsRef.current.length,
+        resources: resourcesRef.current.length,
+        monsters: monsterHitAreasRef.current.length,
+      },
+      pixiChildren: { terrain: terrainSprites.children.length, objects: objectSprites.children.length },
+      retainedCaches: {
+        terrain: terrainSpriteCacheRef.current.size,
+        buildings: buildingSpriteCacheRef.current.size,
+        resources: resourceSpriteCacheRef.current.size,
+        overlays: buildingOverlayCacheRef.current.size,
+      },
+    }, before)
   }
 
   redrawRef.current = redraw
@@ -209,24 +235,20 @@ export function PixiStage({
       app.ticker.maxFPS = 60
       terrainSpritesRef.current = new Container()
       objectSpritesRef.current = new Container()
-      monsterSpritesRef.current = new Container()
-      buildingAnimationOverlaysRef.current = new Container()
       terrainRef.current = new Graphics()
       overlayRef.current = new Graphics()
-      app.stage.addChild(terrainSpritesRef.current)
       app.stage.addChild(terrainRef.current)
-      app.stage.addChild(objectSpritesRef.current)
-      app.stage.addChild(monsterSpritesRef.current)
+      app.stage.addChild(terrainSpritesRef.current)
       app.stage.addChild(overlayRef.current)
-      app.stage.addChild(buildingAnimationOverlaysRef.current)
+      app.stage.addChild(objectSpritesRef.current)
       hostRef.current.appendChild(app.canvas)
       const animateMonsters = () => {
         recordPixiFrame(performance.now())
-        if (!monsterSpritesRef.current) {
+        if (!objectSpritesRef.current) {
           return
         }
         drawMonsterLayer(
-          monsterSpritesRef.current,
+          objectSpritesRef.current,
           monstersRef.current,
           selectedMonsterIdRef.current,
           cameraRef.current,
@@ -234,28 +256,30 @@ export function PixiStage({
           app?.screen.height ?? 0,
           monsterHitAreasRef.current,
           monsterRenderMemoryRef.current,
+          monsterGroupsRef.current,
           performance.now(),
         )
       }
       const animateBuildingOverlays = () => {
-        if (!buildingAnimationOverlaysRef.current) {
+        if (!objectSpritesRef.current) {
           return
         }
         drawBuildingAnimationOverlays(
-          buildingAnimationOverlaysRef.current,
+          objectSpritesRef.current,
           buildingOverlayCacheRef.current,
           buildingDrawCommandsRef.current,
           cameraRef.current,
           app?.screen.width ?? 0,
           app?.screen.height ?? 0,
           performance.now(),
+          viewerIdRef.current,
         )
       }
       app.ticker.add(animateMonsters)
       app.ticker.add(animateBuildingOverlays)
       redraw()
       void preloadTerrainPngTextures().then(() => {
-        if (!disposed && terrainSpritesRef.current && objectSpritesRef.current && monsterSpritesRef.current && buildingAnimationOverlaysRef.current && terrainRef.current && overlayRef.current) {
+        if (!disposed && terrainSpritesRef.current && objectSpritesRef.current && terrainRef.current && overlayRef.current) {
           redraw()
         }
       })
@@ -271,8 +295,7 @@ export function PixiStage({
       appRef.current = null
       terrainSpritesRef.current = null
       objectSpritesRef.current = null
-      monsterSpritesRef.current = null
-      buildingAnimationOverlaysRef.current = null
+      monsterGroupsRef.current.clear()
       terrainRef.current = null
       overlayRef.current = null
       app = null
@@ -291,17 +314,16 @@ export function PixiStage({
     hoveredTileRef.current = hoveredTile
     selectedBuildingIdRef.current = selectedBuildingId
     selectedMonsterIdRef.current = selectedMonsterId
+    viewerIdRef.current = viewerId
     const app = appRef.current
     const terrainSprites = terrainSpritesRef.current
     const objectSprites = objectSpritesRef.current
-    const monsterSprites = monsterSpritesRef.current
-    const buildingAnimationOverlays = buildingAnimationOverlaysRef.current
     const terrain = terrainRef.current
     const overlay = overlayRef.current
-    if (app && terrainSprites && objectSprites && monsterSprites && buildingAnimationOverlays && terrain && overlay) {
+    if (app && terrainSprites && objectSprites && terrain && overlay) {
       redraw()
     }
-  }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, resources, selectedBuildingId, selectedMonsterId, selectedTile, renderedTiles])
+  }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, renderedTiles, resources, selectedBuildingId, selectedMonsterId, selectedTile, viewerId])
 
   return (
     <div
@@ -312,18 +334,14 @@ export function PixiStage({
       onClick={(event) => {
         const rawTile = eventToTile(event, hostRef.current, cameraRef.current)
         const tile = rawTile ? renderedTileAtCoord(rawTile) : null
-        const buildingOnTile = buildingHitAtTile(tile, buildingHitAreasRef.current)
-        if (buildingOnTile) {
-          onSelectBuilding?.(buildingOnTile)
+        if (targetTileOnly) {
+          if (tile) onSelectTile(tile)
           return
         }
         const object = eventToMapObject(event, hostRef.current, buildingHitAreasRef.current, resourceHitAreasRef.current, monsterHitAreasRef.current)
-        if (object?.type === 'building') {
-          if (tile && !occupiedTilesRef.current.has(tileOccupancyKey(tile))) {
-            onSelectTile(tile)
-            return
-          }
-          onSelectBuilding?.(object.building)
+        const building = buildingHitAtClick(tile, buildingHitAreasRef.current, object?.type === 'building' ? object.building : null)
+        if (building) {
+          onSelectBuilding?.(building)
           return
         }
         if (object?.type === 'resource') {
@@ -354,8 +372,6 @@ function drawStage(
   app: Application,
   terrainSprites: Container,
   objectSprites: Container,
-  monsterSprites: Container,
-  buildingAnimationOverlays: Container,
   terrainSpriteCache: RetainedChildCache,
   buildingSpriteCache: RetainedChildCache,
   resourceSpriteCache: RetainedChildCache,
@@ -373,16 +389,20 @@ function drawStage(
   hoveredTile: TileCoord | null,
   selectedBuildingId: string | null,
   selectedMonsterId: string | null,
+  viewerId: string | null,
   buildingHitAreas: BuildingHitArea[],
   resourceHitAreas: ResourceHitArea[],
   monsterHitAreas: MonsterHitArea[],
   monsterRenderMemory: Map<string, MonsterRenderMemory>,
+  monsterGroups: Map<string, MonsterGroup>,
   requestRedraw: () => void,
 ) {
   const width = app.screen.width
   const height = app.screen.height
   const origin = { x: width * 0.48 + camera.x, y: height * 0.16 + camera.y }
   const screenTarget = { x: (width / 2 - origin.x) / camera.zoom, y: (height / 2 - origin.y) / camera.zoom }
+  const centerGrid = screenToGrid(screenTarget)
+  const tileReach = (width / (2 * TILE_WIDTH) + height / (2 * TILE_HEIGHT)) / camera.zoom + 4
   buildingHitAreas.length = 0
   resourceHitAreas.length = 0
   monsterHitAreas.length = 0
@@ -392,8 +412,9 @@ function drawStage(
   const activeBuildingIds = new Set<string>()
   const activeResourceIds = new Set<string>()
 
-  const visibleTiles: { tile: WorldTile; x: number; y: number }[] = []
+  const visibleTiles: { tile: WorldTile; x: number; y: number; sortKey: number }[] = []
   for (const tile of tiles) {
+    if (wrappedGridDistance(tile.x, centerGrid.x) > tileReach || wrappedGridDistance(tile.y, centerGrid.y) > tileReach) continue
     const pos = nearestWrappedScreenCoord(tile, screenTarget)
     const x = origin.x + pos.x * camera.zoom
     const y = origin.y + pos.y * camera.zoom
@@ -404,15 +425,15 @@ function drawStage(
     if (x + halfWidth < 0 || x - halfWidth > width || y + bottomHeight < 0 || y - topHeight > height) {
       continue
     }
-    visibleTiles.push({ tile, x, y })
+    visibleTiles.push({ tile, x, y, sortKey: projectedObjectSortKey(pos, -0.25) })
   }
 
-  for (const { tile, x, y } of visibleTiles) {
+  for (const { tile, x, y, sortKey } of visibleTiles) {
     const textureUrl = terrainTextureUrl(tile)
     if (textureUrl && isTextureReady(textureUrl, requestRedraw)) {
       const key = tileOccupancyKey(tile)
       activeTerrainKeys.add(key)
-      drawTerrainSprite(objectSprites, terrainSpriteCache, key, textureUrl, x, y, camera.zoom, objectLayerSortKey(tile, -100))
+      drawTerrainSprite(isRaisedTerrain(tile) ? objectSprites : terrainSprites, terrainSpriteCache, key, textureUrl, x, y, camera.zoom, sortKey)
       if (tile.safe_zone) {
         drawDiamondBorder(terrain, x, y, camera.zoom, 0xf2c14e, 0.42)
       }
@@ -421,6 +442,16 @@ function drawStage(
     }
   }
 
+  const selectedCannon = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(item.kind)) : null
+  if (selectedCannon?.cannonRange) {
+    const radius = selectedCannon.cannonRange
+    for (let dx = -radius; dx <= radius; dx++) {
+      for (let dy = -radius; dy <= radius; dy++) {
+        if (Math.abs(dx) + Math.abs(dy) !== radius) continue
+        drawOverlay(overlay, { x: selectedCannon.tile.x + dx, y: selectedCannon.tile.y + dy }, origin, screenTarget, camera.zoom, 0x46d5dc, 0.27)
+      }
+    }
+  }
   if (hoveredTile) {
     drawOverlay(overlay, hoveredTile, origin, screenTarget, camera.zoom, 0xffffff, 0.36)
   }
@@ -431,7 +462,7 @@ function drawStage(
   const buildingCommands = buildingDrawCommands(buildings, { allBuildings, selectedBuildingId })
   for (const command of buildingCommands) {
     activeBuildingIds.add(command.id)
-    drawBuildingSprite(objectSprites, buildingSpriteCache, command, origin, screenTarget, camera.zoom, buildingHitAreas, requestRedraw)
+    drawBuildingSprite(isRoadBuilding(command.building) ? terrainSprites : objectSprites, buildingSpriteCache, command, origin, screenTarget, camera.zoom, buildingHitAreas, requestRedraw)
   }
   for (const command of resourceDrawCommands(resources)) {
     activeResourceIds.add(command.id)
@@ -441,16 +472,21 @@ function drawStage(
   pruneRetainedChildren(buildingSpriteCache, activeBuildingIds)
   pruneRetainedChildren(resourceSpriteCache, activeResourceIds)
   const nowMs = performance.now()
-  drawMonsterLayer(monsterSprites, monsters, selectedMonsterId, camera, width, height, monsterHitAreas, monsterRenderMemory, nowMs)
+  drawMonsterLayer(objectSprites, monsters, selectedMonsterId, camera, width, height, monsterHitAreas, monsterRenderMemory, monsterGroups, nowMs)
   drawBuildingOverlayCommands(
-    buildingAnimationOverlays,
+    objectSprites,
     buildingOverlayCache,
-    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs }),
+    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs, viewerId }),
+    buildingCommands,
     origin,
     screenTarget,
     camera.zoom,
   )
-  return buildingCommands
+  return { buildingCommands, visibleTiles: visibleTiles.length }
+}
+
+function isRoadBuilding(building: PlacedBuilding) {
+  return building.kind === 'road' || building.kind === 'standard_road' || building.kind === 'paved_road'
 }
 
 function pruneRetainedChildren(cache: RetainedChildCache, activeKeys: ReadonlySet<string>) {
@@ -458,6 +494,7 @@ function pruneRetainedChildren(cache: RetainedChildCache, activeKeys: ReadonlySe
     if (!activeKeys.has(key)) {
       child.parent?.removeChild(child)
       child.destroy({ children: true })
+      recordPixiChildMutation(0, 1)
       cache.delete(key)
     }
   }
@@ -472,6 +509,7 @@ function drawMonsterLayer(
   height: number,
   monsterHitAreas: MonsterHitArea[],
   monsterRenderMemory: Map<string, MonsterRenderMemory>,
+  monsterGroups: Map<string, MonsterGroup>,
   nowMs: number,
 ) {
   monsterHitAreas.length = 0
@@ -483,21 +521,18 @@ function drawMonsterLayer(
     monsterRenderMemory.set(id, memory)
   }
   const activeMonsterIds = new Set(monsters.map((monster) => monster.id))
-  for (const child of target.children.filter(isMonsterLayerChild)) {
-    const monsterId = (child as Container & { objectLayerKind?: string; objectId?: string }).objectId
-    if (!monsterId || !activeMonsterIds.has(monsterId)) {
-      target.removeChild(child)
-      child.destroy({ children: true })
+  for (const [id, group] of monsterGroups) {
+    if (!activeMonsterIds.has(id)) {
+      target.removeChild(group)
+      group.destroy({ children: true })
+      recordPixiChildMutation(0, 1)
+      monsterGroups.delete(id)
     }
   }
   target.sortableChildren = true
   for (const command of monsterDrawCommands(monsters, { selectedMonsterId, previous: monsterRenderMemory, nowMs })) {
-    drawMonsterSprite(target, command, origin, screenTarget, camera.zoom, monsterHitAreas)
+    drawMonsterSprite(target, monsterGroups, command, origin, screenTarget, camera.zoom, monsterHitAreas)
   }
-}
-
-function isMonsterLayerChild(child: Container['children'][number]) {
-  return (child as { objectLayerKind?: string }).objectLayerKind === 'monster'
 }
 
 function drawBuildingAnimationOverlays(
@@ -508,13 +543,15 @@ function drawBuildingAnimationOverlays(
   width: number,
   height: number,
   nowMs: number,
+  viewerId: string | null,
 ) {
   const origin = { x: width * 0.48 + camera.x, y: height * 0.16 + camera.y }
   const screenTarget = { x: (width / 2 - origin.x) / camera.zoom, y: (height / 2 - origin.y) / camera.zoom }
   drawBuildingOverlayCommands(
     target,
     cache,
-    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs }),
+    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs, viewerId }),
+    buildingCommands,
     origin,
     screenTarget,
     camera.zoom,
@@ -525,6 +562,7 @@ function drawBuildingOverlayCommands(
   target: Container,
   cache: RetainedChildCache,
   commands: BuildingOverlayDrawCommand[],
+  buildingCommands: BuildingDrawCommand[],
   origin: TileCoord,
   screenTarget: TileCoord,
   zoom: number,
@@ -535,6 +573,20 @@ function drawBuildingOverlayCommands(
     const key = `${command.buildingId}:${command.key}`
     activeKeys.add(key)
     drawBuildingOverlay(target, cache, key, command, origin, screenTarget, zoom)
+  }
+  for (const command of buildingCommands) {
+    const ratio = healthRatio(command.building.health, maxHealthForBuilding(command.building))
+    if (ratio >= 1) continue
+    const key = `${command.id}:health_bar`
+    activeKeys.add(key)
+    const pos = nearestWrappedScreenCoord(command.tile, screenTarget)
+    const x = origin.x + pos.x * zoom
+    const y = origin.y + pos.y * zoom
+    const graphic = getOrCreateGraphics(target, cache, key)
+    graphic.clear()
+    graphic.zIndex = projectedObjectSortKey(pos, 0.6)
+    const top = y - command.size.height * command.anchor.y * zoom - 8 * zoom
+    drawHealthBar(graphic, x, top, Math.max(24, Math.min(58, command.size.width * 0.7)) * zoom, zoom, ratio)
   }
   pruneRetainedChildren(cache, activeKeys)
 }
@@ -551,9 +603,10 @@ function drawBuildingOverlay(
   const pos = nearestWrappedScreenCoord(command.tile, screenTarget)
   const x = origin.x + pos.x * zoom
   const y = origin.y + pos.y * zoom
+  const sortKey = projectedObjectSortKey(pos, 0.5)
   const graphic = getOrCreateGraphics(target, cache, key)
   graphic.clear()
-  graphic.zIndex = command.sortKey
+  graphic.zIndex = sortKey
   graphic.alpha = overlayAlpha(command)
 
   if (command.key === 'damaged_smoke') {
@@ -563,7 +616,7 @@ function drawBuildingOverlay(
   } else if (command.key === 'construction_dust') {
     drawDustOverlay(graphic, x, y, zoom, command.phase)
   } else if (command.key === 'ready_to_collect') {
-    drawReadyOverlay(graphic, x, y, zoom, command.phase)
+    drawReadyOverlay(graphic, x, y, zoom, command.phase, command.isField)
   } else if (command.key === 'under_attack') {
     drawHitFlashOverlay(graphic, x, y, zoom, command.phase)
   } else {
@@ -582,7 +635,7 @@ function overlayAlpha(command: BuildingOverlayDrawCommand) {
 function drawWorkingOverlay(target: Graphics, x: number, y: number, zoom: number, phase: number) {
   const pulse = Math.sin(phase * Math.PI * 2) * 0.5 + 0.5
   const radius = (3 + pulse * 3) * zoom
-  const offsetY = (118 - pulse * 8) * zoom
+  const offsetY = (78 - pulse * 8) * zoom
   target.circle(x - 28 * zoom, y - offsetY, radius).fill({ color: 0xffc857, alpha: 0.65 })
   target.circle(x + 10 * zoom, y - (offsetY + 16 * zoom), radius * 0.72).fill({ color: 0xfff1a8, alpha: 0.55 })
   target.circle(x + 36 * zoom, y - (offsetY - 8 * zoom), radius * 0.56).fill({ color: 0xe98735, alpha: 0.45 })
@@ -622,14 +675,15 @@ function drawDustOverlay(target: Graphics, x: number, y: number, zoom: number, p
   }
 }
 
-function drawReadyOverlay(target: Graphics, x: number, y: number, zoom: number, phase: number) {
-  const bob = Math.sin(phase * Math.PI * 2) * 5 * zoom
-  const cx = x + 70 * zoom
-  const cy = y - 178 * zoom + bob
-  const radius = 13 * zoom
+function drawReadyOverlay(target: Graphics, x: number, y: number, zoom: number, phase: number, isField: boolean) {
+  const bob = Math.sin(phase * Math.PI * 2) * (isField ? 1 : 5) * zoom
+  const cx = x + (isField ? 0 : 70) * zoom
+  const cy = y - (isField ? 50 : 125) * zoom + bob
+  const radius = (isField ? 8 : 13) * zoom
+  const checkScale = (isField ? 0.7 : 1) * zoom
   target.circle(cx, cy, radius).fill({ color: 0x2f9e44, alpha: 0.88 }).stroke({ color: 0xd8f5a2, alpha: 0.95, width: Math.max(1, 2 * zoom) })
   target
-    .poly([cx - 6 * zoom, cy, cx - 1 * zoom, cy + 5 * zoom, cx + 8 * zoom, cy - 7 * zoom], false)
+    .poly([cx - 6 * checkScale, cy, cx - checkScale, cy + 5 * checkScale, cx + 8 * checkScale, cy - 7 * checkScale], false)
     .stroke({ color: 0xffffff, alpha: 0.95, width: Math.max(1.5, 2.4 * zoom) })
 }
 
@@ -651,32 +705,39 @@ function drawBuildingSprite(
   const pos = nearestWrappedScreenCoord(command.tile, screenTarget)
   const x = origin.x + pos.x * zoom
   const y = origin.y + pos.y * zoom
+  const sortKey = projectedObjectSortKey(pos)
   target.sortableChildren = true
-  if (command.textureUrl && isTextureReady(command.textureUrl, requestRedraw)) {
+  const hasSprite = Boolean(command.textureUrl && isTextureReady(command.textureUrl, requestRedraw))
+  let texture: Texture | null = null
+  if (command.textureUrl && hasSprite) {
     const sprite = getOrCreateSprite(target, cache, command.id, command.textureUrl)
+    texture = sprite.texture
     sprite.anchor.set(command.anchor.x, command.anchor.y)
     sprite.position.set(x, y)
     sprite.width = command.size.width * zoom
     sprite.height = command.size.height * zoom
-    sprite.zIndex = command.sortKey
+    sprite.zIndex = sortKey
     sprite.alpha = 0.98
     sprite.tint = 0xffffff
   } else {
     const fallback = getOrCreateGraphics(target, cache, command.id)
     fallback.clear()
-    fallback.zIndex = command.sortKey
+    fallback.zIndex = sortKey
     drawBuildingFallback(fallback, command, x, y, zoom)
   }
 
-  const left = x - command.size.width * zoom * command.anchor.x
-  const top = y - command.size.height * zoom * command.anchor.y
+  const width = hasSprite ? command.size.width * zoom : 96 * zoom
+  const height = hasSprite ? command.size.height * zoom : 92 * zoom
+  const left = hasSprite ? x - width * command.anchor.x : x - width / 2
+  const top = hasSprite ? y - height * command.anchor.y : y - height * 0.4
   buildingHitAreas.push({
     building: command.building,
     left,
-    right: left + command.size.width * zoom,
+    right: left + width,
     top,
-    bottom: top + command.size.height * zoom,
-    sortKey: command.sortKey,
+    bottom: top + height,
+    sortKey,
+    texture,
   })
 }
 
@@ -749,6 +810,7 @@ function buildingFallbackPalette(kind: string) {
 
 function drawMonsterSprite(
   target: Container,
+  monsterGroups: Map<string, MonsterGroup>,
   command: MonsterDrawCommand,
   origin: TileCoord,
   screenTarget: TileCoord,
@@ -757,42 +819,124 @@ function drawMonsterSprite(
 ) {
   const pos = nearestWrappedScreenCoord(command.displayTile, screenTarget)
   const x = origin.x + pos.x * zoom
-  const y = origin.y + (pos.y - 18) * zoom
-  const group = getOrCreateMonsterGroup(target, command.id)
-  for (const child of group.removeChildren()) {
-    child.destroy()
-  }
+  // Keep the monster's ground marker below the tile center so its feet read as
+  // standing on the cell. This also lowers the flying ember wisp slightly.
+  const y = origin.y + (pos.y + 10) * zoom
+  const sortKey = projectedObjectSortKey(pos, 0.35)
+  const group = getOrCreateMonsterGroup(target, monsterGroups, command.id)
   const monsterGroup = group as Container & { objectLayerKind: string; objectId: string }
   monsterGroup.objectLayerKind = 'monster'
   monsterGroup.objectId = command.id
-  group.zIndex = command.sortKey
+  group.zIndex = sortKey
+  group.sortableChildren = true
 
-  drawMonsterFallback(group, command, x, y, zoom)
-  drawMonsterHealthBar(group, command, x, y, zoom)
+  const marker = getMonsterGraphic(group, 'marker', 0)
+  marker.clear()
+  const markerWidth = Math.min(command.size.width * 0.3, TILE_WIDTH / 4) * zoom
+  if (command.selected) {
+    marker.ellipse(x, y + 4 * zoom, markerWidth, 13 * zoom)
+      .stroke({ color: 0xfff1a8, alpha: 0.95, width: Math.max(1.5, 2.5 * zoom) })
+  } else {
+    marker.ellipse(x, y + 5 * zoom, markerWidth, 9 * zoom).fill({ color: 0x000000, alpha: 0.18 })
+  }
+
+  const previewUrl = `/assets/monsters/${command.monster.type}/${command.monster.type}_preview.png`
+  const atlasTexture = monsterFrameTexture(command)
+  const frameTexture = atlasTexture
+    ?? (isTextureReady(previewUrl, () => {}) ? Texture.from(previewUrl) : null)
+  const groundOffsetY = atlasTexture ? command.groundOffsetY.atlas
+    : frameTexture ? command.groundOffsetY.preview : 0
+  const spriteY = y + groundOffsetY * zoom
+  if (frameTexture) {
+    const sprite = group.monsterSprite ?? new Sprite(frameTexture)
+    if (!group.monsterSprite) {
+      group.monsterSprite = sprite
+      sprite.zIndex = 1
+      group.addChild(sprite)
+      recordPixiChildMutation(1, 0)
+    }
+    if (sprite.texture !== frameTexture) sprite.texture = frameTexture
+    sprite.visible = true
+    sprite.position.set(x, spriteY)
+    sprite.anchor.set(command.anchor.x, command.anchor.y)
+    sprite.width = command.size.width * zoom
+    sprite.height = command.size.height * zoom
+    sprite.alpha = command.monster.state === 'dead' ? 0.7 : 1
+    if (group.monsterFallback) group.monsterFallback.visible = false
+  } else {
+    if (group.monsterSprite) group.monsterSprite.visible = false
+    const fallback = getMonsterGraphic(group, 'fallback', 1)
+    fallback.visible = true
+    drawMonsterFallback(fallback, command, x, y, zoom)
+  }
+  drawMonsterHealthBar(getMonsterGraphic(group, 'health', 2), command, x, spriteY, zoom)
 
   const left = x - command.size.width * zoom * command.anchor.x
-  const top = y - command.size.height * zoom * command.anchor.y
+  const top = spriteY - command.size.height * zoom * command.anchor.y
   monsterHitAreas.push({
     monster: command.monster,
     left,
     right: left + command.size.width * zoom,
     top,
     bottom: top + command.size.height * zoom,
-    sortKey: command.sortKey,
+    sortKey,
   })
 }
 
-function getOrCreateMonsterGroup(target: Container, id: string) {
-  const existing = target.children.find((child) => isMonsterLayerChild(child) && (child as Container & { objectId?: string }).objectId === id)
+type MonsterGroup = Container & {
+  monsterSprite?: Sprite
+  monsterMarker?: Graphics
+  monsterFallback?: Graphics
+  monsterHealth?: Graphics
+}
+
+function getMonsterGraphic(group: MonsterGroup, kind: 'marker' | 'fallback' | 'health', zIndex: number) {
+  const key = kind === 'marker' ? 'monsterMarker' : kind === 'fallback' ? 'monsterFallback' : 'monsterHealth'
+  let graphic = group[key]
+  if (!graphic) {
+    graphic = new Graphics()
+    graphic.zIndex = zIndex
+    group[key] = graphic
+    group.addChild(graphic)
+    recordPixiChildMutation(1, 0)
+  }
+  return graphic
+}
+
+function monsterFrameTexture(command: MonsterDrawCommand): Texture | null {
+  if (!command.frameName) return null
+  const type = command.monster.type
+  const cached = monsterAtlasTextures.get(type)
+  if (cached === undefined) {
+    const source = resolveMonsterAtlasSource(type)
+    if (!source) {
+      monsterAtlasTextures.set(type, null)
+      return null
+    }
+    monsterAtlasTextures.set(type, 'loading')
+    void loadObjectAtlas(source).then((result) => {
+      const sheet = result.status === 'atlas' ? result.resource : null
+      monsterAtlasTextures.set(type, sheet instanceof Spritesheet && result.status === 'atlas' && result.missingFrames.length === 0
+        ? sheet.textures as Record<string, Texture> : null)
+    })
+    return null
+  }
+  return cached === 'loading' ? null : cached?.[command.frameName] ?? null
+}
+
+function getOrCreateMonsterGroup(target: Container, monsterGroups: Map<string, MonsterGroup>, id: string) {
+  const existing = monsterGroups.get(id)
   if (existing) {
-    return existing as Container
+    return existing
   }
   const group = new Container()
+  recordPixiChildMutation(1, 0)
   const monsterGroup = group as Container & { objectLayerKind: string; objectId: string }
   monsterGroup.objectLayerKind = 'monster'
   monsterGroup.objectId = id
   target.addChild(group)
-  return group
+  monsterGroups.set(id, group)
+  return group as MonsterGroup
 }
 
 function drawResourceNode(
@@ -807,14 +951,16 @@ function drawResourceNode(
   const pos = nearestWrappedScreenCoord(command.tile, screenTarget)
   const x = origin.x + pos.x * zoom
   const y = origin.y + (pos.y - 18) * zoom
-  const group = getOrCreateContainer(target, cache, command.id)
-  for (const child of group.removeChildren()) {
-    child.destroy()
-  }
-  group.zIndex = command.sortKey
+  const sortKey = projectedObjectSortKey(pos, 0.18)
+  const group = getOrCreateContainer(target, cache, command.id) as Container & { resourceGraphic?: Graphics }
+  group.zIndex = sortKey
   target.sortableChildren = true
-
-  drawResourceFallback(group, command, x, y, zoom)
+  if (!group.resourceGraphic) {
+    group.resourceGraphic = new Graphics()
+    group.addChild(group.resourceGraphic)
+    recordPixiChildMutation(1, 0)
+  }
+  drawResourceFallback(group.resourceGraphic, command, x, y, zoom)
 
   const left = x - command.size.width * zoom * command.anchor.x
   const top = y - command.size.height * zoom * command.anchor.y
@@ -824,12 +970,12 @@ function drawResourceNode(
     right: left + command.size.width * zoom,
     top,
     bottom: top + command.size.height * zoom,
-    sortKey: command.sortKey,
+    sortKey,
   })
 }
 
-function drawResourceFallback(target: Container, command: ResourceDrawCommand, x: number, y: number, zoom: number) {
-  const graphic = new Graphics()
+function drawResourceFallback(graphic: Graphics, command: ResourceDrawCommand, x: number, y: number, zoom: number) {
+  graphic.clear()
   const palette = resourcePalette(command.resource)
   const width = command.size.width * zoom
   const height = command.size.height * zoom
@@ -868,7 +1014,6 @@ function drawResourceFallback(target: Container, command: ResourceDrawCommand, x
   graphic.roundRect(x - barWidth / 2, y + height * 0.28, barWidth, barHeight, barHeight / 2).fill({ color: 0x15191c, alpha: 0.52 })
   graphic.roundRect(x - barWidth / 2, y + height * 0.28, barWidth * command.amountRatio, barHeight, barHeight / 2).fill({ color: depleted ? 0x8d9290 : 0x66d17a, alpha: 0.82 })
 
-  target.addChild(graphic)
 }
 
 function resourcePalette(resource: string) {
@@ -881,26 +1026,19 @@ function resourcePalette(resource: string) {
   return { primary: 0x8d9290, secondary: 0xc2c9c7 }
 }
 
-function drawMonsterFallback(target: Container, command: MonsterDrawCommand, x: number, y: number, zoom: number) {
-  const graphic = new Graphics()
+function drawMonsterFallback(graphic: Graphics, command: MonsterDrawCommand, x: number, y: number, zoom: number) {
+  graphic.clear()
   const healthTint = command.healthRatio < 0.35 ? 0xb23a48 : command.monster.state === 'attacking' ? 0xd77a32 : 0x4b6f7f
   const bodyWidth = command.size.width * 0.34 * zoom
   const bodyHeight = command.size.height * 0.42 * zoom
-  const bob = command.animationKey === 'walk' ? Math.sin(performance.now() / 110 + command.id.length) * 3 * zoom : 0
+  const bob = command.monster.type === 'ember_wisp' && command.animationKey === 'walk'
+    ? Math.sin(performance.now() / 110 + command.id.length) * 3 * zoom : 0
   const yBase = y + bob
 
   graphic.ellipse(x, yBase - bodyHeight * 0.46, bodyWidth * 0.62, bodyHeight * 0.72).fill({ color: healthTint, alpha: command.monster.state === 'dead' ? 0.36 : 0.92 })
   graphic.circle(x, yBase - bodyHeight * 1.08, bodyWidth * 0.42).fill({ color: 0x263238, alpha: command.monster.state === 'dead' ? 0.32 : 0.95 })
   graphic.circle(x - bodyWidth * 0.16, yBase - bodyHeight * 1.14, Math.max(1.5, 3 * zoom)).fill({ color: 0xffe08a, alpha: 0.9 })
   graphic.circle(x + bodyWidth * 0.16, yBase - bodyHeight * 1.14, Math.max(1.5, 3 * zoom)).fill({ color: 0xffe08a, alpha: 0.9 })
-
-  if (command.selected) {
-    graphic
-      .ellipse(x, y + 4 * zoom, bodyWidth * 0.84, 13 * zoom)
-      .stroke({ color: 0xfff1a8, alpha: 0.95, width: Math.max(1.5, 2.5 * zoom) })
-  } else {
-    graphic.ellipse(x, y + 5 * zoom, bodyWidth * 0.72, 9 * zoom).fill({ color: 0x000000, alpha: 0.18 })
-  }
 
   if (command.animationKey === 'attack') {
     const side = command.direction === 'nw' || command.direction === 'sw' ? -1 : 1
@@ -909,20 +1047,23 @@ function drawMonsterFallback(target: Container, command: MonsterDrawCommand, x: 
       .fill({ color: 0xffc857, alpha: 0.58 })
   }
 
-  target.addChild(graphic)
 }
 
-function drawMonsterHealthBar(target: Container, command: MonsterDrawCommand, x: number, y: number, zoom: number) {
+function drawMonsterHealthBar(graphic: Graphics, command: MonsterDrawCommand, x: number, y: number, zoom: number) {
+  graphic.clear()
   if (command.monster.state === 'dead') {
     return
   }
-  const width = 58 * zoom
+  const top = y - command.size.height * 0.94 * zoom
+  drawHealthBar(graphic, x, top, 58 * zoom, zoom, command.healthRatio)
+}
+
+function drawHealthBar(graphic: Graphics, x: number, top: number, width: number, zoom: number, ratio: number) {
   const height = Math.max(3, 5 * zoom)
-  const top = y - command.size.height * 0.78 * zoom
-  const graphic = new Graphics()
   graphic.roundRect(x - width / 2, top, width, height, height / 2).fill({ color: 0x15191c, alpha: 0.74 })
-  graphic.roundRect(x - width / 2, top, width * command.healthRatio, height, height / 2).fill({ color: command.healthRatio < 0.35 ? 0xff4d4f : 0x66d17a, alpha: 0.92 })
-  target.addChild(graphic)
+  if (ratio > 0) {
+    graphic.roundRect(x - width / 2, top, width * ratio, height, Math.min(height / 2, width * ratio / 2)).fill({ color: healthBarColor(ratio), alpha: 0.92 })
+  }
 }
 
 function drawTerrainSprite(target: Container, cache: RetainedChildCache, key: string, textureUrl: string, x: number, y: number, zoom: number, sortKey: number) {
@@ -966,10 +1107,14 @@ function getOrCreateSprite(target: Container, cache: RetainedChildCache, key: st
   if (existing && !existingSprite) {
     target.removeChild(existing)
     existing.destroy({ children: true })
+    recordPixiChildMutation(0, 1)
     cache.delete(key)
   }
   if (existingSprite) {
     const tagged = existingSprite as Sprite & { textureUrl?: string }
+    if (tagged.parent !== target) {
+      target.addChild(tagged)
+    }
     if (tagged.textureUrl !== textureUrl) {
       tagged.texture = Texture.from(textureUrl)
       tagged.textureUrl = textureUrl
@@ -977,6 +1122,7 @@ function getOrCreateSprite(target: Container, cache: RetainedChildCache, key: st
     return existingSprite
   }
   const sprite = new Sprite(Texture.from(textureUrl)) as Sprite & { textureUrl?: string }
+  recordPixiChildMutation(1, 0)
   sprite.textureUrl = textureUrl
   cache.set(key, sprite)
   target.addChild(sprite)
@@ -989,12 +1135,14 @@ function getOrCreateGraphics(target: Container, cache: RetainedChildCache, key: 
   if (existing && !existingGraphics) {
     target.removeChild(existing)
     existing.destroy({ children: true })
+    recordPixiChildMutation(0, 1)
     cache.delete(key)
   }
   if (existingGraphics) {
     return existingGraphics
   }
   const graphic = new Graphics()
+  recordPixiChildMutation(1, 0)
   cache.set(key, graphic)
   target.addChild(graphic)
   return graphic
@@ -1006,12 +1154,14 @@ function getOrCreateContainer(target: Container, cache: RetainedChildCache, key:
   if (existing && !existingContainer) {
     target.removeChild(existing)
     existing.destroy({ children: true })
+    recordPixiChildMutation(0, 1)
     cache.delete(key)
   }
   if (existingContainer) {
     return existingContainer
   }
   const group = new Container()
+  recordPixiChildMutation(1, 0)
   cache.set(key, group)
   target.addChild(group)
   return group
@@ -1073,7 +1223,7 @@ function eventToMapObject(
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
   const buildingMatches = buildingHitAreas
-    .filter((area) => x >= area.left && x <= area.right && y >= area.top && y <= area.bottom)
+    .filter((area) => x >= area.left && x <= area.right && y >= area.top && y <= area.bottom && isVisibleBuildingPixel(area, x, y))
     .map((area) => ({ type: 'building' as const, building: area.building, sortKey: area.sortKey }))
   const monsterMatches = monsterHitAreas
     .filter((area) => x >= area.left && x <= area.right && y >= area.top && y <= area.bottom)
@@ -1084,4 +1234,23 @@ function eventToMapObject(
   const matches = [...buildingMatches, ...resourceMatches, ...monsterMatches]
     .sort((left, right) => right.sortKey - left.sortKey)
   return matches[0] ?? null
+}
+
+function isVisibleBuildingPixel(area: BuildingHitArea, x: number, y: number) {
+  if (!area.texture) return true
+  const source = area.texture.source.resource
+  if (!source) return true
+  try {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 1
+    const context = canvas.getContext('2d', { willReadFrequently: true })
+    if (!context) return true
+    const frame = area.texture.frame
+    const sourceX = Math.floor(frame.x + (x - area.left) / (area.right - area.left) * frame.width)
+    const sourceY = Math.floor(frame.y + (y - area.top) / (area.bottom - area.top) * frame.height)
+    context.drawImage(source as CanvasImageSource, sourceX, sourceY, 1, 1, 0, 0, 1, 1)
+    return context.getImageData(0, 0, 1, 1).data[3] > 16
+  } catch {
+    return true
+  }
 }

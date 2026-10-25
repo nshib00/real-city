@@ -29,6 +29,12 @@ describe('building overlay draw data', () => {
     expect(keys).toEqual(['construction_dust', 'damaged_smoke', 'ready_to_collect'].sort())
   })
 
+  it('marks ready field overlays for placement inside the field tile', () => {
+    const [command] = buildingDrawCommands([building({ id: 'field-1', kind: 'field_bed', fieldStageReady: true })])
+
+    expect(buildingOverlayDrawCommands([command], { zoom: 1, nowMs: 0 }).find((overlay) => overlay.key === 'ready_to_collect')?.isField).toBe(true)
+  })
+
   it('adds fire for nearly destroyed buildings', () => {
     const [command] = buildingDrawCommands([building({ id: 'mine-1', kind: 'mine', health: 10, maxHealth: 100 })])
 
@@ -42,6 +48,15 @@ describe('building overlay draw data', () => {
     const [command] = buildingDrawCommands([building({ kind: 'mine' })])
 
     expect(buildingOverlayDrawCommands([command], { zoom: 1, nowMs: 0 })).toEqual([])
+  })
+
+  it('hides work and ready markers on another player buildings', () => {
+    const commands = buildingDrawCommands([
+      building({ id: 'yard', kind: 'lumber_yard', owner: 'other' }),
+      building({ id: 'field', kind: 'field_bed', owner: 'other', fieldStageReady: true }),
+      building({ id: 'damaged', kind: 'mine', owner: 'other', health: 12, maxHealth: 100 }),
+    ])
+    expect(buildingOverlayDrawCommands(commands, { zoom: 1, nowMs: 0, viewerId: 'self' }).map((overlay) => overlay.key)).toEqual(['damaged_smoke'])
   })
 
   it('filters low-priority overlays at far zoom', () => {

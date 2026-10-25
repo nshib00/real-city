@@ -25,6 +25,7 @@ export function NotificationCenter() {
           label={collapsed ? 'Развернуть уведомления' : 'Свернуть уведомления'}
           icon={collapsed ? ChevronDown : ChevronUp}
           active={collapsed}
+          sound={collapsed ? 'ui.toggle.on' : 'ui.toggle.off'}
           onClick={() => setCollapsed(!collapsed)}
         />
       </header>

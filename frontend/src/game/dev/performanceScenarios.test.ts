@@ -23,6 +23,11 @@ describe('performance scenarios', () => {
   })
 
   it('resolves only explicit dev query scenarios', () => {
+    const defaults = resolvePerformanceScenarioFromSearch('?perf=buildings', true)
+    expect(defaults?.buildings).toHaveLength(2600)
+    expect(defaults?.monsters).toHaveLength(160)
+    expect(defaults?.resources).toHaveLength(260)
+    expect(defaults?.tiles).toHaveLength(69 * 69)
     expect(resolvePerformanceScenarioFromSearch('?perf=buildings&perfBuildings=12&perfMonsters=3', true)).toMatchObject({
       name: 'buildings',
       buildings: expect.arrayContaining([expect.objectContaining({ id: 'perf-building-0' })]),

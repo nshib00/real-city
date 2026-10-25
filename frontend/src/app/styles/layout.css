@@ -95,6 +95,10 @@
     padding: 10px 12px;
   }
 
+  .inspector-monster {
+    height: min(240px, 42vh);
+  }
+
   .inspector .tabs,
   .inspector-actions {
     display: none;

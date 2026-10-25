@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { playUiSound } from '../../audio/playUiSound'
 
 type TabItem<T extends string> = {
   id: T
@@ -24,7 +25,8 @@ export function Tabs<T extends string>({ items, active, onChange, children }: Ta
             type="button"
             role="tab"
             aria-selected={item.id === active}
-            onClick={() => onChange(item.id)}
+            data-audio-handled="true"
+            onClick={() => { if (item.id !== active) { playUiSound('ui.tab'); onChange(item.id) } }}
           >
             <span>{item.label}</span>
             {item.badge ? <strong>{item.badge}</strong> : null}

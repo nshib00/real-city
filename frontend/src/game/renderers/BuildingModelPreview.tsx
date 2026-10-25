@@ -10,6 +10,7 @@ export function BuildingModelPreview({ building, className = '' }: { building: P
       <Suspense fallback={<span className="building-model-preview-status">Загрузка 3D</span>}>
         <LazyBuildingGlbModel building={building} />
       </Suspense>
+      <span className="building-model-preview-hint">Тяните для вращения · колесо — масштаб</span>
     </div>
   )
 }

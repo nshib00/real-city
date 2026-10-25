@@ -205,6 +205,8 @@ function scenarioName(value: string | null): PerformanceScenarioName | null {
 }
 
 function numberParam(params: URLSearchParams, key: string, fallback: number) {
-  const value = Number(params.get(key))
+  const raw = params.get(key)
+  if (raw === null || raw.trim() === '') return fallback
+  const value = Number(raw)
   return Number.isFinite(value) && value >= 0 ? Math.round(value) : fallback
 }

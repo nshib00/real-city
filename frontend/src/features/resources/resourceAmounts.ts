@@ -47,7 +47,7 @@ export function buildingCapacityValue(buildings: PlacedBuilding[]) {
   return `${usedBuildingLimit(buildings)}/${buildingLimit(buildings)}`
 }
 
-const catalogByKind = new Map(buildingCatalog.map((item) => [item.type, item]))
+const catalogByKind = new Map<string, (typeof buildingCatalog)[number]>(buildingCatalog.map((item) => [item.type, item]))
 
 export function populationLimit(buildings: PlacedBuilding[]) {
   return buildings.reduce((total, building) => {

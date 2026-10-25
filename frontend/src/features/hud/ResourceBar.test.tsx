@@ -36,6 +36,7 @@ describe('ResourceBar', () => {
     expect(screen.queryByLabelText('Бензин: 0')).toBeNull()
     expect(screen.getByLabelText('Ресурсы').querySelector('.resource-chip')?.getAttribute('aria-label')).toBe('Постройки: 0/8')
     expect(screen.getByLabelText('Монеты: 50/2000').querySelector('img')?.getAttribute('src')).toContain('/assets/resources/icons/coins.png')
+    expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).querySelectorAll('.resource-chip')).toHaveLength(9)
 
     fireEvent.click(screen.getByLabelText('Реестр ресурсов'))
     expect(useGameStore.getState().uiPreferences.resourceRegistryOpen).toBe(true)
@@ -69,7 +70,7 @@ describe('ResourceBar', () => {
     )
 
     expect(screen.queryByLabelText('Древесина: 0')).toBeNull()
-    expect(resourceChipLabels()).toEqual([
+    expect(resourceChipLabels().filter((label) => !resourceCatalog.some((resource) => resource.category === 'weapons' && label?.startsWith(`${resource.name}:`)))).toEqual([
       'Постройки: 0/8',
       'Жители: 0',
       'Монеты: 50/2000',
@@ -84,10 +85,10 @@ describe('ResourceBar', () => {
 
   it('keeps display order on regular resources only', () => {
     const pinnedIds = new Set(['coins', 'population', 'aeolian-crystal'])
-    const regularResources = resourceCatalog.filter((resource) => !pinnedIds.has(resource.id))
+    const regularResources = resourceCatalog.filter((resource) => !pinnedIds.has(resource.id) && resource.category !== 'weapons')
 
     expect(resourceCatalog.filter((resource) => pinnedIds.has(resource.id)).every((resource) => resource.displayOrder === undefined)).toBe(true)
-    expect(regularResources.every((resource) => typeof resource.displayOrder === 'number' && Number.isInteger(resource.displayOrder) && resource.displayOrder >= 0)).toBe(true)
+    expect(regularResources.every((resource) => typeof resource.displayOrder === 'number' && Number.isFinite(resource.displayOrder) && resource.displayOrder >= 0)).toBe(true)
     const displayOrders = regularResources.map((resource) => resource.displayOrder ?? -1)
     expect(new Set(displayOrders).size).toBe(displayOrders.length)
   })

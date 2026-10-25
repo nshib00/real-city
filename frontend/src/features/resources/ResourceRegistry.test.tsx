@@ -75,6 +75,15 @@ describe('ResourceRegistry', () => {
     expect(row?.textContent).toContain('0')
   })
 
+  it('lists every weapon in its own category before it is crafted', () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    queryClient.setQueryData(['economy', 'inventory'], inventoryPayload(1500, 20, 2500))
+    render(<QueryClientProvider client={queryClient}><ResourceRegistry /></QueryClientProvider>)
+    fireEvent.click(screen.getByText('Оружие и бомбы'))
+    expect(screen.getByText('Метательные клинки')).toBeTruthy()
+    expect(screen.getByText('Резонансный заряд')).toBeTruthy()
+  })
+
   it('shows fiber claimed from a resource guardian', () => {
     const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
     queryClient.setQueryData(['economy', 'inventory'], {

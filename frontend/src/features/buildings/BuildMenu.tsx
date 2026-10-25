@@ -1,7 +1,9 @@
-import { Building2, Check, Clock, UsersRound, X } from 'lucide-react'
+import { Building2, Check, ChevronLeft, ChevronRight, Clock, Eye, UsersRound, X } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
+import { playUiSound } from '../../audio/playUiSound'
+import { cellLabel } from '../../game/coordinates/district'
 import { useGameStore } from '../../game/state/useGameStore'
 import { placeBuilding as placeBuildingRequest, toPlacedBuilding } from '../../shared/api/buildings'
 import { ApiClientError } from '../../shared/api/client'
@@ -10,7 +12,9 @@ import { useAuthStore } from '../auth/useAuthStore'
 import { validatePlacementPreview } from '../build-placement/placement'
 import { availablePopulation, inventoryAmount, useInventory } from '../economy/useInventory'
 import { ResourceIcon } from '../resources/ResourceIcon'
+import { showToast } from '../notifications/toast'
 import { buildCatalog } from './catalog'
+import { placementMaterialVariant, placementSound, playBuildingSound } from './buildingAudio'
 
 type BuildCategory = (typeof categories)[number]['id']
 
@@ -31,8 +35,11 @@ export function BuildMenu() {
   const [pendingKind, setPendingKind] = useState<string | null>(null)
   const [buildError, setBuildError] = useState('')
   const [category, setCategory] = useState<BuildCategory>('all')
+  const [collapsed, setCollapsed] = useState(false)
   const open = useGameStore((state) => state.uiPreferences.buildMenuOpen)
   const selectedTile = useGameStore((state) => state.selectedTile)
+  const placementPreviewKind = useGameStore((state) => state.placementPreviewKind)
+  const setPlacementPreviewKind = useGameStore((state) => state.setPlacementPreviewKind)
   const buildings = useGameStore((state) => state.buildings)
   const monsters = useGameStore((state) => state.monsters)
   const worldTiles = useGameStore((state) => state.worldTiles)
@@ -43,37 +50,57 @@ export function BuildMenu() {
   const inventoryQuery = useInventory()
   const inventory = inventoryQuery.data?.inventory.items
   const ownerBuildings = useMemo(() => (player ? buildings.filter((building) => building.owner === player.id) : buildings), [buildings, player])
-  const freePopulation = useMemo(() => availablePopulation(inventory, buildings, player?.id), [buildings, inventory, player?.id])
+  const freePopulation = availablePopulation(inventory)
   const hasTownHall = useMemo(() => ownerBuildings.some((building) => building.kind === 'town_hall'), [ownerBuildings])
   const worldTileByKey = useMemo(() => new Map(worldTiles.map((tile) => [`${tile.x}:${tile.y}`, tile])), [worldTiles])
   const selectedWorldTile = selectedTile ? worldTileByKey.get(`${selectedTile.x}:${selectedTile.y}`) ?? null : null
+  const isOilWellTile = selectedWorldTile?.terrain === 'oil_well'
   const visibleCatalog = useMemo(
-    () => sortBuildCatalogByCoinCost(category === 'all' ? buildCatalog : buildCatalog.filter((item) => item.category === category)),
-    [category],
+    () => sortBuildCatalogByCoinCost(buildCatalog.filter((item) => isOilWellTile ? item.kind === 'oil_well' : item.kind !== 'oil_well' && (category === 'all' || item.category === category))),
+    [category, isOilWellTile],
   )
+
+  useEffect(() => {
+    if (!open) setCollapsed(false)
+  }, [open])
+
+  useEffect(() => {
+    if (!open || !placementPreviewKind) return
+    const cancelOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      playUiSound('ui.place.cancel')
+      setPlacementPreviewKind(null)
+    }
+    window.addEventListener('keydown', cancelOnEscape)
+    return () => window.removeEventListener('keydown', cancelOnEscape)
+  }, [open, placementPreviewKind, setPlacementPreviewKind])
 
   if (!open) {
     return null
   }
 
   return (
-    <div className="build-menu-backdrop" role="presentation">
-      <section className="build-menu" aria-label="Меню строительства">
+    <div className={collapsed ? 'build-menu-backdrop build-menu-backdrop-collapsed' : 'build-menu-backdrop'} role="presentation">
+      <section className={`build-menu${isOilWellTile ? ' build-menu-oil-well' : ''}${collapsed ? ' build-menu-collapsed' : ''}`} aria-label="Меню строительства">
         <header>
           <div>
-            <h2>Стройка</h2>
-            <span>{selectedTile ? `тайл ${selectedTile.x}:${selectedTile.y}` : 'выберите тайл'}</span>
+            <h2>{isOilWellTile ? 'Нефтяная вышка' : 'Стройка'}</h2>
+            {!collapsed ? <span>{selectedTile ? `клетка ${cellLabel(selectedTile)}` : 'выберите клетку'}</span> : null}
           </div>
-          <IconButton label="Закрыть меню строительства" icon={X} onClick={() => setBuildMenuOpen(false)} />
+          <div className="build-menu-header-actions">
+            {placementPreviewKind ? <IconButton label="Отменить предпросмотр постройки" icon={X} sound="ui.place.cancel" onClick={() => setPlacementPreviewKind(null)} /> : null}
+            <IconButton label={collapsed ? 'Развернуть меню строительства' : 'Свернуть меню строительства'} icon={collapsed ? ChevronLeft : ChevronRight} sound={collapsed ? 'ui.toggle.on' : 'ui.toggle.off'} onClick={() => setCollapsed(!collapsed)} />
+            <IconButton label="Закрыть меню строительства" icon={X} sound={placementPreviewKind ? 'ui.place.cancel' : 'ui.panel.close'} onClick={() => setBuildMenuOpen(false)} />
+          </div>
         </header>
-        <div className="build-category-tabs" role="tablist" aria-label="Категории построек">
+        {!collapsed && !isOilWellTile ? <div className="build-category-tabs" role="tablist" aria-label="Категории построек">
           {categories.map((item) => (
-            <button className={category === item.id ? 'build-category-tab build-category-tab-active' : 'build-category-tab'} key={item.id} type="button" role="tab" aria-selected={category === item.id} onClick={() => setCategory(item.id)}>
+            <button className={category === item.id ? 'build-category-tab build-category-tab-active' : 'build-category-tab'} key={item.id} type="button" role="tab" aria-selected={category === item.id} data-audio-handled="true" onClick={() => { if (category !== item.id) { playUiSound('ui.tab'); setCategory(item.id) } }}>
               {item.label}
             </button>
           ))}
-        </div>
-        <div className="build-list">
+        </div> : null}
+        {!collapsed ? <div className="build-list">
           {visibleCatalog.map((item) => {
             const lockedByTownHall = item.kind !== 'town_hall' && !hasTownHall
             const lockedTownHall = item.kind === 'town_hall' && hasTownHall
@@ -81,7 +108,7 @@ export function BuildMenu() {
             const shortage = getShortage(item, inventory, freePopulation)
             const disabled = !placement.valid || lockedByTownHall || lockedTownHall || shortage !== null
             return (
-              <article className={disabled ? 'build-card build-card-disabled' : 'build-card'} key={item.kind}>
+              <article className={`${disabled ? 'build-card build-card-disabled' : 'build-card'}${placementPreviewKind === item.kind ? ' build-card-preview' : ''}`} key={item.kind}>
                 <div className={`build-image build-icon-${item.kind}`} aria-hidden="true">
                   {item.previewImage ? <img src={item.previewImage} alt="" draggable={false} loading="lazy" decoding="async" /> : <Building2 size={22} />}
                 </div>
@@ -103,6 +130,13 @@ export function BuildMenu() {
                         ))}
                   </em>
                 </div>
+                <div className="build-card-actions">
+                  <IconButton
+                    label={`Предпросмотр ${item.name} на карте`}
+                    icon={Eye}
+                    sound="ui.place.preview"
+                    onClick={() => { setPlacementPreviewKind(item.kind); setCollapsed(true) }}
+                  />
                 <IconButton
                   label={`Построить ${item.name}`}
                   icon={Check}
@@ -115,11 +149,16 @@ export function BuildMenu() {
                     setBuildError('')
                     try {
                       const result = await placeBuildingRequest({ type: item.kind, tile_x: selectedTile.x, tile_y: selectedTile.y })
+                      playBuildingSound(placementSound(result.building.type, result.building.state), result.building.id, 'placed', 1200, placementMaterialVariant(result.building.type))
+                      if (item.cost.some((cost) => cost.resource === 'coins' && cost.amount > 0)) playUiSound('economy.coin.spent')
+                      showToast('info', 'Строительство началось')
                       addBuilding(toPlacedBuilding(result.building))
                       setBuildMenuOpen(false)
                       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
                       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
                     } catch (error) {
+                      playUiSound(error instanceof ApiClientError && error.apiError.fields?.coins ? 'economy.coin.insufficient'
+                        : error instanceof ApiClientError && Object.keys(error.apiError.fields ?? {}).some((field) => field !== 'tile' && field !== 'terrain' && field !== 'limit') ? 'ui.resource.insufficient' : 'ui.action.invalid')
                       setBuildError(formatBuildError(error))
                       return
                     } finally {
@@ -127,11 +166,12 @@ export function BuildMenu() {
                     }
                   }}
                 />
+                </div>
               </article>
             )
           })}
-        </div>
-        {buildError ? <p className="build-error" role="alert">{buildError}</p> : null}
+        </div> : null}
+        {!collapsed && buildError ? <p className="build-error" role="alert">{buildError}</p> : null}
       </section>
     </div>
   )
@@ -246,7 +286,6 @@ function resourceLabel(resource: string) {
     tools: 'инструменты',
     star_glass: 'звездное стекло',
     light_crystal: 'светокристалл',
-    influence_seal: 'печать влияния',
   }
   return labels[resource] ?? resource
 }

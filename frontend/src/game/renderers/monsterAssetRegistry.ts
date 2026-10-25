@@ -30,7 +30,7 @@ const monsterAssetManifests: readonly MonsterAssetManifest[] = [
     atlas: {
       image: 'roaming_melee.webp',
       json: 'roaming_melee.atlas.json',
-      revision: 'manifest-contract-2026-10-12',
+      revision: 'blender-rig-v1',
     },
     animations: defaultMonsterAnimations(),
     glb: {
@@ -45,7 +45,7 @@ const monsterAssetManifests: readonly MonsterAssetManifest[] = [
     atlas: {
       image: 'resource_guardian.webp',
       json: 'resource_guardian.atlas.json',
-      revision: 'manifest-contract-2026-10-12',
+      revision: 'blender-rig-v1',
     },
     animations: defaultMonsterAnimations(),
     glb: {
@@ -60,7 +60,7 @@ const monsterAssetManifests: readonly MonsterAssetManifest[] = [
     atlas: {
       image: 'ruins_guardian.webp',
       json: 'ruins_guardian.atlas.json',
-      revision: 'manifest-contract-2026-10-12',
+      revision: 'blender-rig-v1',
     },
     animations: defaultMonsterAnimations(),
     glb: {
@@ -72,39 +72,53 @@ const monsterAssetManifests: readonly MonsterAssetManifest[] = [
     displayName: 'Лесной следопыт',
     anchor: [128, 190],
     directions: defaultDirections,
+    atlas: monsterAtlas('forest_stalker'),
     animations: defaultMonsterAnimations(),
+    glb: { preview: 'forest_stalker_preview.glb' },
   },
   {
     monsterId: 'spore_beast',
     displayName: 'Споровый зверь',
     anchor: [128, 190],
     directions: defaultDirections,
+    atlas: monsterAtlas('spore_beast'),
     animations: defaultMonsterAnimations(),
+    glb: { preview: 'spore_beast_preview.glb' },
   },
   {
     monsterId: 'ironback_brute',
     displayName: 'Железоспин',
     anchor: [128, 190],
     directions: defaultDirections,
+    atlas: monsterAtlas('ironback_brute'),
     animations: defaultMonsterAnimations(),
+    glb: { preview: 'ironback_brute_preview.glb' },
   },
   {
     monsterId: 'ember_wisp',
     displayName: 'Тлеющий огонек',
     anchor: [128, 190],
     directions: defaultDirections,
+    atlas: monsterAtlas('ember_wisp'),
     animations: defaultMonsterAnimations(),
+    glb: { preview: 'ember_wisp_preview.glb' },
   },
   {
     monsterId: 'ancient_colossus',
     displayName: 'Древний колосс',
     anchor: [128, 210],
     directions: defaultDirections,
+    atlas: monsterAtlas('ancient_colossus'),
     animations: defaultMonsterAnimations(),
+    glb: { preview: 'ancient_colossus_preview.glb' },
   },
 ]
 
 const registry = new Map(monsterAssetManifests.map((manifest) => [manifest.monsterId, manifest]))
+
+function monsterAtlas(id: MonsterEntity['type']): AssetAtlasManifest {
+  return { image: `${id}.webp`, json: `${id}.atlas.json`, revision: 'blender-rig-v1' }
+}
 
 export function monsterAssetRegistryEntry(type: MonsterEntity['type']) {
   return registry.get(type) ?? null
@@ -222,7 +236,7 @@ function defaultMonsterAnimations(): MonsterAssetManifest['animations'] {
 function monsterAnimationFrameNames(manifest: MonsterAssetManifest): string[] {
   return Object.entries(manifest.animations).flatMap(([key, animation]) => {
     const frameCount = animation?.frames
-    if (!animation?.framePrefix || typeof frameCount !== 'number') {
+    if (typeof frameCount !== 'number') {
       return []
     }
     const directions = animation.directions?.length ? animation.directions : manifest.directions

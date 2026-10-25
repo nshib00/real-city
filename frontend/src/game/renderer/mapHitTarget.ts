@@ -35,3 +35,11 @@ export function buildingHitAtTile<TBuilding extends { tile: TileCoord }>(
     .sort((left, right) => right.sortKey - left.sortKey)
   return matches[0]?.building ?? null
 }
+
+export function buildingHitAtClick<TBuilding extends { tile: TileCoord }>(
+  tile: TileCoord | null,
+  areas: readonly BuildingTileHit<TBuilding>[],
+  buildingAtPoint: TBuilding | null,
+) {
+  return buildingHitAtTile(tile, areas) ?? buildingAtPoint
+}

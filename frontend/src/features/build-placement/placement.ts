@@ -1,5 +1,10 @@
 import type { BuildingKind, MonsterEntity, PlacedBuilding } from '../../game/state/useGameStore'
 import type { TerrainType, WorldTile } from '../../shared/contracts'
+import { buildingCatalog } from '../../../../shared/catalog/buildings'
+
+const buildingFootprints = new Map<string, { width: number; height: number }>(buildingCatalog.map((item) => [item.type, item.footprint]))
+const trapKinds = new Set<BuildingKind>(['defense_stakes', 'defense_resin_snare'])
+const roadKinds = new Set<BuildingKind>(['road', 'standard_road', 'paved_road'])
 
 export type PlacementPreview = {
   valid: boolean
@@ -15,20 +20,29 @@ export function validatePlacementPreview(input: {
   buildings: PlacedBuilding[]
   ownerId?: string | null
   monsters?: MonsterEntity[]
+  ignoreBuildingId?: string
+  skipTownHallCheck?: boolean
 }): PlacementPreview {
   if (!input.tile) {
     return { valid: false, reason: 'Выберите клетку на карте' }
   }
   const ownerBuildings = input.ownerId ? input.buildings.filter((building) => building.owner === input.ownerId) : input.buildings
   const hasTownHall = ownerBuildings.some((building) => building.kind === 'town_hall')
-  if (input.kind !== 'town_hall' && !hasTownHall) {
+  if (!input.skipTownHallCheck && input.kind !== 'town_hall' && !hasTownHall) {
     return { valid: false, reason: 'Сначала нужна ратуша' }
   }
-  if (input.kind === 'town_hall' && hasTownHall) {
+  if (!input.skipTownHallCheck && input.kind === 'town_hall' && hasTownHall) {
     return { valid: false, reason: 'Ратуша может быть только одна' }
   }
   const footprint = footprintTiles(input.tile, input.footprint)
-  if (input.buildings.some((building) => footprint.some((tile) => tile.x === building.tile.x && tile.y === building.tile.y))) {
+  if (input.buildings.some((building) => {
+    if (building.id === input.ignoreBuildingId) return false
+    if (building.state === 'ruined') return false
+    if ((trapKinds.has(input.kind) && roadKinds.has(building.kind)) || (roadKinds.has(input.kind) && trapKinds.has(building.kind))) return false
+    const occupied = buildingFootprints.get(building.kind)
+    return footprint.some((tile) => tile.x >= building.tile.x && tile.x < building.tile.x + (building.footprintW ?? occupied?.width ?? 1)
+      && tile.y >= building.tile.y && tile.y < building.tile.y + (building.footprintH ?? occupied?.height ?? 1))
+  })) {
     return { valid: false, reason: 'Клетка уже занята' }
   }
   if (input.monsters?.some((monster) => footprint.some((tile) => tile.x === monster.tile.x && tile.y === monster.tile.y))) {

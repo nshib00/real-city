@@ -46,8 +46,32 @@ export function modularPathSpriteAsset(building: PlacedBuilding, shape: ModularP
   return resolveBuildingSpriteAsset(building, { shape })
 }
 
-export function modularPathShapeFor(building: PlacedBuilding, buildings: PlacedBuilding[]): ModularPathShape {
-  return modularPathShapeFromMask(modularPathNeighborMask(building, buildings))
+export function modularPathShapeFor(building: PlacedBuilding, buildings: readonly PlacedBuilding[]): ModularPathShape {
+  return modularPathShapeFromIndex(building, buildModularPathIndex(buildings))
+}
+
+export type ModularPathIndex = { road: Set<string>; wall: Set<string> }
+
+export function buildModularPathIndex(buildings: readonly PlacedBuilding[]): ModularPathIndex {
+  const index: ModularPathIndex = { road: new Set(), wall: new Set() }
+  for (const building of buildings) {
+    if (isModularPathKind(building.kind)) {
+      index[pathAssets[building.kind].group].add(tileKey(building.tile.x, building.tile.y))
+    }
+  }
+  return index
+}
+
+export function modularPathShapeFromIndex(building: PlacedBuilding, index: ModularPathIndex): ModularPathShape {
+  if (!isModularPathKind(building.kind)) return 'single'
+  const connectedTiles = index[pathAssets[building.kind].group]
+  const { x, y } = building.tile
+  return modularPathShapeFromMask({
+    n: connectedTiles.has(tileKey(x, y - 1)),
+    e: connectedTiles.has(tileKey(x + 1, y)),
+    s: connectedTiles.has(tileKey(x, y + 1)),
+    w: connectedTiles.has(tileKey(x - 1, y)),
+  })
 }
 
 export function modularPathShapeFromMask(mask: RoadNeighborMask): ModularPathShape {
@@ -90,25 +114,6 @@ export function groundRoadShapeFor(building: PlacedBuilding, buildings: PlacedBu
 
 export function groundRoadShapeFromMask(mask: RoadNeighborMask): ModularPathShape {
   return modularPathShapeFromMask(mask)
-}
-
-function modularPathNeighborMask(building: PlacedBuilding, buildings: PlacedBuilding[]): RoadNeighborMask {
-  if (!isModularPathKind(building.kind)) {
-    return { n: false, e: false, s: false, w: false }
-  }
-  const group = pathAssets[building.kind].group
-  const connectedTiles = new Set(
-    buildings
-      .filter((item) => isModularPathKind(item.kind) && pathAssets[item.kind].group === group)
-      .map((item) => tileKey(item.tile.x, item.tile.y)),
-  )
-  const { x, y } = building.tile
-  return {
-    n: connectedTiles.has(tileKey(x, y - 1)),
-    e: connectedTiles.has(tileKey(x + 1, y)),
-    s: connectedTiles.has(tileKey(x, y + 1)),
-    w: connectedTiles.has(tileKey(x - 1, y)),
-  }
 }
 
 function modularPathState(building: PlacedBuilding) {

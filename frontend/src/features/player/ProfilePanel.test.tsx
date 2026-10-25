@@ -58,13 +58,14 @@ describe('ProfilePanel', () => {
 
     fireEvent.click(screen.getByLabelText('Открыть профиль игрока'))
 
+    expect(screen.getByRole('dialog', { name: 'Профиль' }).closest('.profile-modal-backdrop')).toBeTruthy()
     expect(screen.getAllByText('Северный рубеж').length).toBeGreaterThan(0)
     expect(screen.getByLabelText('Опыт: 300/1200')).toBeTruthy()
     expect(screen.getByText('До следующего уровня: 900 XP')).toBeTruthy()
 
     fireEvent.click(screen.getByText('Настройки'))
 
-    expect(screen.getByLabelText('Настройки профиля')).toBeTruthy()
+    expect(screen.getByRole('dialog', { name: 'Настройки профиля' }).closest('.profile-modal-backdrop')).toBeTruthy()
     fireEvent.change(screen.getByDisplayValue('Северный рубеж'), { target: { value: 'Новый рубеж' } })
     fireEvent.click(screen.getByText('Сохранить'))
 

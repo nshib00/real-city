@@ -1,3 +1,4 @@
+import { fieldCropSpec } from '../../../features/fields/fieldGrowth'
 import type { BuildingAnimationKey, AssetAnimationManifest } from '../../renderers/assetManifestTypes'
 import { buildingOverlayKeys, buildingVisualState } from '../../renderers/buildingAnimationRegistry'
 import type { BuildingDrawCommand } from './objectDrawData'
@@ -15,6 +16,7 @@ export type BuildingOverlayDrawCommand = {
   frameIndex: number
   phase: number
   selected: boolean
+  isField: boolean
 }
 
 const SHARED_OVERLAY_ANIMATIONS: Partial<Record<BuildingAnimationKey, AssetAnimationManifest>> = {
@@ -60,6 +62,7 @@ export function buildingOverlayDrawCommands(
   options: {
     zoom: number
     nowMs: number
+    viewerId?: string | null
   },
 ): BuildingOverlayDrawCommand[] {
   return buildings.flatMap((command) => buildingOverlayDrawCommandsFor(command, options))
@@ -70,11 +73,13 @@ export function buildingOverlayDrawCommandsFor(
   options: {
     zoom: number
     nowMs: number
+    viewerId?: string | null
   },
 ): BuildingOverlayDrawCommand[] {
   const manifestOverlays = new Map(buildingVisualState(command.building).overlays.map((overlay) => [overlay.key, overlay.animation]))
 
   return runtimeOverlayKeys(command)
+    .filter((key) => options.viewerId === undefined || (key !== 'ready_to_collect' && key !== 'working') || command.building.owner === options.viewerId)
     .map((key) => ({ key, animation: manifestOverlays.get(key) ?? SHARED_OVERLAY_ANIMATIONS[key] }))
     .filter((item): item is { key: BuildingAnimationKey; animation: AssetAnimationManifest } => Boolean(item.animation))
     .filter(({ key }) => shouldRenderBuildingOverlay(key, options.zoom, command.selected))
@@ -102,6 +107,7 @@ export function buildingOverlayDrawCommandsFor(
         frameIndex,
         phase: frameIndex / frameCount,
         selected: command.selected,
+        isField: Boolean(fieldCropSpec(command.building.kind)),
       }
     })
 }

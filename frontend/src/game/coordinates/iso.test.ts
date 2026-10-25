@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { gridToScreen, screenToGrid, tileToChunk, WORLD_WRAP_SCREEN, WORLD_WRAP_TILES, wrapCameraOffset, wrapGridCoord } from './iso'
+import { gridToScreen, nearestWrappedScreenCoord, screenToGrid, tileToChunk, WORLD_WRAP_TILES, wrapGridCoord, wrappedGridDistance } from './iso'
 
 describe('isometric coordinates', () => {
   it('round-trips grid and screen coordinates', () => {
@@ -17,8 +17,14 @@ describe('isometric coordinates', () => {
     expect(tileToChunk({ x: -1, y: -33 })).toEqual({ x: -1, y: -2 })
   })
 
-  it('wraps world coordinates and camera offsets cyclically', () => {
+  it('wraps world coordinates cyclically', () => {
     expect(wrapGridCoord({ x: -1, y: WORLD_WRAP_TILES + 2 })).toEqual({ x: WORLD_WRAP_TILES - 1, y: 2 })
-    expect(wrapCameraOffset({ x: WORLD_WRAP_SCREEN.x + 240, y: -WORLD_WRAP_SCREEN.y - 120 })).toEqual({ x: 240, y: -120 })
+  })
+
+  it('finds the nearest copy after moving across multiple world periods', () => {
+    const target = gridToScreen({ x: WORLD_WRAP_TILES * 3 + 4, y: -WORLD_WRAP_TILES * 2 + 7 })
+    expect(nearestWrappedScreenCoord({ x: 4, y: 7 }, target)).toEqual(target)
+    expect(wrappedGridDistance(159, -1)).toBe(0)
+    expect(wrappedGridDistance(159, 1)).toBe(2)
   })
 })

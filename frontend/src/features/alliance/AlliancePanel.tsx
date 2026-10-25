@@ -1,11 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Coins, Gauge, Hammer, Shield } from 'lucide-react'
 import type { FormEvent } from 'react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { playUiSound } from '../../audio/playUiSound'
 import { useGameStore } from '../../game/state/useGameStore'
 import { Drawer, IconButton } from '../../shared/ui'
-import { createAlliance, createMarketOrder, donateToAlliance, getAllianceProfile, listMarketOrders, upgradeAllianceBuff } from '../../shared/api/social'
+import { cancelMarketOrder, createAlliance, createMarketOrder, donateToAlliance, getAllianceProfile, inviteToAlliance, listMarketOrders, respondToAllianceInvite, upgradeAllianceBuff } from '../../shared/api/social'
+import { useAuthStore } from '../auth/useAuthStore'
 import { ResourceIcon } from '../resources/ResourceIcon'
 
 const buffCatalog = [
@@ -18,9 +20,12 @@ export function AlliancePanel() {
   const open = useGameStore((state) => state.uiPreferences.alliancePanelOpen)
   const setAlliancePanelOpen = useGameStore((state) => state.setAlliancePanelOpen)
   const queryClient = useQueryClient()
-  const profileQuery = useQuery({ queryKey: ['alliances', 'me'], queryFn: getAllianceProfile, enabled: open })
+  const profileQuery = useQuery({ queryKey: ['alliances', 'me'], queryFn: getAllianceProfile, enabled: open, refetchInterval: open ? 10_000 : false })
   const marketQuery = useQuery({ queryKey: ['market', 'orders'], queryFn: listMarketOrders, enabled: open })
   const [name, setName] = useState('Северный караван')
+  const [invitee, setInvitee] = useState('')
+  const playerId = useAuthStore((state) => state.player?.id)
+  const seenInvites = useRef<Set<string> | null>(null)
   const [donation, setDonation] = useState({ resource: 'wood', amount: 25 })
   const [order, setOrder] = useState<{ side: 'sell' | 'buy'; resource: string; amount: number; price: number }>({ side: 'sell', resource: 'wood', amount: 50, price: 120 })
   const profile = profileQuery.data?.profile
@@ -31,9 +36,20 @@ export function AlliancePanel() {
     void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
   }
   const createMutation = useMutation({ mutationFn: createAlliance, onSuccess: refreshSocial })
-  const donateMutation = useMutation({ mutationFn: donateToAlliance, onSuccess: refreshSocial })
+  const donateMutation = useMutation({ mutationFn: donateToAlliance, onSuccess: () => { playUiSound('social.alliance.treasury'); refreshSocial() } })
+  const inviteMutation = useMutation({ mutationFn: inviteToAlliance, onSuccess: () => { playUiSound('social.alliance.invite'); setInvitee(''); refreshSocial() } })
+  const respondMutation = useMutation({ mutationFn: ({ id, accept }: { id: string; accept: boolean }) => respondToAllianceInvite(id, accept), onSuccess: (_result, variables) => { playUiSound(variables.accept ? 'social.alliance.accepted' : 'social.alliance.declined'); refreshSocial() } })
   const buffMutation = useMutation({ mutationFn: upgradeAllianceBuff, onSuccess: refreshSocial })
-  const marketMutation = useMutation({ mutationFn: createMarketOrder, onSuccess: refreshSocial })
+  const marketMutation = useMutation({ mutationFn: createMarketOrder, onSuccess: () => { playUiSound('economy.market.listed'); refreshSocial() } })
+  const cancelMarketMutation = useMutation({ mutationFn: cancelMarketOrder, onSuccess: () => { playUiSound('economy.market.cancelled'); refreshSocial() } })
+
+  useEffect(() => {
+    const invites = profileQuery.data?.profile.invites
+    if (!invites) return
+    if (!seenInvites.current) { seenInvites.current = new Set(invites.map((invite) => invite.id)); return }
+    if (invites.some((invite) => invite.invitee_id === playerId && invite.status === 'pending' && !seenInvites.current?.has(invite.id))) playUiSound('social.alliance.invite')
+    for (const invite of invites) seenInvites.current.add(invite.id)
+  }, [profileQuery.data, playerId])
 
   function submitAlliance(event: FormEvent) {
     event.preventDefault()
@@ -53,6 +69,14 @@ export function AlliancePanel() {
   return (
     <Drawer title="Союзный дом" open={open} onClose={() => setAlliancePanelOpen(false)}>
       {!profile?.alliance ? (
+        <>
+        {profile?.invites.filter((invite) => invite.invitee_id === playerId && invite.status === 'pending').map((invite) => (
+          <div key={invite.id} className="social-form">
+            <span>Приглашение в союз {invite.alliance_id}</span>
+            <button type="button" disabled={respondMutation.isPending} onClick={() => respondMutation.mutate({ id: invite.id, accept: true })}>Принять</button>
+            <button type="button" disabled={respondMutation.isPending} onClick={() => respondMutation.mutate({ id: invite.id, accept: false })}>Отклонить</button>
+          </div>
+        ))}
         <form className="social-form" onSubmit={submitAlliance}>
           <label>
             <span>Название союза</span>
@@ -60,6 +84,7 @@ export function AlliancePanel() {
           </label>
           <button type="submit" disabled={createMutation.isPending}>Создать союз</button>
         </form>
+        </>
       ) : (
         <>
           <section className="alliance-summary">
@@ -92,6 +117,12 @@ export function AlliancePanel() {
           </form>
           <section className="alliance-list">
             <h3>Иерархия</h3>
+            {profile.self && ['leader', 'deputy', 'officer'].includes(profile.self.role) ? (
+              <form className="social-form" onSubmit={(event) => { event.preventDefault(); if (invitee.trim()) inviteMutation.mutate(invitee.trim()) }}>
+                <input aria-label="ID игрока для приглашения" value={invitee} onChange={(event) => setInvitee(event.target.value)} />
+                <button type="submit" disabled={inviteMutation.isPending}>Пригласить</button>
+              </form>
+            ) : null}
             {profile.members.map((member) => (
               <p key={member.player_id}>
                 <strong>{roleLabel(member.role)}{member.treasurer ? ' / казначей' : ''}</strong>
@@ -134,10 +165,11 @@ export function AlliancePanel() {
           <p key={item.id}>
             <strong>{item.side === 'sell' ? 'Продажа' : 'Покупка'}</strong>
             <ResourceIcon id={item.resource} label={item.resource} /> {item.amount} за {item.price} монет
+            {item.status === 'open' ? <button type="button" disabled={cancelMarketMutation.isPending} onClick={() => cancelMarketMutation.mutate(item.id)}>Отменить ордер</button> : null}
           </p>
         ))}
       </form>
-      {(profileQuery.isError || createMutation.isError || donateMutation.isError || marketMutation.isError) ? <p className="build-error">Социальный API временно недоступен.</p> : null}
+      {(profileQuery.isError || createMutation.isError || donateMutation.isError || inviteMutation.isError || respondMutation.isError || marketMutation.isError) ? <p className="build-error">Социальный API временно недоступен.</p> : null}
       <section className="alliance-treasury">
         <p><Coins size={16} aria-hidden="true" /> Комиссия рынка резервируется сразу, пожертвования списываются из инвентаря.</p>
       </section>

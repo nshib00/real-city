@@ -4,10 +4,14 @@ import type { ReactElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { ProductionRecipeResponse } from '../shared/api/economy'
-import { startProduction } from '../shared/api/economy'
+import { listProductionRecipes, startProduction } from '../shared/api/economy'
+import { claimMonsterLoot, listMonsterLoot } from '../shared/api/monsters'
+import { listNearbyPlayers } from '../shared/api/playerPresence'
 import { chopForest, getChunks } from '../shared/api/world'
+import { relocateBuilding } from '../shared/api/buildings'
 import type { WorldTile } from '../shared/contracts'
 import { useAuthStore } from '../features/auth/useAuthStore'
+import { applyRealtimeEvent } from '../features/world/realtime'
 import type { Player } from '../features/auth/types'
 import { useGameStore } from './state/useGameStore'
 import type { PlacedBuilding } from './state/useGameStore'
@@ -15,6 +19,20 @@ import { IsoMap } from './IsoMap'
 
 const economyMocks = vi.hoisted(() => ({
   startProduction: vi.fn(),
+}))
+
+vi.mock('../shared/api/monsters', async () => {
+  const actual = await vi.importActual<typeof import('../shared/api/monsters')>('../shared/api/monsters')
+  return {
+    ...actual,
+    listMonsterLoot: vi.fn(async () => ({ loot: [] })),
+    claimMonsterLoot: vi.fn(),
+  }
+})
+
+vi.mock('../shared/api/playerPresence', () => ({
+  listNearbyPlayers: vi.fn(async () => ({ players: [] })),
+  updatePlayerPresence: vi.fn(async () => ({ status: 'ok' })),
 }))
 
 const pixiMocks = vi.hoisted(() => ({
@@ -26,6 +44,7 @@ const pixiMocks = vi.hoisted(() => ({
     occupiedTiles?: Set<string>
     selectedBuildingId?: string | null
     selectedMonsterId?: string | null
+    targetTileOnly?: boolean
   } | undefined,
 }))
 
@@ -44,6 +63,11 @@ vi.mock('../shared/api/world', () => ({
   chopForest: vi.fn(),
 }))
 
+vi.mock('../shared/api/buildings', async () => {
+  const actual = await vi.importActual<typeof import('../shared/api/buildings')>('../shared/api/buildings')
+  return { ...actual, relocateBuilding: vi.fn() }
+})
+
 vi.mock('./renderer/PixiStage', () => ({
   PixiStage: (props: {
     tiles?: { x: number; y: number }[]
@@ -53,6 +77,7 @@ vi.mock('./renderer/PixiStage', () => ({
     occupiedTiles?: Set<string>
     selectedBuildingId?: string | null
     selectedMonsterId?: string | null
+    targetTileOnly?: boolean
     onSelectTile: (tile: { x: number; y: number }) => void
     onSelectBuilding?: (building: { id: string; name: string }) => void
     onSelectMonster?: (monster: { id: string; type: string }) => void
@@ -99,6 +124,12 @@ describe('IsoMap production interactions', () => {
     vi.mocked(getChunks).mockReset()
     vi.mocked(getChunks).mockResolvedValue({ chunks: [] })
     vi.mocked(chopForest).mockReset()
+    vi.mocked(relocateBuilding).mockReset()
+    vi.mocked(listMonsterLoot).mockReset()
+    vi.mocked(listMonsterLoot).mockResolvedValue({ loot: [] })
+    vi.mocked(claimMonsterLoot).mockReset()
+    vi.mocked(listNearbyPlayers).mockReset()
+    vi.mocked(listNearbyPlayers).mockResolvedValue({ players: [] })
     economyMocks.startProduction.mockResolvedValue({
       job: {
         id: 'job-1',
@@ -121,6 +152,8 @@ describe('IsoMap production interactions', () => {
       selectedBuildingId: null,
       selectedMonsterId: null,
       hoveredTile: null,
+      placementPreviewKind: null,
+      relocatingBuildingId: null,
       buildings: [
         {
           id: 'lumber-yard-1',
@@ -137,17 +170,93 @@ describe('IsoMap production interactions', () => {
       ],
       resourceNodes: [],
       monsters: [],
+      buildingDamageEvents: [],
       worldTiles: [],
+      uiPreferences: { ...useGameStore.getState().uiPreferences, buildMenuOpen: false },
       constructionNow: Date.parse('2026-09-29T10:00:00Z'),
       camera: { x: 0, y: 0, zoom: 1 },
       viewport: { center: { x: 0, y: 0 }, radius: 1 },
     })
   })
 
+  it('moves a selected building to a free tile and rejects an occupied tile', async () => {
+    vi.mocked(relocateBuilding).mockResolvedValue({ building: {
+      id: 'lumber-yard-1', owner_id: 'player-1', type: 'lumber_yard', name: 'Лесопильный двор',
+      level: 1, state: 'active', health: 100, tile_x: 2, tile_y: 1,
+      rotation: 0, footprint_w: 1, footprint_h: 1,
+      started_at: '2026-09-29T10:00:00Z', completes_at: null,
+    } })
+    useGameStore.setState((state) => ({
+      buildings: [...state.buildings, {
+        ...state.buildings[0], id: 'blocker', tile: { x: 1, y: 1 }, owner: 'player-2',
+      }],
+      selectedBuildingId: 'lumber-yard-1',
+      relocatingBuildingId: 'lumber-yard-1',
+    }))
+    renderWithClient(<IsoMap />)
+
+    expect(pixiMocks.latestProps?.targetTileOnly).toBe(true)
+    fireEvent.click(screen.getByTestId('pixi-forest-a'))
+    expect(relocateBuilding).not.toHaveBeenCalled()
+    expect(useGameStore.getState().relocatingBuildingId).toBe('lumber-yard-1')
+
+    fireEvent.click(screen.getByTestId('pixi-forest-b'))
+    await waitFor(() => expect(relocateBuilding).toHaveBeenCalledWith('lumber-yard-1', { x: 2, y: 1 }, 0))
+    await waitFor(() => expect(useGameStore.getState().buildings.find((item) => item.id === 'lumber-yard-1')?.tile).toEqual({ x: 2, y: 1 }))
+    expect(useGameStore.getState().relocatingBuildingId).toBeNull()
+  })
+
+  it('cancels building relocation with Escape', () => {
+    useGameStore.setState({ selectedBuildingId: 'lumber-yard-1', relocatingBuildingId: 'lumber-yard-1' })
+    renderWithClient(<IsoMap />)
+
+    fireEvent.keyDown(window, { key: 'Escape' })
+
+    expect(useGameStore.getState().relocatingBuildingId).toBeNull()
+    expect(pixiMocks.latestProps?.targetTileOnly).toBe(false)
+  })
+
+  it('renders a nearby player with their nickname and level', async () => {
+    vi.mocked(listNearbyPlayers).mockResolvedValue({
+      players: [{ player_id: 'player-2', name: 'Аэрон', level: 4, tile_x: 1, tile_y: 1 }],
+    })
+
+    renderWithClient(<IsoMap />)
+
+    expect(await screen.findByText('Аэрон')).toBeTruthy()
+    expect(screen.getByTitle('Уровень 4').textContent).toContain('4')
+  })
+
+  it('moves a nearby balloon when another player changes tile', async () => {
+    vi.mocked(listNearbyPlayers).mockResolvedValue({
+      players: [{ player_id: 'player-2', name: 'Аэрон', level: 4, tile_x: 1, tile_y: 1 }],
+    })
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    renderWithClient(<IsoMap />, queryClient)
+    const balloon = await screen.findByRole('button', { name: 'Аэрон, уровень 4' })
+    const before = balloon.style.transform
+    const state = useGameStore.getState()
+
+    act(() => applyRealtimeEvent({
+      type: 'presence.moved', event_id: 'move-1', seq: 1, sent_at: '2026-10-25T00:00:00Z', payload_version: 1,
+      payload: { player: { player_id: 'player-2', name: 'Аэрон', level: 4, tile_x: 2, tile_y: 1 } },
+    }, {
+      queryClient, updateWorldTile: state.updateWorldTile, addBuilding: state.addBuilding,
+      deleteBuilding: state.deleteBuilding, upsertResourceNode: state.upsertResourceNode, upsertMonster: state.upsertMonster,
+    }))
+
+    await waitFor(() => expect(balloon.style.transform).not.toBe(before))
+    expect(listNearbyPlayers).toHaveBeenCalledTimes(1)
+  })
+
   it('starts lumber yard production when the workers badge is clicked', async () => {
     renderWithClient(<IsoMap />)
 
-    fireEvent.click(await screen.findByText('3'))
+    const workersBadge = (await screen.findByText('3')).closest('.building-work-badge-workers')
+    expect(workersBadge?.querySelector('.resource-icon-population')).toBeTruthy()
+    expect(workersBadge?.querySelector('.building-work-badge-input')?.textContent).toBe('10')
+    expect(workersBadge?.querySelector('.resource-icon-wood')?.getAttribute('aria-label')).toBe('Древесина')
+    fireEvent.click(workersBadge!)
 
     await waitFor(() => {
       expect(startProduction).toHaveBeenCalled()
@@ -156,6 +265,134 @@ describe('IsoMap production interactions', () => {
         recipe_id: 'planks_from_wood',
       })
     })
+  })
+
+  it('shows the upgraded sawmill inputs instead of the level-one recipe', async () => {
+    vi.mocked(listProductionRecipes).mockResolvedValueOnce({
+      recipes: [
+        lumberRecipe(),
+        {
+          ...lumberRecipe(),
+          required_level: 4,
+          duration_sec: 1395,
+          workers: 4,
+          input: [{ resource: 'wood', amount: 24 }, { resource: 'fuel', amount: 5 }],
+          output: [{ resource: 'planks', amount: 11 }],
+          rare_output: [{ resource: 'premium_planks', amount: 1, chance: 0.01 }],
+        },
+      ],
+    })
+    useGameStore.setState({ buildings: [{ ...useGameStore.getState().buildings[0], level: 4 }] })
+
+    renderWithClient(<IsoMap />)
+
+    const workersBadge = (await screen.findByText('4')).closest('.building-work-badge-workers')
+    expect(workersBadge?.querySelector('.resource-icon-fuel')).toBeTruthy()
+    expect(workersBadge?.textContent).toContain('24')
+    expect(workersBadge?.textContent).toContain('5')
+  })
+
+  it('shows public monster loot and lets the player claim it', async () => {
+    const loot = { id: 'loot-1', monster_id: 'monster-1', tile_x: 1, tile_y: 1, items: [{ resource: 'wood', amount: 25 }], created_at: '2026-09-29T10:00:00Z' }
+    vi.mocked(listMonsterLoot).mockResolvedValueOnce({ loot: [loot] })
+    vi.mocked(claimMonsterLoot).mockResolvedValue({ loot, inventory: { player_id: 'player-1', items: loot.items, coin_capacity: 2000, updated_at: '2026-09-29T10:00:00Z' } })
+
+    renderWithClient(<IsoMap />)
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Собрать добычу: 25 Древесина' }))
+    await waitFor(() => expect(vi.mocked(claimMonsterLoot).mock.calls[0]?.[0]).toBe('loot-1'))
+    await waitFor(() => expect(screen.queryByRole('button', { name: 'Собрать добычу: 25 Древесина' })).toBeNull())
+  })
+
+  it('shows a newly dropped reward without waiting for the next loot poll', async () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
+    renderWithClient(<IsoMap />, queryClient)
+    await waitFor(() => expect(queryClient.getQueryData<{ loot: unknown[] }>(['monster-loot', 16, 16, 1])).toEqual({ loot: [] }))
+
+    act(() => {
+      queryClient.setQueriesData<{ loot: { id: string; monster_id: string; tile_x: number; tile_y: number; items: { resource: string; amount: number }[]; created_at: string }[] }>(
+        { queryKey: ['monster-loot'] },
+        (current) => current ? { loot: [...current.loot, { id: 'new-loot', monster_id: 'monster-1', tile_x: 1, tile_y: 1, items: [{ resource: 'wood', amount: 25 }], created_at: '2026-09-29T10:00:00Z' }] } : current,
+      )
+    })
+
+    expect(await screen.findByRole('button', { name: 'Собрать добычу: 25 Древесина' })).toBeTruthy()
+  })
+
+  it('opens a foreign building without starting production', async () => {
+    vi.mocked(startProduction).mockClear()
+    act(() => {
+      useGameStore.setState({
+        buildings: [{ ...useGameStore.getState().buildings[0], id: 'foreign-yard', owner: 'player-2' }],
+      })
+    })
+
+    renderWithClient(<IsoMap />)
+    fireEvent.click(screen.getByTestId('pixi-building-foreign-yard'))
+
+    await waitFor(() => expect(useGameStore.getState().selectedBuildingId).toBe('foreign-yard'))
+    expect(startProduction).not.toHaveBeenCalled()
+  })
+
+  it('opens construction when an unbuilt oil well tile is clicked', async () => {
+    vi.mocked(getChunks).mockResolvedValue({ chunks: [testChunk([
+      { x: 2, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'oil_well', elevation: 0, safe_zone: false, forest_density: 0 },
+    ])] })
+    renderWithClient(<IsoMap />)
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(1))
+
+    fireEvent.click(screen.getByTestId('pixi-forest-b'))
+
+    expect(useGameStore.getState().selectedTile).toEqual({ x: 2, y: 1 })
+    expect(useGameStore.getState().uiPreferences.buildMenuOpen).toBe(true)
+    expect(chopForest).not.toHaveBeenCalled()
+  })
+
+  it('keeps the current map visible while the next district is loading', async () => {
+    const firstTile: WorldTile = { x: 1, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'grass', elevation: 0, safe_zone: false, forest_density: 0 }
+    const nextTile: WorldTile = { x: 33, y: 1, chunk_x: 1, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 2 }
+    let resolveNext!: (response: { chunks: ReturnType<typeof testChunk>[] }) => void
+    vi.mocked(getChunks)
+      .mockResolvedValueOnce({ chunks: [testChunk([firstTile])] })
+      .mockImplementationOnce(() => new Promise((resolve) => { resolveNext = resolve }))
+
+    const exampleBuilding = useGameStore.getState().buildings[0]
+    useGameStore.setState({ buildings: [
+      { ...exampleBuilding, id: 'left-building', tile: { x: 31, y: 1 } },
+      { ...exampleBuilding, id: 'right-building', tile: { x: 33, y: 1 } },
+    ] })
+    renderWithClient(<IsoMap />)
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toEqual([firstTile]))
+
+    act(() => useGameStore.getState().setViewportCenter({ x: 32, y: 0 }))
+    await waitFor(() => expect(getChunks).toHaveBeenCalledTimes(2))
+    expect(pixiMocks.latestProps?.tiles).toEqual([firstTile])
+
+    await act(async () => resolveNext({ chunks: [testChunk([nextTile])] }))
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toEqual([firstTile, nextTile]))
+    expect(useGameStore.getState().worldTiles).toEqual([firstTile, nextTile])
+    expect(pixiMocks.latestProps?.buildings?.map((building) => building.id)).toEqual(['left-building', 'right-building'])
+
+    const distantTile: WorldTile = { ...firstTile, x: 129, chunk_x: 4 }
+    vi.mocked(getChunks).mockResolvedValue({ chunks: [testChunk([distantTile])] })
+    act(() => useGameStore.getState().setViewportCenter({ x: 128, y: 0 }))
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toEqual([distantTile]))
+  })
+
+  it('moves a placement preview without chopping a forest tile', async () => {
+    vi.mocked(getChunks).mockResolvedValue({ chunks: [testChunk([
+      { x: 2, y: 1, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 2 },
+    ])] })
+    useGameStore.setState({ selectedTile: { x: 1, y: 1 }, placementPreviewKind: 'town_hall' })
+    renderWithClient(<IsoMap />)
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(1))
+
+    expect(document.querySelector('.map-placement-preview img')).toBeTruthy()
+    fireEvent.click(screen.getByTestId('pixi-forest-b'))
+
+    expect(useGameStore.getState().selectedTile).toEqual({ x: 2, y: 1 })
+    expect(chopForest).not.toHaveBeenCalled()
+    expect(useGameStore.getState().placementPreviewKind).toBe('town_hall')
   })
 
   it('passes visible buildings to the Pixi object layer and keeps overlay controls in DOM', async () => {
@@ -349,6 +586,38 @@ describe('IsoMap production interactions', () => {
     })
   })
 
+  it('shows the lost HP above a building after a monster hit', () => {
+    renderWithClient(<IsoMap />)
+
+    act(() => {
+      useGameStore.getState().recordBuildingDamage({
+        id: 'building-hit-1', buildingId: 'lumber-yard-1', tile: { x: 0, y: 0 },
+        damage: 23, createdAt: Date.now(),
+      })
+    })
+
+    const damage = screen.getByText('-23')
+    expect(damage.classList.contains('map-damage-number')).toBe(true)
+    expect(damage.parentElement?.classList.contains('map-damage-layer')).toBe(true)
+    expect(damage.style.left).toBeTruthy()
+    expect(damage.style.top).toBeTruthy()
+  })
+
+  it('shows the lost HP above a monster after a hit', () => {
+    renderWithClient(<IsoMap />)
+
+    act(() => {
+      useGameStore.getState().recordMonsterDamage({
+        id: 'monster-hit-1', monsterId: 'monster-1', tile: { x: 0, y: 0 },
+        damage: 12, createdAt: Date.now(),
+      })
+    })
+
+    const damage = screen.getByText('-12')
+    expect(damage.classList.contains('map-damage-number')).toBe(true)
+    expect(damage.parentElement?.classList.contains('map-damage-layer')).toBe(true)
+  })
+
   it('passes visible resource nodes to Pixi instead of rendering DOM resource markers', async () => {
     act(() => {
       useGameStore.setState({
@@ -403,6 +672,7 @@ function lumberRecipe(): ProductionRecipeResponse {
     id: 'planks_from_wood',
     name: 'Доски',
     building_type: 'lumber_yard',
+    required_level: 1,
     duration_sec: 300,
     workers: 3,
     input: [{ resource: 'wood', amount: 10 }],
@@ -447,6 +717,7 @@ function testPlayer(id: string): Player {
       avatar_url: '',
       level: 1,
       xp: 0,
+      level_start_xp: 0,
       next_level_xp: 100,
       settings: {
         notifications: { raid_alerts: true, production_ready: true, market_updates: true },

@@ -4,10 +4,14 @@ import { readdir, rm } from 'node:fs/promises'
 import path from 'node:path'
 
 const apiProxyTarget = process.env.VITE_API_PROXY_TARGET ?? 'http://localhost:8080'
+const runtimePublicGlbDirectories = [
+  '/assets/buildings/housing/stone_house/',
+  '/assets/buildings/housing/villa/',
+  '/assets/buildings/industry/',
+]
 const nonRuntimeAssetPatterns = [
   /\.backup-/,
   /\.blend1?$/,
-  /\.glb$/,
   /(?:^|[_-])(?:contact_sheet|review|preview)(?:[_-]|\.)/,
 ]
 
@@ -72,7 +76,9 @@ async function pruneTree(dir: string) {
   await Promise.all(entries.map(async (entry) => {
     const entryPath = path.join(dir, entry.name)
     const normalized = entryPath.split(path.sep).join('/')
-    if (nonRuntimeAssetPatterns.some((pattern) => pattern.test(normalized))) {
+    const devOnlyDirectory = entry.isDirectory() && (entry.name === 'preview' || entry.name.startsWith('backup_') || entry.name.endsWith('_test'))
+    const unusedGlb = normalized.endsWith('.glb') && !runtimePublicGlbDirectories.some((directory) => normalized.includes(directory))
+    if (devOnlyDirectory || unusedGlb || nonRuntimeAssetPatterns.some((pattern) => pattern.test(normalized))) {
       await rm(entryPath, { recursive: true, force: true })
       return
     }

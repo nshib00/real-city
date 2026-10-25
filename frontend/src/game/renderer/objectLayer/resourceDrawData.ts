@@ -31,6 +31,7 @@ const DEFAULT_RESOURCE_SPRITE = {
 
 export function resourceDrawCommands(nodes: readonly ResourceNode[]): ResourceDrawCommand[] {
   return nodes
+	.filter((node) => node.resource !== 'oil' || node.state !== 'depleted')
     .map(resourceDrawCommand)
     .sort((left, right) => left.sortKey - right.sortKey || left.id.localeCompare(right.id))
 }

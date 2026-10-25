@@ -1,10 +1,11 @@
 import { Bell, LogOut, MonitorCog, Settings, ShieldAlert, Star, UserRound } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { playUiSound } from '../../audio/playUiSound'
 import { getMe, logout, updateMe } from '../auth/api'
 import type { RenderQuality } from '../auth/types'
 import { useAuthStore } from '../auth/useAuthStore'
-import { Drawer } from '../../shared/ui/Drawer'
+import { Modal } from '../../shared/ui/Modal'
 
 const levelThresholds = [0, 200, 700, 1900, 4700, 11200, 26200, 61200, 141200, 321200, 721200, 1621200, 3621200, 8121200, 18121200]
 
@@ -20,6 +21,14 @@ export function ProfilePanel() {
   const [productionReady, setProductionReady] = useState(true)
   const [marketUpdates, setMarketUpdates] = useState(false)
   const [saving, setSaving] = useState(false)
+  const lastLevel = useRef<{ playerId: string; level: number } | null>(null)
+
+  useEffect(() => {
+    if (!player) { lastLevel.current = null; return }
+    const level = levelThresholds.reduce((current, threshold, index) => player.profile.xp >= threshold ? index + 1 : current, 1)
+    if (lastLevel.current?.playerId === player.id && level > lastLevel.current.level) playUiSound('economy.level.up')
+    lastLevel.current = { playerId: player.id, level }
+  }, [player])
 
   useEffect(() => {
     if (!player?.id) {
@@ -114,7 +123,7 @@ export function ProfilePanel() {
         </span>
       </button>
 
-      <Drawer title="Профиль" open={profileOpen} side="left" onClose={() => setProfileOpen(false)}>
+      <Modal title="Профиль" open={profileOpen} className="profile-modal-backdrop" onClose={() => setProfileOpen(false)}>
         <div className="profile-drawer-body">
           <div className="profile-identity">
             <span className="profile-avatar profile-avatar-large" aria-hidden="true">
@@ -192,9 +201,9 @@ export function ProfilePanel() {
             </button>
           </div>
         </div>
-      </Drawer>
+      </Modal>
 
-      <Drawer title="Настройки профиля" open={settingsOpen} side="left" onClose={() => setSettingsOpen(false)}>
+      <Modal title="Настройки профиля" open={settingsOpen} className="profile-modal-backdrop" onClose={() => setSettingsOpen(false)}>
         <div className="profile-settings-form">
           <label>
             Имя пользователя
@@ -236,7 +245,7 @@ export function ProfilePanel() {
             {saving ? 'Сохранение...' : 'Сохранить'}
           </button>
         </div>
-      </Drawer>
+      </Modal>
     </>
   )
 }

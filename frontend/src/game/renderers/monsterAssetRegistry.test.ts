@@ -40,12 +40,17 @@ describe('monster asset registry', () => {
   })
 
   it('resolves atlas URLs through manifest metadata', () => {
-    expect(resolveMonsterAtlasAsset('ruins_guardian')).toBe('/assets/monsters/ruins_guardian/ruins_guardian.webp?v=manifest-contract-2026-10-12')
+    expect(resolveMonsterAtlasAsset('ruins_guardian')).toBe('/assets/monsters/ruins_guardian/ruins_guardian.webp?v=blender-rig-v1')
     expect(resolveMonsterAtlasSource('ruins_guardian')).toMatchObject({
       assetId: 'ruins_guardian',
       basePath: '/assets/monsters/ruins_guardian',
-      fallbackUrl: '/assets/monsters/ruins_guardian/ruins_guardian.webp?v=manifest-contract-2026-10-12',
+      fallbackUrl: '/assets/monsters/ruins_guardian/ruins_guardian.webp?v=blender-rig-v1',
     })
+    for (const manifest of registeredMonsterAssetFamilies()) {
+      const source = resolveMonsterAtlasSource(manifest.monsterId)
+      expect(source?.requiredFrames).toHaveLength(196)
+      expect(source?.requiredFrames).toContain(`${manifest.monsterId}_death_nw_0013.png`)
+    }
   })
 })
 

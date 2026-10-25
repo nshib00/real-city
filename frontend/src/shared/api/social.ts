@@ -89,6 +89,14 @@ export function createAlliance(name: string) {
   })
 }
 
+export function inviteToAlliance(player_id: string) {
+  return request<{ invite: AllianceInvite }>('/alliances/invites', { method: 'POST', body: JSON.stringify({ player_id }) })
+}
+
+export function respondToAllianceInvite(id: string, accept: boolean) {
+  return request<{ profile: AllianceProfile }>(`/alliances/invites/${encodeURIComponent(id)}`, { method: 'PATCH', body: JSON.stringify({ accept }) })
+}
+
 export function donateToAlliance(input: { resource: string; amount: number }) {
   return request<{ profile: AllianceProfile }>('/alliances/treasury/donations', {
     method: 'POST',

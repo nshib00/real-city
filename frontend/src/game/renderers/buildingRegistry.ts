@@ -35,7 +35,39 @@ const srcModelUrlLoaders = import.meta.env.PROD
     import: 'default',
   }) as Record<string, () => Promise<string>>
 
+function trapAssetState(building: PlacedBuilding): BuildingAssetState {
+  if (building.state === 'ruined' || building.health <= 0) return 'ruined'
+  if (building.status === 'construction' || building.state === 'building' || building.state === 'planned') return 'construction'
+  if (building.state === 'damaged' || isCriticallyDamaged(building)) return 'damaged'
+  if (building.trapCharges === 0) return 'empty'
+  return 'armed'
+}
+
+function staffedDefenseAssetState(building: PlacedBuilding): BuildingAssetState {
+  if (building.state === 'ruined' || building.health <= 0) return 'ruined'
+  if (building.status === 'construction' || building.state === 'building' || building.state === 'planned') return 'construction'
+  if (building.state === 'damaged' || isCriticallyDamaged(building)) return 'damaged'
+  if (!building.cannonEnabled) {
+    if (building.kind === 'defense_automaton_bay') return 'no_mechanic'
+    if (building.kind === 'defense_guardian_enclosure') return 'no_keeper'
+    return 'no_crew'
+  }
+  return 'active'
+}
+
 const manifestPolicies: Partial<Record<PlacedBuilding['kind'], ManifestPolicy>> = {
+  defense_stakes: { level: (level) => level, state: trapAssetState },
+  defense_resin_snare: { level: (level) => level, state: trapAssetState },
+  defense_bolt_thrower: { level: (level) => level, state: staffedDefenseAssetState },
+  defense_storm_coil: { level: (level) => level, state: staffedDefenseAssetState },
+  defense_automaton_bay: { level: (level) => level, state: staffedDefenseAssetState },
+  defense_guardian_enclosure: { level: (level) => level, state: staffedDefenseAssetState },
+  defense_cannon: { level: (level) => level, state: (building) => {
+    if (building.state === 'ruined' || building.health <= 0) return 'ruined'
+    if (building.status === 'construction' || building.state === 'building' || building.state === 'planned') return 'construction'
+    if (building.state === 'damaged' || isCriticallyDamaged(building)) return 'damaged'
+    return 'active'
+  } },
   town_hall: { level: townHallModelLevel, state: (building) => townHallModelState(building) },
   dugout: { level: dugoutModelLevel, state: (building) => dugoutModelState(building) },
   wood_house: { level: woodHouseModelLevel, state: (building) => woodHouseModelState(building) },
@@ -51,6 +83,12 @@ const manifestPolicies: Partial<Record<PlacedBuilding['kind'], ManifestPolicy>> 
   mine: { level: mineModelLevel, state: (building) => mineModelState(building) },
   glass_workshop: { level: glassWorkshopModelLevel, state: (building) => glassWorkshopModelState(building) },
   rope_yard: { level: ropeYardModelLevel, state: (building) => ropeYardModelState(building) },
+  oil_well: { level: (level) => clampLevel(level, [1, 2, 3]), state: (building) => {
+    if (building.state === 'ruined' || building.health <= 0) return 'ruined'
+    if (building.status === 'construction' || building.state === 'building' || building.state === 'planned') return 'construction'
+    if (building.state === 'damaged' || isCriticallyDamaged(building)) return 'damaged'
+    return 'active'
+  } },
 }
 
 export function buildingRegistryEntry(kind: PlacedBuilding['kind']) {
@@ -74,6 +112,9 @@ export function buildingAssetState(building: PlacedBuilding, manifest = building
     return null
   }
   const policyState = manifestPolicies[building.kind]?.state(building) ?? defaultBuildingAssetState(building)
+  if (manifest.strictStates && !manifest.states.includes(policyState)) {
+    return null
+  }
   return stateOrFallback(policyState, manifest)
 }
 
@@ -170,9 +211,13 @@ export function buildingAssetFileName(manifest: BuildingAssetManifest, level: nu
   const extension = options.extension
   if (manifest.shapeDefault) {
     const shape = options.shape ?? manifest.shapeDefault
+    if (manifest.assetId === 'wooden_wall' || manifest.assetId === 'stone_wall' || manifest.assetId === 'concrete_wall' || manifest.assetId === 'modern_wall') {
+      return `${manifest.assetId}_l${String(level).padStart(2, '0')}_${shape}_${state}${extension === 'glb' ? '_LOD0' : ''}.${extension}`
+    }
     return `${manifest.assetId}_${shape}_${state}.${extension}`
   }
-  return `${manifest.assetId}_l${String(level).padStart(2, '0')}_${state}.${extension}`
+  const lod = extension === 'glb' && manifest.modelLod ? `_${manifest.modelLod}` : ''
+  return `${manifest.filePrefix ?? manifest.assetId}_l${String(level).padStart(2, '0')}_${state}${lod}.${extension}`
 }
 
 export function withAssetRevision(asset: string, revision: string) {

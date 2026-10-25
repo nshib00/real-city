@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import type { PlacedBuilding } from '../../state/useGameStore'
+import { resolveBuildingModelAsset } from '../../renderers/buildingRegistry'
+import { OIL_WELL_ASSET_REVISION } from '../../renderers/buildingAssetManifests'
 import { buildingDrawCommands, canDrawBuildingInObjectLayer } from './objectDrawData'
 
 describe('object draw data', () => {
@@ -22,9 +24,11 @@ describe('object draw data', () => {
     const road = building({ id: 'road-1', kind: 'standard_road', tile: { x: 0, y: 0 } })
     const neighbor = building({ id: 'road-2', kind: 'standard_road', tile: { x: 1, y: 0 } })
 
-    expect(buildingDrawCommands([road], { allBuildings: [road, neighbor] })[0].textureUrl).toBe(
-      '/assets/buildings/roads/common_road/common_road_end_e_active.png',
-    )
+    expect(buildingDrawCommands([road], { allBuildings: [road, neighbor] })[0]).toMatchObject({
+      textureUrl: '/assets/buildings/roads/common_road/common_road_end_e_active.png',
+      anchor: { x: 0.5, y: 0.625 },
+      size: { width: 256, height: 256 },
+    })
   })
 
   it('draws wooden walls as single-tile isometric sprites', () => {
@@ -32,19 +36,43 @@ describe('object draw data', () => {
     const neighbor = building({ id: 'wall-2', kind: 'wooden_wall', tile: { x: 1, y: 0 } })
 
     expect(buildingDrawCommands([wall], { allBuildings: [wall, neighbor] })[0]).toMatchObject({
-      textureUrl: '/assets/buildings/roads/wooden_wall/wooden_wall_end_e_active.png',
+      textureUrl: '/assets/buildings/roads/wooden_wall/wooden_wall_l01_end_e_active.png',
       anchor: { x: 0.5, y: 0.625 },
       size: { width: 256, height: 256 },
     })
   })
 
-  it('uses manifest sprite metrics for 512x512 building sprites', () => {
-    const [command] = buildingDrawCommands([building({ kind: 'mine' })])
+  it('renders oversized mine sprites at the same map footprint as other buildings', () => {
+    for (const kind of ['mine', 'copper_mine'] as const) {
+      const [command] = buildingDrawCommands([building({ kind })])
 
-    expect(command).toMatchObject({
-      anchor: { x: 0.5, y: 0.625 },
-      size: { width: 512, height: 512 },
-    })
+      expect(command).toMatchObject({
+        anchor: { x: 0.5, y: 0.625 },
+        size: { width: 512 * 0.58, height: 512 * 0.58 },
+      })
+    }
+  })
+
+  it('draws every oil well level and state with the matching runtime assets', () => {
+    for (const level of [1, 2, 3]) {
+      for (const state of ['active', 'construction', 'damaged', 'ruined'] as const) {
+        const well = building({
+          kind: 'oil_well',
+          level,
+          status: state === 'construction' ? 'construction' : 'active',
+          state: state === 'construction' ? 'building' : state,
+          health: state === 'ruined' ? 0 : state === 'damaged' ? 70 : 100,
+        })
+        const [command] = buildingDrawCommands([well])
+        const base = `/assets/buildings/industry/oil_well/oil_well_l${String(level).padStart(2, '0')}_${state}`
+        expect(command).toMatchObject({
+          textureUrl: `${base}.png?v=${OIL_WELL_ASSET_REVISION}`,
+          anchor: { x: 0.5, y: 292 / 384 },
+          size: { width: 512, height: 384 },
+        })
+        expect(resolveBuildingModelAsset(well)).toBe(`${base}.glb?v=${OIL_WELL_ASSET_REVISION}`)
+      }
+    }
   })
 
   it('marks the selected building for Pixi styling', () => {

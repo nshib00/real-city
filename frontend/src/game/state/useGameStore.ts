@@ -1,11 +1,12 @@
 import { create } from 'zustand'
-import { gridToScreen, wrapCameraOffset, wrapGridCoord } from '../coordinates/iso'
+import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, wrapGridCoord } from '../coordinates/iso'
 import type { WorldTile } from '../../shared/contracts'
 
 export type ToolMode = 'select' | 'build' | 'road' | 'repair' | 'raid'
 export type RealtimeStatus = 'connecting' | 'connected' | 'reconnecting' | 'offline'
 export type BuildingState = 'planned' | 'building' | 'active' | 'damaged' | 'ruined'
 export type BuildingKind =
+  | `ruins_${string}`
   | 'town_hall'
   | 'dugout'
   | 'field_bed'
@@ -22,6 +23,7 @@ export type BuildingKind =
   | 'coin_storage'
   | 'workshop'
   | 'brick_kiln'
+  | 'brick_yard'
   | 'glass_workshop'
   | 'forge'
   | 'weaving_yard'
@@ -31,6 +33,13 @@ export type BuildingKind =
   | 'mint'
   | 'market'
   | 'tower'
+  | 'defense_cannon'
+  | 'defense_stakes'
+  | 'defense_resin_snare'
+  | 'defense_bolt_thrower'
+  | 'defense_storm_coil'
+  | 'defense_automaton_bay'
+  | 'defense_guardian_enclosure'
   | 'wooden_wall'
   | 'stone_wall'
   | 'concrete_wall'
@@ -63,6 +72,8 @@ export type BuildingKind =
   | 'chemical_workshop'
   | 'military_factory'
   | 'precision_workshop'
+  | 'siege_yard'
+  | 'resonance_laboratory'
   | 'wood_house'
   | 'stone_house'
   | 'apartment_house'
@@ -81,10 +92,28 @@ export type PlacedBuilding = {
   name: string
   level: number
   tile: TileCoord
+  rotation?: number
+  footprintW?: number
+  footprintH?: number
   status: 'active' | 'construction'
   state?: BuildingState
   health: number
   maxHealth?: number
+  cannonEnabled?: boolean
+  cannonNextAttackAt?: number | null
+  cannonTargetId?: string
+  cannonRange?: number
+  cannonDamage?: number
+  cannonAmmo?: string
+  cannonCooldownSeconds?: number
+  cannonDamageType?: string
+  trapCharges?: number
+  trapMaxCharges?: number
+  trapDamage?: number
+  defenseSlots?: number
+  defensePatrolRadius?: number
+  defenseStaffRole?: string
+  demolitionRefundCoins?: number
   owner: string
   startedAt: number
   completesAt: number | null
@@ -124,6 +153,10 @@ export type MonsterEntity = {
   aggroRadius: number
   updatedAt: number
 }
+
+export type CannonShotEvent = { id: string; buildingId: string; monsterId: string; damage: number; ammo: string; kind?: BuildingKind }
+export type MonsterDamageEvent = { id: string; monsterId: string; tile: TileCoord; damage: number; createdAt: number }
+export type BuildingDamageEvent = { id: string; buildingId: string; tile: TileCoord; damage: number; createdAt: number }
 
 export type UIPreferences = {
   compactPanels: boolean
@@ -175,12 +208,18 @@ type GameState = {
   selectedBuildingId: string | null
   selectedMonsterId: string | null
   hoveredTile: TileCoord | null
+  placementPreviewKind: BuildingKind | null
+  relocatingBuildingId: string | null
   buildings: PlacedBuilding[]
   buildingIndexById: Record<string, number>
   resourceNodes: ResourceNode[]
   resourceNodeIndexById: Record<string, number>
   monsters: MonsterEntity[]
   monsterIndexById: Record<string, number>
+  deadMonsterIds: Set<string>
+  cannonShots: CannonShotEvent[]
+  monsterDamageEvents: MonsterDamageEvent[]
+  buildingDamageEvents: BuildingDamageEvent[]
   worldTiles: WorldTile[]
   worldTileIndexByKey: Record<string, number>
   constructionNow: number
@@ -189,16 +228,23 @@ type GameState = {
   uiPreferences: UIPreferences
   realtimeStatus: RealtimeStatus
   setTool: (tool: ToolMode) => void
+  setRelocatingBuildingId: (id: string | null) => void
   selectTile: (tile: TileCoord) => void
   selectBuilding: (buildingId: string) => void
   selectMonster: (monsterId: string) => void
   hoverTile: (tile: TileCoord | null) => void
+  setPlacementPreviewKind: (kind: BuildingKind | null) => void
   placeBuilding: (input: { kind: BuildingKind; name: string; tile: TileCoord; durationSeconds: number; free?: boolean; owner?: string }) => { ok: true; building: PlacedBuilding } | { ok: false; reason: string }
   addBuilding: (building: PlacedBuilding) => void
   setResourceNodes: (nodes: ResourceNode[]) => void
   upsertResourceNode: (node: ResourceNode) => void
   setMonsters: (monsters: MonsterEntity[]) => void
   upsertMonster: (monster: MonsterEntity) => void
+  recordCannonShot: (event: CannonShotEvent) => void
+  recordMonsterDamage: (event: MonsterDamageEvent) => void
+  removeMonsterDamage: (id: string) => void
+  recordBuildingDamage: (event: BuildingDamageEvent) => void
+  removeBuildingDamage: (id: string) => void
   setWorldTiles: (tiles: WorldTile[]) => void
   updateWorldTile: (tile: WorldTile) => void
   tickConstructions: (now: number) => void
@@ -224,12 +270,18 @@ export const useGameStore = create<GameState>((set) => ({
   selectedBuildingId: null,
   selectedMonsterId: null,
   hoveredTile: null,
+  placementPreviewKind: null,
+  relocatingBuildingId: null,
   buildings: [],
   buildingIndexById: {},
   resourceNodes: [],
   resourceNodeIndexById: {},
   monsters: [],
   monsterIndexById: {},
+  deadMonsterIds: new Set(),
+  cannonShots: [],
+  monsterDamageEvents: [],
+  buildingDamageEvents: [],
   worldTiles: [],
   worldTileIndexByKey: {},
   constructionNow: Date.now(),
@@ -237,11 +289,29 @@ export const useGameStore = create<GameState>((set) => ({
   viewport: { center: { x: 0, y: 0 }, radius: 1 },
   uiPreferences: readUIPreferences(),
   realtimeStatus: 'connected',
+  recordCannonShot: (event) => set((state) => state.cannonShots.some((item) => item.id === event.id)
+    ? state
+    : { cannonShots: [event, ...state.cannonShots].slice(0, 30) }),
+  recordMonsterDamage: (event) => set((state) => state.monsterDamageEvents.some((item) => item.id === event.id)
+    ? state
+    : { monsterDamageEvents: [...state.monsterDamageEvents.filter((item) => event.createdAt - item.createdAt < 1500), event].slice(-32) }),
+  removeMonsterDamage: (id) => set((state) => ({ monsterDamageEvents: state.monsterDamageEvents.filter((item) => item.id !== id) })),
+  recordBuildingDamage: (event) => set((state) => state.buildingDamageEvents.some((item) => item.id === event.id)
+    ? state
+    : { buildingDamageEvents: [...state.buildingDamageEvents.filter((item) => event.createdAt - item.createdAt < 1500), event].slice(-32) }),
+  removeBuildingDamage: (id) => set((state) => ({ buildingDamageEvents: state.buildingDamageEvents.filter((item) => item.id !== id) })),
   setTool: (tool) =>
     set((state) => ({
       tool,
+      relocatingBuildingId: null,
+      placementPreviewKind: tool === 'build' ? state.placementPreviewKind : null,
       uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen: tool === 'build' ? state.uiPreferences.buildMenuOpen : false }),
     })),
+  setRelocatingBuildingId: (relocatingBuildingId) => set((state) => ({
+    relocatingBuildingId,
+    placementPreviewKind: relocatingBuildingId ? null : state.placementPreviewKind,
+    tool: relocatingBuildingId ? 'select' : state.tool,
+  })),
   selectTile: (selectedTile) => {
     set({ selectedTile, selectedBuildingId: null, selectedMonsterId: null })
   },
@@ -250,8 +320,10 @@ export const useGameStore = create<GameState>((set) => ({
       const building = findByIndexedId(state.buildings, state.buildingIndexById, selectedBuildingId)
       return {
         selectedBuildingId,
+        relocatingBuildingId: null,
         selectedMonsterId: null,
         selectedTile: building?.tile ?? state.selectedTile,
+        placementPreviewKind: null,
         tool: 'select',
       }
     }),
@@ -262,10 +334,12 @@ export const useGameStore = create<GameState>((set) => ({
         selectedMonsterId,
         selectedBuildingId: null,
         selectedTile: monster?.tile ?? state.selectedTile,
+        placementPreviewKind: null,
         tool: 'raid',
       }
     }),
   hoverTile: (hoveredTile) => set({ hoveredTile }),
+  setPlacementPreviewKind: (placementPreviewKind) => set({ placementPreviewKind }),
   placeBuilding: (input) => {
     let result: { ok: true; building: PlacedBuilding } | { ok: false; reason: string } = { ok: false, reason: 'Не удалось разместить постройку' }
     set((state) => {
@@ -280,7 +354,10 @@ export const useGameStore = create<GameState>((set) => ({
         return state
       }
       const tile = input.tile
-      if (state.buildings.some((building) => building.tile.x === tile.x && building.tile.y === tile.y)) {
+      const isTrap = (kind: BuildingKind) => kind === 'defense_stakes' || kind === 'defense_resin_snare'
+      const isRoad = (kind: BuildingKind) => kind === 'road' || kind === 'standard_road' || kind === 'paved_road'
+      if (state.buildings.some((building) => building.tile.x === tile.x && building.tile.y === tile.y &&
+        !((isTrap(input.kind) && isRoad(building.kind)) || (isRoad(input.kind) && isTrap(building.kind))))) {
         result = { ok: false, reason: 'Клетка уже занята' }
         return state
       }
@@ -321,15 +398,20 @@ export const useGameStore = create<GameState>((set) => ({
       const result = upsertByIndexedId(state.resourceNodes, state.resourceNodeIndexById, node)
       return { resourceNodes: result.items, resourceNodeIndexById: result.indexById }
     }),
-  setMonsters: (monsters) => set({ monsters, monsterIndexById: buildIndexById(monsters) }),
+  setMonsters: (monsters) => set((state) => {
+    const visible = monsters.filter((monster) => monster.state !== 'dead' && !state.deadMonsterIds.has(monster.id))
+    return { monsters: visible, monsterIndexById: buildIndexById(visible) }
+  }),
   upsertMonster: (monster) =>
     set((state) => {
+      if (monster.state !== 'dead' && state.deadMonsterIds.has(monster.id)) return state
       const result = monster.state === 'dead'
         ? removeByIndexedId(state.monsters, state.monsterIndexById, monster.id)
         : upsertByIndexedId(state.monsters, state.monsterIndexById, monster)
       return {
         monsters: result.items,
         monsterIndexById: result.indexById,
+        deadMonsterIds: monster.state === 'dead' ? new Set([...state.deadMonsterIds, monster.id]) : state.deadMonsterIds,
         selectedMonsterId: monster.state === 'dead' && state.selectedMonsterId === monster.id ? null : state.selectedMonsterId,
       }
     }),
@@ -340,16 +422,23 @@ export const useGameStore = create<GameState>((set) => ({
       return { worldTiles: result.items, worldTileIndexByKey: result.indexByKey }
     }),
   tickConstructions: (now) =>
-    set((state) => ({
-      constructionNow: now,
-      buildings: state.buildings.map((building) => {
-        const completed =
-          building.status === 'construction' && building.completesAt && building.completesAt <= now
-            ? { ...building, status: 'active' as const, state: 'active' as const, completesAt: null }
-            : building
-        return completed.fieldStageReadyAt && completed.fieldStageReadyAt <= now ? { ...completed, fieldStageReady: true } : completed
-      }),
-    })),
+    set((state) => {
+      let buildings: PlacedBuilding[] | null = null
+      for (let index = 0; index < state.buildings.length; index += 1) {
+        const building = state.buildings[index]
+        const completed = building.status === 'construction' && building.completesAt && building.completesAt <= now
+          ? { ...building, status: 'active' as const, state: 'active' as const, completesAt: null }
+          : building
+        const next = completed.fieldStageReadyAt && completed.fieldStageReadyAt <= now && !completed.fieldStageReady
+          ? { ...completed, fieldStageReady: true }
+          : completed
+        if (next !== building) {
+          buildings ??= state.buildings.slice()
+          buildings[index] = next
+        }
+      }
+      return buildings ? { constructionNow: now, buildings } : { constructionNow: now }
+    }),
   deleteBuilding: (buildingId) =>
     set((state) => {
       const result = removeByIndexedId(state.buildings, state.buildingIndexById, buildingId)
@@ -363,17 +452,20 @@ export const useGameStore = create<GameState>((set) => ({
     set((state) => ({
       camera: {
         ...state.camera,
-        ...wrapCameraOffset({ x: state.camera.x + delta.x, y: state.camera.y + delta.y }),
+        x: state.camera.x + delta.x,
+        y: state.camera.y + delta.y,
       },
     })),
   focusTile: ({ tile, viewportWidth, viewportHeight }) =>
     set((state) => {
       const wrappedTile = wrapGridCoord(tile)
-      const screen = gridToScreen(wrappedTile)
-      const camera = wrapCameraOffset({
+      const origin = { x: viewportWidth * 0.48 + state.camera.x, y: viewportHeight * 0.16 + state.camera.y }
+      const target = { x: (viewportWidth / 2 - origin.x) / state.camera.zoom, y: (viewportHeight / 2 - origin.y) / state.camera.zoom }
+      const screen = nearestWrappedScreenCoord(wrappedTile, target)
+      const camera = {
         x: viewportWidth / 2 - viewportWidth * 0.48 - screen.x * state.camera.zoom,
         y: viewportHeight / 2 - viewportHeight * 0.16 - screen.y * state.camera.zoom,
-      })
+      }
       return {
         camera: { ...state.camera, ...camera },
         selectedTile: wrappedTile,
@@ -395,11 +487,15 @@ export const useGameStore = create<GameState>((set) => ({
         x: (target.x - origin.x) / state.camera.zoom,
         y: (target.y - origin.y) / state.camera.zoom,
       }
-      const camera = wrapCameraOffset({
+      const camera = {
         x: target.x - originBase.x - worldScreen.x * nextZoom,
         y: target.y - originBase.y - worldScreen.y * nextZoom,
-      })
-      return { camera: { ...camera, zoom: nextZoom } }
+      }
+      const center = wrapGridCoord(roundGridCoord(screenToGrid({
+        x: (viewportSize.width / 2 - originBase.x - camera.x) / nextZoom,
+        y: (viewportSize.height / 2 - originBase.y - camera.y) / nextZoom,
+      })))
+      return { camera: { ...camera, zoom: nextZoom }, viewport: { ...state.viewport, center } }
     }),
   setViewportCenter: (center) => set((state) => ({ viewport: { ...state.viewport, center: wrapGridCoord(center) } })),
   setViewportRadius: (radius) =>
@@ -420,6 +516,7 @@ export const useGameStore = create<GameState>((set) => ({
   setBuildMenuOpen: (buildMenuOpen) =>
     set((state) => ({
       tool: buildMenuOpen ? 'build' : state.tool,
+      placementPreviewKind: buildMenuOpen ? state.placementPreviewKind : null,
       uiPreferences: persistUIPreferences({ ...state.uiPreferences, buildMenuOpen }),
     })),
   setAlliancePanelOpen: (alliancePanelOpen) =>

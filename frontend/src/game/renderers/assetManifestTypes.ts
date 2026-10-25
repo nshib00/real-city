@@ -9,6 +9,7 @@ export type AssetRenderMode = 'sprite' | 'atlas' | 'glb-preview'
 export type AssetRenderManifest = {
   mode: AssetRenderMode
   size?: AssetSize
+  mapScale?: number
   preferredFormat?: AssetTextureFormat
   fallbackFormat?: AssetTextureFormat
 }

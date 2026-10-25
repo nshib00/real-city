@@ -1,6 +1,6 @@
 import type { PlacedBuilding } from '../../state/useGameStore'
 import { buildingRegistryEntry, resolveBuildingSpriteAsset } from '../../renderers/buildingRegistry'
-import { isModularPathKind, modularPathShapeFor } from '../../renderers/groundRoad'
+import { buildModularPathIndex, isModularPathKind, modularPathShapeFor, modularPathShapeFromIndex, type ModularPathIndex } from '../../renderers/groundRoad'
 import { objectLayerSortKey } from './objectDepth'
 
 export type BuildingDrawCommand = {
@@ -30,8 +30,9 @@ export function buildingDrawCommands(
   } = {},
 ): BuildingDrawCommand[] {
   const allBuildings = options.allBuildings ?? buildings
+  const pathIndex = buildModularPathIndex(allBuildings)
   return buildings
-    .map((building) => buildingDrawCommand(building, allBuildings, options.selectedBuildingId ?? null))
+    .map((building) => buildingDrawCommand(building, allBuildings, options.selectedBuildingId ?? null, pathIndex))
     .filter((command): command is BuildingDrawCommand => command !== null)
     .sort((left, right) => left.sortKey - right.sortKey || left.id.localeCompare(right.id))
 }
@@ -44,8 +45,11 @@ export function buildingDrawCommand(
   building: PlacedBuilding,
   allBuildings: readonly PlacedBuilding[],
   selectedBuildingId: string | null,
+  pathIndex?: ModularPathIndex,
 ): BuildingDrawCommand {
-  const shape = isModularPathKind(building.kind) ? modularPathShapeFor(building, [...allBuildings]) : undefined
+  const shape = isModularPathKind(building.kind)
+    ? pathIndex ? modularPathShapeFromIndex(building, pathIndex) : modularPathShapeFor(building, allBuildings)
+    : undefined
   const textureUrl = resolveBuildingSpriteAsset(building, { shape })
   const spriteMetrics = buildingSpriteMetrics(building)
 
@@ -69,9 +73,10 @@ function buildingSpriteMetrics(building: PlacedBuilding) {
     DEFAULT_BUILDING_SPRITE.anchorX * DEFAULT_BUILDING_SPRITE.width,
     DEFAULT_BUILDING_SPRITE.anchorY * DEFAULT_BUILDING_SPRITE.height,
   ]
+  const mapScale = manifest?.render?.mapScale ?? 1
 
   return {
     anchor: { x: anchorX / width, y: anchorY / height },
-    size: { width, height },
+    size: { width: width * mapScale, height: height * mapScale },
   }
 }

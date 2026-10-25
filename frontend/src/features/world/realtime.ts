@@ -2,16 +2,20 @@ import { useEffect, useMemo } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
 
-import { tileToChunk } from '../../game/coordinates/iso'
+import { CHUNK_SIZE, WORLD_WRAP_TILES, tileToChunk, wrappedGridDistance } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
 import { realtimeClient } from '../../shared/realtime/client'
 import { toPlacedBuilding, type BuildingResponse } from '../../shared/api/buildings'
 import type { ResourceNodeResponse } from '../../shared/api/economy'
 import type { ChunksResponse } from '../../shared/api/world'
 import type { MonsterResponse } from '../../shared/api/monsters'
+import type { NearbyPlayer } from '../../shared/api/playerPresence'
 import type { WorldTile } from '../../shared/contracts'
 import type { MonsterPayload } from '../../../../shared/events/monster'
-import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload } from '../../../../shared/events/world'
+import { playRealtimeAudio } from '../../audio/realtimeAudio'
+import { useAuthStore } from '../auth/useAuthStore'
+import type { MarketOrderPayload } from '../../../../shared/events/market'
+import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload } from '../../../../shared/events/world'
 
 const DEFAULT_WORLD_ID = 'dev-world'
 
@@ -28,14 +32,55 @@ export function useWorldRealtime() {
   const chunkIDs = useMemo(() => chunksAround(centerChunk, viewport.radius).map((chunk) => `${DEFAULT_WORLD_ID}:${chunk.x}:${chunk.y}`), [centerChunk.x, centerChunk.y, viewport.radius])
 
   useEffect(() => {
+    const pending: RealtimeEnvelope[] = []
+    let frame: number | null = null
+    let resyncTimer: number | null = null
+    let lastResyncAt = 0
+    let resyncAll = false
+    const flush = () => {
+      frame = null
+      for (const event of pending.splice(0)) {
+        playRealtimeAudio(event)
+        applyRealtimeEvent(event, { queryClient, updateWorldTile, addBuilding, deleteBuilding, upsertResourceNode, upsertMonster })
+      }
+    }
+    const resync = (reason: 'reconnect' | 'gap' | 'subscription') => {
+      if (reason !== 'subscription') resyncAll = true
+      if (resyncTimer !== null) return
+      resyncTimer = window.setTimeout(() => {
+        resyncTimer = null
+        lastResyncAt = Date.now()
+        const worldQueries = [
+          ['world', 'chunks'], ['buildings'], ['resources', 'nodes'], ['monsters'], ['players', 'nearby'],
+          ['monster-loot'],
+        ]
+        for (const queryKey of !resyncAll ? worldQueries : [
+          ...worldQueries, ['economy', 'inventory'], ['production', 'jobs'],
+        ]) {
+          void queryClient.invalidateQueries({ queryKey, refetchType: 'active' })
+        }
+        resyncAll = false
+      }, Math.max(0, 1000 - (Date.now() - lastResyncAt)))
+    }
     const offStatus = realtimeClient.onStatus(setRealtimeStatus)
+    const offResync = realtimeClient.onResync(resync)
     const offEvent = realtimeClient.onEvent((event) => {
-      applyRealtimeEvent(event, { queryClient, updateWorldTile, addBuilding, deleteBuilding, upsertResourceNode, upsertMonster })
+      if (event.type === 'ack') return
+      pending.push(event)
+      if (document.hidden) {
+        if (frame !== null) window.cancelAnimationFrame(frame)
+        flush()
+      } else if (frame === null) {
+        frame = window.requestAnimationFrame(flush)
+      }
     })
     realtimeClient.connect()
     return () => {
       offStatus()
+      offResync()
       offEvent()
+      if (frame !== null) window.cancelAnimationFrame(frame)
+      if (resyncTimer !== null) window.clearTimeout(resyncTimer)
     }
   }, [addBuilding, deleteBuilding, queryClient, setRealtimeStatus, upsertMonster, upsertResourceNode, updateWorldTile])
 
@@ -56,6 +101,21 @@ export function applyRealtimeEvent(
   },
 ) {
   switch (event.type) {
+    case 'presence.moved': {
+      const player = (event.payload as PresenceMovedPayload | undefined)?.player
+      if (!player?.player_id || player.player_id === useAuthStore.getState().player?.id) return
+      for (const [key] of handlers.queryClient.getQueriesData<{ players: NearbyPlayer[] }>({ queryKey: ['players', 'nearby'] })) {
+        const [, , x, y, radius] = key
+        handlers.queryClient.setQueryData<{ players: NearbyPlayer[] }>(key, (current) => {
+          if (!current) return current
+          const remaining = current.players.filter((item) => item.player_id !== player.player_id)
+          const inRange = typeof x === 'number' && typeof y === 'number' && typeof radius === 'number'
+            && wrappedGridDistance(x, player.tile_x) <= radius && wrappedGridDistance(y, player.tile_y) <= radius
+          return { players: inRange ? [...remaining, player] : remaining }
+        })
+      }
+      return
+    }
     case 'world.tile.changed': {
       const payload = event.payload as TileChangedPayload | undefined
       if (payload?.tile) {
@@ -68,15 +128,35 @@ export function applyRealtimeEvent(
     case 'world.building.updated': {
       const payload = event.payload as BuildingPayload | undefined
       if (payload?.building) {
-        const building = payload.building as BuildingResponse
+        const rawBuilding = !('id' in payload.building)
+        const building = normalizeBuildingEvent(payload.building)
+        const previous = useGameStore.getState().buildings.find((item) => item.id === building.id)
+        const damage = payload.damage ?? (previous ? Math.max(0, previous.health - building.health) : 0)
+        if (payload.reason === 'monster_attack' && damage > 0) {
+          useGameStore.getState().recordBuildingDamage({
+            id: event.event_id, buildingId: building.id, tile: { x: building.tile_x, y: building.tile_y },
+            damage, createdAt: Date.now(),
+          })
+        }
         handlers.addBuilding(toPlacedBuilding(building))
         patchBuildingInQueryCache(handlers.queryClient, building)
+        if (rawBuilding) void handlers.queryClient.invalidateQueries({ queryKey: ['buildings'] })
       }
       return
     }
     case 'world.building.removed': {
       const payload = event.payload as BuildingRemovedPayload | undefined
       if (payload?.building_id) {
+        const previous = useGameStore.getState().buildings.find((item) => item.id === payload.building_id)
+        const damage = payload.damage ?? previous?.health ?? 0
+        const tile = payload.tile_x !== undefined && payload.tile_y !== undefined
+          ? { x: payload.tile_x, y: payload.tile_y } : previous?.tile
+        if (payload.reason === 'monster_attack' && damage > 0 && tile) {
+          useGameStore.getState().recordBuildingDamage({
+            id: event.event_id, buildingId: payload.building_id, tile,
+            damage, createdAt: Date.now(),
+          })
+        }
         handlers.deleteBuilding(payload.building_id)
         removeBuildingFromQueryCache(handlers.queryClient, payload.building_id)
       }
@@ -99,11 +179,70 @@ export function applyRealtimeEvent(
     case 'monster.despawned': {
       const payload = event.payload as MonsterPayload | undefined
       if (payload?.monster) {
+        if ((event.type === 'monster.damaged' || event.type === 'monster.died') && payload.damage && payload.damage > 0) {
+          const monster = payload.monster
+          const tile = monster.Tile ? { x: monster.Tile.X, y: monster.Tile.Y } : { x: monster.tile_x ?? 0, y: monster.tile_y ?? 0 }
+          useGameStore.getState().recordMonsterDamage({ id: event.event_id, monsterId: monster.id, tile, damage: payload.damage, createdAt: Date.now() })
+        }
+        if (payload.monster.state !== 'dead' && useGameStore.getState().deadMonsterIds.has(payload.monster.id)) return
         handlers.upsertMonster(toMonsterEntity(payload.monster))
         patchMonsterInQueryCache(handlers.queryClient, payload.monster)
       }
       return
     }
+    case 'monster.loot.dropped':
+    case 'monster.loot.claimed': {
+      void handlers.queryClient.invalidateQueries({ queryKey: ['monster-loot'] })
+      return
+    }
+    case 'cannon.shot': {
+      const payload = event.payload as { building_id: string; building_type?: BuildingResponse['type']; monster_id: string; damage: number; ammo: string } | undefined
+      if (payload) useGameStore.getState().recordCannonShot({
+        id: event.event_id, buildingId: payload.building_id, monsterId: payload.monster_id,
+        damage: payload.damage, ammo: payload.ammo,
+        ...(payload.building_type ? { kind: payload.building_type } : {}),
+      })
+      return
+    }
+    case 'economy.inventory.changed': {
+      void handlers.queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      return
+    }
+    case 'market.order.filled': {
+      const order = (event.payload as { order?: MarketOrderPayload } | undefined)?.order
+      if (order && order.player_id === useAuthStore.getState().player?.id) {
+        void handlers.queryClient.invalidateQueries({ queryKey: ['market', 'orders'] })
+        void handlers.queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      }
+      return
+    }
+  }
+}
+
+function normalizeBuildingEvent(value: BuildingPayload['building']): BuildingResponse {
+  if ('id' in value) return value as BuildingResponse
+  const raw = value as unknown as Record<string, unknown>
+  const tile = raw.Tile as { X: number; Y: number }
+  const footprint = raw.Footprint as { Width?: number; Height?: number } | undefined
+  const previous = useGameStore.getState().buildings.find((item) => item.id === raw.ID)
+  return {
+    id: String(raw.ID), owner_id: String(raw.OwnerID), type: raw.Type as BuildingResponse['type'],
+    name: String(raw.Name), level: Number(raw.Level), state: raw.State as BuildingResponse['state'],
+    health: Number(raw.Health), max_health: previous?.maxHealth,
+    tile_x: tile.X, tile_y: tile.Y, rotation: Number(raw.Rotation ?? 0),
+    footprint_w: Number(footprint?.Width ?? previous?.footprintW ?? 1),
+    footprint_h: Number(footprint?.Height ?? previous?.footprintH ?? 1),
+    started_at: String(raw.StartedAt),
+    created_at: raw.CreatedAt ? String(raw.CreatedAt) : undefined,
+    completes_at: raw.CompletesAt ? String(raw.CompletesAt) : null,
+    cannon_enabled: Boolean(raw.CannonEnabled),
+    cannon_next_attack_at: raw.CannonNextAttackAt ? String(raw.CannonNextAttackAt) : null,
+    cannon_target_id: String(raw.CannonTargetID ?? ''),
+    cannon_range: previous?.cannonRange, cannon_damage: previous?.cannonDamage,
+    cannon_ammo: previous?.cannonAmmo, demolition_refund_coins: previous?.demolitionRefundCoins,
+    cannon_cooldown_seconds: previous?.cannonCooldownSeconds, cannon_damage_type: previous?.cannonDamageType,
+    trap_charges: Number(raw.TrapCharges ?? previous?.trapCharges ?? 0), trap_max_charges: previous?.trapMaxCharges, trap_damage: previous?.trapDamage,
+    defense_slots: previous?.defenseSlots, defense_patrol_radius: previous?.defensePatrolRadius, defense_staff_role: previous?.defenseStaffRole,
   }
 }
 
@@ -130,7 +269,7 @@ function patchWorldTileInQueryCache(queryClient: QueryClient, tile: WorldTile) {
 }
 
 function patchBuildingInQueryCache(queryClient: QueryClient, building: BuildingResponse) {
-  queryClient.setQueryData<{ buildings: BuildingResponse[] }>(['buildings'], (current) => {
+  queryClient.setQueriesData<{ buildings: BuildingResponse[] }>({ queryKey: ['buildings'] }, (current) => {
     if (!current) {
       return current
     }
@@ -139,7 +278,7 @@ function patchBuildingInQueryCache(queryClient: QueryClient, building: BuildingR
 }
 
 function removeBuildingFromQueryCache(queryClient: QueryClient, buildingId: string) {
-  queryClient.setQueryData<{ buildings: BuildingResponse[] }>(['buildings'], (current) => {
+  queryClient.setQueriesData<{ buildings: BuildingResponse[] }>({ queryKey: ['buildings'] }, (current) => {
     if (!current) {
       return current
     }
@@ -237,10 +376,17 @@ function removeById<T extends { id: string }>(items: T[], id: string) {
 
 function chunksAround(center: { x: number; y: number }, radius: number) {
   const safeRadius = Math.max(1, Math.min(3, Math.round(radius)))
+  const worldChunks = WORLD_WRAP_TILES / CHUNK_SIZE
   const chunks: { x: number; y: number }[] = []
+  const seen = new Set<string>()
   for (let y = center.y - safeRadius; y <= center.y + safeRadius; y += 1) {
     for (let x = center.x - safeRadius; x <= center.x + safeRadius; x += 1) {
-      chunks.push({ x, y })
+      const chunk = { x: ((x % worldChunks) + worldChunks) % worldChunks, y: ((y % worldChunks) + worldChunks) % worldChunks }
+      const key = `${chunk.x}:${chunk.y}`
+      if (!seen.has(key)) {
+        seen.add(key)
+        chunks.push(chunk)
+      }
     }
   }
   return chunks

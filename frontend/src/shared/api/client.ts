@@ -31,7 +31,7 @@ async function requestWithAuth<T>(path: string, init: RequestInit | undefined, a
   if (response.status === 401 && allowRefresh && shouldRefresh(path) && getRefreshToken()) {
     const refreshed = await refreshTokens()
     if (refreshed) {
-      return requestWithAuth<T>(path, init, false)
+      return requestWithAuth<T>(path, { ...init, headers }, false)
     }
   }
 
@@ -51,7 +51,7 @@ function needsIdempotencyKey(path: string, method = 'GET') {
   if (method.toUpperCase() !== 'POST') {
     return false
   }
-  return path === '/buildings' || path === '/market/orders' || path === '/alliances/invites'
+  return path === '/buildings' || path === '/raids' || path === '/market/orders' || path === '/alliances/invites'
 }
 
 function createIdempotencyKey() {

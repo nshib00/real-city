@@ -46,10 +46,10 @@ describe('ground road renderer assets', () => {
   it('points upgraded roads and wall variants to their generated png assets', () => {
     expect(modularPathSpriteAsset(building('standard_road', 0, 0), 'straight_ns')).toBe('/assets/buildings/roads/common_road/common_road_straight_ns_active.png')
     expect(modularPathSpriteAsset(building('paved_road', 0, 0), 'corner_es')).toBe('/assets/buildings/roads/paved_road/paved_road_corner_es_active.png')
-    expect(modularPathSpriteAsset(building('wooden_wall', 0, 0), 'end_w')).toBe('/assets/buildings/roads/wooden_wall/wooden_wall_end_w_active.png')
-    expect(modularPathSpriteAsset(building('stone_wall', 0, 0), 't_swn')).toBe('/assets/buildings/roads/stone_wall/stone_wall_t_swn_active.png')
-    expect(modularPathSpriteAsset(building('concrete_wall', 0, 0), 'cross')).toBe('/assets/buildings/roads/reinforced_wall/reinforced_wall_cross_active.png')
-    expect(modularPathSpriteAsset(building('modern_wall', 0, 0), 'single')).toBe('/assets/buildings/roads/reinforced_wall/reinforced_wall_single_active.png')
+    expect(modularPathSpriteAsset(building('wooden_wall', 0, 0), 'end_w')).toBe('/assets/buildings/roads/wooden_wall/wooden_wall_l01_end_w_active.png')
+    expect(modularPathSpriteAsset(building('stone_wall', 0, 0), 't_swn')).toBe('/assets/buildings/roads/stone_wall/stone_wall_l04_t_swn_active.png')
+    expect(modularPathSpriteAsset(building('concrete_wall', 0, 0), 'cross')).toBe('/assets/buildings/roads/concrete_wall/concrete_wall_l08_cross_active.png')
+    expect(modularPathSpriteAsset(building('modern_wall', 0, 0), 'single')).toBe('/assets/buildings/roads/modern_wall/modern_wall_l11_single_active.png')
   })
 
   it('connects wall shapes to neighboring walls without connecting them to roads', () => {

@@ -53,7 +53,7 @@ describe('object texture cache', () => {
     })
   })
 
-  it('loads atlas JSON and image through Pixi Assets and reports missing frames', async () => {
+  it('loads a spritesheet through Pixi Assets and reports missing frames', async () => {
     const result = await loadObjectAtlas({
       assetId: 'lumber_yard',
       basePath: '/assets/buildings/industry/lumber_yard',
@@ -77,7 +77,7 @@ describe('object texture cache', () => {
       missingFrames: ['lumber_yard_working_0001.png'],
     })
     expect(loadPixiAsset).toHaveBeenCalledWith('/assets/buildings/industry/lumber_yard/lumber_yard.atlas.json?v=atlas-rev')
-    expect(loadPixiAsset).toHaveBeenCalledWith('/assets/buildings/industry/lumber_yard/lumber_yard.webp?v=atlas-rev')
+    expect(loadPixiAsset).toHaveBeenCalledTimes(1)
   })
 
   it('reuses the cached promise for the same asset revision', async () => {
@@ -93,7 +93,7 @@ describe('object texture cache', () => {
 
     await Promise.all([loadObjectAtlas(source), loadObjectAtlas(source)])
 
-    expect(loadPixiAsset).toHaveBeenCalledTimes(2)
+    expect(loadPixiAsset).toHaveBeenCalledTimes(1)
   })
 
   it('returns fallback state without Pixi calls when atlas is absent', async () => {

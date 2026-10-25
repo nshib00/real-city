@@ -12,11 +12,6 @@ export const TILE_WIDTH = 240
 export const TILE_HEIGHT = 120
 export const CHUNK_SIZE = 32
 export const WORLD_WRAP_TILES = 160
-export const WORLD_WRAP_SCREEN = {
-  x: TILE_WIDTH * WORLD_WRAP_TILES,
-  y: TILE_HEIGHT * WORLD_WRAP_TILES,
-}
-
 export function gridToScreen(coord: GridCoord): ScreenCoord {
   return {
     x: (coord.x - coord.y) * (TILE_WIDTH / 2),
@@ -52,19 +47,15 @@ export function wrapGridCoord(coord: GridCoord): GridCoord {
   }
 }
 
-export function wrapCameraOffset(offset: ScreenCoord): ScreenCoord {
-  return {
-    x: wrapNumber(offset.x, WORLD_WRAP_SCREEN.x, true),
-    y: wrapNumber(offset.y, WORLD_WRAP_SCREEN.y, true),
-  }
-}
-
 export function nearestWrappedScreenCoord(coord: GridCoord, target: ScreenCoord): ScreenCoord {
   let nearest = gridToScreen(coord)
   let nearestDistance = screenDistance(nearest, target)
+  const targetGrid = screenToGrid(target)
+  const wrapX = Math.round((targetGrid.x - coord.x) / WORLD_WRAP_TILES)
+  const wrapY = Math.round((targetGrid.y - coord.y) / WORLD_WRAP_TILES)
 
-  for (let y = -1; y <= 1; y++) {
-    for (let x = -1; x <= 1; x++) {
+  for (let y = wrapY - 1; y <= wrapY + 1; y++) {
+    for (let x = wrapX - 1; x <= wrapX + 1; x++) {
       const candidate = gridToScreen({
         x: coord.x + x * WORLD_WRAP_TILES,
         y: coord.y + y * WORLD_WRAP_TILES,
@@ -78,6 +69,11 @@ export function nearestWrappedScreenCoord(coord: GridCoord, target: ScreenCoord)
   }
 
   return nearest
+}
+
+export function wrappedGridDistance(a: number, b: number) {
+  const delta = Math.abs(a - b) % WORLD_WRAP_TILES
+  return Math.min(delta, WORLD_WRAP_TILES - delta)
 }
 
 function screenDistance(a: ScreenCoord, b: ScreenCoord) {

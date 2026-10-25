@@ -1,4 +1,4 @@
-import { gridToScreen, nearestWrappedScreenCoord } from '../coordinates/iso'
+import { nearestWrappedScreenCoord } from '../coordinates/iso'
 
 type TileCoord = {
   x: number
@@ -22,9 +22,9 @@ type MapObjectLike = {
 
 type VisibilityOptions = {
   camera: Camera
-  viewportCenter: TileCoord
   viewportSize: ViewportSize
   margin?: number
+  maxScreenExtent?: number
 }
 
 const DEFAULT_VISIBILITY_MARGIN = 320
@@ -48,7 +48,7 @@ export function filterVisibleMapObjects<T extends MapObjectLike>(objects: T[], o
 }
 
 export function isMapObjectVisible(tile: TileCoord, options: VisibilityOptions) {
-  const { camera, viewportCenter, viewportSize, margin = DEFAULT_VISIBILITY_MARGIN } = options
+  const { camera, viewportSize, margin = DEFAULT_VISIBILITY_MARGIN, maxScreenExtent = MAX_MAP_OBJECT_SCREEN_EXTENT } = options
   if (viewportSize.width <= 0 || viewportSize.height <= 0) {
     return true
   }
@@ -57,11 +57,14 @@ export function isMapObjectVisible(tile: TileCoord, options: VisibilityOptions) 
     x: viewportSize.width * 0.48 + camera.x,
     y: viewportSize.height * 0.16 + camera.y,
   }
-  const screenTarget = gridToScreen(viewportCenter)
+  const screenTarget = {
+    x: (viewportSize.width / 2 - origin.x) / camera.zoom,
+    y: (viewportSize.height / 2 - origin.y) / camera.zoom,
+  }
   const pos = nearestWrappedScreenCoord(tile, screenTarget)
   const x = origin.x + pos.x * camera.zoom
   const y = origin.y + (pos.y - 30) * camera.zoom
-  const effectiveMargin = Math.max(margin, MAX_MAP_OBJECT_SCREEN_EXTENT * camera.zoom)
+  const effectiveMargin = Math.max(margin, maxScreenExtent * camera.zoom)
 
   return x >= -effectiveMargin
     && x <= viewportSize.width + effectiveMargin

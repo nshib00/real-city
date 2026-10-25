@@ -47,6 +47,36 @@ describe('validatePlacementPreview', () => {
     })
   })
 
+  it('blocks a footprint that overlaps another player building', () => {
+    const buildings = [{
+      id: 'foreign-building', kind: 'dugout' as const, name: 'Землянка', level: 1,
+      tile: { x: 3, y: 4 }, status: 'active' as const, health: 100,
+      owner: 'p2', startedAt: 0, completesAt: null,
+    }]
+    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 2, y: 4 }, footprint: { width: 2, height: 1 }, buildings, ownerId: 'p1' })).toEqual({
+      valid: false, reason: 'Клетка уже занята',
+    })
+  })
+
+  it('uses the occupied footprint after a building was rotated', () => {
+    const buildings = [{
+      id: 'rotated', kind: 'dugout' as const, name: 'Землянка', level: 1,
+      tile: { x: 3, y: 4 }, rotation: 1, footprintW: 1, footprintH: 2,
+      status: 'active' as const, health: 100, owner: 'p2', startedAt: 0, completesAt: null,
+    }]
+    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 3, y: 5 }, buildings, ownerId: 'p1' }).valid).toBe(false)
+  })
+
+  it('allows a trap on a road but blocks a second trap', () => {
+    const base = { id: 'road', kind: 'road' as const, name: 'Дорога', level: 1,
+      tile: { x: 2, y: 2 }, status: 'active' as const, health: 40,
+      owner: 'p1', startedAt: 0, completesAt: null }
+    const input = { kind: 'defense_stakes' as const, tile: { x: 2, y: 2 }, buildings: [base], ownerId: 'p1' }
+    expect(validatePlacementPreview({ ...input, buildings: [{ ...base, id: 'hall', kind: 'town_hall' as const, tile: { x: 0, y: 0 } }, base] }).valid).toBe(true)
+    expect(validatePlacementPreview({ ...input, buildings: [{ ...base, id: 'hall', kind: 'town_hall' as const, tile: { x: 0, y: 0 } }, base,
+      { ...base, id: 'trap', kind: 'defense_resin_snare' as const }] }).valid).toBe(false)
+  })
+
   it('blocks building on forest, water and mountain tiles', () => {
     expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 0, y: 0 }, terrain: 'forest', buildings: [] })).toEqual({
       valid: false,

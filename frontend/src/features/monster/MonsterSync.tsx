@@ -8,6 +8,7 @@ import { listMonsters, toMonster } from '../../shared/api/monsters'
 export function MonsterSync() {
   const viewport = useGameStore((state) => state.viewport)
   const setMonsters = useGameStore((state) => state.setMonsters)
+  const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const centerChunk = tileToChunk(viewport.center)
   const queryCenter = chunkCenterTile(centerChunk)
   const radiusTiles = viewport.radius * CHUNK_SIZE + CHUNK_SIZE
@@ -15,7 +16,7 @@ export function MonsterSync() {
     queryKey: ['monsters', centerChunk.x, centerChunk.y, viewport.radius],
     queryFn: () => listMonsters({ x: queryCenter.x, y: queryCenter.y, radius: radiusTiles }),
     retry: false,
-    refetchInterval: 8000,
+    refetchInterval: realtimeStatus === 'connected' ? 30_000 : 8000,
     staleTime: 5000,
   })
 
