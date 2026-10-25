@@ -42,7 +42,7 @@
 | Загрузка чанков | `frontend/src/features/world/useVisibleChunks.ts` | React Query hook для `/world/chunks` |
 | Рубка леса | `frontend/src/features/world/forestActions.ts`, `IsoMap.tsx` | Если выбран лесной тайл, отправляется `chopForest` |
 
-Мир имеет wrap по координатам: `WORLD_WRAP_TILES = 160`. Камера и координаты оборачиваются функциями `wrapGridCoord`, `wrapCameraOffset`, `nearestWrappedScreenCoord`.
+Мир имеет wrap по координатам: `WORLD_WRAP_TILES = 160`. Камера перемещается непрерывно; `wrapGridCoord` нормализует координаты клеток, а `nearestWrappedScreenCoord` выбирает ближайшее видимое повторение клетки.
 
 ## Строительство
 

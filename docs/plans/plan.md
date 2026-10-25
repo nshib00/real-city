@@ -1,6 +1,8 @@
 # Real City — План реализации
 
-Пунктов плана выполнено: 154/286 (53.8%)
+Пунктов плана выполнено: 174/359 (48.5%)
+
+План охватывает весь путь от текущего игрового прототипа до проверенного выпуска. ✅ означает завершённую работу, ⏳ — оставшуюся, 🟡 — реализованную частично, 🚫 — исключённую из актуального направления (фаза 9). В числителе учитываются только ✅; исключённые пункты остаются в истории плана, но не становятся задачами к выполнению. Пути в таблицах указаны от корня репозитория. Фазы 21–26 раскрывают крупные задачи существующих фаз; одна и та же работа не считается завершённой дважды без результата и проверки из соответствующей строки.
 
 ## Подход к логированию
 
@@ -144,7 +146,7 @@
 | 4.16 | Лимит построек от ратуши: дороги не расходуют лимит, все остальные постройки расходуют; апгрейд ратуши повышает лимит | `backend/internal/domain/building/limits.go`, `backend/internal/domain/catalog/buildings.go`, `frontend/src/features/build-catalog/` | ✅ |
 | 4.17 | Жилая ветка: Землянка → деревянный дом → каменный дом → ветки `многоквартирный дом/жилой небоскреб` и `вилла/дворец` | `backend/internal/domain/catalog/housing.go`, `shared/catalog/buildings.ts`, `frontend/src/assets/buildings/housing/` | ✅ |
 | 4.18 | Таблицы характеристик для всех построек: уровни, прочность, время строительства, стоимость строительства/апгрейдов, население, размер, цепочки переходов и специальные параметры по категориям | `docs/buildings/**/*.md` | ⏳ |
-| 4.19 | Единый источник информации о постройках: вынести баланс из дублирующихся TS/Go каталогов в общий data-каталог и генерировать или валидировать `shared/catalog/buildings.ts` и `backend/internal/domain/catalog/buildings.go` из него | `data/buildings/`, `shared/catalog/buildings.ts`, `backend/internal/domain/catalog/buildings.go`, `tools/` | ⏳ |
+| 4.19 | Единый источник информации о постройках: вынести баланс из дублирующихся TS/Go каталогов в общий data-каталог и генерировать или валидировать `shared/catalog/buildings.ts` и `backend/internal/domain/catalog/buildings.go` из него | `data/buildings/`, `shared/catalog/buildings.ts`, `backend/internal/domain/catalog/buildings.go`, `tools/` | ✅ data-каталог v1 для 73 ID; TS генерируется, Go читает встроенные данные, поуровневая сверка проходит |
 
 ---
 
@@ -314,7 +316,7 @@
 | 12.1 | Middleware CORS, request id, recoverer, body limit, timeout | `backend/internal/adapter/http/middleware/` | ✅ |
 | 12.2 | Middleware logger production access log: route pattern, status class, response size, panic marker | `backend/internal/adapter/http/middleware/logger.go` | ✅ |
 | 12.3 | Rate limiting по risky routes: auth, build/raid, chat, market, uploads, WS commands | `backend/internal/adapter/http/middleware/ratelimit.go`, `backend/internal/adapter/ws/ratelimit.go` | ✅ |
-| 12.4 | Idempotency keys для небезопасных POST: building placement, raid start, market order, alliance invite | `backend/internal/adapter/http/middleware/idempotency.go`, `backend/internal/adapter/redis/idempotency_store.go` | 🟡 memory + adapter |
+| 12.4 | Idempotency keys для небезопасных POST: building placement, raid start, market order, alliance invite | `backend/internal/adapter/http/middleware/idempotency.go`, `backend/internal/adapter/postgres/idempotency_store.go`, `backend/db/migrations/000036_idempotency_reservations.sql` | ✅ четыре маршрута под обязательным ключом: аутентифицированный игрок, межпроцессная блокировка, отпечаток тела, резервирование до мутации и replay; незавершённая резервация после сбоя блокирует повтор до сверки, SQL и API-тесты пройдены |
 | 12.5 | Сборка router с группами `/api/v1/auth`, `/players`, `/world`, `/buildings`, `/economy`, `/monsters`, `/raids`, `/alliances`, `/chat`, `/market`, `/admin`, `/health`, `/metrics`, `/swagger` | `backend/internal/adapter/http/router.go` | ✅ |
 | 12.6 | Swagger/OpenAPI annotations и генерация контракта | `backend/docs/swagger/`, `backend/internal/adapter/http/handler/` | 🟡 OpenAPI snapshot |
 | 12.7 | Typed frontend API client из OpenAPI или ручной client с contract tests | `frontend/src/shared/api/`, `shared/api/` | ✅ |
@@ -387,8 +389,8 @@
 |---|---|---|---|
 | 16.1 | Backend unit-тесты всех доменных правил: placement, economy, combat, territory, AI, cooldowns | `backend/internal/domain/**/*_test.go` | ⏳ |
 | 16.2 | Backend service unit-тесты с fake repositories/cache/event bus | `backend/internal/service/**/*_test.go` | ⏳ |
-| 16.3 | Интеграционные тесты PostgreSQL/Redis через testcontainers-go: миграции, репозитории, locks, constraints | `backend/internal/adapter/postgres/tests/`, `backend/internal/adapter/redis/tests/` | ⏳ |
-| 16.4 | API smoke/e2e compose tests: auth → world → build → economy → realtime → monster → raid | `tests/e2e/api/` | ⏳ |
+| 16.3 | Интеграционные тесты PostgreSQL/Redis через testcontainers-go: миграции, репозитории, locks, constraints | `backend/internal/adapter/postgres/testcontainers_integration_test.go`, `backend/internal/adapter/redis/integration_test.go` | ✅ testcontainers: миграции, запись/чтение idempotency, advisory lock, уникальность нефтяной вышки, Redis ping; запуск `TEST_CONTAINERS=1 go test ./internal/adapter/postgres -run TestPostgresRedisContainers` |
+| 16.4 | API smoke/e2e compose tests: auth → world → build → economy → realtime → monster → raid | `tests/e2e/api/`, `backend/internal/service/raid.go` | ✅ два игрока на общем мире, строительство/replay после обновления токена, экономика, монстры, WS, запуск/replay и завершение рейда с уроном; PostgreSQL smoke пройден |
 | 16.5 | Frontend unit/component tests для stores, panels, render state reducers, API client | `frontend/src/**/*.test.ts`, `frontend/src/**/*.test.tsx` | ⏳ |
 | 16.6 | Playwright E2E playable MVP: login, load map, place building, wait completion, harvest resource, receive WS event | `frontend/tests/e2e/` | ⏳ |
 | 16.7 | Visual regression/screenshot tests: desktop/mobile, placement, inspector states, combat/monster overlays | `frontend/tests/visual/` | ⏳ |
@@ -398,6 +400,8 @@
 ---
 
 ## Фаза 17 — Observability
+
+Контур Prometheus/Grafana и его проверки подробно описаны в [отдельном плане наблюдаемости](observability-plan.md). Локальные серверные измерения и оставшиеся браузерные прогоны зафиксированы в [базовой линии](../performance/observability-baseline.md). Пункты ниже шире этого контура: игровые метрики, Redis и клиентские ошибки остаются отдельными задачами общего плана.
 
 | # | Что | Файлы | Статус |
 |---|---|---|---|
@@ -453,6 +457,135 @@
 | 20.8 | Финальный паспорт playable MVP: реализованные функции, known limitations, проверочный чеклист, demo scenario | `docs/final-mvp.md` | ⏳ |
 | 20.9 | Синхронизация design docs с сеттингом Эолии: монеты, эолийские кристаллы, нефть/бензин, жилье, поля/грядки, Союзный дом, цикличный мир | `docs/game-design/visual-style-and-setting-options.md`, `docs/game-design/setting.md`, `docs/product/overview.md` | ⏳ |
 
+---
+
+## Фаза 21 — Полное покрытие построек спецификациями и балансом
+
+Результат фазы — единый проверяемый реестр всех доступных и запланированных типов построек. Для каждого `building_id` нужны текстовая спецификация в `docs/buildings/`, машиночитаемые характеристики в игровом каталоге и отдельная визуальная спецификация в `docs/assets/specs/`, если объекту требуется модель. Уже существующий файл считается готовым только после сверки уровней, цен, производства, ограничений и состояний с каталогом. Этап развивает пункты 4.1–4.13, 5.1–5.15, 14.7 и 20.7.
+
+| # | Что | Файлы | Статус |
+|---|---|---|---|
+| 21.1 | Собрать инвентаризацию `building_id` из backend/shared-каталогов, всех `docs/buildings/`, `docs/assets/specs/` и runtime-манифестов; отметить отсутствующие, дублирующиеся и устаревшие id, категорию, число уровней и степень готовности | `docs/buildings/catalog-coverage.md`, `backend/internal/domain/catalog/`, `shared/catalog/`, `docs/assets/specs/` | ✅ |
+| 21.2 | Закрепить единый шаблон текстовой спеки: роль, доступность, footprint/место, уровни, цены и время, производство/потребление, хранилище, здоровье, оборона, разрушение/ремонт, визуальные отличия, действия игрока, ограничения, связи с ресурсами и критерии проверки | `docs/buildings/building-characteristics-template.md`, `docs/buildings/tables/templates/` | ✅ |
+| 21.3 | Описать все центры и уникальные управляющие постройки, включая ратушу: уровни, зона применения эффектов, строительство, апгрейды, захват/потеря и состояние после разрушения | `docs/buildings/center/`, `shared/catalog/buildings.ts` | ✅ (действующий центр и будущий захват разграничены) |
+| 21.4 | Покрыть все жилые ветки и каждый игровой уровень: население, рабочие, вместимость, стоимость, внешний рост от землянки до позднего жилья, доступность после разрушения | `docs/buildings/houses/`, `shared/catalog/buildings.ts` | ✅ (выявлено отсутствие серверной вместимости жилья) |
+| 21.5 | Покрыть все поля и грядки: рост по стадиям, время, урожайность, повторный посев, супер-версия, сезонные/ресурсные ограничения и отличия уровней | `docs/buildings/fields/`, `backend/internal/domain/catalog/`, `shared/catalog/buildings.ts` | ✅ (игровой цикл и проектные ограничения разграничены) |
+| 21.6 | Покрыть все мастерские, добывающие и перерабатывающие здания: входы/выходы, рабочие, топливо, складские лимиты, остановка, цепочки ресурсов и уровни, включая отсутствующие в каталоге отрасли | `docs/buildings/industry/`, `docs/buildings/resource-buildings/`, `shared/catalog/buildings.ts` | ✅ (34 ID; действующие рецепты отделены от проектных ролей) |
+| 21.7 | Разрешить конфликты предметной модели: нефть и растительное масло, эолиевый сплав без resource id, разные названия/стоимости одного объекта и проектные уровни, которых нет в runtime | `docs/game-design/resources-list.md`, `docs/game-design/economy-audit.md`, `docs/buildings/catalog-coverage.md`, `shared/catalog/resources.ts` | ✅ |
+| 21.8 | Покрыть склады, хранилища монет, торговые и социальные постройки: ёмкость, доступ, комиссии, казна, права союза, лимиты и последствия повреждения | `docs/buildings/storage/`, `docs/buildings/trade/`, `docs/buildings/social/` | ✅ (активные правила и проектные функции разделены) |
+| 21.9 | Покрыть дороги, стены и мостовые: стоимость за сегмент, проходимость, логистика, урон, ремонт, стыки и отображение при соседстве | `docs/buildings/roads/`, `docs/buildings/defense/`, `shared/catalog/buildings.ts` | ✅ (текущие правила и будущая логистика разделены) |
+| 21.10 | Покрыть все оборонные постройки, ловушки и базы защитников: дальность, цель, боеприпасы/энергия, перезарядка, взаимодействие с PvE/PvP, контрмеры и баланс массовой обороны | `docs/buildings/defense/`, `docs/game-design/player-defenders.md`, `docs/game-design/defense-expansion-plan.md` | ✅ (спеки; создание защитников и PvP остаются отдельной реализацией) |
+| 21.11 | Описать захватываемые руины и объекты на редких клетках: условия захвата, удержание, восстановление, ресурсы, ограничения на размещение и потерю контроля без территориального запрета строительства | `docs/buildings/ruins/`, `docs/buildings/resource-buildings/`, `docs/game-design/` | ✅ захват, длительное восстановление и освобождение клетки после продажи/разрушения реализованы |
+| 21.12 | Для каждого типа и уровня сверить документ с backend/shared-каталогом, API и frontend: один id, доступность, цены, характеристики, единицы измерения и русское имя; зафиксировать решение при каждом расхождении | `docs/buildings/catalog-coverage.md`, `backend/internal/domain/catalog/`, `shared/catalog/`, `frontend/src/features/build-catalog/` | ✅ 73 документа с таблицами всех игровых уровней; 17 ранее неявных HP=100 записаны явно; меню и размещение согласованы по `firstLevel`, API `scope=all` раскрывает уровни; `make catalog-check` и frontend-тест пройдены |
+| 21.13 | Перевести утверждённый баланс в версионируемые данные каталога с проверкой схемы: экономика, строительство, энергия/бензин, PvE/PvP; миграции и совместимость сохранённого мира при изменении баланса | `data/buildings/`, `data/balance/v1.json`, `backend/internal/domain/catalog/`, `backend/db/migrations/`, `docs/game-design/balance-versioning.md` | ✅ v1: постройки и руины, ресурсы и рецепты с бензином, монстры, оружие, оборона и рейд загружаются из JSON; схема/копии проверяются, версия БД контролируется при старте, повторная миграция сохранила 104 постройки; при будущей смене чисел нужна отдельная миграция мира |
+| 21.14 | Добавить автоматическую проверку покрытия: каждый доступный `building_id` имеет текстовую и визуальную спеку либо явное исключение, все уровни и ресурсы существуют, стоимость неотрицательна, ссылки на ассеты разрешаются | `docs/buildings/check-coverage.py`, `docs/buildings/catalog-coverage.md`, `docs/assets/specs/schema.json` | ✅ (73 ID, 77 ресурсов, 0 ошибок; проверка структуры visual-spec отдельно) |
+| 21.15 | Проверить игровые цепочки вручную и тестами: первое поселение, жильё/рабочие, добыча, производство, хранение, оборона, апгрейд, разрушение и восстановление без тупиков в ресурсах | `docs/game-design/economy-audit.md`, `backend/internal/domain/catalog/*_test.go`, `frontend/tests/e2e/` | ⏳ (catalog/service тесты проходят; сквозной сценарий и источники поздних ресурсов не подтверждены) |
+
+---
+
+## Фаза 22 — Полный набор игровых моделей, анимаций и визуальная интеграция
+
+Текущий пайплайн Blender и часть семейств PNG/GLB уже существуют; статус отдельных семейств зафиксирован в [журнале ассетов](../assets/asset-generation-status.md). Эта фаза считается завершённой по итоговому покрытию каталога и проверке в игре, а не по наличию одной тестовой модели. Она конкретизирует фазу 14 и [план фабрики моделей](../assets/blender-asset-factory-plan.md).
+
+Порядок работы и конкретные пробелы 22.3–22.7 зафиксированы в [очереди производства](../assets/phase-22-3-7-execution.md). Blender MCP на момент проверки не отвечает; наличие visual-spec не меняет статус генерации моделей.
+
+| # | Что | Файлы | Статус |
+|---|---|---|---|
+| 22.1 | Сопоставить каждый тип и уровень из реестра 21.1 с asset id, `.blend`, PNG, GLB LOD0–2, `manifest`, `report`, статусом подключения и обязательными состояниями; отделить тестовые варианты от production | `docs/assets/building-asset-coverage.md`, `docs/assets/scan-building-assets.py`, `frontend/public/assets/buildings/` | ✅ (инвентаризация; визуальная приёмка остаётся в 22.12–22.14) |
+| 22.2 | Утвердить общий контракт визуальной спеки: footprint, размер/камера, origin/anchor, цвет и материалы, стадии строительства, `active/damaged/ruined`, LOD, экспорт и допустимые бюджеты | `docs/assets/building-asset-contract.md`, `docs/assets/specs/schema.json`, `docs/assets/specs/template.yaml` | ✅ |
+| 22.3 | Довести семейства центров и жилья до полного набора уровней и состояний; исключить подмену стройки или повреждения готовой моделью там, где по плану требуется отдельная геометрия | `docs/assets/specs/center/`, `docs/assets/specs/housing/`, `frontend/public/assets/buildings/center/`, `frontend/public/assets/buildings/housing/` | ⏳ |
+| 22.4 | Сгенерировать и проверить все недостающие семейства полей и грядок: стадии роста, урожай, супер-версия, стройка, повреждение, руина и различимые уровни | `docs/assets/specs/fields/`, `tools/assets/blender/real_city/components/`, `frontend/public/assets/buildings/fields/` | ⏳ |
+| 22.5 | Сгенерировать все недостающие промышленные и ресурсные постройки: читаемые входы/выходы производства, топливо, механизмы, уровни, остановка, повреждение и руины | `docs/assets/specs/industry/`, `tools/assets/blender/real_city/components/`, `frontend/public/assets/buildings/industry/` | ⏳ |
+| 22.6 | Создать семейства склада, рынка, союзного дома, обороны, ловушек, дорог и стен по их текстовым спекам; проверить соседство сегментов, зоны атаки и визуальную читаемость владельца | `docs/assets/specs/`, `frontend/public/assets/buildings/`, `tools/assets/blender/real_city/components/` | ⏳ |
+| 22.7 | Завершить природный набор: тайлы, лес и вырубка/восстановление, горы, реки, месторождения, редкие клетки и руины; проверить переходы границ и совместимость с цикличной картой | `docs/assets/terrain-regeneration-brief.md`, `frontend/public/assets/terrain/`, `frontend/public/assets/resources/` | ⏳ |
+| 22.8 | Создать оригинальные модели/спрайты всех видов монстров и защитников с необходимыми состояниями движения, атаки, урона и гибели | `docs/game-design/monster-specs.md`, `docs/assets/monster-sprites-and-animation-plan.md`, `frontend/public/assets/monsters/` | ⏳ |
+| 22.9 | Реализовать экспорт и проигрывание только нужных игровых анимаций: движение, производство, удары, предупреждения, рост; задать паузу/редукцию движения и предел одновременных эффектов | `docs/assets/animation-export-conventions.md`, `tools/assets/`, `frontend/src/game/renderers/` | ⏳ |
+| 22.10 | Автоматически проверять все артефакты: размеры и alpha PNG, имена состояний, bounds/footprint, три LOD, число полигонов, материалы, manifest, URL и отсутствие пустых файлов | `tools/assets/`, `frontend/scripts/check-asset-budget.mjs`, `docs/assets/specs/` | ⏳ |
+| 22.11 | Подключить каждое утверждённое семейство к runtime lookup и проверить рендер на карте, в инспекторе и 3D-просмотре; для 3D-сцен использовать Three.js | `frontend/src/game/`, `frontend/src/game/assets/`, `frontend/public/assets/buildings/` | ⏳ |
+| 22.12 | Проверить контактные листы и игровые скриншоты каждого семейства на масштабе карты: силуэт, различимость уровней/состояний, тени, стыки земли и читаемость на мобильном экране | `docs/assets/asset-generation-status.md`, `docs/assets/review/`, `frontend/tests/visual/` | ⏳ |
+| 22.13 | Ввести бюджеты первоначальной загрузки, чанка, памяти текстур и GLB; загрузку по видимости, fallback и очистку ресурсов при уходе чанка | `frontend/src/game/assets/`, `frontend/src/game/performance/`, `frontend/scripts/check-asset-budget.mjs` | ⏳ |
+| 22.14 | Сверить визуальный список с реестром 21.1: ни одна доступная постройка, уровень или обязательное состояние не остаются без утверждённого ассета либо явно указанного временного fallback | `docs/buildings/catalog-coverage.md`, `docs/assets/asset-generation-status.md`, `scripts/check-building-coverage.*` | ⏳ |
+
+---
+
+## Фаза 23 — Генерация аудио и игровой звук
+
+Детальная матрица звуков, рецепты, частичный набор WAV/MP3 и задачи подключения описаны в [плане аудио](audio-effects-plan.md). Здесь зафиксирован результат для полной игры: оригинальный воспроизводимый каталог эффектов, подключённый к подтверждённым действиям. Фоновая музыка и озвучка остаются отдельным решением о масштабе выпуска.
+
+| # | Что | Файлы | Статус |
+|---|---|---|---|
+| 23.1 | Сверить матрицу событий с актуальными API/WS-командами и экранными действиями: различать локальный UI-отклик, серверное подтверждение, удалённое событие и пассивный тик | `docs/audio/event-matrix.md`, `shared/events/`, `frontend/src/features/` | ⏳ |
+| 23.2 | Довести реестр `sound_id` и происхождения до полного покрытия: собственный рецепт или запись, автор/лицензия, версия, варианты, игровое событие, приоритет и шина | `docs/audio/asset-register.md`, `docs/audio/sound-style.md`, `tools/audio/recipes/` | ⏳ |
+| 23.3 | Провести слепое прослушивание уже созданных пилотных звуков и выбрать финальные варианты на наушниках, ноутбуке и телефоне; записать решения по тембру и громкости | `docs/audio/listening-review.md`, `tools/audio/review/` | ⏳ |
+| 23.4 | Сгенерировать/записать и собрать все эффекты интерфейса, выбора, подтверждений, ошибок, предупреждений и доступности с вариациями для частых действий | `tools/audio/recipes/ui.json`, `tools/audio/master/`, `frontend/public/assets/audio/ui/` | ⏳ |
+| 23.5 | Сгенерировать экономические эффекты: монеты, кристаллы, добыча каждого материала, сбор полей, производство, остановка по топливу, торговля и награда; пакетные события озвучивать один раз | `tools/audio/recipes/`, `frontend/public/assets/audio/economy/`, `docs/audio/event-matrix.md` | ⏳ |
+| 23.6 | Сгенерировать строительство и мир: установка, стадии, завершение, апгрейд, ремонт, дорога, стена, разрушение, лес, руины и редкие ресурсы | `tools/audio/recipes/`, `frontend/public/assets/audio/build/`, `frontend/public/assets/audio/world/` | ⏳ |
+| 23.7 | Сгенерировать семейства PvE/PvP: выстрелы разных орудий, попадание, блок/защита, монстры, тревога, рейд, победа/потеря; разделить близкие и дальние события | `tools/audio/recipes/`, `frontend/public/assets/audio/combat/`, `frontend/public/assets/audio/monsters/` | ⏳ |
+| 23.8 | Создать ненавязчивые петли окружения и социальные сигналы для чата/союза/рынка; предусмотреть выключение атмосферы и подавление спама сообщений | `tools/audio/recipes/`, `frontend/public/assets/audio/ambience/`, `frontend/public/assets/audio/social/` | ⏳ |
+| 23.9 | Реализовать воспроизводимую сборку WAV master → обработка → MP3/резервный формат → manifest; проверки клиппинга, тишины, хвостов, длительности, формата и размера | `tools/audio/build_audio.py`, `tools/audio/validate_audio.py`, `frontend/public/assets/audio/manifest.json` | ⏳ |
+| 23.10 | Подключить Web Audio: запуск после жеста, шины UI/world/alerts/ambience, общая громкость и mute, лимит голосов, приоритеты, кеш, вариации и сохранение настроек | `frontend/src/audio/`, `frontend/src/features/settings/`, `frontend/src/shared/store/` | ⏳ |
+| 23.11 | Связать звук с подтверждёнными ответами и `event_id`, убрать дубли HTTP/WS и повторы после reconnect; добавить затухание по расстоянию и видимости для мировых событий | `frontend/src/audio/`, `frontend/src/shared/realtime/`, `frontend/src/features/world/` | ⏳ |
+| 23.12 | Проверить сценарии без звука, autoplay block, мобильные браузеры, фоновые вкладки и слабую сеть; измерить бюджет первой загрузки и итоговый баланс громкостей | `frontend/tests/e2e/audio.spec.ts`, `docs/audio/listening-review.md`, `frontend/scripts/check-asset-budget.mjs` | ⏳ |
+
+---
+
+## Фаза 24 — Редизайн игровой поверхности
+
+Работа ведётся по [плану редизайна](interface-redesign-plan.md). Первый экран остаётся картой и действиями игрока. Редизайн принимает реальные сценарии и ассеты игры; он должен улучшить читаемость управления, не подменяя игровую механику. Этап конкретизирует фазу 3 и визуальную часть фаз 14/16.
+
+| # | Что | Файлы | Статус |
+|---|---|---|---|
+| 24.1 | Зафиксировать текущие desktop/mobile скриншоты, маршруты игрока и проблемы иерархии, плотности, перекрытия карты, адаптивности и доступности | `docs/plans/interface-redesign-audit.md`, `docs/assets/ui/review/`, `frontend/src/features/` | ⏳ |
+| 24.2 | Утвердить арт-направление Эолии и интерактивный макет главного экрана на реальном фрагменте карты: HUD, выбор, стройка, события, тревога, чат и инспектор | `docs/art/aeolian-ui-style-guide.md`, `docs/assets/ui/review/` | ⏳ |
+| 24.3 | Реализовать токены цветов, типографики, отступов, размеров, слоёв, теней и состояний без разнобоя между CSS и Pixi overlays | `frontend/src/app/styles/`, `frontend/src/shared/ui/`, `frontend/src/game/overlays/` | ⏳ |
+| 24.4 | Переработать HUD ресурсов, статусы угроз и связи, панель инструментов и уведомления: важное видно сразу, длинные числа не ломают сетку, карта остаётся главным полем | `frontend/src/features/hud/`, `frontend/src/features/tools/`, `frontend/src/features/notifications/` | ⏳ |
+| 24.5 | Переработать каталог строительства: категории, поиск/фильтры, карточка уровня, цена/время/условия, выбор места, предпросмотр footprint и понятная причина запрета | `frontend/src/features/buildings/`, `frontend/src/features/build-placement/`, `frontend/src/game/overlays/` | ⏳ |
+| 24.6 | Переработать инспектор клетки, своей/чужой постройки, ресурса, монстра, руины и игрока: собственник, состояние, доход, защита, риск и доступные действия с серверными причинами запрета | `frontend/src/features/inspector/`, `frontend/src/features/player/`, `frontend/src/features/raid/` | ⏳ |
+| 24.7 | Переработать журнал событий, чат, союз, рынок, профиль и настройки: очередность уведомлений, контекстные переходы на карту, непрерывность действий при realtime-обновлении | `frontend/src/features/event-log/`, `frontend/src/features/chat/`, `frontend/src/features/alliance/`, `frontend/src/features/market/`, `frontend/src/features/player/` | ⏳ |
+| 24.8 | Создать оригинальный набор UI-иконок и умеренный декор; сверить палитру с террейном, зданиями и эффектами, предусмотреть fallback при загрузке | `frontend/public/assets/ui/`, `docs/art/aeolian-ui-style-guide.md`, `frontend/src/shared/ui/` | ⏳ |
+| 24.9 | Реализовать отдельные компактные компоновки для планшета/телефона, touch-цели, жесты карты и альтернативы hover без перекрытия ключевого действия | `frontend/src/app/styles/`, `frontend/src/game/camera/`, `frontend/src/features/` | ⏳ |
+| 24.10 | Добавить клавиатурный маршрут и доступные состояния: focus, Escape/возврат фокуса, контраст, reduced motion, сообщения об ошибках и статусе без потока объявлений от тиков | `frontend/src/shared/ui/`, `frontend/src/app/styles/`, `docs/frontend/controls.md` | ⏳ |
+| 24.11 | Связать визуальный и звуковой отклик: локальный выбор, ожидание сервера, успех/ошибка и тревога; состояние действия показывать и без звука | `frontend/src/features/`, `frontend/src/audio/`, `docs/audio/event-matrix.md` | ⏳ |
+| 24.12 | Провести визуальные и сценарные проверки desktop/mobile, клавиатуры и скринридера; сравнить до/после FPS, время реакции и долю доступной карты | `frontend/tests/e2e/ui.spec.ts`, `frontend/tests/visual/`, `docs/assets/ui/performance-review.md` | ⏳ |
+| 24.13 | Включить новую тему поэтапно, проверить игровые API/WS действия и откат без миграций данных; обновить финальный style guide и инструкции компонентов | `frontend/src/app/`, `docs/operations/ui-rollout.md`, `docs/art/aeolian-ui-style-guide.md` | ⏳ |
+
+---
+
+## Фаза 25 — Замыкание игровых механик и цельный игровой цикл
+
+Фаза собирает ещё не завершённые пункты 1–13 в единую последовательность действий и устраняет зависимость от демонстрационных заглушек. Для актуального направления фаза 9 с контролируемой территорией остаётся исключённой; правила строительства на свободной клетке, владения объектом и спорных ресурсов проверяются отдельно.
+
+| # | Что | Файлы | Статус |
+|---|---|---|---|
+| 25.1 | Завершить расширенный профиль, уровни/XP и достижения на основе подтверждённых игровых событий; разделить публичные и приватные данные | `backend/internal/service/profile.go`, `backend/internal/service/xp.go`, `frontend/src/features/player/` | ⏳ |
+| 25.2 | Завершить цикличную карту: wrap координат и чанков, pathfinding через шов, отсутствие дублей объектов и корректные камера/selection | `backend/internal/domain/world/`, `backend/internal/service/world.go`, `frontend/src/game/` | ⏳ |
+| 25.3 | Довести размещение и апгрейды всех утверждённых построек до серверных правил стоимости, занятости клетки, уровня, лимитов, прав, таймеров и атомарной записи ресурсов | `backend/internal/service/building.go`, `backend/internal/domain/building/`, `frontend/src/features/buildings/` | ⏳ |
+| 25.4 | Замкнуть экономику: добыча и конкуренция за узлы, поля, производство, рабочие, топливо, склад, торговля, офлайн-прогресс и понятные UI-причины остановки | `backend/internal/service/economy.go`, `backend/internal/worker/simulation/`, `frontend/src/features/economy/` | ⏳ |
+| 25.5 | Завершить PvE и оборону: монстры, защитники, орудия, ловушки, расход ресурсов, выбор целей и восстановление после потерь | `backend/internal/service/combat.go`, `backend/internal/service/defense.go`, `frontend/src/features/threat/` | ⏳ |
+| 25.6 | Завершить PvP: путь и время рейда, валидация целей, урон, добыча, лимиты потерь, cooldown, ремонт и понятные оповещения обеим сторонам | `backend/internal/service/raid.go`, `backend/internal/service/repair.go`, `frontend/src/features/raid/` | ⏳ |
+| 25.7 | Завершить социальный контур: постоянные репозитории союза/казны/рынка, leave/kick, роли, unread, realtime, сделки и модерацию чата | `backend/internal/adapter/postgres/`, `backend/internal/service/alliance.go`, `backend/internal/service/market.go`, `frontend/src/features/` | ⏳ |
+| 25.8 | Довести API и realtime-контракт до одной версии: идемпотентность опасных POST, OpenAPI/WS-события, коды ошибок, typed client и миграции совместимости | `backend/docs/swagger/`, `shared/`, `frontend/src/shared/api/`, `backend/internal/adapter/ws/` | ⏳ |
+| 25.9 | Завершить администрирование: права, аудит, диагностические экраны, безопасную модерацию и проверку запрета доступа обычного игрока | `backend/internal/service/admin.go`, `backend/internal/adapter/http/handler/admin.go`, `frontend/src/features/admin/` | ⏳ |
+| 25.10 | Провести цельный сценарий на общем сервере: зарегистрироваться → основать поселение → добыть → построить/улучшить → защититься → столкнуться с монстром и соседом → восстановиться → вступить в союз/сделку | `frontend/tests/e2e/`, `tests/e2e/api/`, `docs/qa/playable-mvp.md` | ⏳ |
+| 25.11 | Проверить конкурентные команды, повтор WS/HTTP, рестарт worker, догоняющие тики и недоверенный клиент: отсутствие двойных наград, отрицательных ресурсов и незаконных действий | `backend/internal/service/**/*_test.go`, `backend/internal/worker/**/*_test.go`, `tests/e2e/api/` | ⏳ |
+
+---
+
+## Фаза 26 — Приёмка, эксплуатация и выпуск
+
+Этот этап конкретизирует общие фазы 15–20. Выпуск определяется работающей общей картой и воспроизводимым запуском; наличие файлов и зелёная сборка сами по себе не закрывают приёмку.
+
+| # | Что | Файлы | Статус |
+|---|---|---|---|
+| 26.1 | Зафиксировать целевые пороги производительности и измерить карту, 3D-просмотр, крупные чанки, загрузку ассетов, WS fanout, задержку тика и память на desktop/mobile | `docs/performance/performance-audit.md`, `frontend/tests/performance/`, `tests/k6/` | ⏳ |
+| 26.2 | Устранить подтверждённые узкие места: incremental rendering, culling, viewport delta, горячие SQL-запросы, кэш с корректной инвалидацией и ограничение очередей | `frontend/src/game/`, `backend/internal/service/world.go`, `backend/internal/adapter/ws/`, `backend/db/query/` | ⏳ |
+| 26.3 | Провести регрессию доменной логики, контрактов, миграций, браузерных сценариев, звука, визуальных состояний и доступности; включить необходимые проверки в CI | `backend/**/*_test.go`, `frontend/tests/`, `.github/workflows/` | ⏳ |
+| 26.4 | Закрыть контур наблюдаемости: метрики, логи и алерты для API, WS, DB, worker, игрового цикла и загрузки клиентских ассетов; обновить runbooks | `docs/plans/observability-plan.md`, `docs/operations/observability.md`, `deploy/observability/` | ⏳ |
+| 26.5 | Подготовить production-сборки, секреты, миграции, reverse proxy/WS, healthchecks, резервирование, восстановление и проверенный откат | `deploy/`, `docker-compose.prod.yml`, `docs/operations/deploy.md`, `scripts/` | ⏳ |
+| 26.6 | Выполнить smoke на целевом стенде с несколькими игроками и перезапуском сервисов; проверить сохранность общей карты, корректность таймеров и восстановление соединения | `tests/e2e/deploy-smoke.md`, `docs/qa/release-checklist.md` | ⏳ |
+| 26.7 | Сверить документацию с фактической игрой: быстрый старт, управление, каталог построек, баланс, звук, ассеты, API/WS, ограничения и политика оригинального контента | `README.md`, `docs/product/`, `docs/buildings/`, `docs/audio/`, `docs/architecture/` | ⏳ |
+| 26.8 | Составить паспорт версии: выполненные сценарии, измерения, известные ограничения, сценарий демонстрации и дальнейший backlog без скрытых заглушек | `docs/final-mvp.md`, `docs/qa/release-checklist.md`, `docs/plans/plan.md` | ⏳ |
+
 ## Порядок зависимостей
 
 ```
@@ -463,21 +596,34 @@
     │       │       ├── Фаза 4 (здания, размещение и строительство)
     │       │       │       ├── Фаза 5 (экономика, ресурсы и инвентарь)
     │       │       │       │       └── Фаза 7 (симуляция мира, таймеры и фоновые задачи)
-    │       │       │       ├── Фаза 9 (территория, владение и защита)
-    │       │       │       │       └── Фаза 10 (PvP, рейды, разрушения и ремонт)
+    │       │       │       ├── Фаза 9 (территория, владение и защита) — исключена
+    │       │       │       ├── Фаза 10 (PvP, рейды, разрушения и ремонт)
     │       │       │       └── Фаза 15 (кэширование, производительность и масштабирование)
     │       │       └── Фаза 8 (монстры, PvE и угрозы) — после базовой карты, чанков и simulation worker
     │       └── Фаза 11 (союзы, чат, рынок и социальные механики)
     ├── Фаза 6 (Realtime WebSocket и события мира) — после auth и базовой карты; затем используется фазами 4–11
     ├── Фаза 12 (middleware, роутер, Swagger и API-контракт) — параллельно с 1–11, но финализируется после стабилизации API
-    └── Фаза 14 (ассеты, визуальный пайплайн и контент) — параллельно frontend/gameplay фазам, критична до polished MVP
+    ├── Фаза 14 (ассеты, визуальный пайплайн и контент) — параллельно frontend/gameplay фазам
+    └── Фаза 21 (полное покрытие построек спецификациями)
+            └── Фаза 22 (модели, анимации и интеграция)
 
-Расширенный профиль игрока из фазы 1 наращивается по мере готовности фаз 4, 5, 8, 9, 10 и 11: эти механики поставляют XP-события, публичные score, достижения, репутацию и групповой контекст.
+Фаза 23 (генерация аудио) — после матрицы событий, интеграция после готовности соответствующих механик.
+Фаза 24 (редизайн) — после аудита игровых сценариев, параллельно 22–23.
+Фаза 25 (цельный игровой цикл) — объединяет результаты механик 1–13 и контента 21–24.
+Фаза 26 (приёмка и выпуск) — после 25 и необходимых частей 15–20.
+
+Расширенный профиль игрока из фазы 1 наращивается по мере готовности фаз 4, 5, 8, 10 и 11: эти механики поставляют XP-события, публичные score, достижения, репутацию и групповой контекст.
 Фаза 13 (администрирование и модерация) — после auth, world, realtime и базовых gameplay-сущностей; diagnostics зависят от 7, 15 и 17.
-Фаза 16 (тестирование и качество) — наращивается по всем фазам, финальный проход после завершения прикладных фаз 1–15.
+Фаза 16 (тестирование и качество) — наращивается по всем фазам, финальный проход после завершения прикладных фаз 1–15 и 21–25.
 Фаза 17 (observability) — после базового logger из 0 и realtime/simulation из 6–7; инфраструктура нужна до production-like деплоя.
 Фаза 18 (деплой и runtime-инфраструктура) — после стабилизации сборки frontend/backend, миграций, WS proxy и observability.
 Фаза 19 (CI/CD) — после фиксации команд тестирования, сборки, contract generation и docker pipeline.
-Фаза 20 (финальная документация) — последняя, после фиксации фактических функций, API, запуска, деплоя и пользовательских сценариев.
-Ближайший playable MVP: фазы 0–8 с минимальной частью 9, 12, 14, 15, 16 и 17; PvP, союзы, рынок и production hardening выполняются после доказательства server-authoritative flow.
+Фаза 20 (финальная документация) — ведётся по мере реализации; окончательно закрывается после приёмки 26.
+Фаза 21 (спеки построек и баланс) — начинается с инвентаризации существующего каталога; решения 21.7–21.13 предшествуют массовой генерации моделей и окончательной настройке экономики.
+Фаза 22 (модели и анимации) — использует утверждённые спеки 21; подключение и визуальная проверка идут партиями параллельно игровым механикам и редизайну.
+Фаза 23 (аудио) — генерация эффектов идёт после матрицы событий, подключение — после устойчивого API/WS-контракта 25.8; громкостная приёмка следует за редизайном 24.
+Фаза 24 (редизайн) — опирается на существующую карту и игровые сценарии; финальные панели проверяются с каталогом 21, ассетами 22 и аудио 23.
+Фаза 25 (цельный игровой цикл) — собирает незавершённые части фаз 1–13; сценарий 25.10 возможен после готовности ключевых построек и ресурсов.
+Фаза 26 (приёмка и выпуск) — после игровых сценариев 25, интеграции контента 21–24 и необходимых частей фаз 15–20.
+Ближайший playable MVP: фазы 0–8, 12 и минимальные части 14–17, 21–25; контролируемая территория из фазы 9 исключена, PvP и production hardening развиваются после подтверждения авторитетного серверного цикла.
 ```

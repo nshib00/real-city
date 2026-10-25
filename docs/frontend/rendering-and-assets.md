@@ -40,8 +40,7 @@
 | `tileToChunk` | Определение чанка по тайлу |
 | `roundGridCoord` | Округление координат до тайла |
 | `wrapGridCoord` | Оборачивание координат мира |
-| `wrapCameraOffset` | Оборачивание смещения камеры |
-| `nearestWrappedScreenCoord` | Поиск ближайшей экранной позиции с учетом wrap мира |
+| `nearestWrappedScreenCoord` | Поиск ближайшей экранной позиции с учетом wrap мира и непрерывного смещения камеры |
 
 ## Pixi-Слой Карты
 
@@ -142,7 +141,7 @@ PNG-подбор поддерживает все семьи, зарегистр�
 - `frontend/src/game/renderers/BuildingGlbModel.tsx`;
 - `frontend/src/game/renderers/buildingModelAssets.ts`.
 
-`BuildingGlbModel` создает Three.js renderer на canvas, грузит GLB через `GLTFLoader`, ставит ортографическую камеру и освещение, затем подгоняет модель под ячейку функцией `fitModelToCell`.
+`BuildingGlbModel` создает Three.js renderer на canvas, грузит GLB через `GLTFLoader`, ставит ортографическую камеру и освещение, затем подгоняет модель под ячейку функцией `fitModelToCell`. Начальный ракурс изометрический с учетом оси Y как вертикали GLB; модель можно вращать перетаскиванием мышью или касанием и приближать колесом мыши или жестом масштабирования.
 
 GLB не используется как runtime-рендер карты. Он доступен только в preview/debug интерфейсах через `BuildingModelPreview`, чтобы карта не создавала сотни Three/WebGL contexts.
 
