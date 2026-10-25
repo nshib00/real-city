@@ -1,5 +1,20 @@
 # Кристальная оранжерея
 
+<!-- runtime-catalog:start -->
+## Действующие игровые параметры
+
+Игровой ID: `crystal_greenhouse`. Категория: `fields`. Название в интерфейсе: **Кристальная оранжерея**. Занимает 1×1 клеток. Можно построить напрямую. Переходы к другим типам: нет.
+
+| Уровень | Время, с | Строители | HP | Стоимость по ID ресурса |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 900 | 4 | 260 | 2300000 × `coins`, 260 × `glass`, 1 × `star_glass`, 90 × `copper_parts`, 90 × `stone_block`, 8 × `light_crystal`, 1 × `mechanism` |
+| 2 | 900 | 4 | 260 | 3700000 × `coins`, 380 × `glass`, 2 × `star_glass`, 130 × `copper_parts`, 135 × `stone_block`, 12 × `light_crystal`, 2 × `mechanism`, 1 × `emerald_dust` |
+| 3 | 900 | 4 | 260 | 5500000 × `coins`, 540 × `glass`, 4 × `star_glass`, 190 × `copper_parts`, 200 × `stone_block`, 18 × `light_crystal`, 3 × `mechanism`, 3 × `emerald_dust` |
+| 4 | 900 | 4 | 260 | 7800000 × `coins`, 760 × `glass`, 7 × `star_glass`, 270 × `copper_parts`, 290 × `stone_block`, 28 × `light_crystal`, 5 × `mechanism`, 5 × `emerald_dust`, 1 × `aeolian-crystal` |
+
+Источник этих значений — `data/buildings/catalog-v2.json`. Другие числовые варианты ниже в документе относятся к проектным предложениям до отдельного переноса в игровой каталог.
+<!-- runtime-catalog:end -->
+
 Кристальная оранжерея выращивает `crystal_fruit` - end-game редкую культуру. Это уже не открытая грядка, а компактная 1x1 теплица с прозрачным куполом, каменным основанием, медными деталями, механизмами и световыми акцентами.
 
 ## Общие параметры

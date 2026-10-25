@@ -1,5 +1,22 @@
 # Красильный сад
 
+<!-- runtime-catalog:start -->
+## Действующие игровые параметры
+
+Игровой ID: `dye_garden`. Категория: `fields`. Название в интерфейсе: **Красильный сад**. Занимает 1×1 клеток. Можно построить напрямую. Переходы к другим типам: нет.
+
+| Уровень | Время, с | Строители | HP | Стоимость по ID ресурса |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 220 | 1 | 90 | 780000 × `coins`, 140 × `herbs`, 90 × `dyes`, 120 × `fabric`, 65 × `stone_block`, 3 × `gold_ingot`, 1 × `rare_flowers` |
+| 2 | 220 | 1 | 90 | 1250000 × `coins`, 190 × `herbs`, 140 × `dyes`, 170 × `fabric`, 95 × `stone_block`, 5 × `gold_ingot`, 2 × `rare_flowers`, 2 × `premium_planks` |
+| 3 | 220 | 1 | 90 | 1900000 × `coins`, 260 × `herbs`, 210 × `dyes`, 235 × `fabric`, 135 × `stone_block`, 8 × `gold_ingot`, 3 × `rare_flowers`, 1 × `emerald_dust` |
+| 4 | 220 | 1 | 90 | 2750000 × `coins`, 350 × `herbs`, 300 × `dyes`, 320 × `fabric`, 185 × `stone_block`, 12 × `gold_ingot`, 5 × `rare_flowers`, 2 × `emerald_dust`, 1 × `mechanism` |
+| 5 | 220 | 1 | 90 | 3850000 × `coins`, 470 × `herbs`, 420 × `dyes`, 430 × `fabric`, 250 × `stone_block`, 18 × `gold_ingot`, 8 × `rare_flowers`, 3 × `emerald_dust`, 2 × `mechanism`, 1 × `star_glass` |
+| 6 | 220 | 1 | 90 | 5250000 × `coins`, 620 × `herbs`, 580 × `dyes`, 580 × `fabric`, 330 × `stone_block`, 26 × `gold_ingot`, 12 × `rare_flowers`, 5 × `emerald_dust`, 3 × `mechanism`, 2 × `star_glass` |
+
+Источник этих значений — `data/buildings/catalog-v2.json`. Другие числовые варианты ниже в документе относятся к проектным предложениям до отдельного переноса в игровой каталог.
+<!-- runtime-catalog:end -->
+
 Красильный сад выращивает `dyes` и редкий урожай `rare_flowers`. Это end-game производственная грядка для пигментов, а не декоративная клумба: цветовые пятна должны быть яркими, но организованными, с лотками, тканевыми пробниками, каменными секциями и дорогими ремесленными деталями.
 
 ## Общие параметры

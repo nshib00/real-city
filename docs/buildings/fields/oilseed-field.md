@@ -1,5 +1,23 @@
 # Масличное поле
 
+<!-- runtime-catalog:start -->
+## Действующие игровые параметры
+
+Игровой ID: `oilseed_field`. Категория: `fields`. Название в интерфейсе: **Масличное поле**. Занимает 1×1 клеток. Можно построить напрямую. Переходы к другим типам: нет.
+
+| Уровень | Время, с | Строители | HP | Стоимость по ID ресурса |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 240 | 1 | 90 | 260000 × `coins`, 130 × `seeds`, 90 × `planks`, 42 × `fabric`, 30 × `stone_block`, 3 × `iron_ingot` |
+| 2 | 240 | 1 | 90 | 430000 × `coins`, 180 × `seeds`, 125 × `planks`, 60 × `fabric`, 48 × `stone_block`, 5 × `iron_ingot`, 1 × `premium_planks` |
+| 3 | 240 | 1 | 90 | 680000 × `coins`, 240 × `seeds`, 170 × `planks`, 85 × `fabric`, 72 × `stone_block`, 8 × `iron_ingot`, 2 × `premium_planks` |
+| 4 | 240 | 1 | 90 | 1020000 × `coins`, 320 × `seeds`, 3 × `premium_planks`, 115 × `fabric`, 100 × `stone_block`, 12 × `iron_ingot`, 1 × `mechanism` |
+| 5 | 240 | 1 | 90 | 1470000 × `coins`, 420 × `seeds`, 4 × `premium_planks`, 155 × `fabric`, 135 × `stone_block`, 16 × `iron_ingot`, 2 × `mechanism`, 1 × `gold_ingot` |
+| 6 | 240 | 1 | 90 | 2050000 × `coins`, 540 × `seeds`, 6 × `premium_planks`, 200 × `fabric`, 180 × `stone_block`, 22 × `iron_ingot`, 3 × `mechanism`, 2 × `gold_ingot` |
+| 7 | 240 | 1 | 90 | 2780000 × `coins`, 700 × `seeds`, 8 × `premium_planks`, 260 × `fabric`, 240 × `stone_block`, 30 × `iron_ingot`, 4 × `mechanism`, 3 × `gold_ingot`, 1 × `super-seeds` |
+
+Источник этих значений — `data/buildings/catalog-v2.json`. Другие числовые варианты ниже в документе относятся к проектным предложениям до отдельного переноса в игровой каталог.
+<!-- runtime-catalog:end -->
+
 Масличное поле выращивает `oil_plants` - mid-game растительное сырье для масла, еды, ремесла и будущей химии. Важно визуально не путать его с нефтяной промышленностью: это теплая сельскохозяйственная культура с желто-зелеными головками, корзинами семян и простыми прессовыми деталями на поздних уровнях.
 
 ## Общие параметры

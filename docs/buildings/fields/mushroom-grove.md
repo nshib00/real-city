@@ -1,5 +1,26 @@
 # Грибница
 
+<!-- runtime-catalog:start -->
+## Действующие игровые параметры
+
+Игровой ID: `mushroom_grove`. Категория: `fields`. Название в интерфейсе: **Грибница**. Занимает 1×1 клеток. Можно построить напрямую. Переходы к другим типам: нет.
+
+| Уровень | Время, с | Строители | HP | Стоимость по ID ресурса |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 150 | 1 | 80 | 25000 × `coins`, 40 × `planks`, 18 × `stone`, 8 × `resin` |
+| 2 | 150 | 1 | 80 | 55000 × `coins`, 65 × `planks`, 30 × `stone`, 14 × `resin`, 8 × `brick` |
+| 3 | 150 | 1 | 80 | 105000 × `coins`, 90 × `planks`, 50 × `stone`, 22 × `resin`, 18 × `brick`, 8 × `windleaf` |
+| 4 | 150 | 1 | 80 | 180000 × `coins`, 120 × `planks`, 70 × `stone`, 34 × `resin`, 30 × `brick`, 14 × `fabric` |
+| 5 | 150 | 1 | 80 | 300000 × `coins`, 1 × `premium_planks`, 95 × `stone`, 48 × `resin`, 28 × `stone_block`, 24 × `fabric` |
+| 6 | 150 | 1 | 80 | 470000 × `coins`, 2 × `premium_planks`, 130 × `stone`, 64 × `resin`, 45 × `stone_block`, 2 × `iron_ingot`, 1 × `blue_salt` |
+| 7 | 150 | 1 | 80 | 700000 × `coins`, 3 × `premium_planks`, 80 × `resin`, 70 × `stone_block`, 4 × `iron_ingot`, 2 × `blue_salt` |
+| 8 | 150 | 1 | 80 | 1000000 × `coins`, 4 × `premium_planks`, 105 × `resin`, 95 × `stone_block`, 7 × `iron_ingot`, 3 × `blue_salt`, 1 × `emerald_dust` |
+| 9 | 150 | 1 | 80 | 1380000 × `coins`, 6 × `premium_planks`, 135 × `resin`, 130 × `stone_block`, 10 × `iron_ingot`, 2 × `emerald_dust`, 1 × `super-mushrooms` |
+| 10 | 150 | 1 | 80 | 1850000 × `coins`, 8 × `premium_planks`, 170 × `resin`, 170 × `stone_block`, 14 × `iron_ingot`, 3 × `emerald_dust`, 2 × `super-mushrooms`, 1 × `super-seeds` |
+
+Источник этих значений — `data/buildings/catalog-v2.json`. Другие числовые варианты ниже в документе относятся к проектным предложениям до отдельного переноса в игровой каталог.
+<!-- runtime-catalog:end -->
+
 Грибница - mid-game полевая постройка для выращивания `mushrooms` и редкого урожая `super-mushrooms`. Она должна выглядеть не как обычная грядка, а как круглая влажная теневая делянка: мох, коряги, темная земля, постепенно растущий бортик-забор, навес и все более крупные грибные шляпки на поздних уровнях.
 
 ## Общие параметры

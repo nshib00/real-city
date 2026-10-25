@@ -1,5 +1,25 @@
 # Травяная грядка
 
+<!-- runtime-catalog:start -->
+## Действующие игровые параметры
+
+Игровой ID: `herb_bed`. Категория: `fields`. Название в интерфейсе: **Травяная грядка**. Занимает 1×1 клеток. Можно построить напрямую. Переходы к другим типам: нет.
+
+| Уровень | Время, с | Строители | HP | Стоимость по ID ресурса |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 120 | 1 | 70 | 75000 × `coins`, 45 × `seeds`, 45 × `planks`, 18 × `fabric`, 8 × `rope`, 6 × `windleaf` |
+| 2 | 120 | 1 | 70 | 120000 × `coins`, 65 × `seeds`, 60 × `planks`, 26 × `fabric`, 14 × `rope`, 10 × `windleaf`, 12 × `brick` |
+| 3 | 120 | 1 | 70 | 185000 × `coins`, 90 × `seeds`, 85 × `planks`, 36 × `fabric`, 20 × `rope`, 18 × `windleaf`, 20 × `stone_block` |
+| 4 | 120 | 1 | 70 | 280000 × `coins`, 120 × `seeds`, 110 × `planks`, 50 × `fabric`, 30 × `rope`, 28 × `stone_block`, 2 × `iron_ingot` |
+| 5 | 120 | 1 | 70 | 410000 × `coins`, 155 × `seeds`, 1 × `premium_planks`, 70 × `fabric`, 44 × `stone_block`, 4 × `iron_ingot`, 1 × `blue_salt` |
+| 6 | 120 | 1 | 70 | 590000 × `coins`, 200 × `seeds`, 2 × `premium_planks`, 95 × `fabric`, 60 × `stone_block`, 6 × `iron_ingot`, 2 × `blue_salt` |
+| 7 | 120 | 1 | 70 | 820000 × `coins`, 260 × `seeds`, 3 × `premium_planks`, 125 × `fabric`, 82 × `stone_block`, 9 × `iron_ingot`, 1 × `emerald_dust` |
+| 8 | 120 | 1 | 70 | 1100000 × `coins`, 330 × `seeds`, 4 × `premium_planks`, 160 × `fabric`, 110 × `stone_block`, 12 × `iron_ingot`, 2 × `emerald_dust`, 1 × `rare_flowers` |
+| 9 | 120 | 1 | 70 | 1450000 × `coins`, 420 × `seeds`, 6 × `premium_planks`, 210 × `fabric`, 145 × `stone_block`, 16 × `iron_ingot`, 3 × `emerald_dust`, 1 × `super-seeds` |
+
+Источник этих значений — `data/buildings/catalog-v2.json`. Другие числовые варианты ниже в документе относятся к проектным предложениям до отдельного переноса в игровой каталог.
+<!-- runtime-catalog:end -->
+
 Травяная грядка - mid-game полевая постройка для выращивания `herbs` и редкого урожая `rare_flowers`. Визуально это мягкая аптекарская грядка: невысокие плетеные борта, пучки зелени, маленькие бирки растений и все более аккуратная травяная геометрия на поздних уровнях.
 
 ## Общие параметры

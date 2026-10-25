@@ -1,5 +1,25 @@
 # Сахарная грядка
 
+<!-- runtime-catalog:start -->
+## Действующие игровые параметры
+
+Игровой ID: `sugar_bed`. Категория: `fields`. Название в интерфейсе: **Сахарная грядка**. Занимает 1×1 клеток. Можно построить напрямую. Переходы к другим типам: нет.
+
+| Уровень | Время, с | Строители | HP | Стоимость по ID ресурса |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 260 | 1 | 95 | 125000 × `coins`, 80 × `seeds`, 55 × `planks`, 30 × `reed`, 24 × `fabric`, 18 × `clay` |
+| 2 | 260 | 1 | 95 | 210000 × `coins`, 110 × `seeds`, 80 × `planks`, 45 × `reed`, 36 × `fabric`, 30 × `clay`, 14 × `brick` |
+| 3 | 260 | 1 | 95 | 340000 × `coins`, 150 × `seeds`, 110 × `planks`, 65 × `reed`, 52 × `fabric`, 48 × `brick`, 22 × `stone_block` |
+| 4 | 260 | 1 | 95 | 520000 × `coins`, 200 × `seeds`, 150 × `planks`, 90 × `reed`, 75 × `fabric`, 70 × `brick`, 35 × `stone_block` |
+| 5 | 260 | 1 | 95 | 760000 × `coins`, 260 × `seeds`, 1 × `premium_planks`, 120 × `reed`, 105 × `fabric`, 55 × `stone_block`, 3 × `iron_ingot` |
+| 6 | 260 | 1 | 95 | 1070000 × `coins`, 340 × `seeds`, 2 × `premium_planks`, 155 × `reed`, 140 × `fabric`, 80 × `stone_block`, 5 × `iron_ingot`, 1 × `blue_salt` |
+| 7 | 260 | 1 | 95 | 1470000 × `coins`, 430 × `seeds`, 4 × `premium_planks`, 200 × `reed`, 180 × `fabric`, 110 × `stone_block`, 8 × `iron_ingot`, 2 × `blue_salt` |
+| 8 | 260 | 1 | 95 | 1980000 × `coins`, 540 × `seeds`, 6 × `premium_planks`, 255 × `reed`, 230 × `fabric`, 150 × `stone_block`, 12 × `iron_ingot`, 2 × `gold_ingot` |
+| 9 | 260 | 1 | 95 | 2600000 × `coins`, 680 × `seeds`, 8 × `premium_planks`, 330 × `reed`, 300 × `fabric`, 200 × `stone_block`, 18 × `iron_ingot`, 3 × `gold_ingot`, 1 × `super-seeds` |
+
+Источник этих значений — `data/buildings/catalog-v2.json`. Другие числовые варианты ниже в документе относятся к проектным предложениям до отдельного переноса в игровой каталог.
+<!-- runtime-catalog:end -->
+
 Сахарная грядка выращивает `sugar_cane`. Это mid-game культура, близкая к Тростниковой грядке по вертикальности, но более дорогая и торговая. Она должна читаться теплее и суше: толстые сочные стебли, светлые срезы, сладкие узлы и корзины для нарезанного сырья.
 
 ## Общие параметры
