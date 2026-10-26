@@ -6,7 +6,7 @@ describe('combat sound policy', () => {
   it('mutes distant events and attenuates nearby ones', () => {
     expect(combatDistanceGain({ x: 0, y: 0 }, { x: 0, y: 0 }, 1)).toBe(1)
     expect(combatDistanceGain({ x: 8, y: 0 }, { x: 0, y: 0 }, 1)).toBeLessThan(1)
-    expect(combatDistanceGain({ x: 1000, y: 0 }, { x: 0, y: 0 }, 1)).toBe(0)
+    expect(combatDistanceGain({ x: 80, y: 0 }, { x: 0, y: 0 }, 1)).toBe(0)
     expect(combatDistanceGain(undefined, { x: 0, y: 0 }, 1)).toBe(0)
   })
 
