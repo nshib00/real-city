@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useIsMutating, useQueryClient } from '@tanstack/react-query'
 import { ActionState, actionErrorReason, type ActionPhase } from '../../shared/ui/ActionState'
 import { setInterfaceTheme, useInterfaceTheme } from '../../app/theme'
+import { clientTelemetry } from '../../shared/telemetry/clientTelemetry'
 
 export function ActionFeedback() {
   const theme = useInterfaceTheme()
@@ -29,6 +30,7 @@ export function ActionFeedback() {
     if (event.action.type === 'pending') setFeedback({ phase: 'pending' })
     if (event.action.type === 'success') setFeedback({ phase: 'success' })
     if (event.action.type === 'error') {
+      clientTelemetry.record('ui_action_failure')
       const error = event.mutation.state.error
       setFeedback(error instanceof Error && error.name === 'AbortError'
         ? { phase: 'cancelled', reason: 'Запрос прерван. Проверьте состояние объекта: сервер мог уже принять действие.' }

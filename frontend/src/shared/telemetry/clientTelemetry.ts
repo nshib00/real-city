@@ -1,6 +1,6 @@
 import { version } from '../../../package.json'
 
-export type ClientSignal = 'runtime_error' | 'unhandled_rejection' | 'asset_error' | 'render_error' | 'ws_reconnecting' | 'ws_recovered' | 'ws_gap'
+export type ClientSignal = 'runtime_error' | 'unhandled_rejection' | 'asset_error' | 'render_error' | 'ui_error_boundary' | 'ui_action_failure' | 'ui_build_panel_open' | 'ui_resource_panel_open' | 'ui_alliance_panel_open' | 'ws_reconnecting' | 'ws_recovered' | 'ws_gap'
 export type ClientReport = { schema: 1; version: string; signal: ClientSignal; minute: number }
 type Receiver = (reports: readonly ClientReport[]) => void | Promise<void>
 

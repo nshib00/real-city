@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { StatusState } from '../shared/ui/StatusState'
+import { clientTelemetry } from '../shared/telemetry/clientTelemetry'
 
 type Props = {
   children: ReactNode
@@ -17,6 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
+    clientTelemetry.record('ui_error_boundary')
     console.error('ui.error_boundary', { error, info })
   }
 

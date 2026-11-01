@@ -25,6 +25,7 @@ import { WorldRealtime } from '../features/world/WorldRealtime'
 import { IsoMap } from '../game/IsoMap'
 import { FirstCityHelp } from '../features/buildings/FirstCityHelp'
 import { useGameStore } from '../game/state/useGameStore'
+import { clientTelemetry } from '../shared/telemetry/clientTelemetry'
 
 const BuildMenu = lazy(() => import('../features/buildings/BuildMenu').then((module) => ({ default: module.BuildMenu })))
 const ResourceRegistry = lazy(() => import('../features/resources/ResourceRegistry').then((module) => ({ default: module.ResourceRegistry })))
@@ -37,6 +38,9 @@ export function App() {
   const buildMenuOpen = useGameStore((state) => state.uiPreferences.buildMenuOpen)
   const resourceRegistryOpen = useGameStore((state) => state.uiPreferences.resourceRegistryOpen)
   const alliancePanelOpen = useGameStore((state) => state.uiPreferences.alliancePanelOpen)
+  useEffect(() => { if (buildMenuOpen) clientTelemetry.record('ui_build_panel_open') }, [buildMenuOpen])
+  useEffect(() => { if (resourceRegistryOpen) clientTelemetry.record('ui_resource_panel_open') }, [resourceRegistryOpen])
+  useEffect(() => { if (alliancePanelOpen) clientTelemetry.record('ui_alliance_panel_open') }, [alliancePanelOpen])
   useEffect(preloadUiSounds, [])
   const showAssetDebugPanel = import.meta.env.DEV && new URLSearchParams(window.location.search).has('assets')
   return (

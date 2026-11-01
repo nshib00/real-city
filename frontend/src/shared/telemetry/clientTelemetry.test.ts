@@ -67,4 +67,19 @@ describe('client telemetry', () => {
     await telemetry.flush()
     expect(receive).toHaveBeenCalledTimes(2)
   })
+
+  it('accepts only bounded UI failure and critical-panel signals', async () => {
+    const receive = vi.fn()
+    const telemetry = new ClientTelemetry(receive, 'test')
+    telemetry.record('ui_error_boundary')
+    telemetry.record('ui_action_failure')
+    telemetry.record('ui_build_panel_open')
+    telemetry.record('ui_resource_panel_open')
+    telemetry.record('ui_alliance_panel_open')
+    await telemetry.flush()
+    expect(receive.mock.calls[0][0].map((report: { signal: string }) => report.signal)).toEqual([
+      'ui_error_boundary', 'ui_action_failure', 'ui_build_panel_open', 'ui_resource_panel_open', 'ui_alliance_panel_open',
+    ])
+    expect(JSON.stringify(receive.mock.calls[0][0])).not.toMatch(/message|url|player|coordinate|payload/i)
+  })
 })
