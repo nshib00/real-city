@@ -1,6 +1,10 @@
 package handler
 
 import (
+	"encoding/binary"
+	"encoding/json"
+	"fmt"
+	"hash/fnv"
 	"net/http"
 	"strconv"
 
@@ -12,12 +16,13 @@ import (
 )
 
 type WorldHandler struct {
-	worlds  *service.WorldService
-	forests *service.ForestService
+	worlds        *service.WorldService
+	forests       *service.ForestService
+	responseCache *worldResponseCache
 }
 
 func NewWorldHandler(worlds *service.WorldService, forests *service.ForestService) *WorldHandler {
-	return &WorldHandler{worlds: worlds, forests: forests}
+	return &WorldHandler{worlds: worlds, forests: forests, responseCache: newWorldResponseCache()}
 }
 
 func (h *WorldHandler) World(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +45,7 @@ func (h *WorldHandler) Chunks(w http.ResponseWriter, r *http.Request) {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusOK, envelope{"chunks": dto.Chunks(chunks)})
+	h.writeChunks(w, r, chunks)
 }
 
 func (h *WorldHandler) Viewport(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +70,47 @@ func (h *WorldHandler) Viewport(w http.ResponseWriter, r *http.Request) {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusOK, envelope{"chunks": dto.Chunks(chunks)})
+	h.writeChunks(w, r, chunks)
+}
+
+func (h *WorldHandler) writeChunks(w http.ResponseWriter, r *http.Request, chunks []world.Chunk) {
+	if writeNotModified(w, r, chunks) {
+		return
+	}
+	key := w.Header().Get("ETag")
+	data, ok := h.responseCache.get(key)
+	if !ok {
+		var err error
+		data, err = json.Marshal(envelope{"chunks": dto.Chunks(chunks)})
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		data = append(data, '\n')
+		h.responseCache.put(key, data)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(data)
+}
+
+func writeNotModified(w http.ResponseWriter, r *http.Request, chunks []world.Chunk) bool {
+	hash := fnv.New64a()
+	var data [24]byte
+	for _, chunk := range chunks {
+		binary.LittleEndian.PutUint64(data[0:8], uint64(chunk.Coord.X))
+		binary.LittleEndian.PutUint64(data[8:16], uint64(chunk.Coord.Y))
+		binary.LittleEndian.PutUint64(data[16:24], uint64(chunk.Version))
+		_, _ = hash.Write(data[:])
+	}
+	etag := fmt.Sprintf("\"world-%016x\"", hash.Sum64())
+	w.Header().Set("ETag", etag)
+	w.Header().Set("Cache-Control", "private, no-cache")
+	if r.Header.Get("If-None-Match") != etag {
+		return false
+	}
+	w.WriteHeader(http.StatusNotModified)
+	return true
 }
 
 func (h *WorldHandler) ChopForest(w http.ResponseWriter, r *http.Request) {
