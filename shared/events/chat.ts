@@ -1,4 +1,4 @@
-export type ChatEventType = 'chat.message.created' | 'chat.message.flagged'
+export type ChatEventType = 'chat.message.created' | 'chat.message.flagged' | 'chat.read.updated'
 
 export type ChatMessagePayload = {
   id: string

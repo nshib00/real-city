@@ -1,0 +1,182 @@
+[
+  {
+    "level": 1,
+    "title": "Уровень 1",
+    "xp": 0,
+    "icon": "Tent",
+    "unlocks": [
+      {
+        "label": "Базовое строительство и чат",
+        "status": "available"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "title": "Уровень 2",
+    "xp": 200,
+    "icon": "MapPinned",
+    "unlocks": [
+      {
+        "label": "Дороги и значок профиля",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "title": "Уровень 3",
+    "xp": 700,
+    "icon": "Hammer",
+    "unlocks": [
+      {
+        "label": "Улучшения и инспектор производства",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 4,
+    "title": "Уровень 4",
+    "xp": 1900,
+    "icon": "Shield",
+    "unlocks": [
+      {
+        "label": "Оборонный статус и журнал угроз",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 5,
+    "title": "Уровень 5",
+    "xp": 4700,
+    "icon": "Route",
+    "unlocks": [
+      {
+        "label": "Рынок и титул профиля",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 6,
+    "title": "Уровень 6",
+    "xp": 11200,
+    "icon": "Warehouse",
+    "unlocks": [
+      {
+        "label": "Складские уведомления и три значка",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 7,
+    "title": "Уровень 7",
+    "xp": 26200,
+    "icon": "LandPlot",
+    "unlocks": [
+      {
+        "label": "Приоритеты логистики и специализации",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 8,
+    "title": "Уровень 8",
+    "xp": 61200,
+    "icon": "Handshake",
+    "unlocks": [
+      {
+        "label": "Групповой вклад и дипломатические метки",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 9,
+    "title": "Уровень 9",
+    "xp": 141200,
+    "icon": "TowerControl",
+    "unlocks": [
+      {
+        "label": "Фильтры событий и обзор угроз",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 10,
+    "title": "Уровень 10",
+    "xp": 321200,
+    "icon": "Castle",
+    "unlocks": [
+      {
+        "label": "Престижная рамка и история достижений",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 11,
+    "title": "Уровень 11",
+    "xp": 721200,
+    "icon": "Network",
+    "unlocks": [
+      {
+        "label": "Групповая статистика",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 12,
+    "title": "Уровень 12",
+    "xp": 1621200,
+    "icon": "Gem",
+    "unlocks": [
+      {
+        "label": "Престижный медальон и архив",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 13,
+    "title": "Уровень 13",
+    "xp": 3621200,
+    "icon": "Landmark",
+    "unlocks": [
+      {
+        "label": "Косметические варианты профиля",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 14,
+    "title": "Уровень 14",
+    "xp": 8121200,
+    "icon": "Crown",
+    "unlocks": [
+      {
+        "label": "Избранные достижения",
+        "status": "planned"
+      }
+    ]
+  },
+  {
+    "level": 15,
+    "title": "Уровень 15",
+    "xp": 18121200,
+    "icon": "Trophy",
+    "unlocks": [
+      {
+        "label": "Максимальный престиж и дальнейший учёт XP",
+        "status": "planned"
+      }
+    ]
+  }
+]

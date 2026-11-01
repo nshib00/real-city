@@ -66,3 +66,5 @@ export type APIError = {
   message: string
   fields?: Record<string, string>
 }
+
+export type { ProfileAppearance, PublicPlayerProfile } from '../player/profile'

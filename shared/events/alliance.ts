@@ -1,10 +1,15 @@
 export type AllianceEventType =
   | 'alliance.created'
+  | 'alliance.leader.changed'
+  | 'alliance.invite.responded'
+  | 'alliance.member.left'
+  | 'alliance.member.kicked'
   | 'alliance.invite.created'
   | 'alliance.invite.accepted'
   | 'alliance.invite.declined'
   | 'alliance.role.changed'
   | 'alliance.treasury.donated'
+  | 'alliance.treasury.spent'
   | 'alliance.buff.upgraded'
   | 'alliance.territory_aid.added'
 

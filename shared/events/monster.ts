@@ -13,6 +13,8 @@ export type MonsterPayload = {
   source?: 'player' | 'cannon'
   monster: {
     id: string
+    creator_id?: string
+    expires_at?: string
     type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
     state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
     tile_x?: number

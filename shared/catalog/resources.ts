@@ -10,6 +10,8 @@ export type ResourceCatalogItem = {
 }
 
 export const resourceCatalog: ResourceCatalogItem[] = [
+  { id: 'stone_heart', name: 'Каменное сердце', category: 'rare', hasLimit: false, source: 'шахта со второго уровня', displayOrder: 54.3 },
+  { id: 'fine_rope', name: 'Качественная веревка', category: 'rare', hasLimit: false, source: 'канатный двор с третьего уровня', displayOrder: 54.4 },
   { id: 'throwing_knives', name: 'Метательные клинки', category: 'weapons', hasLimit: false, source: 'кузница', displayOrder: 100 },
   { id: 'hunting_traps', name: 'Охотничий капкан', category: 'weapons', hasLimit: false, source: 'мастерская', displayOrder: 101 },
   { id: 'blackpowder_bomb', name: 'Пороховая бомба', category: 'weapons', hasLimit: false, source: 'мастерская', displayOrder: 102 },

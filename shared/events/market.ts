@@ -1,6 +1,7 @@
 export type MarketEventType = 'market.order.created' | 'market.order.filled' | 'market.order.cancelled'
 
 export type MarketOrderPayload = {
+  filled_amount: number
   id: string
   player_id: string
   side: 'buy' | 'sell'

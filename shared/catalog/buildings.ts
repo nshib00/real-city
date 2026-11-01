@@ -21,7 +21,6 @@ export type BuildingTypeId =
   | 'mechanical_workshop'
   | 'optical_workshop'
   | 'mint'
-  | 'warehouse'
   | 'coin_storage'
   | 'market'
   | 'tower'

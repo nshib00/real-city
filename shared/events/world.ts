@@ -1,6 +1,10 @@
 import type { WorldTile } from '../src'
+import type { AllianceEventType } from './alliance'
+import type { ChatEventType } from './chat'
 
 export type WorldEventType =
+  | AllianceEventType
+  | ChatEventType
   | 'world.tile.changed'
   | 'world.building.placed'
   | 'world.building.updated'
@@ -53,7 +57,7 @@ export type TileChangedPayload = {
 }
 
 export type BuildingPayload = {
-  reason?: 'placed' | 'completed' | 'upgrade_started' | 'upgrade_completed' | 'rushed' | 'repaired' | 'relocated' | 'monster_attack'
+  reason?: 'placed' | 'completed' | 'upgrade_started' | 'upgrade_completed' | 'rushed' | 'repair_started' | 'repaired' | 'relocated' | 'monster_attack'
   damage?: number
   building: {
     id: string
