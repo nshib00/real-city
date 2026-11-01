@@ -1,0 +1,68 @@
+name: release-images
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Select immutable tag and build context
+        id: image
+        env:
+          REPOSITORY: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          COMPONENT: ${{ matrix.component }}
+        run: |
+          repository=$(printf '%s' "$REPOSITORY" | tr '[:upper:]' '[:lower:]')
+          echo "name=ghcr.io/$repository/$COMPONENT:sha-${SHA}" >> "$GITHUB_OUTPUT"
+          if [ "$COMPONENT" = backend ]; then
+            echo 'context=backend' >> "$GITHUB_OUTPUT"
+            echo 'dockerfile=backend/Dockerfile' >> "$GITHUB_OUTPUT"
+          else
+            echo 'context=.' >> "$GITHUB_OUTPUT"
+            echo 'dockerfile=frontend/Dockerfile' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Build local image for scan
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ steps.image.outputs.context }}
+          file: ${{ steps.image.outputs.dockerfile }}
+          load: true
+          tags: ${{ steps.image.outputs.name }}
+      - name: Scan high and critical vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ steps.image.outputs.name }}
+          format: table
+          exit-code: '1'
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push scanned image
+        run: docker push '${{ steps.image.outputs.name }}'
+      - name: Publish version tag for release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          SHA_IMAGE: ${{ steps.image.outputs.name }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][a-zA-Z0-9.-]+)?$ ]]
+          version_image="${SHA_IMAGE%:*}:$VERSION"
+          docker tag "$SHA_IMAGE" "$version_image"
+          docker push "$version_image"
