@@ -106,9 +106,8 @@ def generate_go(specs):
                   f'\t\tCost: {go_amount(first["cost"], "building.Cost")}, UpgradeLevels: []BuildingUpgradeLevel{{']
         for row in rows:
             lines.append(f'\t\t\t{{Level: {row["level"]}, BuildDuration: {row["build"]} * time.Minute, Population: {row["workers"]}, Health: {row["health"]}, Cost: {go_amount(row["cost"], "building.Cost")}}},')
-        lines += ['\t\t},', '\t}', f'\tbuildingXP[building.Type{go_type}] = []BuildingXP{{']
-        lines += [f'\t\t{{Completion: {r["xp"][0]}, Work: {r["xp"][1]}, Destruction: {r["xp"][2]}}},' for r in rows]
-        lines += ['\t}', f'\tindustryLevelRecipes["{recipe_id}"] = []economy.ProductionRecipe{{']
+        # XP is maintained in catalog/building_xp.json and synced to each specification.
+        lines += ['\t\t},', '\t}', f'\tindustryLevelRecipes["{recipe_id}"] = []economy.ProductionRecipe{{']
         for row in rows:
             ingredients = row['input'] + [(resource, count) for resource, count in row['fuel'] if resource != 'fuel']
             fuel = next((count for resource, count in row['fuel'] if resource == 'fuel'), 0)
