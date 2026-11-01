@@ -4,7 +4,7 @@
 
 This repository is the browser game project `Real City`.
 
-The game is a multiplayer real-time strategy on one shared persistent map. All players exist in the same world, place buildings on the map, compete for space and resources, and interact with each other through construction, economy, defense, raids, destruction, and territorial control.
+The game is a multiplayer real-time strategy on one shared persistent map. All players exist in the same world, place buildings on the map, compete for space and resources, and interact with each other through construction, economy, defense, direct weapon attacks, player-created monsters, and destruction.
 
 The closest reference is the closed browser game Gnomgrad / "Real City - Gnomgrad" (`https://gnomgrad.ru/`). Use it as a gameplay reference, not as something to copy directly. Preserve the useful design ideas, but do not copy its setting, names, visual identity, exact object list, text, or copyrighted assets.
 
@@ -27,7 +27,7 @@ Keep the following pillars stable unless the user explicitly changes the design:
 - One large shared server-side map, not isolated per-player bases.
 - Real-time world simulation.
 - Player-built structures exist directly on the map and can affect nearby territory.
-- Other players can interact with, raid, damage, or destroy vulnerable buildings.
+- Other players can damage or destroy vulnerable buildings using inventory weapons and player-created monsters. There is no raid system.
 - Hostile roaming monsters create PvE pressure and make undefended expansion risky.
 - Resources spawn or exist on the shared map and can be claimed, harvested, contested, stolen, or defended.
 - Territory and logistics should matter: placement, borders, roads, defenses, travel time, and proximity should create strategic decisions.
