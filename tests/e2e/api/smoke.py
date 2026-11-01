@@ -1,10 +1,11 @@
-"""Сквозная проверка живого API: два игрока, постройки и запуск рейда."""
+"""Сквозная проверка живого API: два игрока, постройки и прямая атака."""
 
 import base64
 import json
 import os
 import secrets
 import socket
+import ssl
 import time
 import urllib.error
 import urllib.parse
@@ -33,7 +34,9 @@ def websocket_handshake(token):
     url = urllib.parse.urlsplit(BASE)
     port = url.port or (443 if url.scheme == "https" else 80)
     key = base64.b64encode(secrets.token_bytes(16)).decode()
-    with socket.create_connection((url.hostname, port), timeout=10) as sock:
+    connection=socket.create_connection((url.hostname, port), timeout=10)
+    if url.scheme=="https": connection=ssl.create_default_context().wrap_socket(connection,server_hostname=url.hostname)
+    with connection as sock:
         sock.settimeout(10)
         message = (
             f"GET /api/v1/realtime HTTP/1.1\r\nHost: {url.hostname}:{port}\r\n"
@@ -108,28 +111,27 @@ def main():
             if "HTTP 409" not in str(exc) and "HTTP 422" not in str(exc) and "HTTP 400" not in str(exc):
                 raise
     assert rival_building, "нет свободной клетки для второго игрока рядом с первым"
-    raid_payload = {"target_building_id": rival_building["building"]["id"]}
-    raid_key = "smoke-raid-" + nonce
-    raid_status, started, _ = request("POST", "/api/v1/raids", raid_payload, token, raid_key)
-    assert raid_status == 201 and started["raid"]["status"] == "pending"
-    replay_status, replay, headers = request("POST", "/api/v1/raids", raid_payload, token, raid_key)
-    assert replay_status == 201 and replay["raid"]["id"] == started["raid"]["id"]
+    target_id = rival_building["building"]["id"]
+    _, rules_response, _ = request("GET", "/api/v1/combat/rules")
+    assert rules_response["rules"]["summon_cost_coins"] > 0
+    payload = {"weapon": "throwing_knives"}
+    key = "smoke-weapon-" + nonce
+    attack_path = f"/api/v1/buildings/{target_id}/weapons"
+    status, created, _ = request("POST", attack_path, payload, token, key)
+    assert status == 202
+    status, replay, headers = request("POST", attack_path, payload, token, key)
+    assert status == 202 and replay["attack"]["id"] == created["attack"]["id"]
     assert headers.get("Idempotency-Replayed") == "true"
-    _, raids, _ = request("GET", "/api/v1/raids", token=token)
-    assert any(item["id"] == started["raid"]["id"] for item in raids["raids"])
-    deadline = time.monotonic() + 60
-    while time.monotonic() < deadline:
-        _, raids, _ = request("GET", "/api/v1/raids", token=token)
-        current = next(item for item in raids["raids"] if item["id"] == started["raid"]["id"])
-        if current["status"] == "done":
-            break
-        time.sleep(1)
-    else:
-        raise AssertionError("рейд не завершился за 60 секунд")
-    _, target, _ = request("GET", "/api/v1/buildings/" + raid_payload["target_building_id"], token=token)
-    assert target["building"]["health"] <= 100 - started["raid"]["damage"]
+    _, damaged, _ = request("GET", f"/api/v1/buildings/{target_id}", token=rival_token)
+    assert damaged["building"]["health"] < rival_building["building"]["health"]
+    _, pending, _ = request("GET", "/api/v1/combat/attacks", token=token)
+    assert "attacks" in pending
     websocket_handshake(token)
-    print(f"PASS auth → world → build/replay → economy → monsters → raid/replay → realtime; building={built['building']['id']}")
+    print(f"PASS auth → world → build/replay → economy → monsters → weapon/replay → realtime; building={built['building']['id']}")
+
+    return {"token": token, "rival_token": rival_token, "player_id": auth["player"]["id"],
+            "rival_id": rival_auth["player"]["id"], "building_id": built["building"]["id"],
+            "target_id": target_id, "nonce": nonce}
 
 
 if __name__ == "__main__":
