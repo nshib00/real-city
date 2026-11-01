@@ -1,0 +1,329 @@
+{
+  "scope": "Видимый текст, сплошные CSS-фоны с alpha; худшая подложка чёрная/белая. Градиенты, изображения, общий opacity и нетекстовые границы требуют визуального ревью.",
+  "rows": [
+    {
+      "text": "Интерфейс",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "Эффекты: включены",
+      "selector": "",
+      "ratio": 14.47,
+      "required": 4.5
+    },
+    {
+      "text": "Оформление",
+      "selector": "interface-theme-control",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "2/8",
+      "selector": "",
+      "ratio": 7.34,
+      "required": 4.5
+    },
+    {
+      "text": "Жители",
+      "selector": "",
+      "ratio": 4.85,
+      "required": 4.5
+    },
+    {
+      "text": "Монеты",
+      "selector": "",
+      "ratio": 4.85,
+      "required": 4.5
+    },
+    {
+      "text": "Эолийские кристаллы",
+      "selector": "",
+      "ratio": 4.85,
+      "required": 4.5
+    },
+    {
+      "text": "3",
+      "selector": "profile-level-badge",
+      "ratio": 8.91,
+      "required": 4.5
+    },
+    {
+      "text": "Город Эолии",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Тихая долина",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Выбор",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "1–5 — инструменты",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "←",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "↑",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "↓",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "→",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "−",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "+",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "Выбрать клетку по координатам",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "fps 54.1",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "chunk 0:0",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "zoom 1.00",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "1024 tiles",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "Клетка A1",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Участок мира",
+      "selector": "",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Открыть строительство",
+      "selector": "",
+      "ratio": 8.48,
+      "required": 4.5
+    },
+    {
+      "text": "Клетка",
+      "selector": "",
+      "ratio": 7.19,
+      "required": 4.5
+    },
+    {
+      "text": "Объект",
+      "selector": "",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Игрок",
+      "selector": "",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Выбранная клетка",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "A1",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Наведение",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Нет",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Район",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "A",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Поверхность",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "лес",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Статус",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Можно осмотреть, занять или проложить маршрут",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Густота леса",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "/3",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Стройка",
+      "selector": "segment-button segment-button-active",
+      "ratio": 7.19,
+      "required": 4.5
+    },
+    {
+      "text": "Атака",
+      "selector": "segment-button",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Производство",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Рецептов пока нет. Осмотрите доступные производственные здания в каталоге.",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Задания",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 3
+    },
+    {
+      "text": "Заданий нет. Выберите рецепт и запустите производство.",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Связь и события",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "События",
+      "selector": "",
+      "ratio": 7.19,
+      "required": 4.5
+    },
+    {
+      "text": "Чат",
+      "selector": "",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Новых событий обороны нет. Здесь появятся подтверждённые попадания ваших защитных построек.",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Уведомления",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "selector": "",
+      "ratio": 9.38,
+      "required": 4.5
+    },
+    {
+      "text": "Боевых событий пока нет.",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    }
+  ]
+}

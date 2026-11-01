@@ -1,0 +1,565 @@
+{
+  "revision": "aeolian-ui-1",
+  "resources": [
+    {
+      "id": "stone_heart",
+      "name": "Каменное сердце",
+      "shape": "heart",
+      "color": "#a5a49b",
+      "file": "stone_heart.svg"
+    },
+    {
+      "id": "fine_rope",
+      "name": "Качественная веревка",
+      "shape": "rope",
+      "color": "#ceb586",
+      "file": "fine_rope.svg"
+    },
+    {
+      "id": "throwing_knives",
+      "name": "Метательные клинки",
+      "shape": "knife",
+      "color": "#b8c8c5",
+      "file": "throwing_knives.svg"
+    },
+    {
+      "id": "hunting_traps",
+      "name": "Охотничий капкан",
+      "shape": "trap",
+      "color": "#a9a69a",
+      "file": "hunting_traps.svg"
+    },
+    {
+      "id": "blackpowder_bomb",
+      "name": "Пороховая бомба",
+      "shape": "bomb",
+      "color": "#ad9990",
+      "file": "blackpowder_bomb.svg"
+    },
+    {
+      "id": "shaped_charge",
+      "name": "Направленный заряд",
+      "shape": "charge",
+      "color": "#d2a070",
+      "file": "shaped_charge.svg"
+    },
+    {
+      "id": "firebomb",
+      "name": "Огненная бомба",
+      "shape": "bomb",
+      "color": "#ad9990",
+      "file": "firebomb.svg"
+    },
+    {
+      "id": "shock_charge",
+      "name": "Импульсный заряд",
+      "shape": "charge",
+      "color": "#d2a070",
+      "file": "shock_charge.svg"
+    },
+    {
+      "id": "siege_mine",
+      "name": "Осадная мина",
+      "shape": "mine",
+      "color": "#94a39b",
+      "file": "siege_mine.svg"
+    },
+    {
+      "id": "breach_bomb",
+      "name": "Проломная бомба",
+      "shape": "bomb",
+      "color": "#ad9990",
+      "file": "breach_bomb.svg"
+    },
+    {
+      "id": "resonance_charge",
+      "name": "Резонансный заряд",
+      "shape": "charge",
+      "color": "#d2a070",
+      "file": "resonance_charge.svg"
+    },
+    {
+      "id": "coins",
+      "name": "Монеты",
+      "shape": "coins",
+      "color": "#e4ba5c",
+      "file": "coins.svg"
+    },
+    {
+      "id": "population",
+      "name": "Жители",
+      "shape": "people",
+      "color": "#d7b991",
+      "file": "population.svg"
+    },
+    {
+      "id": "aeolian-crystal",
+      "name": "Эолийские кристаллы",
+      "shape": "crystal",
+      "color": "#7dcad8",
+      "file": "aeolian-crystal.svg"
+    },
+    {
+      "id": "wood",
+      "name": "Древесина",
+      "shape": "wood",
+      "color": "#b78553",
+      "file": "wood.svg"
+    },
+    {
+      "id": "clay",
+      "name": "Глина",
+      "shape": "stone",
+      "color": "#9aa6a2",
+      "file": "clay.svg"
+    },
+    {
+      "id": "stone",
+      "name": "Камень",
+      "shape": "stone",
+      "color": "#9aa6a2",
+      "file": "stone.svg"
+    },
+    {
+      "id": "windleaf",
+      "name": "Ветролист",
+      "shape": "leaf",
+      "color": "#91b969",
+      "file": "windleaf.svg"
+    },
+    {
+      "id": "seeds",
+      "name": "Семена",
+      "shape": "seed",
+      "color": "#d2ae65",
+      "file": "seeds.svg"
+    },
+    {
+      "id": "sand",
+      "name": "Песок",
+      "shape": "grain",
+      "color": "#e0cba2",
+      "file": "sand.svg"
+    },
+    {
+      "id": "resin",
+      "name": "Смола",
+      "shape": "drop",
+      "color": "#d79b47",
+      "file": "resin.svg"
+    },
+    {
+      "id": "flax",
+      "name": "Лен",
+      "shape": "stalk",
+      "color": "#9fb87c",
+      "file": "flax.svg"
+    },
+    {
+      "id": "fiber",
+      "name": "Волокно",
+      "shape": "thread",
+      "color": "#c4ad84",
+      "file": "fiber.svg"
+    },
+    {
+      "id": "reed",
+      "name": "Тростник",
+      "shape": "stalk",
+      "color": "#9fb87c",
+      "file": "reed.svg"
+    },
+    {
+      "id": "herbs",
+      "name": "Травы",
+      "shape": "leaf",
+      "color": "#91b969",
+      "file": "herbs.svg"
+    },
+    {
+      "id": "mushrooms",
+      "name": "Грибы",
+      "shape": "mushroom",
+      "color": "#c59580",
+      "file": "mushrooms.svg"
+    },
+    {
+      "id": "oil_plants",
+      "name": "Масличные растения",
+      "shape": "leaf",
+      "color": "#91b969",
+      "file": "oil_plants.svg"
+    },
+    {
+      "id": "sugar_cane",
+      "name": "Сахарный тростник",
+      "shape": "stalk",
+      "color": "#9fb87c",
+      "file": "sugar_cane.svg"
+    },
+    {
+      "id": "coal",
+      "name": "Уголь",
+      "shape": "stone",
+      "color": "#637b7b",
+      "file": "coal.svg"
+    },
+    {
+      "id": "iron_ore",
+      "name": "Железная руда",
+      "shape": "stone",
+      "color": "#9aa6a2",
+      "file": "iron_ore.svg"
+    },
+    {
+      "id": "copper",
+      "name": "Медь",
+      "shape": "ingot",
+      "color": "#d7966e",
+      "file": "copper.svg"
+    },
+    {
+      "id": "dyes",
+      "name": "Красители",
+      "shape": "jar",
+      "color": "#7fada3",
+      "file": "dyes.svg"
+    },
+    {
+      "id": "brick",
+      "name": "Кирпич",
+      "shape": "block",
+      "color": "#c28969",
+      "file": "brick.svg"
+    },
+    {
+      "id": "planks",
+      "name": "Доски",
+      "shape": "plank",
+      "color": "#c49661",
+      "file": "planks.svg"
+    },
+    {
+      "id": "stone_block",
+      "name": "Каменный блок",
+      "shape": "block",
+      "color": "#c28969",
+      "file": "stone_block.svg"
+    },
+    {
+      "id": "rope",
+      "name": "Веревка",
+      "shape": "rope",
+      "color": "#ceb586",
+      "file": "rope.svg"
+    },
+    {
+      "id": "fabric",
+      "name": "Ткань",
+      "shape": "sheet",
+      "color": "#c5cfb4",
+      "file": "fabric.svg"
+    },
+    {
+      "id": "paper",
+      "name": "Бумага",
+      "shape": "sheet",
+      "color": "#c5cfb4",
+      "file": "paper.svg"
+    },
+    {
+      "id": "tile",
+      "name": "Черепица",
+      "shape": "tile",
+      "color": "#c9896a",
+      "file": "tile.svg"
+    },
+    {
+      "id": "quiet_powder",
+      "name": "Тихий порошок",
+      "shape": "grain",
+      "color": "#e0cba2",
+      "file": "quiet_powder.svg"
+    },
+    {
+      "id": "amber_essence",
+      "name": "Янтарная эссенция",
+      "shape": "drop",
+      "color": "#d79b47",
+      "file": "amber_essence.svg"
+    },
+    {
+      "id": "memory_shard",
+      "name": "Осколок памяти",
+      "shape": "crystal",
+      "color": "#7dcad8",
+      "file": "memory_shard.svg"
+    },
+    {
+      "id": "glass",
+      "name": "Стекло",
+      "shape": "sheet",
+      "color": "#c5cfb4",
+      "file": "glass.svg"
+    },
+    {
+      "id": "metal",
+      "name": "Металл",
+      "shape": "ingot",
+      "color": "#9caeac",
+      "file": "metal.svg"
+    },
+    {
+      "id": "iron",
+      "name": "Железо",
+      "shape": "ingot",
+      "color": "#9caeac",
+      "file": "iron.svg"
+    },
+    {
+      "id": "iron_ingot",
+      "name": "Железный слиток",
+      "shape": "ingot",
+      "color": "#9caeac",
+      "file": "iron_ingot.svg"
+    },
+    {
+      "id": "copper_parts",
+      "name": "Медные детали",
+      "shape": "production",
+      "color": "#c8b080",
+      "file": "copper_parts.svg"
+    },
+    {
+      "id": "tools",
+      "name": "Инструменты",
+      "shape": "repair",
+      "color": "#b5c3be",
+      "file": "tools.svg"
+    },
+    {
+      "id": "cement",
+      "name": "Цемент",
+      "shape": "sack",
+      "color": "#b8ae99",
+      "file": "cement.svg"
+    },
+    {
+      "id": "concrete",
+      "name": "Бетон",
+      "shape": "block",
+      "color": "#c28969",
+      "file": "concrete.svg"
+    },
+    {
+      "id": "steel",
+      "name": "Сталь",
+      "shape": "ingot",
+      "color": "#9caeac",
+      "file": "steel.svg"
+    },
+    {
+      "id": "mechanism",
+      "name": "Механизм",
+      "shape": "production",
+      "color": "#c8b080",
+      "file": "mechanism.svg"
+    },
+    {
+      "id": "premium_planks",
+      "name": "Премиум-доски",
+      "shape": "plank",
+      "color": "#c49661",
+      "file": "premium_planks.svg"
+    },
+    {
+      "id": "reinforced_concrete",
+      "name": "Железобетон",
+      "shape": "block",
+      "color": "#c28969",
+      "file": "reinforced_concrete.svg"
+    },
+    {
+      "id": "reinforced_beams",
+      "name": "Усиленные балки",
+      "shape": "beam",
+      "color": "#9eafab",
+      "file": "reinforced_beams.svg"
+    },
+    {
+      "id": "armor_plates",
+      "name": "Защитные пластины",
+      "shape": "shield",
+      "color": "#a3b8bb",
+      "file": "armor_plates.svg"
+    },
+    {
+      "id": "electronics",
+      "name": "Электроника",
+      "shape": "circuit",
+      "color": "#78b3ad",
+      "file": "electronics.svg"
+    },
+    {
+      "id": "sulfur",
+      "name": "Сера",
+      "shape": "grain",
+      "color": "#e0cba2",
+      "file": "sulfur.svg"
+    },
+    {
+      "id": "explosives",
+      "name": "Взрывчатка",
+      "shape": "charge",
+      "color": "#d2a070",
+      "file": "explosives.svg"
+    },
+    {
+      "id": "oil",
+      "name": "Нефть",
+      "shape": "barrel",
+      "color": "#637b7b",
+      "file": "oil.svg"
+    },
+    {
+      "id": "plant_oil",
+      "name": "Растительное масло",
+      "shape": "jar",
+      "color": "#7fada3",
+      "file": "plant_oil.svg"
+    },
+    {
+      "id": "paints",
+      "name": "Краски",
+      "shape": "jar",
+      "color": "#7fada3",
+      "file": "paints.svg"
+    },
+    {
+      "id": "oleoresin",
+      "name": "Живица",
+      "shape": "drop",
+      "color": "#d79b47",
+      "file": "oleoresin.svg"
+    },
+    {
+      "id": "aeolian_alloy",
+      "name": "Эолиевый сплав",
+      "shape": "ingot",
+      "color": "#9caeac",
+      "file": "aeolian_alloy.svg"
+    },
+    {
+      "id": "fuel",
+      "name": "Бензин",
+      "shape": "barrel",
+      "color": "#8a9c9a",
+      "file": "fuel.svg"
+    },
+    {
+      "id": "gold_ingot",
+      "name": "Золотой слиток",
+      "shape": "ingot",
+      "color": "#e6c766",
+      "file": "gold_ingot.svg"
+    },
+    {
+      "id": "crystal_fruit",
+      "name": "Кристальные плоды",
+      "shape": "fruit",
+      "color": "#9cc5ac",
+      "file": "crystal_fruit.svg"
+    },
+    {
+      "id": "super-seeds",
+      "name": "Супер-семена",
+      "shape": "seed",
+      "color": "#d2ae65",
+      "file": "super-seeds.svg"
+    },
+    {
+      "id": "super-fiber",
+      "name": "Супер-волокно",
+      "shape": "thread",
+      "color": "#c4ad84",
+      "file": "super-fiber.svg"
+    },
+    {
+      "id": "super-mushrooms",
+      "name": "Супер-грибы",
+      "shape": "mushroom",
+      "color": "#c59580",
+      "file": "super-mushrooms.svg"
+    },
+    {
+      "id": "super-windleaf",
+      "name": "Супер-ветролист",
+      "shape": "leaf",
+      "color": "#91b969",
+      "file": "super-windleaf.svg"
+    },
+    {
+      "id": "rare_flowers",
+      "name": "Редкие цветы",
+      "shape": "flower",
+      "color": "#c9a3bd",
+      "file": "rare_flowers.svg"
+    },
+    {
+      "id": "blue_salt",
+      "name": "Синяя соль",
+      "shape": "grain",
+      "color": "#80b8da",
+      "file": "blue_salt.svg"
+    },
+    {
+      "id": "kaolin",
+      "name": "Каолин",
+      "shape": "stone",
+      "color": "#9aa6a2",
+      "file": "kaolin.svg"
+    },
+    {
+      "id": "emerald_dust",
+      "name": "Изумрудная пыль",
+      "shape": "grain",
+      "color": "#7fbd93",
+      "file": "emerald_dust.svg"
+    },
+    {
+      "id": "star_glass",
+      "name": "Звездное стекло",
+      "shape": "sheet",
+      "color": "#c5cfb4",
+      "file": "star_glass.svg"
+    },
+    {
+      "id": "light_crystal",
+      "name": "Светокристалл",
+      "shape": "crystal",
+      "color": "#7dcad8",
+      "file": "light_crystal.svg"
+    },
+    {
+      "id": "super_mechanism",
+      "name": "Супер-механизм",
+      "shape": "production",
+      "color": "#c8b080",
+      "file": "super_mechanism.svg"
+    },
+    {
+      "id": "elderwood-heart",
+      "name": "Сердцевина древня",
+      "shape": "wood",
+      "color": "#b78553",
+      "file": "elderwood-heart.svg"
+    },
+    {
+      "id": "rune_tile",
+      "name": "Руническая черепица",
+      "shape": "tile",
+      "color": "#c9896a",
+      "file": "rune_tile.svg"
+    }
+  ]
+}

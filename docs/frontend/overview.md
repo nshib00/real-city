@@ -34,6 +34,8 @@ npm run lint
 
 `frontend/src/app/App.tsx` собирает весь игровой экран. Важная особенность: часть компонентов ничего не рисует, а только синхронизирует данные.
 
+Уточнение аудита 30.10.2026: текущий App также монтирует `AudioProvider`, `ToastCenter`, предварительно загружает UI-звуки и при необходимости показывает `AssetDebugPanel`. Схема ниже перечисляет основную игровую композицию; полный перечень и границы редизайна — в [аудите](../plans/interface-redesign-audit.md). Изолированный dev-стенд исходных компонентов доступен через `frontend/design.html`; он не запускает игровые синхронизаторы и не меняет основной маршрут приложения.
+
 Верхний уровень выглядит так:
 
 ```tsx
@@ -86,7 +88,7 @@ npm run lint
 
 Zustand-store `frontend/src/game/state/useGameStore.ts` хранит:
 
-- активный инструмент: `select`, `build`, `road`, `repair`, `raid`;
+- активный инструмент: `select`, `build`, `road`, `repair`, `attack`;
 - выбранный тайл, здание, монстр и hover-тайл;
 - массивы `buildings`, `resourceNodes`, `monsters`, `worldTiles`;
 - таймер строительства `constructionNow`;

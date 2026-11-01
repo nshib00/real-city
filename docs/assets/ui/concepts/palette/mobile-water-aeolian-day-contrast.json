@@ -1,0 +1,161 @@
+{
+  "scope": "Видимый текст, сплошные CSS-фоны с alpha; худшая подложка чёрная/белая. Градиенты, изображения, общий opacity и нетекстовые границы требуют визуального ревью.",
+  "rows": [
+    {
+      "text": "Интерфейс",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "Эффекты: включены",
+      "selector": "",
+      "ratio": 14.47,
+      "required": 4.5
+    },
+    {
+      "text": "Оформление",
+      "selector": "interface-theme-control",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "2/8",
+      "selector": "",
+      "ratio": 13.12,
+      "required": 4.5
+    },
+    {
+      "text": "3",
+      "selector": "profile-level-badge",
+      "ratio": 6.8,
+      "required": 4.5
+    },
+    {
+      "text": "Город Эолии",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "Тихая долина",
+      "selector": "",
+      "ratio": 5.37,
+      "required": 4.5
+    },
+    {
+      "text": "Выбор",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "1–5 — инструменты",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "←",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "↑",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "↓",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "→",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "−",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "+",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "Выбрать клетку по координатам",
+      "selector": "",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "fps 47.0",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "chunk 0:0",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "zoom 1.00",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "1024 tiles",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "Развернуть инспектор",
+      "selector": "inspector-disclosure",
+      "ratio": 13.06,
+      "required": 4.5
+    },
+    {
+      "text": "Клетка A1",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "Производство",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "Журнал свернут",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "Уведомления",
+      "selector": "",
+      "ratio": 11.14,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "selector": "",
+      "ratio": 6.8,
+      "required": 4.5
+    }
+  ]
+}

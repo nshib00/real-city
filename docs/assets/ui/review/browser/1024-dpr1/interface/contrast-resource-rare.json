@@ -1,0 +1,401 @@
+{
+  "scope": "Видимый текст, сплошные CSS-фоны с alpha; худшая подложка чёрная/белая. Градиенты, изображения, общий opacity и нетекстовые границы требуют визуального ревью.",
+  "rows": [
+    {
+      "text": "Интерфейс",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "Эффекты: включены",
+      "selector": "",
+      "ratio": 14.47,
+      "required": 4.5
+    },
+    {
+      "text": "Оформление",
+      "selector": "interface-theme-control",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "Защита: по объектам",
+      "selector": "hud-protection",
+      "ratio": 9.17,
+      "required": 4.5
+    },
+    {
+      "text": "chunk 0:0",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "zoom 1.10",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "1024 tiles",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "Карта мира",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Участок мира",
+      "selector": "",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Выберите клетку или объект на карте.",
+      "selector": "",
+      "ratio": 6.81,
+      "required": 4.5
+    },
+    {
+      "text": "Клетка",
+      "selector": "",
+      "ratio": 6.06,
+      "required": 4.5
+    },
+    {
+      "text": "Объект",
+      "selector": "",
+      "ratio": 4.96,
+      "required": 4.5
+    },
+    {
+      "text": "Игрок",
+      "selector": "",
+      "ratio": 4.96,
+      "required": 4.5
+    },
+    {
+      "text": "Выбранная клетка",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Нет",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Наведение",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Нет",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Район",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Нет",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Поверхность",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Не выбран",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Статус",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Выберите клетку на карте",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Стройка",
+      "selector": "segment-button segment-button-active",
+      "ratio": 6.06,
+      "required": 4.5
+    },
+    {
+      "text": "Атака",
+      "selector": "segment-button",
+      "ratio": 4.96,
+      "required": 4.5
+    },
+    {
+      "text": "Производство",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Рецептов пока нет. Осмотрите доступные производственные здания в каталоге.",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Задания",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 3
+    },
+    {
+      "text": "Заданий нет. Выберите рецепт и запустите производство.",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Новых событий обороны нет. Здесь появятся подтверждённые попадания ваших защитных построек.",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Уведомления",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "selector": "",
+      "ratio": 9.38,
+      "required": 4.5
+    },
+    {
+      "text": "Боевых событий пока нет.",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Реестр ресурсов",
+      "selector": "",
+      "ratio": 9.17,
+      "required": 4.5
+    },
+    {
+      "text": "База",
+      "selector": "segment-button",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Сырье",
+      "selector": "segment-button",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Производство",
+      "selector": "segment-button",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Редкие",
+      "selector": "segment-button segment-button-active",
+      "ratio": 6.01,
+      "required": 4.5
+    },
+    {
+      "text": "Топливо",
+      "selector": "segment-button",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Оружие и бомбы",
+      "selector": "segment-button",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Каменное сердце",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "без лимита",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "шахта со второго уровня",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Качественная веревка",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "без лимита",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "канатный двор с третьего уровня",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Тихий порошок",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "без лимита",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "поздние находки",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Янтарная эссенция",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "без лимита",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "нефтяные вышки",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Осколок памяти",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "без лимита",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "поздние находки",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Живица",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "без лимита",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "редкий выход смолокурни",
+      "selector": "",
+      "ratio": 4.93,
+      "required": 4.5
+    },
+    {
+      "text": "Эолиевый сплав",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    },
+    {
+      "text": "123456789",
+      "selector": "",
+      "ratio": 7.45,
+      "required": 4.5
+    }
+  ]
+}

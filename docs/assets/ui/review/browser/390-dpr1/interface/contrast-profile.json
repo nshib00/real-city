@@ -1,0 +1,245 @@
+{
+  "scope": "Видимый текст, сплошные CSS-фоны с alpha; худшая подложка чёрная/белая. Градиенты, изображения, общий opacity и нетекстовые границы требуют визуального ревью.",
+  "rows": [
+    {
+      "text": "Интерфейс",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 3
+    },
+    {
+      "text": "Эффекты: выключены",
+      "selector": "",
+      "ratio": 14.47,
+      "required": 3
+    },
+    {
+      "text": "Оформление",
+      "selector": "interface-theme-control",
+      "ratio": 10.34,
+      "required": 3
+    },
+    {
+      "text": "Защита: по объектам",
+      "selector": "hud-protection",
+      "ratio": 9.17,
+      "required": 3
+    },
+    {
+      "text": "3",
+      "selector": "profile-level-badge",
+      "ratio": 8.91,
+      "required": 4.5
+    },
+    {
+      "text": "Город Эолии",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Тихая долина",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Профиль",
+      "selector": "",
+      "ratio": 9.58,
+      "required": 4.5
+    },
+    {
+      "text": "Ваш профиль. Настройки аккаунта доступны только вам; другим игрокам показывается публичная карточка.",
+      "selector": "panel-note",
+      "ratio": 6.33,
+      "required": 3
+    },
+    {
+      "text": "Город Эолии",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 3
+    },
+    {
+      "text": "Тихая долина",
+      "selector": "",
+      "ratio": 6.83,
+      "required": 4.5
+    },
+    {
+      "text": "Экономика",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "60",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "Производство",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "30",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "Хранение",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "20",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "Оборона",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "10",
+      "selector": "",
+      "ratio": 7.41,
+      "required": 3
+    },
+    {
+      "text": "Строить",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 3
+    },
+    {
+      "text": "1–5 — инструменты",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 3
+    },
+    {
+      "text": "Отмена (Esc)",
+      "selector": "",
+      "ratio": 5.33,
+      "required": 3
+    },
+    {
+      "text": "←",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "↑",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "↓",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "→",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "−",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "+",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "Выбрать клетку по координатам",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 3
+    },
+    {
+      "text": "perf mixed: 6b/2r/0m",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "fps 40.5",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "chunk 0:0",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "zoom 1.10",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "1024 tiles",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "Развернуть инспектор",
+      "selector": "inspector-disclosure",
+      "ratio": 10.3,
+      "required": 3
+    },
+    {
+      "text": "Карта мира",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 3
+    },
+    {
+      "text": "Производство",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 3
+    },
+    {
+      "text": "Журнал свернут",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Уведомления",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "selector": "",
+      "ratio": 9.38,
+      "required": 4.5
+    }
+  ]
+}

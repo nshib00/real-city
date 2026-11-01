@@ -13,6 +13,9 @@
 | [animated-map-assets-architecture.md](animated-map-assets-architecture.md) | Целевая архитектура анимированных построек, монстров, Blender-пайплайна и Pixi object layer |
 | [rendering-performance-notes.md](rendering-performance-notes.md) | Dev-сценарии нагрузки карты, HUD, baseline FPS/памяти/WebGL-контекстов |
 | [testing.md](testing.md) | Тесты, команды проверки, что покрыто |
+| [interface-phase-1a.md](interface-phase-1a.md) | Новая палитра, токены, знаки владения и браузерная проверка |
+| [start-page.md](start-page.md) | Маршруты, формы, загрузка карты и оставшаяся приёмка первого входа |
+| [interface-next-five-review.md](interface-next-five-review.md) | Живой вход, занятые территории, управление движением, оптика 16 px и матрица бейджей |
 
 ## Главное за одну минуту
 

@@ -1,0 +1,251 @@
+{
+  "scope": "Видимый текст, сплошные CSS-фоны с alpha; худшая подложка чёрная/белая. Градиенты, изображения, общий opacity и нетекстовые границы требуют визуального ревью.",
+  "rows": [
+    {
+      "text": "Интерфейс",
+      "selector": "",
+      "ratio": 10.34,
+      "required": 4.5
+    },
+    {
+      "text": "0/8",
+      "selector": "",
+      "ratio": 7.34,
+      "required": 4.5
+    },
+    {
+      "text": "3",
+      "selector": "profile-level-badge",
+      "ratio": 8.91,
+      "required": 4.5
+    },
+    {
+      "text": "Город Эолии",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Тихая долина",
+      "selector": "",
+      "ratio": 6.11,
+      "required": 4.5
+    },
+    {
+      "text": "Строить",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "1–5 — инструменты",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Отмена (Esc)",
+      "selector": "",
+      "ratio": 5.33,
+      "required": 4.5
+    },
+    {
+      "text": "Стройка",
+      "selector": "",
+      "ratio": 9.73,
+      "required": 4.5
+    },
+    {
+      "text": "выберите клетку",
+      "selector": "",
+      "ratio": 6.43,
+      "required": 4.5
+    },
+    {
+      "text": "Все",
+      "selector": "build-category-tab build-category-tab-active",
+      "ratio": 6.29,
+      "required": 4.5
+    },
+    {
+      "text": "Жилье",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Грядки",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Заводы",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Оборона",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Склады",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Торговля",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Дороги",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Центр",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Союзы",
+      "selector": "build-category-tab",
+      "ratio": 5.21,
+      "required": 4.5
+    },
+    {
+      "text": "Поиск построек",
+      "selector": "",
+      "ratio": 10.32,
+      "required": 4.5
+    },
+    {
+      "text": "Только доступные здесь",
+      "selector": "",
+      "ratio": 10.32,
+      "required": 4.5
+    },
+    {
+      "text": "Найдено: 66",
+      "selector": "",
+      "ratio": 6.82,
+      "required": 4.5
+    },
+    {
+      "text": "←",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "↑",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "↓",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "→",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "−",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "+",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "Выбрать клетку по координатам",
+      "selector": "",
+      "ratio": 10.36,
+      "required": 4.5
+    },
+    {
+      "text": "perf mixed: 6b/2r/0m",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "fps 25.4",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "chunk 0:0",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "zoom 1.10",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "1024 tiles",
+      "selector": "",
+      "ratio": 9.02,
+      "required": 4.5
+    },
+    {
+      "text": "Развернуть инспектор",
+      "selector": "inspector-disclosure",
+      "ratio": 10.3,
+      "required": 4.5
+    },
+    {
+      "text": "Карта мира",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Производство",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Журнал свернут",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "Уведомления",
+      "selector": "",
+      "ratio": 9.25,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "selector": "",
+      "ratio": 9.38,
+      "required": 4.5
+    }
+  ]
+}
