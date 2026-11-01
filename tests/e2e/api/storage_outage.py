@@ -2,6 +2,7 @@
 import argparse
 import json
 from pathlib import Path
+import socket
 import time
 import urllib.error
 import urllib.request
@@ -10,7 +11,7 @@ import smoke
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('phase', choices=['before', 'database-down', 'after'])
+    parser.add_argument('phase', choices=['before', 'database-slow', 'database-down', 'after'])
     parser.add_argument('state', type=Path)
     args = parser.parse_args()
     if args.phase == 'before':
@@ -22,14 +23,17 @@ def main():
         args.state.write_text(json.dumps(dict(token=auth['access_token'], inventory=response['inventory']['items'])))
     else:
         state = json.loads(args.state.read_text())
-        if args.phase == 'database-down':
+        if args.phase in ('database-slow', 'database-down'):
             for endpoint in ['/ready', '/api/v1/economy/inventory']:
                 req = urllib.request.Request(smoke.BASE + endpoint, headers={'Authorization': 'Bearer '+state['token']})
                 try:
-                    with urllib.request.urlopen(req, timeout=10):
+                    with urllib.request.urlopen(req, timeout=5):
                         raise AssertionError('Unavailable database returned success')
                 except urllib.error.HTTPError as error:
                     assert error.code == 503, f'{endpoint}: expected 503, got {error.code}'
+                except (TimeoutError, socket.timeout):
+                    if args.phase == 'database-down':
+                        raise AssertionError(f'{endpoint}: stopped database timed out instead of returning 503')
         else:
             _, response, _ = smoke.request('GET', '/api/v1/economy/inventory', token=state['token'])
             before = {i['resource']: i['amount'] for i in state['inventory']}

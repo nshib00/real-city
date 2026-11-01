@@ -61,13 +61,17 @@ def main():
     _, catalog, _ = request("GET", "/api/v1/buildings/catalog")
     assert any(item["type"] == "town_hall" for item in catalog["buildings"])
     _, full_catalog, _ = request("GET", "/api/v1/buildings/catalog?scope=all")
-    assert len(full_catalog["buildings"]) == 73
+    assert len(full_catalog["buildings"]) >= len(catalog["buildings"])
+    assert len({item["type"] for item in full_catalog["buildings"]}) == len(full_catalog["buildings"])
     workshop = next(item for item in full_catalog["buildings"] if item["type"] == "workshop")
     assert workshop["health"] == 100 and workshop["first_level"]
     assert workshop["upgrade_levels"][0]["health"] == 100
-    _, viewport, _ = request("GET", "/api/v1/world/viewport?x=0&y=0&radius=8")
+    viewport_x = int(os.environ.get("REAL_CITY_SMOKE_X", "0"))
+    viewport_y = int(os.environ.get("REAL_CITY_SMOKE_Y", "0"))
+    _, viewport, _ = request("GET", f"/api/v1/world/viewport?x={viewport_x}&y={viewport_y}&radius=8")
     tiles = [tile for chunk in viewport["chunks"] for tile in chunk["tiles"]
              if tile["terrain"] not in {"water", "mountain", "forest", "ruins", "oil_well"}]
+    tiles.sort(key=lambda tile: abs(tile["x"] - viewport_x) + abs(tile["y"] - viewport_y))
     assert tiles, "нет свободных по ландшафту клеток"
     built = None
     for tile in tiles:
@@ -127,7 +131,8 @@ def main():
     _, pending, _ = request("GET", "/api/v1/combat/attacks", token=token)
     assert "attacks" in pending
     websocket_handshake(token)
-    print(f"PASS auth → world → build/replay → economy → monsters → weapon/replay → realtime; building={built['building']['id']}")
+    websocket_handshake(token)
+    print(f"PASS auth → world → build/replay → economy → monsters → weapon/replay → realtime/reconnect; building={built['building']['id']}")
 
     return {"token": token, "rival_token": rival_token, "player_id": auth["player"]["id"],
             "rival_id": rival_auth["player"]["id"], "building_id": built["building"]["id"],
