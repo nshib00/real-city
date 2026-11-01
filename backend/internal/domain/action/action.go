@@ -6,6 +6,8 @@ type ID string
 type Status string
 type Type string
 
+const TypeCreateMonster Type = "create_monster"
+
 const (
 	StatusPending Status = "pending"
 	StatusRunning Status = "running"
@@ -17,7 +19,6 @@ const (
 	TypeRespawnResource    Type = "respawn_resource"
 	TypeRegrowForest       Type = "regrow_forest"
 	TypeDetonateWeapon     Type = "detonate_weapon"
-	TypeResolveRaid        Type = "resolve_raid"
 )
 
 type ObjectRef struct {
@@ -49,6 +50,7 @@ func NewGameAction(id ID, actionType Type, idempotencyKey string, actor ObjectRe
 		IdempotencyKey: idempotencyKey,
 		Actor:          actor,
 		Target:         target,
+		Payload:        []byte(`{}`),
 		DueAt:          dueAt,
 		CreatedAt:      now,
 		UpdatedAt:      now,

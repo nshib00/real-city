@@ -35,13 +35,17 @@ func (r *BuildingRepo) Create(ctx context.Context, b building.Building) (resultE
 }
 
 func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.Building, error) {
-	row := execer(ctx, r.db).QueryRowContext(ctx, `
+	query := `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
 			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
 		FROM buildings
 		WHERE id = $1
-	`, id)
+ `
+	if _, ok := ctx.Value(txKey{}).(*sql.Tx); ok {
+		query += ` FOR UPDATE`
+	}
+	row := execer(ctx, r.db).QueryRowContext(ctx, query, id)
 	return scanBuilding(row)
 }
 
@@ -228,9 +232,13 @@ func (r *BuildingRepo) ConsumeTrapCharge(ctx context.Context, id building.ID, ex
 	return affected == 1, err
 }
 
-func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time) (building.Building, bool, error) {
+func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time, expectedOwner ...string) (building.Building, bool, error) {
 	if damage <= 0 {
 		return building.Building{}, false, nil
+	}
+	owner := ""
+	if len(expectedOwner) > 0 {
+		owner = expectedOwner[0]
 	}
 	result, err := execer(ctx, r.db).ExecContext(ctx, `
 		UPDATE buildings
@@ -238,8 +246,8 @@ func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expe
 			state = CASE WHEN health <= $3 THEN $4 WHEN state = $8 THEN state ELSE $5 END,
 			cannon_enabled = CASE WHEN health <= $3 THEN false ELSE cannon_enabled END,
 			updated_at = $6
-		WHERE id = $1 AND health = $2 AND health > 0 AND state IN ($7, $5, $8)
-	`, id, expectedHealth, damage, building.StateRuined, building.StateDamaged, now, building.StateActive, building.StateBuilding)
+		WHERE id = $1 AND health = $2 AND health > 0 AND state IN ($7, $5, $8) AND ($9 = '' OR owner_id = $9)
+	`, id, expectedHealth, damage, building.StateRuined, building.StateDamaged, now, building.StateActive, building.StateBuilding, owner)
 	if err != nil {
 		return building.Building{}, false, err
 	}
@@ -259,7 +267,7 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 			field_stage = $11, field_stage_started_at = $12, field_stage_ready_at = $13,
 			field_super_crop = $14, updated_at = $15,
 			cannon_enabled = $16, cannon_next_attack_at = $17, cannon_target_id = $18, trap_charges = $19, rotation = $20
-		WHERE id = $1
+		WHERE id = $1 AND (state <> 'ruined' OR $5 = 'ruined')
 	`, b.ID, b.Type, b.Name, b.Level, b.State, b.Health, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.UpdatedAt, b.CannonEnabled, b.CannonNextAttackAt, b.CannonTargetID, b.TrapCharges, b.Rotation)
 	if err != nil {
 		return err

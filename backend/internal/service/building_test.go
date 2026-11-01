@@ -172,7 +172,29 @@ func TestRepairRestoresCurrentLevelHealth(t *testing.T) {
 	if err := repo.Create(ctx, item); err != nil {
 		t.Fatal(err)
 	}
+	eco := NewEconomyService(memory.NewEconomyRepo(), repo, slog.Default())
+	service.SetEconomy(eco)
+	quote := quoteRepair(item)
+	grant := []economy.ResourceAmount{{Resource: economy.ResourcePopulation, Amount: 3}}
+	for _, cost := range quote.Cost {
+		grant = append(grant, economy.ResourceAmount{Resource: cost.Resource, Amount: cost.Amount})
+	}
+	grantTestResources(t, withUncappedCoins(ctx), eco, "p1", grant...)
 	repaired, err := service.Repair(ctx, item.ID, "p1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if repaired.Health != 100 {
+		t.Fatal("repair healed before timer")
+	}
+	if _, err = service.Repair(ctx, item.ID, "p1"); err == nil {
+		t.Fatal("duplicate repair accepted")
+	}
+	pending, _ := repo.PendingRepair(ctx, item.ID)
+	if n, err := service.CompleteRepairs(ctx, pending.DueAt.Add(time.Second), 10); err != nil || n != 1 {
+		t.Fatalf("complete repair: %d %v", n, err)
+	}
+	repaired, err = repo.FindByID(ctx, item.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -352,8 +374,8 @@ func TestTownHallCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	if spec.Population != 3 {
 		t.Fatalf("expected level 1 town hall to grant 3 population, got %d", spec.Population)
 	}
-	if len(spec.UpgradeLevels) != 10 {
-		t.Fatalf("expected 10 town hall levels, got %d", len(spec.UpgradeLevels))
+	if len(spec.UpgradeLevels) != 15 {
+		t.Fatalf("expected 15 town hall levels, got %d", len(spec.UpgradeLevels))
 	}
 	for _, level := range spec.UpgradeLevels {
 		if level.Population != 3 {
@@ -362,11 +384,45 @@ func TestTownHallCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	}
 
 	final := spec.UpgradeLevels[len(spec.UpgradeLevels)-1]
-	if final.Level != 10 || final.Health != 3530 || final.BuildDuration != 7*time.Hour+36*time.Minute {
+	if final.Level != 15 || final.Health != 8750 || final.BuildDuration != 33*time.Hour {
 		t.Fatalf("unexpected final town hall level: %#v", final)
 	}
-	if got := (building.BuildRules{BaseLimit: 8}).LimitForTownHallLevel(10); got != 35 {
-		t.Fatalf("expected level 10 town hall limit 35, got %d", got)
+	if got := (building.BuildRules{BaseLimit: 8}).LimitForTownHallLevel(15); got != 50 {
+		t.Fatalf("expected level 15 town hall limit 50, got %d", got)
+	}
+}
+
+func TestBuildingServiceCompletesTownHallUpgradesThroughLevel15(t *testing.T) {
+	ctx := context.Background()
+	service := NewBuildingService(memory.NewBuildingRepo(), memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	now := time.Date(2026, 10, 31, 12, 0, 0, 0, time.UTC)
+	service.now = func() time.Time { return now }
+	item, err := service.Place(ctx, PlaceBuildingInput{PlayerID: "p1", Type: building.TypeTownHall, Tile: world.Coord{X: 0, Y: 0}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for level := 2; level <= 15; level++ {
+		item, err = service.Upgrade(ctx, item.ID, "p1")
+		if err != nil {
+			t.Fatalf("upgrade to %d: %v", level, err)
+		}
+		if item.Level != level || item.CompletesAt == nil || item.State != building.StateBuilding {
+			t.Fatalf("invalid upgrade to %d: %#v", level, item)
+		}
+		now = item.CompletesAt.Add(time.Second)
+		item, err = service.Complete(ctx, item.ID, "p1")
+		if err != nil {
+			t.Fatalf("complete %d: %v", level, err)
+		}
+		if item.State != building.StateActive || item.Health <= 0 {
+			t.Fatalf("invalid completed level %d: %#v", level, item)
+		}
+		if catalog.ExperienceForBuilding(building.TypeTownHall, level).Completion <= 0 {
+			t.Fatalf("missing XP for %d", level)
+		}
+	}
+	if _, err := service.Upgrade(ctx, item.ID, "p1"); err == nil {
+		t.Fatal("level 15 must be final")
 	}
 }
 
@@ -394,13 +450,16 @@ func TestWindleafBedCatalogUsesDocumentedUpgradeBalance(t *testing.T) {
 	}
 }
 
-func TestStartingInventoryOnlyGrantsCoins(t *testing.T) {
+func TestStartingInventoryGrantsCoinsAndThrowingKnives(t *testing.T) {
 	items := economy.StartingItems()
-	if len(items) != 1 {
-		t.Fatalf("expected only one starting resource, got %#v", items)
+	if len(items) != 2 {
+		t.Fatalf("expected two starting resources, got %#v", items)
 	}
 	if items[economy.ResourceCoins] != 50 {
 		t.Fatalf("expected 50 starting coins, got %#v", items)
+	}
+	if items[economy.ResourceThrowingKnives] != 50 {
+		t.Fatalf("expected 50 starting throwing knives, got %#v", items)
 	}
 }
 

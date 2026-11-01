@@ -63,6 +63,10 @@ func (h *PlayerHandler) UpdatePresence(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, envelope{"status": "ok"})
 }
 
+func (h *PlayerHandler) Levels(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, envelope{"levels": player.LevelCatalog})
+}
+
 func (h *PlayerHandler) NearbyPresence(w http.ResponseWriter, r *http.Request) {
 	playerID, ok := middleware.PlayerID(r.Context())
 	if !ok {
@@ -96,6 +100,7 @@ func (h *PlayerHandler) UpdateMe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	p, err := h.players.UpdateProfile(r.Context(), playerID, service.UpdateProfileInput{
+		AvatarID: req.AvatarID, BannerID: req.BannerID, Title: req.Title, HomeCenterID: req.HomeCenterID,
 		DisplayName: req.DisplayName,
 		CityName:    req.CityName,
 		AvatarURL:   req.AvatarURL,
@@ -124,6 +129,15 @@ func (h *PlayerHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, envelope{"status": "ok"})
+}
+
+func (h *PlayerHandler) PublicProfile(w http.ResponseWriter, r *http.Request) {
+	view, err := h.players.PublicProfile(r.Context(), player.ID(r.PathValue("id")))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"profile": view})
 }
 
 func (h *PlayerHandler) DeleteMe(w http.ResponseWriter, r *http.Request) {

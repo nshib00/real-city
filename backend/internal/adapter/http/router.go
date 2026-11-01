@@ -1,6 +1,7 @@
 package httpadapter
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"log/slog"
@@ -27,7 +28,6 @@ type RouterDeps struct {
 	Population  *service.PopulationService
 	Monsters    *service.MonsterService
 	Combat      *service.CombatService
-	Raids       *service.RaidService
 	Threats     *service.ThreatService
 	Alliances   *service.AllianceService
 	Chat        *service.ChatService
@@ -40,19 +40,25 @@ type RouterDeps struct {
 
 func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux := http.NewServeMux()
+	authenticated := func(tokens *jwtadapter.Manager, next http.Handler) http.Handler {
+		return middleware.Auth(tokens, next, deps.Players)
+	}
 	authHandler := handler.NewAuthHandler(deps.Auth)
 	playerHandler := handler.NewPlayerHandler(deps.Players)
 	worldHandler := handler.NewWorldHandler(deps.Worlds, deps.Forests)
 	buildingHandler := handler.NewBuildingHandler(deps.Buildings)
 	economyHandler := handler.NewEconomyHandler(deps.Economy, deps.Resources, deps.Production, deps.Fields, deps.Population)
 	monsterHandler := handler.NewMonsterHandler(deps.Monsters, deps.Combat, deps.Threats)
-	raidHandler := handler.NewRaidHandler(deps.Raids)
+	combatHandler := handler.NewCombatHandler(deps.Combat)
 	allianceHandler := handler.NewAllianceHandler(deps.Alliances)
 	chatHandler := handler.NewChatHandler(deps.Chat)
 	marketHandler := handler.NewMarketHandler(deps.Market)
+	adminHandler := handler.NewAdminHandler(service.NewAdminService(deps.Players, deps.Chat))
+	mux.Handle("PATCH /api/v1/admin/players/{id}", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.ChangeAccount)))
+	mux.Handle("GET /api/v1/admin/accounts/audit", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.AccountAudit)))
 	httpMetrics := middleware.NewHTTPMetrics()
 	idempotentAuth := func(next http.HandlerFunc) http.Handler {
-		return middleware.Auth(deps.Tokens, middleware.Idempotency(deps.Idempotency, 24*time.Hour)(next))
+		return authenticated(deps.Tokens, middleware.Idempotency(deps.Idempotency, 24*time.Hour)(next))
 	}
 
 	health := func(w http.ResponseWriter, r *http.Request) {
@@ -63,6 +69,17 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	}
 	mux.HandleFunc("GET /health", health)
 	mux.HandleFunc("GET /healthz", health)
+	mux.HandleFunc("GET /ready", func(w http.ResponseWriter, r *http.Request) {
+		if deps.DBPool != nil {
+			ctx, cancel := context.WithTimeout(r.Context(), time.Second)
+			defer cancel()
+			if err := deps.DBPool.PingContext(ctx); err != nil {
+				JSON(w, http.StatusServiceUnavailable, Envelope{"status": "unavailable"})
+				return
+			}
+		}
+		JSON(w, http.StatusOK, Envelope{"status": "ready"})
+	})
 	mux.HandleFunc("GET /metrics", metrics(httpMetrics, deps.Realtime, deps.DBPool))
 	mux.HandleFunc("GET /swagger/openapi.json", swaggerOpenAPI)
 	mux.HandleFunc("GET /api/v1/world", worldHandler.World)
@@ -75,59 +92,71 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.HandleFunc("GET /api/v1/monsters", monsterHandler.List)
 	mux.HandleFunc("GET /api/v1/monster-loot", monsterHandler.Loot)
 	mux.HandleFunc("GET /api/v1/threats", monsterHandler.Threats)
-	mux.Handle("GET /api/v1/raids", middleware.Auth(deps.Tokens, http.HandlerFunc(raidHandler.List)))
-	mux.Handle("POST /api/v1/raids", idempotentAuth(raidHandler.Start))
-	mux.HandleFunc("GET /api/v1/admin/status", func(w http.ResponseWriter, r *http.Request) {
-		JSON(w, http.StatusOK, Envelope{"status": "placeholder"})
-	})
+	mux.HandleFunc("GET /api/v1/combat/rules", combatHandler.Rules)
+	mux.HandleFunc("GET /api/v1/players/levels", playerHandler.Levels)
+	mux.Handle("GET /api/v1/admin/status", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.Status)))
+	mux.Handle("GET /api/v1/admin/players", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.Players)))
+	mux.Handle("GET /api/v1/admin/chat/messages", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.Flagged)))
+	mux.Handle("PATCH /api/v1/admin/chat/messages/{id}", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.Moderate)))
+	mux.Handle("GET /api/v1/admin/audit", authenticated(deps.Tokens, http.HandlerFunc(adminHandler.Audit)))
 	if deps.Realtime != nil {
 		mux.Handle("GET /api/v1/realtime", deps.Realtime)
 	}
 	mux.HandleFunc("POST /api/v1/auth/register", authHandler.Register)
 	mux.HandleFunc("POST /api/v1/auth/login", authHandler.Login)
 	mux.HandleFunc("POST /api/v1/auth/refresh", authHandler.Refresh)
-	mux.Handle("POST /api/v1/auth/logout", middleware.Auth(deps.Tokens, http.HandlerFunc(authHandler.Logout)))
-	mux.Handle("GET /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.Me)))
-	mux.Handle("POST /api/v1/players/me/presence", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.UpdatePresence)))
-	mux.Handle("GET /api/v1/players/nearby", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.NearbyPresence)))
-	mux.Handle("GET /api/v1/players/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.Public)))
-	mux.Handle("PATCH /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.UpdateMe)))
-	mux.Handle("PATCH /api/v1/players/me/password", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.ChangePassword)))
-	mux.Handle("DELETE /api/v1/players/me", middleware.Auth(deps.Tokens, http.HandlerFunc(playerHandler.DeleteMe)))
-	mux.Handle("GET /api/v1/buildings", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.List)))
-	mux.Handle("POST /api/v1/world/tiles/chop-forest", middleware.Auth(deps.Tokens, http.HandlerFunc(worldHandler.ChopForest)))
+	mux.Handle("POST /api/v1/auth/logout", authenticated(deps.Tokens, http.HandlerFunc(authHandler.Logout)))
+	mux.Handle("GET /api/v1/players/me", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.Me)))
+	mux.Handle("POST /api/v1/players/me/presence", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.UpdatePresence)))
+	mux.Handle("GET /api/v1/players/nearby", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.NearbyPresence)))
+	mux.Handle("GET /api/v1/players/{id}/profile", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.PublicProfile)))
+	mux.Handle("GET /api/v1/players/{id}", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.Public)))
+	mux.Handle("PATCH /api/v1/players/me", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.UpdateMe)))
+	mux.Handle("PATCH /api/v1/players/me/password", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.ChangePassword)))
+	mux.Handle("DELETE /api/v1/players/me", authenticated(deps.Tokens, http.HandlerFunc(playerHandler.DeleteMe)))
+	mux.Handle("GET /api/v1/buildings", authenticated(deps.Tokens, http.HandlerFunc(buildingHandler.List)))
+	mux.Handle("POST /api/v1/world/tiles/chop-forest", authenticated(deps.Tokens, http.HandlerFunc(worldHandler.ChopForest)))
 	mux.Handle("POST /api/v1/buildings", idempotentAuth(buildingHandler.Place))
-	mux.Handle("GET /api/v1/buildings/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Get)))
-	mux.Handle("PATCH /api/v1/buildings/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Patch)))
-	mux.Handle("DELETE /api/v1/buildings/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(buildingHandler.Delete)))
-	mux.Handle("GET /api/v1/economy/inventory", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.Inventory)))
-	mux.Handle("GET /api/v1/economy/transactions", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.Transactions)))
-	mux.Handle("GET /api/v1/economy/population", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.Population)))
-	mux.Handle("PATCH /api/v1/resources/nodes/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.PatchResourceNode)))
-	mux.Handle("GET /api/v1/production/jobs", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.ProductionJobs)))
-	mux.Handle("POST /api/v1/production/jobs", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.StartProduction)))
-	mux.Handle("PATCH /api/v1/production/jobs/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.PatchProduction)))
-	mux.Handle("POST /api/v1/fields/advance", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
-	mux.Handle("POST /api/v1/fields/harvest", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
-	mux.Handle("POST /api/v1/fields/windleaf/advance", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
-	mux.Handle("POST /api/v1/fields/windleaf/harvest", middleware.Auth(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
-	mux.Handle("GET /api/v1/monsters/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.Get)))
-	mux.Handle("POST /api/v1/monsters/{id}/weapons", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.UseWeapon)))
-	mux.Handle("GET /api/v1/combat/attacks", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.PendingWeapons)))
-	mux.Handle("POST /api/v1/monster-loot/{id}/claim", middleware.Auth(deps.Tokens, http.HandlerFunc(monsterHandler.ClaimLoot)))
-	mux.Handle("GET /api/v1/alliances/me", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Profile)))
-	mux.Handle("POST /api/v1/alliances", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Create)))
+	mux.Handle("POST /api/v1/buildings/{id}/weapons", idempotentAuth(combatHandler.BuildingWeapon))
+	mux.Handle("POST /api/v1/combat/monsters", idempotentAuth(combatHandler.CreateMonster))
+	mux.Handle("GET /api/v1/buildings/{id}/repair", authenticated(deps.Tokens, http.HandlerFunc(buildingHandler.RepairStatus)))
+	mux.Handle("GET /api/v1/buildings/{id}", authenticated(deps.Tokens, http.HandlerFunc(buildingHandler.Get)))
+	mux.Handle("PATCH /api/v1/buildings/{id}", authenticated(deps.Tokens, http.HandlerFunc(buildingHandler.Patch)))
+	mux.Handle("DELETE /api/v1/buildings/{id}", authenticated(deps.Tokens, http.HandlerFunc(buildingHandler.Delete)))
+	mux.Handle("GET /api/v1/economy/inventory", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.Inventory)))
+	mux.Handle("GET /api/v1/economy/transactions", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.Transactions)))
+	mux.Handle("GET /api/v1/economy/population", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.Population)))
+	mux.Handle("PATCH /api/v1/resources/nodes/{id}", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.PatchResourceNode)))
+	mux.Handle("GET /api/v1/production/jobs", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.ProductionJobs)))
+	mux.Handle("POST /api/v1/production/jobs", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.StartProduction)))
+	mux.Handle("PATCH /api/v1/production/jobs/{id}", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.PatchProduction)))
+	mux.Handle("POST /api/v1/fields/advance", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
+	mux.Handle("POST /api/v1/fields/harvest", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
+	mux.Handle("POST /api/v1/fields/windleaf/advance", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
+	mux.Handle("POST /api/v1/fields/windleaf/harvest", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
+	mux.Handle("GET /api/v1/monsters/{id}", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.Get)))
+	mux.Handle("POST /api/v1/monsters/{id}/weapons", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.UseWeapon)))
+	mux.Handle("GET /api/v1/combat/attacks", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.PendingWeapons)))
+	mux.Handle("GET /api/v1/combat/history", authenticated(deps.Tokens, http.HandlerFunc(combatHandler.History)))
+	mux.Handle("POST /api/v1/monster-loot/{id}/claim", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.ClaimLoot)))
+	mux.Handle("POST /api/v1/alliances/members/{id}/leadership", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.TransferLeadership)))
+	mux.Handle("DELETE /api/v1/alliances/me", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Leave)))
+	mux.Handle("DELETE /api/v1/alliances/members/{id}", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Kick)))
+	mux.Handle("GET /api/v1/alliances/me", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Profile)))
+	mux.Handle("POST /api/v1/alliances", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Create)))
 	mux.Handle("POST /api/v1/alliances/invites", idempotentAuth(allianceHandler.Invite))
-	mux.Handle("PATCH /api/v1/alliances/invites/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.RespondInvite)))
-	mux.Handle("PATCH /api/v1/alliances/roles", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.SetRole)))
-	mux.Handle("POST /api/v1/alliances/treasury/donations", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.Donate)))
-	mux.Handle("POST /api/v1/alliances/buffs", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.UpgradeBuff)))
-	mux.Handle("POST /api/v1/alliances/territory-aid", middleware.Auth(deps.Tokens, http.HandlerFunc(allianceHandler.AddTerritoryAid)))
-	mux.Handle("GET /api/v1/chat/messages", middleware.Auth(deps.Tokens, http.HandlerFunc(chatHandler.List)))
-	mux.Handle("POST /api/v1/chat/messages", middleware.Auth(deps.Tokens, http.HandlerFunc(chatHandler.Send)))
+	mux.Handle("PATCH /api/v1/alliances/invites/{id}", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.RespondInvite)))
+	mux.Handle("PATCH /api/v1/alliances/roles", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.SetRole)))
+	mux.Handle("POST /api/v1/alliances/treasury/donations", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Donate)))
+	mux.Handle("POST /api/v1/alliances/treasury/spend", idempotentAuth(allianceHandler.SpendTreasury))
+	mux.Handle("POST /api/v1/alliances/buffs", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.UpgradeBuff)))
+	mux.Handle("POST /api/v1/alliances/territory-aid", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.AddTerritoryAid)))
+	mux.Handle("PATCH /api/v1/chat/read", authenticated(deps.Tokens, http.HandlerFunc(chatHandler.MarkRead)))
+	mux.Handle("GET /api/v1/chat/messages", authenticated(deps.Tokens, http.HandlerFunc(chatHandler.List)))
+	mux.Handle("POST /api/v1/chat/messages", authenticated(deps.Tokens, http.HandlerFunc(chatHandler.Send)))
 	mux.HandleFunc("GET /api/v1/market/orders", marketHandler.List)
 	mux.Handle("POST /api/v1/market/orders", idempotentAuth(marketHandler.Create))
-	mux.Handle("DELETE /api/v1/market/orders/{id}", middleware.Auth(deps.Tokens, http.HandlerFunc(marketHandler.Cancel)))
+	mux.Handle("DELETE /api/v1/market/orders/{id}", authenticated(deps.Tokens, http.HandlerFunc(marketHandler.Cancel)))
 	return middleware.Chain(
 		mux,
 		middleware.RequestID(),

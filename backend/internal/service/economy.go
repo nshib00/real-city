@@ -44,10 +44,11 @@ type EconomyService struct {
 	now       func() time.Time
 	catchUp   func(context.Context, player.ID) error
 	events    *EventBus
+	uow       UnitOfWork
 }
 
 func NewEconomyService(repo EconomyRepository, buildings BuildingRepository, log *slog.Logger) *EconomyService {
-	return &EconomyService{repo: repo, buildings: buildings, log: log, now: func() time.Time { return time.Now().UTC() }}
+	return &EconomyService{repo: repo, buildings: buildings, uow: snapshotUnitOfWork{[]any{repo, buildings}}, log: log, now: func() time.Time { return time.Now().UTC() }}
 }
 
 func (s *EconomyService) SetPlayers(players PlayerRepository) {
@@ -62,7 +63,7 @@ func (s *EconomyService) SetEventBus(events *EventBus) {
 	s.events = events
 }
 
-func (s *EconomyService) Inventory(ctx context.Context, playerID player.ID) (economy.Inventory, error) {
+func (s *EconomyService) inventory(ctx context.Context, playerID player.ID) (economy.Inventory, error) {
 	if s.catchUp != nil && ctx.Value(skipCatchUpKey{}) != true {
 		if err := s.catchUp(ctx, playerID); err != nil {
 			return economy.Inventory{}, err
@@ -143,7 +144,7 @@ func (s *EconomyService) ReleaseReadyFieldWorkers(ctx context.Context, playerID 
 		return err
 	}
 	if s.events != nil {
-		s.events.Publish(Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
+		publishEvent(ctx, s.events, Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
 	}
 	return nil
 }
@@ -160,7 +161,7 @@ func withUncappedCoins(ctx context.Context) context.Context {
 	return context.WithValue(ctx, uncappedCoinsKey{}, true)
 }
 
-func (s *EconomyService) Spend(ctx context.Context, playerID player.ID, cost []economy.ResourceAmount, reason string) (economy.Inventory, error) {
+func (s *EconomyService) spend(ctx context.Context, playerID player.ID, cost []economy.ResourceAmount, reason string) (economy.Inventory, error) {
 	inventory, err := s.Inventory(ctx, playerID)
 	if err != nil {
 		return economy.Inventory{}, err
@@ -180,15 +181,17 @@ func (s *EconomyService) Spend(ctx context.Context, playerID player.ID, cost []e
 		return economy.Inventory{}, err
 	}
 	for _, item := range cost {
-		_ = s.logTransaction(ctx, playerID, economy.TransactionSpend, item, reason)
+		if err := s.logTransaction(ctx, playerID, economy.TransactionSpend, item, reason); err != nil {
+			return economy.Inventory{}, err
+		}
 	}
 	if s.events != nil {
-		s.events.Publish(Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
+		publishEvent(ctx, s.events, Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
 	}
 	return inventory, nil
 }
 
-func (s *EconomyService) Add(ctx context.Context, playerID player.ID, items []economy.ResourceAmount, reason string) (economy.Inventory, []economy.ResourceAmount, error) {
+func (s *EconomyService) add(ctx context.Context, playerID player.ID, items []economy.ResourceAmount, reason string) (economy.Inventory, []economy.ResourceAmount, error) {
 	inventory, err := s.Inventory(ctx, playerID)
 	if err != nil {
 		return economy.Inventory{}, nil, err
@@ -198,13 +201,15 @@ func (s *EconomyService) Add(ctx context.Context, playerID player.ID, items []ec
 		return economy.Inventory{}, nil, err
 	}
 	for _, item := range items {
-		_ = s.logTransaction(ctx, playerID, economy.TransactionAdd, item, reason)
+		if err := s.logTransaction(ctx, playerID, economy.TransactionAdd, item, reason); err != nil {
+			return economy.Inventory{}, nil, err
+		}
 	}
 	for _, item := range overflow {
 		s.log.Warn("economy.coin_capacity.overflow", "event", "economy.coin_capacity.overflow", "player_id", playerID, "overflow", item.Amount)
 	}
 	if s.events != nil {
-		s.events.Publish(Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
+		publishEvent(ctx, s.events, Event{Type: EventInventoryChanged, PlayerID: playerID, Payload: InventoryPayload{Inventory: inventory}})
 	}
 	return inventory, overflow, nil
 }
@@ -305,4 +310,26 @@ func (s *EconomyService) logTransaction(ctx context.Context, playerID player.ID,
 	}
 	s.log.Info("economy.resource.changed", "event", "economy.resource.changed", "player_id", playerID, "kind", kind, "resource", item.Resource, "amount", item.Amount, "reason", reason)
 	return s.repo.AddTransaction(ctx, tx)
+}
+
+func (s *EconomyService) SetUnitOfWork(u UnitOfWork) {
+	if u != nil {
+		s.uow = u
+	}
+}
+func (s *EconomyService) Inventory(ctx context.Context, p player.ID) (result economy.Inventory, err error) {
+	err = transactional(ctx, s.uow, func(ctx context.Context) error { var e error; result, e = s.inventory(ctx, p); return e })
+	return
+}
+func (s *EconomyService) Spend(ctx context.Context, p player.ID, cost []economy.ResourceAmount, reason string) (result economy.Inventory, err error) {
+	err = transactional(ctx, s.uow, func(ctx context.Context) error { var e error; result, e = s.spend(ctx, p, cost, reason); return e })
+	return
+}
+func (s *EconomyService) Add(ctx context.Context, p player.ID, items []economy.ResourceAmount, reason string) (result economy.Inventory, overflow []economy.ResourceAmount, err error) {
+	err = transactional(ctx, s.uow, func(ctx context.Context) error {
+		var e error
+		result, overflow, e = s.add(ctx, p, items, reason)
+		return e
+	})
+	return
 }

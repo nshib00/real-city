@@ -2,6 +2,7 @@ package memory
 
 import (
 	"context"
+	"maps"
 	"sort"
 	"sync"
 	"time"
@@ -10,18 +11,22 @@ import (
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/pkg/apperror"
+	"real-city/backend/pkg/memorytx"
 )
 
 type BuildingRepo struct {
 	mu        sync.RWMutex
 	buildings map[building.ID]building.Building
+	repairs   map[string]building.RepairJob
 }
 
 func NewBuildingRepo() *BuildingRepo {
-	return &BuildingRepo{buildings: make(map[building.ID]building.Building)}
+	return &BuildingRepo{buildings: make(map[building.ID]building.Building), repairs: make(map[string]building.RepairJob)}
 }
 
 func (r *BuildingRepo) Create(ctx context.Context, b building.Building) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -39,9 +44,96 @@ func (r *BuildingRepo) Create(ctx context.Context, b building.Building) error {
 	return nil
 }
 
+func (r *BuildingRepo) RepairWorkers(ctx context.Context, p player.ID) (int, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	n := 0
+	for _, j := range r.repairs {
+		if j.PlayerID == string(p) && j.Status == "pending" {
+			n += j.Workers
+		}
+	}
+	return n, nil
+}
+
+func (r *BuildingRepo) Snapshot() func() {
+	r.mu.RLock()
+	items := maps.Clone(r.buildings)
+	jobs := maps.Clone(r.repairs)
+	r.mu.RUnlock()
+	return func() { r.mu.Lock(); defer r.mu.Unlock(); r.buildings = items; r.repairs = jobs }
+}
+func (r *BuildingRepo) CreateRepair(ctx context.Context, a building.RepairJob) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	for _, j := range r.repairs {
+		if j.BuildingID == a.BuildingID && j.Status == "pending" {
+			return apperror.New(apperror.Conflict, "repair already pending")
+		}
+	}
+	r.repairs[a.ID] = a
+	return nil
+}
+func (r *BuildingRepo) PendingRepair(ctx context.Context, id building.ID) (building.RepairJob, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	for _, j := range r.repairs {
+		if j.BuildingID == id && j.Status == "pending" {
+			return j, nil
+		}
+	}
+	return building.RepairJob{}, apperror.New(apperror.NotFound, "repair not found")
+}
+func (r *BuildingRepo) DueRepairs(ctx context.Context, now time.Time, limit int) ([]building.RepairJob, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	items := []building.RepairJob{}
+	for _, j := range r.repairs {
+		if j.Status == "pending" && !j.DueAt.After(now) {
+			items = append(items, j)
+		}
+	}
+	sort.Slice(items, func(i, j int) bool { return items[i].DueAt.Before(items[j].DueAt) })
+	if limit > 0 && len(items) > limit {
+		items = items[:limit]
+	}
+	return items, nil
+}
+func (r *BuildingRepo) LockRepair(ctx context.Context, id string) (building.RepairJob, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	j, ok := r.repairs[id]
+	if !ok {
+		return j, apperror.New(apperror.NotFound, "repair not found")
+	}
+	return j, nil
+}
+func (r *BuildingRepo) FinishRepair(ctx context.Context, id, status string) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	j := r.repairs[id]
+	j.Status = status
+	r.repairs[id] = j
+	return nil
+}
+
 func isRuinType(kind building.Type) bool { return len(kind) > 6 && string(kind[:6]) == "ruins_" }
 
 func (r *BuildingRepo) ListRuinedRuins(ctx context.Context, limit int) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	items, err := r.ListByMap(ctx, "dev-world")
 	if err != nil {
 		return nil, err
@@ -59,6 +151,8 @@ func (r *BuildingRepo) ListRuinedRuins(ctx context.Context, limit int) ([]buildi
 }
 
 func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -70,6 +164,8 @@ func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.B
 }
 
 func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -83,6 +179,8 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 }
 
 func (r *BuildingRepo) PlayerPlacementStats(ctx context.Context, playerID player.ID) (building.PlacementStats, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	items, err := r.ListByPlayer(ctx, playerID)
 	if err != nil {
 		return building.PlacementStats{}, err
@@ -96,6 +194,8 @@ func (r *BuildingRepo) PlayerPlacementStats(ctx context.Context, playerID player
 }
 
 func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -110,6 +210,8 @@ func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.
 }
 
 func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord world.ChunkCoord) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -123,6 +225,8 @@ func (r *BuildingRepo) ListByChunk(ctx context.Context, mapID string, coord worl
 }
 
 func (r *BuildingRepo) ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -148,6 +252,8 @@ func (r *BuildingRepo) ListByViewport(ctx context.Context, mapID string, minX, m
 }
 
 func (r *BuildingRepo) ListIntersectingFootprint(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	return r.ListByViewport(ctx, mapID, minX, minY, maxX, maxY)
 }
 
@@ -162,6 +268,8 @@ func townHallLevel(items []building.Building) int {
 }
 
 func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -179,6 +287,8 @@ func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([
 }
 
 func (r *BuildingRepo) ListReadyCannons(ctx context.Context, mapID string, now time.Time, afterID building.ID, limit int) ([]building.Building, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	items, err := r.ListByMap(ctx, mapID)
 	if err != nil {
 		return nil, err
@@ -198,6 +308,8 @@ func (r *BuildingRepo) ListReadyCannons(ctx context.Context, mapID string, now t
 }
 
 func (r *BuildingRepo) ClaimCannonShot(ctx context.Context, id building.ID, now, next time.Time, targetID string, expectedHealth int) (bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	item, ok := r.buildings[id]
@@ -213,6 +325,8 @@ func (r *BuildingRepo) ClaimCannonShot(ctx context.Context, id building.ID, now,
 }
 
 func (r *BuildingRepo) ConsumeTrapCharge(ctx context.Context, id building.ID, expectedHealth int) (bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	item, ok := r.buildings[id]
@@ -224,11 +338,13 @@ func (r *BuildingRepo) ConsumeTrapCharge(ctx context.Context, id building.ID, ex
 	return true, nil
 }
 
-func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time) (building.Building, bool, error) {
+func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time, expectedOwner ...string) (building.Building, bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	item, ok := r.buildings[id]
-	if !ok || item.Health != expectedHealth || item.Health <= 0 || damage <= 0 || (item.State != building.StateActive && item.State != building.StateDamaged && item.State != building.StateBuilding) {
+	if !ok || (len(expectedOwner) > 0 && item.OwnerID != expectedOwner[0]) || item.Health != expectedHealth || item.Health <= 0 || damage <= 0 || (item.State != building.StateActive && item.State != building.StateDamaged && item.State != building.StateBuilding) {
 		return building.Building{}, false, nil
 	}
 	item.Health = max(0, item.Health-damage)
@@ -244,17 +360,24 @@ func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expe
 }
 
 func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	if _, ok := r.buildings[b.ID]; !ok {
 		return apperror.New(apperror.NotFound, "building not found")
 	}
+	if r.buildings[b.ID].State == building.StateRuined && b.State != building.StateRuined {
+		return apperror.New(apperror.Conflict, "destroyed building cannot be restored by a stale update")
+	}
 	r.buildings[b.ID] = b
 	return nil
 }
 
 func (r *BuildingRepo) RelocateIfCurrent(ctx context.Context, previous, next building.Building) (bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -281,6 +404,8 @@ func (r *BuildingRepo) RelocateIfCurrent(ctx context.Context, previous, next bui
 }
 
 func (r *BuildingRepo) Delete(ctx context.Context, id building.ID) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()

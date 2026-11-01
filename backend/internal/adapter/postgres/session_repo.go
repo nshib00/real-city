@@ -51,11 +51,17 @@ func (r *SessionRepo) FindByRefreshTokenHash(ctx context.Context, tokenHash stri
 }
 
 func (r *SessionRepo) Revoke(ctx context.Context, sessionID player.SessionID) error {
-	_, err := r.db.ExecContext(ctx, `UPDATE player_sessions SET revoked_at = $2, updated_at = $2 WHERE id = $1 AND revoked_at IS NULL`, sessionID, time.Now().UTC())
+	_, err := execer(ctx, r.db).ExecContext(ctx, `UPDATE player_sessions SET revoked_at = $2, updated_at = $2 WHERE id = $1 AND revoked_at IS NULL`, sessionID, time.Now().UTC())
 	return err
 }
 
 func (r *SessionRepo) RevokePlayer(ctx context.Context, playerID player.ID) error {
-	_, err := r.db.ExecContext(ctx, `UPDATE player_sessions SET revoked_at = $2, updated_at = $2 WHERE player_id = $1 AND revoked_at IS NULL`, playerID, time.Now().UTC())
+	_, err := execer(ctx, r.db).ExecContext(ctx, `UPDATE player_sessions SET revoked_at = $2, updated_at = $2 WHERE player_id = $1 AND revoked_at IS NULL`, playerID, time.Now().UTC())
 	return err
+}
+
+func (r *SessionRepo) SessionActive(ctx context.Context, p player.ID, id player.SessionID, now time.Time) (bool, error) {
+	var active bool
+	err := execer(ctx, r.db).QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM player_sessions WHERE id=$1 AND player_id=$2 AND revoked_at IS NULL AND expires_at>$3)`, id, p, now).Scan(&active)
+	return active, err
 }

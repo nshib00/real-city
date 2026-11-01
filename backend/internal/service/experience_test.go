@@ -156,7 +156,7 @@ func TestProductionCollectionAwardsDocumentedXP(t *testing.T) {
 	ctx := context.Background()
 	repo, experience := newExperienceTestPlayer(t)
 	buildings := memory.NewBuildingRepo()
-	if err := buildings.Create(ctx, building.Building{ID: "glass-1", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeGlassWorkshop, Level: 1, State: building.StateActive}); err != nil {
+	if err := buildings.Create(ctx, building.Building{ID: "glass-1", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeGlassWorkshop, Level: 1, Health: 100, State: building.StateActive}); err != nil {
 		t.Fatal(err)
 	}
 	economyRepo := memory.NewEconomyRepo()
@@ -206,11 +206,11 @@ func TestBuildingXPMatchesDocumentedExamples(t *testing.T) {
 		level int
 		want  catalog.BuildingXP
 	}{
-		{building.TypeFlaxField, 3, catalog.BuildingXP{Completion: 68, Work: 4, Destruction: 560}},
-		{building.TypeGlassWorkshop, 9, catalog.BuildingXP{Completion: 6557, Work: 70, Destruction: 297600}},
-		{building.TypeMine, 1, catalog.BuildingXP{Completion: 60, Work: 8, Destruction: 420}},
-		{building.TypeRopeYard, 8, catalog.BuildingXP{Completion: 1220, Work: 42, Destruction: 23000}},
-		{building.TypeDugout, 1, catalog.BuildingXP{}},
+		{building.TypeFlaxField, 3, catalog.BuildingXP{Completion: 68, Work: 4, Destruction: 579}},
+		{building.TypeGlassWorkshop, 9, catalog.BuildingXP{Completion: 6778, Work: 70, Destruction: 302639}},
+		{building.TypeMine, 1, catalog.BuildingXP{Completion: 60, Work: 8, Destruction: 409}},
+		{building.TypeRopeYard, 8, catalog.BuildingXP{Completion: 1198, Work: 42, Destruction: 23094}},
+		{building.TypeDugout, 1, catalog.BuildingXP{Completion: 2, Destruction: 11}},
 	}
 	for _, testCase := range cases {
 		if got := catalog.ExperienceForBuilding(testCase.kind, testCase.level); got != testCase.want {

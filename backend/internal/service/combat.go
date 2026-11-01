@@ -3,12 +3,14 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"sync"
 	"time"
 
 	"real-city/backend/internal/domain/action"
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/monster"
@@ -17,28 +19,36 @@ import (
 )
 
 type CombatService struct {
-	monsters *MonsterService
-	economy  EconomyRepository
-	actions  ActionRepository
-	uow      UnitOfWork
-	log      *slog.Logger
-	now      func() time.Time
-	mu       sync.Mutex
+	monsters        *MonsterService
+	economy         EconomyRepository
+	actions         ActionRepository
+	uow             UnitOfWork
+	log             *slog.Logger
+	now             func() time.Time
+	mu              sync.Mutex
+	buildings       BuildingRepository
+	worlds          WorldRepository
+	resources       *ResourceService
+	buildingService *BuildingService
 }
 
+func (s *CombatService) SetBuildingService(buildings *BuildingService) { s.buildingService = buildings }
+
 type WeaponAttack struct {
-	ID      action.ID            `json:"id"`
-	Weapon  economy.ResourceType `json:"weapon"`
-	DueAt   time.Time            `json:"due_at"`
-	Monster *monster.Monster     `json:"-"`
-	Loot    *monster.LootDrop    `json:"-"`
+	ID       action.ID            `json:"id"`
+	Weapon   economy.ResourceType `json:"weapon"`
+	DueAt    time.Time            `json:"due_at"`
+	Monster  *monster.Monster     `json:"-"`
+	Loot     *monster.LootDrop    `json:"-"`
+	Building *building.Building   `json:"-"`
 }
 
 type PendingWeaponAttack struct {
-	ID        action.ID            `json:"id"`
-	MonsterID monster.ID           `json:"monster_id"`
-	Weapon    economy.ResourceType `json:"weapon"`
-	DueAt     time.Time            `json:"due_at"`
+	ID         action.ID            `json:"id"`
+	MonsterID  monster.ID           `json:"monster_id"`
+	BuildingID building.ID          `json:"building_id,omitempty"`
+	Weapon     economy.ResourceType `json:"weapon"`
+	DueAt      time.Time            `json:"due_at"`
 }
 
 func NewCombatService(monsters *MonsterService, log *slog.Logger) *CombatService {
@@ -65,12 +75,26 @@ func (s *CombatService) PendingWeapons(ctx context.Context, playerID player.ID) 
 		if err := json.Unmarshal(item.Payload, &payload); err != nil {
 			continue
 		}
-		items = append(items, PendingWeaponAttack{ID: item.ID, MonsterID: monster.ID(item.Target.ID), Weapon: payload.Weapon, DueAt: item.DueAt})
+		attack := PendingWeaponAttack{ID: item.ID, Weapon: payload.Weapon, DueAt: item.DueAt}
+		if item.Target.Type == "building" {
+			attack.BuildingID = building.ID(item.Target.ID)
+		} else {
+			attack.MonsterID = monster.ID(item.Target.ID)
+		}
+		items = append(items, attack)
 	}
 	return items, nil
 }
 
 func (s *CombatService) UseWeapon(ctx context.Context, id monster.ID, playerID player.ID, resource economy.ResourceType, key string) (WeaponAttack, error) {
+	return s.useWeapon(ctx, action.ObjectRef{ID: string(id), Type: "monster"}, playerID, resource, key)
+}
+
+func (s *CombatService) UseBuildingWeapon(ctx context.Context, id building.ID, playerID player.ID, resource economy.ResourceType, key string) (WeaponAttack, error) {
+	return s.useWeapon(ctx, action.ObjectRef{ID: string(id), Type: "building"}, playerID, resource, key)
+}
+
+func (s *CombatService) useWeapon(ctx context.Context, ref action.ObjectRef, playerID player.ID, resource economy.ResourceType, key string) (WeaponAttack, error) {
 	spec, ok := catalog.PlayerWeaponByResource(resource)
 	if !ok {
 		return WeaponAttack{}, apperror.New(apperror.Validation, "unknown weapon")
@@ -91,20 +115,44 @@ func (s *CombatService) UseWeapon(ctx context.Context, id monster.ID, playerID p
 		return WeaponAttack{}, apperror.New(apperror.Conflict, "weapon action already submitted")
 	}
 	now := s.now()
-	target, err := s.monsters.Get(ctx, id)
-	if err != nil {
-		return WeaponAttack{}, err
-	}
-	if !target.Alive() {
-		return WeaponAttack{}, apperror.New(apperror.Conflict, "monster is already dead")
-	}
 	attack := WeaponAttack{ID: action.ID(fmt.Sprintf("weapon_%d_%s", now.UnixNano(), playerID)), Weapon: resource, DueAt: now.Add(spec.Fuse)}
 	item := action.NewGameAction(attack.ID, action.TypeDetonateWeapon, "weapon:"+string(playerID)+":"+key,
-		action.ObjectRef{ID: string(playerID), Type: "player"}, action.ObjectRef{ID: string(id), Type: "monster"}, attack.DueAt, now)
+		action.ObjectRef{ID: string(playerID), Type: "player"}, ref, attack.DueAt, now)
 	item.Payload, _ = json.Marshal(struct {
-		Weapon economy.ResourceType `json:"weapon"`
-	}{resource})
+		Weapon  economy.ResourceType `json:"weapon"`
+		OwnerID string               `json:"owner_id,omitempty"`
+	}{Weapon: resource})
 	run := func(ctx context.Context) error {
+		if err := s.actions.LockCombatActor(ctx, playerID); err != nil {
+			return err
+		}
+		var target monster.Monster
+		if ref.Type == "building" {
+			b, err := s.validatePvPTarget(ctx, playerID, building.ID(ref.ID))
+			if err != nil {
+				return err
+			}
+			recent, err := s.actions.HasRecentAction(ctx, playerID, action.TypeDetonateWeapon, now.Add(-time.Duration(catalog.CombatRules().AttackCooldownSeconds)*time.Second))
+			if err != nil {
+				return err
+			}
+			if recent {
+				return apperror.New(apperror.Conflict, "Подождите перед следующей атакой")
+			}
+			item.Payload, _ = json.Marshal(struct {
+				Weapon  economy.ResourceType `json:"weapon"`
+				OwnerID string               `json:"owner_id"`
+			}{resource, b.OwnerID})
+		} else {
+			var err error
+			target, err = s.monsters.Get(ctx, monster.ID(ref.ID))
+			if err != nil {
+				return err
+			}
+			if !target.Alive() {
+				return apperror.New(apperror.Conflict, "monster is already dead")
+			}
+		}
 		spent, err := s.economy.SpendResourceIfAvailable(ctx, playerID, resource, 1, now)
 		if err != nil {
 			return err
@@ -120,7 +168,15 @@ func (s *CombatService) UseWeapon(ctx context.Context, id monster.ID, playerID p
 			return apperror.New(apperror.Conflict, "weapon action already submitted")
 		}
 		if spec.Fuse == 0 {
-			resolved, loot, err := s.monsters.Damage(ctx, id, playerID, weaponDamage(spec, target.Type))
+			if ref.Type == "building" {
+				resolved, err := s.damageBuilding(ctx, item, spec.Damage, now)
+				if err != nil {
+					return err
+				}
+				attack.Building = resolved
+				return s.actions.MarkDone(ctx, item.ID, now)
+			}
+			resolved, loot, err := s.monsters.Damage(ctx, monster.ID(ref.ID), playerID, weaponDamage(spec, target.Type))
 			if err != nil {
 				return err
 			}
@@ -129,7 +185,9 @@ func (s *CombatService) UseWeapon(ctx context.Context, id monster.ID, playerID p
 		}
 		return nil
 	}
-	if s.uow != nil {
+	if s.buildingService != nil {
+		err = s.buildingService.DestructionTransaction(ctx, s.uow, run, s.economy, s.actions, s.monsters.repo)
+	} else if s.uow != nil {
 		err = s.uow.Do(ctx, run)
 	} else {
 		err = run(ctx)
@@ -137,7 +195,7 @@ func (s *CombatService) UseWeapon(ctx context.Context, id monster.ID, playerID p
 	if err != nil {
 		return WeaponAttack{}, err
 	}
-	s.log.Info("combat.weapon.used", "player_id", playerID, "monster_id", id, "weapon", resource, "due_at", attack.DueAt)
+	s.log.Info("combat.weapon.used", "event", "combat.weapon.used", "player_id", playerID, "target_id", ref.ID, "target_type", ref.Type, "weapon", resource, "due_at", attack.DueAt)
 	return attack, nil
 }
 
@@ -152,8 +210,16 @@ func (s *CombatService) ResolveWeapon(ctx context.Context, item action.GameActio
 	if !ok {
 		return apperror.New(apperror.Validation, "unknown queued weapon")
 	}
+	if item.Target.Type == "building" {
+		_, err := s.damageBuilding(ctx, item, spec.Damage, s.now())
+		return err
+	}
 	target, err := s.monsters.Get(ctx, monster.ID(item.Target.ID))
 	if err != nil {
+		var appErr *apperror.Error
+		if errors.As(err, &appErr) && appErr.Kind == apperror.NotFound {
+			return nil
+		}
 		return err
 	}
 	if !target.Alive() {

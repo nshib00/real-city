@@ -161,7 +161,7 @@ func (s *CannonService) fire(ctx context.Context, id building.ID, now time.Time)
 			if err := s.monsterService.scheduleSpawnAfterDeath(txCtx, target, now); err != nil {
 				return err
 			}
-			if s.monsterService.experience != nil {
+			if s.monsterService.experience != nil && target.CreatorID == "" {
 				if spec, ok := catalog.MonsterSpec(target.Type); ok {
 					if err := s.monsterService.experience.Award(txCtx, player.ID(cannon.OwnerID), max(1, spec.MaxHealth/10), "monster:kill", "monster:"+string(target.ID)+":kill"); err != nil {
 						return err
@@ -180,11 +180,15 @@ func (s *CannonService) fire(ctx context.Context, id building.ID, now time.Time)
 		return nil
 	}
 	var err error
-	if s.uow != nil {
-		err = s.uow.Do(ctx, work)
-	} else {
-		err = work(ctx)
+	uow := s.uow
+	if uow == nil {
+		repos := []any{s.buildings, s.monsters, s.economy}
+		if s.monsterService != nil && s.monsterService.experience != nil {
+			repos = append(repos, s.monsterService.experience.players)
+		}
+		uow = snapshotUnitOfWork{repos}
 	}
+	err = transactional(ctx, uow, work)
 	if err != nil || !fired {
 		return false, err
 	}
@@ -227,7 +231,7 @@ func (s *CannonService) chooseTarget(ctx context.Context, cannon building.Buildi
 		return a.ID < b.ID
 	})
 	for _, item := range items {
-		if !item.Alive() || defenseDistance(item.Tile, cannon.Tile) > radius {
+		if !item.Alive() || (item.CreatorID != "" && item.CreatorID == cannon.OwnerID) || defenseDistance(item.Tile, cannon.Tile) > radius {
 			continue
 		}
 		clear, err := s.lineOfSight(ctx, cannon, item.Tile)

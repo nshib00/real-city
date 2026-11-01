@@ -13,6 +13,7 @@ import (
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/observability"
 	"real-city/backend/internal/service"
+	"real-city/backend/pkg/apperror"
 	"real-city/backend/pkg/config"
 )
 
@@ -27,7 +28,6 @@ type Runner struct {
 	monsters   *MonsterAI
 	cannons    *service.CannonService
 	combat     *service.CombatService
-	raids      *service.RaidService
 	log        *slog.Logger
 	cfg        config.SimulationConfig
 	now        func() time.Time
@@ -66,7 +66,6 @@ func (r *Runner) SetCannonService(cannons *service.CannonService) {
 }
 
 func (r *Runner) SetCombatService(combat *service.CombatService) { r.combat = combat }
-func (r *Runner) SetRaidService(raids *service.RaidService) { r.raids = raids }
 
 func (r *Runner) SetMonsterSpawner(spawner *MonsterSpawner) {
 	r.spawner = spawner
@@ -137,6 +136,9 @@ func (r *Runner) tick(ctx context.Context, mode string) (result TickResult, err 
 	if r.buildings != nil {
 		stageStart := time.Now()
 		result.BuildingsCompleted, err = r.buildings.CompleteDue(ctx, now, r.cfg.BatchSize)
+		if err == nil {
+			_, err = r.buildings.CompleteRepairs(ctx, now, r.cfg.BatchSize)
+		}
 		if mode == "scheduled" {
 			observability.Stage("buildings", stageStart, result.BuildingsCompleted, boolCount(err != nil), r.cfg.BatchSize, err)
 		}
@@ -260,13 +262,13 @@ func (r *Runner) handleAction(ctx context.Context, item action.GameAction, now t
 				return nil
 			}
 			_, err := r.buildings.CompleteAt(ctx, building.ID(item.Target.ID), player.ID(item.Actor.ID), now)
-			return err
+			return ignoreRemovedActionTarget(err)
 		case action.TypeCompleteProduction:
 			if r.production == nil {
 				return nil
 			}
 			_, err := r.production.ReadyAt(ctx, player.ID(item.Actor.ID), economy.ProductionJobID(item.Target.ID), now)
-			return err
+			return ignoreRemovedActionTarget(err)
 		case action.TypeRespawnResource:
 			if r.resources == nil {
 				return nil
@@ -279,15 +281,24 @@ func (r *Runner) handleAction(ctx context.Context, item action.GameAction, now t
 			}
 			return r.forests.HandleRegrowthAction(ctx, item, now)
 		case action.TypeDetonateWeapon:
-			if r.combat == nil { return nil }
-			if err := r.combat.ResolveWeapon(ctx, item); err != nil { return err }
+			if r.combat == nil {
+				return nil
+			}
+			if err := r.combat.ResolveWeapon(ctx, item); err != nil {
+				return err
+			}
 			return r.actions.MarkDone(ctx, item.ID, now)
-		case action.TypeResolveRaid:
-			if r.raids == nil { return nil }
-			return r.raids.Resolve(ctx, item, now)
 		default:
 			return nil
 		}
+	}
+	if item.Type == action.TypeDetonateWeapon && r.buildings != nil {
+		repositories := []any{r.actions}
+		if r.monsters != nil {
+			repositories = append(repositories, r.monsters.monsters)
+		}
+		// Damage, XP, queue acknowledgement and outgoing events share one commit.
+		return r.buildings.DestructionTransaction(ctx, r.uow, run, repositories...)
 	}
 	if r.uow != nil {
 		return r.uow.Do(ctx, run)
@@ -296,6 +307,14 @@ func (r *Runner) handleAction(ctx context.Context, item action.GameAction, now t
 }
 
 type skipActionQueueKey struct{}
+
+func ignoreRemovedActionTarget(err error) error {
+	var appErr *apperror.Error
+	if errors.As(err, &appErr) && appErr.Kind == apperror.NotFound {
+		return nil
+	}
+	return err
+}
 
 func WithoutActionQueue(ctx context.Context) context.Context {
 	return context.WithValue(ctx, skipActionQueueKey{}, true)

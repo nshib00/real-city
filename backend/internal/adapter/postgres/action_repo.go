@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/action"
-	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/pkg/apperror"
 )
@@ -16,8 +15,39 @@ type ActionRepo struct {
 	db *sql.DB
 }
 
+func (r *ActionRepo) LockCombatActor(ctx context.Context, actor player.ID) error {
+	_, err := execer(ctx, r.db).ExecContext(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1, 0))`, "combat:"+string(actor))
+	return err
+}
+
+func (r *ActionRepo) HasRecentAction(ctx context.Context, actor player.ID, kind action.Type, since time.Time) (bool, error) {
+	var found bool
+	err := execer(ctx, r.db).QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM game_actions WHERE actor_id=$1 AND type=$2 AND created_at > $3)`, actor, kind, since).Scan(&found)
+	return found, err
+}
+
 func NewActionRepo(db *sql.DB) *ActionRepo {
 	return &ActionRepo{db: db}
+}
+
+func (r *ActionRepo) ListCombatRecords(ctx context.Context, id player.ID, limit int) ([]action.GameAction, error) {
+	if limit < 1 || limit > 100 {
+		limit = 50
+	}
+	rows, err := execer(ctx, r.db).QueryContext(ctx, `SELECT id,type,status,idempotency_key,actor_id,actor_type,target_id,target_type,payload,due_at,locked_until,attempts,last_error,created_at,updated_at FROM game_actions WHERE type='combat_record' AND (actor_id=$1 OR payload->>'owner_id'=$1) ORDER BY created_at DESC,id DESC LIMIT $2`, id, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []action.GameAction{}
+	for rows.Next() {
+		item, err := scanAction(rows)
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	return items, rows.Err()
 }
 
 func (r *ActionRepo) Append(ctx context.Context, item action.GameAction) error {
@@ -73,34 +103,6 @@ func (r *ActionRepo) ListPendingWeapons(ctx context.Context, playerID player.ID)
 		items = append(items, item)
 	}
 	return items, rows.Err()
-}
-
-func (r *ActionRepo) ListRaids(ctx context.Context, playerID player.ID) ([]action.GameAction, error) {
-	rows, err := execer(ctx, r.db).QueryContext(ctx, `
-		SELECT id, type, status, idempotency_key, actor_id, actor_type, target_id, target_type,
-			payload, due_at, locked_until, attempts, last_error, created_at, updated_at
-		FROM game_actions WHERE actor_id = $1 AND type = $2
-		ORDER BY created_at DESC, id DESC LIMIT 200
-	`, playerID, action.TypeResolveRaid)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := make([]action.GameAction, 0)
-	for rows.Next() {
-		item, err := scanAction(rows)
-		if err != nil {
-			return nil, err
-		}
-		items = append(items, item)
-	}
-	return items, rows.Err()
-}
-
-func (r *ActionRepo) HasRecentRaid(ctx context.Context, playerID player.ID, targetID building.ID, since time.Time) (bool, error) {
-	var exists bool
-	err := execer(ctx, r.db).QueryRowContext(ctx, `SELECT EXISTS(SELECT 1 FROM game_actions WHERE type=$1 AND actor_id=$2 AND target_id=$3 AND created_at >= $4)`, action.TypeResolveRaid, playerID, targetID, since).Scan(&exists)
-	return exists, err
 }
 
 func (r *ActionRepo) FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) (items []action.GameAction, resultErr error) {

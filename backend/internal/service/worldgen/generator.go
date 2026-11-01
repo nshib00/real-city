@@ -7,7 +7,7 @@ import (
 	"real-city/backend/internal/domain/world"
 )
 
-const WorldSizeTiles = 160
+const WorldSizeTiles = world.WorldSize
 
 var ruinTypes = [...]string{
 	"ruins_town_square",
@@ -54,6 +54,7 @@ func (g Generator) Map() world.WorldMap {
 }
 
 func (g Generator) Chunk(coord world.ChunkCoord) world.Chunk {
+	coord = world.NormalizeChunk(coord)
 	tiles := world.TilesInChunk(coord)
 	chunk := world.Chunk{
 		MapID:   g.mapID,

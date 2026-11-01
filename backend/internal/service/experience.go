@@ -29,7 +29,7 @@ func (s *ExperienceService) Award(ctx context.Context, id player.ID, amount int,
 		return err
 	}
 	if applied {
-		s.log.Info("player.xp_awarded", "player_id", id, "amount", amount, "reason", reason, "event_key", eventKey)
+		s.log.Info("player.xp_awarded", "event", "player.xp_awarded", "player_id", id, "requested_amount", amount, "reason", reason, "event_key", eventKey)
 	}
 	return nil
 }

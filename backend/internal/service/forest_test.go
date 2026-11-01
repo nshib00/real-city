@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"encoding/json"
+	"errors"
 	"io"
 	"log/slog"
 	"testing"
@@ -85,7 +87,19 @@ func TestForestChopPublishesOneAudibleResultWithCoordinateAndReason(t *testing.T
 	}
 }
 
-func TestForestServiceChopAddsCoinsOnEachStage(t *testing.T) {
+// Match the PostgreSQL JSONB NOT NULL constraint, which the memory repository does not enforce.
+type forestJSONActionRepo struct {
+	*memory.ActionRepo
+}
+
+func (r *forestJSONActionRepo) Append(ctx context.Context, item action.GameAction) error {
+	if !json.Valid(item.Payload) {
+		return errors.New("game_actions.payload must contain non-null valid JSON")
+	}
+	return r.ActionRepo.Append(ctx, item)
+}
+
+func TestForestServiceChopAllThreeStagesWithRegrowthQueue(t *testing.T) {
 	ctx := context.Background()
 	coord := world.Coord{X: 1, Y: 1}
 	chunkCoord := world.ChunkForTile(coord)
@@ -105,6 +119,11 @@ func TestForestServiceChopAddsCoinsOnEachStage(t *testing.T) {
 	economyService := NewEconomyService(memory.NewEconomyRepo(), nil, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	service := NewForestService(worlds, economyService, slog.New(slog.NewTextHandler(io.Discard, nil)))
 	service.rareDrop = func() bool { return false }
+	actions := &forestJSONActionRepo{ActionRepo: memory.NewActionRepo()}
+	service.SetActionQueue(actions)
+	now := time.Date(2026, 10, 30, 10, 0, 0, 0, time.UTC)
+	service.now = func() time.Time { return now }
+	service.regrowthDelay = func() time.Duration { return 3 * time.Minute }
 
 	var result ChopForestResult
 	for range world.MaxForestDensity {
@@ -120,6 +139,16 @@ func TestForestServiceChopAddsCoinsOnEachStage(t *testing.T) {
 	}
 	if result.Inventory.Items[economy.ResourceCoins] != 56 {
 		t.Fatalf("expected coins to increase by 2 for each stage to 56, got %d", result.Inventory.Items[economy.ResourceCoins])
+	}
+	if result.Inventory.Items[economy.ResourceWood] != 3 {
+		t.Fatalf("expected wood from all three stages, got %d", result.Inventory.Items[economy.ResourceWood])
+	}
+	due, err := actions.FetchDue(ctx, now.Add(3*time.Minute), 10, time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(due) != 1 || due[0].Type != action.TypeRegrowForest || due[0].Target.ID != coordRef(coord) {
+		t.Fatalf("expected exactly one regrowth action for the cleared tile, got %#v", due)
 	}
 }
 

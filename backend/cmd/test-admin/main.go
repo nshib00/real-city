@@ -12,10 +12,11 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/lib/pq"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
+
+	_ "github.com/lib/pq"
 )
 
 // Keep below the historical INT maximum so normal game additions remain safe.

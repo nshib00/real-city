@@ -73,21 +73,30 @@ func TestPostgresRedisContainers(t *testing.T) {
 		t.Fatalf("response = %+v, ok=%v, err=%v", got, ok, err)
 	}
 	unlock, err := store.Lock(ctx, "container-test")
-	if err != nil { t.Fatal(err) }
+	if err != nil {
+		t.Fatal(err)
+	}
 	waiting := make(chan error, 1)
 	go func() {
 		secondUnlock, err := NewIdempotencyStore(db).Lock(ctx, "container-test")
-		if err == nil { secondUnlock() }
+		if err == nil {
+			secondUnlock()
+		}
 		waiting <- err
 	}()
 	select {
-	case err := <-waiting: t.Fatalf("lock was not exclusive: %v", err)
-	case <-time.After(50*time.Millisecond):
+	case err := <-waiting:
+		t.Fatalf("lock was not exclusive: %v", err)
+	case <-time.After(50 * time.Millisecond):
 	}
 	unlock()
 	select {
-	case err := <-waiting: if err != nil { t.Fatal(err) }
-	case <-ctx.Done(): t.Fatal("lock wait timed out")
+	case err := <-waiting:
+		if err != nil {
+			t.Fatal(err)
+		}
+	case <-ctx.Done():
+		t.Fatal("lock wait timed out")
 	}
 	var balanceVersion int
 	if err := db.QueryRowContext(ctx, `SELECT version FROM game_balance_version WHERE singleton=true`).Scan(&balanceVersion); err != nil || balanceVersion != 2 {

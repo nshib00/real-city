@@ -7,6 +7,12 @@ import (
 )
 
 type Profile struct {
+	AvatarID     string                 `json:"avatar_id"`
+	BannerID     string                 `json:"banner_id"`
+	Title        string                 `json:"title"`
+	GroupID      string                 `json:"group_id,omitempty"`
+	HomeCenterID string                 `json:"home_center_id,omitempty"`
+	Scores       map[string]int         `json:"scores,omitempty"`
 	DisplayName  string                 `json:"display_name"`
 	CityName     string                 `json:"city_name"`
 	AvatarURL    string                 `json:"avatar_url"`
@@ -19,10 +25,14 @@ type Profile struct {
 }
 
 type UpdateProfileRequest struct {
-	DisplayName string                 `json:"display_name"`
-	CityName    string                 `json:"city_name"`
-	AvatarURL   string                 `json:"avatar_url"`
-	Settings    player.ProfileSettings `json:"settings"`
+	AvatarID     *string                `json:"avatar_id"`
+	BannerID     *string                `json:"banner_id"`
+	Title        *string                `json:"title"`
+	HomeCenterID *string                `json:"home_center_id"`
+	DisplayName  string                 `json:"display_name"`
+	CityName     string                 `json:"city_name"`
+	AvatarURL    string                 `json:"avatar_url"`
+	Settings     player.ProfileSettings `json:"settings"`
 }
 
 type ChangePasswordRequest struct {
@@ -52,6 +62,7 @@ func Player(p player.Player) PlayerResponse {
 		Status: p.Status,
 		Role:   p.Role,
 		Profile: Profile{
+			AvatarID: p.Profile.AvatarID, BannerID: p.Profile.BannerID, Title: p.Profile.Title, GroupID: p.Profile.GroupID, HomeCenterID: p.Profile.HomeCenterID, Scores: p.Profile.Scores,
 			DisplayName:  p.Profile.DisplayName,
 			CityName:     p.Profile.CityName,
 			AvatarURL:    p.Profile.AvatarURL,

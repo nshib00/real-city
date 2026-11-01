@@ -51,7 +51,13 @@ func (s *PopulationService) Summary(ctx context.Context, playerID player.ID) (pl
 			busy.Production += recipe.Workers
 		}
 	}
+	if repo, ok := s.economy.buildings.(RepairRepository); ok {
+		busy.Repair, err = repo.RepairWorkers(ctx, playerID)
+		if err != nil {
+			return player.Population{}, err
+		}
+	}
 	free := inventory.Items[economy.ResourcePopulation]
-	total := free + busy.Builders + busy.Production + busy.Fields
+	total := free + busy.Builders + busy.Production + busy.Fields + busy.Repair
 	return player.NewPopulation(total, busy), nil
 }

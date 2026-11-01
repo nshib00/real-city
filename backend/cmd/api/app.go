@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"time"
 
 	httpadapter "real-city/backend/internal/adapter/http"
 	httpmiddleware "real-city/backend/internal/adapter/http/middleware"
@@ -19,7 +20,6 @@ import (
 	"real-city/backend/internal/worker"
 	"real-city/backend/internal/worker/simulation"
 	"real-city/backend/pkg/config"
-	"real-city/backend/pkg/logger"
 )
 
 type app struct {
@@ -32,8 +32,11 @@ type app struct {
 	outbox   *worker.OutboxDispatcher
 }
 
-func newApp(cfg config.Config, log *slog.Logger) *app {
-	db := openPostgres(cfg, log)
+func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
+	db, err := openPostgres(cfg, log)
+	if err != nil {
+		return nil, err
+	}
 	var dbPool *sql.DB
 	if db != nil {
 		dbPool = db.Pool()
@@ -47,13 +50,24 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	buildingRepo := buildBuildingStore(db)
 	economyRepo := buildEconomyStore(db)
 	monsterRepo := buildMonsterStore(db)
-	socialRepo := memory.NewSocialRepo()
+	var socialRepo interface {
+		service.AllianceRepository
+		service.ChatRepository
+		service.MarketRepository
+	}
+	if dbPool != nil {
+		socialRepo = postgresadapter.NewSocialRepo(dbPool)
+	} else {
+		socialRepo = memory.NewSocialRepo()
+	}
 	tokenManager := jwtadapter.NewManager(cfg.Session.Secret, cfg.Session.AccessTTL, cfg.Session.RefreshTTL)
 	authService := service.NewAuthService(playerRepo, sessionStore, tokenManager, log)
 	playerService := service.NewPlayerService(playerRepo, sessionStore, log)
+	playerService.SetProfileSources(buildingRepo, socialRepo)
 	experienceService := service.NewExperienceService(playerRepo, log)
 	worldService := service.NewWorldService(worldRepo, log)
 	buildingService := service.NewBuildingService(buildingRepo, worldRepo, log)
+	buildingService.SetPvPProtection(playerRepo)
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, log)
 	economyService.SetPlayers(playerRepo)
 	resourceService := service.NewResourceService(economyRepo, economyService, log)
@@ -63,23 +77,34 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 	monsterService := service.NewMonsterService(monsterRepo, log)
 	monsterService.SetEconomy(economyService)
 	combatService := service.NewCombatService(monsterService, log)
+	combatService.SetBuildingService(buildingService)
 	threatService := service.NewThreatService(monsterRepo)
 	allianceService := service.NewAllianceService(socialRepo, economyService, log)
+	buildingService.SetAllianceBenefits(allianceService)
+	resourceService.SetAllianceBenefits(allianceService)
 	chatService := service.NewChatService(socialRepo, socialRepo, log)
+	chatService.SetBuildings(buildingRepo)
 	marketService := service.NewMarketService(socialRepo, economyService, log)
 	actionRepo := buildActionStore(db)
 	outboxRepo := buildOutboxStore(db)
 	uow := buildUnitOfWork(db)
+	economyService.SetUnitOfWork(uow)
+	productionService.SetUnitOfWork(uow)
+	marketService.SetUnitOfWork(uow)
+	chatService.SetUnitOfWork(uow)
+	allianceService.SetUnitOfWork(uow)
 	combatService.SetWeaponDependencies(economyRepo, actionRepo, uow)
-	raidService := service.NewRaidService(buildingRepo, actionRepo, log)
-	raidService.SetResources(resourceService)
+	combatService.SetPvPDependencies(buildingRepo, worldRepo, resourceService)
 	fieldService := service.NewFieldService(economyService, buildingRepo)
 	populationService := service.NewPopulationService(economyService)
 	forestService := service.NewForestService(worldRepo, economyService, log)
 	eventBus := service.NewEventBus(128)
+	marketService.SetEventBus(eventBus)
+	allianceService.SetEventBus(eventBus)
+	chatService.SetEventBus(eventBus)
 	playerService.SetEventBus(eventBus)
-	raidService.SetEventBus(eventBus)
 	buildingService.SetEconomy(economyService)
+	buildingService.SetRepairUnitOfWork(uow)
 	buildingService.SetActionQueue(actionRepo)
 	buildingService.SetMonsters(monsterRepo)
 	economyService.SetEventBus(eventBus)
@@ -109,13 +134,14 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 		monsterAI := simulation.NewMonsterAI(monsterRepo, buildingRepo, worldRepo, eventBus, log)
 		monsterAI.SetUnitOfWork(uow)
 		monsterAI.SetExperience(experienceService)
+		monsterAI.SetBuildingService(buildingService)
 		monsterAI.SetMoveInterval(cfg.Simulation.TickInterval)
 		simulationRunner.SetMonsterAI(monsterAI)
 		simulationRunner.SetCannonService(service.NewCannonService(buildingRepo, monsterRepo, economyRepo, worldRepo, uow, monsterService, economyService, eventBus, log))
 		simulationRunner.SetCombatService(combatService)
-		simulationRunner.SetRaidService(raidService)
 	}
 	realtimeGateway := wsadapter.NewGateway(tokenManager, eventBus, log)
+	realtimeGateway.SetAccessValidator(playerService)
 
 	return &app{
 		cfg:      cfg,
@@ -125,26 +151,30 @@ func newApp(cfg config.Config, log *slog.Logger) *app {
 		sim:      simulationRunner,
 		outbox:   outboxDispatcher,
 		server: &http.Server{
+			Handler:      httpadapter.NewRouter(log, httpadapter.RouterDeps{Auth: authService, Players: playerService, Worlds: worldService, Forests: forestService, Buildings: buildingService, Economy: economyService, Resources: resourceService, Production: productionService, Fields: fieldService, Population: populationService, Monsters: monsterService, Combat: combatService, Threats: threatService, Alliances: allianceService, Chat: chatService, Market: marketService, Tokens: tokenManager, Realtime: realtimeGateway, DBPool: dbPool, Idempotency: idempotencyStore}),
 			Addr:         cfg.Server.Addr,
-			Handler:      httpadapter.NewRouter(log, httpadapter.RouterDeps{Auth: authService, Players: playerService, Worlds: worldService, Forests: forestService, Buildings: buildingService, Economy: economyService, Resources: resourceService, Production: productionService, Fields: fieldService, Population: populationService, Monsters: monsterService, Combat: combatService, Raids: raidService, Threats: threatService, Alliances: allianceService, Chat: chatService, Market: marketService, Tokens: tokenManager, Realtime: realtimeGateway, DBPool: dbPool, Idempotency: idempotencyStore}),
 			ReadTimeout:  cfg.Server.ReadTimeout,
 			WriteTimeout: cfg.Server.WriteTimeout,
 		},
-	}
+	}, nil
 }
 
-func openPostgres(cfg config.Config, log *slog.Logger) *postgresadapter.DB {
+func openPostgres(cfg config.Config, log *slog.Logger) (*postgresadapter.DB, error) {
 	if cfg.Postgres.DSN == "" {
+		if cfg.AppEnv == "production" {
+			return nil, fmt.Errorf("production requires POSTGRES_DSN")
+		}
 		log.Info("storage.memory", "event", "storage.memory")
-		return nil
+		return nil, nil
 	}
-	db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	db, err := postgresadapter.Open(ctx, cfg.Postgres.Driver, cfg.Postgres.DSN)
 	if err != nil {
-		log.Warn("postgres.unavailable_fallback_memory", "event", "postgres.unavailable_fallback_memory", logger.ErrorAttr(err))
-		return nil
+		return nil, fmt.Errorf("configured PostgreSQL unavailable: %w", err)
 	}
 	log.Info("postgres.connected", "event", "postgres.connected")
-	return db
+	return db, nil
 }
 
 func buildMonsterStore(db *postgresadapter.DB) service.MonsterRepository {

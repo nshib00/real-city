@@ -19,7 +19,12 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	if err := newApp(cfg, log).run(ctx); err != nil {
+	application, err := newApp(cfg, log)
+	if err != nil {
+		log.Error("app.startup_failed", "event", "app.startup_failed", logger.ErrorAttr(err))
+		os.Exit(1)
+	}
+	if err := application.run(ctx); err != nil {
 		log.Error("app.failed", "event", "app.failed", logger.ErrorAttr(err))
 		os.Exit(1)
 	}

@@ -18,17 +18,20 @@ import (
 )
 
 type BuildingService struct {
-	buildings  BuildingRepository
-	worlds     WorldRepository
-	log        *slog.Logger
-	now        func() time.Time
-	rules      building.BuildRules
-	events     *EventBus
-	economy    *EconomyService
-	actions    ActionRepository
-	monsters   MonsterRepository
-	experience *ExperienceService
-	resources  *ResourceService
+	allianceBenefits *AllianceService
+	buildings        BuildingRepository
+	worlds           WorldRepository
+	log              *slog.Logger
+	now              func() time.Time
+	rules            building.BuildRules
+	events           *EventBus
+	economy          *EconomyService
+	actions          ActionRepository
+	monsters         MonsterRepository
+	experience       *ExperienceService
+	resources        *ResourceService
+	repairUOW        UnitOfWork
+	pvpProtection    PvPProtectionRepository
 }
 
 type PlaceBuildingInput struct {
@@ -38,6 +41,7 @@ type PlaceBuildingInput struct {
 }
 
 func NewBuildingService(buildings BuildingRepository, worlds WorldRepository, log *slog.Logger) *BuildingService {
+	catalog.ValidateBuildingXP()
 	return &BuildingService{buildings: buildings, worlds: worlds, log: log, now: func() time.Time { return time.Now().UTC() }, rules: building.BuildRules{BaseLimit: 8}}
 }
 
@@ -77,7 +81,8 @@ func (s *BuildingService) FullCatalog(ctx context.Context) ([]catalog.BuildingTy
 	return catalog.AllBuildings(), nil
 }
 
-func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (placed building.Building, resultErr error) {
+func (s *BuildingService) place(ctx context.Context, input PlaceBuildingInput) (placed building.Building, resultErr error) {
+	input.Tile = world.NormalizeCoord(input.Tile)
 	totalStarted := time.Now()
 	defer func() { observability.ObservePlacement("total", totalStarted, resultErr) }()
 	spec, ok := catalog.GetBuilding(input.Type)
@@ -135,6 +140,11 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 			return building.Building{}, err
 		}
 	}
+	duration, err := s.buffedDuration(ctx, input.PlayerID, spec.BuildDuration, "build_speed")
+	if err != nil {
+		return building.Building{}, err
+	}
+	spec.BuildDuration = duration
 	if err := s.spendCost(ctx, input.PlayerID, spec.Cost, "building:place:"+string(input.Type)); err != nil {
 		return building.Building{}, err
 	}
@@ -193,11 +203,13 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 		}
 	}
 	if item.CompletesAt != nil {
-		_ = s.scheduleCompletion(ctx, item)
+		if err := s.scheduleCompletion(ctx, item); err != nil {
+			return building.Building{}, err
+		}
 	} else if err := s.awardCompletionXP(ctx, item); err != nil {
 		return building.Building{}, err
 	}
-	s.publish(EventBuildingPlaced, item, BuildingPayload{Building: item, Reason: "placed"})
+	s.publish(ctx, EventBuildingPlaced, item, BuildingPayload{Building: item, Reason: "placed"})
 	s.log.Info("building.placed", "event", "building.placed", "building_id", item.ID, "building_type", item.Type, "player_id", item.OwnerID, "tile_x", item.Tile.X, "tile_y", item.Tile.Y, "chunk_id", world.ChunkID(DefaultWorldID, chunkCoord))
 	return item, nil
 }
@@ -277,20 +289,12 @@ func (s *BuildingService) CompleteDue(ctx context.Context, now time.Time, limit 
 		if item.State != building.StateBuilding || item.CompletesAt == nil || item.CompletesAt.After(now) {
 			continue
 		}
-		item.State = building.StateActive
-		item.CompletesAt = nil
-		item.UpdatedAt = now
-		if err := s.buildings.Update(ctx, item); err != nil {
+		if _, err := s.CompleteAt(ctx, item.ID, player.ID(item.OwnerID), now); err != nil {
+			if isNotFound(err) {
+				continue
+			}
 			return completed, err
 		}
-		if err := s.releaseConstructionPopulation(ctx, item, "building:builders:complete:"+string(item.Type)); err != nil {
-			return completed, err
-		}
-		if err := s.awardCompletionXP(ctx, item); err != nil {
-			return completed, err
-		}
-		s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: completionReason(item)})
-		s.log.Info("simulation.building.completed", "event", "simulation.building.completed", "building_id", item.ID, "building_type", item.Type, "player_id", item.OwnerID, "chunk_id", world.ChunkID(item.MapID, world.ChunkForTile(item.Tile)))
 		completed++
 	}
 	return completed, nil
@@ -308,7 +312,7 @@ func (s *BuildingService) cleanupRuinedRuins(ctx context.Context) error {
 		if err := s.buildings.Delete(ctx, item.ID); err != nil {
 			return err
 		}
-		s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "destroyed"})
+		s.publish(ctx, EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "destroyed"})
 	}
 	return nil
 }
@@ -317,7 +321,7 @@ func (s *BuildingService) Complete(ctx context.Context, id building.ID, playerID
 	return s.CompleteAt(ctx, id, playerID, s.now())
 }
 
-func (s *BuildingService) RushComplete(ctx context.Context, id building.ID, playerID player.ID) (building.Building, economy.Inventory, int, error) {
+func (s *BuildingService) rushComplete(ctx context.Context, id building.ID, playerID player.ID) (building.Building, economy.Inventory, int, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, economy.Inventory{}, 0, err
@@ -364,11 +368,11 @@ func (s *BuildingService) RushComplete(ctx context.Context, id building.ID, play
 	}
 	inventory, _ = s.currentInventory(ctx, playerID)
 	s.log.Info("building.rush_completed", "event", "building.rush_completed", "building_id", item.ID, "building_type", item.Type, "player_id", playerID, "crystal_cost", cost, "remaining_ms", remaining.Milliseconds())
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "rushed"})
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "rushed"})
 	return item, inventory, cost, nil
 }
 
-func (s *BuildingService) CompleteAt(ctx context.Context, id building.ID, playerID player.ID, now time.Time) (building.Building, error) {
+func (s *BuildingService) completeAt(ctx context.Context, id building.ID, playerID player.ID, now time.Time) (building.Building, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, err
@@ -395,7 +399,7 @@ func (s *BuildingService) CompleteAt(ctx context.Context, id building.ID, player
 		return building.Building{}, err
 	}
 	s.log.Info("building.completed", "event", "building.completed", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: completionReason(item)})
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: completionReason(item)})
 	return item, nil
 }
 
@@ -410,7 +414,7 @@ func (s *BuildingService) Upgrade(ctx context.Context, id building.ID, playerID 
 	return s.UpgradeTo(ctx, id, playerID, "")
 }
 
-func (s *BuildingService) UpgradeTo(ctx context.Context, id building.ID, playerID player.ID, targetType building.Type) (building.Building, error) {
+func (s *BuildingService) upgradeTo(ctx context.Context, id building.ID, playerID player.ID, targetType building.Type) (building.Building, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, err
@@ -425,6 +429,11 @@ func (s *BuildingService) UpgradeTo(ctx context.Context, id building.ID, playerI
 	if !ok {
 		return building.Building{}, apperror.New(apperror.Validation, "building has no available upgrade for selected target")
 	}
+	duration, err := s.buffedDuration(ctx, playerID, next.BuildDuration, "build_speed")
+	if err != nil {
+		return building.Building{}, err
+	}
+	next.BuildDuration = duration
 	if err := s.spendCost(ctx, playerID, next.Cost, "building:upgrade:"+string(item.Type)); err != nil {
 		return building.Building{}, err
 	}
@@ -466,7 +475,9 @@ func (s *BuildingService) UpgradeTo(ctx context.Context, id building.ID, playerI
 		return building.Building{}, err
 	}
 	if item.CompletesAt != nil {
-		_ = s.scheduleCompletion(ctx, item)
+		if err := s.scheduleCompletion(ctx, item); err != nil {
+			return building.Building{}, err
+		}
 	} else if err := s.awardCompletionXP(ctx, item); err != nil {
 		return building.Building{}, err
 	}
@@ -475,11 +486,11 @@ func (s *BuildingService) UpgradeTo(ctx context.Context, id building.ID, playerI
 	if item.CompletesAt == nil {
 		reason = "upgrade_completed"
 	}
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: reason})
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: reason})
 	return item, nil
 }
 
-func (s *BuildingService) SetCannonEnabled(ctx context.Context, id building.ID, playerID player.ID, enabled bool) (building.Building, error) {
+func (s *BuildingService) setCannonEnabled(ctx context.Context, id building.ID, playerID player.ID, enabled bool) (building.Building, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, err
@@ -514,11 +525,11 @@ func (s *BuildingService) SetCannonEnabled(ctx context.Context, id building.ID, 
 			return building.Building{}, err
 		}
 	}
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item})
 	return item, nil
 }
 
-func (s *BuildingService) ReloadTrap(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
+func (s *BuildingService) reloadTrap(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, err
@@ -542,7 +553,7 @@ func (s *BuildingService) ReloadTrap(ctx context.Context, id building.ID, player
 		s.refundCost(ctx, playerID, stats.Reload, "trap:reload:refund:"+string(id))
 		return building.Building{}, err
 	}
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item})
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item})
 	return item, nil
 }
 
@@ -593,23 +604,25 @@ func toEconomyCost(cost []building.Cost) []economy.ResourceAmount {
 }
 
 func (s *BuildingService) existingBuildingsForFootprint(ctx context.Context, origin world.Coord, footprint building.Footprint) ([]building.Building, error) {
-	coords := placementFootprint(origin, footprint)
-	minX, minY, maxX, maxY := coords[0].X, coords[0].Y, coords[0].X, coords[0].Y
-	for _, coord := range coords {
-		if coord.X < minX {
-			minX = coord.X
-		}
-		if coord.Y < minY {
-			minY = coord.Y
-		}
-		if coord.X > maxX {
-			maxX = coord.X
-		}
-		if coord.Y > maxY {
-			maxY = coord.Y
+	origin = world.NormalizeCoord(origin)
+	items := []building.Building{}
+	seen := map[building.ID]bool{}
+	// Include mirrored rectangles to find footprints that straddle either seam.
+	for _, dx := range []int{-world.WorldSize, 0, world.WorldSize} {
+		for _, dy := range []int{-world.WorldSize, 0, world.WorldSize} {
+			found, err := s.buildings.ListIntersectingFootprint(ctx, DefaultWorldID, origin.X+dx, origin.Y+dy, origin.X+dx+max(1, footprint.Width)-1, origin.Y+dy+max(1, footprint.Height)-1)
+			if err != nil {
+				return nil, err
+			}
+			for _, b := range found {
+				if !seen[b.ID] {
+					seen[b.ID] = true
+					items = append(items, b)
+				}
+			}
 		}
 	}
-	return s.buildings.ListIntersectingFootprint(ctx, DefaultWorldID, minX, minY, maxX, maxY)
+	return items, nil
 }
 
 func (s *BuildingService) validateMonsterFree(ctx context.Context, origin world.Coord, footprint building.Footprint) error {
@@ -659,7 +672,7 @@ func buildingPopulation(item building.Building) int {
 	return spec.Population
 }
 
-func (s *BuildingService) Demolish(ctx context.Context, id building.ID, playerID player.ID) error {
+func (s *BuildingService) demolish(ctx context.Context, id building.ID, playerID player.ID) error {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return err
@@ -734,7 +747,7 @@ func (s *BuildingService) Demolish(ctx context.Context, id building.ID, playerID
 		}
 	}
 	s.log.Info("building.demolished", "event", "building.demolished", "building_id", item.ID, "building_type", item.Type, "player_id", playerID, "refund_coins", refundCoins, "population_returned", releasedPopulation)
-	s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "demolished"})
+	s.publish(ctx, EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "demolished"})
 	return nil
 }
 
@@ -744,6 +757,10 @@ func (s *BuildingService) awardCompletionXP(ctx context.Context, item building.B
 	}
 	reward := catalog.ExperienceForBuilding(item.Type, item.Level).Completion
 	key := fmt.Sprintf("building:%s:%s:%d:complete", item.ID, item.Type, item.Level)
+	// The free, instant starting hall must not become an unlimited XP loop.
+	if item.Type == building.TypeTownHall && item.Level == 1 {
+		key = fmt.Sprintf("player:%s:town_hall:first_complete", item.OwnerID)
+	}
 	return s.experience.Award(ctx, player.ID(item.OwnerID), reward, "building:complete", key)
 }
 
@@ -766,7 +783,7 @@ func (s *BuildingService) requireIdleBuilding(ctx context.Context, item building
 	return nil
 }
 
-func (s *BuildingService) Cancel(ctx context.Context, id building.ID, playerID player.ID) error {
+func (s *BuildingService) cancel(ctx context.Context, id building.ID, playerID player.ID) error {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return err
@@ -793,31 +810,8 @@ func (s *BuildingService) Cancel(ctx context.Context, id building.ID, playerID p
 		}
 	}
 	s.log.Info("building.cancelled", "event", "building.cancelled", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
-	s.publish(EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "cancelled"})
+	s.publish(ctx, EventBuildingRemoved, item, BuildingRemovedPayload{BuildingID: item.ID, Reason: "cancelled"})
 	return nil
-}
-
-func (s *BuildingService) Repair(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
-	item, err := s.requireOwned(ctx, id, playerID)
-	if err != nil {
-		return building.Building{}, err
-	}
-	if item.State != building.StateActive && item.State != building.StateDamaged {
-		return building.Building{}, apperror.New(apperror.Conflict, "ремонтировать можно только завершённую, не разрушенную постройку")
-	}
-	maxHealth := buildingHealthForLevel(item.Type, item.Level)
-	if item.Health >= maxHealth {
-		return building.Building{}, apperror.New(apperror.Conflict, "постройка не нуждается в ремонте")
-	}
-	item.Health = maxHealth
-	item.State = building.StateActive
-	item.UpdatedAt = s.now()
-	if err := s.buildings.Update(ctx, item); err != nil {
-		return building.Building{}, err
-	}
-	s.log.Info("building.repaired", "event", "building.repaired", "building_id", item.ID, "building_type", item.Type, "player_id", playerID)
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "repaired"})
-	return item, nil
 }
 
 func buildingHealthForLevel(kind building.Type, level int) int {
@@ -833,7 +827,8 @@ func buildingHealthForLevel(kind building.Type, level int) int {
 	return buildingHealth(spec)
 }
 
-func (s *BuildingService) Relocate(ctx context.Context, id building.ID, playerID player.ID, destination world.Coord, rotation int) (building.Building, error) {
+func (s *BuildingService) relocate(ctx context.Context, id building.ID, playerID player.ID, destination world.Coord, rotation int) (building.Building, error) {
+	destination = world.NormalizeCoord(destination)
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
 		return building.Building{}, err
@@ -895,18 +890,18 @@ func (s *BuildingService) Relocate(ctx context.Context, id building.ID, playerID
 		return building.Building{}, apperror.New(apperror.Conflict, "постройка или целевые клетки изменились; попробуйте ещё раз")
 	}
 	if s.events != nil && previous.Tile != item.Tile && world.ChunkForTile(previous.Tile) != world.ChunkForTile(item.Tile) {
-		s.events.Publish(Event{Type: EventBuildingRemoved, ChunkID: world.ChunkID(previous.MapID, world.ChunkForTile(previous.Tile)), PlayerID: playerID,
+		publishEvent(ctx, s.events, Event{Type: EventBuildingRemoved, ChunkID: world.ChunkID(previous.MapID, world.ChunkForTile(previous.Tile)), PlayerID: playerID,
 			Payload: BuildingRemovedPayload{BuildingID: item.ID, Reason: "moved"}})
 	}
-	s.publish(EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "relocated"})
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "relocated"})
 	return item, nil
 }
 
-func (s *BuildingService) publish(eventType EventType, item building.Building, payload any) {
+func (s *BuildingService) publish(ctx context.Context, eventType EventType, item building.Building, payload any) {
 	if s.events == nil {
 		return
 	}
-	s.events.Publish(Event{
+	publishEvent(ctx, s.events, Event{
 		Type:     eventType,
 		ChunkID:  world.ChunkID(item.MapID, world.ChunkForTile(item.Tile)),
 		PlayerID: player.ID(item.OwnerID),
@@ -1051,8 +1046,32 @@ func placementFootprint(origin world.Coord, footprint building.Footprint) []worl
 	tiles := make([]world.Coord, 0, width*height)
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
-			tiles = append(tiles, world.Coord{X: origin.X + x, Y: origin.Y + y})
+			tiles = append(tiles, world.NormalizeCoord(world.Coord{X: origin.X + x, Y: origin.Y + y}))
 		}
 	}
 	return tiles
+}
+
+func (s *BuildingService) SetAllianceBenefits(alliances *AllianceService) {
+	s.allianceBenefits = alliances
+}
+func (s *BuildingService) buffedDuration(ctx context.Context, p player.ID, d time.Duration, effect string) (time.Duration, error) {
+	if s.allianceBenefits == nil || d <= 0 {
+		return d, nil
+	}
+	percent, err := s.allianceBenefits.Percent(ctx, p, effect)
+	if err != nil {
+		return 0, err
+	}
+	return max(time.Second, d*time.Duration(100-percent)/100), nil
+}
+func (s *BuildingService) ProtectedDamage(ctx context.Context, p player.ID, damage int) (int, error) {
+	if s.allianceBenefits == nil || damage <= 0 {
+		return damage, nil
+	}
+	percent, err := s.allianceBenefits.Percent(ctx, p, "defense")
+	if err != nil {
+		return 0, err
+	}
+	return max(1, damage*(100-percent)/100), nil
 }

@@ -55,6 +55,7 @@ func (r *WorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, erro
 }
 
 func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (chunkResult world.Chunk, cached bool, resultErr error) {
+	coord = world.NormalizeChunk(coord)
 	started := time.Now()
 	defer func() { observability.ObserveWorld("world.get_or_create_chunk", started, resultErr) }()
 	if chunk, ok := r.cachedChunk(mapID, coord); ok {
@@ -75,6 +76,7 @@ func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord wo
 }
 
 func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) (result []world.Chunk, resultErr error) {
+	coords = world.UniqueChunks(coords)
 	started := time.Now()
 	defer func() { observability.ObserveWorld("world.get_or_create_chunks", started, resultErr) }()
 	if len(coords) == 0 {
@@ -125,6 +127,7 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 }
 
 func (r *WorldRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	coords = world.UniqueChunks(coords)
 	if len(coords) == 0 {
 		return []world.Chunk{}, nil
 	}
@@ -352,6 +355,8 @@ func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.C
 }
 
 func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) (resultErr error) {
+	tile.Coord = world.NormalizeCoord(tile.Coord)
+	tile.Chunk = world.ChunkForTile(tile.Coord)
 	defer observe("world.update_tile", time.Now(), &resultErr)
 	result, err := r.db.ExecContext(ctx, `
 		UPDATE world_tiles

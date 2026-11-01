@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -176,12 +178,34 @@ func (h *ChatHandler) List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	limit := queryLimit(r, 50)
-	items, err := h.service.List(r.Context(), playerID, chat.Channel(r.URL.Query().Get("channel")), limit)
+	if limit > 100 {
+		limit = 100
+	}
+	var cursor chat.Cursor
+	if raw := r.URL.Query().Get("before"); raw != "" {
+		data, err := base64.RawURLEncoding.DecodeString(raw)
+		if len(raw) > 512 || err != nil || json.Unmarshal(data, &cursor) != nil || cursor.ID == "" || cursor.CreatedAt.IsZero() {
+			writeError(w, apperror.New(apperror.Validation, "Некорректный курсор сообщений"))
+			return
+		}
+	}
+	items, err := h.service.List(r.Context(), playerID, chat.Channel(r.URL.Query().Get("channel")), limit, cursor)
 	if err != nil {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusOK, envelope{"messages": dto.ChatMessages(items)})
+	state, err := h.service.ReadState(r.Context(), playerID, chat.Channel(r.URL.Query().Get("channel")))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	next := ""
+	if len(items) == limit && len(items) > 0 {
+		last := items[len(items)-1]
+		data, _ := json.Marshal(chat.Cursor{CreatedAt: last.CreatedAt, ID: last.ID})
+		next = base64.RawURLEncoding.EncodeToString(data)
+	}
+	writeJSON(w, http.StatusOK, envelope{"messages": dto.ChatMessages(items), "read_state": state, "next_cursor": next})
 }
 
 func (h *ChatHandler) Send(w http.ResponseWriter, r *http.Request) {
@@ -268,4 +292,82 @@ func queryLimit(r *http.Request, fallback int) int {
 		return 200
 	}
 	return value
+}
+
+func (h *AllianceHandler) Leave(w http.ResponseWriter, r *http.Request) {
+	p, ok := requirePlayerID(w, r)
+	if !ok {
+		return
+	}
+	if err := h.service.Leave(r.Context(), p); err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"left": true})
+}
+func (h *AllianceHandler) Kick(w http.ResponseWriter, r *http.Request) {
+	p, ok := requirePlayerID(w, r)
+	if !ok {
+		return
+	}
+	if err := h.service.Kick(r.Context(), p, player.ID(r.PathValue("id"))); err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"removed": true})
+}
+
+func (h *ChatHandler) MarkRead(w http.ResponseWriter, r *http.Request) {
+	p, ok := requirePlayerID(w, r)
+	if !ok {
+		return
+	}
+	var req struct {
+		Channel   chat.Channel   `json:"channel"`
+		MessageID chat.MessageID `json:"message_id"`
+	}
+	if err := decodeJSON(r, &req); err != nil {
+		writeError(w, err)
+		return
+	}
+	state, err := h.service.MarkRead(r.Context(), p, req.Channel, req.MessageID)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"read_state": state})
+}
+
+func (h *AllianceHandler) TransferLeadership(w http.ResponseWriter, r *http.Request) {
+	p, ok := requirePlayerID(w, r)
+	if !ok {
+		return
+	}
+	if err := h.service.TransferLeadership(r.Context(), p, player.ID(r.PathValue("id"))); err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"transferred": true})
+}
+
+func (h *AllianceHandler) SpendTreasury(w http.ResponseWriter, r *http.Request) {
+	p, ok := requirePlayerID(w, r)
+	if !ok {
+		return
+	}
+	var req struct {
+		Recipient player.ID            `json:"recipient"`
+		Resource  economy.ResourceType `json:"resource"`
+		Amount    int                  `json:"amount"`
+	}
+	if err := decodeJSON(r, &req); err != nil {
+		writeError(w, err)
+		return
+	}
+	profile, err := h.service.SpendTreasury(r.Context(), p, req.Recipient, req.Resource, req.Amount)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"profile": dto.AllianceProfile(profile)})
 }

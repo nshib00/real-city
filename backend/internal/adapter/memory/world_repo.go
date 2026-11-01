@@ -38,6 +38,7 @@ func (r *WorldRepo) GetMap(ctx context.Context, id string) (world.WorldMap, erro
 }
 
 func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, bool, error) {
+	coord = world.NormalizeChunk(coord)
 	_ = ctx
 	key := world.ChunkID(mapID, coord)
 	r.mu.RLock()
@@ -61,6 +62,7 @@ func (r *WorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord wo
 }
 
 func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	coords = world.UniqueChunks(coords)
 	chunks := make([]world.Chunk, 0, len(coords))
 	for _, coord := range coords {
 		chunk, _, err := r.GetOrCreateChunk(ctx, mapID, coord)
@@ -73,10 +75,13 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 }
 
 func (r *WorldRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, coords []world.ChunkCoord) ([]world.Chunk, error) {
+	coords = world.UniqueChunks(coords)
 	return r.GetOrCreateChunks(ctx, mapID, coords)
 }
 
 func (r *WorldRepo) UpdateTile(ctx context.Context, tile world.Tile) error {
+	tile.Coord = world.NormalizeCoord(tile.Coord)
+	tile.Chunk = world.ChunkForTile(tile.Coord)
 	_ = ctx
 	key := world.ChunkID(tile.MapID, tile.Chunk)
 	r.mu.Lock()

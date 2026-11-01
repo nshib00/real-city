@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 	"math/rand"
+	"sort"
 	"time"
 
 	"real-city/backend/internal/domain/catalog"
@@ -50,29 +51,43 @@ func (s *MonsterService) List(ctx context.Context, center world.Coord, radius in
 	if radius <= 0 {
 		radius = 24
 	}
-	items, err := s.repo.ListByMap(ctx, DefaultWorldID)
-	if err != nil {
-		return nil, err
-	}
-	visible := make([]monster.Monster, 0, len(items))
-	for _, item := range items {
-		if wrappedTileDistance(item.Tile.X, center.X) <= radius && wrappedTileDistance(item.Tile.Y, center.Y) <= radius {
-			visible = append(visible, item)
+	center = world.NormalizeCoord(center)
+	visible := make([]monster.Monster, 0)
+	seen := make(map[monster.ID]bool)
+	for _, x := range wrappedMonsterRanges(center.X, radius) {
+		for _, y := range wrappedMonsterRanges(center.Y, radius) {
+			items, err := s.repo.ListByViewport(ctx, DefaultWorldID, x[0], y[0], x[1], y[1])
+			if err != nil {
+				return nil, err
+			}
+			for _, item := range items {
+				if !seen[item.ID] && wrappedTileDistance(item.Tile.X, center.X) <= radius && wrappedTileDistance(item.Tile.Y, center.Y) <= radius {
+					visible = append(visible, item)
+					seen[item.ID] = true
+				}
+			}
 		}
 	}
+	sort.Slice(visible, func(i, j int) bool { return visible[i].ID < visible[j].ID })
 	return visible, nil
 }
 
-func wrappedTileDistance(left, right int) int {
-	distance := (left - right) % worldgen.WorldSizeTiles
-	if distance < 0 {
-		distance += worldgen.WorldSizeTiles
+func wrappedMonsterRanges(center, radius int) [][2]int {
+	if radius >= world.WorldSize/2 {
+		return [][2]int{{-world.WorldSize, world.WorldSize*2 - 1}}
 	}
-	if distance > worldgen.WorldSizeTiles/2 {
-		distance = worldgen.WorldSizeTiles - distance
+	low, high := center-radius, center+radius
+	ranges := [][2]int{{low, high}}
+	if low < 0 {
+		ranges = append(ranges, [2]int{low + world.WorldSize, high + world.WorldSize})
 	}
-	return distance
+	if high >= world.WorldSize {
+		ranges = append(ranges, [2]int{low - world.WorldSize, high - world.WorldSize})
+	}
+	return ranges
 }
+
+func wrappedTileDistance(left, right int) int { return world.WrappedDistance(left, right) }
 
 func (s *MonsterService) Get(ctx context.Context, id monster.ID) (monster.Monster, error) {
 	return s.repo.FindByID(ctx, id)
@@ -121,7 +136,7 @@ func (s *MonsterService) Damage(ctx context.Context, id monster.ID, playerID pla
 		if err := s.scheduleSpawnAfterDeath(ctx, item, now); err != nil {
 			return monster.Monster{}, nil, err
 		}
-		if s.experience != nil {
+		if s.experience != nil && item.CreatorID == "" {
 			spec, ok := catalog.MonsterSpec(item.Type)
 			if ok {
 				key := "monster:" + string(item.ID) + ":kill"
@@ -290,6 +305,9 @@ func (s *MonsterService) publishLoot(eventType EventType, item monster.LootDrop,
 }
 
 func LootForMonster(item monster.Monster) []economy.ResourceAmount {
+	if item.CreatorID != "" {
+		return nil
+	}
 	switch item.Type {
 	case monster.TypeRoamingMelee:
 		return rollLoot(roamingMeleeLootOptions)

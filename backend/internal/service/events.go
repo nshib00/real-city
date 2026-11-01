@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/chat"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
@@ -116,3 +117,5 @@ type DefenseTriggeredPayload struct {
 	TileX        int    `json:"tile_x"`
 	TileY        int    `json:"tile_y"`
 }
+
+type ChatMessagePayload struct{ Message chat.Message }

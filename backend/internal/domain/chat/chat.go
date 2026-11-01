@@ -27,6 +27,22 @@ type Message struct {
 	Body       string
 	Flagged    bool
 	CreatedAt  time.Time
+	// Nearby messages are private to the server-calculated audience at send time.
+	Audience []player.ID
+}
+
+type Cursor struct {
+	CreatedAt time.Time `json:"created_at"`
+	ID        MessageID `json:"id"`
+}
+
+type ModerationAudit struct {
+	ID        string    `json:"id"`
+	ActorID   player.ID `json:"actor_id"`
+	MessageID MessageID `json:"message_id"`
+	Action    string    `json:"action"`
+	Reason    string    `json:"reason"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 func NormalizeBody(body string) string {

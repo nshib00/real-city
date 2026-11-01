@@ -8,6 +8,8 @@ import (
 )
 
 type MonsterResponse struct {
+	CreatorID   string    `json:"creator_id,omitempty"`
+	ExpiresAt   time.Time `json:"expires_at,omitempty"`
 	ID          string    `json:"id"`
 	Type        string    `json:"type"`
 	State       string    `json:"state"`
@@ -57,7 +59,7 @@ type MonsterAttackResponse struct {
 
 func Monster(item monster.Monster) MonsterResponse {
 	return MonsterResponse{
-		ID: string(item.ID), Type: string(item.Type), State: string(item.State), TileX: item.Tile.X, TileY: item.Tile.Y,
+		CreatorID: item.CreatorID, ExpiresAt: item.ExpiresAt, ID: string(item.ID), Type: string(item.Type), State: string(item.State), TileX: item.Tile.X, TileY: item.Tile.Y,
 		TargetID: item.TargetID, TargetType: item.TargetType, Health: item.Health, MaxHealth: item.MaxHealth,
 		Damage: item.Damage, AggroRadius: item.AggroRadius, UpdatedAt: item.UpdatedAt,
 	}

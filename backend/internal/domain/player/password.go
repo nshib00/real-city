@@ -3,8 +3,9 @@ package player
 import (
 	"unicode"
 
-	"golang.org/x/crypto/bcrypt"
 	"real-city/backend/pkg/apperror"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 const (

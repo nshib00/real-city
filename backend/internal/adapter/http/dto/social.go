@@ -5,6 +5,7 @@ import (
 
 	"real-city/backend/internal/domain/alliance"
 	"real-city/backend/internal/domain/chat"
+	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/market"
 	"real-city/backend/internal/service"
 )
@@ -61,13 +62,14 @@ type TerritoryAidResponse struct {
 }
 
 type AllianceProfileResponse struct {
-	Alliance *AllianceResponse        `json:"alliance"`
-	Self     *AllianceMemberResponse  `json:"self"`
-	Members  []AllianceMemberResponse `json:"members"`
-	Invites  []AllianceInviteResponse `json:"invites"`
-	Treasury []TreasuryEntryResponse  `json:"treasury"`
-	Buffs    []AllianceBuffResponse   `json:"buffs"`
-	Aid      []TerritoryAidResponse   `json:"aid"`
+	Alliance *AllianceResponse            `json:"alliance"`
+	Self     *AllianceMemberResponse      `json:"self"`
+	Members  []AllianceMemberResponse     `json:"members"`
+	Invites  []AllianceInviteResponse     `json:"invites"`
+	Balance  map[economy.ResourceType]int `json:"balance"`
+	Treasury []TreasuryEntryResponse      `json:"treasury"`
+	Buffs    []AllianceBuffResponse       `json:"buffs"`
+	Aid      []TerritoryAidResponse       `json:"aid"`
 }
 
 type CreateAllianceRequest struct {
@@ -120,16 +122,17 @@ type SendChatMessageRequest struct {
 }
 
 type MarketOrderResponse struct {
-	ID        string    `json:"id"`
-	PlayerID  string    `json:"player_id"`
-	Side      string    `json:"side"`
-	Resource  string    `json:"resource"`
-	Amount    int       `json:"amount"`
-	Price     int       `json:"price"`
-	Fee       int       `json:"fee"`
-	Status    string    `json:"status"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	FilledAmount int       `json:"filled_amount"`
+	ID           string    `json:"id"`
+	PlayerID     string    `json:"player_id"`
+	Side         string    `json:"side"`
+	Resource     string    `json:"resource"`
+	Amount       int       `json:"amount"`
+	Price        int       `json:"price"`
+	Fee          int       `json:"fee"`
+	Status       string    `json:"status"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
 }
 
 type CreateMarketOrderRequest struct {
@@ -141,6 +144,7 @@ type CreateMarketOrderRequest struct {
 
 func AllianceProfile(item service.AllianceProfile) AllianceProfileResponse {
 	response := AllianceProfileResponse{
+		Balance:  item.Balance,
 		Members:  AllianceMembers(item.Members),
 		Invites:  AllianceInvites(item.Invites),
 		Treasury: TreasuryEntries(item.Treasury),
@@ -209,6 +213,9 @@ func TerritoryAidItems(items []alliance.TerritoryAid) []TerritoryAidResponse {
 }
 
 func ChatMessage(item chat.Message) ChatMessageResponse {
+	if item.Flagged {
+		item.Body = ""
+	}
 	return ChatMessageResponse{ID: string(item.ID), Channel: string(item.Channel), AuthorID: string(item.AuthorID), AllianceID: string(item.AllianceID), Recipient: string(item.Recipient), Body: item.Body, Flagged: item.Flagged, CreatedAt: item.CreatedAt}
 }
 
@@ -221,7 +228,7 @@ func ChatMessages(items []chat.Message) []ChatMessageResponse {
 }
 
 func MarketOrder(item market.Order) MarketOrderResponse {
-	return MarketOrderResponse{ID: string(item.ID), PlayerID: string(item.PlayerID), Side: string(item.Side), Resource: string(item.Resource), Amount: item.Amount, Price: item.Price, Fee: item.Fee, Status: string(item.Status), CreatedAt: item.CreatedAt, UpdatedAt: item.UpdatedAt}
+	return MarketOrderResponse{FilledAmount: item.FilledAmount, ID: string(item.ID), PlayerID: string(item.PlayerID), Side: string(item.Side), Resource: string(item.Resource), Amount: item.Amount, Price: item.Price, Fee: item.Fee, Status: string(item.Status), CreatedAt: item.CreatedAt, UpdatedAt: item.UpdatedAt}
 }
 
 func MarketOrders(items []market.Order) []MarketOrderResponse {

@@ -26,6 +26,7 @@ type ProductionService struct {
 	experience *ExperienceService
 	resources  *ResourceService
 	randFloat  func() float64
+	uow        UnitOfWork
 }
 
 func NewProductionService(repo EconomyRepository, economyService *EconomyService, log *slog.Logger) *ProductionService {
@@ -64,7 +65,7 @@ func (s *ProductionService) Recipes(ctx context.Context) ([]economy.ProductionRe
 			continue
 		}
 		if catalog.IsIndustryLevelRecipe(recipe.ID) {
-			for level := 1; level <= 10; level++ {
+			for level := 1; level <= catalog.IndustryRecipeLevels(recipe.ID); level++ {
 				levelRecipe, _ := catalog.RecipeForBuildingLevel(recipe.ID, level)
 				recipes = append(recipes, levelRecipe)
 			}
@@ -93,7 +94,7 @@ func (s *ProductionService) List(ctx context.Context, playerID player.ID) ([]eco
 	return s.repo.ListProductionJobs(ctx, playerID)
 }
 
-func (s *ProductionService) Start(ctx context.Context, playerID player.ID, buildingID string, recipeID string) (economy.ProductionJob, economy.Inventory, error) {
+func (s *ProductionService) start(ctx context.Context, playerID player.ID, buildingID string, recipeID string) (economy.ProductionJob, economy.Inventory, error) {
 	recipe, ok := catalog.RecipeByID(recipeID)
 	if !ok {
 		return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.NotFound, "production recipe not found")
@@ -106,7 +107,7 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 		if item.OwnerID != string(playerID) {
 			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Forbidden, "building belongs to another player")
 		}
-		if item.State != building.StateActive {
+		if item.State != building.StateActive || item.Health <= 0 {
 			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "building is not active")
 		}
 		if string(item.Type) != recipe.BuildingType {
@@ -144,7 +145,7 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 	}
 	now := s.now()
 	job := economy.ProductionJob{
-		ID:          economy.ProductionJobID(fmt.Sprintf("job_%d_%s", now.UnixNano(), recipe.ID)),
+		ID:          economy.ProductionJobID(newID("job")),
 		PlayerID:    string(playerID),
 		BuildingID:  buildingID,
 		RecipeID:    recipe.ID,
@@ -159,7 +160,9 @@ func (s *ProductionService) Start(ctx context.Context, playerID player.ID, build
 		_, _, _ = s.economy.Add(ctx, playerID, economy.WithFuelCost(recipe.Input, recipe), "production:refund:"+recipe.ID)
 		return economy.ProductionJob{}, economy.Inventory{}, err
 	}
-	_ = s.scheduleCompletion(ctx, job)
+	if err := s.scheduleCompletion(ctx, job); err != nil {
+		return economy.ProductionJob{}, economy.Inventory{}, err
+	}
 	s.log.Info("economy.production.started", "event", "economy.production.started", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID)
 	return job, inventory, nil
 }
@@ -184,7 +187,7 @@ func (s *ProductionService) Complete(ctx context.Context, playerID player.ID, id
 	return s.CompleteAt(ctx, playerID, id, s.now())
 }
 
-func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, economy.Inventory, error) {
+func (s *ProductionService) completeAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, economy.Inventory, error) {
 	job, err := s.repo.FindProductionJob(ctx, id)
 	if err != nil {
 		return economy.ProductionJob{}, economy.Inventory{}, err
@@ -209,6 +212,9 @@ func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, 
 	var completionBuilding *building.Building
 	if s.buildings != nil {
 		item, err := s.buildings.FindByID(ctx, building.ID(job.BuildingID))
+		if err != nil || item.OwnerID != string(playerID) || item.Health <= 0 || item.State == building.StateRuined || string(item.Type) != recipe.BuildingType {
+			return economy.ProductionJob{}, economy.Inventory{}, apperror.New(apperror.Conflict, "Постройка больше не может выдать продукцию")
+		}
 		if err == nil && string(item.Type) == recipe.BuildingType {
 			recipe, _ = catalog.RecipeForBuildingLevel(job.RecipeID, item.Level)
 			completionBuilding = &item
@@ -257,7 +263,7 @@ func (s *ProductionService) CompleteAt(ctx context.Context, playerID player.ID, 
 			return economy.ProductionJob{}, economy.Inventory{}, err
 		}
 	}
-	s.publish(job, inventory)
+	s.publish(ctx, job, inventory)
 	s.log.Info("economy.production.completed", "event", "economy.production.completed", "player_id", playerID, "job_id", job.ID, "recipe_id", recipe.ID, "output", output, "rare_output", rareOutput, "rare_chances", recipe.RareOutput)
 	return job, inventory, nil
 }
@@ -271,15 +277,26 @@ func (s *ProductionService) rollRareOutput(recipe economy.ProductionRecipe) []ec
 		roll = rand.Float64
 	}
 	output := make([]economy.ResourceAmount, 0, len(recipe.RareOutput))
+	draws := map[economy.ResourceType]float64{}
+	thresholds := map[economy.ResourceType]float64{}
+	awarded := map[economy.ResourceType]bool{}
 	for _, item := range recipe.RareOutput {
-		if item.Amount > 0 && item.Chance > 0 && roll() < item.Chance {
+		if item.Amount <= 0 || item.Chance <= 0 {
+			continue
+		}
+		if _, ok := draws[item.Resource]; !ok {
+			draws[item.Resource] = roll()
+		}
+		thresholds[item.Resource] += item.Chance
+		if !awarded[item.Resource] && draws[item.Resource] < thresholds[item.Resource] {
 			output = append(output, economy.ResourceAmount{Resource: item.Resource, Amount: item.Amount})
+			awarded[item.Resource] = true
 		}
 	}
 	return output
 }
 
-func (s *ProductionService) ReadyAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, error) {
+func (s *ProductionService) readyAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, error) {
 	job, err := s.repo.FindProductionJob(ctx, id)
 	if err != nil {
 		return economy.ProductionJob{}, err
@@ -287,7 +304,7 @@ func (s *ProductionService) ReadyAt(ctx context.Context, playerID player.ID, id 
 	if job.PlayerID != string(playerID) {
 		return economy.ProductionJob{}, apperror.New(apperror.Forbidden, "production job belongs to another player")
 	}
-	if job.State == economy.ProductionReady || job.State == economy.ProductionCompleted {
+	if job.State == economy.ProductionReady || job.State == economy.ProductionCompleted || job.State == economy.ProductionCancelled {
 		return job, nil
 	}
 	if job.State != economy.ProductionRunning {
@@ -340,7 +357,7 @@ func (s *ProductionService) CompleteDue(ctx context.Context, now time.Time, limi
 	return completed, nil
 }
 
-func (s *ProductionService) Cancel(ctx context.Context, playerID player.ID, id economy.ProductionJobID) (economy.ProductionJob, error) {
+func (s *ProductionService) cancel(ctx context.Context, playerID player.ID, id economy.ProductionJobID) (economy.ProductionJob, error) {
 	job, err := s.repo.FindProductionJob(ctx, id)
 	if err != nil {
 		return economy.ProductionJob{}, err
@@ -398,11 +415,11 @@ func (s *ProductionService) recipeForJob(ctx context.Context, job economy.Produc
 	return recipe, true
 }
 
-func (s *ProductionService) publish(job economy.ProductionJob, inventory economy.Inventory) {
+func (s *ProductionService) publish(ctx context.Context, job economy.ProductionJob, inventory economy.Inventory) {
 	if s.events == nil {
 		return
 	}
-	s.events.Publish(Event{
+	publishEvent(ctx, s.events, Event{
 		Type:     EventProductionDone,
 		PlayerID: player.ID(job.PlayerID),
 		Payload:  ProductionPayload{Job: job, Inventory: inventory},

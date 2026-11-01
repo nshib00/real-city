@@ -21,6 +21,98 @@ type uniqueMonsterEventRepo struct {
 	eventIDs map[string]bool
 }
 
+func TestCannonSelectsVisibleTargetAroundConstruction(t *testing.T) {
+	for _, tc := range []struct {
+		name     string
+		state    building.State
+		mountain bool
+	}{
+		{"construction", building.StateBuilding, false},
+		{"active wall", building.StateActive, false},
+		{"ruined wall", building.StateRuined, false},
+		{"mountain behind ruined wall", building.StateRuined, true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			state := tc.state
+			ctx := context.Background()
+			now := time.Date(2026, 10, 31, 12, 0, 0, 0, time.UTC)
+			log := slog.New(slog.NewTextHandler(io.Discard, nil))
+			buildings, monsters, inventory := memory.NewBuildingRepo(), memory.NewMonsterRepo(), memory.NewEconomyRepo()
+			worlds := memory.NewWorldRepo()
+			// Reproduce the test world's cannon (6,137), wall (8,136), monster (9,135).
+			for _, coord := range []world.Coord{{X: 7, Y: 136}, {X: 8, Y: 136}, {X: 6, Y: 138}, {X: 6, Y: 139}, {X: 6, Y: 140}} {
+				chunk, _, err := worlds.GetOrCreateChunk(ctx, DefaultWorldID, world.ChunkForTile(coord))
+				if err != nil {
+					t.Fatal(err)
+				}
+				for _, tile := range chunk.Tiles {
+					if tile.Coord == coord {
+						tile.Terrain = world.TerrainGrass
+						if tc.mountain && coord == (world.Coord{X: 7, Y: 136}) {
+							tile.Terrain = world.TerrainMountain
+						}
+						if err := worlds.UpdateTile(ctx, tile); err != nil {
+							t.Fatal(err)
+						}
+					}
+				}
+			}
+			for _, item := range []building.Building{
+				{ID: "cannon", MapID: DefaultWorldID, OwnerID: "owner", Type: building.TypeDefenseCannon, Level: 6, Health: 650, State: building.StateActive, Tile: world.Coord{X: 6, Y: 137}, Footprint: building.Footprint{Width: 1, Height: 1}, CannonEnabled: true},
+				{ID: "wall", MapID: DefaultWorldID, Type: building.TypeModernWall, State: state, Tile: world.Coord{X: 8, Y: 136}, Footprint: building.Footprint{Width: 1, Height: 1}},
+			} {
+				if err := buildings.Create(ctx, item); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if err := monsters.Create(ctx, monster.Monster{ID: "blocked", MapID: DefaultWorldID, Type: monster.TypeRoamingMelee, State: monster.StateIdle, Tile: world.Coord{X: 9, Y: 135}, Health: 640, MaxHealth: 640}); err != nil {
+				t.Fatal(err)
+			}
+			stock, err := inventory.GetInventory(ctx, "owner", 10000)
+			if err != nil {
+				t.Fatal(err)
+			}
+			stock.Items[economy.ResourceStone] = 2
+			if err := inventory.SaveInventory(ctx, stock); err != nil {
+				t.Fatal(err)
+			}
+			svc := NewCannonService(buildings, monsters, inventory, worlds, nil, NewMonsterService(monsters, log), nil, nil, log)
+			fired, err := svc.Tick(ctx, now, 10)
+			want := 0
+			if state == building.StateRuined && !tc.mountain {
+				want = 1
+			}
+			if err != nil || fired != want {
+				t.Fatalf("blocked shot: fired=%d want=%d err=%v", fired, want, err)
+			}
+			stock, err = inventory.GetInventory(ctx, "owner", 10000)
+			if err != nil || stock.Items[economy.ResourceStone] != 2-want {
+				t.Fatalf("ammo=%v err=%v", stock.Items, err)
+			}
+			cannon, err := buildings.FindByID(ctx, "cannon")
+			if err != nil {
+				t.Fatal(err)
+			}
+			if want == 0 && cannon.CannonNextAttackAt != nil {
+				t.Fatal("blocked shot started cooldown")
+			}
+			if want == 0 {
+				if err := monsters.Create(ctx, monster.Monster{ID: "visible", MapID: DefaultWorldID, Type: monster.TypeRoamingMelee, State: monster.StateIdle, Tile: world.Coord{X: 6, Y: 141}, Health: 640, MaxHealth: 640}); err != nil {
+					t.Fatal(err)
+				}
+				fired, err = svc.Tick(ctx, now, 10)
+				if err != nil || fired != 1 {
+					t.Fatalf("visible alternative: fired=%d err=%v", fired, err)
+				}
+				cannon, _ = buildings.FindByID(ctx, "cannon")
+				if cannon.CannonTargetID != "visible" {
+					t.Fatalf("target=%s", cannon.CannonTargetID)
+				}
+			}
+		})
+	}
+}
+
 func (r *uniqueMonsterEventRepo) AddEvent(ctx context.Context, event monster.Event) error {
 	if r.eventIDs[event.ID] {
 		return errors.New("duplicate monster event ID")

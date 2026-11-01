@@ -12,11 +12,13 @@ import (
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/pkg/apperror"
+	"real-city/backend/pkg/memorytx"
 )
 
 type MonsterRepo struct {
 	mu     sync.RWMutex
 	items  map[monster.ID]monster.Monster
+	nextAI map[monster.ID]time.Time
 	spawns map[monster.SpawnID]monster.SpawnPoint
 	loot   map[monster.LootDropID]monster.LootDrop
 	events []monster.Event
@@ -42,6 +44,7 @@ func NewMonsterRepo() *MonsterRepo {
 	}
 	return &MonsterRepo{
 		items: items,
+		nextAI: make(map[monster.ID]time.Time),
 		spawns: map[monster.SpawnID]monster.SpawnPoint{
 			"spawn_roamers": {ID: "spawn_roamers", MapID: "dev-world", Type: monster.TypeRoamingMelee, Tile: world.Coord{X: 6, Y: -7}, Radius: 8, MaxAlive: 4, Cooldown: 10 * time.Minute, NextSpawnAt: now.Add(2 * time.Minute), CreatedAt: now, UpdatedAt: now},
 			"spawn_ruins":   {ID: "spawn_ruins", MapID: "dev-world", Type: monster.TypeRuinsGuardian, Tile: world.Coord{X: -8, Y: 12}, Radius: 4, MaxAlive: 2, Cooldown: 18 * time.Minute, NextSpawnAt: now.Add(4 * time.Minute), CreatedAt: now, UpdatedAt: now},
@@ -51,14 +54,19 @@ func NewMonsterRepo() *MonsterRepo {
 }
 
 func (r *MonsterRepo) Create(ctx context.Context, item monster.Monster) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.items[item.ID] = item
+	delete(r.nextAI, item.ID)
 	return nil
 }
 
 func (r *MonsterRepo) FindByID(ctx context.Context, id monster.ID) (monster.Monster, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -70,6 +78,8 @@ func (r *MonsterRepo) FindByID(ctx context.Context, id monster.ID) (monster.Mons
 }
 
 func (r *MonsterRepo) ListByMap(ctx context.Context, mapID string) ([]monster.Monster, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -83,24 +93,47 @@ func (r *MonsterRepo) ListByMap(ctx context.Context, mapID string) ([]monster.Mo
 	return items, nil
 }
 
-func (r *MonsterRepo) ListActiveForTick(ctx context.Context, mapID string, limit int) ([]monster.Monster, error) {
+func (r *MonsterRepo) ListActiveForTick(ctx context.Context, mapID string, now time.Time, limit int) ([]monster.Monster, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	items, err := r.ListByMap(ctx, mapID)
 	if err != nil {
 		return nil, err
 	}
-	sort.Slice(items, func(i, j int) bool {
-		if items[i].UpdatedAt.Equal(items[j].UpdatedAt) {
-			return items[i].ID < items[j].ID
+	eligible := items[:0]
+	r.mu.RLock()
+	for _, item := range items {
+		due := r.nextAI[item.ID]
+		if due.IsZero() {
+			due = item.UpdatedAt
 		}
-		return items[i].UpdatedAt.Before(items[j].UpdatedAt)
-	})
-	if limit > 0 && len(items) > limit {
-		items = items[:limit]
+		if !due.After(now) {
+			eligible = append(eligible, item)
+		}
 	}
-	return items, nil
+	sort.Slice(eligible, func(i, j int) bool {
+		left, right := r.nextAI[eligible[i].ID], r.nextAI[eligible[j].ID]
+		if left.IsZero() {
+			left = eligible[i].UpdatedAt
+		}
+		if right.IsZero() {
+			right = eligible[j].UpdatedAt
+		}
+		if left.Equal(right) {
+			return eligible[i].ID < eligible[j].ID
+		}
+		return left.Before(right)
+	})
+	r.mu.RUnlock()
+	if limit > 0 && len(eligible) > limit {
+		eligible = eligible[:limit]
+	}
+	return eligible, nil
 }
 
 func (r *MonsterRepo) ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.Monster, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	items, err := r.ListByMap(ctx, mapID)
 	if err != nil {
 		return nil, err
@@ -115,14 +148,19 @@ func (r *MonsterRepo) ListByViewport(ctx context.Context, mapID string, minX, mi
 }
 
 func (r *MonsterRepo) Update(ctx context.Context, item monster.Monster) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.items[item.ID] = item
+	delete(r.nextAI, item.ID)
 	return nil
 }
 
 func (r *MonsterRepo) UpdateIfCurrent(ctx context.Context, previous, next monster.Monster) (bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -131,10 +169,20 @@ func (r *MonsterRepo) UpdateIfCurrent(ctx context.Context, previous, next monste
 		return false, nil
 	}
 	r.items[previous.ID] = next
+	r.nextAI[previous.ID] = nextMonsterAIAt(next)
 	return true, nil
 }
 
+func nextMonsterAIAt(next monster.Monster) time.Time {
+	if next.State == monster.StateWandering && next.TargetID == "" {
+		return next.UpdatedAt.Add(2 * time.Second)
+	}
+	return next.UpdatedAt.Add(time.Second)
+}
+
 func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (map[monster.SpawnID]int, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -148,6 +196,8 @@ func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (map[
 }
 
 func (r *MonsterRepo) ListSpawnPoints(ctx context.Context, mapID string) ([]monster.SpawnPoint, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -161,6 +211,8 @@ func (r *MonsterRepo) ListSpawnPoints(ctx context.Context, mapID string) ([]mons
 }
 
 func (r *MonsterRepo) SaveSpawnPoint(ctx context.Context, item monster.SpawnPoint) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -169,6 +221,8 @@ func (r *MonsterRepo) SaveSpawnPoint(ctx context.Context, item monster.SpawnPoin
 }
 
 func (r *MonsterRepo) CreateLootDrop(ctx context.Context, item monster.LootDrop) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -180,6 +234,8 @@ func (r *MonsterRepo) CreateLootDrop(ctx context.Context, item monster.LootDrop)
 }
 
 func (r *MonsterRepo) FindLootDrop(ctx context.Context, id monster.LootDropID) (monster.LootDrop, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -191,6 +247,8 @@ func (r *MonsterRepo) FindLootDrop(ctx context.Context, id monster.LootDropID) (
 }
 
 func (r *MonsterRepo) ListLootDropsByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.LootDrop, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -205,6 +263,8 @@ func (r *MonsterRepo) ListLootDropsByViewport(ctx context.Context, mapID string,
 }
 
 func (r *MonsterRepo) ClaimLootDrop(ctx context.Context, id monster.LootDropID, playerID player.ID, now time.Time) (monster.LootDrop, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -222,6 +282,8 @@ func (r *MonsterRepo) ClaimLootDrop(ctx context.Context, id monster.LootDropID, 
 }
 
 func (r *MonsterRepo) AddEvent(ctx context.Context, item monster.Event) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()

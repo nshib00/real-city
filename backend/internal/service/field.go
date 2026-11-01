@@ -68,7 +68,7 @@ func (s *FieldService) AdvanceWindleaf(ctx context.Context, playerID player.ID, 
 	return s.AdvanceField(ctx, playerID, id)
 }
 
-func (s *FieldService) AdvanceField(ctx context.Context, playerID player.ID, id building.ID) (building.Building, economy.Inventory, error) {
+func (s *FieldService) advanceField(ctx context.Context, playerID player.ID, id building.ID) (building.Building, economy.Inventory, error) {
 	item, err := s.requireField(ctx, playerID, id)
 	if err != nil {
 		return building.Building{}, economy.Inventory{}, err
@@ -134,7 +134,7 @@ func (s *FieldService) HarvestWindleaf(ctx context.Context, playerID player.ID, 
 	return s.HarvestField(ctx, playerID, id)
 }
 
-func (s *FieldService) HarvestField(ctx context.Context, playerID player.ID, id building.ID) (building.Building, economy.Inventory, error) {
+func (s *FieldService) harvestField(ctx context.Context, playerID player.ID, id building.ID) (building.Building, economy.Inventory, error) {
 	item, err := s.requireField(ctx, playerID, id)
 	if err != nil {
 		return building.Building{}, economy.Inventory{}, err

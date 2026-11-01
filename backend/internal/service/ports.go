@@ -25,6 +25,7 @@ type PlayerRepository interface {
 	UpdateProfile(ctx context.Context, id player.ID, profile player.Profile) (player.Player, error)
 	UpdateProgress(ctx context.Context, id player.ID, xp int, level int) (player.Player, error)
 	AwardXPEvent(ctx context.Context, id player.ID, amount int, reason string, eventKey string) (bool, error)
+	XPEventAmount(ctx context.Context, id player.ID, eventKey string) (int, error)
 	UpdatePasswordHash(ctx context.Context, id player.ID, passwordHash string) error
 	Delete(ctx context.Context, id player.ID) error
 }
@@ -58,7 +59,7 @@ type BuildingRepository interface {
 	ListReadyCannons(ctx context.Context, mapID string, now time.Time, afterID building.ID, limit int) ([]building.Building, error)
 	ClaimCannonShot(ctx context.Context, id building.ID, now, next time.Time, targetID string, expectedHealth int) (bool, error)
 	ConsumeTrapCharge(ctx context.Context, id building.ID, expectedHealth int) (bool, error)
-	DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time) (building.Building, bool, error)
+	DamageIfCurrent(ctx context.Context, id building.ID, expectedHealth, damage int, now time.Time, expectedOwner ...string) (building.Building, bool, error)
 	Update(ctx context.Context, b building.Building) error
 	RelocateIfCurrent(ctx context.Context, previous, next building.Building) (bool, error)
 	Delete(ctx context.Context, id building.ID) error
@@ -81,6 +82,9 @@ type EconomyRepository interface {
 }
 
 type AllianceRepository interface {
+	DeleteAlliance(ctx context.Context, id alliance.ID) error
+	LockAlliance(ctx context.Context, id alliance.ID) error
+	UpdateLeader(ctx context.Context, id alliance.ID, p player.ID) error
 	Create(ctx context.Context, item alliance.Alliance) error
 	FindByID(ctx context.Context, id alliance.ID) (alliance.Alliance, error)
 	FindByPlayer(ctx context.Context, playerID player.ID) (alliance.Alliance, alliance.Membership, error)
@@ -92,6 +96,7 @@ type AllianceRepository interface {
 	ListInvitesForPlayer(ctx context.Context, playerID player.ID) ([]alliance.Invite, error)
 	UpdateInvite(ctx context.Context, item alliance.Invite) error
 	AddTreasuryEntry(ctx context.Context, item alliance.TreasuryEntry) error
+	TreasuryBalance(ctx context.Context, id alliance.ID) (map[economy.ResourceType]int, error)
 	ListTreasury(ctx context.Context, id alliance.ID, limit int) ([]alliance.TreasuryEntry, error)
 	SaveBuff(ctx context.Context, item alliance.Buff) error
 	ListBuffs(ctx context.Context, id alliance.ID) ([]alliance.Buff, error)
@@ -100,11 +105,16 @@ type AllianceRepository interface {
 }
 
 type ChatRepository interface {
+	ReadAt(ctx context.Context, p player.ID, scope string) (time.Time, error)
+	SaveReadAt(ctx context.Context, p player.ID, scope string, at time.Time) error
+	CountUnread(ctx context.Context, p player.ID, ch chat.Channel, id alliance.ID, after time.Time) (int, error)
 	AddMessage(ctx context.Context, item chat.Message) error
-	ListMessages(ctx context.Context, playerID player.ID, channel chat.Channel, allianceID alliance.ID, limit int) ([]chat.Message, error)
+	ListMessages(ctx context.Context, playerID player.ID, channel chat.Channel, allianceID alliance.ID, limit int, before ...chat.Cursor) ([]chat.Message, error)
 }
 
 type MarketRepository interface {
+	LockMarket(ctx context.Context, resource economy.ResourceType) error
+	FindMatch(ctx context.Context, item market.Order) (market.Order, error)
 	CreateOrder(ctx context.Context, item market.Order) error
 	FindOrder(ctx context.Context, id market.OrderID) (market.Order, error)
 	UpdateOrder(ctx context.Context, item market.Order) error
@@ -115,7 +125,7 @@ type MonsterRepository interface {
 	Create(ctx context.Context, item monster.Monster) error
 	FindByID(ctx context.Context, id monster.ID) (monster.Monster, error)
 	ListByMap(ctx context.Context, mapID string) ([]monster.Monster, error)
-	ListActiveForTick(ctx context.Context, mapID string, limit int) ([]monster.Monster, error)
+	ListActiveForTick(ctx context.Context, mapID string, now time.Time, limit int) ([]monster.Monster, error)
 	ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.Monster, error)
 	Update(ctx context.Context, item monster.Monster) error
 	UpdateIfCurrent(ctx context.Context, previous, next monster.Monster) (bool, error)
@@ -134,8 +144,9 @@ type ActionRepository interface {
 	AppendUnique(ctx context.Context, item action.GameAction) (bool, error)
 	HasIdempotencyKey(ctx context.Context, key string) (bool, error)
 	ListPendingWeapons(ctx context.Context, playerID player.ID) ([]action.GameAction, error)
-	ListRaids(ctx context.Context, playerID player.ID) ([]action.GameAction, error)
-	HasRecentRaid(ctx context.Context, playerID player.ID, targetID building.ID, since time.Time) (bool, error)
+	ListCombatRecords(ctx context.Context, playerID player.ID, limit int) ([]action.GameAction, error)
+	LockCombatActor(ctx context.Context, playerID player.ID) error
+	HasRecentAction(ctx context.Context, actor player.ID, kind action.Type, since time.Time) (bool, error)
 	FetchDue(ctx context.Context, now time.Time, limit int, lockTTL time.Duration) ([]action.GameAction, error)
 	MarkDone(ctx context.Context, id action.ID, now time.Time) error
 	MarkFailed(ctx context.Context, id action.ID, message string, retryAt time.Time, now time.Time) error
@@ -152,4 +163,13 @@ type OutboxRepository interface {
 
 type UnitOfWork interface {
 	Do(ctx context.Context, fn func(context.Context) error) error
+}
+
+type RepairRepository interface {
+	RepairWorkers(ctx context.Context, p player.ID) (int, error)
+	CreateRepair(ctx context.Context, job building.RepairJob) error
+	PendingRepair(ctx context.Context, id building.ID) (building.RepairJob, error)
+	DueRepairs(ctx context.Context, now time.Time, limit int) ([]building.RepairJob, error)
+	LockRepair(ctx context.Context, id string) (building.RepairJob, error)
+	FinishRepair(ctx context.Context, id string, status string) error
 }

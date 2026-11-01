@@ -41,6 +41,8 @@ type Monster struct {
 	ID             ID
 	MapID          string
 	SpawnID        SpawnID
+	CreatorID      string
+	ExpiresAt      time.Time
 	Type           Type
 	State          State
 	Tile           world.Coord

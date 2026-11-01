@@ -38,7 +38,6 @@ const (
 	TypeMechanicalShop           Type = "mechanical_workshop"
 	TypeOpticalShop              Type = "optical_workshop"
 	TypeMint                     Type = "mint"
-	TypeWarehouse                Type = "warehouse"
 	TypeCoinStorage              Type = "coin_storage"
 	TypeMarket                   Type = "market"
 	TypeTower                    Type = "tower"
@@ -165,7 +164,7 @@ func (b Building) OccupiedTiles() []world.Coord {
 	tiles := make([]world.Coord, 0, width*height)
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
-			tiles = append(tiles, world.Coord{X: b.Tile.X + x, Y: b.Tile.Y + y})
+			tiles = append(tiles, world.NormalizeCoord(world.Coord{X: b.Tile.X + x, Y: b.Tile.Y + y}))
 		}
 	}
 	return tiles

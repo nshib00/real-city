@@ -14,10 +14,14 @@ func NewUnitOfWork(db *sql.DB) *UnitOfWork {
 }
 
 func (u *UnitOfWork) Do(ctx context.Context, fn func(context.Context) error) error {
+	if _, ok := ctx.Value(txKey{}).(*sql.Tx); ok {
+		return fn(ctx)
+	}
 	tx, err := u.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
 	}
+	defer tx.Rollback()
 	txCtx := context.WithValue(ctx, txKey{}, tx)
 	if err := fn(txCtx); err != nil {
 		_ = tx.Rollback()

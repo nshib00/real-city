@@ -53,7 +53,7 @@ func main() {
 		DefenseWeapons map[string][]catalog.DefenseWeaponStats `json:"defense_weapons"`
 		Cannons        []catalog.CannonStats                   `json:"cannons"`
 		Ruins          map[building.Type]catalog.BuildingType  `json:"ruins"`
-	}{1, catalog.BalanceVersion, catalog.Resources, catalog.ProductionCatalog(), levels, catalog.MonsterSpecs(), catalog.PlayerWeapons, catalog.RaidRules(), defense, cannons, catalog.RuinSpecs}
+	}{1, catalog.BalanceVersion, catalog.Resources, catalog.ProductionCatalog(), levels, catalog.MonsterSpecs(), catalog.PlayerWeapons, catalog.CombatRules(), defense, cannons, catalog.RuinSpecs}
 	data, err := json.MarshalIndent(payload, "", "  ")
 	if err != nil {
 		panic(err)

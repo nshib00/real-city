@@ -54,19 +54,34 @@ func run(ctx context.Context, cfg config.Config, log *slog.Logger) error {
 	eventBus.SetForwarder(service.NewOutboxForwarder(outboxRepo))
 
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, log)
+	economyService.SetUnitOfWork(uow)
 	economyService.SetPlayers(playerRepo)
 	buildingService := service.NewBuildingService(buildingRepo, worldRepo, log)
+	buildingService.SetPvPProtection(playerRepo)
 	buildingService.SetMonsters(monsterRepo)
 	resourceService := service.NewResourceService(economyRepo, economyService, log)
 	resourceService.SetOilWorld(worldRepo, buildingRepo)
 	buildingService.SetResources(resourceService)
 	productionService := service.NewProductionService(economyRepo, economyService, log)
+	productionService.SetUnitOfWork(uow)
 	forestService := service.NewForestService(worldRepo, economyService, log)
 	monsterService := service.NewMonsterService(monsterRepo, log)
 	monsterService.SetEconomy(economyService)
 	combatService := service.NewCombatService(monsterService, log)
+	combatService.SetBuildingService(buildingService)
 	combatService.SetWeaponDependencies(economyRepo, actionRepo, uow)
+	combatService.SetPvPDependencies(buildingRepo, worldRepo, resourceService)
+	var allianceRepo service.AllianceRepository
+	if db != nil {
+		allianceRepo = postgresadapter.NewSocialRepo(db.Pool())
+	} else {
+		allianceRepo = memory.NewSocialRepo()
+	}
+	allianceService := service.NewAllianceService(allianceRepo, economyService, log)
+	buildingService.SetAllianceBenefits(allianceService)
+	resourceService.SetAllianceBenefits(allianceService)
 	buildingService.SetEconomy(economyService)
+	buildingService.SetRepairUnitOfWork(uow)
 	buildingService.SetActionQueue(actionRepo)
 	buildingService.SetEventBus(eventBus)
 	resourceService.SetEventBus(eventBus)
@@ -91,14 +106,11 @@ func run(ctx context.Context, cfg config.Config, log *slog.Logger) error {
 	monsterAI := simulation.NewMonsterAI(monsterRepo, buildingRepo, worldRepo, eventBus, log)
 	monsterAI.SetUnitOfWork(uow)
 	monsterAI.SetExperience(experienceService)
+	monsterAI.SetBuildingService(buildingService)
 	monsterAI.SetMoveInterval(cfg.Simulation.TickInterval)
 	sim.SetMonsterAI(monsterAI)
 	sim.SetCannonService(service.NewCannonService(buildingRepo, monsterRepo, economyRepo, worldRepo, uow, monsterService, economyService, eventBus, log))
 	sim.SetCombatService(combatService)
-	raidService := service.NewRaidService(buildingRepo, actionRepo, log)
-	raidService.SetResources(resourceService)
-	raidService.SetEventBus(eventBus)
-	sim.SetRaidService(raidService)
 	observability.EnableSimulation()
 	go postgresadapter.RunQueueSampler(runCtx, dbPool, log)
 
@@ -132,9 +144,11 @@ func openPostgres(cfg config.Config, log *slog.Logger) *postgresadapter.DB {
 		log.Info("storage.memory", "event", "storage.memory")
 		return nil
 	}
-	db, err := postgresadapter.Open(context.Background(), cfg.Postgres.Driver, cfg.Postgres.DSN)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	db, err := postgresadapter.Open(ctx, cfg.Postgres.Driver, cfg.Postgres.DSN)
 	if err != nil {
-		log.Warn("postgres.unavailable_fallback_memory", "event", "postgres.unavailable_fallback_memory", logger.ErrorAttr(err))
+		log.Error("postgres.unavailable", "event", "postgres.unavailable", logger.ErrorAttr(err))
 		return nil
 	}
 	log.Info("postgres.connected", "event", "postgres.connected")

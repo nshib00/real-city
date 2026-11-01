@@ -53,9 +53,27 @@ func TestOpenAPIFreshness(t *testing.T) {
 		t.Fatalf("decode runtime openapi: %v", err)
 	}
 	fileSpec := readOpenAPIFile(t)
-	for path := range fileSpec.Paths {
-		if _, ok := runtimeSpec.Paths[path]; !ok {
-			t.Fatalf("runtime openapi is missing documented path %s", path)
+	if len(fileSpec.Paths) != len(runtimeSpec.Paths) {
+		t.Fatal("OpenAPI path counts differ")
+	}
+	for path, raw := range fileSpec.Paths {
+		expected := raw.(map[string]any)
+		actualRaw, ok := runtimeSpec.Paths[path]
+		if !ok {
+			t.Fatalf("runtime missing %s", path)
+		}
+		actual := actualRaw.(map[string]any)
+		if len(expected) != len(actual) {
+			t.Fatalf("OpenAPI methods differ for %s", path)
+		}
+		for method, value := range expected {
+			got, ok := actual[method]
+			if !ok {
+				t.Fatalf("runtime missing %s %s", method, path)
+			}
+			if value.(map[string]any)["summary"] != got.(map[string]any)["summary"] {
+				t.Fatalf("OpenAPI summary differs for %s %s", method, path)
+			}
 		}
 	}
 }

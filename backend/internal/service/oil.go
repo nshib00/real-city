@@ -62,7 +62,7 @@ func (s *ResourceService) ClaimOilWell(ctx context.Context, well building.Buildi
 	if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 		return err
 	}
-	s.publish(node)
+	s.publish(ctx, node)
 	return nil
 }
 
@@ -80,7 +80,7 @@ func (s *ResourceService) ReleaseOilWell(ctx context.Context, coord world.Coord,
 	if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 		return err
 	}
-	s.publish(node)
+	s.publish(ctx, node)
 	return nil
 }
 
@@ -140,7 +140,7 @@ func (s *ResourceService) tickOil(ctx context.Context, node economy.ResourceNode
 			if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 				return false, err
 			}
-			s.publish(node)
+			s.publish(ctx, node)
 		}
 		if node.RespawnAt == nil || node.RespawnAt.After(now) {
 			return false, nil
@@ -211,7 +211,7 @@ func (s *ResourceService) CompleteOilCycle(ctx context.Context, well building.Bu
 	if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 		return err
 	}
-	s.publish(node)
+	s.publish(ctx, node)
 	return nil
 }
 
@@ -272,7 +272,7 @@ func (s *ResourceService) respawnOil(ctx context.Context, node economy.ResourceN
 		if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 			return false, err
 		}
-		s.publish(node)
+		s.publish(ctx, node)
 		return true, nil
 	}
 	return false, nil

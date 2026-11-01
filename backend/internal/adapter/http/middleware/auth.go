@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strings"
 	"time"
@@ -16,7 +17,11 @@ type contextKey string
 
 const playerIDKey contextKey = "player_id"
 
-func Auth(tokens *jwtadapter.Manager, next http.Handler) http.Handler {
+type AccessValidator interface {
+	ValidateAccess(context.Context, player.ID, string) error
+}
+
+func Auth(tokens *jwtadapter.Manager, next http.Handler, validators ...AccessValidator) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		raw := strings.TrimSpace(strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer "))
 		if raw == "" || raw == r.Header.Get("Authorization") {
@@ -27,6 +32,12 @@ func Auth(tokens *jwtadapter.Manager, next http.Handler) http.Handler {
 		if err != nil {
 			writeAuthError(w, err)
 			return
+		}
+		for _, validator := range validators {
+			if err := validator.ValidateAccess(r.Context(), claims.Subject, claims.SessionID); err != nil {
+				writeAuthError(w, err)
+				return
+			}
 		}
 		next.ServeHTTP(w, r.WithContext(WithPlayerID(r.Context(), claims.Subject)))
 	})
@@ -42,11 +53,13 @@ func PlayerID(ctx context.Context) (player.ID, bool) {
 }
 
 func writeAuthError(w http.ResponseWriter, err error) {
-	appErr, ok := err.(*apperror.Error)
-	if !ok {
-		appErr = apperror.New(apperror.Unauthorized, "unauthorized")
+	var appErr *apperror.Error
+	status := http.StatusUnauthorized
+	if !errors.As(err, &appErr) || appErr.Kind == apperror.Internal {
+		status = http.StatusServiceUnavailable
+		appErr = apperror.New(apperror.Internal, "Проверка доступа временно недоступна")
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusUnauthorized)
+	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(map[string]any{"error": appErr})
 }

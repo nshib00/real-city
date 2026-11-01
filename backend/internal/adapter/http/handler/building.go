@@ -181,3 +181,17 @@ func (h *BuildingHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJSON(w, http.StatusOK, envelope{"status": "ok"})
 }
+
+func (h *BuildingHandler) RepairStatus(w http.ResponseWriter, r *http.Request) {
+	p, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player required"))
+		return
+	}
+	quote, err := h.buildings.RepairStatus(r.Context(), building.ID(r.PathValue("id")), p)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"repair": quote})
+}

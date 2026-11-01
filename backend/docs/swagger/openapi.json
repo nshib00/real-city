@@ -10,60 +10,404 @@
     }
   ],
   "paths": {
-    "/auth/register": { "post": { "summary": "Register player" } },
-    "/auth/login": { "post": { "summary": "Login player" } },
-    "/auth/refresh": { "post": { "summary": "Refresh tokens" } },
-    "/auth/logout": { "post": { "summary": "Logout current session" } },
-    "/players/me": { "get": { "summary": "Current player profile" }, "patch": { "summary": "Update current player profile" }, "delete": { "summary": "Delete current player" } },
-    "/players/me/password": { "patch": { "summary": "Change password" } },
-    "/players/{id}": { "get": { "summary": "Public player profile" } },
-    "/world": { "get": { "summary": "Current world summary" } },
-    "/world/chunks": { "get": { "summary": "Visible chunks" } },
-    "/world/viewport": { "get": { "summary": "Viewport snapshot" } },
-    "/world/tiles/chop-forest": { "post": { "summary": "Chop forest tile" } },
-    "/buildings/catalog": { "get": { "summary": "Building catalog; scope=all includes every type and level" } },
-    "/buildings": { "get": { "summary": "List player buildings or visible world buildings" }, "post": { "summary": "Place building" } },
-    "/buildings/{id}": { "get": { "summary": "Get building" }, "patch": { "summary": "Update building" }, "delete": { "summary": "Delete building" } },
-    "/economy/inventory": { "get": { "summary": "Inventory" } },
-    "/economy/transactions": { "get": { "summary": "Economy transactions" } },
-    "/economy/population": { "get": { "summary": "Population summary" } },
-    "/resources/nodes": { "get": { "summary": "Resource nodes" } },
-    "/resources/nodes/{id}": { "patch": { "summary": "Claim or harvest resource node" } },
-    "/production/recipes": { "get": { "summary": "Production recipes" } },
-    "/production/jobs": { "get": { "summary": "List production jobs" }, "post": { "summary": "Start production" } },
-    "/production/jobs/{id}": { "patch": { "summary": "Patch production job" } },
-    "/fields/windleaf/harvest": { "post": { "summary": "Harvest windleaf field" } },
-    "/monsters/catalog": { "get": { "summary": "Monster catalog" } },
-    "/monsters": { "get": { "summary": "List monsters" } },
-    "/monster-loot": { "get": { "summary": "List public monster loot drops" } },
-    "/monster-loot/{id}/claim": { "post": { "summary": "Claim public monster loot drop" } },
-    "/monsters/{id}": { "get": { "summary": "Monster details" } },
-    "/monsters/{id}/weapons": { "post": { "summary": "Use weapon against monster" } },
-    "/combat/attacks": { "get": { "summary": "List pending weapon attacks" } },
-    "/threats": { "get": { "summary": "Threats" } },
-    "/raids": { "get": { "summary": "List own raids" }, "post": { "summary": "Start raid against rival building", "parameters": [{ "in": "header", "name": "Idempotency-Key", "required": true, "schema": { "type": "string", "minLength": 8, "maxLength": 128 } }] } },
-    "/admin/status": { "get": { "summary": "Admin status placeholder" } },
-    "/alliances/me": { "get": { "summary": "Alliance profile" } },
-    "/alliances": { "post": { "summary": "Create alliance" } },
-    "/alliances/invites": { "post": { "summary": "Create alliance invite" } },
-    "/alliances/invites/{id}": { "patch": { "summary": "Accept or decline invite" } },
-    "/alliances/roles": { "patch": { "summary": "Set alliance role" } },
-    "/alliances/treasury/donations": { "post": { "summary": "Donate to alliance treasury" } },
-    "/alliances/buffs": { "post": { "summary": "Upgrade alliance buff" } },
-    "/alliances/territory-aid": { "post": { "summary": "Add alliance territory aid" } },
-    "/chat/messages": { "get": { "summary": "List chat messages" }, "post": { "summary": "Send chat message" } },
-    "/market/orders": { "get": { "summary": "List market orders" }, "post": { "summary": "Create market order" } },
-    "/market/orders/{id}": { "delete": { "summary": "Cancel market order" } }
+    "/alliances/me": {
+      "delete": {
+        "summary": "Leave alliance; last leader dissolves it"
+      },
+      "get": {
+        "summary": "Alliance profile"
+      }
+    },
+    "/alliances/members/{id}": {
+      "delete": {
+        "summary": "Kick a lower-ranked alliance member"
+      }
+    },
+    "/buildings/{id}": {
+      "delete": {
+        "summary": "Delete building"
+      },
+      "get": {
+        "summary": "Get building"
+      },
+      "patch": {
+        "summary": "Update building"
+      }
+    },
+    "/market/orders/{id}": {
+      "delete": {
+        "summary": "Cancel market order"
+      }
+    },
+    "/players/me": {
+      "delete": {
+        "summary": "Delete current player"
+      },
+      "get": {
+        "summary": "Current player profile"
+      },
+      "patch": {
+        "summary": "Update current player profile"
+      }
+    },
+    "/admin/accounts/audit": {
+      "get": {
+        "summary": "GET /admin/accounts/audit"
+      }
+    },
+    "/admin/audit": {
+      "get": {
+        "summary": "GET /admin/audit"
+      }
+    },
+    "/admin/chat/messages": {
+      "get": {
+        "summary": "GET /admin/chat/messages"
+      }
+    },
+    "/admin/players": {
+      "get": {
+        "summary": "GET /admin/players"
+      }
+    },
+    "/admin/status": {
+      "get": {
+        "summary": "Administrator-only process diagnostics"
+      }
+    },
+    "/buildings": {
+      "get": {
+        "summary": "List player buildings or visible world buildings"
+      },
+      "post": {
+        "summary": "Place building"
+      }
+    },
+    "/buildings/catalog": {
+      "get": {
+        "summary": "Building catalog; scope=all includes every type and level"
+      }
+    },
+    "/buildings/{id}/repair": {
+      "get": {
+        "summary": "Repair price, worker reservation, duration and pending job"
+      }
+    },
+    "/chat/messages": {
+      "get": {
+        "summary": "List chat messages"
+      },
+      "post": {
+        "summary": "Send chat message"
+      }
+    },
+    "/combat/attacks": {
+      "get": {
+        "summary": "List pending weapon attacks"
+      }
+    },
+    "/combat/history": {
+      "get": {
+        "summary": "GET /combat/history"
+      }
+    },
+    "/combat/rules": {
+      "get": {
+        "summary": "PvP rules and monster creation cost"
+      }
+    },
+    "/economy/inventory": {
+      "get": {
+        "summary": "Inventory"
+      }
+    },
+    "/economy/population": {
+      "get": {
+        "summary": "Population summary"
+      }
+    },
+    "/economy/transactions": {
+      "get": {
+        "summary": "Economy transactions"
+      }
+    },
+    "/market/orders": {
+      "get": {
+        "summary": "List market orders"
+      },
+      "post": {
+        "summary": "Create market order"
+      }
+    },
+    "/monster-loot": {
+      "get": {
+        "summary": "List public monster loot drops"
+      }
+    },
+    "/monsters": {
+      "get": {
+        "summary": "List monsters"
+      }
+    },
+    "/monsters/catalog": {
+      "get": {
+        "summary": "Monster catalog"
+      }
+    },
+    "/monsters/{id}": {
+      "get": {
+        "summary": "Monster details"
+      }
+    },
+    "/players/levels": {
+      "get": {
+        "summary": "Shared catalog of player levels and planned unlocks"
+      }
+    },
+    "/players/nearby": {
+      "get": {
+        "summary": "GET /players/nearby"
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "summary": "Public player profile"
+      }
+    },
+    "/players/{id}/profile": {
+      "get": {
+        "summary": "Public profile with approximate settlement and aggregate scores"
+      }
+    },
+    "/production/jobs": {
+      "get": {
+        "summary": "List production jobs"
+      },
+      "post": {
+        "summary": "Start production"
+      }
+    },
+    "/production/recipes": {
+      "get": {
+        "summary": "Production recipes"
+      }
+    },
+    "/resources/nodes": {
+      "get": {
+        "summary": "Resource nodes"
+      }
+    },
+    "/threats": {
+      "get": {
+        "summary": "Threats"
+      }
+    },
+    "/world": {
+      "get": {
+        "summary": "Current world summary"
+      }
+    },
+    "/world/chunks": {
+      "get": {
+        "summary": "Visible chunks"
+      }
+    },
+    "/world/viewport": {
+      "get": {
+        "summary": "Viewport snapshot"
+      }
+    },
+    "/admin/chat/messages/{id}": {
+      "patch": {
+        "summary": "PATCH /admin/chat/messages/{id}"
+      }
+    },
+    "/admin/players/{id}": {
+      "patch": {
+        "summary": "PATCH /admin/players/{id}"
+      }
+    },
+    "/alliances/invites/{id}": {
+      "patch": {
+        "summary": "Accept or decline invite"
+      }
+    },
+    "/alliances/roles": {
+      "patch": {
+        "summary": "Set alliance role"
+      }
+    },
+    "/chat/read": {
+      "patch": {
+        "summary": "Advance own visible channel read cursor"
+      }
+    },
+    "/players/me/password": {
+      "patch": {
+        "summary": "Change password"
+      }
+    },
+    "/production/jobs/{id}": {
+      "patch": {
+        "summary": "Patch production job"
+      }
+    },
+    "/resources/nodes/{id}": {
+      "patch": {
+        "summary": "Claim or harvest resource node"
+      }
+    },
+    "/alliances": {
+      "post": {
+        "summary": "Create alliance"
+      }
+    },
+    "/alliances/buffs": {
+      "post": {
+        "summary": "Upgrade alliance buff"
+      }
+    },
+    "/alliances/invites": {
+      "post": {
+        "summary": "Create alliance invite"
+      }
+    },
+    "/alliances/members/{id}/leadership": {
+      "post": {
+        "summary": "Transfer alliance leadership"
+      }
+    },
+    "/alliances/territory-aid": {
+      "post": {
+        "summary": "Add alliance territory aid"
+      }
+    },
+    "/alliances/treasury/donations": {
+      "post": {
+        "summary": "Donate to alliance treasury"
+      }
+    },
+    "/alliances/treasury/spend": {
+      "post": {
+        "summary": "Transfer treasury resources to a member"
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login player"
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Logout current session"
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "Refresh tokens"
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register player"
+      }
+    },
+    "/buildings/{id}/weapons": {
+      "post": {
+        "summary": "Use inventory weapon against rival building",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          }
+        ]
+      }
+    },
+    "/combat/monsters": {
+      "post": {
+        "summary": "Create monster against rival buildings",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          }
+        ]
+      }
+    },
+    "/fields/advance": {
+      "post": {
+        "summary": "POST /fields/advance"
+      }
+    },
+    "/fields/harvest": {
+      "post": {
+        "summary": "POST /fields/harvest"
+      }
+    },
+    "/fields/windleaf/advance": {
+      "post": {
+        "summary": "POST /fields/windleaf/advance"
+      }
+    },
+    "/fields/windleaf/harvest": {
+      "post": {
+        "summary": "Harvest windleaf field"
+      }
+    },
+    "/monster-loot/{id}/claim": {
+      "post": {
+        "summary": "Claim public monster loot drop"
+      }
+    },
+    "/monsters/{id}/weapons": {
+      "post": {
+        "summary": "Use weapon against monster"
+      }
+    },
+    "/players/me/presence": {
+      "post": {
+        "summary": "POST /players/me/presence"
+      }
+    },
+    "/world/tiles/chop-forest": {
+      "post": {
+        "summary": "Chop forest tile"
+      }
+    }
   },
   "components": {
     "schemas": {
       "Error": {
         "type": "object",
-        "required": ["kind", "message"],
+        "required": [
+          "kind",
+          "message"
+        ],
         "properties": {
-          "kind": { "type": "string" },
-          "message": { "type": "string" },
-          "fields": { "type": "object", "additionalProperties": { "type": "string" } }
+          "kind": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
         }
       }
     },

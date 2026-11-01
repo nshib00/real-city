@@ -56,6 +56,42 @@ func TestMonsterAITickAggrosNearestBuilding(t *testing.T) {
 	}
 }
 
+func TestWanderingMonsterWaitsForNextDecision(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters := memory.NewMonsterRepo()
+	item := monster.Monster{ID: "scheduled_wanderer", MapID: "dev-world", Type: monster.TypeRoamingMelee,
+		State: monster.StateWandering, Tile: world.Coord{X: 20, Y: 20}, HomeTile: world.Coord{X: 20, Y: 20},
+		Health: 100, MaxHealth: 100, SpeedTiles: 1, UpdatedAt: now.Add(-time.Second)}
+	if err := monsters.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	ai := NewMonsterAI(monsters, memory.NewBuildingRepo(), nil, nil, slog.Default())
+	if _, err := ai.Tick(ctx, now, 10); err != nil {
+		t.Fatal(err)
+	}
+	if due, err := monsters.ListActiveForTick(ctx, "dev-world", now.Add(time.Second), 10); err != nil {
+		t.Fatal(err)
+	} else {
+		for _, candidate := range due {
+			if candidate.ID == item.ID {
+				t.Fatal("wandering monster was scheduled too early")
+			}
+		}
+	}
+	if due, err := monsters.ListActiveForTick(ctx, "dev-world", now.Add(2*time.Second), 10); err != nil {
+		t.Fatal(err)
+	} else {
+		found := false
+		for _, candidate := range due {
+			found = found || candidate.ID == item.ID
+		}
+		if !found {
+			t.Fatal("wandering monster was not scheduled again")
+		}
+	}
+}
+
 func TestMonsterAIDamagesAndRuinsBuilding(t *testing.T) {
 	ctx := context.Background()
 	now := time.Now().UTC()
@@ -77,7 +113,7 @@ func TestMonsterAIDamagesAndRuinsBuilding(t *testing.T) {
 	received := events.Subscribe(eventCtx)
 	ai := NewMonsterAI(monsters, buildings, nil, events, slog.Default())
 	for _, tick := range []time.Time{now, now.Add(2 * time.Second)} {
-		if _, err := ai.Tick(ctx, tick, 1); err != nil {
+		if _, err := ai.Tick(ctx, tick, 10); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -127,7 +163,7 @@ func TestMonsterAIFallsBackToReachableWall(t *testing.T) {
 	}
 	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
 	for _, tick := range []time.Time{now, now.Add(time.Second), now.Add(2 * time.Second)} {
-		if _, err := ai.Tick(ctx, tick, 1); err != nil {
+		if _, err := ai.Tick(ctx, tick, 10); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -239,12 +275,12 @@ func TestMonsterAITargetPreferencesAndFallback(t *testing.T) {
 	}{
 		{"налётчик", monster.TypeRoamingMelee, building.TypeDugout, building.TypeTownHall},
 		{"страж залежи", monster.TypeResourceGuardian, building.TypeClayQuarry, building.TypeTownHall},
-		{"сторож руин", monster.TypeRuinsGuardian, building.TypeWarehouse, building.TypeTownHall},
+		{"сторож руин", monster.TypeRuinsGuardian, building.TypeCoinStorage, building.TypeTownHall},
 		{"лесной следопыт", monster.TypeForestStalker, building.TypeLumberYard, building.TypeTownHall},
 		{"споровый зверь", monster.TypeSporeBeast, building.TypeFieldBed, building.TypeTownHall},
 		{"железоспин", monster.TypeIronbackBrute, building.TypeStoneWall, building.TypeTownHall},
 		{"тлеющий огонёк", monster.TypeEmberWisp, building.TypeWorkshop, building.TypeTownHall},
-		{"колосс", monster.TypeAncientColossus, building.TypeTownHall, building.TypeWarehouse},
+		{"колосс", monster.TypeAncientColossus, building.TypeTownHall, building.TypeCoinStorage},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -277,9 +313,9 @@ func TestMonsterAITargetsNearestFootprintTileAndSkipsInvalidBuildings(t *testing
 	ctx := context.Background()
 	buildings := memory.NewBuildingRepo()
 	for _, b := range []building.Building{
-		{ID: "preferred", MapID: "dev-world", Type: building.TypeWarehouse, State: building.StateActive,
+		{ID: "preferred", MapID: "dev-world", Type: building.TypeCoinStorage, State: building.StateActive,
 			Tile: world.Coord{X: 34}, Footprint: building.Footprint{Width: 4, Height: 1}, Health: 100},
-		{ID: "ruined", MapID: "dev-world", Type: building.TypeWarehouse, State: building.StateRuined,
+		{ID: "ruined", MapID: "dev-world", Type: building.TypeCoinStorage, State: building.StateRuined,
 			Tile: world.Coord{X: 31}, Health: 0},
 		{ID: "trap", MapID: "dev-world", Type: building.TypeDefenseStakes, State: building.StateActive,
 			Tile: world.Coord{X: 31}, Health: 100},
@@ -316,7 +352,7 @@ func TestMonsterAIFallbackFavorsWeaponsAndWalls(t *testing.T) {
 	ctx := context.Background()
 	buildings := memory.NewBuildingRepo()
 	for _, item := range []building.Building{
-		{ID: "ordinary", MapID: "dev-world", Type: building.TypeWarehouse, State: building.StateActive, Tile: world.Coord{X: 1}, Health: 100},
+		{ID: "ordinary", MapID: "dev-world", Type: building.TypeCoinStorage, State: building.StateActive, Tile: world.Coord{X: 1}, Health: 100},
 		{ID: "weapon", MapID: "dev-world", Type: building.TypeDefenseCannon, State: building.StateActive, Tile: world.Coord{X: 3}, Health: 100},
 	} {
 		if err := buildings.Create(ctx, item); err != nil {

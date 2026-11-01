@@ -43,6 +43,7 @@ func TestOilExtractionLevels(t *testing.T) {
 
 func TestUpgradedOilWellProducesMoreOilAndPreservesDeposit(t *testing.T) {
 	ctx := context.Background()
+	players, xp := newExperienceTestPlayer(t)
 	service, resources, buildings, nodes, _, well := oilFixture(t)
 	if _, err := service.CompleteAt(ctx, well.ID, "p1", well.StartedAt.Add(11*time.Minute)); err != nil {
 		t.Fatal(err)
@@ -62,6 +63,7 @@ func TestUpgradedOilWellProducesMoreOilAndPreservesDeposit(t *testing.T) {
 	production := NewProductionService(nodes, resources.economy, resources.log)
 	production.SetBuildings(buildings)
 	production.SetResources(resources)
+	production.SetExperience(xp)
 	production.randFloat = func() float64 { return 0 }
 	production.now = func() time.Time { return node.UpdatedAt }
 	grantTestResources(t, ctx, resources.economy, "p1", economy.ResourceAmount{Resource: economy.ResourcePopulation, Amount: 21})
@@ -88,6 +90,9 @@ func TestUpgradedOilWellProducesMoreOilAndPreservesDeposit(t *testing.T) {
 	}
 	if inventory.Items[economy.ResourceAmberEssence] != 1 {
 		t.Fatalf("rare amber essence = %d", inventory.Items[economy.ResourceAmberEssence])
+	}
+	if got, want := playerXP(t, players), catalog.ExperienceForBuilding(building.TypeOilWell, 2).Work; got != want {
+		t.Fatalf("oil XP %d, want %d", got, want)
 	}
 }
 

@@ -112,7 +112,7 @@ func footprintTiles(origin world.Coord, footprint Footprint) []world.Coord {
 	tiles := make([]world.Coord, 0, footprint.Width*footprint.Height)
 	for y := 0; y < footprint.Height; y++ {
 		for x := 0; x < footprint.Width; x++ {
-			tiles = append(tiles, world.Coord{X: origin.X + x, Y: origin.Y + y})
+			tiles = append(tiles, world.NormalizeCoord(world.Coord{X: origin.X + x, Y: origin.Y + y}))
 		}
 	}
 	return tiles

@@ -25,6 +25,9 @@ const websocketGUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 var errInvalidUpgrade = errors.New("invalid websocket upgrade")
 
 type Gateway struct {
+	accessValidator interface {
+		ValidateAccess(context.Context, player.ID, string) error
+	}
 	tokens        *jwtadapter.Manager
 	events        *service.EventBus
 	log           *slog.Logger
@@ -42,6 +45,12 @@ type Gateway struct {
 	transport     TransportMetrics
 	ctx           context.Context
 	cancel        context.CancelFunc
+}
+
+func (g *Gateway) SetAccessValidator(v interface {
+	ValidateAccess(context.Context, player.ID, string) error
+}) {
+	g.accessValidator = v
 }
 
 func NewGateway(tokens *jwtadapter.Manager, events *service.EventBus, log *slog.Logger) *Gateway {
@@ -107,6 +116,9 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		g.log.Info("ws.disconnect", "event", "ws.disconnect", "connection_id", client.ID(), "player_id", playerID, "reason", reason)
 	}
 	g.register(client)
+	if g.accessValidator != nil {
+		go g.watchAccess(r, client)
+	}
 	g.publishPresence(playerID, true)
 	g.log.Info("ws.connect", "event", "ws.connect", "connection_id", client.ID(), "player_id", playerID)
 	client.Enqueue(AckEnvelope(0, map[string]any{"connection_id": client.ID(), "protocol_version": ProtocolVersion}))
@@ -134,7 +146,45 @@ func (g *Gateway) authenticate(r *http.Request) (player.ID, error) {
 	if header == "" {
 		return "", apperror.New(apperror.Unauthorized, "websocket token is required")
 	}
-	return AuthenticateBearer(g.tokens, header)
+	claims, err := g.tokens.VerifyAccess(strings.TrimSpace(strings.TrimPrefix(header, "Bearer ")), time.Now().UTC())
+	if err != nil {
+		return "", err
+	}
+	if g.accessValidator != nil {
+		if err := g.accessValidator.ValidateAccess(r.Context(), claims.Subject, claims.SessionID); err != nil {
+			return "", err
+		}
+	}
+	return claims.Subject, nil
+}
+
+func (g *Gateway) watchAccess(r *http.Request, client *Connection) {
+	header := r.Header.Get("Authorization")
+	if header == "" {
+		header = "Bearer " + r.URL.Query().Get("token")
+	}
+	token := strings.TrimSpace(strings.TrimPrefix(header, "Bearer "))
+	ticker := time.NewTicker(2 * time.Second)
+	defer ticker.Stop()
+	for {
+		ctx, cancel := context.WithTimeout(g.ctx, 5*time.Second)
+		claims, err := g.tokens.VerifyAccess(token, time.Now().UTC())
+		if err == nil {
+			err = g.accessValidator.ValidateAccess(ctx, claims.Subject, claims.SessionID)
+		}
+		cancel()
+		if err != nil {
+			client.Close("session_revoked")
+			return
+		}
+		select {
+		case <-g.ctx.Done():
+			return
+		case <-client.closed:
+			return
+		case <-ticker.C:
+		}
+	}
 }
 
 func (g *Gateway) readLoop(client *Connection) {

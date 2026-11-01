@@ -23,7 +23,15 @@ func NewEconomyRepo(db *sql.DB) *EconomyRepo {
 }
 
 func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coinCapacity int) (economy.Inventory, error) {
-	rows, err := execer(ctx, r.db).QueryContext(ctx, `SELECT resource, amount, updated_at FROM player_inventories WHERE player_id = $1`, playerID)
+	query := `SELECT resource, amount, updated_at FROM player_inventories WHERE player_id = $1 ORDER BY resource`
+	if _, ok := ctx.Value(txKey{}).(*sql.Tx); ok {
+		// Serialize even the first inventory creation for this player.
+		if _, err := execer(ctx, r.db).ExecContext(ctx, `SELECT pg_advisory_xact_lock(hashtextextended($1,0))`, "inventory:"+string(playerID)); err != nil {
+			return economy.Inventory{}, err
+		}
+		query += ` FOR UPDATE`
+	}
+	rows, err := execer(ctx, r.db).QueryContext(ctx, query, playerID)
 	if err != nil {
 		return economy.Inventory{}, err
 	}

@@ -7,6 +7,10 @@ import (
 )
 
 type ResourceType string
+
+const ResourceStoneHeart ResourceType = "stone_heart"
+const ResourceFineRope ResourceType = "fine_rope"
+
 type NodeID string
 type ProductionJobID string
 type TransactionID string
@@ -206,12 +210,14 @@ func EmptyInventory(playerID string, now time.Time, coinCapacity int) Inventory 
 
 func StartingItems() map[ResourceType]int {
 	return map[ResourceType]int{
-		ResourceCoins: 50,
+		ResourceCoins:          50,
+		ResourceThrowingKnives: 50,
 	}
 }
 
 func AllResourceTypes() []ResourceType {
 	return []ResourceType{
+		ResourceStoneHeart, ResourceFineRope,
 		ResourceThrowingKnives, ResourceHuntingTraps, ResourceBlackpowderBomb,
 		ResourceShapedCharge, ResourceFirebomb, ResourceShockCharge,
 		ResourceSiegeMine, ResourceBreachBomb, ResourceResonanceCharge,

@@ -2,26 +2,33 @@ package memory
 
 import (
 	"context"
+	"maps"
+	"slices"
 	"sort"
 	"sync"
+	"time"
 
 	"real-city/backend/internal/domain/alliance"
 	"real-city/backend/internal/domain/chat"
+	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/market"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/pkg/apperror"
+	"real-city/backend/pkg/memorytx"
 )
 
 type SocialRepo struct {
-	mu          sync.RWMutex
-	alliances   map[alliance.ID]alliance.Alliance
-	memberships map[alliance.ID]map[player.ID]alliance.Membership
-	invites     map[alliance.InviteID]alliance.Invite
-	treasury    map[alliance.ID][]alliance.TreasuryEntry
-	buffs       map[alliance.ID]map[alliance.BuffID]alliance.Buff
-	aid         map[alliance.ID][]alliance.TerritoryAid
-	messages    []chat.Message
-	orders      map[market.OrderID]market.Order
+	mu              sync.RWMutex
+	alliances       map[alliance.ID]alliance.Alliance
+	memberships     map[alliance.ID]map[player.ID]alliance.Membership
+	invites         map[alliance.InviteID]alliance.Invite
+	treasury        map[alliance.ID][]alliance.TreasuryEntry
+	buffs           map[alliance.ID]map[alliance.BuffID]alliance.Buff
+	aid             map[alliance.ID][]alliance.TerritoryAid
+	messages        []chat.Message
+	orders          map[market.OrderID]market.Order
+	reads           map[string]time.Time
+	moderationAudit []chat.ModerationAudit
 }
 
 func NewSocialRepo() *SocialRepo {
@@ -33,10 +40,13 @@ func NewSocialRepo() *SocialRepo {
 		buffs:       make(map[alliance.ID]map[alliance.BuffID]alliance.Buff),
 		aid:         make(map[alliance.ID][]alliance.TerritoryAid),
 		orders:      make(map[market.OrderID]market.Order),
+		reads:       make(map[string]time.Time),
 	}
 }
 
 func (r *SocialRepo) Create(ctx context.Context, item alliance.Alliance) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -48,6 +58,8 @@ func (r *SocialRepo) Create(ctx context.Context, item alliance.Alliance) error {
 }
 
 func (r *SocialRepo) FindByID(ctx context.Context, id alliance.ID) (alliance.Alliance, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -59,6 +71,8 @@ func (r *SocialRepo) FindByID(ctx context.Context, id alliance.ID) (alliance.All
 }
 
 func (r *SocialRepo) FindByPlayer(ctx context.Context, playerID player.ID) (alliance.Alliance, alliance.Membership, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -71,6 +85,8 @@ func (r *SocialRepo) FindByPlayer(ctx context.Context, playerID player.ID) (alli
 }
 
 func (r *SocialRepo) ListMembers(ctx context.Context, id alliance.ID) ([]alliance.Membership, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -83,7 +99,129 @@ func (r *SocialRepo) ListMembers(ctx context.Context, id alliance.ID) ([]allianc
 	return items, nil
 }
 
+func (r *SocialRepo) UpdateLeader(ctx context.Context, id alliance.ID, p player.ID) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	a := r.alliances[id]
+	a.LeaderID = p
+	r.alliances[id] = a
+	return nil
+}
+
+func (r *SocialRepo) ReadAt(ctx context.Context, p player.ID, scope string) (time.Time, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	return r.reads[string(p)+":"+scope], nil
+}
+func (r *SocialRepo) SaveReadAt(ctx context.Context, p player.ID, scope string, at time.Time) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	key := string(p) + ":" + scope
+	if r.reads == nil {
+		r.reads = map[string]time.Time{}
+	}
+	if at.After(r.reads[key]) {
+		r.reads[key] = at
+	}
+	return nil
+}
+func (r *SocialRepo) CountUnread(ctx context.Context, p player.ID, ch chat.Channel, id alliance.ID, after time.Time) (int, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	n := 0
+	for _, m := range r.messages {
+		if m.Channel != ch || m.AuthorID == p || m.Flagged || !m.CreatedAt.After(after) {
+			continue
+		}
+		if ch == chat.ChannelAlliance && m.AllianceID != id {
+			continue
+		}
+		if ch == chat.ChannelPrivate && m.Recipient != p {
+			continue
+		}
+		if ch == chat.ChannelNearby && !slices.Contains(m.Audience, p) {
+			continue
+		}
+		n++
+	}
+	return n, nil
+}
+
+func (r *SocialRepo) DeleteAlliance(ctx context.Context, id alliance.ID) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	delete(r.alliances, id)
+	delete(r.memberships, id)
+	delete(r.treasury, id)
+	delete(r.buffs, id)
+	delete(r.aid, id)
+	messages := r.messages[:0]
+	for _, message := range r.messages {
+		if message.AllianceID != id {
+			messages = append(messages, message)
+		}
+	}
+	r.messages = messages
+	for key, v := range r.invites {
+		if v.AllianceID == id {
+			delete(r.invites, key)
+		}
+	}
+	return nil
+}
+func (r *SocialRepo) LockAlliance(ctx context.Context, id alliance.ID) error { return nil }
+func (r *SocialRepo) Snapshot() func() {
+	r.mu.RLock()
+	alliances := maps.Clone(r.alliances)
+	members := maps.Clone(r.memberships)
+	for id, v := range members {
+		members[id] = maps.Clone(v)
+	}
+	invites := maps.Clone(r.invites)
+	orders := maps.Clone(r.orders)
+	treasury := maps.Clone(r.treasury)
+	buffs := maps.Clone(r.buffs)
+	aid := maps.Clone(r.aid)
+	for id, v := range treasury {
+		treasury[id] = append([]alliance.TreasuryEntry(nil), v...)
+	}
+	for id, v := range buffs {
+		buffs[id] = maps.Clone(v)
+	}
+	for id, v := range aid {
+		aid[id] = append([]alliance.TerritoryAid(nil), v...)
+	}
+	messages := append([]chat.Message(nil), r.messages...)
+	audit := append([]chat.ModerationAudit(nil), r.moderationAudit...)
+	r.mu.RUnlock()
+	return func() {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.alliances = alliances
+		r.memberships = members
+		r.invites = invites
+		r.orders = orders
+		r.treasury = treasury
+		r.buffs = buffs
+		r.aid = aid
+		r.messages = messages
+		r.moderationAudit = audit
+	}
+}
+
 func (r *SocialRepo) SaveMembership(ctx context.Context, item alliance.Membership) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -95,6 +233,8 @@ func (r *SocialRepo) SaveMembership(ctx context.Context, item alliance.Membershi
 }
 
 func (r *SocialRepo) DeleteMembership(ctx context.Context, allianceID alliance.ID, playerID player.ID) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -103,6 +243,8 @@ func (r *SocialRepo) DeleteMembership(ctx context.Context, allianceID alliance.I
 }
 
 func (r *SocialRepo) CreateInvite(ctx context.Context, item alliance.Invite) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -111,6 +253,8 @@ func (r *SocialRepo) CreateInvite(ctx context.Context, item alliance.Invite) err
 }
 
 func (r *SocialRepo) FindInvite(ctx context.Context, id alliance.InviteID) (alliance.Invite, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -122,6 +266,8 @@ func (r *SocialRepo) FindInvite(ctx context.Context, id alliance.InviteID) (alli
 }
 
 func (r *SocialRepo) ListInvitesForPlayer(ctx context.Context, playerID player.ID) ([]alliance.Invite, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -136,6 +282,8 @@ func (r *SocialRepo) ListInvitesForPlayer(ctx context.Context, playerID player.I
 }
 
 func (r *SocialRepo) UpdateInvite(ctx context.Context, item alliance.Invite) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -144,6 +292,8 @@ func (r *SocialRepo) UpdateInvite(ctx context.Context, item alliance.Invite) err
 }
 
 func (r *SocialRepo) AddTreasuryEntry(ctx context.Context, item alliance.TreasuryEntry) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -152,6 +302,8 @@ func (r *SocialRepo) AddTreasuryEntry(ctx context.Context, item alliance.Treasur
 }
 
 func (r *SocialRepo) ListTreasury(ctx context.Context, id alliance.ID, limit int) ([]alliance.TreasuryEntry, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -163,7 +315,61 @@ func (r *SocialRepo) ListTreasury(ctx context.Context, id alliance.ID, limit int
 	return items, nil
 }
 
+func (r *SocialRepo) LockMarket(ctx context.Context, resource economy.ResourceType) error { return nil }
+func (r *SocialRepo) FindMatch(ctx context.Context, item market.Order) (market.Order, error) {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	candidates := []market.Order{}
+	for _, o := range r.orders {
+		if o.Status != market.StatusOpen || o.PlayerID == item.PlayerID || o.Side == item.Side || o.Resource != item.Resource || market.TradeQuantity(o, item) == 0 {
+			continue
+		}
+		left, right := int64(o.Price)*int64(item.Amount), int64(item.Price)*int64(o.Amount)
+		if item.Side == market.SideBuy && left > right || item.Side == market.SideSell && left < right {
+			continue
+		}
+		candidates = append(candidates, o)
+	}
+	sort.Slice(candidates, func(i, j int) bool {
+		a, b := candidates[i], candidates[j]
+		left, right := int64(a.Price)*int64(b.Amount), int64(b.Price)*int64(a.Amount)
+		if left != right {
+			if item.Side == market.SideBuy {
+				return left < right
+			}
+			return left > right
+		}
+		if !a.CreatedAt.Equal(b.CreatedAt) {
+			return a.CreatedAt.Before(b.CreatedAt)
+		}
+		return a.ID < b.ID
+	})
+	if len(candidates) == 0 {
+		return market.Order{}, apperror.New(apperror.NotFound, "matching order not found")
+	}
+	return candidates[0], nil
+}
+func (r *SocialRepo) TreasuryBalance(ctx context.Context, id alliance.ID) (map[economy.ResourceType]int, error) {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	balance := map[economy.ResourceType]int{}
+	for _, v := range r.treasury[id] {
+		if v.Kind == alliance.LedgerDonation {
+			balance[v.Resource] += v.Amount
+		} else {
+			balance[v.Resource] -= v.Amount
+		}
+	}
+	return balance, nil
+}
+
 func (r *SocialRepo) SaveBuff(ctx context.Context, item alliance.Buff) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -175,6 +381,8 @@ func (r *SocialRepo) SaveBuff(ctx context.Context, item alliance.Buff) error {
 }
 
 func (r *SocialRepo) ListBuffs(ctx context.Context, id alliance.ID) ([]alliance.Buff, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -187,6 +395,8 @@ func (r *SocialRepo) ListBuffs(ctx context.Context, id alliance.ID) ([]alliance.
 }
 
 func (r *SocialRepo) AddTerritoryAid(ctx context.Context, item alliance.TerritoryAid) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -195,6 +405,8 @@ func (r *SocialRepo) AddTerritoryAid(ctx context.Context, item alliance.Territor
 }
 
 func (r *SocialRepo) ListTerritoryAid(ctx context.Context, id alliance.ID) ([]alliance.TerritoryAid, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -202,6 +414,8 @@ func (r *SocialRepo) ListTerritoryAid(ctx context.Context, id alliance.ID) ([]al
 }
 
 func (r *SocialRepo) AddMessage(ctx context.Context, item chat.Message) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -209,7 +423,9 @@ func (r *SocialRepo) AddMessage(ctx context.Context, item chat.Message) error {
 	return nil
 }
 
-func (r *SocialRepo) ListMessages(ctx context.Context, playerID player.ID, channel chat.Channel, allianceID alliance.ID, limit int) ([]chat.Message, error) {
+func (r *SocialRepo) ListMessages(ctx context.Context, playerID player.ID, channel chat.Channel, allianceID alliance.ID, limit int, before ...chat.Cursor) ([]chat.Message, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -224,9 +440,23 @@ func (r *SocialRepo) ListMessages(ctx context.Context, playerID player.ID, chann
 		if channel == chat.ChannelPrivate && item.AuthorID != playerID && item.Recipient != playerID {
 			continue
 		}
+		if channel == chat.ChannelNearby && !slices.Contains(item.Audience, playerID) {
+			continue
+		}
+		if len(before) > 0 && !before[0].CreatedAt.IsZero() && (item.CreatedAt.After(before[0].CreatedAt) || item.CreatedAt.Equal(before[0].CreatedAt) && item.ID >= before[0].ID) {
+			continue
+		}
 		items = append(items, item)
 	}
-	sort.Slice(items, func(i, j int) bool { return items[i].CreatedAt.After(items[j].CreatedAt) })
+	sort.Slice(items, func(i, j int) bool {
+		if items[i].CreatedAt.Equal(items[j].CreatedAt) {
+			return items[i].ID > items[j].ID
+		}
+		return items[i].CreatedAt.After(items[j].CreatedAt)
+	})
+	if limit <= 0 || limit > 100 {
+		limit = 100
+	}
 	if limit > 0 && len(items) > limit {
 		items = items[:limit]
 	}
@@ -234,6 +464,8 @@ func (r *SocialRepo) ListMessages(ctx context.Context, playerID player.ID, chann
 }
 
 func (r *SocialRepo) CreateOrder(ctx context.Context, item market.Order) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -242,6 +474,8 @@ func (r *SocialRepo) CreateOrder(ctx context.Context, item market.Order) error {
 }
 
 func (r *SocialRepo) FindOrder(ctx context.Context, id market.OrderID) (market.Order, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -253,6 +487,8 @@ func (r *SocialRepo) FindOrder(ctx context.Context, id market.OrderID) (market.O
 }
 
 func (r *SocialRepo) UpdateOrder(ctx context.Context, item market.Order) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -261,6 +497,8 @@ func (r *SocialRepo) UpdateOrder(ctx context.Context, item market.Order) error {
 }
 
 func (r *SocialRepo) ListOrders(ctx context.Context, status market.Status, limit int) ([]market.Order, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()

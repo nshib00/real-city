@@ -7,6 +7,7 @@ import (
 
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/pkg/apperror"
+	"real-city/backend/pkg/memorytx"
 )
 
 type SessionStore struct {
@@ -25,6 +26,8 @@ func NewSessionStore() *SessionStore {
 }
 
 func (s *SessionStore) Save(ctx context.Context, session player.Session) error {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
 	_ = ctx
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -38,6 +41,8 @@ func (s *SessionStore) Save(ctx context.Context, session player.Session) error {
 }
 
 func (s *SessionStore) FindByRefreshTokenHash(ctx context.Context, tokenHash string) (player.Session, error) {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
 	_ = ctx
 	s.mu.RLock()
 	defer s.mu.RUnlock()
@@ -53,6 +58,8 @@ func (s *SessionStore) FindByRefreshTokenHash(ctx context.Context, tokenHash str
 }
 
 func (s *SessionStore) Revoke(ctx context.Context, sessionID player.SessionID) error {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
 	_ = ctx
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -67,6 +74,8 @@ func (s *SessionStore) Revoke(ctx context.Context, sessionID player.SessionID) e
 }
 
 func (s *SessionStore) RevokePlayer(ctx context.Context, playerID player.ID) error {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
 	_ = ctx
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -77,4 +86,23 @@ func (s *SessionStore) RevokePlayer(ctx context.Context, playerID player.ID) err
 		s.byID[id] = session
 	}
 	return nil
+}
+
+func (s *SessionStore) SessionActive(ctx context.Context, p player.ID, id player.SessionID, now time.Time) (bool, error) {
+	ctx, release := memorytx.Guard(ctx)
+	defer release()
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	item, ok := s.byID[id]
+	return ok && item.PlayerID == p && item.RevokedAt.IsZero() && item.ExpiresAt.After(now), nil
+}
+
+func (s *SessionStore) Snapshot() func() {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	items := make(map[player.SessionID]player.Session, len(s.byID))
+	for id, item := range s.byID {
+		items[id] = item
+	}
+	return func() { s.mu.Lock(); defer s.mu.Unlock(); s.byID = items }
 }

@@ -26,7 +26,7 @@ const (
 )
 
 type NotificationSettings struct {
-	RaidAlerts      bool `json:"raid_alerts"`
+	AttackAlerts    bool `json:"attack_alerts"`
 	ProductionReady bool `json:"production_ready"`
 	MarketUpdates   bool `json:"market_updates"`
 }
@@ -45,13 +45,19 @@ type ProfileSettings struct {
 }
 
 type Profile struct {
-	DisplayName string          `json:"display_name"`
-	CityName    string          `json:"city_name"`
-	AvatarURL   string          `json:"avatar_url"`
-	Level       int             `json:"level"`
-	XP          int             `json:"xp"`
-	Settings    ProfileSettings `json:"settings"`
-	UpdatedAt   time.Time       `json:"updated_at"`
+	AvatarID     string          `json:"avatar_id"`
+	BannerID     string          `json:"banner_id"`
+	Title        string          `json:"title"`
+	GroupID      string          `json:"group_id,omitempty"`
+	HomeCenterID string          `json:"home_center_id,omitempty"`
+	Scores       map[string]int  `json:"scores,omitempty"`
+	DisplayName  string          `json:"display_name"`
+	CityName     string          `json:"city_name"`
+	AvatarURL    string          `json:"avatar_url"`
+	Level        int             `json:"level"`
+	XP           int             `json:"xp"`
+	Settings     ProfileSettings `json:"settings"`
+	UpdatedAt    time.Time       `json:"updated_at"`
 }
 
 type Player struct {
@@ -86,7 +92,7 @@ func DefaultProfile(name string, now time.Time) Profile {
 		XP:          0,
 		Settings: ProfileSettings{
 			Notifications: NotificationSettings{
-				RaidAlerts:      true,
+				AttackAlerts:    true,
 				ProductionReady: true,
 				MarketUpdates:   false,
 			},
@@ -131,8 +137,6 @@ func ValidateName(name string) error {
 	return nil
 }
 
-var levelThresholds = []int{0, 200, 700, 1900, 4700, 11200, 26200, 61200, 141200, 321200, 721200, 1621200, 3621200, 8121200, 18121200}
-
 func LevelForXP(xp int) int {
 	if xp <= 0 {
 		return 1
@@ -167,6 +171,7 @@ func LevelStartXP(level int) int {
 }
 
 func NormalizeProfile(profile Profile) Profile {
+	profile.Title = strings.TrimSpace(profile.Title)
 	profile.DisplayName = strings.TrimSpace(profile.DisplayName)
 	profile.CityName = strings.TrimSpace(profile.CityName)
 	profile.AvatarURL = strings.TrimSpace(profile.AvatarURL)

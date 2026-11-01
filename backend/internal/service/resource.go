@@ -15,16 +15,17 @@ import (
 )
 
 type ResourceService struct {
-	repo       EconomyRepository
-	economy    *EconomyService
-	log        *slog.Logger
-	now        func() time.Time
-	events     *EventBus
-	actions    ActionRepository
-	experience *ExperienceService
-	worlds     WorldRepository
-	buildings  BuildingRepository
-	randomIntn func(int) int
+	allianceBenefits *AllianceService
+	repo             EconomyRepository
+	economy          *EconomyService
+	log              *slog.Logger
+	now              func() time.Time
+	events           *EventBus
+	actions          ActionRepository
+	experience       *ExperienceService
+	worlds           WorldRepository
+	buildings        BuildingRepository
+	randomIntn       func(int) int
 }
 
 func NewResourceService(repo EconomyRepository, economyService *EconomyService, log *slog.Logger) *ResourceService {
@@ -61,7 +62,7 @@ func (s *ResourceService) List(ctx context.Context) ([]economy.ResourceNode, err
 		if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 			return nil, err
 		}
-		s.publish(node)
+		s.publish(ctx, node)
 		nodes[index] = node
 	}
 	return nodes, nil
@@ -102,7 +103,7 @@ func (s *ResourceService) Tick(ctx context.Context, now time.Time, limit int) (i
 		if err := s.repo.SaveResourceNode(ctx, node); err != nil {
 			return restored, err
 		}
-		s.publish(node)
+		s.publish(ctx, node)
 		s.log.Info("simulation.resource.respawned", "event", "simulation.resource.respawned", "node_id", node.ID, "resource", node.Resource, "chunk_id", world.ChunkID(node.MapID, world.ChunkForTile(node.Tile)))
 		restored++
 		processed++
@@ -133,7 +134,7 @@ func (s *ResourceService) Claim(ctx context.Context, id economy.NodeID, playerID
 			return economy.ResourceNode{}, err
 		}
 	}
-	s.publish(node)
+	s.publish(ctx, node)
 	s.log.Info("economy.resource_node.claimed", "event", "economy.resource_node.claimed", "node_id", node.ID, "player_id", playerID, "resource", node.Resource)
 	return node, nil
 }
@@ -153,7 +154,15 @@ func (s *ResourceService) Harvest(ctx context.Context, id economy.NodeID, player
 		return economy.ResourceNode{}, economy.Inventory{}, apperror.New(apperror.Forbidden, "resource node belongs to another player")
 	}
 	harvestKey := fmt.Sprintf("resource:%s:harvest:%d:%d", id, node.UpdatedAt.UnixNano(), node.Amount)
-	harvest := min(12, node.Amount)
+	percent := 0
+	if s.allianceBenefits != nil {
+		var e error
+		percent, e = s.allianceBenefits.Percent(ctx, playerID, "harvest")
+		if e != nil {
+			return economy.ResourceNode{}, economy.Inventory{}, e
+		}
+	}
+	harvest := min((12*(100+percent)+99)/100, node.Amount)
 	node.Amount -= harvest
 	if node.Amount == 0 {
 		respawn := s.now().Add(20 * time.Minute)
@@ -179,7 +188,7 @@ func (s *ResourceService) Harvest(ctx context.Context, id economy.NodeID, player
 			return economy.ResourceNode{}, economy.Inventory{}, err
 		}
 	}
-	s.publish(node)
+	s.publish(ctx, node)
 	s.log.Info("economy.resource.harvested", "event", "economy.resource.harvested", "node_id", node.ID, "player_id", playerID, "resource", node.Resource, "amount", harvest)
 	return node, inventory, nil
 }
@@ -200,14 +209,16 @@ func (s *ResourceService) scheduleRespawn(ctx context.Context, node economy.Reso
 	))
 }
 
-func (s *ResourceService) publish(node economy.ResourceNode) {
+func (s *ResourceService) publish(ctx context.Context, node economy.ResourceNode) {
 	if s.events == nil {
 		return
 	}
-	s.events.Publish(Event{
+	publishEvent(ctx, s.events, Event{
 		Type:     EventResourceChanged,
 		ChunkID:  world.ChunkID(node.MapID, world.ChunkForTile(node.Tile)),
 		PlayerID: player.ID(node.OwnerID),
 		Payload:  ResourceChangedPayload{Node: node},
 	})
 }
+
+func (s *ResourceService) SetAllianceBenefits(a *AllianceService) { s.allianceBenefits = a }

@@ -229,10 +229,7 @@ func generatedSpawnIndex(id monster.SpawnID) (int, bool) {
 	return index, err == nil && index >= 0 && index < monsterSpawnPointCount
 }
 
-func wrappedCoord(tile world.Coord) world.Coord {
-	size := worldgen.WorldSizeTiles
-	return world.Coord{X: (tile.X%size + size) % size, Y: (tile.Y%size + size) % size}
-}
+func wrappedCoord(tile world.Coord) world.Coord { return world.NormalizeCoord(tile) }
 
 func wrappedChebyshev(a, b world.Coord) int {
 	a, b = wrappedCoord(a), wrappedCoord(b)

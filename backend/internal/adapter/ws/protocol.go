@@ -46,6 +46,8 @@ func EventEnvelope(event service.Event, seq uint64) Envelope {
 
 func normalizePayload(payload any) any {
 	switch value := payload.(type) {
+	case service.ChatMessagePayload:
+		return dto.ChatMessage(value.Message)
 	case service.TileChangedPayload:
 		return map[string]any{"tile": dto.Tile(value.Tile), "reason": value.Reason}
 	case service.BuildingPayload:

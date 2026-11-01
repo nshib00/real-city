@@ -6,3 +6,6 @@ dist/
 tmp/
 coverage.out
 *.test
+*.pem
+*.key
+!.env.example

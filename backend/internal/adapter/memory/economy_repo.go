@@ -2,6 +2,7 @@ package memory
 
 import (
 	"context"
+	"maps"
 	"sort"
 	"sync"
 	"time"
@@ -10,6 +11,7 @@ import (
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/pkg/apperror"
+	"real-city/backend/pkg/memorytx"
 )
 
 type EconomyRepo struct {
@@ -41,6 +43,8 @@ func NewEconomyRepo() *EconomyRepo {
 }
 
 func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coinCapacity int) (economy.Inventory, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -59,6 +63,8 @@ func (r *EconomyRepo) GetInventory(ctx context.Context, playerID player.ID, coin
 }
 
 func (r *EconomyRepo) SaveInventory(ctx context.Context, inventory economy.Inventory) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -67,6 +73,8 @@ func (r *EconomyRepo) SaveInventory(ctx context.Context, inventory economy.Inven
 }
 
 func (r *EconomyRepo) SpendResourceIfAvailable(ctx context.Context, playerID player.ID, resource economy.ResourceType, amount int, now time.Time) (bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	if amount <= 0 {
 		return false, nil
@@ -84,6 +92,8 @@ func (r *EconomyRepo) SpendResourceIfAvailable(ctx context.Context, playerID pla
 }
 
 func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -93,6 +103,8 @@ func (r *EconomyRepo) AddTransaction(ctx context.Context, tx economy.Transaction
 }
 
 func (r *EconomyRepo) HasPopulationTransactions(ctx context.Context, playerID player.ID) (bool, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -105,6 +117,8 @@ func (r *EconomyRepo) HasPopulationTransactions(ctx context.Context, playerID pl
 }
 
 func (r *EconomyRepo) ListTransactions(ctx context.Context, playerID player.ID, limit int) ([]economy.Transaction, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -117,6 +131,8 @@ func (r *EconomyRepo) ListTransactions(ctx context.Context, playerID player.ID, 
 }
 
 func (r *EconomyRepo) ListResourceNodes(ctx context.Context, mapID string) ([]economy.ResourceNode, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -131,6 +147,8 @@ func (r *EconomyRepo) ListResourceNodes(ctx context.Context, mapID string) ([]ec
 }
 
 func (r *EconomyRepo) SaveResourceNode(ctx context.Context, node economy.ResourceNode) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -139,6 +157,8 @@ func (r *EconomyRepo) SaveResourceNode(ctx context.Context, node economy.Resourc
 }
 
 func (r *EconomyRepo) FindResourceNode(ctx context.Context, id economy.NodeID) (economy.ResourceNode, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -150,6 +170,8 @@ func (r *EconomyRepo) FindResourceNode(ctx context.Context, id economy.NodeID) (
 }
 
 func (r *EconomyRepo) ListProductionJobs(ctx context.Context, playerID player.ID) ([]economy.ProductionJob, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -164,6 +186,8 @@ func (r *EconomyRepo) ListProductionJobs(ctx context.Context, playerID player.ID
 }
 
 func (r *EconomyRepo) ListDueProductionJobs(ctx context.Context, now time.Time, limit int) ([]economy.ProductionJob, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -181,6 +205,8 @@ func (r *EconomyRepo) ListDueProductionJobs(ctx context.Context, now time.Time, 
 }
 
 func (r *EconomyRepo) SaveProductionJob(ctx context.Context, job economy.ProductionJob) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -189,6 +215,8 @@ func (r *EconomyRepo) SaveProductionJob(ctx context.Context, job economy.Product
 }
 
 func (r *EconomyRepo) FindProductionJob(ctx context.Context, id economy.ProductionJobID) (economy.ProductionJob, error) {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
 	_ = ctx
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -206,4 +234,27 @@ func cloneInventory(inventory economy.Inventory) economy.Inventory {
 	}
 	inventory.Items = items
 	return inventory
+}
+
+func (r *EconomyRepo) Snapshot() func() {
+	r.mu.RLock()
+	inventories := maps.Clone(r.inventories)
+	for id, v := range inventories {
+		inventories[id] = cloneInventory(v)
+	}
+	transactions := maps.Clone(r.transactions)
+	for id, v := range transactions {
+		transactions[id] = append([]economy.Transaction(nil), v...)
+	}
+	nodes := maps.Clone(r.nodes)
+	jobs := maps.Clone(r.jobs)
+	r.mu.RUnlock()
+	return func() {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		r.inventories = inventories
+		r.transactions = transactions
+		r.nodes = nodes
+		r.jobs = jobs
+	}
 }

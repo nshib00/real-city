@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"io"
 	"net/http"
+	"strings"
 	"sync"
 	"time"
 
@@ -210,10 +211,10 @@ func requiresIdempotency(r *http.Request) bool {
 		return false
 	}
 	switch r.URL.Path {
-	case "/api/v1/buildings", "/api/v1/raids", "/api/v1/market/orders", "/api/v1/alliances/invites":
+	case "/api/v1/buildings", "/api/v1/combat/monsters", "/api/v1/market/orders", "/api/v1/alliances/invites":
 		return true
 	default:
-		return false
+		return strings.HasPrefix(r.URL.Path, "/api/v1/buildings/") && strings.HasSuffix(r.URL.Path, "/weapons")
 	}
 }
 

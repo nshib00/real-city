@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/world"
-	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
 )
 
@@ -31,6 +30,7 @@ func (s *WorldService) GetWorld(ctx context.Context) (world.WorldMap, error) {
 }
 
 func (s *WorldService) GetChunk(ctx context.Context, coord world.ChunkCoord) (world.Chunk, error) {
+	coord = world.NormalizeChunk(coord)
 	start := time.Now()
 	chunk, hit, err := s.repo.GetOrCreateChunk(ctx, DefaultWorldID, coord)
 	s.log.Info("world.chunk.loaded",
@@ -73,20 +73,7 @@ func (s *WorldService) ListChunks(ctx context.Context, center world.ChunkCoord, 
 }
 
 func visibleWorldChunks(center world.ChunkCoord, radius int) []world.ChunkCoord {
-	worldChunks := worldgen.WorldSizeTiles / world.ChunkSize
-	coords := make([]world.ChunkCoord, 0, worldChunks*worldChunks)
-	seen := make(map[world.ChunkCoord]bool)
-	for _, coord := range world.ChunksAround(center, radius) {
-		wrapped := world.ChunkCoord{
-			X: ((coord.X % worldChunks) + worldChunks) % worldChunks,
-			Y: ((coord.Y % worldChunks) + worldChunks) % worldChunks,
-		}
-		if !seen[wrapped] {
-			seen[wrapped] = true
-			coords = append(coords, wrapped)
-		}
-	}
-	return coords
+	return world.UniqueChunks(world.ChunksAround(world.NormalizeChunk(center), radius))
 }
 
 func (s *WorldService) LoadViewport(ctx context.Context, viewport world.Viewport) ([]world.Chunk, error) {

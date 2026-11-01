@@ -5,23 +5,30 @@ import (
 	"log/slog"
 	"time"
 
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/pkg/apperror"
 )
 
 type PlayerService struct {
-	players  PlayerRepository
-	sessions SessionStore
-	log      *slog.Logger
-	events   *EventBus
+	players   PlayerRepository
+	sessions  SessionStore
+	log       *slog.Logger
+	events    *EventBus
+	buildings BuildingRepository
+	alliances AllianceRepository
 }
 
 type UpdateProfileInput struct {
-	DisplayName string
-	CityName    string
-	AvatarURL   string
-	Settings    player.ProfileSettings
+	AvatarID     *string
+	BannerID     *string
+	Title        *string
+	HomeCenterID *string
+	DisplayName  string
+	CityName     string
+	AvatarURL    string
+	Settings     player.ProfileSettings
 }
 
 func NewPlayerService(players PlayerRepository, sessions SessionStore, log *slog.Logger) *PlayerService {
@@ -33,7 +40,11 @@ func (s *PlayerService) SetEventBus(events *EventBus) {
 }
 
 func (s *PlayerService) GetMe(ctx context.Context, id player.ID) (player.Player, error) {
-	return s.players.FindByID(ctx, id)
+	p, err := s.players.FindByID(ctx, id)
+	if err != nil {
+		return p, err
+	}
+	return s.enrichProfile(ctx, p)
 }
 
 func (s *PlayerService) GetPublic(ctx context.Context, id player.ID) (player.Player, error) {
@@ -77,15 +88,40 @@ func (s *PlayerService) UpdateProfile(ctx context.Context, id player.ID, input U
 	if err != nil {
 		return player.Player{}, err
 	}
-	profile := player.Profile{
-		DisplayName: input.DisplayName,
-		CityName:    input.CityName,
-		AvatarURL:   input.AvatarURL,
-		Level:       current.Profile.Level,
-		XP:          current.Profile.XP,
-		Settings:    input.Settings,
-		UpdatedAt:   time.Now().UTC(),
+	profile := current.Profile
+	profile.DisplayName = input.DisplayName
+	profile.CityName = input.CityName
+	profile.AvatarURL = input.AvatarURL
+	profile.Settings = input.Settings
+	profile.UpdatedAt = time.Now().UTC()
+	if input.AvatarID != nil {
+		profile.AvatarID = *input.AvatarID
 	}
+	if input.BannerID != nil {
+		profile.BannerID = *input.BannerID
+	}
+	if input.Title != nil {
+		profile.Title = *input.Title
+	}
+	if input.HomeCenterID != nil {
+		profile.HomeCenterID = *input.HomeCenterID
+		if profile.HomeCenterID != "" {
+			if s.buildings == nil {
+				return player.Player{}, apperror.New(apperror.Conflict, "Поселения временно недоступны")
+			}
+			b, e := s.buildings.FindByID(ctx, building.ID(profile.HomeCenterID))
+			if e != nil {
+				return player.Player{}, e
+			}
+			if b.OwnerID != string(id) || b.Type != building.TypeTownHall || b.State == building.StateRuined {
+				return player.Player{}, apperror.New(apperror.Forbidden, "Выберите свою действующую ратушу")
+			}
+		}
+	}
+	if err := player.ValidateAppearance(profile); err != nil {
+		return player.Player{}, err
+	}
+
 	profile = player.NormalizeProfile(profile)
 	if err := player.ValidateProfile(profile); err != nil {
 		return player.Player{}, err
@@ -144,6 +180,13 @@ func (s *PlayerService) ChangePassword(ctx context.Context, id player.ID, curren
 }
 
 func (s *PlayerService) DeleteMe(ctx context.Context, id player.ID) error {
+	p, err := s.players.FindByID(ctx, id)
+	if err != nil {
+		return err
+	}
+	if p.Role == player.RoleAdmin {
+		return apperror.New(apperror.Conflict, "Перед удалением передайте роль администратора и снимите её с этого аккаунта")
+	}
 	if err := s.sessions.RevokePlayer(ctx, id); err != nil {
 		return err
 	}
