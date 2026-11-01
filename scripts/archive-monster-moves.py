@@ -39,14 +39,14 @@ def main() -> None:
     cutoff = dt.datetime.fromisoformat(args.before.replace("Z", "+00:00"))
     if cutoff.tzinfo is None or args.batch_size < 1 or args.batch_size > 100000:
         parser.error("нужны timezone в --before и batch-size 1..100000")
+    if args.apply and (args.archive is None or args.archive.exists()):
+        parser.error("для --apply нужен новый, ещё не существующий --archive")
     sql_cutoff = cutoff.astimezone(dt.timezone.utc).isoformat().replace("'", "")
     predicate = f"type = 'monster.moved' AND created_at < TIMESTAMPTZ '{sql_cutoff}'"
     count = int(psql(args.container, f"SELECT count(*) FROM monster_events WHERE {predicate}"))
     print(f"Подходящих monster.moved: {count}", flush=True)
     if not args.apply or count == 0:
         return
-    if args.archive is None or args.archive.exists():
-        parser.error("для --apply нужен новый, ещё не существующий --archive")
     args.archive.parent.mkdir(parents=True, exist_ok=True)
     try:
         with open(args.archive, "xb") as raw:
