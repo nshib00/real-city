@@ -22,7 +22,8 @@ export function AuthScreen({ expired = false }: { expired?: boolean }) {
   const [error, setError] = useState('')
   const [isSubmitting, setSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [useRaster, setUseRaster] = useState(true)
+  const [useSceneFallback, setUseSceneFallback] = useState(false)
+  const [sceneUnavailable, setSceneUnavailable] = useState(false)
   const [fields, setFields] = useState<Record<string, string>>({})
   const submitting = useRef(false)
   const emailRef = useRef<HTMLInputElement>(null)
@@ -57,11 +58,28 @@ export function AuthScreen({ expired = false }: { expired?: boolean }) {
   return (
     <main className="auth-screen start-screen">
       <figure className="start-scene">
-        <picture>{useRaster ? <source type="image/webp" srcSet="/assets/ui/start/settlement-480.webp 480w, /assets/ui/start/settlement-960.webp 960w" sizes="(max-width: 700px) 90vw, 58vw" /> : null}<img src="/assets/ui/start/settlement.svg" width="960" height="720" alt="Поселение Эолии: центр, мастерская и грядки у дороги на опушке леса" fetchPriority="high" onError={() => setUseRaster(false)} /></picture>
+        {sceneUnavailable ? <div className="start-scene-fallback" role="img" aria-label="Карта Эолии загрузится после входа" /> :
+          <picture>
+            {!useSceneFallback ? <>
+              <source media="(max-width: 700px)" type="image/webp" srcSet="/assets/ui/start/settlement-480.webp" />
+              <source type="image/webp" srcSet="/assets/ui/start/settlement-960.webp" />
+            </> : null}
+            <img
+              src={useSceneFallback ? '/assets/ui/start/settlement-480.webp' : '/assets/ui/start/settlement-960.webp'}
+              width="960"
+              height="656"
+              alt="Изометрический участок Эолии с ратушей, домами, дорогой, садом и лесом"
+              fetchPriority="high"
+              onError={() => useSceneFallback ? setSceneUnavailable(true) : setUseSceneFallback(true)}
+            />
+          </picture>}
         <figcaption>Место для вашего города есть в общем мире.</figcaption>
       </figure>
       <section className="auth-panel start-panel" aria-label="Аккаунт">
-        <h1>Эолия</h1>
+        <div className="start-brand">
+          <img src="/assets/ui/start/eolia-mark.png" width="64" height="64" alt="" aria-hidden="true" />
+          <h1>Эолия</h1>
+        </div>
         <p className="start-promise">Строй город в общем живом мире</p>
         <ul className="start-principles"><li>Строй рядом с другими игроками.</li><li>Добывай ресурсы и развивай производство.</li><li>Защищай постройки и пути к запасам.</li></ul>
         <div className="start-actions"><button type="button" disabled={isSubmitting} onClick={() => { setMode('register'); setError(''); setFields({}); emailRef.current?.focus() }}>Начать играть</button><button type="button" disabled={isSubmitting} onClick={() => { setMode('login'); setError(''); setFields({}); emailRef.current?.focus() }}>Войти в аккаунт</button></div>

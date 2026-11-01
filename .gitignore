@@ -75,6 +75,9 @@ frontend/public/assets/**/work/
 *.blend1
 *.blend2
 *.blend@
+# Blender source scenes for browser-facing Real City art assets.
+!tools/assets/ui/start-city/*.blend
+!tools/assets/ui/favicon/*.blend
 *.fbx
 *.glb
 *.gltf

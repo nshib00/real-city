@@ -34,12 +34,14 @@ for (const relative of required) {
 }
 if (total > 128 * 1024) errors.push(`UI exceeds 128 KB: ${total}`)
 let startTotal = 0
-for (const [file, limit] of [['settlement.svg', 12], ['settlement-480.webp', 20], ['settlement-960.webp', 40]]) {
+for (const [file, limit] of [['settlement-480.webp', 20], ['settlement-960.webp', 40]]) {
   const bytes = (await stat(path.join(ui, 'start', file))).size
   startTotal += bytes
   if (bytes > limit * 1024) errors.push(`Start scene exceeds ${limit} KiB: ${file}`)
 }
 if (startTotal > 72 * 1024) errors.push(`Start scene exceeds 72 KiB: ${startTotal}`)
+const markBytes = (await stat(path.join(ui, 'start', 'eolia-mark.png'))).size
+if (markBytes > 32 * 1024) errors.push(`Start mark exceeds 32 KiB: ${markBytes}`)
 // Потребители не должны незаметно возвращать старые знаки.
 async function checkConsumers(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
