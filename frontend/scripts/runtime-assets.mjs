@@ -19,5 +19,6 @@ export function isRuntimeAsset(relativePath) {
     return !fileName.endsWith('_levels.glb') && runtimeGlbDirectories.some((directory) => normalized.startsWith(directory))
   }
   if (/^resources\/icons\/[^/]+\.png$/.test(normalized)) return false
+  if (normalized.startsWith('terrain/tiles/') && fileName.endsWith('.png')) return false
   return true
 }

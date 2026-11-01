@@ -10,6 +10,7 @@ import { validatePlacementPreview } from '../features/build-placement/placement'
 
 import { flattenChunkTiles, useVisibleChunks } from '../features/world/useVisibleChunks'
 import { MapEntryStatus } from '../features/world/MapEntryStatus'
+import { InitialLoadingScreen } from '../features/loading/InitialLoadingScreen'
 import { useOwnershipContext } from '../features/alliance/useOwnership'
 import { occupiedTerritory } from './territory'
 import { canChopForestTile } from '../features/world/forestActions'
@@ -26,7 +27,7 @@ import { chopForest, type ChunksResponse } from '../shared/api/world'
 import { relocateBuilding, patchBuilding, toPlacedBuilding } from '../shared/api/buildings'
 import { buildingSpriteAsset } from './renderers/buildingSpriteAssets'
 import { claimMonsterLoot, listMonsterLoot, type MonsterLootResponse } from '../shared/api/monsters'
-import { advanceField, harvestField, listProductionJobs, listProductionRecipes, patchProductionJob, startProduction } from '../shared/api/economy'
+import { advanceField, harvestField, listProductionRecipes, patchProductionJob, startProduction } from '../shared/api/economy'
 import type { InventoryItem, InventoryResponse, ProductionJobResponse, ProductionRecipeResponse } from '../shared/api/economy'
 import { useAuthStore } from '../features/auth/useAuthStore'
 import { PlayerBalloon } from '../features/player/PlayerBalloon'
@@ -38,6 +39,7 @@ import { ResourceIcon } from '../features/resources/ResourceIcon'
 import { resourceCatalog } from '../../../shared/catalog/resources'
 import { formatRemaining } from '../shared/time/formatRemaining'
 import { updateProductionCache } from '../features/production/updateProductionCache'
+import { useProductionJobs } from '../features/production/useProductionJobs'
 import { mapObjectZIndex } from './renderer/depth'
 
 const RECENT_CHOP_TILE_TTL_MS = 10_000
@@ -89,6 +91,8 @@ export function IsoMap() {
   const optimisticChopResultTilesRef = useRef(new Map<string, WorldTile>())
   const recentChopTilesRef = useRef(new Map<string, { tile: WorldTile; expiresAt: number }>())
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
+  const [rendererReady, setRendererReady] = useState(false)
+  const [rendererFailed, setRendererFailed] = useState(false)
   const activePointers = useRef(new Set<number>())
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
@@ -106,6 +110,7 @@ export function IsoMap() {
   const renderBuildings = performanceScenario?.buildings ?? buildings
   const renderResourceNodes = performanceScenario?.resources ?? resourceNodes
   const renderMonsters = performanceScenario?.monsters ?? monsters
+  const territories = useMemo(() => occupiedTerritory(renderBuildings, ownership.viewerId, ownership.alliedIds), [renderBuildings, ownership.viewerId, ownership.alliedIds])
   const mapTiles = performanceScenario?.tiles ?? (worldTiles.length > 0 ? worldTiles : tiles)
   const mapTilesByKey = useMemo(() => new Map(mapTiles.map((tile) => [tileActionKey(tile), tile])), [mapTiles])
   const placementPreview = placementPreviewKind ? buildCatalog.find((item) => item.kind === placementPreviewKind) : undefined
@@ -218,7 +223,7 @@ export function IsoMap() {
     onError: (error) => showToast('warning', error instanceof Error ? error.message : 'Не удалось починить постройку'),
   })
   const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes, staleTime: 5 * 60_000, gcTime: 30 * 60_000 })
-  const jobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, refetchInterval: 5000 })
+  const jobsQuery = useProductionJobs()
   const recipes = recipesQuery.data?.recipes ?? []
   const productionJobs = jobsQuery.data?.jobs ?? []
   const activeProductionByBuilding = useMemo(() => {
@@ -546,7 +551,9 @@ export function IsoMap() {
       </div> : null}
       {placementValidity ? <div className="placement-status" role="status">{placementValidity.valid ? '✓ Место подходит предварительно. Подтвердите в меню строительства.' : `× ${placementValidity.reason}`} Сервер проверит размещение.</div> : null}
       <PixiStage key={mapPowerSave ? 'economy' : 'normal'} powerSave={mapPowerSave}
-        territories={occupiedTerritory(renderBuildings, ownership.viewerId, ownership.alliedIds)}
+        onReady={() => { setRendererReady(true); setRendererFailed(false) }}
+        onFailed={() => setRendererFailed(true)}
+        territories={territories}
         tiles={mapTiles}
         occupiedTiles={buildingOccupiedTiles}
         buildings={visibleBuildings}
@@ -667,6 +674,17 @@ export function IsoMap() {
         ))}
       </div>
       <MapEntryStatus query={chunksQuery} />
+      <InitialLoadingScreen
+        query={chunksQuery}
+        tiles={tiles}
+        buildings={visibleBuildings}
+        allBuildings={renderBuildings}
+        monsters={visibleMonsters}
+        rendererReady={rendererReady}
+        rendererFailed={rendererFailed}
+        stageReady={stageSize.width > 0 && stageSize.height > 0}
+        retryRenderer={() => { setRendererFailed(false); window.dispatchEvent(new Event('real-city:retry-renderer')) }}
+      />
       <div className="map-debug" aria-live="polite">
         {performanceScenario ? <span>{performanceScenarioLabel(performanceScenario)}</span> : null}
         <MapFpsLabel />

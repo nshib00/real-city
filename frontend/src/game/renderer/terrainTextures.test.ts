@@ -1,48 +1,38 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-import { hasTerrainTexture, isRaisedTerrain, TERRAIN_SPRITE, terrainPngTextureUrl, terrainTextureUrl } from './terrainTextures'
-
-const { loadTerrainAsset } = vi.hoisted(() => ({
-  loadTerrainAsset: vi.fn(() => Promise.resolve({})),
-}))
-
-vi.mock('pixi.js', () => ({
-  Assets: {
-    load: loadTerrainAsset,
-  },
-}))
+import { hasTerrainTexture, isRaisedTerrain, TERRAIN_SPRITE, terrainRuntimeTextureUrl, terrainTextureUrl, terrainPreloadUrls } from './terrainTextures'
 
 describe('terrain textures', () => {
   it('provides image textures for visual terrain types', () => {
-    expect(terrainTextureUrl({ terrain: 'grass' })).toBe('/assets/terrain/tiles/grass.png')
-    expect(terrainTextureUrl({ terrain: 'forest' })).toBe('/assets/terrain/tiles/forest.png')
-    expect(terrainTextureUrl({ terrain: 'water' })).toBe('/assets/terrain/tiles/water.png')
-    expect(terrainTextureUrl({ terrain: 'mountain' })).toBe('/assets/terrain/tiles/mountain_detail_staging/mountain_detail_ridge.png')
-    expect(terrainTextureUrl({ terrain: 'oil_well' })).toBe('/assets/terrain/tiles/oil_well.png')
-    expect(terrainTextureUrl({ terrain: 'ruins' })).toBe('/assets/terrain/tiles/ruins.png')
+    expect(terrainTextureUrl({ terrain: 'grass' })).toBe('/assets/terrain/tiles/runtime/grass.webp')
+    expect(terrainTextureUrl({ terrain: 'forest' })).toBe('/assets/terrain/tiles/runtime/forest.webp')
+    expect(terrainTextureUrl({ terrain: 'water' })).toBe('/assets/terrain/tiles/runtime/water.webp')
+    expect(terrainTextureUrl({ terrain: 'mountain' })).toBe('/assets/terrain/tiles/runtime/mountain_detail_ridge.webp')
+    expect(terrainTextureUrl({ terrain: 'oil_well' })).toBe('/assets/terrain/tiles/runtime/oil_well.webp')
+    expect(terrainTextureUrl({ terrain: 'ruins' })).toBe('/assets/terrain/tiles/runtime/ruins.webp')
   })
 
-  it('points terrain ids to PNG sprite assets', () => {
-    expect(terrainPngTextureUrl({ terrain: 'grass' })).toBe('/assets/terrain/tiles/grass.png')
-    expect(terrainPngTextureUrl({ terrain: 'forest' })).toBe('/assets/terrain/tiles/forest.png')
-    expect(terrainPngTextureUrl({ terrain: 'water' })).toBe('/assets/terrain/tiles/water.png')
-    expect(terrainPngTextureUrl({ terrain: 'mountain' })).toBe('/assets/terrain/tiles/mountain_detail_staging/mountain_detail_ridge.png')
-    expect(terrainPngTextureUrl({ terrain: 'oil_well' })).toBe('/assets/terrain/tiles/oil_well.png')
-    expect(terrainPngTextureUrl({ terrain: 'ruins' })).toBe('/assets/terrain/tiles/ruins.png')
+  it('points terrain ids to runtime sprite assets', () => {
+    expect(terrainRuntimeTextureUrl({ terrain: 'grass' })).toBe('/assets/terrain/tiles/runtime/grass.webp')
+    expect(terrainRuntimeTextureUrl({ terrain: 'forest' })).toBe('/assets/terrain/tiles/runtime/forest.webp')
+    expect(terrainRuntimeTextureUrl({ terrain: 'water' })).toBe('/assets/terrain/tiles/runtime/water.webp')
+    expect(terrainRuntimeTextureUrl({ terrain: 'mountain' })).toBe('/assets/terrain/tiles/runtime/mountain_detail_ridge.webp')
+    expect(terrainRuntimeTextureUrl({ terrain: 'oil_well' })).toBe('/assets/terrain/tiles/runtime/oil_well.webp')
+    expect(terrainRuntimeTextureUrl({ terrain: 'ruins' })).toBe('/assets/terrain/tiles/runtime/ruins.webp')
   })
 
   it('connects generated ruins variants to runtime terrain sprites', () => {
-    expect(terrainTextureUrl({ terrain: 'ruins_archive' })).toBe('/assets/terrain/tiles/ruins_archive.png')
-    expect(terrainTextureUrl({ terrain: 'ruins_wind_shrine' })).toBe('/assets/terrain/tiles/ruins_wind_shrine.png')
+    expect(terrainTextureUrl({ terrain: 'ruins_archive' })).toBe('/assets/terrain/tiles/runtime/ruins_archive.webp')
+    expect(terrainTextureUrl({ terrain: 'ruins_wind_shrine' })).toBe('/assets/terrain/tiles/runtime/ruins_wind_shrine.webp')
     for (const variant of [
       'ruins_town_square', 'ruins_archive', 'ruins_mint', 'ruins_storage',
       'ruins_greenhouse', 'ruins_water_station', 'ruins_bastion',
       'ruins_mechanic_workshop', 'ruins_wind_shrine', 'ruins_ore_obelisk',
       'ruins_rift_watch', 'ruins_river_lighthouse',
     ]) {
-      expect(terrainTextureUrl({ terrain: 'ruins', ruin_type: variant })).toBe(`/assets/terrain/tiles/${variant}.png`)
+      expect(terrainTextureUrl({ terrain: 'ruins', ruin_type: variant })).toBe(`/assets/terrain/tiles/runtime/${variant}.webp`)
     }
-    expect(terrainTextureUrl({ terrain: 'ruins', ruin_type: 'unknown' })).toBe('/assets/terrain/tiles/ruins.png')
+    expect(terrainTextureUrl({ terrain: 'ruins', ruin_type: 'unknown' })).toBe('/assets/terrain/tiles/runtime/ruins.webp')
   })
 
   it('selects a stable mountain variant for each coordinate without changing its terrain type', () => {
@@ -57,15 +47,15 @@ describe('terrain textures', () => {
       }
     }
     expect(variants).toEqual(new Set([
-      '/assets/terrain/tiles/mountain_detail_staging/mountain_detail_ridge.png',
-      '/assets/terrain/tiles/mountain_detail_staging/mountain_detail_spire.png',
-      '/assets/terrain/tiles/mountain_detail_staging/mountain_detail_snowcap.png',
+      '/assets/terrain/tiles/runtime/mountain_detail_ridge.webp',
+      '/assets/terrain/tiles/runtime/mountain_detail_spire.webp',
+      '/assets/terrain/tiles/runtime/mountain_detail_snowcap.webp',
     ]))
   })
 
   it('provides a regenerated road sprite', () => {
     expect(hasTerrainTexture({ terrain: 'road' })).toBe(true)
-    expect(terrainTextureUrl({ terrain: 'road' })).toBe('/assets/terrain/tiles/road.png')
+    expect(terrainTextureUrl({ terrain: 'road' })).toBe('/assets/terrain/tiles/runtime/road.webp')
   })
 
   it('places raised terrain in the depth-sorted object layer', () => {
@@ -77,10 +67,10 @@ describe('terrain textures', () => {
   })
 
   it('shows forest clearing through canopy density', () => {
-    expect(terrainTextureUrl({ terrain: 'forest', forest_density: 3 })).toBe('/assets/terrain/tiles/forest.png')
-    expect(terrainTextureUrl({ terrain: 'forest', forest_density: 2 })).toBe('/assets/terrain/tiles/forest_thinned.png')
-    expect(terrainTextureUrl({ terrain: 'forest', forest_density: 1 })).toBe('/assets/terrain/tiles/forest_sparse.png')
-    expect(terrainTextureUrl({ terrain: 'grass', forest_density: 0 })).toBe('/assets/terrain/tiles/grass.png')
+    expect(terrainTextureUrl({ terrain: 'forest', forest_density: 3 })).toBe('/assets/terrain/tiles/runtime/forest.webp')
+    expect(terrainTextureUrl({ terrain: 'forest', forest_density: 2 })).toBe('/assets/terrain/tiles/runtime/forest_thinned.webp')
+    expect(terrainTextureUrl({ terrain: 'forest', forest_density: 1 })).toBe('/assets/terrain/tiles/runtime/forest_sparse.webp')
+    expect(terrainTextureUrl({ terrain: 'grass', forest_density: 0 })).toBe('/assets/terrain/tiles/runtime/grass.webp')
   })
 
   it('matches the Blender tile footprint without aspect distortion', () => {
@@ -90,23 +80,15 @@ describe('terrain textures', () => {
     expect(TERRAIN_SPRITE.anchorY * TERRAIN_SPRITE.height).toBe(320)
   })
 
-  it('preloads PNG textures through Pixi assets so Texture.from can read the cache', async () => {
-    const { preloadTerrainPngTextures } = await import('./terrainTextures')
-
-    await preloadTerrainPngTextures()
-
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/grass.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/forest.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/water.png')
-    for (const variant of ['ridge', 'spire', 'snowcap']) {
-      expect(loadTerrainAsset).toHaveBeenCalledWith(`/assets/terrain/tiles/mountain_detail_staging/mountain_detail_${variant}.png`)
-    }
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/oil_well.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/ruins.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/ruins_archive.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/ruins_wind_shrine.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/road.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/forest_thinned.png')
-    expect(loadTerrainAsset).toHaveBeenCalledWith('/assets/terrain/tiles/forest_sparse.png')
+  it('preloads only terrain variants present in the initial viewport', () => {
+    expect(terrainPreloadUrls([
+      { terrain: 'grass' }, { terrain: 'grass' },
+      { terrain: 'forest', forest_density: 2 },
+      { terrain: 'ruins', ruin_type: 'ruins_archive' },
+    ])).toEqual([
+      '/assets/terrain/tiles/runtime/grass.webp',
+      '/assets/terrain/tiles/runtime/forest_thinned.webp',
+      '/assets/terrain/tiles/runtime/ruins_archive.webp',
+    ])
   })
 })

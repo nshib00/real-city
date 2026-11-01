@@ -1,4 +1,3 @@
-import { Assets } from 'pixi.js'
 import type { WorldTile } from '../../shared/contracts'
 
 const RUINS_VARIANTS = [
@@ -17,11 +16,13 @@ const RUINS_VARIANTS = [
 ] as const
 const TEXTURED_TERRAINS = new Set(['grass', 'forest', 'water', 'mountain', 'road', 'oil_well', 'ruins', ...RUINS_VARIANTS])
 const MOUNTAIN_VARIANTS = [
-  'mountain_detail_staging/mountain_detail_ridge',
-  'mountain_detail_staging/mountain_detail_spire',
-  'mountain_detail_staging/mountain_detail_snowcap',
+  'mountain_detail_ridge',
+  'mountain_detail_spire',
+  'mountain_detail_snowcap',
 ] as const
-const TERRAIN_SPRITES = [...TEXTURED_TERRAINS].filter((terrain) => terrain !== 'mountain').concat('forest_thinned', 'forest_sparse', ...MOUNTAIN_VARIANTS)
+export function terrainPreloadUrls(tiles: readonly TerrainTile[]) {
+  return [...new Set(tiles.map(terrainTextureUrl).filter((url): url is string => Boolean(url)))]
+}
 type TerrainTile = { terrain: string } & Partial<Pick<WorldTile, 'x' | 'y' | 'forest_density' | 'ruin_type'>>
 
 export function isRaisedTerrain(tile: TerrainTile) {
@@ -35,9 +36,8 @@ export const TERRAIN_SPRITE = {
   anchorX: 0.5,
   anchorY: 0.625,
 } as const
-const terrainPngTextureChecks = new Map<string, Promise<void>>()
 
-export function terrainPngTextureUrl(tile: TerrainTile) {
+export function terrainRuntimeTextureUrl(tile: TerrainTile) {
   if (!TEXTURED_TERRAINS.has(tile.terrain)) {
     return undefined
   }
@@ -53,31 +53,13 @@ export function terrainPngTextureUrl(tile: TerrainTile) {
     const variant = Math.abs(Math.imul(tile.x ?? 0, 73856093) ^ Math.imul(tile.y ?? 0, 19349663)) % MOUNTAIN_VARIANTS.length
     sprite = MOUNTAIN_VARIANTS[variant]
   }
-  return `/assets/terrain/tiles/${sprite}.png`
+  return `/assets/terrain/tiles/runtime/${sprite}.webp`
 }
 
 export function terrainTextureUrl(tile: TerrainTile) {
-  return terrainPngTextureUrl(tile)
+  return terrainRuntimeTextureUrl(tile)
 }
 
 export function hasTerrainTexture(tile: TerrainTile) {
   return Boolean(terrainTextureUrl(tile))
-}
-
-export function preloadTerrainPngTextures() {
-  return Promise.all(TERRAIN_SPRITES.map((terrain) => checkTerrainPngTexture(terrain))).then(() => undefined)
-}
-
-function checkTerrainPngTexture(terrain: string) {
-  const existing = terrainPngTextureChecks.get(terrain)
-  if (existing) {
-    return existing
-  }
-
-  const promise = Assets.load(`/assets/terrain/tiles/${terrain}.png`).then(
-    () => undefined,
-    () => undefined,
-  )
-  terrainPngTextureChecks.set(terrain, promise)
-  return promise
 }

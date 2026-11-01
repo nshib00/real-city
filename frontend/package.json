@@ -10,6 +10,7 @@
     "lint": "tsc --noEmit",
     "assets:budget": "node --test scripts/runtime-assets.test.mjs && node scripts/check-ui-assets.mjs && node scripts/check-asset-budget.mjs",
     "assets:ui": "node scripts/check-ui-assets.mjs",
+    "assets:terrain": "node scripts/generate-runtime-terrain.mjs",
     "test:e2e": "node node_modules/playwright/cli.js test",
     "test:design": "node node_modules/playwright/cli.js test --config playwright.design.config.ts",
     "test:interface": "node node_modules/playwright/cli.js test --config playwright.interface.config.ts",

@@ -10,5 +10,8 @@ test('keeps the monster fallback sprite while excluding source previews and comb
   assert.equal(isRuntimeAsset('buildings/center/town_hall/town_hall_l01_active_LOD0.glb'), true)
   assert.equal(isRuntimeAsset('resources/icons/coins.png'), false)
   assert.equal(isRuntimeAsset('resources/icons/runtime/coins.webp'), true)
+  assert.equal(isRuntimeAsset('terrain/tiles/grass.png'), false)
+  assert.equal(isRuntimeAsset('terrain/tiles/mountain_detail_staging/mountain_detail_ridge.png'), false)
+  assert.equal(isRuntimeAsset('terrain/tiles/runtime/grass.webp'), true)
   assert.equal(isRuntimeAsset('buildings/industry/mine/preview/mine.png'), false)
 })

@@ -16,6 +16,8 @@ jobs:
         working-directory: frontend
       - run: npm run lint
         working-directory: frontend
+      - run: npm run assets:budget
+        working-directory: frontend
       - name: Production dependency vulnerabilities
         run: npm audit --omit=dev --audit-level=high
         working-directory: frontend

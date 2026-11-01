@@ -1,0 +1,92 @@
+.initial-loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  min-width: 320px;
+  background: radial-gradient(circle at 50% 38%, #fff9e9 0, #eee0be 52%, #c9bc99 100%);
+  color: #20302b;
+}
+
+.initial-loading-content {
+  width: min(100%, 620px);
+  text-align: center;
+}
+
+.initial-loading-logo {
+  margin: 0 0 clamp(44px, 9vh, 96px);
+  color: #215239;
+  font-size: clamp(56px, 13vw, 112px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-shadow: 2px 3px 0 #f8e6ae;
+}
+
+.initial-loading-progress-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4ch;
+  align-items: center;
+  gap: 14px;
+}
+
+.initial-loading-bar {
+  height: 20px;
+  overflow: hidden;
+  border: 2px solid #274438;
+  border-radius: 5px;
+  background: #fffaf0;
+  box-shadow: 3px 4px 0 rgba(32, 48, 43, 0.14);
+}
+
+.initial-loading-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #387c54, #70ae62);
+  transition: width 160ms ease-out;
+}
+
+.initial-loading-percent {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 20px;
+}
+
+.initial-loading-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 15px 4ch 0 0;
+  text-align: left;
+  font-size: 15px;
+}
+
+.initial-loading-details span:last-child {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.initial-loading-hint { margin: 20px 0 0; color: #526052; }
+.initial-loading-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.initial-loading-screen button {
+  min-height: 44px;
+  margin-top: 24px;
+  padding: 9px 16px;
+  border: 2px solid #274438;
+  border-radius: 5px;
+  background: #286447;
+  color: #fff8e8;
+  font: inherit;
+  cursor: pointer;
+}
+.initial-loading-screen button:focus-visible { outline: 3px solid #225f79; outline-offset: 3px; }
+
+@media (max-width: 480px) {
+  .initial-loading-progress-row { gap: 8px; }
+  .initial-loading-details { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .initial-loading-bar span { transition: none; }
+}

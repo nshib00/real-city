@@ -1,7 +1,7 @@
 import type { MonsterEntity } from '../../state/useGameStore'
 import { healthRatio } from '../../health'
 import type { AssetDirection, MonsterAnimationKey } from '../../renderers/assetManifestTypes'
-import { monsterAssetRegistryEntry, monsterDisplayName, resolveMonsterAnimation, resolveMonsterAtlasSource } from '../../renderers/monsterAssetRegistry'
+import { monsterAssetRegistryEntry, monsterDisplayName, resolveMonsterAnimation, resolveMonsterAtlasAsset } from '../../renderers/monsterAssetRegistry'
 import { animationFrameIndex, animationPhaseOffsetMs } from './animationClock'
 import { objectLayerSortKey } from './objectDepth'
 
@@ -148,7 +148,6 @@ export function monsterDrawCommand(
     })
     : 0
   const frameName = animation ? monsterFrameName(monster.type, animationKey, selection?.direction ?? direction, frameIndex, animation.framePrefix) : null
-  const source = resolveMonsterAtlasSource(monster.type)
   const displayTile = options.reducedMotion ? monster.tile : interpolatedMonsterTile(monster, options.previous, options.nowMs)
   const isColossus = monster.type === 'ancient_colossus'
   // During death the body falls to one side. Center those two poses so their
@@ -167,7 +166,7 @@ export function monsterDrawCommand(
     direction,
     animationKey,
     frameName,
-    atlasUrl: source?.fallbackUrl ?? null,
+    atlasUrl: resolveMonsterAtlasAsset(monster.type),
     anchor: { x: isColossus ? colossusAnchorX : DEFAULT_MONSTER_SPRITE.anchorX, y: isColossus ? 0.87 : DEFAULT_MONSTER_SPRITE.anchorY },
     size: { width: isColossus ? ANCIENT_COLOSSUS_SPRITE_SIZE : DEFAULT_MONSTER_SPRITE.width, height: isColossus ? ANCIENT_COLOSSUS_SPRITE_SIZE : DEFAULT_MONSTER_SPRITE.height },
     groundOffsetY: monsterGroundOffsetY(monster.type, direction),

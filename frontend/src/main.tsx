@@ -13,6 +13,7 @@ import './app/styles/aeolian.css'
 import './app/styles/control-states.css'
 import './app/styles/object-marks.css'
 import './app/styles/start.css'
+import './app/styles/loading.css'
 import { clientTelemetry, installClientTelemetry } from './shared/telemetry/clientTelemetry'
 
 installClientTelemetry()

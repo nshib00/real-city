@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { ApiClientError, clearTokens, getAccessToken } from '../../shared/api/client'
 import { StatusState } from '../../shared/ui/StatusState'
+import { LoadingScreenView } from '../loading/LoadingScreenView'
 import { restoreSession } from './session'
 import { AuthScreen } from './AuthScreen'
 import { useAuthStore } from './useAuthStore'
@@ -42,7 +43,7 @@ export function AuthGate({ children }: AuthGateProps) {
   if (error) return <StatusState title="Не удалось проверить сессию" variant="error" action={{ label: 'Повторить подключение', onClick: () => setAttempt(attempt + 1) }}>Проверьте соединение. Ваша сессия сохранена; повтор не создаёт новый аккаунт.</StatusState>
 
   if (isBooting) {
-    return <StatusState>Подключение сессии</StatusState>
+    return <LoadingScreenView loaded={0} total={0} message="Проверяем вход…" />
   }
 
   if (!isAuthenticated) {

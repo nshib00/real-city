@@ -19,7 +19,7 @@ import { projectedObjectSortKey } from './objectLayer/objectDepth'
 import { resourceDrawCommands, type ResourceDrawCommand } from './objectLayer/resourceDrawData'
 import { buildingHitAtClick, createRenderedTileLookup } from './mapHitTarget'
 import { pixiMutationCounts, recordPixiChildMutation, recordPixiFrame, recordPixiRedraw, registerPixiContext } from './renderPerformanceMetrics'
-import { isRaisedTerrain, preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
+import { isRaisedTerrain, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
 import { tileOccupancyKey } from './visibleObjects'
 import { indexWorldTiles, worldTilesNear, type WorldTileIndex } from './worldTileIndex'
 import { observeWorldMotion, worldMotionEnabled } from './motionPolicy'
@@ -38,6 +38,8 @@ type TileCoord = {
 }
 
 type PixiStageProps = {
+  onReady?: () => void
+  onFailed?: () => void
   powerSave?: boolean
   territories?: TerritoryCell[]
   tiles: WorldTile[]
@@ -105,6 +107,8 @@ export const mapTextureReadiness = new TextureReadiness((url) => Assets.load(url
 const monsterAtlasTextures = new Map<MonsterEntity['type'], 'loading' | Record<string, Texture> | null>()
 
 export function PixiStage({
+  onReady,
+  onFailed,
   powerSave = false,
   territories = [],
   tiles,
@@ -329,11 +333,6 @@ export function PixiStage({
         }
       })
       redraw()
-      void preloadTerrainPngTextures().then(() => {
-        if (!disposed && terrainSpritesRef.current && objectSpritesRef.current && terrainRef.current && overlayRef.current) {
-          redraw()
-        }
-      })
     }
 
     let starting = false
@@ -341,9 +340,15 @@ export function PixiStage({
       if (starting) return
       starting = true
       void mount().then(() => {
-        if (!disposed && app) window.dispatchEvent(new Event('real-city:map-ready'))
+        if (!disposed && app) {
+          onReady?.()
+          window.dispatchEvent(new Event('real-city:map-ready'))
+        }
       }).catch(() => {
-        if (!disposed) window.dispatchEvent(new Event('real-city:map-failed'))
+        if (!disposed) {
+          onFailed?.()
+          window.dispatchEvent(new Event('real-city:map-failed'))
+        }
       }).finally(() => { starting = false })
     }
     const retry = () => { if (!app && !disposed) start() }
