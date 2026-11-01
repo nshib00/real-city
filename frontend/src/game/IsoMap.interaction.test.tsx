@@ -179,6 +179,37 @@ describe('IsoMap production interactions', () => {
     })
   })
 
+  it('pans and zooms without dragging and keeps the selected object', () => {
+    useGameStore.setState({ selectedBuildingId: 'lumber-yard-1' })
+    renderWithClient(<IsoMap />)
+    fireEvent.keyDown(screen.getByLabelText('Карта', { exact: true }), { key: 'ArrowRight' })
+    expect(useGameStore.getState().camera.x).toBe(-64)
+    fireEvent.click(screen.getByRole('button', { name: 'Карта влево' }))
+    expect(useGameStore.getState().camera.x).toBe(0)
+    fireEvent.click(screen.getByRole('button', { name: 'Увеличить карту' }))
+    expect(useGameStore.getState().camera.zoom).toBeCloseTo(1.1)
+    expect(useGameStore.getState().selectedBuildingId).toBe('lumber-yard-1')
+  })
+
+  it('suppresses an action click after a two-finger gesture', () => {
+    renderWithClient(<IsoMap />)
+    const tile = screen.getByTestId('pixi-forest-a')
+    const stage = screen.getByLabelText('Карта', { exact: true })
+    const pointer = (name: string, id: number, primary: boolean) => {
+      const event = new Event(name, { bubbles: true })
+      Object.assign(event, { pointerId: id, pointerType: 'touch', isPrimary: primary, clientX: 10, clientY: 10 })
+      fireEvent(stage, event)
+    }
+    pointer('pointerdown', 1, true)
+    pointer('pointerdown', 2, false)
+    pointer('pointerup', 1, true)
+    pointer('pointerup', 2, false)
+    fireEvent.click(tile, { detail: 1 })
+    expect(chopForest).not.toHaveBeenCalled()
+    expect(relocateBuilding).not.toHaveBeenCalled()
+    expect(useGameStore.getState().selectedTile).toBeNull()
+  })
+
   it('moves a selected building to a free tile and rejects an occupied tile', async () => {
     vi.mocked(relocateBuilding).mockResolvedValue({ building: {
       id: 'lumber-yard-1', owner_id: 'player-1', type: 'lumber_yard', name: 'Лесопильный двор',
@@ -409,14 +440,14 @@ describe('IsoMap production interactions', () => {
       useGameStore.setState({
         buildings: [
           testBuilding({ id: 'coin-storage-1', kind: 'coin_storage', name: 'Монетный склад', tile: { x: 0, y: 1 } }),
-          testBuilding({ id: 'warehouse-1', kind: 'warehouse', name: 'Склад', tile: { x: 1, y: 1 } }),
+          testBuilding({ id: 'mint-1', kind: 'mint', name: 'Монетный двор', tile: { x: 1, y: 1 } }),
         ],
       })
     })
 
     renderWithClient(<IsoMap />)
 
-    expect(pixiMocks.latestProps?.buildings?.map((building) => building.id)).toEqual(['coin-storage-1', 'warehouse-1'])
+    expect(pixiMocks.latestProps?.buildings?.map((building) => building.id)).toEqual(['coin-storage-1', 'mint-1'])
     expect(pixiMocks.latestProps?.occupiedTiles?.has('0:1')).toBe(true)
     expect(pixiMocks.latestProps?.occupiedTiles?.has('1:1')).toBe(true)
     expect(screen.queryByLabelText('Склад')).toBeNull()
@@ -720,7 +751,7 @@ function testPlayer(id: string): Player {
       level_start_xp: 0,
       next_level_xp: 100,
       settings: {
-        notifications: { raid_alerts: true, production_ready: true, market_updates: true },
+        notifications: { attack_alerts: true, production_ready: true, market_updates: true },
         render_quality: 'medium',
       },
       updated_at: '2026-09-29T10:00:00Z',

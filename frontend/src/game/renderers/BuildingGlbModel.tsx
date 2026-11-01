@@ -68,6 +68,8 @@ export function BuildingGlbModel({ building }: { building: PlacedBuilding }) {
       camera.lookAt(0, 0, 0)
       const controls = new controlsModule.OrbitControls(camera, modelCanvas)
       controls.enablePan = false
+      controls.autoRotate = false
+      controls.enableDamping = false
       controls.minZoom = 0.5
       controls.maxZoom = 4
       controls.addEventListener('change', render)

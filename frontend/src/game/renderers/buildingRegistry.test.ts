@@ -14,7 +14,7 @@ import {
 describe('building asset registry', () => {
   it('registers public and src-backed building families', () => {
     expect(registeredBuildingAssetFamilies().length).toBeGreaterThanOrEqual(10)
-    expect(buildingRegistryEntry('town_hall')).toMatchObject({ assetId: 'town_hall', modelSource: 'src-models' })
+    expect(buildingRegistryEntry('town_hall')).toMatchObject({ assetId: 'town_hall', modelSource: 'public', modelLod: 'LOD0' })
     expect(buildingRegistryEntry('stone_house')).toMatchObject({ assetId: 'stone_house', modelSource: 'public' })
     expect(buildingRegistryEntry('villa')).toMatchObject({ assetId: 'villa', levels: [1, 2, 3, 4, 5], states: ['active'], modelSource: 'public' })
     expect(buildingRegistryEntry('mine')).toMatchObject({ assetId: 'mine', category: 'industry', modelSource: 'public' })
@@ -45,7 +45,7 @@ describe('building asset registry', () => {
   })
 
   it('clamps levels through manifest policy', () => {
-    expect(buildingAssetLevel(building({ kind: 'town_hall', level: 99 }))).toBe(10)
+    expect(buildingAssetLevel(building({ kind: 'town_hall', level: 99 }))).toBe(15)
     expect(buildingAssetLevel(building({ kind: 'dugout', level: 0 }))).toBe(1)
     expect(buildingAssetLevel(building({ kind: 'lumber_yard', level: 99 }))).toBe(13)
     expect(buildingAssetLevel(building({ kind: 'herb_bed', level: 99 }))).toBe(9)
@@ -184,11 +184,13 @@ describe('building asset registry', () => {
     }
   })
 
-  it('keeps src-backed GLB models out of synchronous asset lookup', () => {
+  it('resolves town hall GLB models from public assets', () => {
     const townHall = building({ kind: 'town_hall' })
 
     expect(canResolveBuildingModelAsset(townHall)).toBe(true)
-    expect(resolveBuildingModelAsset(townHall)).toBeNull()
+    expect(resolveBuildingModelAsset(townHall)).toContain('/assets/buildings/center/town_hall/town_hall_l01_active_LOD0.glb')
+    expect(resolveBuildingModelAsset(building({ kind: 'town_hall', level: 15, status: 'construction', state: 'building' }))).toContain('town_hall_l15_construction_LOD0.glb')
+    expect(resolveBuildingModelAsset(building({ kind: 'town_hall', level: 15, health: 10, maxHealth: 100 }))).toContain('town_hall_l15_damaged_LOD0.glb')
   })
 
   it('keeps public GLB model lookup synchronous for asset links', () => {

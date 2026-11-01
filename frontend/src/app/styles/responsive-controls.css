@@ -1,0 +1,65 @@
+/* Управление остаётся доступным при малой ширине и увеличении текста. */
+.interface-links { position: fixed; z-index: 1000; inset: 0 auto auto 0; transform: translateY(-110%); display: flex; flex-wrap: wrap; background: var(--color-panel-strong); }
+.interface-links:focus-within { transform: none; }
+.interface-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px; color: var(--color-text); }
+.game-shell :focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; }
+.game-shell :is(button, input:not([type=checkbox]), select, textarea) { min-height: 44px; }
+.game-shell :is(.icon-button, .world-district) { min-width: 44px; min-height: 44px; }
+.game-shell :is(h2, h3, p, dd, .resource-label, .build-card, .notification, .tool-context) { overflow-wrap: anywhere; }
+.game-shell :is(.resource-chip, .build-card, .drawer, .inspector, .chat-panel) { min-width: 0; }
+.inspector-disclosure { display: none; }
+.inspector-details { min-width: 0; }
+.map-stage, .pixi-stage, .pixi-stage canvas { touch-action: pinch-zoom; }
+.map-navigation { position: absolute; z-index: 10; left: 84px; bottom: 144px; display: flex; flex-wrap: wrap; max-width: 288px; background: var(--color-panel-strong); border: 1px solid var(--material-brass); }
+.map-navigation button { min-width: 44px; padding: 4px; color: var(--color-text); background: transparent; border: 1px solid var(--color-panel-border); }
+.game-shell .drawer, .game-shell .build-menu { max-height: calc(var(--visible-height, 100dvh) - 24px); overflow-y: auto; overscroll-behavior: contain; }
+.game-shell .drawer { top: max(12px, var(--visible-top, 0px)); bottom: auto; height: calc(var(--visible-height, 100dvh) - 24px); }
+.game-shell .resource-bar { overflow-x: auto; overscroll-behavior-x: contain; }
+.game-shell .resource-pinned { height: auto; min-height: 44px; padding-block: 4px; gap: 0 6px; }
+.game-shell .resource-chip { flex-shrink: 0; }
+.game-shell .resource-chip small { color: var(--color-muted); }
+.game-shell .map-navigation { bottom: 200px; }
+.game-shell .build-menu-backdrop, .game-shell .drawer { z-index: calc(var(--layer-dialog) - 10); }
+.game-shell .build-menu.build-menu-collapsed { height: auto; max-height: calc(var(--visible-height, 100dvh) - 24px); }
+.build-menu.build-menu-collapsed header { margin-bottom: 0; }
+.interface-settings > summary, .production-panel > details > summary { cursor: pointer; min-height: 44px; }
+.production-panel > details > summary h2 { display: inline; }
+@media (max-width: 760px), (max-height: 500px) and (max-width: 1000px) {
+  .game-shell .production-panel { top: 224px; bottom: auto; right: 12px; width: calc(50% - 18px); max-height: 28dvh; padding: 8px; }
+  .game-shell .production-panel:has(> details[open]) { width: calc(100% - 24px); z-index: 36; }
+  .interface-settings > summary, .production-panel > details > summary { display: flex; align-items: center; }
+  .production-panel > details > summary h2 { font-size: .875rem; }
+  .game-shell .tool-bar { top: auto; bottom: var(--safe-bottom); left: 12px; right: 12px; width: auto; display: flex; align-items: center; overflow-x: auto; padding: 4px; max-height: 88px; }
+  .tool-bar > * { flex-shrink: 0; }
+  .game-shell .profile-panel { top: var(--safe-top); left: 12px; right: auto; width: 160px; min-height: 52px; grid-template-columns: 36px 1fr; }
+  .game-shell .resource-bar { top: 84px; left: 12px; right: 12px; max-height: 64px; padding: 4px 8px; }
+  .game-shell .map-widget { top: var(--safe-top); left: auto; right: 12px; bottom: auto; display: flex; }
+  .game-shell .map-widget-panel { top: 56px; left: auto; right: 0; bottom: auto; width: min(288px, calc(100vw - 24px)); }
+  .game-shell .inspector { top: auto; bottom: calc(var(--safe-bottom) + 208px); left: 12px; right: 12px; width: auto; height: auto; max-height: 96px; padding: 8px 12px; }
+  .game-shell .inspector h2 { margin: 4px 0 0; font-size: 1rem; }
+  .inspector-disclosure { display: block; width: 100%; text-align: start; color: var(--color-text); background: var(--color-panel-strong); border: 1px solid var(--material-brass); }
+  .inspector:not(.inspector-expanded) .inspector-details { display: none; }
+  .game-shell .inspector-expanded { z-index: 35; max-height: calc(var(--visible-height, 100dvh) - 200px); }
+  .game-shell .inspector .tabs { display: grid; }
+  .game-shell .inspector-actions { display: flex; flex-wrap: wrap; }
+  .game-shell .event-log { left: 12px; right: auto; bottom: calc(var(--safe-bottom) + 312px); width: calc(100% - 24px); min-height: 52px; max-height: min(44dvh, calc(100dvh - 484px)); z-index: 24; overflow-y: auto; }
+  .game-shell .event-log-collapsed { width: min(264px, calc(100% - 24px)); max-height: 64px; overflow: hidden; }
+  .event-log-collapsed > .connection-note, .notification-stack-collapsed > .connection-note { display: none; }
+  .game-shell .notification-stack { top: 156px; bottom: auto; right: 12px; width: min(280px, calc(100% - 24px)); max-height: 22dvh; }
+  .game-shell .notification-stack-collapsed { max-height: 64px; }
+  .game-shell .map-navigation { left: 12px; bottom: calc(var(--safe-bottom) + 108px); max-width: calc(100% - 24px); }
+  .game-shell .build-menu { height: calc(var(--visible-height, 100dvh) - 24px); }
+  .game-shell .build-menu-backdrop.build-menu-backdrop-collapsed { padding-bottom: calc(var(--safe-bottom) + 108px); }
+  .world-status, .placement-status { top: 224px; max-height: 20dvh; overflow-y: auto; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .game-shell .resource-bar { top: var(--safe-top); left: 184px; right: 12px; }
+  .game-shell .inspector { left: auto; right: 12px; width: min(280px, 42vw); bottom: calc(var(--safe-bottom) + 76px); }
+  .game-shell .event-log { top: 84px; bottom: auto; left: 12px; width: 212px; max-height: 112px; }
+  .game-shell .production-panel { top: 84px; left: 390px; right: auto; width: 142px; }
+  .game-shell .production-panel:has(> details[open]) { left: 12px; right: 12px; width: auto; max-height: 55dvh; }
+  .game-shell .map-navigation { bottom: calc(var(--safe-bottom) + 76px); }
+  .game-shell .notification-stack { top: 84px; right: 12px; }
+  .game-shell .map-widget { top: 154px; bottom: auto; right: 12px; }
+  .world-status, .placement-status { top: 154px; left: 312px; max-width: 228px; }
+}

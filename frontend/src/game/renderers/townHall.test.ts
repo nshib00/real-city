@@ -6,7 +6,7 @@ describe('town hall renderer', () => {
   it('clamps model level to available town hall variants', () => {
     expect(townHallModelLevel(0)).toBe(1)
     expect(townHallModelLevel(6)).toBe(6)
-    expect(townHallModelLevel(99)).toBe(10)
+    expect(townHallModelLevel(99)).toBe(15)
   })
 
   it('chooses construction, damaged and ruined states from health threshold', () => {

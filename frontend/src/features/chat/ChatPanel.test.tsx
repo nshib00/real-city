@@ -1,0 +1,62 @@
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { afterEach, expect, it, vi } from 'vitest'
+import { ChatPanel } from './ChatPanel'
+import { useAuthStore } from '../auth/useAuthStore'
+const api=vi.hoisted(() => ({ list:vi.fn(),read:vi.fn(),send:vi.fn() }))
+vi.mock('../../shared/api/social', () => ({ listChatMessages:api.list, markChatRead:api.read, sendChatMessage:api.send }))
+vi.mock('../../audio/socialAudio', () => ({ chatSoundEnabled:()=>false,isMention:()=>false,playChatSound:vi.fn(),setChatSoundEnabled:vi.fn() }))
+afterEach(() => { cleanup();vi.clearAllMocks();vi.restoreAllMocks() })
+it('сохраняет черновики каналов, не стирает новый текст поздним ответом и не читает скрытую панель', async () => {
+ useAuthStore.setState({player:{id:'draft-owner'} as never})
+ api.list.mockResolvedValue({messages:[{id:'draft-m',author_id:'other',body:'Ответ',flagged:false}],read_state:{unread:1}})
+ let confirm!: (value: unknown) => void
+ api.send.mockImplementation(() => new Promise((resolve) => {confirm=resolve}))
+ const client=new QueryClient({defaultOptions:{queries:{retry:false}}})
+ const {rerender}=render(<QueryClientProvider client={client}><ChatPanel visible={false} /></QueryClientProvider>)
+ await screen.findByText('Ответ')
+ expect(api.read).not.toHaveBeenCalled()
+ const input=screen.getByLabelText('Сообщение в чат')
+ fireEvent.change(input,{target:{value:'Первый текст'}})
+ fireEvent.click(screen.getByRole('button',{name:/Рядом/}))
+ fireEvent.change(input,{target:{value:'Местный текст'}})
+ fireEvent.click(screen.getByRole('button',{name:/Общий/}))
+ expect((input as HTMLInputElement).value).toBe('Первый текст')
+ fireEvent.click(screen.getByRole('button',{name:'Отправить'}))
+ await waitFor(() => expect(api.send).toHaveBeenCalledWith({channel:'global',body:'Первый текст'}))
+ fireEvent.change(input,{target:{value:'Новый текст'}})
+ await act(async()=>confirm({}))
+ expect((input as HTMLInputElement).value).toBe('Новый текст')
+ act(()=>useAuthStore.setState({player:{id:'another-owner'} as never}))
+ rerender(<QueryClientProvider client={client}><ChatPanel visible={false} /></QueryClientProvider>)
+ expect((input as HTMLInputElement).value).toBe('')
+ client.clear()
+})
+it('marks only the displayed channel as read and keeps unread counts in other channels', async () => {
+ useAuthStore.setState({player:{id:'p1'} as never})
+ let read=false
+ api.list.mockImplementation(async(channel:string) => ({ messages:channel==='global'?[{id:'m1',channel,author_id:'other',body:'Привет',flagged:false,created_at:'2026-10-30T00:00:00Z'}]:[],read_state:{read_at:'',unread:channel==='nearby'?3:read?0:1} }))
+ api.read.mockImplementation(async() => {read=true;return {}})
+ const client=new QueryClient({defaultOptions:{queries:{retry:false}}})
+ render(<QueryClientProvider client={client}><ChatPanel /></QueryClientProvider>)
+ await waitFor(() => expect(api.read).toHaveBeenCalledWith('global','m1'))
+ expect(await screen.findByRole('button',{name:'Рядом (3)'})).toBeTruthy()
+ expect(api.read).toHaveBeenCalledTimes(1)
+ client.clear()
+})
+
+it('does not read a hidden browser tab and offers an explicit retry after read failure', async () => {
+ useAuthStore.setState({player:{id:'p2'} as never})
+ const visibility=vi.spyOn(document,'hidden','get').mockReturnValue(true)
+ api.list.mockImplementation(async(channel:string) => ({messages:channel==='global'?[{id:'m2',channel,author_id:'other',body:'Новое',flagged:false,created_at:'2026-10-30T00:00:00Z'}]:[],read_state:{unread:channel==='global'?1:0}}))
+ api.read.mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({})
+ const client=new QueryClient({defaultOptions:{queries:{retry:false}}})
+ render(<QueryClientProvider client={client}><ChatPanel /></QueryClientProvider>)
+ expect(await screen.findByText('Новое')).toBeTruthy()
+ expect(api.read).not.toHaveBeenCalled()
+ act(() => {visibility.mockReturnValue(false);document.dispatchEvent(new Event('visibilitychange'))})
+ fireEvent.click(await screen.findByText('Повторить отметку'))
+ await waitFor(() => expect(api.read).toHaveBeenCalledTimes(2))
+ expect(api.read).toHaveBeenLastCalledWith('global','m2')
+ client.clear()
+})

@@ -37,6 +37,23 @@ class FakeSocket {
 describe('realtime sequence', () => {
   afterEach(() => { vi.unstubAllGlobals(); FakeSocket.instances = [] })
 
+  it('resyncs after malformed or incompatible frames and accepts the next valid event', () => {
+    vi.stubGlobal('WebSocket', FakeSocket)
+    const client = new RealtimeClient()
+    const received = vi.fn(), resync = vi.fn()
+    client.onEvent(received); client.onResync(resync); client.connect()
+    const socket = FakeSocket.instances[0]
+    socket.onopen?.()
+    for (const data of ['{', 'null', '{"type":"monster.attacked","seq":1,"payload_version":2}']) {
+      expect(() => socket.onmessage?.({ data } as MessageEvent)).not.toThrow()
+    }
+    expect(received).not.toHaveBeenCalled()
+    expect(resync).toHaveBeenCalledTimes(3)
+    socket.receive(1)
+    expect(received).toHaveBeenCalledTimes(1)
+    client.close()
+  })
+
   it('accepts fresh events when a new socket restarts sequence numbering', () => {
     vi.stubGlobal('WebSocket', FakeSocket)
     const client = new RealtimeClient()

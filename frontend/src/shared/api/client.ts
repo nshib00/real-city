@@ -51,7 +51,7 @@ function needsIdempotencyKey(path: string, method = 'GET') {
   if (method.toUpperCase() !== 'POST') {
     return false
   }
-  return path === '/buildings' || path === '/raids' || path === '/market/orders' || path === '/alliances/invites'
+  return path === '/buildings' || path === '/combat/monsters' || /^\/buildings\/[^/]+\/weapons$/.test(path) || path === '/market/orders' || path === '/alliances/invites'
 }
 
 function createIdempotencyKey() {
@@ -61,7 +61,13 @@ function createIdempotencyKey() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`
 }
 
-export async function refreshTokens() {
+let pendingRefresh: Promise<boolean> | null = null
+export function refreshTokens(): Promise<boolean> {
+  if (!pendingRefresh) pendingRefresh = performRefresh().finally(() => { pendingRefresh = null })
+  return pendingRefresh
+}
+
+async function performRefresh() {
   const refreshToken = getRefreshToken()
   if (!refreshToken) {
     return false
@@ -72,8 +78,11 @@ export async function refreshTokens() {
     body: JSON.stringify({ refresh_token: refreshToken }),
   })
   if (!response.ok) {
-    clearTokens()
-    return false
+    if (response.status === 401 || response.status === 403) {
+      clearTokens()
+      return false
+    }
+    throw new Error('Не удалось обновить сессию. Повторите подключение.')
   }
   const payload = (await response.json()) as { access_token: string; refresh_token: string }
   setTokens(payload.access_token, payload.refresh_token)

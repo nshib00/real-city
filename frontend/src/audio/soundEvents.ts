@@ -79,7 +79,7 @@ export const soundEvents = {
       'combat.monster.ancient_colossus.hit',
       'combat.monster.ancient_colossus.death',
       'combat.player.attack', 'combat.player.hit', 'combat.loot.dropped',
-      'combat.loot.claimed', 'combat.threat.nearby', 'combat.raid.started',
+      'combat.loot.claimed', 'combat.threat.nearby',
       'combat.victory', 'combat.retreat',
     ],
   },
@@ -134,7 +134,6 @@ export const soundEventOverrides: Partial<Record<SoundId, { bus?: SoundBus; prio
   'combat.monster.step': { priority: 'low' },
   'combat.monster.idle': { priority: 'low' },
   'combat.threat.nearby': { bus: 'alerts', priority: 'critical' },
-  'combat.raid.started': { bus: 'alerts', priority: 'critical' },
   'social.chat.mention': { bus: 'alerts', priority: 'high' },
   'social.alliance.invite': { bus: 'alerts', priority: 'high' },
 }

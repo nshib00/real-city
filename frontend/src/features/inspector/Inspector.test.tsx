@@ -10,6 +10,7 @@ import { listPendingWeaponAttacks, useWeaponOnMonster, type MonsterLootResponse 
 import { deleteBuilding as deleteBuildingRequest, patchBuilding, placeBuilding, type BuildingResponse } from '../../shared/api/buildings'
 import { Inspector } from './Inspector'
 import { playCombatSound } from '../../audio/voiceManager'
+import { TOWN_HALL_ASSET_REVISION } from '../../game/renderers/buildingAssetManifests'
 
 vi.mock('../../audio/voiceManager', () => ({ playCombatSound: vi.fn() }))
 
@@ -54,6 +55,15 @@ describe('Inspector', () => {
     useAuthStore.setState({ player: testPlayer('player-1'), isAuthenticated: true })
   })
 
+  it('collapses with Escape, restores focus and preserves selection', () => {
+    renderWithClient(<Inspector />)
+    fireEvent.click(screen.getByRole('button', { name: 'Развернуть инспектор' }))
+    expect(screen.getByRole('button', { name: 'Свернуть инспектор' }).getAttribute('aria-expanded')).toBe('true')
+    fireEvent.keyDown(screen.getByLabelText('Инспектор'), { key: 'Escape' })
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Развернуть инспектор' }))
+    expect(useGameStore.getState().selectedTile).toEqual({ x: 2, y: 3 })
+  })
+
   it('shows selected tile details and object/player tabs', () => {
     useGameStore.setState({
       worldTiles: [{ x: 2, y: 3, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 2 }],
@@ -71,6 +81,14 @@ describe('Inspector', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: 'Игрок' }))
     expect(screen.getByText('Игрок: Северный двор')).toBeTruthy()
+  })
+
+  it('сворачивает мобильный лист при переходе к размещению, сохраняя клетку', () => {
+    renderWithClient(<Inspector />)
+    fireEvent.click(screen.getByRole('button', { name: 'Развернуть инспектор' }))
+    act(() => useGameStore.getState().setTool('build'))
+    expect(screen.getByRole('button', { name: 'Развернуть инспектор' }).getAttribute('aria-expanded')).toBe('false')
+    expect(useGameStore.getState().selectedTile).toEqual({ x: 2, y: 3 })
   })
 
   it('shows only the server terrain and waits for an unloaded tile', () => {
@@ -156,8 +174,8 @@ describe('Inspector', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Выбрать оружие' }))
     const menu = screen.getByRole('dialog', { name: 'Оружие против монстра' })
-    expect(menu.querySelector('img[src*="throwing_knives.png"]')).toBeTruthy()
-    expect(menu.querySelector('img[src*="blackpowder_bomb.png"]')).toBeTruthy()
+    expect(menu.querySelector('img[src*="throwing_knives.svg"]')).toBeTruthy()
+    expect(menu.querySelector('img[src*="blackpowder_bomb.svg"]')).toBeTruthy()
     expect(screen.getByText('мгновенно')).toBeTruthy()
     expect(screen.getByText('через 40 с')).toBeTruthy()
     fireEvent.click(screen.getByRole('radio', { name: /Пороховая бомба/ }))
@@ -285,6 +303,17 @@ describe('Inspector', () => {
     expect(screen.getByText('10')).toBeTruthy()
   })
 
+  it('closes the confirmation when its target disappears instead of acting on another object', () => {
+    useGameStore.setState({ buildings: [{ id: 'gone-target', kind: 'dugout', name: 'Землянка', level: 1, tile: { x: 2, y: 3 }, status: 'active', health: 35, owner: 'player-1', startedAt: 1000, completesAt: null }], selectedBuildingId: 'gone-target' })
+    renderWithClient(<Inspector />)
+    fireEvent.click(screen.getByLabelText('Улучшить'))
+    expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
+    act(() => useGameStore.setState({ buildings: [] }))
+    expect(screen.queryByRole('dialog', { name: 'Улучшение постройки' })).toBeNull()
+    expect(screen.getByText(/Выбранный объект больше не доступен/)).toBeTruthy()
+    expect(patchBuilding).not.toHaveBeenCalled()
+  })
+
   it('offers both exclusive branches after stone house level 6', async () => {
     useGameStore.setState({
       buildings: [{
@@ -360,7 +389,7 @@ describe('Inspector', () => {
     fireEvent.click(screen.getByLabelText('Улучшить'))
 
     expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
-    expect(screen.getByAltText('Модель: Ратуша, уровень 2').getAttribute('src')).toBe('/assets/buildings/center/town_hall/town_hall_l02_active.png')
+    expect(screen.getByAltText('Модель: Ратуша, уровень 2').getAttribute('src')).toBe(`/assets/buildings/center/town_hall/town_hall_l02_active.png?v=${TOWN_HALL_ASSET_REVISION}`)
     expect(screen.getByText('Уровень 1 -> 2')).toBeTruthy()
     expect(screen.getByText('1 мин 30 сек')).toBeTruthy()
     expect(screen.getByText('1500')).toBeTruthy()
@@ -442,7 +471,7 @@ function testPlayer(id: string): Player {
       level_start_xp: 0,
       next_level_xp: 100,
       settings: {
-        notifications: { raid_alerts: true, production_ready: true, market_updates: true },
+        notifications: { attack_alerts: true, production_ready: true, market_updates: true },
         render_quality: 'medium',
       },
       updated_at: '2026-09-20T00:00:00Z',

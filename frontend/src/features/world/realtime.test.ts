@@ -20,6 +20,18 @@ describe('world realtime reducer', () => {
     })
   })
 
+  it('clears cached alliance history after membership changes', () => {
+    const state = useGameStore.getState()
+    const queryClient = new QueryClient()
+    queryClient.setQueryData(['chat', 'alliance', 'player-1'], { messages: [{ id: 'secret' }] })
+    applyRealtimeEvent({ type: 'alliance.member.kicked', event_id: 'kick', seq: 1, sent_at: '2026-10-30T00:00:00Z', payload_version: 1, payload: { target_player_id: 'player-1' } }, {
+      queryClient, updateWorldTile: state.updateWorldTile, addBuilding: state.addBuilding,
+      deleteBuilding: state.deleteBuilding, upsertResourceNode: state.upsertResourceNode, upsertMonster: state.upsertMonster,
+    })
+    expect(queryClient.getQueryData(['chat', 'alliance', 'player-1'])).toBeUndefined()
+    queryClient.clear()
+  })
+
   it('shows a building placed by another player in the visible map state', () => {
     const state = useGameStore.getState()
     const queryClient = new QueryClient()

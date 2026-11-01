@@ -1,0 +1,30 @@
+.object-marks { position: relative; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 4px; color: var(--color-text); font-size: var(--text-xs); }
+.ownership-sign, .threat-sign { display: inline-flex; align-items: center; gap: 4px; }
+.object-marks svg { flex-shrink: 0; }
+.threat-sign { color: var(--color-danger); }
+.selection-sign { padding-inline: 4px; border: 2px double var(--color-selected); }
+.object-marks[data-selected='true']::after { content: ''; position: absolute; right: 0; top: 0; width: 6px; height: 6px; border-top: 2px solid var(--color-selected); border-right: 2px solid var(--color-selected); pointer-events: none; }
+.object-marks-compact { padding: 2px; background: var(--color-panel-strong); flex-wrap: nowrap; gap: 2px; border-radius: 2px; }
+.game-shell .world-building-marker { width: 20px; height: 20px; padding: 0; border: 0; background: none; color: var(--color-text); rotate: none; }
+.game-shell .world-building-marker[data-owner] { border: 0; rotate: none; border-radius: 0; }
+.world-building-marker .object-marks { pointer-events: none; }
+.world-map-legend .object-marks { white-space: nowrap; }
+.world-map-legend .object-marks svg { width: 16px; height: 16px; }
+.ownership-review { padding: 16px; }
+.ownership-review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.ownership-review article { padding: 12px; border: 1px solid currentColor; }
+.ownership-review-light, .ownership-review-gray { --color-text: #20302b; --color-danger: #a83236; --color-selected: #225f79; color: #20302b; background: #fff8e8; }
+.ownership-review-dark { --color-text: #f9f4df; --color-danger: #ff9393; --color-selected: #69c7d9; color: #f9f4df; background: #293e38; }
+.ownership-review-gray { filter: grayscale(1); }
+.category-sign, .status-sign, .rarity-sign { display: inline-flex; align-items: center; gap: 4px; }
+.rarity-sign { color: var(--color-text); border-bottom: 3px double currentColor; font-size: var(--text-xs); }
+.object-marks > span { max-width: 100%; overflow-wrap: anywhere; }
+.resource-registry-row > .rarity-sign { grid-column: 2 / -1; }
+.icon-optics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 8px; }
+.icon-optics-grid article { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.icon-optics-grid article > span { width: 96px; font-size: 12px; overflow-wrap: anywhere; }
+.world-territory-layer { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.world-territory-layer rect { fill: #fff8e8; fill-opacity: .25; stroke: #20332f; stroke-width: 2px; vector-effect: non-scaling-stroke; }
+.world-territory-layer [data-ownership='own'] { stroke: #286447; }
+.world-territory-layer [data-ownership='ally'] { stroke: #225f79; stroke-dasharray: 5 3; }
+.world-territory-layer [data-ownership='foreign'] { stroke: #765000; stroke-dasharray: 1 3; }

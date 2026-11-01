@@ -1,0 +1,81 @@
+/* Включается пользователем; возврат к classic не меняет игровое дерево. */
+:root[data-interface-theme=aeolian] {
+  color-scheme: light;
+  --surface-canvas: var(--ref-parchment-200);
+  --surface-panel: var(--ref-parchment-200);
+  --surface-raised: var(--ref-paper-50);
+  --surface-muted: var(--ref-stone-300);
+  --surface-hover: #e2d6b7;
+  --surface-pressed: #cbbd96;
+  --surface-selected: var(--ref-blue-100);
+  --surface-disabled: #e4dfd1;
+  --surface-error: var(--ref-red-100);
+  --text-primary: var(--ref-ink-text);
+  --text-secondary: var(--ref-sage-500);
+  --text-disabled: var(--ref-sage-500);
+  --text-selected: var(--ref-blue-700);
+  --border-subtle: var(--ref-sage-500);
+  --border-interactive: var(--ref-sage-500);
+  --action-primary: var(--ref-forest-700);
+  --action-primary-ink: var(--ref-paper-50);
+  --action-primary-hover: var(--ref-forest-800);
+  --action-primary-pressed: var(--ref-forest-900);
+  --state-warning: var(--ref-ochre-800);
+  --state-danger: var(--ref-red-700);
+  --state-info: var(--ref-blue-700);
+  --state-success: var(--ref-forest-700);
+  --focus-inner: var(--ref-ink-900);
+  --focus-outer: var(--ref-paper-50);
+  --color-crystal: var(--ref-amethyst-700);
+  --color-sky: var(--ref-blue-700);
+  --material-brass: var(--ref-brass-500);
+  --shadow-panel: 0 8px 24px #101e1866;
+}
+[data-interface-theme=aeolian] .profile-drawer-body .profile-identity { background: var(--color-panel-soft); }
+[data-interface-theme=aeolian] .resource-chip small { color: var(--color-muted); }
+[data-interface-theme=aeolian] :is(.notification-header strong, .tab-button strong) { color: var(--action-primary-ink); background: var(--action-primary); }
+/* Поверхности и состояния старых панелей тоже следуют выбранной теме. */
+[data-interface-theme=aeolian] :is(.audio-toast, .map-debug span, .map-performance-hud, .map-widget) { color: var(--text-primary); background: var(--surface-panel); border-color: var(--border-interactive); }
+[data-interface-theme=aeolian] .audio-toast-warning { border-color: var(--state-warning); }
+[data-interface-theme=aeolian] .audio-toast-error { border-color: var(--state-danger); }
+[data-interface-theme=aeolian] :is(.resource-registry-row, .profile-xp-detail, .alliance-treasury, .alliance-list p, .alliance-buffs article, .upgrade-branch-card, .upgrade-summary, .upgrade-cost, .upgrade-stats div) { background: var(--surface-muted); border-color: var(--border-subtle); }
+[data-interface-theme=aeolian] :is(.chat-channels button, .chat-compose button, .social-form button, .profile-actions button, .profile-settings-form button, .alliance-treasury button, .status-state button, .text-button) { color: var(--text-primary); background: var(--surface-raised); border-color: var(--border-interactive); }
+[data-interface-theme=aeolian] :is(.chat-channels button, .chat-compose button, .social-form button, .profile-actions button, .profile-settings-form button, .alliance-treasury button, .status-state button, .text-button):hover:not(:disabled) { background: var(--surface-hover); }
+[data-interface-theme=aeolian] :is(.text-button-primary, .building-work-badge-ready) { color: var(--action-primary-ink); background: var(--action-primary); border-color: var(--action-primary); }
+[data-interface-theme=aeolian] .text-button-primary:hover:not(:disabled) { color: var(--action-primary-ink); background: var(--action-primary-hover); }
+[data-interface-theme=aeolian] :is(.chat-channels button[aria-pressed='true'], .build-category-tab-active) { color: var(--text-selected); background: var(--surface-selected); border-color: var(--state-info); }
+[data-interface-theme=aeolian] .build-card-preview { border-color: var(--state-info); }
+[data-interface-theme=aeolian] :is(.chat-messages em, .realtime-chip-connecting, .realtime-chip-reconnecting) { color: var(--state-warning); }
+[data-interface-theme=aeolian] .realtime-chip-connected { color: var(--state-success); }
+[data-interface-theme=aeolian] .realtime-chip-offline { color: var(--state-danger); }
+[data-interface-theme=aeolian] :is(.building-work-badge, .building-work-badge-workers) { color: var(--text-primary); background: var(--surface-raised); border-color: var(--border-interactive); }
+[data-interface-theme=aeolian] :is(.construction-timer, .building-work-badge-timer) { color: var(--ref-ink-text); background: var(--ref-ochre-100); border-color: var(--state-warning); }
+[data-interface-theme=aeolian] .building-work-badge-ready { color: var(--action-primary-ink); background: var(--action-primary); }
+[data-interface-theme=aeolian] :is(input[type='checkbox'], input[type='range'], progress) { accent-color: var(--action-primary); }
+[data-interface-theme=aeolian] :is(.build-error, .upgrade-error, .auth-error) { color: var(--state-danger); }
+[data-interface-theme=aeolian] :is(input:not([type='checkbox']):not([type='range']), select, textarea) { color: var(--text-primary); background: var(--surface-raised); border: 1px solid var(--border-interactive); }
+[data-interface-theme=aeolian] .game-shell :is(.inspector, .build-menu, .event-log, .drawer, .resource-bar, .notification-stack) {
+  border: 1px solid var(--color-panel-border);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--shadow-panel);
+}
+[data-interface-theme=aeolian] :is(.inspector-context, .build-filters, .drawer-header) { border-bottom: 1px solid var(--material-brass); padding-bottom: var(--space-2); }
+.interface-theme-control { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
+.map-asset-status { position: absolute; z-index: var(--layer-hud); left: 84px; top: 140px; display: grid; gap: var(--space-2); max-width: min(320px, calc(100vw - 24px)); padding: var(--space-2); background: var(--color-panel-strong); border: 1px solid var(--color-warning); }
+.resource-chip strong { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.game-shell .resource-chip { max-width: none; }
+.game-shell .resource-material-group, .game-shell .resource-weapon-group { display: flex; flex-shrink: 0; }
+.game-shell .resource-weapon-group { border-inline-start: 2px solid var(--material-brass); margin-inline-start: var(--space-2); padding-inline-start: var(--space-2); }
+.game-shell [hidden] { display: none !important; }
+.inspector-target-status { border-inline-start: 3px solid var(--color-warning); padding: var(--space-2); }
+.map-coordinate-selection { flex-basis: 100%; padding: var(--space-2); max-height: 35dvh; overflow: auto; }
+.map-coordinate-selection summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+.map-coordinate-selection form { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.map-coordinate-selection label { display: grid; width: 5rem; }
+@media (max-width: 760px) {
+  .map-asset-status { left: 12px; top: 156px; max-height: 22dvh; overflow: auto; }
+  .game-shell .drawer { left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right)); width: auto; top: max(env(safe-area-inset-top), var(--visible-top, 0px)); height: calc(var(--visible-height, 100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 8px); max-height: none; }
+  .game-shell .build-menu-backdrop { top: var(--visible-top, 0px); height: var(--visible-height, 100dvh); padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
+  .game-shell .build-menu { max-height: 100%; height: 100%; }
+  .game-shell .action-feedback { max-width: calc(100vw - 24px); max-height: 28dvh; overflow-y: auto; }
+}

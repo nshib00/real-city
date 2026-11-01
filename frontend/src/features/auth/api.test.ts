@@ -31,7 +31,7 @@ describe('auth api', () => {
                 next_level_xp: 100,
                 settings: {
                   notifications: {
-                    raid_alerts: true,
+                    attack_alerts: true,
                     production_ready: true,
                     market_updates: false,
                   },

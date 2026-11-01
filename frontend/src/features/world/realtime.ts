@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
 
+import { visibleChunks } from '../../../../shared/world/coordinates'
 import { CHUNK_SIZE, WORLD_WRAP_TILES, tileToChunk, wrappedGridDistance } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
 import { realtimeClient } from '../../shared/realtime/client'
@@ -14,6 +15,8 @@ import type { WorldTile } from '../../shared/contracts'
 import type { MonsterPayload } from '../../../../shared/events/monster'
 import { playRealtimeAudio } from '../../audio/realtimeAudio'
 import { useAuthStore } from '../auth/useAuthStore'
+import { showToast } from '../notifications/toast'
+import type { CombatRecord } from '../../../../shared/events/combat'
 import type { MarketOrderPayload } from '../../../../shared/events/market'
 import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload } from '../../../../shared/events/world'
 
@@ -55,7 +58,7 @@ export function useWorldRealtime() {
           ['monster-loot'],
         ]
         for (const queryKey of !resyncAll ? worldQueries : [
-          ...worldQueries, ['economy', 'inventory'], ['production', 'jobs'],
+          ...worldQueries, ['economy', 'inventory'], ['economy', 'population'], ['production', 'jobs'], ['repairs'], ['chat'], ['alliances', 'me'], ['combat', 'history'],
         ]) {
           void queryClient.invalidateQueries({ queryKey, refetchType: 'active' })
         }
@@ -100,7 +103,34 @@ export function applyRealtimeEvent(
     upsertMonster: ReturnType<typeof useGameStore.getState>['upsertMonster']
   },
 ) {
+  if (event.type.startsWith('chat.')) {
+    void handlers.queryClient.invalidateQueries({ queryKey: ['chat'] })
+    return
+  }
+  if (event.type.startsWith('alliance.')) {
+    void handlers.queryClient.invalidateQueries({ queryKey: ['alliances', 'me'] })
+    if (event.type === 'alliance.member.left' || event.type === 'alliance.member.kicked') {
+      handlers.queryClient.setQueriesData({ queryKey: ['chat', 'alliance'] }, { messages: [], read_state: { unread: 0, read_at: '' } })
+      handlers.queryClient.removeQueries({ queryKey: ['chat', 'alliance'] })
+    }
+    void handlers.queryClient.invalidateQueries({ queryKey: ['chat'] })
+    return
+  }
+  if (event.type.startsWith('market.order.')) {
+    void handlers.queryClient.invalidateQueries({ queryKey: ['market', 'orders'] })
+    void handlers.queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+  }
   switch (event.type) {
+    case 'combat.resolved': {
+      const record = event.payload as CombatRecord | undefined
+      void handlers.queryClient.invalidateQueries({ queryKey: ['combat', 'history'] })
+      if (record && record.owner_id === useAuthStore.getState().player?.id) {
+        if (useAuthStore.getState().player?.profile.settings.notifications.attack_alerts !== false) {
+          showToast('warning', `${record.destroyed ? 'Уничтожена' : 'Атакована'} ваша постройка: ${record.building_type}. Урон: ${record.damage}.`)
+        }
+      }
+      return
+    }
     case 'presence.moved': {
       const player = (event.payload as PresenceMovedPayload | undefined)?.player
       if (!player?.player_id || player.player_id === useAuthStore.getState().player?.id) return
@@ -140,6 +170,7 @@ export function applyRealtimeEvent(
         }
         handlers.addBuilding(toPlacedBuilding(building))
         patchBuildingInQueryCache(handlers.queryClient, building)
+        void handlers.queryClient.invalidateQueries({ queryKey: ['repairs', building.id] })
         if (rawBuilding) void handlers.queryClient.invalidateQueries({ queryKey: ['buildings'] })
       }
       return
@@ -326,6 +357,8 @@ function toMonsterEntity(monster: MonsterPayload['monster']) {
   const tile = monster.Tile ? { x: monster.Tile.X, y: monster.Tile.Y } : { x: monster.tile_x ?? 0, y: monster.tile_y ?? 0 }
   return {
     id: monster.id,
+    creatorId: monster.creator_id,
+    expiresAt: monster.expires_at ? Date.parse(monster.expires_at) : undefined,
     type: monster.type,
     state: monster.state,
     tile,
@@ -342,6 +375,8 @@ function toMonsterEntity(monster: MonsterPayload['monster']) {
 function toMonsterResponse(monster: MonsterPayload['monster']): MonsterResponse {
   return {
     id: monster.id,
+    creator_id: monster.creator_id,
+    expires_at: monster.expires_at,
     type: monster.type,
     state: monster.state,
     tile_x: monster.Tile?.X ?? monster.tile_x ?? 0,
@@ -374,7 +409,7 @@ function removeById<T extends { id: string }>(items: T[], id: string) {
   return [...items.slice(0, index), ...items.slice(index + 1)]
 }
 
-function chunksAround(center: { x: number; y: number }, radius: number) {
+function chunksAroundLegacy(center: { x: number; y: number }, radius: number) {
   const safeRadius = Math.max(1, Math.min(3, Math.round(radius)))
   const worldChunks = WORLD_WRAP_TILES / CHUNK_SIZE
   const chunks: { x: number; y: number }[] = []
@@ -391,3 +426,5 @@ function chunksAround(center: { x: number; y: number }, radius: number) {
   }
   return chunks
 }
+
+function chunksAround(center: { x: number; y: number }, radius: number) { return visibleChunks(center, Math.max(1, Math.min(3, Math.round(radius)))) }

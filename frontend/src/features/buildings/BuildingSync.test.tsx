@@ -108,7 +108,7 @@ function testPlayer(id: string): Player {
       level_start_xp: 0,
       next_level_xp: 100,
       settings: {
-        notifications: { raid_alerts: true, production_ready: true, market_updates: true },
+        notifications: { attack_alerts: true, production_ready: true, market_updates: true },
         render_quality: 'medium',
       },
       updated_at: '2026-09-20T00:00:00Z',

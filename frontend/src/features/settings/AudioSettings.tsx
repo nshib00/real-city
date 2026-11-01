@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { SlidersHorizontal } from 'lucide-react'
+import { createPortal } from 'react-dom'
+import { Drawer } from '../../shared/ui/Drawer'
+import { SlidersHorizontal } from '../../shared/ui/icons'
 import { getAudioSettings, onAudioSettings, updateAudioSettings, type AudioSettings as Settings } from '../../audio/audioSettings'
 import { playUiSound } from '../../audio/playUiSound'
 
@@ -17,7 +19,7 @@ export function AudioSettings() {
   useEffect(() => onAudioSettings(setSettings), [])
   return <div className="audio-settings">
     <button type="button" className="icon-button" aria-label="Настройки звука" title="Настройки звука" aria-expanded={open} data-audio-handled="true" onClick={() => { playUiSound(open ? 'ui.panel.close' : 'ui.panel.open'); setOpen(!open) }}><SlidersHorizontal size={20} /></button>
-    {open ? <section aria-label="Настройки звука">
+    {open ? createPortal(<Drawer title="Настройки звука" open={open} onClose={() => setOpen(false)}><section className="audio-settings-panel">
       {sliders.map(([bus, label, sample]) => <div key={bus}>
         <label htmlFor={`audio-${bus}`}>{label}: {Math.round(settings[bus] * 100)}%</label>
         <input id={`audio-${bus}`} type="range" min="0" max="1" step="0.05" value={settings[bus]}
@@ -32,7 +34,7 @@ export function AudioSettings() {
       <label><input type="checkbox" checked={settings.muted} onChange={(event) => updateAudioSettings({ muted: event.target.checked })} />Выключить весь звук</label>
       <label><input type="checkbox" checked={settings.chat} onChange={(event) => updateAudioSettings({ chat: event.target.checked })} />Уведомления чата</label>
       <label><input type="checkbox" checked={settings.reduced} onChange={(event) => updateAudioSettings({ reduced: event.target.checked })} />Меньше одновременных звуков</label>
-    </section> : null}
+    </section></Drawer>, document.querySelector('.game-shell') ?? document.body) : null}
   </div>
 }
 

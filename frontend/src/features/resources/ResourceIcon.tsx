@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react'
-import { Package } from 'lucide-react'
+import { Package } from '../../shared/ui/icons'
+import { resourceCatalog } from '../../../../shared/catalog/resources'
 
 type ResourceIconProps = {
   id: string
   label: string
   className?: string
+  decorative?: boolean
 }
 
 export const RESOURCE_ICON_ASSET_REVISION = 'weapon-icons-2026-10-25'
+const knownResources = new Set(resourceCatalog.map((item) => item.id))
+// Старые имена файлов сохранены после переименования ресурсов в каталоге.
+const legacyNames: Record<string, string> = { quiet_powder: 'silent_powder', plant_oil: 'vegetable_oil', oleoresin: 'sap', fine_rope: 'rope', tile: 'runic_tile' }
 
 export function resourceIconUrl(id: string) {
-  if (id === 'kaolin') {
-    return '/assets/resources/icons/kaolin.svg'
-  }
-  return `/assets/resources/icons/${id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`
+  if (!knownResources.has(id)) return `/assets/ui/icons/shortage.svg?v=${RESOURCE_ICON_ASSET_REVISION}`
+  if (id === 'kaolin') return '/assets/resources/icons/kaolin.svg'
+  return `/assets/resources/icons/${legacyNames[id] ?? id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`
 }
 
-export function ResourceIcon({ id, label, className }: ResourceIconProps) {
+export function ResourceIcon({ id, label, className, decorative = false }: ResourceIconProps) {
   const [renderedIconAvailable, setRenderedIconAvailable] = useState(true)
 
   useEffect(() => {
@@ -24,13 +28,16 @@ export function ResourceIcon({ id, label, className }: ResourceIconProps) {
   }, [id])
 
   return (
-    <span className={`resource-icon resource-icon-${id}${className ? ` ${className}` : ''}`} title={label} aria-label={label}>
+    <span className={`resource-icon resource-icon-${id}${className ? ` ${className}` : ''}`} title={label} role={decorative ? undefined : 'img'} aria-hidden={decorative || undefined} aria-label={decorative ? undefined : label}>
       {renderedIconAvailable ? (
         <img
           src={resourceIconUrl(id)}
           alt=""
           aria-hidden="true"
           className="resource-icon-render"
+          width={32}
+          height={32}
+          decoding="async"
           onError={() => setRenderedIconAvailable(false)}
         />
       ) : (

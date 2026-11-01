@@ -1,20 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Coins, Gauge, Hammer, Shield } from 'lucide-react'
+import { Coins, Gauge, Hammer, Shield } from '../../shared/ui/icons'
 import type { FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 
+import { allianceBuffCatalog } from '../../../../shared/catalog/alliance-buffs'
+import { resourceCatalog } from '../../../../shared/catalog/resources'
 import { playUiSound } from '../../audio/playUiSound'
 import { useGameStore } from '../../game/state/useGameStore'
 import { Drawer, IconButton } from '../../shared/ui'
-import { cancelMarketOrder, createAlliance, createMarketOrder, donateToAlliance, getAllianceProfile, inviteToAlliance, listMarketOrders, respondToAllianceInvite, upgradeAllianceBuff } from '../../shared/api/social'
+import { spendAllianceTreasury, transferAllianceLeadership, leaveAlliance, kickAllianceMember, cancelMarketOrder, createAlliance, createMarketOrder, donateToAlliance, getAllianceProfile, inviteToAlliance, listMarketOrders, respondToAllianceInvite, upgradeAllianceBuff } from '../../shared/api/social'
 import { useAuthStore } from '../auth/useAuthStore'
 import { ResourceIcon } from '../resources/ResourceIcon'
 
-const buffCatalog = [
-  { id: 'build_speed', icon: Hammer, name: 'Быстрая стройка', effect: '+3% к скорости за уровень' },
-  { id: 'defense', icon: Shield, name: 'Общая защита', effect: '+2% к прочности за уровень' },
-  { id: 'logistics', icon: Gauge, name: 'Логистика', effect: '+2% к доставке за уровень' },
-] as const
+const buffCatalog = allianceBuffCatalog.map((buff) => ({ ...buff, icon: buff.id === 'build_speed' || buff.id === 'repair_speed' ? Hammer : buff.id === 'defense' ? Shield : Gauge }))
+
 
 export function AlliancePanel() {
   const open = useGameStore((state) => state.uiPreferences.alliancePanelOpen)
@@ -27,6 +26,7 @@ export function AlliancePanel() {
   const playerId = useAuthStore((state) => state.player?.id)
   const seenInvites = useRef<Set<string> | null>(null)
   const [donation, setDonation] = useState({ resource: 'wood', amount: 25 })
+  const [withdrawal, setWithdrawal] = useState({ resource: 'wood', amount: 1, recipient: '' })
   const [order, setOrder] = useState<{ side: 'sell' | 'buy'; resource: string; amount: number; price: number }>({ side: 'sell', resource: 'wood', amount: 50, price: 120 })
   const profile = profileQuery.data?.profile
 
@@ -35,7 +35,12 @@ export function AlliancePanel() {
     void queryClient.invalidateQueries({ queryKey: ['market', 'orders'] })
     void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
   }
+  const transferMutation = useMutation({ mutationFn: transferAllianceLeadership, onSuccess: refreshSocial })
+  const leaveMutation = useMutation({ mutationFn: leaveAlliance, onSuccess: refreshSocial })
+  const kickMutation = useMutation({ mutationFn: kickAllianceMember, onSuccess: refreshSocial })
+  const membershipError = leaveMutation.error ?? kickMutation.error ?? transferMutation.error
   const createMutation = useMutation({ mutationFn: createAlliance, onSuccess: refreshSocial })
+  const spendMutation = useMutation({ mutationFn: spendAllianceTreasury, onSuccess: refreshSocial })
   const donateMutation = useMutation({ mutationFn: donateToAlliance, onSuccess: () => { playUiSound('social.alliance.treasury'); refreshSocial() } })
   const inviteMutation = useMutation({ mutationFn: inviteToAlliance, onSuccess: () => { playUiSound('social.alliance.invite'); setInvitee(''); refreshSocial() } })
   const respondMutation = useMutation({ mutationFn: ({ id, accept }: { id: string; accept: boolean }) => respondToAllianceInvite(id, accept), onSuccess: (_result, variables) => { playUiSound(variables.accept ? 'social.alliance.accepted' : 'social.alliance.declined'); refreshSocial() } })
@@ -68,7 +73,10 @@ export function AlliancePanel() {
 
   return (
     <Drawer title="Союзный дом" open={open} onClose={() => setAlliancePanelOpen(false)}>
-      {!profile?.alliance ? (
+      <p className="panel-note">Участники, казна и полномочия вашего союза. Действия доступны согласно вашей роли.</p>
+      {profileQuery.isPending ? <p role="status">Загружаем сведения о союзе…</p> : null}
+      {profileQuery.error ? <p role="alert">Не удалось загрузить союз. <button type="button" onClick={() => void profileQuery.refetch()}>Повторить</button></p> : null}
+      {profileQuery.data && !profile?.alliance ? (
         <>
         {profile?.invites.filter((invite) => invite.invitee_id === playerId && invite.status === 'pending').map((invite) => (
           <div key={invite.id} className="social-form">
@@ -85,7 +93,7 @@ export function AlliancePanel() {
           <button type="submit" disabled={createMutation.isPending}>Создать союз</button>
         </form>
         </>
-      ) : (
+      ) : profile?.alliance ? (
         <>
           <section className="alliance-summary">
             <strong>{profile.alliance.name}</strong>
@@ -117,6 +125,8 @@ export function AlliancePanel() {
           </form>
           <section className="alliance-list">
             <h3>Иерархия</h3>
+            <button type="button" disabled={leaveMutation.isPending} onClick={() => leaveMutation.mutate()}>Выйти из союза</button>
+            {membershipError ? <p role="alert">{membershipError.message}</p> : null}
             {profile.self && ['leader', 'deputy', 'officer'].includes(profile.self.role) ? (
               <form className="social-form" onSubmit={(event) => { event.preventDefault(); if (invitee.trim()) inviteMutation.mutate(invitee.trim()) }}>
                 <input aria-label="ID игрока для приглашения" value={invitee} onChange={(event) => setInvitee(event.target.value)} />
@@ -127,27 +137,43 @@ export function AlliancePanel() {
               <p key={member.player_id}>
                 <strong>{roleLabel(member.role)}{member.treasurer ? ' / казначей' : ''}</strong>
                 <span>{member.player_id}</span>
+                {profile.self?.role === 'leader' && member.player_id !== playerId ? <button type="button" disabled={transferMutation.isPending} onClick={() => transferMutation.mutate(member.player_id)}>Передать лидерство</button> : null}
+                {profile.self && member.player_id !== playerId && roleRank(profile.self.role) > roleRank(member.role) ? <button type="button" disabled={kickMutation.isPending} onClick={() => kickMutation.mutate(member.player_id)}>Исключить</button> : null}
               </p>
             ))}
           </section>
+          <section className="alliance-treasury-spend">
+            <h3>Баланс казны</h3>
+            {Object.entries(profile.balance ?? {}).map(([id, amount]) => <span key={id}><ResourceIcon id={id} label={resourceCatalog.find(r => r.id === id)?.name ?? id} />{amount} </span>)}
+            {profile.self?.role === 'leader' || profile.self?.treasurer ? <form className="social-form" onSubmit={(event) => { event.preventDefault(); spendMutation.mutate(withdrawal) }}>
+              <label>Ресурс<select value={withdrawal.resource} onChange={e => setWithdrawal({ ...withdrawal, resource: e.target.value })}>{resourceCatalog.filter(r => r.id !== 'population').map(r => <option key={r.id} value={r.id}>{r.name}</option>)}</select></label>
+              <label>Количество<input type="number" min={1} max={2147483647} value={withdrawal.amount} onChange={e => setWithdrawal({ ...withdrawal, amount: Number(e.target.value) })} /></label>
+              <label>Получатель<select required value={withdrawal.recipient} onChange={e => setWithdrawal({ ...withdrawal, recipient: e.target.value })}><option value="">Выберите участника</option>{profile.members.map(m => <option key={m.player_id} value={m.player_id}>{m.player_id}</option>)}</select></label>
+              <button type="submit" disabled={spendMutation.isPending}>Выдать из казны</button>
+              {spendMutation.error ? <p role="alert">{spendMutation.error.message}</p> : null}
+            </form> : null}
+          </section>
           <section className="alliance-buffs">
             <h3>Баффы</h3>
+            {buffMutation.error ? <p role="alert">{buffMutation.error.message}</p> : null}
             {buffCatalog.map((buff) => {
               const level = profile.buffs.find((item) => item.id === buff.id)?.level ?? 0
               return (
                 <article key={buff.id}>
-                  <IconButton label={buff.name} icon={buff.icon} onClick={() => buffMutation.mutate(buff.id)} />
+                  <IconButton label={buff.name} icon={buff.icon} disabled={buffMutation.isPending || level >= buff.max_level || !(profile.self?.role === 'leader' || profile.self?.treasurer) || (profile.balance?.[buff.resource] ?? 0) < buff.base_cost * (level + 1) ** 2} onClick={() => buffMutation.mutate(buff.id)} />
                   <strong>{buff.name}</strong>
                   <span>ур. {level}</span>
-                  <small>{buff.effect}</small>
+                  <small>{buff.id === 'defense' ? 'Снижение урона' : buff.id === 'logistics' ? 'Добыча' : 'Ускорение'}: {buff.percent * level}%</small>
+                  <small>{level >= buff.max_level ? 'Максимальный уровень' : `Следующий уровень: ${buff.base_cost * (level + 1) ** 2} ${resourceCatalog.find(r => r.id === buff.resource)?.name ?? ''}`}</small>
                 </article>
               )
             })}
           </section>
         </>
-      )}
+      ) : null}
       <form className="social-form market-panel" onSubmit={submitOrder}>
         <h3>Рынок</h3>
+        {marketQuery.error ? <p role="alert">Рынок не загружен. <button type="button" onClick={() => void marketQuery.refetch()}>Повторить</button></p> : null}
         <select value={order.side} onChange={(event) => setOrder({ ...order, side: event.target.value as 'sell' | 'buy' })}>
           <option value="sell">Продажа</option>
           <option value="buy">Покупка</option>
@@ -165,6 +191,7 @@ export function AlliancePanel() {
           <p key={item.id}>
             <strong>{item.side === 'sell' ? 'Продажа' : 'Покупка'}</strong>
             <ResourceIcon id={item.resource} label={item.resource} /> {item.amount} за {item.price} монет
+            {item.filled_amount ? <span> Выполнено: {item.filled_amount} из {item.amount}.</span> : null}
             {item.status === 'open' ? <button type="button" disabled={cancelMarketMutation.isPending} onClick={() => cancelMarketMutation.mutate(item.id)}>Отменить ордер</button> : null}
           </p>
         ))}
@@ -191,3 +218,5 @@ function roleLabel(role?: string) {
       return 'Без союза'
   }
 }
+
+function roleRank(role: string) { return ({ member: 0, officer: 1, deputy: 2, leader: 3 } as Record<string, number>)[role] ?? -1 }

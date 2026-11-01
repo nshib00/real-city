@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ReactElement } from 'react'
@@ -42,7 +42,7 @@ describe('BuildMenu', () => {
       selectedBuildingId: null,
       buildings: [],
       worldTiles: [],
-      uiPreferences: { compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, buildMenuOpen: true, isChatCollapsed: false, areNotificationsCollapsed: false },
+      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, buildMenuOpen: true, isChatCollapsed: false, areNotificationsCollapsed: false },
     })
     useAuthStore.setState({ player: testPlayer('p1'), isAuthenticated: true })
   })
@@ -71,6 +71,21 @@ describe('BuildMenu', () => {
 
     fireEvent.click(screen.getByLabelText('Отменить предпросмотр постройки'))
     expect(useGameStore.getState().placementPreviewKind).toBeNull()
+  })
+
+  it('preserves search and category when closed and filters unavailable buildings', () => {
+    renderWithClient(<BuildMenu />)
+    fireEvent.click(screen.getByRole('button', { name: 'Жилье' }))
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'землянка' } })
+    expect(screen.getByLabelText('Построить Землянка')).toBeTruthy()
+    act(() => useGameStore.getState().setBuildMenuOpen(false))
+    expect(screen.queryByRole('searchbox')).toBeNull()
+    act(() => useGameStore.getState().setBuildMenuOpen(true))
+    expect((screen.getByRole('searchbox') as HTMLInputElement).value).toBe('землянка')
+    expect(screen.getByRole('button', { name: 'Жилье' }).getAttribute('aria-pressed')).toBe('true')
+    fireEvent.click(screen.getByLabelText('Только доступные здесь'))
+    expect(screen.queryByLabelText('Построить Землянка')).toBeNull()
+    expect(screen.getByText(/Нет подходящих построек/)).toBeTruthy()
   })
 
   it('allows one free town hall before other buildings', async () => {
@@ -217,7 +232,6 @@ describe('BuildMenu', () => {
       'Современная стена',
       'Сторожевая башня',
       'Мастерская',
-      'Склад материалов',
       'Рынок',
       'Союзный дом',
     ]) {
@@ -239,7 +253,7 @@ describe('BuildMenu', () => {
   it('hides the oil derrick from the regular industry category', () => {
     renderWithClient(<BuildMenu />)
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Заводы' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Заводы' }))
 
     expect(screen.queryByLabelText('Построить Нефтяная вышка')).toBeNull()
     expect(screen.getByLabelText('Построить Нефтеперерабатывающий завод')).toBeTruthy()
@@ -264,7 +278,7 @@ describe('BuildMenu', () => {
   it('sorts each category by coin cost independently', () => {
     const { container } = renderWithClient(<BuildMenu />)
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Грядки' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Грядки' }))
 
     const names = buildCardNames(container)
     expect(names.slice(0, 6)).toEqual(['Грядка ветролиста', 'Семенной огород', 'Льняное поле', 'Тростниковая грядка', 'Грибница', 'Травяная грядка'])
@@ -325,7 +339,7 @@ function testPlayer(id: string): Player {
       level_start_xp: 0,
       next_level_xp: 100,
       settings: {
-        notifications: { raid_alerts: true, production_ready: true, market_updates: true },
+        notifications: { attack_alerts: true, production_ready: true, market_updates: true },
         render_quality: 'medium',
       },
       updated_at: '2026-09-20T00:00:00Z',

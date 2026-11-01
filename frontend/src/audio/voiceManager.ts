@@ -1,15 +1,11 @@
 import { audioManager } from './AudioManager'
 import type { SoundId } from './soundEvents'
+import { AudioEventWindow } from './eventWindow'
 
-const seenEvents = new Map<string, number>()
+const seenEvents = new AudioEventWindow(500, 60_000)
 
 export function playCombatSound(id: SoundId, gain = 1, eventId?: string, pan = 0): boolean {
   if (gain <= 0) return false
-  const now = performance.now()
-  if (eventId) {
-    if (seenEvents.has(eventId)) return false
-    seenEvents.set(eventId, now)
-    if (seenEvents.size > 500) for (const [key, at] of seenEvents) if (now - at > 60_000) seenEvents.delete(key)
-  }
+  if (eventId && !seenEvents.accept(eventId)) return false
   return audioManager.play(id, { gain, pan })
 }

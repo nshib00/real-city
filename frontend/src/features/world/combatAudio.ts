@@ -85,7 +85,7 @@ export function playCombatEvent(event: RealtimeEnvelope): void {
     }
   } else if (event.type === 'monster.attacked') {
     playCombatSound(monsterActionSound(monster.type, 'attack'), gain, `${event.event_id}:attack`, pan)
-    if (ownTarget) playCombatSound('combat.raid.started', 1, `${event.event_id}:raid`)
+    if (ownTarget) playCombatSound('combat.threat.nearby', 1, `${event.event_id}:threat-attack`)
   } else if (event.type === 'monster.damaged') {
     if (!ownerId || event.player_id !== ownerId) playCombatSound(monsterActionSound(monster.type, 'hit'), gain, `${event.event_id}:hit`, pan)
   } else if (event.type === 'monster.died') {

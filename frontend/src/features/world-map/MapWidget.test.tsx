@@ -8,8 +8,10 @@ import { getChunks } from '../../shared/api/world'
 import { useAuthStore } from '../auth/useAuthStore'
 import type { Player } from '../auth/types'
 import { MapWidget } from './MapWidget'
+import { getAllianceProfile } from '../../shared/api/social'
 
 vi.mock('../../shared/api/world', () => ({ getChunks: vi.fn(async () => ({ chunks: [] })) }))
+vi.mock('../../shared/api/social', () => ({ getAllianceProfile: vi.fn() }))
 
 function renderMapWidget() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
@@ -18,6 +20,7 @@ function renderMapWidget() {
 
 describe('MapWidget', () => {
   beforeEach(() => {
+    vi.mocked(getAllianceProfile).mockReset()
     vi.mocked(getChunks).mockReset()
     vi.mocked(getChunks).mockResolvedValue({ chunks: [] })
     useAuthStore.setState({ player: { id: 'test' } as Player })
@@ -28,6 +31,20 @@ describe('MapWidget', () => {
       camera: { x: 0, y: 0, zoom: 1 },
       viewport: { center: { x: 0, y: 0 }, radius: 1 },
     })
+  })
+
+  it.each([['group', 'ally'], ['different-group', 'foreign']])('показывает союзный знак только при совпадении подтверждённого союза %s', async (group, expected) => {
+    useAuthStore.setState({ player: { id: 'test', profile: { group_id: 'group' } } as Player })
+    vi.mocked(getAllianceProfile).mockResolvedValue({ profile: {
+      alliance: { id: group, name: 'Союз', leader_id: 'test', level: 1, member_limit: 10 }, self: null,
+      members: [{ player_id: 'ally', role: 'member', treasurer: false, joined_at: '2026-10-31T00:00:00Z' }],
+      invites: [], treasury: [], buffs: [], aid: [],
+    } })
+    useGameStore.setState({ buildings: [{ ...building('dugout', 'Землянка'), owner: 'ally' }] })
+    renderMapWidget()
+    fireEvent.click(screen.getByLabelText('Карта мира'))
+    await waitFor(() => expect(getAllianceProfile).toHaveBeenCalled())
+    await waitFor(() => expect(screen.getByLabelText('Землянка').getAttribute('data-owner')).toBe(expected))
   })
 
   it('disables town hall teleport until an active town hall exists', () => {
@@ -106,26 +123,26 @@ describe('MapWidget', () => {
 
   it('focuses and selects a building from its world map marker', async () => {
     useGameStore.setState({
-      buildings: [building('warehouse', 'Склад материалов', { x: 48, y: 96 })],
+      buildings: [building('coin_storage', 'Хранилище монет', { x: 48, y: 96 })],
     })
     renderMapWidget()
 
     fireEvent.click(screen.getByLabelText('Карта мира'))
-    fireEvent.click(screen.getByLabelText('Склад материалов'))
+    fireEvent.click(screen.getByLabelText('Хранилище монет'))
 
     await waitFor(() => expect(useGameStore.getState().selectedTile).toEqual({ x: 48, y: 96 }))
     expect(useGameStore.getState().viewport.center).toEqual({ x: 48, y: 96 })
-    expect(useGameStore.getState().selectedBuildingId).toBe('warehouse-id')
+    expect(useGameStore.getState().selectedBuildingId).toBe('coin_storage-id')
   })
 
   it('keeps the previous district visible until the destination chunks arrive', async () => {
     let finishLoading!: (value: { chunks: [] }) => void
     vi.mocked(getChunks).mockImplementationOnce(() => new Promise((resolve) => { finishLoading = resolve }))
-    useGameStore.setState({ buildings: [building('warehouse', 'Склад материалов', { x: 48, y: 96 })] })
+    useGameStore.setState({ buildings: [building('coin_storage', 'Хранилище монет', { x: 48, y: 96 })] })
     renderMapWidget()
 
     fireEvent.click(screen.getByLabelText('Карта мира'))
-    fireEvent.click(screen.getByLabelText('Склад материалов'))
+    fireEvent.click(screen.getByLabelText('Хранилище монет'))
 
     expect(useGameStore.getState().viewport.center).toEqual({ x: 0, y: 0 })
     await act(async () => finishLoading({ chunks: [] }))

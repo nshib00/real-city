@@ -1,6 +1,7 @@
 import { request } from './client'
 import type { InventoryResponse } from './economy'
 import type { WorldChunk, WorldMap, WorldTile } from '../contracts'
+import { normalizeChunk, normalizeTile } from '../../../../shared/world/coordinates'
 
 export type ChunksResponse = {
   chunks: WorldChunk[]
@@ -11,6 +12,7 @@ export function getWorld() {
 }
 
 export function getChunks(center: { x: number; y: number }, radius = 1) {
+  center = normalizeChunk(center)
   const params = new URLSearchParams({
     x: String(center.x),
     y: String(center.y),
@@ -20,6 +22,7 @@ export function getChunks(center: { x: number; y: number }, radius = 1) {
 }
 
 export function getViewport(center: { x: number; y: number }, radius = 48) {
+  center = normalizeTile(center)
   const params = new URLSearchParams({
     x: String(center.x),
     y: String(center.y),
@@ -29,6 +32,7 @@ export function getViewport(center: { x: number; y: number }, radius = 48) {
 }
 
 export function chopForest(tile: { x: number; y: number }) {
+  tile = normalizeTile(tile)
   return request<{ tile: WorldTile; inventory: InventoryResponse }>('/world/tiles/chop-forest', {
     method: 'POST',
     body: JSON.stringify({ tile_x: tile.x, tile_y: tile.y }),

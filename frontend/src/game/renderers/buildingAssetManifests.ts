@@ -53,6 +53,7 @@ export const OILSEED_FIELD_ASSET_REVISION = 'mcp-midpoly-l01-l07-2026-10-09'
 export const ROPE_YARD_ASSET_REVISION = 'mcp-midpoly-l01-l08-2026-10-08'
 export const OIL_WELL_ASSET_REVISION = 'oil-well-no-side-rods-2026-10-14'
 export const DEFENSE_CANNON_ASSET_REVISION = 'defense-cannon-2026-10-17'
+export const TOWN_HALL_ASSET_REVISION = 'town-hall-vertical-2026-10-26'
 
 const l1To3 = [1, 2, 3] as const
 const l1To5 = [1, 2, 3, 4, 5] as const
@@ -63,6 +64,7 @@ const l1To10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 const l1To11 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const
 const l1To12 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
 const l1To13 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] as const
+const l1To15 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] as const
 const coreStates = ['active', 'construction', 'damaged'] as const
 const coreWithRuinedStates = ['active', 'construction', 'damaged', 'ruined'] as const
 const modularWallRender = {
@@ -132,10 +134,12 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     assetId: 'town_hall',
     category: 'center',
     displayName: 'Центр города',
-    levels: l1To10,
+    levels: l1To15,
     states: coreStates,
     spriteSource: 'public',
-    modelSource: 'src-models',
+    modelSource: 'public',
+    modelLod: 'LOD0',
+    revision: TOWN_HALL_ASSET_REVISION,
   },
   {
     kind: 'dugout',
@@ -456,6 +460,11 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     kind: 'weaving_yard', assetId: 'weaving_yard', category: 'industry', displayName: 'Ткацкая мастерская',
     levels: l1To10, states: coreStates, spriteSource: 'public', modelSource: 'public',
     modelLod: 'LOD0', revision: 'weaving-yard-2026-10-18',
+  },
+  {
+    kind: 'dye_works', assetId: 'dye_works', category: 'industry', displayName: 'Красильня',
+    levels: [1], states: coreWithRuinedStates, spriteSource: 'public', modelSource: 'public',
+    modelLod: 'LOD0', revision: 'dye-works-2026-11-01',
   },
   {
     kind: 'paint_workshop', assetId: 'paint_workshop', category: 'industry', displayName: 'Красильная мастерская',

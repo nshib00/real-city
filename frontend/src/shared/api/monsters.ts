@@ -1,5 +1,7 @@
 import { request } from './client'
+import { normalizeTile } from '../../../../shared/world/coordinates'
 import type { InventoryItem, InventoryResponse } from './economy'
+import type { BuildingResponse } from './buildings'
 
 export type MonsterResponse = {
   id: string
@@ -14,6 +16,8 @@ export type MonsterResponse = {
   damage: number
   aggro_radius: number
   updated_at: string
+  creator_id?: string
+  expires_at?: string
 }
 
 export type ThreatResponse = {
@@ -33,6 +37,7 @@ export type MonsterLootResponse = {
 }
 
 export function listMonsterLoot(input: { x: number; y: number; radius: number }) {
+  input = { ...input, ...normalizeTile(input) }
   return request<{ loot: MonsterLootResponse[] }>(`/monster-loot?x=${input.x}&y=${input.y}&radius=${input.radius}`)
 }
 
@@ -41,6 +46,7 @@ export function claimMonsterLoot(id: string) {
 }
 
 export function listMonsters(input: { x: number; y: number; radius: number }) {
+  input = { ...input, ...normalizeTile(input) }
   return request<{ monsters: MonsterResponse[] }>(`/monsters?x=${input.x}&y=${input.y}&radius=${input.radius}`)
 }
 
@@ -48,9 +54,18 @@ export type WeaponAttackResponse = {
   attack: { id: string; weapon: string; due_at: string }
   monster?: MonsterResponse
   loot?: MonsterLootResponse
+  building?: BuildingResponse
 }
 
-export type PendingWeaponAttack = { id: string; monster_id: string; weapon: string; due_at: string }
+export type PendingWeaponAttack = { id: string; monster_id?: string; building_id?: string; weapon: string; due_at: string }
+
+export function useWeaponOnBuilding(id: string, weapon: string) {
+  return request<WeaponAttackResponse>(`/buildings/${encodeURIComponent(id)}/weapons`, { method: 'POST', body: JSON.stringify({ weapon }) })
+}
+
+export function createAttackMonster(targetBuildingId: string) {
+  return request<{ monster: MonsterResponse }>('/combat/monsters', { method: 'POST', body: JSON.stringify({ target_building_id: targetBuildingId }) })
+}
 
 export function listPendingWeaponAttacks() {
   return request<{ attacks: PendingWeaponAttack[] }>('/combat/attacks')
@@ -66,12 +81,15 @@ export function useWeaponOnMonster(id: string, weapon: string) {
 }
 
 export function listThreats(input: { x: number; y: number; radius: number }) {
+  input = { ...input, ...normalizeTile(input) }
   return request<{ threats: ThreatResponse[] }>(`/threats?x=${input.x}&y=${input.y}&radius=${input.radius}`)
 }
 
 export function toMonster(item: MonsterResponse) {
   return {
     id: item.id,
+    creatorId: item.creator_id,
+    expiresAt: item.expires_at ? Date.parse(item.expires_at) : undefined,
     type: item.type,
     state: item.state,
     tile: { x: item.tile_x, y: item.tile_y },
@@ -83,4 +101,10 @@ export function toMonster(item: MonsterResponse) {
     aggroRadius: item.aggro_radius,
     updatedAt: Date.parse(item.updated_at),
   }
+}
+
+export type CombatRules = { attack_range_tiles: number; attack_cooldown_seconds: number; summon_cost_coins: number; summon_cooldown_seconds: number; summon_max_alive: number; summon_lifetime_seconds: number }
+
+export function getCombatRules() {
+  return request<{ rules: CombatRules }>('/combat/rules')
 }

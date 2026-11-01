@@ -1,4 +1,5 @@
 import { request } from './client'
+import { normalizeTile } from '../../../../shared/world/coordinates'
 import type { BuildingKind, BuildingState, PlacedBuilding } from '../../game/state/useGameStore'
 
 export type BuildingResponse = {
@@ -82,13 +83,15 @@ export function listBuildings() {
 }
 
 export function listVisibleBuildings(center: { x: number; y: number }, radius: number) {
+  center = normalizeTile(center)
   return request<{ buildings: BuildingResponse[] }>(`/buildings?scope=visible&x=${center.x}&y=${center.y}&radius=${radius}`)
 }
 
 export function placeBuilding(input: { type: BuildingKind; tile_x: number; tile_y: number }) {
+  const tile = normalizeTile({ x: input.tile_x, y: input.tile_y })
   return request<{ building: BuildingResponse }>('/buildings', {
     method: 'POST',
-    body: JSON.stringify(input),
+    body: JSON.stringify({ ...input, tile_x: tile.x, tile_y: tile.y }),
   })
 }
 
@@ -100,6 +103,7 @@ export function patchBuilding(id: string, action: 'complete' | 'rush_complete' |
 }
 
 export function relocateBuilding(id: string, tile: { x: number; y: number }, rotation: number) {
+  tile = normalizeTile(tile)
   return request<{ building: BuildingResponse }>(`/buildings/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ action: 'relocate', tile_x: tile.x, tile_y: tile.y, rotation }),
@@ -153,3 +157,6 @@ export function toPlacedBuilding(response: BuildingResponse): PlacedBuilding {
     superCrop: response.super_crop,
   }
 }
+
+export type RepairQuote = { cost: { resource: string; amount: number }[]; workers: number; duration_seconds: number; job?: { id: string; due_at: string; status: string } }
+export function getRepairStatus(id: string) { return request<{ repair: RepairQuote }>(`/buildings/${encodeURIComponent(id)}/repair`) }

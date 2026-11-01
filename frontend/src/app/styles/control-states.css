@@ -1,0 +1,34 @@
+/* Компонентные токены применяются после прежнего CSS и не меняют геометрию. */
+button:is(.ui-button, .icon-button, .tab-button, .segment-button, .build-category-tab) {
+  color: var(--control-default-fg);
+  background: var(--control-default-bg);
+  border-color: var(--control-default-border);
+}
+button:is(.ui-button, .icon-button, .tab-button, .segment-button, .build-category-tab):hover:not(:disabled) {
+  color: var(--control-hover-fg); background: var(--control-hover-bg); border-color: var(--control-hover-border);
+}
+button:is(.icon-button, .tab-button, .segment-button, .build-category-tab):is([aria-pressed='true'], [aria-selected='true'], .segment-button-active) {
+  color: var(--control-selected-fg); background: var(--control-selected-bg); border-color: var(--control-selected-border);
+}
+button:is(.ui-button, .icon-button, .tab-button, .segment-button, .build-category-tab):active:not(:disabled) {
+  color: var(--control-pressed-fg); background: var(--control-pressed-bg); border-color: var(--control-pressed-border);
+}
+button:is(.ui-button, .icon-button, .tab-button, .segment-button, .build-category-tab):disabled {
+  color: var(--control-disabled-fg); background: var(--control-disabled-bg); border-color: var(--control-disabled-border); border-style: dashed; opacity: 1;
+}
+button:is(.ui-button, .icon-button, .tab-button, .segment-button, .build-category-tab)[aria-busy='true'] {
+  color: var(--control-loading-fg); background: var(--control-loading-bg); border-color: var(--control-loading-border); border-style: dashed;
+}
+button.ui-button.ui-button-primary { color: var(--action-primary-ink); background: var(--action-primary); border-color: var(--action-primary); }
+button.ui-button.ui-button-primary:hover:not(:disabled) { color: var(--action-primary-ink); background: var(--action-primary-hover); }
+button.ui-button.ui-button-primary:active:not(:disabled) { color: var(--action-primary-ink); background: var(--action-primary-pressed); }
+button.ui-button.ui-button-primary:disabled { color: var(--control-disabled-fg); background: var(--control-disabled-bg); border-color: var(--control-disabled-border); }
+button.ui-button.ui-button-primary[aria-busy='true'] { color: var(--control-loading-fg); background: var(--control-loading-bg); }
+button.ui-button.ui-button-danger, :is(input, select, textarea)[aria-invalid='true'] { color: var(--control-error-fg); background: var(--control-error-bg); border-color: var(--control-error-border); }
+.game-shell :is(button, input, select, textarea, [tabindex]):focus-visible,
+:is(.ui-button, .icon-button, .tab-button, .segment-button):focus-visible {
+  outline: 2px solid var(--control-focus-inner); outline-offset: 2px; box-shadow: 0 0 0 5px var(--control-focus-outer);
+}
+.map-debug { color: var(--ref-cream-50); }
+.map-debug span { background: var(--ref-night-800); }
+[data-interface-theme=aeolian] .profile-level-badge { color: var(--ref-paper-50); background: var(--state-warning); }

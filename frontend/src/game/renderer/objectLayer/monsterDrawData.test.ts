@@ -4,6 +4,14 @@ import type { MonsterEntity } from '../../state/useGameStore'
 import { monsterDirection, monsterDrawCommand, monsterDrawCommands, nextMonsterRenderMemory } from './monsterDrawData'
 
 describe('monster draw data', () => {
+  it('при reduced motion сохраняет серверную позицию и статичный кадр текущего состояния', () => {
+    const entity = monster({ tile: { x: 8, y: 9 }, state: 'attacking' })
+    const first = monsterDrawCommands([entity], { nowMs: 1000, reducedMotion: true })[0]
+    const later = monsterDrawCommands([{ ...entity, tile: { x: 9, y: 9 } }], { nowMs: 1300, reducedMotion: true })[0]
+    expect(first.frameName).toBe(later.frameName)
+    expect(later.displayTile).toEqual({ x: 9, y: 9 })
+    expect(later.animationKey).toBe('attack')
+  })
   it('maps domain state to atlas-ready animation frames', () => {
     const command = monsterDrawCommand(monster({ state: 'attacking' }), {
       selectedMonsterId: 'm1',

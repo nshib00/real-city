@@ -1,4 +1,8 @@
 import { Application, Assets, Container, Graphics, Sprite, Spritesheet, Texture } from 'pixi.js'
+import { overlayColors } from '../../app/theme'
+import { TextureReadiness } from './textureReadiness'
+import { mapRenderBudget, observePageVisibility } from './powerPolicy'
+import { clientTelemetry } from '../../shared/telemetry/clientTelemetry'
 import { useEffect, useMemo, useRef } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
 
@@ -17,6 +21,9 @@ import { buildingHitAtClick, createRenderedTileLookup } from './mapHitTarget'
 import { pixiMutationCounts, recordPixiChildMutation, recordPixiFrame, recordPixiRedraw, registerPixiContext } from './renderPerformanceMetrics'
 import { isRaisedTerrain, preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
 import { tileOccupancyKey } from './visibleObjects'
+import { observeWorldMotion, worldMotionEnabled } from './motionPolicy'
+import type { TerritoryCell } from '../territory'
+import { defenseRangeCells } from '../defenseRange'
 
 type Camera = {
   x: number
@@ -30,6 +37,8 @@ type TileCoord = {
 }
 
 type PixiStageProps = {
+  powerSave?: boolean
+  territories?: TerritoryCell[]
   tiles: WorldTile[]
   occupiedTiles: Set<string>
   buildings?: PlacedBuilding[]
@@ -91,12 +100,12 @@ type ResourceHitArea = {
 
 type RetainedChild = Container['children'][number]
 type RetainedChildCache = Map<string, RetainedChild>
-type TextureLoadState = 'loading' | 'loaded' | 'failed'
-
-const textureLoadStates = new Map<string, TextureLoadState>()
+export const mapTextureReadiness = new TextureReadiness((url) => Assets.load(url), () => clientTelemetry.record('asset_error'))
 const monsterAtlasTextures = new Map<MonsterEntity['type'], 'loading' | Record<string, Texture> | null>()
 
 export function PixiStage({
+  powerSave = false,
+  territories = [],
   tiles,
   occupiedTiles,
   buildings = [],
@@ -126,8 +135,11 @@ export function PixiStage({
   const resourceSpriteCacheRef = useRef<RetainedChildCache>(new Map())
   const buildingOverlayCacheRef = useRef<RetainedChildCache>(new Map())
   const terrainRef = useRef<Graphics | null>(null)
+  const territoryRef = useRef<Graphics | null>(null)
   const overlayRef = useRef<Graphics | null>(null)
   const tilesRef = useRef<WorldTile[]>(renderedTiles)
+  const territoriesRef = useRef(territories)
+  territoriesRef.current = territories
   const occupiedTilesRef = useRef<Set<string>>(occupiedTiles)
   const buildingsRef = useRef<PlacedBuilding[]>(buildings)
   const allBuildingsRef = useRef<PlacedBuilding[]>(allBuildings)
@@ -153,8 +165,9 @@ export function PixiStage({
     const terrainSprites = terrainSpritesRef.current
     const objectSprites = objectSpritesRef.current
     const terrain = terrainRef.current
+    const territory = territoryRef.current
     const overlay = overlayRef.current
-    if (!app || !terrainSprites || !objectSprites || !terrain || !overlay) {
+    if (!app || !terrainSprites || !objectSprites || !terrain || !overlay || !territory) {
       return
     }
     const before = import.meta.env.DEV ? pixiMutationCounts() : null
@@ -186,6 +199,8 @@ export function PixiStage({
       monsterRenderMemoryRef.current,
       monsterGroupsRef.current,
       () => redrawRef.current?.(),
+      territoriesRef.current,
+      territory,
     )
     buildingDrawCommandsRef.current = drawn.buildingCommands
     visibleTileCountRef.current = drawn.visibleTiles
@@ -207,22 +222,37 @@ export function PixiStage({
   }
 
   redrawRef.current = redraw
+  useEffect(() => { redrawRef.current?.() }, [territories])
+
+  useEffect(() => observeWorldMotion(() => redrawRef.current?.()), [])
+
+  useEffect(() => {
+    const retry = () => redrawRef.current?.()
+    const retryFailed = () => { mapTextureReadiness.retryFailed(); retry() }
+    const timer = window.setInterval(() => {
+      if (!document.hidden && mapTextureReadiness.diagnostics().retryable) retry()
+    }, 2000)
+    window.addEventListener('real-city:retry-map-assets', retryFailed)
+    return () => { window.clearInterval(timer); window.removeEventListener('real-city:retry-map-assets', retryFailed) }
+  }, [])
 
   useEffect(() => {
     let app: Application | null = null
     let disposed = false
     let unregisterPixiContext: (() => void) | null = null
 
+    let stopVisibility: (() => void) | undefined
     async function mount() {
       if (!hostRef.current) {
         return
       }
       const nextApp = new Application()
+      const budget = mapRenderBudget(powerSave, window.devicePixelRatio)
       await nextApp.init({
         antialias: true,
         autoDensity: true,
         backgroundAlpha: 0,
-        resolution: window.devicePixelRatio || 1,
+        resolution: budget.resolution,
         resizeTo: hostRef.current,
       })
       if (disposed || !hostRef.current) {
@@ -232,19 +262,21 @@ export function PixiStage({
       app = nextApp
       appRef.current = nextApp
       unregisterPixiContext = registerPixiContext()
-      app.ticker.maxFPS = 60
+      app.ticker.maxFPS = budget.maxFPS
       terrainSpritesRef.current = new Container()
       objectSpritesRef.current = new Container()
       terrainRef.current = new Graphics()
       overlayRef.current = new Graphics()
+      territoryRef.current = new Graphics()
       app.stage.addChild(terrainRef.current)
       app.stage.addChild(terrainSpritesRef.current)
       app.stage.addChild(overlayRef.current)
+      app.stage.addChild(territoryRef.current)
       app.stage.addChild(objectSpritesRef.current)
       hostRef.current.appendChild(app.canvas)
       const animateMonsters = () => {
         recordPixiFrame(performance.now())
-        if (!objectSpritesRef.current) {
+        if (!objectSpritesRef.current || !worldMotionEnabled()) {
           return
         }
         drawMonsterLayer(
@@ -261,7 +293,7 @@ export function PixiStage({
         )
       }
       const animateBuildingOverlays = () => {
-        if (!objectSpritesRef.current) {
+        if (!objectSpritesRef.current || !worldMotionEnabled()) {
           return
         }
         drawBuildingAnimationOverlays(
@@ -277,6 +309,14 @@ export function PixiStage({
       }
       app.ticker.add(animateMonsters)
       app.ticker.add(animateBuildingOverlays)
+      stopVisibility = observePageVisibility((visible) => {
+        if (visible) {
+          redraw()
+          app?.start()
+        } else {
+          app?.stop()
+        }
+      })
       redraw()
       void preloadTerrainPngTextures().then(() => {
         if (!disposed && terrainSpritesRef.current && objectSpritesRef.current && terrainRef.current && overlayRef.current) {
@@ -285,10 +325,24 @@ export function PixiStage({
       })
     }
 
-    void mount()
+    let starting = false
+    const start = () => {
+      if (starting) return
+      starting = true
+      void mount().then(() => {
+        if (!disposed && app) window.dispatchEvent(new Event('real-city:map-ready'))
+      }).catch(() => {
+        if (!disposed) window.dispatchEvent(new Event('real-city:map-failed'))
+      }).finally(() => { starting = false })
+    }
+    const retry = () => { if (!app && !disposed) start() }
+    start()
+    window.addEventListener('real-city:retry-renderer', retry)
 
     return () => {
       disposed = true
+      window.removeEventListener('real-city:retry-renderer', retry)
+      stopVisibility?.()
       app?.destroy()
       unregisterPixiContext?.()
       unregisterPixiContext = null
@@ -396,6 +450,8 @@ function drawStage(
   monsterRenderMemory: Map<string, MonsterRenderMemory>,
   monsterGroups: Map<string, MonsterGroup>,
   requestRedraw: () => void,
+  territories: TerritoryCell[],
+  territoryOverlay: Graphics,
 ) {
   const width = app.screen.width
   const height = app.screen.height
@@ -408,6 +464,7 @@ function drawStage(
   monsterHitAreas.length = 0
   terrain.clear()
   overlay.clear()
+  territoryOverlay.clear()
   const activeTerrainKeys = new Set<string>()
   const activeBuildingIds = new Set<string>()
   const activeResourceIds = new Set<string>()
@@ -442,21 +499,46 @@ function drawStage(
     }
   }
 
+  for (const cell of territories) {
+    if (wrappedGridDistance(cell.x, centerGrid.x) > tileReach || wrappedGridDistance(cell.y, centerGrid.y) > tileReach) continue
+    const pos = nearestWrappedScreenCoord(cell, screenTarget)
+    const x = origin.x + pos.x * camera.zoom, y = origin.y + pos.y * camera.zoom
+    const w = TILE_WIDTH * camera.zoom / 2, h = TILE_HEIGHT * camera.zoom / 2
+    const corners = [[x, y-h], [x+w, y], [x, y+h], [x-w, y]]
+    const color = cell.ownership === 'own' ? 0x78d088 : cell.ownership === 'ally' ? 0x69c7d9 : 0xffc18e
+    cell.edges.forEach((edge, i) => {
+      if (!edge) return
+      const a = corners[i], b = corners[(i+1)%4]
+      territoryOverlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0x14242a, width: 5, alpha: .95 })
+      const parts = cell.ownership === 'own' ? 1 : cell.ownership === 'ally' ? 4 : 8
+      for (let j = 0; j < parts; j++) {
+        const from = j/parts, to = (j + (parts === 1 ? 1 : .55))/parts
+        territoryOverlay.moveTo(a[0]+(b[0]-a[0])*from, a[1]+(b[1]-a[1])*from).lineTo(a[0]+(b[0]-a[0])*to, a[1]+(b[1]-a[1])*to).stroke({ color, width: 2, alpha: 1 })
+      }
+    })
+  }
+
   const selectedCannon = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(item.kind)) : null
   if (selectedCannon?.cannonRange) {
-    const radius = selectedCannon.cannonRange
-    for (let dx = -radius; dx <= radius; dx++) {
-      for (let dy = -radius; dy <= radius; dy++) {
-        if (Math.abs(dx) + Math.abs(dy) !== radius) continue
-        drawOverlay(overlay, { x: selectedCannon.tile.x + dx, y: selectedCannon.tile.y + dy }, origin, screenTarget, camera.zoom, 0x46d5dc, 0.27)
-      }
+    for (const cell of defenseRangeCells(selectedCannon, allBuildings, tiles)) {
+      const pos = nearestWrappedScreenCoord(cell, screenTarget)
+      const x = origin.x + pos.x * camera.zoom, y = origin.y + pos.y * camera.zoom
+      const w = TILE_WIDTH * camera.zoom / 2, h = TILE_HEIGHT * camera.zoom / 2
+      const corners = [[x, y-h], [x+w, y], [x, y+h], [x-w, y]]
+      cell.edges.forEach((edge, i) => {
+        if (!edge) return
+        const a = corners[i], b = corners[(i+1)%4]
+        overlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0x351316, width: 5, alpha: .95 })
+        overlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0xff5555, width: 2.5, alpha: 1 })
+      })
     }
   }
   if (hoveredTile) {
-    drawOverlay(overlay, hoveredTile, origin, screenTarget, camera.zoom, 0xffffff, 0.36)
+    drawOverlay(overlay, hoveredTile, origin, screenTarget, camera.zoom, 0xffffff, 0.6)
   }
   if (selectedTile) {
-    drawOverlay(overlay, selectedTile, origin, screenTarget, camera.zoom, 0xf2c14e, 0.9)
+    drawOverlay(overlay, selectedTile, origin, screenTarget, camera.zoom, 0x183e2c, 1)
+    drawOverlay(overlay, selectedTile, origin, screenTarget, camera.zoom, overlayColors.focus, 0.9)
   }
 
   const buildingCommands = buildingDrawCommands(buildings, { allBuildings, selectedBuildingId })
@@ -476,7 +558,7 @@ function drawStage(
   drawBuildingOverlayCommands(
     objectSprites,
     buildingOverlayCache,
-    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs, viewerId }),
+    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs: worldMotionEnabled() ? nowMs : 0, viewerId }),
     buildingCommands,
     origin,
     screenTarget,
@@ -530,7 +612,7 @@ function drawMonsterLayer(
     }
   }
   target.sortableChildren = true
-  for (const command of monsterDrawCommands(monsters, { selectedMonsterId, previous: monsterRenderMemory, nowMs })) {
+  for (const command of monsterDrawCommands(monsters, { selectedMonsterId, previous: monsterRenderMemory, nowMs, reducedMotion: !worldMotionEnabled() })) {
     drawMonsterSprite(target, monsterGroups, command, origin, screenTarget, camera.zoom, monsterHitAreas)
   }
 }
@@ -799,7 +881,7 @@ function buildingFallbackPalette(kind: string) {
   if (kind.includes('field') || kind.includes('garden') || kind.includes('bed')) {
     return { base: 0x3e7f4f, roof: 0x65a86a, detail: 0xe2c46f, stroke: 0xb9d989 }
   }
-  if (kind.includes('storage') || kind.includes('warehouse')) {
+  if (kind.includes('storage')) {
     return { base: 0x8c6b45, roof: 0x5f4632, detail: 0xe2b766, stroke: 0xd8b987 }
   }
   if (kind.includes('tower') || kind.includes('military')) {
@@ -1031,7 +1113,7 @@ function drawMonsterFallback(graphic: Graphics, command: MonsterDrawCommand, x: 
   const healthTint = command.healthRatio < 0.35 ? 0xb23a48 : command.monster.state === 'attacking' ? 0xd77a32 : 0x4b6f7f
   const bodyWidth = command.size.width * 0.34 * zoom
   const bodyHeight = command.size.height * 0.42 * zoom
-  const bob = command.monster.type === 'ember_wisp' && command.animationKey === 'walk'
+  const bob = worldMotionEnabled() && command.monster.type === 'ember_wisp' && command.animationKey === 'walk'
     ? Math.sin(performance.now() / 110 + command.id.length) * 3 * zoom : 0
   const yBase = y + bob
 
@@ -1078,27 +1160,7 @@ function drawTerrainSprite(target: Container, cache: RetainedChildCache, key: st
 }
 
 function isTextureReady(textureUrl: string, onChange: () => void) {
-  const status = textureLoadStates.get(textureUrl)
-  if (status === 'loaded') {
-    return true
-  }
-  if (status === 'failed') {
-    return false
-  }
-  if (status !== 'loading') {
-    textureLoadStates.set(textureUrl, 'loading')
-    void Assets.load(textureUrl).then(
-      () => {
-        textureLoadStates.set(textureUrl, 'loaded')
-        onChange()
-      },
-      () => {
-        textureLoadStates.set(textureUrl, 'failed')
-        onChange()
-      },
-    )
-  }
-  return false
+  return mapTextureReadiness.ready(textureUrl, onChange)
 }
 
 function getOrCreateSprite(target: Container, cache: RetainedChildCache, key: string, textureUrl: string) {

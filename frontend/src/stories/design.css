@@ -1,0 +1,13 @@
+/* Этот файл подключён только к design.html, игровая оболочка не меняется. */
+body { overflow: auto; }
+.component-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block: var(--space-2); }
+.component-environment { padding: 24px 12px; margin-block: 16px; }
+.component-environment-light { background: #a7bb75; }
+.component-environment-dark { background: #183e2c; }
+.component-surface { padding: 16px; color: var(--color-text); background: var(--color-panel-strong); border: 1px solid var(--material-brass); background-image: url('/assets/ui/ornaments/weave.svg'); }
+.component-states .drawer { position: fixed; z-index: 20; }
+.design-workbench { max-width: 900px; margin: auto; padding: 24px; overflow-wrap: anywhere; }
+.design-workbench section { margin-block: 20px; padding: 16px; border: 1px solid currentColor; }
+.design-workbench .icon-button { display: inline-flex; margin-right: 8px; }
+.design-workbench .health-bar { max-width: 300px; }
+@media (max-width: 400px) { .design-workbench { padding: 12px; } }

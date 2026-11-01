@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Box, Gem, Hammer, Move, RotateCw, Route, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from 'lucide-react'
+import { Box, Gem, Hammer, Repair, Move, RotateCw, Route, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from '../../shared/ui/icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { getRepairStatus } from '../../shared/api/buildings'
 import { playUiSound } from '../../audio/playUiSound'
 import { playCombatSound } from '../../audio/voiceManager'
 import { cellLabel, districtFromTile, districtLabel } from '../../game/coordinates/district'
@@ -19,11 +20,14 @@ import { ruinRestoration } from './ruinRestoration'
 import { playBuildingSound } from '../buildings/buildingAudio'
 import { ApiClientError } from '../../shared/api/client'
 import { advanceField, harvestField, listProductionJobs, patchResourceNode, type InventoryResponse } from '../../shared/api/economy'
-import { listPendingWeaponAttacks, useWeaponOnMonster, toMonster, type MonsterLootResponse, type MonsterResponse, type PendingWeaponAttack } from '../../shared/api/monsters'
+import { createAttackMonster, getCombatRules, listPendingWeaponAttacks, useWeaponOnBuilding, useWeaponOnMonster, toMonster, type MonsterLootResponse, type MonsterResponse, type PendingWeaponAttack } from '../../shared/api/monsters'
 import { weaponFuseLabel } from './weaponFuse'
 import { IconButton, Modal, SegmentedControl, Tabs } from '../../shared/ui'
 import { formatRemaining } from '../../shared/time/formatRemaining'
 import { useAuthStore } from '../auth/useAuthStore'
+import { useOwnershipContext } from '../alliance/useOwnership'
+import { ownershipOf } from '../../shared/ui/ownership'
+import { ObjectMarks } from '../../shared/ui/ObjectMarks'
 import { getPublicPlayer } from '../auth/api'
 import { inventoryAmount, useInventory } from '../economy/useInventory'
 import { fieldHarvestSound, playConfirmedCoinChange, playConfirmedRareReward, resourceGatherSound } from '../economy/economyAudio'
@@ -31,6 +35,7 @@ import { fieldCropSpec } from '../fields/fieldGrowth'
 import { ResourceIcon } from '../resources/ResourceIcon'
 import { useThreatLevel } from '../threat/ThreatPanel'
 import { showToast } from '../notifications/toast'
+import { PublicProfileButton } from '../player/PublicProfileButton'
 
 type InspectorTab = 'tile' | 'object' | 'player'
 
@@ -42,10 +47,13 @@ const tabs = [
 
 const claimModes = [
   { id: 'build', label: 'Стройка' },
-  { id: 'raid', label: 'Рейд' },
+  { id: 'attack', label: 'Атака' },
 ] as const
 
 export function Inspector() {
+  const ownership = useOwnershipContext()
+  const [expanded, setExpanded] = useState(false)
+  const disclosure = useRef<HTMLButtonElement>(null)
   const [activeTab, setActiveTab] = useState<InspectorTab>('tile')
   const [upgradeOpen, setUpgradeOpen] = useState(false)
   const [modelPreviewOpen, setModelPreviewOpen] = useState(false)
@@ -55,6 +63,7 @@ export function Inspector() {
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [selectedWeapon, setSelectedWeapon] = useState('throwing_knives')
   const [weaponMenuOpen, setWeaponMenuOpen] = useState(false)
+  const [summonMenuOpen, setSummonMenuOpen] = useState(false)
   const selectedTile = useGameStore((state) => state.selectedTile)
   const hoveredTile = useGameStore((state) => state.hoveredTile)
   const buildings = useGameStore((state) => state.buildings)
@@ -64,7 +73,9 @@ export function Inspector() {
   const setRelocatingBuildingId = useGameStore((state) => state.setRelocatingBuildingId)
   const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
   const constructionNow = useGameStore((state) => state.constructionNow)
+  const damageEvents = useGameStore(state => state.buildingDamageEvents)
   const tool = useGameStore((state) => state.tool)
+  useEffect(() => { if (tool === 'build') setExpanded(false) }, [tool])
   const setTool = useGameStore((state) => state.setTool)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const deleteBuilding = useGameStore((state) => state.deleteBuilding)
@@ -85,6 +96,8 @@ export function Inspector() {
   const activeTile = selectedTile ?? hoveredTile
   const selectedBuilding = buildings.find((building) => building.id === selectedBuildingId) ?? null
   const canManageSelectedBuilding = Boolean(selectedBuilding && player && selectedBuilding.owner === player.id)
+  const canAttackSelectedBuilding = Boolean(selectedBuilding && player && selectedBuilding.owner !== player.id && selectedBuilding.health > 0 && ['active', 'damaged'].includes(selectedBuilding.state ?? ''))
+  const combatRulesQuery = useQuery({ queryKey: ['combat', 'rules'], queryFn: getCombatRules, enabled: canAttackSelectedBuilding, staleTime: 60_000 })
   const ownerQuery = useQuery({
     queryKey: ['players', 'public', selectedBuilding?.owner],
     queryFn: () => getPublicPlayer(selectedBuilding!.owner),
@@ -94,6 +107,11 @@ export function Inspector() {
   })
   const ownerName = canManageSelectedBuilding ? player?.profile.display_name || player?.name : ownerQuery.data?.display_name
   const ownerLevel = canManageSelectedBuilding ? player?.profile.level : ownerQuery.data?.level
+  const repairQuery = useQuery({
+    queryKey: ['repairs', selectedBuilding?.id], queryFn: () => getRepairStatus(selectedBuilding!.id),
+    enabled: Boolean(selectedBuilding && canManageSelectedBuilding && selectedBuilding.state !== 'ruined' && selectedBuilding.status !== 'construction'),
+    refetchInterval: 5000, retry: false,
+  })
   const selectedMonster = useGameStore((state) => state.monsters.find((monster) => monster.id === selectedMonsterId) ?? null)
   const threat = useThreatLevel()
   const nextUpgrades = selectedBuilding && canManageSelectedBuilding ? getNextUpgrades(selectedBuilding) : []
@@ -114,6 +132,8 @@ export function Inspector() {
     ? selectedWorldTile.terrain === 'ruins' ? ruinTypeLabels[selectedWorldTile.ruin_type ?? ''] ?? 'руины' : terrainLabels[selectedWorldTile.terrain] ?? 'луг'
     : activeTile ? 'Загрузка...' : 'Не выбран'
   const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y && (node.resource !== 'oil' || node.state !== 'depleted')) ?? null : null
+  const selectedOwnership = ownershipOf(selectedBuilding?.owner ?? selectedMonster?.creatorId ?? selectedResourceNode?.ownerId, ownership.viewerId, ownership.alliedIds)
+  const objectThreat = Boolean(selectedMonster && ['aggro', 'attacking'].includes(selectedMonster.state)) || Boolean(selectedBuilding && damageEvents.some(event => event.buildingId === selectedBuilding.id && constructionNow - event.createdAt < 1500))
   const selectedOilNode = selectedBuilding?.kind === 'oil_well' ? resourceNodes.find((node) => node.resource === 'oil' && node.tile.x === selectedBuilding.tile.x && node.tile.y === selectedBuilding.tile.y) : null
   const selectedOilJob = selectedBuilding?.kind === 'oil_well' ? oilJobsQuery.data?.jobs.find((job) => job.building_id === selectedBuilding.id && (job.state === 'running' || job.state === 'ready')) : null
   const selectedFieldSpec = selectedBuilding ? fieldCropSpec(selectedBuilding.kind) : null
@@ -195,7 +215,10 @@ export function Inspector() {
     mutationFn: (buildingId: string) => patchBuilding(buildingId, 'repair'),
     onSuccess: (result) => {
       if (result.building) {
-        playBuildingSound('build.repaired', result.building.id, 'repaired')
+        playBuildingSound('build.repair.started', result.building.id, 'repair_started')
+        void queryClient.invalidateQueries({ queryKey: ['repairs', result.building.id] })
+        void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+        void queryClient.invalidateQueries({ queryKey: ['economy', 'population'] })
         addBuilding(toPlacedBuilding(result.building))
       }
       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
@@ -267,6 +290,33 @@ export function Inspector() {
   const availableWeapons = resourceCatalog.filter((resource) => resource.category === 'weapons' && inventoryAmount(inventoryQuery.data?.inventory.items, resource.id) > 0)
   const weaponCatalog = resourceCatalog.filter((resource) => resource.category === 'weapons')
   const selectedMonsterAttacks = pendingWeaponsQuery.data?.attacks.filter((attack) => attack.monster_id === selectedMonsterId) ?? []
+  const selectedBuildingAttacks = pendingWeaponsQuery.data?.attacks.filter((attack) => attack.building_id === selectedBuildingId) ?? []
+  const attackBuildingMutation = useMutation({
+    mutationFn: ({ id, weapon }: { id: string; weapon: string }) => useWeaponOnBuilding(id, weapon),
+    onSuccess: (result) => {
+      setWeaponMenuOpen(false)
+      if (result.building) {
+        if (result.building.state === 'ruined' && (result.building.type === 'oil_well' || result.building.type.startsWith('ruins_'))) deleteBuilding(result.building.id)
+        else addBuilding(toPlacedBuilding(result.building))
+      }
+      showToast('info', result.building ? 'Попадание подтверждено' : 'Заряд установлен на постройке')
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['combat', 'attacks'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: (error) => showToast('warning', formatActionError(error)),
+  })
+  const createMonsterMutation = useMutation({
+    mutationFn: createAttackMonster,
+    onSuccess: ({ monster }) => {
+      setSummonMenuOpen(false)
+      upsertMonster(toMonster(monster))
+      void queryClient.invalidateQueries({ queryKey: ['monsters'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+      showToast('info', 'Монстр создан. Он атакует чужие постройки поблизости.')
+    },
+    onError: (error) => showToast('warning', formatActionError(error)),
+  })
   const attackMonsterMutation = useMutation({
     mutationFn: ({ monsterId, weaponId }: { monsterId: string; weaponId: string }) => useWeaponOnMonster(monsterId, weaponId),
     onSuccess: (result, variables) => {
@@ -319,9 +369,45 @@ export function Inspector() {
     if (selectedMonsterId) setActiveTab('object')
   }, [selectedMonsterId])
 
+  useEffect(() => {
+    setUpgradeOpen(false)
+    setDeleteOpen(false)
+    setWeaponMenuOpen(false)
+    setModelPreviewOpen(false)
+    setSummonMenuOpen(false)
+    setUpgradeError('')
+    setConstructionError('')
+  }, [selectedBuilding?.id, selectedMonster?.id])
+
   return (
-    <aside className={`inspector${selectedMonster ? ' inspector-monster' : ''}`} aria-label="Инспектор">
+    <aside id="game-inspector" tabIndex={-1} className={`inspector${expanded ? ' inspector-expanded' : ''}${selectedMonster ? ' inspector-monster' : ''}`} aria-label="Инспектор" onKeyDown={(event) => {
+      if (event.key === 'Escape' && expanded) { event.preventDefault(); event.stopPropagation(); setExpanded(false); disclosure.current?.focus() }
+    }}>
+      <button ref={disclosure} className="inspector-disclosure" type="button" aria-expanded={expanded} aria-controls="inspector-details" onClick={() => setExpanded(!expanded)}>{expanded ? 'Свернуть инспектор' : 'Развернуть инспектор'}</button>
       <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Клетка ${cellLabel(activeTile)}` : 'Карта мира'}</h2>
+      {selectedBuildingId && !selectedBuilding || selectedMonsterId && !selectedMonster ? <p className="inspector-target-status" role="status">Выбранный объект больше не доступен в загруженной области. Выберите цель заново.</p> : null}
+      <div id="inspector-details" className="inspector-details">
+      {(selectedBuilding || selectedMonster || selectedResourceNode) && <ObjectMarks ownership={selectedOwnership} selected threat={objectThreat}
+        category={selectedBuilding ? buildingCatalog.find(item => item.type === selectedBuilding.kind)?.category : undefined}
+        status={selectedBuilding ? selectedBuilding.state === 'building' ? 'building' : selectedBuilding.health < selectedBuildingMaxHealth ? 'damage' : 'ready' : selectedResourceNode?.state === 'depleted' ? 'depleted' : undefined}
+        rare={Boolean(selectedResourceNode && resourceCatalog.find(item => item.id === selectedResourceNode.resource)?.category === 'rare')} />}
+      <section className="inspector-context" aria-label="Действие с целью">
+        <strong>{selectedMonster ? 'Угроза' : selectedBuilding ? canManageSelectedBuilding ? 'Ваша постройка' : selectedOwnership === 'ally' ? 'Союзная постройка' : selectedOwnership === 'neutral' ? 'Нейтральная постройка' : 'Чужая постройка' : selectedResourceNode ? 'Ресурсный узел' : selectedRuin ? 'Руины' : 'Участок мира'}</strong>
+        {selectedMonster || canAttackSelectedBuilding ? <button type="button" onClick={() => setWeaponMenuOpen(true)}>Выбрать оружие</button>
+          : selectedBuilding ? canManageSelectedBuilding && selectedBuilding.status === 'active' && nextUpgrades.length > 0
+            ? <button type="button" onClick={() => setUpgradeOpen(true)}>Открыть улучшение</button>
+            : <button type="button" onClick={() => setActiveTab('object')}>Осмотреть постройку</button>
+          : selectedResourceNode && selectedResourceNode.resource !== 'oil' ? <>
+            <button type="button" disabled={resourceMutation.isPending || selectedResourceNode.state === 'depleted' || (selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId !== player?.id)} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: selectedResourceNode.state === 'neutral' ? 'claim' : 'harvest' })}>{selectedResourceNode.state === 'neutral' ? 'Захватить узел' : 'Собрать ресурс'}</button>
+            <small>{selectedResourceNode.state === 'depleted' ? 'Узел истощён. Дождитесь восстановления.' : selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId !== player?.id ? 'Узел принадлежит другому игроку.' : `Доступно: ${selectedResourceNode.amount}/${selectedResourceNode.maxAmount}`}</small>
+          </> : selectedRuin ? <button type="button" disabled={ruinOccupied || ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>{ruinOccupied ? 'Восстановление недоступно' : 'Захватить и восстановить'}</button>
+          : <button type="button" disabled={!activeTile} onClick={() => setBuildMenuOpen(true)}>Открыть строительство</button>}
+        {!activeTile && !selectedBuilding && !selectedMonster ? <small>Выберите клетку или объект на карте.</small> : null}
+        {selectedBuilding ? <small>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}. {selectedBuilding.status === 'construction' ? 'Строительство: управление и срок во вкладке «Объект».' : canManageSelectedBuilding && !nextUpgrades.length ? 'Следующий уровень улучшения недоступен.' : ''}</small> : null}
+        {selectedRuin && !selectedBuilding ? <small>Восстановление: {selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет.</small> : null}
+        {selectedBuilding && !canManageSelectedBuilding && !canAttackSelectedBuilding ? <small>Атака доступна только по действующей уязвимой постройке.</small> : null}
+        {resourceMutation.error || ruinMutation.error ? <p role="alert">{(resourceMutation.error ?? ruinMutation.error)?.message}</p> : null}
+      </section>
       <Tabs items={tabs} active={activeTab} onChange={setActiveTab}>
         {activeTab === 'tile' ? (
           <>
@@ -344,11 +430,8 @@ export function Inspector() {
               ) : null}
               {selectedRuin ? (
                 <>
-                  <dt>Восстановление</dt>
-                  <dd>{selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет</dd>
                   <dt>Владение</dt>
                   <dd>{ruinOccupied ? 'Руина занята' : 'Свободна'}</dd>
-                  {!ruinOccupied ? <dd><button type="button" disabled={ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>Захватить и восстановить</button></dd> : null}
                 </>
               ) : null}
               {selectedResourceNode ? (
@@ -358,8 +441,6 @@ export function Inspector() {
                   <dt>Состояние узла</dt>
                   <dd>{resourceStateLabel[selectedResourceNode.state]}</dd>
                   {selectedResourceNode.resource === 'oil' && selectedResourceNode.state === 'neutral' ? <dd>Постройте нефтяную вышку, чтобы занять месторождение.</dd> : null}
-                  {selectedResourceNode.resource !== 'oil' && selectedResourceNode.state === 'neutral' ? <dd><button type="button" disabled={resourceMutation.isPending} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: 'claim' })}>Захватить узел</button></dd> : null}
-                  {selectedResourceNode.resource !== 'oil' && selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId === player?.id && selectedResourceNode.amount > 0 ? <dd><button type="button" disabled={resourceMutation.isPending} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: 'harvest' })}>Собрать ресурс</button></dd> : null}
                 </>
               ) : null}
               {threat ? (
@@ -369,18 +450,19 @@ export function Inspector() {
                 </>
               ) : null}
             </dl>
-            <SegmentedControl items={claimModes} value={tool === 'raid' ? 'raid' : 'build'} label="Режим действия" onChange={setTool} />
+            <SegmentedControl items={claimModes} value={tool === 'attack' ? 'attack' : 'build'} label="Режим действия" onChange={setTool} />
           </>
         ) : null}
         {activeTab === 'object' ? (
           selectedMonster ? (
             <div className="inspector-card inspector-card-threat">
               <strong>{monsterName(selectedMonster.type)}</strong>
-              <IconButton label="Выбрать оружие" icon={Swords} active onClick={() => setWeaponMenuOpen(true)} />
               <span>Состояние: {monsterStateLabel[selectedMonster.state]}</span>
               <span>Здоровье {selectedMonster.health}/{selectedMonster.maxHealth}</span>
               <span>Урон: {selectedMonster.damage}</span>
               <span>Агро-радиус: {selectedMonster.aggroRadius}</span>
+              {selectedMonster.creatorId ? <span>Создатель: {selectedMonster.creatorId}. Наград за убийство нет.</span> : null}
+              {selectedMonster.creatorId && selectedMonster.expiresAt ? <span>Исчезнет через {formatRemaining(Math.max(0, selectedMonster.expiresAt - constructionNow))}</span> : null}
               {selectedMonster.targetId ? <span>Цель: {selectedMonster.targetType} {selectedMonster.targetId}</span> : null}
               <HealthBar health={selectedMonster.health} maxHealth={selectedMonster.maxHealth} />
               {selectedMonsterAttacks.map((attack) => (
@@ -395,6 +477,7 @@ export function Inspector() {
               <span>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}</span>
               <span>Поворот: {(selectedBuilding.rotation ?? 0) * 90}°</span>
               <span className="building-owner">Владелец: <Star size={15} aria-label="Уровень" /> {ownerLevel ?? '—'} · {ownerName ?? 'Игрок'}</span>
+              {selectedBuilding.owner ? <PublicProfileButton key={selectedBuilding.owner} playerId={selectedBuilding.owner} /> : null}
               {!canManageSelectedBuilding ? <span>Чужая постройка: управление недоступно</span> : null}
               <span>Состояние: {selectedBuilding.state === 'ruined' ? 'разрушена' : selectedBuilding.status === 'construction' ? 'строится' : selectedBuilding.state === 'damaged' ? 'повреждена' : 'работает'}</span>
               {selectedBuilding.kind === 'oil_well' ? (
@@ -469,6 +552,11 @@ export function Inspector() {
       <div className="inspector-actions">
         {selectedBuilding ? (
           <>
+            {canAttackSelectedBuilding ? <>
+              <IconButton label="Атаковать оружием" icon={Swords} onClick={() => setWeaponMenuOpen(true)} />
+              <button type="button" disabled={createMonsterMutation.isPending || !combatRulesQuery.data} onClick={() => setSummonMenuOpen(true)}>Создать монстра{combatRulesQuery.data ? ` · ${combatRulesQuery.data.rules.summon_cost_coins} монет` : ''}</button>
+              {selectedBuildingAttacks.map((attack) => <span key={attack.id}>Заряд: {resourceCatalog.find((item) => item.id === attack.weapon)?.name ?? attack.weapon} — {formatRemaining(Math.max(0, Date.parse(attack.due_at) - constructionNow))}</span>)}
+            </> : null}
             {canManageSelectedBuilding ? <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || nextUpgrades.length === 0} onClick={() => setUpgradeOpen(true)} /> : null}
             {canManageSelectedBuilding && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) ? (
               <IconButton
@@ -502,8 +590,15 @@ export function Inspector() {
                 onClick={() => cancelConstructionMutation.mutate(selectedBuilding.id)} />
             ) : null}
             {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && selectedBuilding.health < selectedBuildingMaxHealth ? (
-              <IconButton label="Починить" icon={Hammer} disabled={repairMutation.isPending}
+              <><IconButton label="Починить" icon={Repair} disabled={repairMutation.isPending || Boolean(repairQuery.data?.repair.job)}
                 onClick={() => repairMutation.mutate(selectedBuilding.id)} />
+              {repairQuery.error ? <p role="status">Условия ремонта не загружены. <button type="button" onClick={() => void repairQuery.refetch()}>Повторить</button></p> : null}
+              {repairQuery.data ? <div aria-label="Условия ремонта">
+                {repairQuery.data.repair.job ? `Ремонт: осталось ${formatRemaining(Date.parse(repairQuery.data.repair.job.due_at) - constructionNow)}. Завершение подтвердит сервер.` : <>
+                  <span>Рабочих: {repairQuery.data.repair.workers}; время: {repairQuery.data.repair.duration_seconds} с.</span>
+                  {repairQuery.data.repair.cost.map((item) => <span key={item.resource}><ResourceIcon id={item.resource} label={resourceLabel(item.resource)} />{resourceLabel(item.resource)}: {item.amount} </span>)}
+                </>}
+              </div> : null}</>
             ) : null}
             {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && !selectedBuilding.kind.startsWith('ruins_') && selectedBuilding.kind !== 'oil_well' ? (
               <>
@@ -550,15 +645,15 @@ export function Inspector() {
         ) : null}
         <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} sound="ui.panel.open" onClick={() => setBuildMenuOpen(true)} />
         <IconButton label="Маршрут" icon={Route} active={tool === 'road'} disabled={!activeTile} onClick={() => setTool('road')} />
-        <IconButton label="Рейд" icon={Swords} active={tool === 'raid'} disabled={!activeTile} onClick={() => setTool('raid')} />
+        <IconButton label="Атака" icon={Swords} active={tool === 'attack'} disabled={!selectedMonster && !canAttackSelectedBuilding} onClick={() => { setTool('attack'); setWeaponMenuOpen(true) }} />
       </div>
-      {createPortal(<Modal title="Оружие против монстра" open={weaponMenuOpen && Boolean(selectedMonster)} onClose={() => { if (!attackMonsterMutation.isPending) setWeaponMenuOpen(false) }} className="weapon-menu-modal">
+      {createPortal(<Modal title={selectedMonster ? 'Оружие против монстра' : 'Оружие против постройки'} open={weaponMenuOpen && (Boolean(selectedMonster) || canAttackSelectedBuilding)} onClose={() => { if (!attackMonsterMutation.isPending && !attackBuildingMutation.isPending) setWeaponMenuOpen(false) }} className="weapon-menu-modal">
         <div className="weapon-menu-list" role="radiogroup" aria-label="Выбрать оружие">
           {weaponCatalog.map((item) => {
             const count = inventoryAmount(inventoryQuery.data?.inventory.items, item.id)
             const selected = item.id === (availableWeapons.some((weapon) => weapon.id === selectedWeapon) ? selectedWeapon : availableWeapons[0]?.id)
             return (
-              <button key={item.id} type="button" role="radio" aria-checked={selected} className={`weapon-menu-item${selected ? ' weapon-menu-item-selected' : ''}`} disabled={count === 0 || attackMonsterMutation.isPending} onClick={() => setSelectedWeapon(item.id)}>
+              <button key={item.id} type="button" role="radio" aria-checked={selected} className={`weapon-menu-item${selected ? ' weapon-menu-item-selected' : ''}`} disabled={count === 0 || attackMonsterMutation.isPending || attackBuildingMutation.isPending} onClick={() => setSelectedWeapon(item.id)}>
                 <ResourceIcon id={item.id} label={item.name} />
                 <span className="weapon-menu-name">{item.name}</span>
                 <span className="weapon-menu-time">{weaponFuseLabel(item.id)}</span>
@@ -569,12 +664,20 @@ export function Inspector() {
         </div>
         {availableWeapons.length === 0 ? <p>В инвентаре нет оружия. Его можно изготовить в производственных постройках.</p> : null}
         <div className="weapon-menu-actions">
-          <button className="text-button" type="button" disabled={attackMonsterMutation.isPending} onClick={() => setWeaponMenuOpen(false)}>Отмена</button>
-          <button className="text-button text-button-primary" type="button" disabled={attackMonsterMutation.isPending || availableWeapons.length === 0 || !selectedMonster} onClick={() => {
-            if (selectedMonster) attackMonsterMutation.mutate({ monsterId: selectedMonster.id, weaponId: availableWeapons.some((item) => item.id === selectedWeapon) ? selectedWeapon : availableWeapons[0]!.id })
+          <button className="text-button" type="button" disabled={attackMonsterMutation.isPending || attackBuildingMutation.isPending} onClick={() => setWeaponMenuOpen(false)}>Отмена</button>
+          <button className="text-button text-button-primary" type="button" disabled={attackMonsterMutation.isPending || attackBuildingMutation.isPending || availableWeapons.length === 0 || (!selectedMonster && !canAttackSelectedBuilding)} onClick={() => {
+            const weapon = availableWeapons.some((item) => item.id === selectedWeapon) ? selectedWeapon : availableWeapons[0]!.id
+            if (selectedMonster) attackMonsterMutation.mutate({ monsterId: selectedMonster.id, weaponId: weapon })
+            else if (selectedBuilding && canAttackSelectedBuilding) attackBuildingMutation.mutate({ id: selectedBuilding.id, weapon })
           }}>Применить оружие</button>
         </div>
       </Modal>, document.body)}
+      <Modal title="Создать монстра" open={summonMenuOpen && canAttackSelectedBuilding} onClose={() => { if (!createMonsterMutation.isPending) setSummonMenuOpen(false) }}>
+        <p>Цена: {combatRulesQuery.data?.rules.summon_cost_coins} монет. Монстр атакует чужие постройки поблизости, включая постройки третьих игроков. Создателя он не атакует.</p>
+        <p>Лимит: {combatRulesQuery.data?.rules.summon_max_alive}. Срок жизни: {Math.round((combatRulesQuery.data?.rules.summon_lifetime_seconds ?? 0) / 60)} мин. Повторное создание через {combatRulesQuery.data?.rules.summon_cooldown_seconds} с. Наград за убийство нет.</p>
+        <button type="button" disabled={createMonsterMutation.isPending || !selectedBuilding || !combatRulesQuery.data} onClick={() => { if (selectedBuilding) createMonsterMutation.mutate(selectedBuilding.id) }}>Подтвердить создание</button>
+        {createMonsterMutation.isError ? <p role="alert">{formatActionError(createMonsterMutation.error)}</p> : null}
+      </Modal>
       <UpgradeModal
         building={selectedBuilding}
         upgrades={nextUpgrades}
@@ -603,6 +706,7 @@ export function Inspector() {
           {deleteMutation.isError ? <p className="upgrade-error" role="alert">{deleteMutation.error instanceof Error ? deleteMutation.error.message : 'Не удалось удалить постройку'}</p> : null}
         </div>
       </Modal>
+      </div>
     </aside>
   )
 }

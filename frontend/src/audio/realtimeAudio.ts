@@ -10,7 +10,9 @@ import { spatialSound } from './spatialAudio'
 import { playCombatSound } from './voiceManager'
 import { playUiSound } from './playUiSound'
 
-const seen = new Map<string, number>()
+import { AudioEventWindow } from './eventWindow'
+
+const seen = new AudioEventWindow(2000, 120_000)
 
 function nearby(x: number, y: number): boolean {
   if (typeof document !== 'undefined' && document.hidden) return false
@@ -41,10 +43,7 @@ function buildingData(payload: BuildingPayload): { id: string; owner_id: string;
 /** Один мост WS → звук. Вызывается до обновления authoritative state. */
 export function playRealtimeAudio(event: RealtimeEnvelope): void {
   if (!event.event_id || event.type === 'ack' || event.type === 'error') return
-  if (seen.has(event.event_id)) return
-  const now = Date.now()
-  seen.set(event.event_id, now)
-  if (seen.size > 2000) for (const [id, at] of seen) if (now - at > 120_000) seen.delete(id)
+  if (!seen.accept(event.event_id)) return
   const ownerId = useAuthStore.getState().player?.id
   const { viewport, camera } = useGameStore.getState()
 
@@ -76,6 +75,7 @@ export function playRealtimeAudio(event: RealtimeEnvelope): void {
         playBuildingSound(payload.reason === 'completed' ? 'build.completed' : 'build.upgrade.completed', building.id, 'completion', 1200, undefined, owner ? 1 : 0.5)
       if (payload.reason === 'rushed') playBuildingSound('build.rushed', building.id, 'rushed')
       if (payload.reason === 'repaired' && visible) playBuildingSound('build.repaired', building.id, 'repaired')
+      if (payload.reason === 'repair_started' && visible) playBuildingSound('build.repair.started', building.id, 'repair_started')
     }
     if (visible || owner) {
       const sound = payload.reason === 'monster_attack' && (payload.damage ?? 0) > 0

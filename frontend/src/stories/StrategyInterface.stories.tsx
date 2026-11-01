@@ -14,7 +14,7 @@ export default {
 export function DesktopHud() {
   useGameStore.setState({
     selectedTile: { x: 4, y: -2 },
-    uiPreferences: { compactPanels: false, resourceRegistryOpen: true, alliancePanelOpen: true, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
+    uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: true, alliancePanelOpen: true, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
   })
 
   return (

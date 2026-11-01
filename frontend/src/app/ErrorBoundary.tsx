@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { StatusState } from '../shared/ui/StatusState'
 
 type Props = {
   children: ReactNode
@@ -21,7 +22,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <div className="status-state">Интерфейс временно недоступен</div>
+      return <StatusState title="Интерфейс временно недоступен" variant="error" action={{ label: 'Перезагрузить страницу', onClick: () => window.location.reload() }}>Не удалось отобразить игру. Перезагрузите страницу, чтобы заново получить состояние мира.</StatusState>
     }
 
     return this.props.children

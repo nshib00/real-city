@@ -8,6 +8,7 @@ export type AllianceProfile = {
   members: AllianceMember[]
   invites: AllianceInvite[]
   treasury: TreasuryEntry[]
+  balance?: Record<string, number>
   buffs: AllianceBuff[]
   aid: TerritoryAid[]
 }
@@ -67,6 +68,7 @@ export type ChatMessage = {
 }
 
 export type MarketOrder = {
+  filled_amount?: number
   id: string
   player_id: string
   side: 'buy' | 'sell'
@@ -111,8 +113,8 @@ export function upgradeAllianceBuff(buff_id: string) {
   })
 }
 
-export function listChatMessages(channel: ChatMessage['channel']) {
-  return request<{ messages: ChatMessage[] }>(`/chat/messages?channel=${encodeURIComponent(channel)}&limit=60`)
+export function listChatMessages(channel: ChatMessage['channel'], before?: string) {
+  return request<{ messages: ChatMessage[]; read_state?: { read_at: string; unread: number }; next_cursor?: string }>(`/chat/messages?channel=${encodeURIComponent(channel)}&limit=60${before ? `&before=${encodeURIComponent(before)}` : ''}`)
 }
 
 export function sendChatMessage(input: { channel: ChatMessage['channel']; body: string; recipient?: string }) {
@@ -135,4 +137,17 @@ export function createMarketOrder(input: { side: MarketOrder['side']; resource: 
 
 export function cancelMarketOrder(id: string) {
   return request<{ order: MarketOrder }>(`/market/orders/${id}`, { method: 'DELETE' })
+}
+
+export function leaveAlliance() { return request('/alliances/me', { method: 'DELETE' }) }
+export function kickAllianceMember(id: string) { return request(`/alliances/members/${encodeURIComponent(id)}`, { method: 'DELETE' }) }
+
+export function markChatRead(channel: ChatMessage['channel'], message_id: string) {
+  return request('/chat/read', { method: 'PATCH', body: JSON.stringify({ channel, message_id }) })
+}
+
+export function transferAllianceLeadership(id: string) { return request(`/alliances/members/${encodeURIComponent(id)}/leadership`, { method: 'POST', body: '{}' }) }
+
+export function spendAllianceTreasury(input: { resource: string; amount: number; recipient: string }) {
+ return request<{ profile: AllianceProfile }>('/alliances/treasury/spend', { method: 'POST', body: JSON.stringify(input) })
 }

@@ -1,0 +1,49 @@
+/* Контекстные панели: дерево держит структуру, латунь отмечает решение. */
+:is(.inspector-context, .build-filters, .alliance-summary, .production-card, .production-job) {
+  padding: var(--space-3); border: 1px solid var(--color-panel-border);
+  border-inline-start: 3px solid var(--material-brass); border-radius: var(--ui-radius-sm);
+  background: var(--color-panel-strong); color: var(--color-text);
+}
+.inspector-context { display: grid; gap: var(--space-2); margin-bottom: var(--space-3); }
+.inspector-context > button { background: var(--color-accent); color: var(--color-accent-ink); font-weight: 700; }
+:is(.inspector-context, .build-filters, .production-card) small, .panel-note { color: var(--color-muted); line-height: var(--line-body); }
+.panel-note { padding: var(--space-3); margin-block: var(--space-2) var(--space-4); border-bottom: 1px solid var(--material-brass); }
+.build-filters { display: grid; gap: var(--space-2); margin: var(--space-2) var(--space-3); }
+.build-menu:not(.build-menu-collapsed):not(.build-menu-oil-well) { height: min(860px, calc(100dvh - 32px)); grid-template-rows: auto auto auto minmax(0, 1fr); grid-auto-rows: auto; }
+.build-list { min-height: 0; overscroll-behavior: contain; scrollbar-gutter: stable; scrollbar-width: auto; scrollbar-color: var(--border-interactive) var(--surface-muted); }
+.build-list { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.build-card { position: relative; box-sizing: border-box; grid-template-rows: 180px minmax(165px, auto) 0; min-height: 420px; padding-bottom: 62px; }
+.build-card-actions { position: absolute; right: 10px; bottom: 10px; display: flex; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 20px); min-height: 44px; }
+.build-card-body { align-content: start; }
+.build-card-body .build-cost { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; min-height: 32px; overflow: visible; text-overflow: clip; }
+.build-card-body .build-cost > span { display: inline-flex; align-items: center; gap: 3px; overflow: visible; text-overflow: clip; white-space: nowrap; }
+.build-list::-webkit-scrollbar { width: 16px; }
+.build-list::-webkit-scrollbar-track { background: var(--surface-muted); border-radius: var(--ui-radius-sm); }
+.build-list::-webkit-scrollbar-thumb { background: var(--border-interactive); border: 3px solid var(--surface-muted); border-radius: var(--ui-radius-sm); }
+.build-card.build-card-disabled { opacity: 1; border-style: dashed; }
+.build-card-disabled .build-image { opacity: .65; }
+.build-filters label:first-child { display: grid; gap: var(--space-1); }
+.build-filters input[type='search'] { width: 100%; min-width: 0; min-height: var(--target-size); }
+.build-filters label:has(input[type='checkbox']) { display: flex; align-items: center; gap: var(--space-2); min-height: var(--target-size); }
+:is(.inspector, .build-menu, .production-panel, .chat-panel, .event-log, .notification-stack, .auth-panel, .profile-drawer-body, .drawer) :is(button, input:not([type='checkbox']), select) { min-height: var(--target-size); }
+:is(.inspector, .build-menu, .production-panel, .chat-panel, .auth-panel, .drawer) :is(button, input, select):focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.production-cost { flex-wrap: wrap; gap: var(--space-2); }
+.production-cost > small { flex-basis: 100%; }
+.production-job progress { width: 100%; accent-color: var(--color-accent); }
+.connection-note { padding: var(--space-2); border-inline-start: 3px dashed var(--color-warning); background: var(--color-bg); color: var(--color-warning); font-size: var(--text-sm); }
+.notification.notification-danger { border-inline-start: 3px solid var(--color-danger); }
+.notification :is(span, small), .chat-messages p { overflow-wrap: anywhere; }
+.notification time { color: var(--color-muted); font-variant-numeric: tabular-nums; }
+.auth-panel { border-top: 3px solid var(--material-brass); background-color: var(--color-panel-strong); }
+.auth-panel h1 { margin-bottom: var(--space-2); }
+.auth-panel > p { color: var(--color-muted); line-height: var(--line-body); }
+.profile-drawer-body .profile-identity { padding: var(--space-3); border-bottom: 2px solid var(--material-brass); background: var(--material-wood); }
+.profile-drawer-body :is(.profile-meta, .profile-stat-grid) { padding: var(--space-3); background: var(--color-panel-soft); border: 1px solid var(--color-panel-border); border-radius: var(--ui-radius-sm); }
+.profile-drawer-body .profile-stat-grid article { background: var(--color-panel-strong); }
+.drawer :is(.alliance-list, .alliance-treasury, .market-panel) { padding: var(--space-3); border-top: 1px solid var(--material-brass); }
+.drawer .alliance-list > p { padding-block: var(--space-2); border-bottom: 1px solid var(--color-panel-border); overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+  .build-filters { margin-inline: var(--space-2); }
+  .inspector-context { padding: var(--space-2); }
+  :is(.production-card, .production-job, .alliance-summary) { min-width: 0; }
+}

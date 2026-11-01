@@ -14,7 +14,7 @@ describe('object draw data', () => {
 
     expect(commands.map((command) => command.id)).toEqual(['a', 'b'])
     expect(commands[0]).toMatchObject({
-      textureUrl: '/assets/buildings/center/town_hall/town_hall_l01_active.png',
+      textureUrl: '/assets/buildings/center/town_hall/town_hall_l01_active.png?v=town-hall-vertical-2026-10-26',
       anchor: { x: 0.5 },
       size: { width: 512, height: 384 },
     })
@@ -80,10 +80,10 @@ describe('object draw data', () => {
   })
 
   it('keeps unsupported building kinds in Pixi with procedural fallback', () => {
-    const [command] = buildingDrawCommands([building({ kind: 'warehouse' })])
+    const [command] = buildingDrawCommands([building({ kind: 'mint' })])
 
     expect(command.textureUrl).toBeNull()
-    expect(canDrawBuildingInObjectLayer(building({ kind: 'warehouse' }))).toBe(true)
+    expect(canDrawBuildingInObjectLayer(building({ kind: 'mint' }))).toBe(true)
     expect(canDrawBuildingInObjectLayer(building({ kind: 'coin_storage' }))).toBe(true)
   })
 })

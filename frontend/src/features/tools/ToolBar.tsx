@@ -1,18 +1,20 @@
-import { useState } from 'react'
-import { Castle, Hammer, MousePointer2, Route, Swords, Volume2, VolumeX, Waves } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Castle, Repair, MousePointer2, Route, Settings, Swords, Volume2, VolumeX, Waves } from '../../shared/ui/icons'
 
 import { isUiSoundMuted, playUiSound, setUiSoundMuted } from '../../audio/playUiSound'
 import { isAmbienceEnabled, setAmbienceEnabled } from '../../audio/ambience'
 import { useGameStore, type ToolMode } from '../../game/state/useGameStore'
 import { IconButton } from '../../shared/ui'
 import { AudioSettings } from '../settings/AudioSettings'
+import { AdminPanel } from '../admin/AdminPanel'
+import { buildCatalog } from '../buildings/catalog'
 
 const tools = [
   { id: 'select', label: 'Выбор', icon: MousePointer2 },
   { id: 'build', label: 'Строить', icon: Castle },
   { id: 'road', label: 'Дорога', icon: Route },
-  { id: 'repair', label: 'Ремонт', icon: Hammer },
-  { id: 'raid', label: 'Рейд', icon: Swords },
+  { id: 'repair', label: 'Ремонт', icon: Repair },
+  { id: 'attack', label: 'Атака', icon: Swords },
 ] satisfies readonly { id: ToolMode; label: string; icon: typeof MousePointer2 }[]
 
 export function ToolBar() {
@@ -21,13 +23,44 @@ export function ToolBar() {
   const activeTool = useGameStore((state) => state.tool)
   const setTool = useGameStore((state) => state.setTool)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
+  const mapPowerSave = useGameStore((state) => state.uiPreferences.mapPowerSave)
+  const setMapPowerSave = useGameStore((state) => state.setMapPowerSave)
+  const previewKind = useGameStore((state) => state.placementPreviewKind)
+  const preview = buildCatalog.find((item) => item.kind === previewKind)
+  const openRoads = () => {
+    setBuildMenuOpen(true)
+    useGameStore.getState().setPlacementPreviewKind('road')
+  }
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target instanceof Element ? event.target : null
+      if (event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey || target?.closest('input, textarea, select, [contenteditable="true"], [role="dialog"]')) return
+      if (event.key === 'Escape') { setTool('select'); return }
+      const index = Number(event.key) - 1
+      const tool = tools[index]
+      if (!tool) return
+      event.preventDefault()
+      if (tool.id === 'road') { setBuildMenuOpen(true); useGameStore.getState().setPlacementPreviewKind('road') }
+      else if (tool.id === 'build') setBuildMenuOpen(true)
+      else setTool(tool.id)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [setTool, setBuildMenuOpen])
 
   return (
-    <nav className="tool-bar" aria-label="Инструменты">
-      {tools.map((tool) => {
-        const onClick = tool.id === 'build' ? () => setBuildMenuOpen(true) : () => setTool(tool.id)
-        return <IconButton key={tool.id} label={tool.label} icon={tool.icon} active={activeTool === tool.id} sound={tool.id === 'build' ? 'ui.panel.open' : 'ui.click'} onClick={onClick} />
+    <nav id="game-tools" tabIndex={-1} className="tool-bar" aria-label="Инструменты">
+      {tools.map((tool, index) => {
+        const onClick = tool.id === 'road' ? openRoads : tool.id === 'build' ? () => setBuildMenuOpen(true) : () => setTool(tool.id)
+        const active = preview?.category === 'roads' ? tool.id === 'road' : activeTool === tool.id
+        return <IconButton key={tool.id} label={tool.label} shortcut={String(index + 1)} icon={tool.icon} active={active} sound={tool.id === 'build' ? 'ui.panel.open' : 'ui.click'} onClick={onClick} />
       })}
+      <div className="tool-context" role="status">
+        <strong>{preview?.name ?? tools.find((item) => item.id === activeTool)?.label}</strong>
+        {preview || activeTool === 'repair' || activeTool === 'attack' ? <span>{preview ? preview.cost.map((cost) => `${cost.label}: ${cost.amount}`).join(', ') || 'Бесплатно' : activeTool === 'repair' ? 'Цена — в карточке постройки' : 'Расход оружия — в карточке цели'}</span> : null}
+        {activeTool !== 'select' || preview ? <button type="button" onClick={() => setTool('select')}>Отмена (Esc)</button> : null}
+      </div>
+      <IconButton label="Экономный режим карты" icon={Settings} active={mapPowerSave} onClick={() => setMapPowerSave(!mapPowerSave)} />
       <IconButton
         label={ambienceEnabled ? 'Выключить атмосферу' : 'Включить атмосферу'}
         icon={Waves}
@@ -47,6 +80,7 @@ export function ToolBar() {
         }}
       />
       <AudioSettings />
+      <AdminPanel />
     </nav>
   )
 }

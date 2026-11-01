@@ -53,6 +53,10 @@ export async function updateMe(input: {
   display_name: string
   city_name: string
   avatar_url: string
+ avatar_id?: string
+ banner_id?: string
+ title?: string
+ home_center_id?: string
   settings: ProfileSettings
 }) {
   return request<Player>('/players/me', {

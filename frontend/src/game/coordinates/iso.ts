@@ -1,3 +1,5 @@
+import { WORLD_SIZE, CHUNK_SIZE as SHARED_CHUNK_SIZE, normalizeTile, wrappedDistance } from '../../../../shared/world/coordinates'
+
 export type GridCoord = {
   x: number
   y: number
@@ -10,8 +12,8 @@ export type ScreenCoord = {
 
 export const TILE_WIDTH = 240
 export const TILE_HEIGHT = 120
-export const CHUNK_SIZE = 32
-export const WORLD_WRAP_TILES = 160
+export const CHUNK_SIZE = SHARED_CHUNK_SIZE
+export const WORLD_WRAP_TILES = WORLD_SIZE
 export function gridToScreen(coord: GridCoord): ScreenCoord {
   return {
     x: (coord.x - coord.y) * (TILE_WIDTH / 2),
@@ -41,10 +43,7 @@ export function roundGridCoord(coord: GridCoord): GridCoord {
 }
 
 export function wrapGridCoord(coord: GridCoord): GridCoord {
-  return {
-    x: wrapNumber(coord.x, WORLD_WRAP_TILES),
-    y: wrapNumber(coord.y, WORLD_WRAP_TILES),
-  }
+  return normalizeTile(coord)
 }
 
 export function nearestWrappedScreenCoord(coord: GridCoord, target: ScreenCoord): ScreenCoord {
@@ -72,8 +71,7 @@ export function nearestWrappedScreenCoord(coord: GridCoord, target: ScreenCoord)
 }
 
 export function wrappedGridDistance(a: number, b: number) {
-  const delta = Math.abs(a - b) % WORLD_WRAP_TILES
-  return Math.min(delta, WORLD_WRAP_TILES - delta)
+  return wrappedDistance(a, b)
 }
 
 function screenDistance(a: ScreenCoord, b: ScreenCoord) {

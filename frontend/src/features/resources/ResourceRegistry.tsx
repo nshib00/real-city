@@ -7,6 +7,7 @@ import { Drawer, SegmentedControl } from '../../shared/ui'
 import { useInventory } from '../economy/useInventory'
 import { ResourceIcon } from './ResourceIcon'
 import { resourceValue } from './resourceAmounts'
+import { RarityMark } from '../../shared/ui/ObjectMarks'
 
 type ResourceCategory = 'basic' | 'raw' | 'crafted' | 'rare' | 'fuel' | 'weapons'
 
@@ -21,6 +22,7 @@ const categories = [
 
 const fallbackAmounts: Record<string, number> = {
   coins: 50,
+  throwing_knives: 50,
 }
 
 const limitFallbacks: Record<string, number> = {
@@ -54,6 +56,7 @@ export function ResourceRegistry() {
           <article className="resource-registry-row" key={resource.name}>
             <ResourceIcon id={resource.id} label={resource.name} />
             <strong>{resource.name}</strong>
+            {resource.category === 'rare' ? <RarityMark /> : null}
             <span>{resourceValue({ id: resource.id, fallback: resource.fallback, limitFallback: resource.limitFallback, items, coinCapacity, buildings: ownerBuildings })}</span>
             <small>{resource.limit}</small>
             <em>{resource.source}</em>

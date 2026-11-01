@@ -1,5 +1,6 @@
 import { getAccessToken, getRefreshToken, refreshTokens } from '../api/client'
 import type { RealtimeEnvelope } from '../../../../shared/events/world'
+import { clientTelemetry } from '../telemetry/clientTelemetry'
 
 export type RealtimeStatus = 'connecting' | 'connected' | 'reconnecting' | 'offline'
 
@@ -99,7 +100,17 @@ export class RealtimeClient {
   }
 
   private handleMessage(message: MessageEvent) {
-    const event = JSON.parse(String(message.data)) as RealtimeEnvelope
+    let event: RealtimeEnvelope
+    try {
+      event = JSON.parse(String(message.data)) as RealtimeEnvelope
+      if (!event || typeof event.type !== 'string' || !Number.isSafeInteger(event.seq) || event.seq < 0 || event.payload_version !== 1) {
+        this.requestResync('gap')
+        return
+      }
+    } catch {
+      this.requestResync('gap')
+      return
+    }
     if (event.type === 'ack') {
       const payload = event.payload as { command?: string } | undefined
       if (payload?.command === 'subscribe' && this.pendingSubscriptionAcks > 0) {
@@ -142,6 +153,8 @@ export class RealtimeClient {
   }
 
   private requestResync(reason: 'reconnect' | 'gap' | 'subscription') {
+    if (reason === 'gap') clientTelemetry.record('ws_gap')
+    if (reason === 'reconnect') clientTelemetry.record('ws_recovered')
     for (const listener of this.resyncListeners) listener(reason)
   }
 
@@ -151,11 +164,13 @@ export class RealtimeClient {
     }
     this.setStatus('reconnecting')
     this.reconnectAttempt += 1
-    const delay = Math.min(1000 * 2 ** this.reconnectAttempt, 15000)
+    // Spread reconnects after a server/network outage across a bounded window.
+    const delay = Math.round(Math.min(1000 * 2 ** this.reconnectAttempt, 15000) * (0.75 + Math.random() * 0.5))
     this.reconnectTimer = window.setTimeout(() => this.connect(), delay)
   }
 
   private setStatus(status: RealtimeStatus) {
+    if (status === 'reconnecting') clientTelemetry.record('ws_reconnecting')
     for (const listener of this.statusListeners) {
       listener(status)
     }

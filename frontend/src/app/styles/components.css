@@ -1,0 +1,52 @@
+/* Повышенная специфичность удерживает контракт над старым монолитным CSS. */
+.ui-button,
+button.icon-button.icon-button,
+button.tab-button.tab-button,
+button.segment-button.segment-button {
+  min-height: var(--target-size);
+  min-width: var(--target-size);
+  height: auto;
+  border-radius: var(--ui-radius-sm);
+  transition: background-color var(--motion-fast), border-color var(--motion-fast);
+}
+button.ui-button.ui-button {
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text);
+  background: var(--color-panel-strong);
+  border: 1px solid var(--color-panel-border);
+  font: inherit;
+  line-height: var(--line-body);
+  cursor: pointer;
+}
+button.ui-button-primary.ui-button-primary { color: var(--color-accent-ink); background: var(--color-accent); }
+button.ui-button-danger.ui-button-danger { border-color: var(--color-danger); }
+.ui-button:hover:not(:disabled), button.icon-button:hover:not(:disabled), button.tab-button:hover:not(:disabled), button.segment-button:hover:not(:disabled) { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.ui-button:active:not(:disabled), button.icon-button:active:not(:disabled), button.tab-button:active:not(:disabled), button.segment-button:active:not(:disabled) { box-shadow: inset 0 0 0 2px var(--color-focus); }
+.ui-button:disabled, button.icon-button:disabled, button.tab-button:disabled, button.segment-button:disabled { border-style: dashed; cursor: not-allowed; opacity: 0.65; }
+:is(.ui-button, .icon-button, .tab-button, .segment-button, .drawer, .modal-panel):focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+section.modal-panel.modal-panel, aside.drawer.drawer {
+  background-color: var(--color-panel-strong);
+  background-image: var(--ui-ornament, url('/assets/ui/ornaments/craft.svg'));
+  background-repeat: no-repeat;
+  background-position: right 8px bottom 8px;
+  background-size: 24px 24px;
+  line-height: var(--line-body);
+}
+section.modal-panel.modal-panel { max-height: calc(100dvh - 32px); overflow: auto; }
+.modal-backdrop.modal-backdrop { z-index: var(--layer-dialog); }
+aside.drawer.drawer { transition: transform var(--motion-panel), opacity var(--motion-panel); }
+.status-state.status-state { line-height: var(--line-body); }
+.status-state.status-state-error { border-top: 3px solid var(--color-danger); }
+.status-state.status-state-offline { border-top: 3px dashed var(--color-warning); }
+.status-state h2 { line-height: var(--line-heading); }
+.resource-chip strong, .ui-numeric { font-variant-numeric: tabular-nums lining-nums; }
+.ui-tooltip-anchor { position: relative; display: inline-flex; }
+.ui-tooltip { position: absolute; z-index: var(--layer-tooltip); bottom: 100%; left: 0; width: max-content; max-width: min(240px, 70vw); padding: var(--space-2); color: var(--color-text); background: var(--color-bg); border: 1px solid var(--color-panel-border); border-radius: var(--ui-radius-sm); font-size: var(--text-sm); line-height: var(--line-body); visibility: hidden; }
+.ui-tooltip-anchor:hover > .ui-tooltip, .ui-tooltip-anchor:focus-within > .ui-tooltip { visibility: visible; }
+.ui-tooltip[data-dismissed='true'] { visibility: hidden !important; }
+
+/* Вариант выбирается явно: эпоха не выводится из несвязанных клиентских данных. */
+[data-ui-era='technology'] { --ui-ornament: url('/assets/ui/ornaments/technology.svg'); }
+[data-ui-era='craft'] { --ui-ornament: url('/assets/ui/ornaments/craft.svg'); }
+
+

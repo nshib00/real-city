@@ -1,4 +1,4 @@
-import { Building2, HandCoins, UsersRound } from 'lucide-react'
+import { Building2, HandCoins, UsersRound } from '../../shared/ui/icons'
 
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import type { ResourceCatalogItem } from '../../../../shared/catalog/resources'
@@ -6,8 +6,10 @@ import { useGameStore } from '../../game/state/useGameStore'
 import { useAuthStore } from '../auth/useAuthStore'
 import { IconButton } from '../../shared/ui'
 import { availablePopulation, useInventory } from '../economy/useInventory'
-import { ResourceIcon, resourceIconUrl } from '../resources/ResourceIcon'
+import { ResourceIcon } from '../resources/ResourceIcon'
 import { buildingCapacityValue, resourceAmount, resourceLimit } from '../resources/resourceAmounts'
+import { buildCatalog } from '../buildings/catalog'
+import { formatAmount } from './formatAmount'
 
 type ResourceBarItem = {
   id: string
@@ -40,6 +42,9 @@ export function ResourceBar() {
   const ownerBuildings = buildings.filter((building) => building.owner === player?.id)
   const inventoryQuery = useInventory()
   const items = inventoryQuery.data?.inventory.items
+  const previewKind = useGameStore((state) => state.placementPreviewKind)
+  const required = buildCatalog.find((item) => item.kind === previewKind)?.cost ?? []
+  const shortages = items ? required.filter((cost) => resourceAmount(items, cost.resource, 0) < cost.amount) : []
   const coinCapacity = inventoryQuery.data?.inventory.coin_capacity
   const buildingValue = buildingCapacityValue(ownerBuildings)
   const visiblePanelResources = orderedPanelResources
@@ -53,6 +58,7 @@ export function ResourceBar() {
     .filter((resource) => resource.amount > 0)
   const visibleWeapons = weaponResources
     .map((resource) => ({ ...resource, amount: resourceAmount(items, resource.id, 0) }))
+    .filter((resource) => resource.amount > 0)
 
   return (
     <header className="resource-bar" aria-label="Ресурсы">
@@ -67,35 +73,36 @@ export function ResourceBar() {
         const warning = id === 'coins' && coinCapacity && amount >= coinCapacity * 0.9
         const title = note ? `${label}: ${value}, ${note}` : `${label}: ${value}`
         return (
-          <div className="resource-chip" key={id} title={title} aria-label={`${label}: ${value}`}>
-            <span className="resource-icon resource-icon-topbar" title={label} aria-hidden="true">
-              <img src={resourceIconUrl(id)} alt="" className="resource-icon-render" />
-            </span>
+          <div className={`resource-chip resource-pinned resource-${id}`} key={id} title={title} aria-label={`${label}: ${value}`}>
+            <ResourceIcon id={id} label={label} className="resource-icon-topbar" decorative />
             {warning ? <span className="resource-warning" aria-label="Лимит монет почти заполнен" /> : null}
-            <strong>{value}</strong>
+            <strong aria-hidden="true">{limit ? `${formatAmount(amount)}/${formatAmount(limit)}` : formatAmount(amount)}</strong>
+            <small>{label}</small>
           </div>
         )
       })}
+      <div className="resource-material-group" role="group" aria-label="Материалы">
       {visiblePanelResources.map(({ id, label, note, amount }) => {
         const title = note ? `${label}: ${amount}, ${note}` : `${label}: ${amount}`
         return (
           <div className="resource-chip" key={id} title={title} aria-label={`${label}: ${amount}`}>
-            <span className="resource-icon resource-icon-topbar" title={label} aria-hidden="true">
-              <img src={resourceIconUrl(id)} alt="" className="resource-icon-render" />
-            </span>
-            <strong>{amount}</strong>
+            <ResourceIcon id={id} label={label} className="resource-icon-topbar" decorative />
+            <strong aria-hidden="true">{formatAmount(amount)}</strong>
           </div>
         )
       })}
-      <div className="resource-weapon-group" role="group" aria-label="Оружие и бомбы">
+      </div>
+      {visibleWeapons.length > 0 && <div className="resource-weapon-group" role="group" aria-label="Оружие и бомбы">
         {visibleWeapons.map(({ id, name, amount }) => (
           <div className="resource-chip" key={id} title={`${name}: ${amount}`} aria-label={`${name}: ${amount}`}>
             <ResourceIcon id={id} label={name} className="resource-icon-topbar" />
-            <strong>{amount}</strong>
+            <strong aria-hidden="true">{formatAmount(amount)}</strong>
           </div>
         ))}
-      </div>
+      </div>}
       <IconButton label="Реестр ресурсов" icon={HandCoins} onClick={toggleResourceRegistry} />
+      <span className="hud-protection" title="Откройте постройку, чтобы проверить её защиту">Защита: по объектам</span>
+      {shortages.length ? <span className="hud-shortage" role="status">Не хватает: {shortages.map((cost) => `${cost.label} ${cost.amount - resourceAmount(items, cost.resource, 0)}`).join(', ')}</span> : null}
       <IconButton label="Союз" icon={UsersRound} onClick={() => setAlliancePanelOpen(true)} />
     </header>
   )

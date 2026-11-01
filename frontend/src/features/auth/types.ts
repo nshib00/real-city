@@ -2,7 +2,7 @@ export type RenderQuality = 'low' | 'medium' | 'high'
 
 export type ProfileSettings = {
   notifications: {
-    raid_alerts: boolean
+    attack_alerts: boolean
     production_ready: boolean
     market_updates: boolean
   }
@@ -10,6 +10,12 @@ export type ProfileSettings = {
 }
 
 export type PlayerProfile = {
+ avatar_id?: string
+ banner_id?: string
+ title?: string
+ group_id?: string
+ home_center_id?: string
+ scores?: Record<string, number>
   display_name: string
   city_name: string
   avatar_url: string

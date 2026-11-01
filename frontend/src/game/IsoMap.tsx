@@ -9,10 +9,14 @@ import { buildCatalog } from '../features/buildings/catalog'
 import { validatePlacementPreview } from '../features/build-placement/placement'
 
 import { flattenChunkTiles, useVisibleChunks } from '../features/world/useVisibleChunks'
+import { MapEntryStatus } from '../features/world/MapEntryStatus'
+import { useOwnershipContext } from '../features/alliance/useOwnership'
+import { occupiedTerritory } from './territory'
 import { canChopForestTile } from '../features/world/forestActions'
 import { CHUNK_SIZE, gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, tileToChunk, wrapGridCoord } from './coordinates/iso'
 import { resolvePerformanceScenarioFromSearch, type PerformanceScenario } from './dev/performanceScenarios'
 import { PixiStage } from './renderer/PixiStage'
+import { AccessibleMapSelection } from './AccessibleMapSelection'
 import { renderPerformanceSnapshot, type RenderPerformanceSnapshot } from './renderer/renderPerformanceMetrics'
 import { filterVisibleMapObjects, occupiedTileKeys } from './renderer/visibleObjects'
 import { useGameStore } from './state/useGameStore'
@@ -39,6 +43,8 @@ import { mapObjectZIndex } from './renderer/depth'
 const RECENT_CHOP_TILE_TTL_MS = 10_000
 
 export function IsoMap() {
+  const mapPowerSave = useGameStore((state) => state.uiPreferences.mapPowerSave)
+  const ownership = useOwnershipContext()
   useEffect(() => startAmbience(), [])
   const selectedTile = useGameStore((state) => state.selectedTile)
   const hoveredTile = useGameStore((state) => state.hoveredTile)
@@ -74,6 +80,7 @@ export function IsoMap() {
   const player = useAuthStore((state) => state.player)
   const mapStageRef = useRef<HTMLElement | null>(null)
   const dragStart = useRef<{ x: number; y: number } | null>(null)
+  const dragDistance = useRef(0)
   const exploredTilesRef = useRef(new Set<string>())
   const pendingDragRef = useRef<{ screen: { x: number; y: number }; grid: { x: number; y: number } } | null>(null)
   const dragFrameRef = useRef<number | null>(null)
@@ -82,6 +89,7 @@ export function IsoMap() {
   const optimisticChopResultTilesRef = useRef(new Map<string, WorldTile>())
   const recentChopTilesRef = useRef(new Map<string, { tile: WorldTile; expiresAt: number }>())
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
+  const activePointers = useRef(new Set<number>())
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
   const renderCenter = useMemo(() => {
@@ -101,6 +109,10 @@ export function IsoMap() {
   const mapTiles = performanceScenario?.tiles ?? (worldTiles.length > 0 ? worldTiles : tiles)
   const mapTilesByKey = useMemo(() => new Map(mapTiles.map((tile) => [tileActionKey(tile), tile])), [mapTiles])
   const placementPreview = placementPreviewKind ? buildCatalog.find((item) => item.kind === placementPreviewKind) : undefined
+  const previewTile = hoveredTile ?? selectedTile
+  const placementValidity = placementPreview ? validatePlacementPreview({ kind: placementPreview.kind, tile: previewTile, footprint: placementPreview.footprint, buildings, worldTiles: mapTiles, monsters, ownerId: player?.id }) : null
+  const missingCenterTile = mapTiles.length > 0 && !mapTilesByKey.has(tileActionKey(wrapGridCoord(roundGridCoord(renderCenter))))
+  const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const relocatingBuilding = relocatingBuildingId ? buildings.find((item) => item.id === relocatingBuildingId) : null
   const relocationPreview = relocatingBuilding && hoveredTile ? validatePlacementPreview({
     kind: relocatingBuilding.kind,
@@ -466,28 +478,49 @@ export function IsoMap() {
   return (
     <section
       className="map-stage"
+      id="game-map"
+      tabIndex={0}
       ref={mapStageRef}
       aria-label="Карта"
+      aria-description="Стрелки — перемещение карты, плюс и минус — масштаб. F6 — следующая область интерфейса."
+      onClickCapture={(event) => { if (event.detail !== 0 && dragDistance.current > 8) { event.preventDefault(); event.stopPropagation(); dragDistance.current = 0 } }}
+      onKeyDown={(event) => {
+        if (event.target !== event.currentTarget || event.ctrlKey || event.metaKey || event.altKey) return
+        const delta = { ArrowLeft: { x: 64, y: 0 }, ArrowRight: { x: -64, y: 0 }, ArrowUp: { x: 0, y: 64 }, ArrowDown: { x: 0, y: -64 } }[event.key]
+        if (delta) { event.preventDefault(); scheduleDragFrame(delta); flushDragFrame() }
+        if (event.key === '+' || event.key === '=' || event.key === '-') { event.preventDefault(); setZoomAt({ zoom: camera.zoom + (event.key === '-' ? -0.1 : 0.1), viewportSize: stageSize }) }
+      }}
       onPointerDown={(event) => {
+        activePointers.current.add(event.pointerId)
+        if (activePointers.current.size > 1) { dragStart.current = null; dragDistance.current = Number.POSITIVE_INFINITY; return }
+        if (event.isPrimary === false || (event.pointerType === 'mouse' && event.button !== 0)) return
+        dragDistance.current = 0
         dragStart.current = { x: event.clientX, y: event.clientY }
       }}
       onPointerMove={(event) => {
-        if (!dragStart.current || event.buttons !== 1) {
+        if (activePointers.current.size > 1) return
+        if (!dragStart.current || (event.pointerType !== 'touch' && event.buttons !== 1)) {
           return
         }
         const delta = { x: event.clientX - dragStart.current.x, y: event.clientY - dragStart.current.y }
+        dragDistance.current += Math.hypot(delta.x, delta.y)
         scheduleDragFrame(delta)
         dragStart.current = { x: event.clientX, y: event.clientY }
       }}
-      onPointerUp={() => {
+      onPointerUp={(event) => {
+        activePointers.current.delete(event.pointerId)
         flushDragFrame()
         dragStart.current = null
       }}
-      onPointerCancel={() => {
+      onPointerCancel={(event) => {
+        activePointers.current.delete(event.pointerId)
+        dragDistance.current = Number.POSITIVE_INFINITY
         flushDragFrame()
         dragStart.current = null
       }}
+      onPointerLeave={(event) => { activePointers.current.delete(event.pointerId); flushDragFrame(); dragStart.current = null }}
       onWheel={(event) => {
+        if (event.ctrlKey || event.metaKey) return
         event.preventDefault()
         const rect = mapStageRef.current?.getBoundingClientRect()
         setZoomAt({
@@ -497,7 +530,20 @@ export function IsoMap() {
         })
       }}
     >
-      <PixiStage
+      <nav className="map-navigation" aria-label="Перемещение карты" onPointerDown={(event) => event.stopPropagation()} onWheel={(event) => event.stopPropagation()}>
+        {([{ label: 'Карта влево', x: 64, y: 0, text: '←' }, { label: 'Карта вверх', x: 0, y: 64, text: '↑' }, { label: 'Карта вниз', x: 0, y: -64, text: '↓' }, { label: 'Карта вправо', x: -64, y: 0, text: '→' }]).map((direction) => <button key={direction.label} type="button" aria-label={direction.label} onClick={() => { scheduleDragFrame(direction); flushDragFrame() }}>{direction.text}</button>)}
+        <button type="button" aria-label="Уменьшить карту" onClick={() => setZoomAt({ zoom: camera.zoom - 0.1, viewportSize: stageSize })}>−</button>
+        <button type="button" aria-label="Увеличить карту" onClick={() => setZoomAt({ zoom: camera.zoom + 0.1, viewportSize: stageSize })}>+</button>
+        <AccessibleMapSelection />
+      </nav>
+      {(chunksQuery.isPending || chunksQuery.isError || chunksQuery.isPlaceholderData || missingCenterTile || realtimeStatus !== 'connected') && !performanceScenario ? <div className="world-status" role="status" onPointerDown={(event) => event.stopPropagation()}>
+        <strong>{realtimeStatus === 'offline' ? 'Нет связи с миром' : realtimeStatus !== 'connected' ? 'Подключаемся к миру…' : chunksQuery.isError ? 'Район не загрузился' : missingCenterTile && !chunksQuery.isFetching ? 'Данные района отсутствуют' : mapTiles.length ? 'Загружаем район…' : 'Загружаем мир…'}</strong>
+        <span>{mapTiles.length ? 'Загруженная карта остаётся доступной. Данные могут устареть.' : 'Карта появится после получения данных сервера.'}</span>
+        {chunksQuery.isError || missingCenterTile ? <button type="button" disabled={chunksQuery.isFetching} onClick={() => void chunksQuery.refetch()}>Повторить загрузку</button> : null}
+      </div> : null}
+      {placementValidity ? <div className="placement-status" role="status">{placementValidity.valid ? '✓ Место подходит предварительно. Подтвердите в меню строительства.' : `× ${placementValidity.reason}`} Сервер проверит размещение.</div> : null}
+      <PixiStage key={mapPowerSave ? 'economy' : 'normal'} powerSave={mapPowerSave}
+        territories={occupiedTerritory(renderBuildings, ownership.viewerId, ownership.alliedIds)}
         tiles={mapTiles}
         occupiedTiles={buildingOccupiedTiles}
         buildings={visibleBuildings}
@@ -538,10 +584,11 @@ export function IsoMap() {
           transform: `translate(${camera.x}px, ${camera.y}px) scale(${camera.zoom})`,
         }}
       >
-        {placementPreview?.previewImage && selectedTile ? (() => {
-          const pos = nearestWrappedScreenCoord(selectedTile, gridToScreen(renderCenter))
-          return <div className="map-placement-preview" style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)` }} aria-hidden="true">
+        {placementPreview?.previewImage && previewTile ? (() => {
+          const pos = nearestWrappedScreenCoord(previewTile, gridToScreen(renderCenter))
+          return <div className={`map-placement-preview${placementValidity?.valid === false ? ' map-placement-preview-invalid' : ''}`} style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)` }} aria-hidden="true">
             <img src={placementPreview.previewImage} alt="" draggable={false} />
+            <svg className="placement-footprint" viewBox={`${-32 * placementPreview.footprint.height} -16 ${32 * (placementPreview.footprint.width + placementPreview.footprint.height)} ${16 * (placementPreview.footprint.width + placementPreview.footprint.height)}`} style={{ width: 32 * (placementPreview.footprint.width + placementPreview.footprint.height), height: 16 * (placementPreview.footprint.width + placementPreview.footprint.height) }}><polygon points={`0,-16 ${32 * placementPreview.footprint.width},${16 * (placementPreview.footprint.width - 1)} ${32 * (placementPreview.footprint.width - placementPreview.footprint.height)},${16 * (placementPreview.footprint.width + placementPreview.footprint.height - 1)} ${-32 * placementPreview.footprint.height},${16 * (placementPreview.footprint.height - 1)}`} /></svg>
           </div>
         })() : null}
         {relocatingBuilding && hoveredTile ? (() => {
@@ -616,6 +663,7 @@ export function IsoMap() {
           </MapObject>
         ))}
       </div>
+      <MapEntryStatus query={chunksQuery} />
       <div className="map-debug" aria-live="polite">
         {performanceScenario ? <span>{performanceScenarioLabel(performanceScenario)}</span> : null}
         <MapFpsLabel />

@@ -1,4 +1,4 @@
-import { Landmark, Map as MapIcon, X } from 'lucide-react'
+import { Landmark, Map as MapIcon, X } from '../../shared/ui/icons'
 import { useRef, useState } from 'react'
 import type { PointerEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
@@ -13,6 +13,11 @@ import { IconButton } from '../../shared/ui'
 import { useAuthStore } from '../auth/useAuthStore'
 import { visibleChunksQueryOptions } from '../world/useVisibleChunks'
 import { showToast } from '../notifications/toast'
+import { useOwnershipContext } from '../alliance/useOwnership'
+import { ObjectMarks } from '../../shared/ui/ObjectMarks'
+import { ownershipOf, ownershipLabels } from '../../shared/ui/ownership'
+import { occupiedTerritory } from '../../game/territory'
+import { TerritoryLayer } from './TerritoryLayer'
 
 const buildingCategoryByKind = new Map<string, BuildingCatalogItem['category']>(buildingCatalog.map((item) => [item.type, item.category]))
 
@@ -32,15 +37,19 @@ const markerClassByCategory: Record<BuildingCategory, string> = {
 
 export function MapWidget() {
   const [open, setOpen] = useState(false)
+  const { viewerId, alliedIds } = useOwnershipContext()
+  const selectedBuildingId = useGameStore(state => state.selectedBuildingId)
   const queryClient = useQueryClient()
   const navigationRequestRef = useRef(0)
   const player = useAuthStore((state) => state.player)
-  const buildings = useGameStore((state) => state.buildings).filter((building) => building.owner === player?.id)
+  const buildings = useGameStore((state) => state.buildings)
+  const monsters = useGameStore((state) => state.monsters)
+  const resourceNodes = useGameStore((state) => state.resourceNodes)
   const selectedTile = useGameStore((state) => state.selectedTile)
   const viewport = useGameStore((state) => state.viewport)
   const focusTile = useGameStore((state) => state.focusTile)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
-  const townHall = buildings.find((building) => building.kind === 'town_hall' && building.status === 'active')
+  const townHall = buildings.find((building) => building.owner === player?.id && building.kind === 'town_hall' && building.status === 'active')
   const activeTile = selectedTile ?? viewport.center
   const activeDistrict = districtFromTile(activeTile)
   const activeDistrictLabel = districtLabel(activeDistrict)
@@ -92,6 +101,9 @@ export function MapWidget() {
                     className={active ? 'world-district world-district-active' : 'world-district'}
                     key={`${districtX}:${districtY}`}
                     type="button"
+                    onClick={(event) => {
+                      if (event.detail === 0) void navigateTo({ x: districtX * DISTRICT_SIZE + DISTRICT_SIZE / 2, y: districtY * DISTRICT_SIZE + DISTRICT_SIZE / 2 })
+                    }}
                     onPointerDown={(event) => {
                       const tile = tileFromDistrictClick(event, districtX, districtY)
                       void navigateTo(tile)
@@ -104,15 +116,19 @@ export function MapWidget() {
                 )
               })}
             </div>
+            <TerritoryLayer cells={occupiedTerritory(buildings, viewerId, alliedIds)} />
             <div
               aria-label={`Текущая позиция: клетка ${cellLabel(activeTile)}`}
               className="world-position-marker"
               style={tileMarkerStyle(activeTile)}
             />
-            <div className="world-building-markers" aria-label="Постройки игрока на карте мира">
+            <div className="world-building-markers" aria-label="Известные постройки на карте мира">
               {buildings.map((building, index) => (
                 <button
                   aria-label={building.name}
+                  data-owner={ownershipOf(building.owner, viewerId, alliedIds)}
+                  data-selected={building.id === selectedBuildingId || undefined}
+                  aria-description={ownershipLabels[ownershipOf(building.owner, viewerId, alliedIds)]}
                   className={`world-building-marker ${markerClassByCategory[buildingCategory(building.kind)]}`}
                   key={building.id}
                   style={buildingMarkerStyle(building, index)}
@@ -121,13 +137,17 @@ export function MapWidget() {
                   onClick={() => {
                     void navigateTo(building.tile, building.id)
                   }}
-                />
+                ><ObjectMarks ownership={ownershipOf(building.owner, viewerId, alliedIds)} selected={building.id === selectedBuildingId} compact /></button>
               ))}
             </div>
+            {resourceNodes.map((node) => <span key={node.id} className="world-neutral-marker" style={tileMarkerStyle(node.tile)} title="Ресурс" aria-label="Ресурс"><ObjectMarks ownership={ownershipOf(node.ownerId, viewerId, alliedIds)} compact /></span>)}
+            {monsters.map((monster) => <span key={monster.id} className="world-danger-marker" style={tileMarkerStyle(monster.tile)} title="Опасность: монстр" aria-label="Опасность: монстр">▲</span>)}
           </div>
           <footer>
             <span>{`Район ${activeDistrictLabel} · клетка ${cellLabel(activeTile)}`}</span>
           </footer>
+          <div className="world-map-legend" aria-label="Владение и состояние">{(['own', 'ally', 'foreign', 'neutral'] as const).map(ownership => <ObjectMarks key={ownership} ownership={ownership} />)}<span>△ Угроза — отдельный знак</span></div>
+          <small>Контуры занятых клеток: сплошной — свой, штрих — союзный, точки — чужой. Это не радиус контроля. Показаны только загруженные объекты мира.</small>
         </section>
       ) : null}
     </aside>

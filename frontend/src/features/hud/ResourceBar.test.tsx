@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -14,7 +14,7 @@ describe('ResourceBar', () => {
     useAuthStore.setState({ player: { id: 'test' } as Player })
     useGameStore.setState({
       buildings: [],
-      uiPreferences: { compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
+      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
       realtimeStatus: 'connected',
     })
   })
@@ -36,7 +36,7 @@ describe('ResourceBar', () => {
     expect(screen.queryByLabelText('Бензин: 0')).toBeNull()
     expect(screen.getByLabelText('Ресурсы').querySelector('.resource-chip')?.getAttribute('aria-label')).toBe('Постройки: 0/8')
     expect(screen.getByLabelText('Монеты: 50/2000').querySelector('img')?.getAttribute('src')).toContain('/assets/resources/icons/coins.png')
-    expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).querySelectorAll('.resource-chip')).toHaveLength(9)
+    expect(screen.queryByRole('group', { name: 'Оружие и бомбы' })).toBeNull()
 
     fireEvent.click(screen.getByLabelText('Реестр ресурсов'))
     expect(useGameStore.getState().uiPreferences.resourceRegistryOpen).toBe(true)
@@ -81,6 +81,38 @@ describe('ResourceBar', () => {
       'Кирпич: 7',
       'Бензин: 2',
     ])
+  })
+
+  it('shows weapons when acquired and hides them and their group when depleted', async () => {
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, enabled: false } } })
+    const updateInventory = (knives: number, bombs: number) => queryClient.setQueryData(['economy', 'inventory'], {
+      inventory: {
+        player_id: 'test',
+        items: [
+          { resource: 'throwing_knives', amount: knives },
+          { resource: 'blackpowder_bomb', amount: bombs },
+        ],
+        coin_capacity: 2000,
+        updated_at: '2026-10-10T00:00:00Z',
+      },
+    })
+    updateInventory(0, 0)
+    render(<QueryClientProvider client={queryClient}><ResourceBar /></QueryClientProvider>)
+    expect(screen.queryByRole('group', { name: 'Оружие и бомбы' })).toBeNull()
+
+    updateInventory(50, 0)
+    await waitFor(() => expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).querySelectorAll('.resource-chip')).toHaveLength(1))
+    expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).textContent).toBe('50')
+
+    updateInventory(50, 1)
+    await waitFor(() => expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).querySelectorAll('.resource-chip')).toHaveLength(2))
+
+    updateInventory(0, 1)
+    await waitFor(() => expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).querySelectorAll('.resource-chip')).toHaveLength(1))
+    expect(screen.getByRole('group', { name: 'Оружие и бомбы' }).textContent).toBe('1')
+
+    updateInventory(0, 0)
+    await waitFor(() => expect(screen.queryByRole('group', { name: 'Оружие и бомбы' })).toBeNull())
   })
 
   it('keeps display order on regular resources only', () => {

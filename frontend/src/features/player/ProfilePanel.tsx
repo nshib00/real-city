@@ -1,4 +1,4 @@
-import { Bell, LogOut, MonitorCog, Settings, ShieldAlert, Star, UserRound } from 'lucide-react'
+import { Bell, LogOut, MonitorCog, Settings, ShieldAlert, Star, UserRound } from '../../shared/ui/icons'
 import { useEffect, useRef, useState } from 'react'
 
 import { playUiSound } from '../../audio/playUiSound'
@@ -7,7 +7,8 @@ import type { RenderQuality } from '../auth/types'
 import { useAuthStore } from '../auth/useAuthStore'
 import { Modal } from '../../shared/ui/Modal'
 
-const levelThresholds = [0, 200, 700, 1900, 4700, 11200, 26200, 61200, 141200, 321200, 721200, 1621200, 3621200, 8121200, 18121200]
+import { levelThresholds, playerProgress, levelIcons } from './levels'
+import { ProfileScores } from './ProfileScores'
 
 export function ProfilePanel() {
   const { player, setPlayer } = useAuthStore()
@@ -16,12 +17,22 @@ export function ProfilePanel() {
   const [displayName, setDisplayName] = useState('')
   const [cityName, setCityName] = useState('')
   const [avatarURL, setAvatarURL] = useState('')
+  const [title,setTitle]=useState('')
+  const [avatarId,setAvatarId]=useState('')
+  const [bannerId,setBannerId]=useState('')
   const [quality, setQuality] = useState<RenderQuality>('medium')
-  const [raidAlerts, setRaidAlerts] = useState(true)
+  const [attackAlerts, setAttackAlerts] = useState(true)
   const [productionReady, setProductionReady] = useState(true)
   const [marketUpdates, setMarketUpdates] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
   const lastLevel = useRef<{ playerId: string; level: number } | null>(null)
+
+  useEffect(() => {
+    setProfileOpen(false)
+    setSettingsOpen(false)
+    setSaveError('')
+  }, [player?.id])
 
   useEffect(() => {
     if (!player) { lastLevel.current = null; return }
@@ -35,23 +46,28 @@ export function ProfilePanel() {
       return
     }
     const timer = window.setInterval(() => {
-      getMe().then(setPlayer).catch(() => undefined)
+      getMe().then((updated) => {
+        if (useAuthStore.getState().player?.id === updated.id) setPlayer(updated)
+      }).catch(() => undefined)
     }, 10_000)
     return () => window.clearInterval(timer)
   }, [player?.id, setPlayer])
 
   useEffect(() => {
-    if (!player) {
+    if (!player || settingsOpen) {
       return
     }
     setDisplayName(player.profile.display_name)
     setCityName(player.profile.city_name)
     setAvatarURL(player.profile.avatar_url)
+    setTitle(player.profile.title ?? '')
+    setAvatarId(player.profile.avatar_id ?? '')
+    setBannerId(player.profile.banner_id ?? '')
     setQuality(player.profile.settings.render_quality)
-    setRaidAlerts(player.profile.settings.notifications.raid_alerts)
+    setAttackAlerts(player.profile.settings.notifications.attack_alerts)
     setProductionReady(player.profile.settings.notifications.production_ready)
     setMarketUpdates(player.profile.settings.notifications.market_updates)
-  }, [player])
+  }, [player, settingsOpen])
 
   if (!player) {
     return null
@@ -62,23 +78,28 @@ export function ProfilePanel() {
       return
     }
     setSaving(true)
+    setSaveError('')
     try {
       const updated = await updateMe({
         display_name: displayName,
         city_name: cityName,
         avatar_url: avatarURL,
+        title, avatar_id: avatarId, banner_id: bannerId,
         settings: {
           notifications: {
-            raid_alerts: raidAlerts,
+            attack_alerts: attackAlerts,
             production_ready: productionReady,
             market_updates: marketUpdates,
           },
           render_quality: quality,
         },
       })
+      if (useAuthStore.getState().player?.id !== player.id) return
       setPlayer(updated)
       setSettingsOpen(false)
       setProfileOpen(true)
+    } catch {
+      if (useAuthStore.getState().player?.id === player.id) setSaveError('Не удалось сохранить профиль. Проверьте связь и повторите сохранение.')
     } finally {
       setSaving(false)
     }
@@ -100,7 +121,9 @@ export function ProfilePanel() {
   const levelXP = totalXP - levelStartXP
   const nextLevelXP = nextThreshold === undefined ? 0 : nextThreshold - levelStartXP
   const remainingXP = nextThreshold === undefined ? 0 : nextThreshold - totalXP
-  const xpPercent = nextLevelXP > 0 ? Math.max(0, Math.min(100, Math.round((levelXP / nextLevelXP) * 100))) : 0
+  const progress = playerProgress(totalXP)
+  const LevelIcon = levelIcons[progress.icon as keyof typeof levelIcons]
+  const xpPercent = progress.percent
   const xpLabel = nextLevelXP > 0 ? `${levelXP}/${nextLevelXP}` : `${levelXP}`
 
   return (
@@ -111,7 +134,7 @@ export function ProfilePanel() {
             {profile.avatar_url ? <img src={profile.avatar_url} alt="" /> : avatarLabel}
           </span>
           <span className="profile-level-badge" title={`Уровень ${level}`}>
-            <Star size={12} /> {level}
+            <LevelIcon size={12} /> {level}
           </span>
           <span className="profile-xp-mini" aria-hidden="true">
             <span style={{ width: `${xpPercent}%` }} />
@@ -125,6 +148,7 @@ export function ProfilePanel() {
 
       <Modal title="Профиль" open={profileOpen} className="profile-modal-backdrop" onClose={() => setProfileOpen(false)}>
         <div className="profile-drawer-body">
+          <p className="panel-note">Ваш профиль. Настройки аккаунта доступны только вам; другим игрокам показывается публичная карточка.</p>
           <div className="profile-identity">
             <span className="profile-avatar profile-avatar-large" aria-hidden="true">
               {profile.avatar_url ? <img src={profile.avatar_url} alt="" /> : avatarLabel}
@@ -135,6 +159,8 @@ export function ProfilePanel() {
             </div>
           </div>
 
+          {profile.title ? <p>{profile.title}</p> : null}
+          <ProfileScores scores={profile.scores} />
           <div className="profile-stat-grid">
             <article>
               <UserRound size={16} />
@@ -156,6 +182,8 @@ export function ProfilePanel() {
             </article>
           </div>
 
+          <p>{progress.title}</p>
+          <ul aria-label="Возможности уровня">{progress.unlocks.map((unlock) => <li key={unlock.label}>{unlock.label}{unlock.status === 'planned' ? ' — запланировано' : ''}</li>)}</ul>
           <div className="profile-xp-detail" aria-label={`Опыт: ${xpLabel}`}>
             <span>
               <strong>Опыт</strong>
@@ -213,14 +241,17 @@ export function ProfilePanel() {
             Название города
             <input value={cityName} onChange={(event) => setCityName(event.target.value)} />
           </label>
+          <label>Титул<input maxLength={80} value={title} onChange={(event) => setTitle(event.target.value)} /></label>
+          <label>Аватар<input maxLength={48} value={avatarId} onChange={(event) => setAvatarId(event.target.value)} /></label>
+          <label>Баннер<input maxLength={48} value={bannerId} onChange={(event) => setBannerId(event.target.value)} /></label>
           <label>
             URL аватарки
             <input value={avatarURL} onChange={(event) => setAvatarURL(event.target.value)} placeholder="https://..." />
           </label>
           <label>
             <ShieldAlert size={16} />
-            <span>Оповещения о рейдах</span>
-            <input checked={raidAlerts} onChange={(event) => setRaidAlerts(event.target.checked)} type="checkbox" />
+            <span>Оповещения об атаках</span>
+            <input checked={attackAlerts} onChange={(event) => setAttackAlerts(event.target.checked)} type="checkbox" />
           </label>
           <label>
             <Bell size={16} />
@@ -244,6 +275,7 @@ export function ProfilePanel() {
           <button type="button" onClick={saveSettings} disabled={saving}>
             {saving ? 'Сохранение...' : 'Сохранить'}
           </button>
+          {saveError ? <p role="alert">{saveError}</p> : null}
         </div>
       </Modal>
     </>

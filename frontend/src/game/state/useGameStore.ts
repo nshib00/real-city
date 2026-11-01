@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { nearestWrappedScreenCoord, roundGridCoord, screenToGrid, wrapGridCoord } from '../coordinates/iso'
 import type { WorldTile } from '../../shared/contracts'
 
-export type ToolMode = 'select' | 'build' | 'road' | 'repair' | 'raid'
+export type ToolMode = 'select' | 'build' | 'road' | 'repair' | 'attack'
 export type RealtimeStatus = 'connecting' | 'connected' | 'reconnecting' | 'offline'
 export type BuildingState = 'planned' | 'building' | 'active' | 'damaged' | 'ruined'
 export type BuildingKind =
@@ -19,7 +19,6 @@ export type BuildingKind =
   | 'oilseed_field'
   | 'sugar_bed'
   | 'crystal_greenhouse'
-  | 'warehouse'
   | 'coin_storage'
   | 'workshop'
   | 'brick_kiln'
@@ -142,6 +141,8 @@ export type ResourceNode = {
 
 export type MonsterEntity = {
   id: string
+  creatorId?: string
+  expiresAt?: number
   type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
   state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
   tile: TileCoord
@@ -159,6 +160,7 @@ export type MonsterDamageEvent = { id: string; monsterId: string; tile: TileCoor
 export type BuildingDamageEvent = { id: string; buildingId: string; tile: TileCoord; damage: number; createdAt: number }
 
 export type UIPreferences = {
+  mapPowerSave: boolean
   compactPanels: boolean
   resourceRegistryOpen: boolean
   alliancePanelOpen: boolean
@@ -168,6 +170,7 @@ export type UIPreferences = {
 }
 
 const defaultUIPreferences: UIPreferences = {
+  mapPowerSave: false,
   compactPanels: false,
   resourceRegistryOpen: false,
   alliancePanelOpen: false,
@@ -179,18 +182,21 @@ const defaultUIPreferences: UIPreferences = {
 const uiPreferencesStorageKey = 'real-city.ui-preferences'
 
 function readUIPreferences(): UIPreferences {
+  const defaults = typeof window !== 'undefined' && window.matchMedia?.('(max-width: 760px), (max-height: 500px) and (max-width: 1000px)').matches
+    ? { ...defaultUIPreferences, isChatCollapsed: true, areNotificationsCollapsed: true }
+    : defaultUIPreferences
   if (typeof localStorage === 'undefined') {
-    return defaultUIPreferences
+    return defaults
   }
 
   try {
     const stored = localStorage.getItem(uiPreferencesStorageKey)
     if (!stored) {
-      return defaultUIPreferences
+      return defaults
     }
-    return { ...defaultUIPreferences, ...JSON.parse(stored) }
+    return { ...defaults, ...JSON.parse(stored) }
   } catch {
-    return defaultUIPreferences
+    return defaults
   }
 }
 
@@ -256,6 +262,7 @@ type GameState = {
   setViewportCenter: (center: TileCoord) => void
   setViewportRadius: (radius: number) => void
   setCompactPanels: (compactPanels: boolean) => void
+  setMapPowerSave: (enabled: boolean) => void
   toggleResourceRegistry: () => void
   setBuildMenuOpen: (buildMenuOpen: boolean) => void
   setAlliancePanelOpen: (alliancePanelOpen: boolean) => void
@@ -335,7 +342,7 @@ export const useGameStore = create<GameState>((set) => ({
         selectedBuildingId: null,
         selectedTile: monster?.tile ?? state.selectedTile,
         placementPreviewKind: null,
-        tool: 'raid',
+        tool: 'attack',
       }
     }),
   hoverTile: (hoveredTile) => set({ hoveredTile }),
@@ -505,6 +512,10 @@ export const useGameStore = create<GameState>((set) => ({
   setCompactPanels: (compactPanels) =>
     set((state) => ({
       uiPreferences: persistUIPreferences({ ...state.uiPreferences, compactPanels }),
+    })),
+  setMapPowerSave: (mapPowerSave) =>
+    set((state) => ({
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, mapPowerSave }),
     })),
   toggleResourceRegistry: () =>
     set((state) => ({

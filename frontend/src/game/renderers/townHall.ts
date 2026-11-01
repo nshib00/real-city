@@ -4,7 +4,7 @@ import { isCriticallyDamaged } from './buildingDamage'
 export type TownHallModelState = 'active' | 'construction' | 'damaged' | 'ruined'
 
 export function townHallModelLevel(level: number) {
-  return Math.max(1, Math.min(10, Math.round(level || 1)))
+  return Math.max(1, Math.min(15, Math.round(level || 1)))
 }
 
 export function townHallModelState(building: Pick<PlacedBuilding, 'status' | 'state' | 'health' | 'maxHealth'>): TownHallModelState {

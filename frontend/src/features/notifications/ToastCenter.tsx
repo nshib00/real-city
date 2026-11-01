@@ -18,7 +18,7 @@ export function ToastCenter() {
     return () => { unsubscribe(); for (const timeout of timeouts) window.clearTimeout(timeout) }
   }, [])
 
-  return <div className="audio-toast-stack" aria-live="polite">
+  return <div className="audio-toast-stack">
     {toasts.map((toast) => <div className={`audio-toast audio-toast-${toast.severity}`} role={toast.severity === 'error' ? 'alert' : 'status'} key={toast.id}>{toast.message}</div>)}
   </div>
 }

@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest'
 import type { PlacedBuilding } from '../state/useGameStore'
 import { resolveBuildingAtlasSource } from './buildingRegistry'
 import { COIN_STORAGE_ASSET_REVISION, FLAX_FIELD_ASSET_REVISION, GLASS_WORKSHOP_ASSET_REVISION, HERB_BED_ASSET_REVISION, LUMBER_YARD_ASSET_REVISION, MINE_ASSET_REVISION, MUSHROOM_GROVE_ASSET_REVISION, OILSEED_FIELD_ASSET_REVISION, OIL_WELL_ASSET_REVISION, REED_BED_ASSET_REVISION, ROPE_YARD_ASSET_REVISION, SAND_QUARRY_ASSET_REVISION, SEED_GARDEN_ASSET_REVISION, buildingSpriteAsset } from './buildingSpriteAssets'
+import { TOWN_HALL_ASSET_REVISION } from './buildingAssetManifests'
 
 describe('building sprite assets', () => {
   it('connects visible building kinds to png sprites', () => {
     expect(buildingSpriteAsset(building({ kind: 'town_hall', level: 12, status: 'active', state: 'active', health: 1000 }))).toBe(
-      '/assets/buildings/center/town_hall/town_hall_l10_active.png',
+      `/assets/buildings/center/town_hall/town_hall_l12_active.png?v=${TOWN_HALL_ASSET_REVISION}`,
     )
     expect(buildingSpriteAsset(building({ kind: 'dugout', level: 0, status: 'construction', state: 'building', health: 100 }))).toBe(
       '/assets/buildings/housing/dugout/dugout_l01_construction.png',
@@ -123,7 +124,7 @@ describe('building sprite assets', () => {
   })
 
   it('keeps unsupported css fallback buildings without sprite urls', () => {
-    expect(buildingSpriteAsset(building({ kind: 'warehouse', level: 1, status: 'active', state: 'active', health: 100 }))).toBeNull()
+    expect(buildingSpriteAsset(building({ kind: 'mint', level: 1, status: 'active', state: 'active', health: 100 }))).toBeNull()
   })
 
   it('resolves atlas metadata with PNG fallback for atlas-ready buildings', () => {

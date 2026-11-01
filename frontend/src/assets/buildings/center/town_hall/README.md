@@ -1,19 +1,7 @@
-# Ратуша
+# Ратуша: прежняя серия
 
-Исходный генератор: `tools/assets/blender/generate_town_hall_models.py`.
+Эта папка содержит исходники и GLB прежней серии уровней 1–10. Её полная резервная копия находится в `tools/assets/backups/town_hall_before_vertical_2026-10-26.tar.gz`.
 
-Генератор создает 10 уровней `town_hall_l01` ... `town_hall_l10` в трех состояниях:
+Игра использует новую вертикальную серию из `frontend/public/assets/buildings/center/town_hall/`: PNG для карты и GLB LOD0 для просмотра модели. В этой runtime-папке находятся `.blend`, PNG и LOD0–2 для уровней 1–15 в состояниях `active`, `construction`, `damaged`.
 
-- `active`;
-- `construction`;
-- `damaged`.
-
-Ожидаемые файлы после запуска генератора в Blender:
-
-- `town_hall_levels.blend`;
-- `town_hall_levels.glb`;
-- `town_hall_l01_active.glb` ... `town_hall_l10_damaged.glb`.
-
-Все тяжелые `.blend` и `.glb` файлы игнорируются git согласно корневому `.gitignore`.
-
-Runtime-карта использует PNG-спрайты из `frontend/public/assets/buildings/center/town_hall`, чтобы не запускать отдельный WebGL renderer для каждой постройки.
+Рендерер распознаёт все 15 уровней. Игровой каталог пока разрешает улучшения только до уровня 10; для 11–15 нужны отдельный баланс и серверная поддержка.

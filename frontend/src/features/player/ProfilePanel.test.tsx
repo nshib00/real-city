@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Player } from '../auth/types'
 import { useAuthStore } from '../auth/useAuthStore'
 import { ProfilePanel } from './ProfilePanel'
+import { updateMe } from '../auth/api'
 
 const testPlayer = vi.hoisted(() => ({
   id: 'player_1',
@@ -21,7 +22,7 @@ const testPlayer = vi.hoisted(() => ({
     next_level_xp: 1900,
     settings: {
       notifications: {
-        raid_alerts: true,
+        attack_alerts: true,
         production_ready: true,
         market_updates: false,
       },
@@ -115,5 +116,20 @@ describe('ProfilePanel', () => {
     expect(screen.getByText('До следующего уровня: 1 XP')).toBeTruthy()
     expect(screen.getByLabelText('Опыт: 199/200')).toBeTruthy()
     expect(screen.getByTitle('Уровень 1')).toBeTruthy()
+  })
+
+  it('keeps edited values and offers another save after an API error', async () => {
+    vi.mocked(updateMe).mockRejectedValueOnce(new Error('offline'))
+    render(<ProfilePanel />)
+    fireEvent.click(screen.getByLabelText('Открыть профиль игрока'))
+    fireEvent.click(screen.getByText('Настройки'))
+    fireEvent.change(screen.getByLabelText('Название города'), { target: { value: 'Несохранённый город' } })
+    act(() => useAuthStore.setState({ player: { ...testPlayer } as Player }))
+    expect(screen.getByDisplayValue('Несохранённый город')).toBeTruthy()
+    fireEvent.click(screen.getByText('Сохранить'))
+    expect((await screen.findByRole('alert')).textContent).toContain('Не удалось сохранить профиль')
+    expect(screen.getByDisplayValue('Несохранённый город')).toBeTruthy()
+    fireEvent.click(screen.getByText('Сохранить'))
+    await waitFor(() => expect(useAuthStore.getState().player?.profile.city_name).toBe('Несохранённый город'))
   })
 })

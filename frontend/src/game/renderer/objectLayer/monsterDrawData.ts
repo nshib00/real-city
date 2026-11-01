@@ -77,6 +77,7 @@ export function monsterDrawCommands(
     selectedMonsterId?: string | null
     previous?: ReadonlyMap<string, MonsterRenderMemory>
     nowMs?: number
+    reducedMotion?: boolean
   } = {},
 ): MonsterDrawCommand[] {
   const nowMs = options.nowMs ?? Date.now()
@@ -85,6 +86,7 @@ export function monsterDrawCommands(
       selectedMonsterId: options.selectedMonsterId ?? null,
       previous: options.previous?.get(monster.id),
       nowMs,
+      reducedMotion: options.reducedMotion,
     }))
     .sort((left, right) => left.sortKey - right.sortKey || left.id.localeCompare(right.id))
 }
@@ -121,6 +123,7 @@ export function monsterDrawCommand(
     selectedMonsterId: string | null
     previous?: MonsterRenderMemory
     nowMs: number
+    reducedMotion?: boolean
   },
 ): MonsterDrawCommand {
   const direction = monsterDirection(monster, options.previous)
@@ -135,7 +138,7 @@ export function monsterDrawCommand(
   const phaseOffsetMs = animation?.loop
     ? animationPhaseOffsetMs(`${monster.id}:${animationKey}`, (animation.frames ?? 1) * (1000 / animation.fps))
     : -(showHit ? hitStartedAtMs ?? options.nowMs : options.previous?.actionStartedAtMs ?? options.nowMs)
-  const frameIndex = animation
+  const frameIndex = animation && !options.reducedMotion
     ? animationFrameIndex({
       nowMs: options.nowMs,
       fps: animation.fps,
@@ -146,7 +149,7 @@ export function monsterDrawCommand(
     : 0
   const frameName = animation ? monsterFrameName(monster.type, animationKey, selection?.direction ?? direction, frameIndex, animation.framePrefix) : null
   const source = resolveMonsterAtlasSource(monster.type)
-  const displayTile = interpolatedMonsterTile(monster, options.previous, options.nowMs)
+  const displayTile = options.reducedMotion ? monster.tile : interpolatedMonsterTile(monster, options.previous, options.nowMs)
   const isColossus = monster.type === 'ancient_colossus'
   // During death the body falls to one side. Center those two poses so their
   // 82 px wide silhouette still stays inside the 240 px tile width.

@@ -19,6 +19,8 @@ export function shouldShowAssetDebugPanel(search = typeof window === 'undefined'
 }
 
 export function AssetDebugPanel() {
+  const [variants, setVariants] = useState<Record<string, { level: number; state: 'active' | 'construction' | 'damaged' | 'ruined' }>>({})
+  const [atlasGeneration, setAtlasGeneration] = useState(0)
   const [audioStatus, setAudioStatus] = useState(audioManager.diagnostics())
   useEffect(() => {
     const timer = window.setInterval(() => setAudioStatus(audioManager.diagnostics()), 1000)
@@ -26,6 +28,13 @@ export function AssetDebugPanel() {
   }, [])
   const rows = useMemo(() => registeredBuildingAssetFamilies().map((manifest) => {
     const previewBuilding = previewBuildingFor(manifest.kind)
+    const variant = variants[manifest.kind]
+    if (variant) {
+      previewBuilding.level = variant.level
+      previewBuilding.status = variant.state === 'construction' ? 'construction' : 'active'
+      previewBuilding.state = variant.state === 'construction' ? 'building' : variant.state
+      previewBuilding.health = variant.state === 'ruined' ? 0 : variant.state === 'damaged' ? 10 : 100
+    }
     const shape = manifest.shapeDefault ? 'straight_ew' : undefined
     const sprite = resolveBuildingSpriteAsset(previewBuilding, { shape })
     const model = resolveBuildingModelAsset(previewBuilding, { shape })
@@ -40,7 +49,7 @@ export function AssetDebugPanel() {
       hasModel ? null : 'missing glb lookup',
     ].filter(Boolean) as string[]
     return { manifest, previewBuilding, sprite, model, hasModel, atlasSource, selectedLevel, selectedState, errors }
-  }), [])
+  }), [variants])
   const [atlasResults, setAtlasResults] = useState<Record<string, ObjectAtlasLoadResult>>({})
   const [previewKey, setPreviewKey] = useState<string | null>(null)
 
@@ -65,7 +74,7 @@ export function AssetDebugPanel() {
     return () => {
       cancelled = true
     }
-  }, [rows])
+  }, [rows, atlasGeneration])
 
   return (
     <aside className="asset-debug-panel" aria-label="Asset debug">
@@ -77,6 +86,7 @@ export function AssetDebugPanel() {
       <header>
         <strong>Asset registry</strong>
         <span>{rows.length} families</span>
+        <button type="button" onClick={() => { void import('../../game/renderer/objectLayer/objectTextureCache').then(({ clearObjectAtlasCache }) => { clearObjectAtlasCache(); setAtlasResults({}); setAtlasGeneration((value) => value + 1) }) }}>Повторить проверку атласов</button>
       </header>
       <div className="asset-debug-list">
         {rows.map(({ manifest, previewBuilding, sprite, model, hasModel, atlasSource, selectedLevel, selectedState, errors }) => {
@@ -98,6 +108,9 @@ export function AssetDebugPanel() {
               <span>{manifest.kind} / {manifest.category}/{manifest.assetId}</span>
               <small>levels {rangeText(manifest.levels)} · states {manifest.states.join(', ')}</small>
               <small>preview l{selectedLevel} {selectedState}</small>
+              <label>Уровень {manifest.displayName}<select value={variants[manifest.kind]?.level ?? 1} onChange={(event) => setVariants((current) => ({ ...current, [manifest.kind]: { level: Number(event.target.value), state: current[manifest.kind]?.state ?? 'active' } }))}>{manifest.levels.map((level) => <option key={level} value={level}>{level}</option>)}</select></label>
+              <label>Состояние {manifest.displayName}<select value={variants[manifest.kind]?.state ?? 'active'} onChange={(event) => setVariants((current) => ({ ...current, [manifest.kind]: { level: current[manifest.kind]?.level ?? 1, state: event.target.value as 'active' | 'construction' | 'damaged' | 'ruined' } }))}><option value="active">Действующая</option><option value="construction">Строительство</option><option value="damaged">Повреждённая</option><option value="ruined">Разрушенная</option></select></label>
+              <small>Выше указан фактически выбранный runtime-вариант; он может использовать fallback.</small>
               <small>{atlasDebugText(atlasSource, atlasResults)}</small>
               <span className="asset-debug-actions">
                 {model ? <a href={model} target="_blank" rel="noreferrer">GLB</a> : null}

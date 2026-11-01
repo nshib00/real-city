@@ -1,34 +1,5 @@
-:root {
-  color-scheme: dark;
-  --color-bg: #14242a;
-  --color-panel: rgba(31, 47, 47, 0.9);
-  --color-panel-strong: rgba(41, 62, 56, 0.96);
-  --color-panel-soft: rgba(255, 255, 255, 0.085);
-  --color-panel-border: rgba(225, 239, 212, 0.22);
-  --color-text: #f9f4df;
-  --color-muted: #c0ccb9;
-  --color-accent: #78d088;
-  --color-accent-ink: #132618;
-  --color-warning: #f2bf55;
-  --color-danger: #ec6b6b;
-  --color-crystal: #b483f2;
-  --color-sky: #69c7d9;
-  --color-water: #67c7f0;
-  --color-grass: #83d96f;
-  --color-forest: #1f6f43;
-  --shadow-panel: 0 18px 44px rgba(10, 18, 18, 0.34);
-  --shadow-panel-soft: 0 8px 22px rgba(10, 18, 18, 0.22);
-  --top-bar-height: 58px;
-  --left-bar-width: 60px;
-  --right-panel-width: 300px;
-  --bottom-log-height: 112px;
-  --ui-radius: 8px;
-  --ui-radius-sm: 6px;
-  --font-ui: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-  font-family:
-    var(--font-ui);
-}
+@import "./tokens.css";
+@import "./components.css";
 
 * {
   box-sizing: border-box;
@@ -60,7 +31,8 @@ button {
   width: 100vw;
   height: 100vh;
   min-width: 320px;
-  overflow: hidden;
+  /* Скрытые drawer не должны прокручивать всю сцену при получении фокуса. */
+  overflow: clip;
 }
 
 .resource-bar,
@@ -208,6 +180,7 @@ button {
 
 .resource-weapon-group {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 8px;
   padding-left: 10px;
@@ -462,13 +435,7 @@ button {
   height: 42px;
 }
 
-.audio-settings section {
-  position: absolute;
-  left: 50px;
-  top: -8px;
-  width: min(320px, calc(100vw - 80px));
-  max-height: min(640px, calc(100vh - 100px));
-  overflow: auto;
+.audio-settings-panel {
   padding: 12px;
   display: grid;
   gap: 12px;
@@ -479,16 +446,16 @@ button {
   box-shadow: var(--shadow-panel);
 }
 
-.audio-settings section > div {
+.audio-settings-panel > div {
   display: grid;
   gap: 4px;
 }
 
-.audio-settings section > div > button {
+.audio-settings-panel > div > button {
   justify-self: start;
 }
 
-.audio-settings section > label {
+.audio-settings-panel > label {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1014,7 +981,6 @@ button {
   background: #70c772;
 }
 
-.build-icon-warehouse,
 .build-icon-coin_storage,
 .build-icon-alliance_house {
   background: #b9c0be;
@@ -1907,12 +1873,6 @@ button {
 .modular-path-sprite-image {
   width: 256px;
   height: 256px;
-}
-
-.map-building-warehouse {
-  width: 66px;
-  background: linear-gradient(#c9dde2 0 20%, #8a6748 20% 72%, #5e4536 72%);
-  border-radius: 6px;
 }
 
 .map-building-coin_storage {

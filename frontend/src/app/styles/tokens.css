@@ -1,0 +1,159 @@
+:root {
+  /* Primitive: значения материалов, без назначения компонентам. */
+  --ref-night-950: #14242a;
+  --ref-night-800: #293e38;
+  --ref-night-panel: rgba(31, 47, 47, .9);
+  --ref-night-raised: rgba(41, 62, 56, .96);
+  --ref-glass-soft: rgba(255, 255, 255, .085);
+  --ref-glass-border: rgba(225, 239, 212, .22);
+  --ref-cream-50: #f9f4df;
+  --ref-sage-200: #c0ccb9;
+  --ref-sage-400: #819783;
+  --ref-sage-500: #526052;
+  --ref-green-300: #78d088;
+  --ref-green-950: #132618;
+  --ref-gold-300: #f2bf55;
+  --ref-coral-300: #ff9393;
+  --ref-blue-300: #69c7d9;
+  --ref-parchment-200: #f2e6c8;
+  --ref-paper-50: #fff8e8;
+  --ref-stone-300: #e4d9bd;
+  --ref-ink-900: #20332f;
+  --ref-ink-text: #20302b;
+  --ref-forest-700: #286447;
+  --ref-forest-800: #205239;
+  --ref-forest-900: #183e2b;
+  --ref-brass-500: #c89b51;
+  --ref-amethyst-700: #684a91;
+  --ref-red-700: #a83236;
+  --ref-red-100: #fce8e3;
+  --ref-ochre-800: #765000;
+  --ref-ochre-100: #fff0c2;
+  --ref-blue-700: #225f79;
+  --ref-blue-100: #e4f1f5;
+
+  /* Semantic: роль поверхности/текста/состояния, классическая тема. */
+  --surface-canvas: var(--ref-night-950);
+  --surface-panel: var(--ref-night-panel);
+  --surface-raised: var(--ref-night-raised);
+  --surface-muted: var(--ref-glass-soft);
+  --surface-hover: #3b574b;
+  --surface-pressed: #254536;
+  --surface-selected: #35584a;
+  --surface-disabled: var(--ref-night-800);
+  --surface-error: #43272b;
+  --text-primary: var(--ref-cream-50);
+  --text-secondary: var(--ref-sage-200);
+  --text-disabled: var(--ref-sage-200);
+  --text-selected: var(--ref-cream-50);
+  --border-subtle: var(--ref-glass-border);
+  --border-interactive: var(--ref-sage-200);
+  --action-primary: var(--ref-green-300);
+  --action-primary-ink: var(--ref-green-950);
+  --action-primary-hover: #91dfa0;
+  --action-primary-pressed: #65bc76;
+  --state-warning: var(--ref-gold-300);
+  --state-danger: var(--ref-coral-300);
+  --state-info: var(--ref-blue-300);
+  --state-success: var(--ref-green-300);
+  --focus-inner: var(--ref-gold-300);
+  --focus-outer: var(--ref-night-950);
+
+  color-scheme: dark;
+  /* Совместимые имена для существующих потребителей. */
+  --color-bg: var(--surface-canvas);
+  --color-panel: var(--surface-panel);
+  --color-panel-strong: var(--surface-raised);
+  --color-panel-soft: var(--surface-muted);
+  --color-panel-border: var(--border-subtle);
+  --color-text: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-accent: var(--action-primary);
+  --color-accent-ink: var(--action-primary-ink);
+  --color-warning: var(--state-warning);
+  --color-danger: var(--state-danger);
+  --color-crystal: #b483f2;
+  --color-sky: #69c7d9;
+  --color-water: #67c7f0;
+  --color-grass: #83d96f;
+  --color-forest: #1f6f43;
+  --shadow-panel: 0 18px 44px rgba(10, 18, 18, 0.34);
+  --shadow-panel-soft: 0 8px 22px rgba(10, 18, 18, 0.22);
+  --top-bar-height: 58px;
+  --left-bar-width: 60px;
+  --right-panel-width: 300px;
+  --bottom-log-height: 112px;
+  --ui-radius: 8px;
+  --ui-radius-sm: 6px;
+  --font-ui: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-family:
+    var(--font-ui);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --line-body: 1.5;
+  --line-heading: 1.25;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --target-size: 44px;
+  --layer-hud: 10;
+  --layer-dialog: 100;
+  --layer-tooltip: 40;
+  --motion-fast: 120ms;
+  --motion-panel: 160ms;
+  --color-focus: var(--focus-inner);
+  --color-disabled: var(--text-disabled);
+  --color-success: var(--state-success);
+  --color-selected: var(--state-info);
+  --material-wood: #293e38;
+  --material-brass: #b99a5c;
+
+  /* Component: явные пары для каждого состояния, SVG наследует foreground. */
+  --control-default-bg: var(--surface-raised);
+  --control-default-fg: var(--text-primary);
+  --control-default-border: var(--border-interactive);
+  --control-default-icon: var(--text-primary);
+  --control-hover-bg: var(--surface-hover);
+  --control-hover-fg: var(--text-primary);
+  --control-hover-border: var(--border-interactive);
+  --control-pressed-bg: var(--surface-pressed);
+  --control-pressed-fg: var(--text-primary);
+  --control-pressed-border: var(--focus-inner);
+  --control-disabled-bg: var(--surface-disabled);
+  --control-disabled-fg: var(--text-disabled);
+  --control-disabled-border: var(--border-interactive);
+  --control-loading-bg: var(--surface-raised);
+  --control-loading-fg: var(--text-primary);
+  --control-loading-border: var(--border-interactive);
+  --control-error-bg: var(--surface-error);
+  --control-error-fg: var(--state-danger);
+  --control-error-border: var(--state-danger);
+  --control-selected-bg: var(--surface-selected);
+  --control-selected-fg: var(--text-selected);
+  --control-selected-border: var(--state-info);
+  --control-focus-inner: var(--focus-inner);
+  --control-focus-outer: var(--focus-outer);
+  --control-hover-icon: var(--control-hover-fg);
+  --control-pressed-icon: var(--control-pressed-fg);
+  --control-disabled-icon: var(--control-disabled-fg);
+  --control-loading-icon: var(--control-loading-fg);
+  --control-error-icon: var(--control-error-fg);
+  --control-selected-icon: var(--control-selected-fg);
+  --control-default-focus: var(--focus-inner);
+  --control-hover-focus: var(--focus-inner);
+  --control-pressed-focus: var(--focus-inner);
+  --control-disabled-focus: var(--focus-inner);
+  --control-loading-focus: var(--focus-inner);
+  --control-error-focus: var(--focus-inner);
+  --control-selected-focus: var(--focus-inner);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-fast: 0ms; --motion-panel: 0ms; }
+}
