@@ -108,11 +108,30 @@ test('карта, панели, масштаб текста, эффекты и �
 })
 
 test('вход: шрифт, ошибка и сохранение введённых данных', async ({ page }, info) => {
-  test.skip(!/^(390|1440)-dpr[12]$/.test(info.project.name), 'Оба DPR на desktop и mobile.')
+  test.skip(!/^(320|390|1440)-dpr1$/.test(info.project.name), 'Проверка стартовой сцены на 320, 390 и 1440 px.')
+  if (page.viewportSize()!.width === 320) await page.setViewportSize({ width: 320, height: 700 })
+  else if (page.viewportSize()!.width === 390) await page.setViewportSize({ width: 390, height: 844 })
   await page.addInitScript(theme => localStorage.setItem('real-city.interface-theme', theme), process.env.REAL_CITY_REVIEW_THEME ?? 'classic')
+  await page.route('**/ready', route => route.fulfill({ json: { status: 'ready' } }))
   await page.route('**/api/v1/auth/login', route => route.fulfill({ status: 401, json: { error: { kind: 'unauthorized', message: 'Проверьте почту и пароль.' } } }))
   await page.goto('/')
   await expect(page.getByRole('heading', { name: 'Эолия', exact: true })).toBeVisible()
+  const scene = page.locator('.start-scene img')
+  const emblem = page.locator('.start-brand img')
+  await expect(scene).toBeVisible()
+  await expect(emblem).toBeVisible()
+  await expect(page.getByRole('status')).toHaveText('Мир доступен')
+  expect(await scene.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+  expect(await emblem.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBe(256)
+  const sceneBox = await scene.boundingBox()
+  expect(sceneBox).not.toBeNull()
+  expect(sceneBox!.y).toBeGreaterThanOrEqual(0)
+  expect(sceneBox!.y + sceneBox!.height).toBeLessThanOrEqual(page.viewportSize()!.height)
+  await page.screenshot({ path: info.outputPath('start-page.png') })
+  await expect(page.locator('.start-screen')).toHaveScreenshot('start-screen.png', { animations: 'disabled' })
+  await expect(page.locator('link[rel="icon"][href="/favicon.ico"]')).toHaveCount(1)
+  const favicon = await page.request.get(new URL('/favicon.ico', page.url()).toString())
+  expect(favicon.ok()).toBe(true)
   await page.getByLabel('Email', { exact: true }).fill('review@example.invalid')
   await page.getByLabel('Пароль', { exact: true }).fill('review-password')
   await page.getByRole('button', { name: 'Войти', exact: true }).click()
@@ -122,6 +141,15 @@ test('вход: шрифт, ошибка и сохранение введённ�
   expect(await page.getByLabel('Аккаунт', { exact: true }).evaluate(node => getComputedStyle(node).fontFamily)).toContain('Trebuchet MS')
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width)
   await page.screenshot({ path: info.outputPath('auth-error.png') })
+  if (page.viewportSize()!.width === 390) {
+    const password = page.getByLabel('Пароль', { exact: true })
+    await password.focus()
+    await page.setViewportSize({ width: 390, height: 500 })
+    await expect(password).toBeFocused()
+    const box = await password.boundingBox()
+    expect(box).not.toBeNull()
+    expect(box!.y + box!.height).toBeLessThanOrEqual(500)
+  }
   const audit = await auditVisibleText(page)
   writeFileSync(info.outputPath('auth-contrast.json'), JSON.stringify(audit, null, 2))
   expect(audit.rows.filter(row => row.ratio < row.required)).toEqual([])
@@ -207,4 +235,127 @@ test('цветовые симуляции над миром и читаемые 
     await expect(page.getByRole('button', { name: 'Строить', exact: true })).toHaveAccessibleName('Строить')
   }
   expect(errors).toEqual([])
+})
+
+test('доступные имена, возврат фокуса и восстановление карты после перезагрузки', async ({ page }) => {
+  const { errors, unknown } = await mockInterfaceWorld(page)
+  await page.goto('/')
+  await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
+
+  const unnamedControls = await page.locator('button:visible, input:visible, select:visible, textarea:visible').evaluateAll(nodes =>
+    nodes.flatMap(node => {
+      const element = node as HTMLButtonElement
+      const name = [element.getAttribute('aria-label'), element.getAttribute('title'), element.getAttribute('alt'), element.labels ? [...element.labels].map(label => label.textContent).join(' ') : '', element.textContent]
+        .filter(Boolean).join(' ').replace(/\s+/g, ' ').trim()
+      return name ? [] : [`${element.tagName.toLowerCase()}.${element.className}`]
+    }),
+  )
+  expect(unnamedControls).toEqual([])
+
+  await page.locator('#game-tools').focus()
+  await page.getByRole('button', { name: 'Строить', exact: true }).click()
+  const menu = page.getByLabel('Меню строительства', { exact: true })
+  await expect(menu).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(page.getByRole('button', { name: 'Строить', exact: true })).toBeFocused()
+
+  await page.getByLabel('Открыть профиль игрока', { exact: true }).click()
+  const profile = page.getByRole('dialog', { name: 'Профиль', exact: true })
+  await expect(profile).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(page.getByLabel('Открыть профиль игрока', { exact: true })).toBeFocused()
+
+  await page.reload()
+  await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
+  await expect(page.locator('.pixi-stage canvas')).toBeVisible()
+  expect(errors).toEqual([])
+  expect(unknown).toEqual([])
+})
+
+test('профиль карты: загрузка, кадры, реакция на действие и перекрытие UI', async ({ page }, info) => {
+  test.skip(info.project.name !== '1440-dpr1', 'Воспроизводимый профиль снимается на desktop 1440×900; мобильное устройство требует отдельного физического прогона.')
+  const { errors, unknown } = await mockInterfaceWorld(page)
+  const uiResponses: { url: string; bytes: number }[] = []
+  page.on('response', async response => {
+    const type = response.request().resourceType()
+    if (!['stylesheet', 'font', 'image'].includes(type)) return
+    try { uiResponses.push({ url: new URL(response.url()).pathname, bytes: (await response.body()).byteLength }) } catch {}
+  })
+  const startedAt = Date.now()
+  await page.goto('/?perf=mixed&perfBuildings=100&perfMonsters=30&perfResources=50&perfTileRadius=16')
+  await expect(page.locator('.pixi-stage canvas')).toBeVisible()
+  await expect(page.locator('.map-performance-hud')).toContainText('mixed')
+  const readyMs = Date.now() - startedAt
+  const frameProfile = await page.evaluate(async () => {
+    const frames: number[] = []
+    let previous = performance.now()
+    const endAt = previous + 5000
+    await new Promise<void>(resolve => {
+      const tick = (now: number) => {
+        frames.push(now - previous)
+        previous = now
+        if (now >= endAt) resolve()
+        else requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    })
+    const sorted = [...frames].sort((a, b) => a - b)
+    const percentile = (p: number) => sorted[Math.min(sorted.length - 1, Math.floor((sorted.length - 1) * p))] ?? 0
+    return { count: frames.length, fps: frames.length / 5, p50Ms: percentile(.5), p95Ms: percentile(.95) }
+  })
+  const coverage = await page.evaluate(() => {
+    const map = document.querySelector<HTMLElement>('#game-map')!
+    const bounds = map.getBoundingClientRect()
+    const selector = '.resource-bar, #game-tools, #game-inspector, .event-log, .notification-stack, .map-navigation, .world-status, .placement-status, .first-city-help'
+    const rects = [...document.querySelectorAll<HTMLElement>(selector)].filter(node => {
+      const style = getComputedStyle(node), rect = node.getBoundingClientRect()
+      return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0
+    }).map(node => {
+      const rect = node.getBoundingClientRect()
+      return { x1: Math.max(bounds.left, rect.left), y1: Math.max(bounds.top, rect.top), x2: Math.min(bounds.right, rect.right), y2: Math.min(bounds.bottom, rect.bottom) }
+    }).filter(rect => rect.x2 > rect.x1 && rect.y2 > rect.y1)
+    const xs = [...new Set([bounds.left, bounds.right, ...rects.flatMap(rect => [rect.x1, rect.x2])])].sort((a, b) => a - b)
+    let covered = 0
+    for (let i = 0; i + 1 < xs.length; i++) {
+      const left = xs[i], right = xs[i + 1], intervals = rects.filter(rect => rect.x1 < right && rect.x2 > left).map(rect => [rect.y1, rect.y2] as const).sort((a, b) => a[0] - b[0])
+      let start = -1, end = -1, height = 0
+      for (const [top, bottom] of intervals) {
+        if (top > end) { height += Math.max(0, end - start); start = top; end = bottom }
+        else end = Math.max(end, bottom)
+      }
+      height += Math.max(0, end - start)
+      covered += (right - left) * height
+    }
+    return { mapAreaPx: bounds.width * bounds.height, coveredAreaPx: covered, coveredPercent: bounds.width * bounds.height ? covered / (bounds.width * bounds.height) * 100 : 0 }
+  })
+  const zoomButton = page.getByRole('button', { name: 'Увеличить карту', exact: true })
+  const mapOrigin = page.locator('.map-origin')
+  const beforeAction = await mapOrigin.getAttribute('style')
+  await page.evaluate(() => {
+    const target = document.querySelector<HTMLElement>('.map-origin')!
+    const started = performance.now()
+    const observer = new MutationObserver(() => {
+      ;(window as Window & { __mapActionLatency?: number }).__mapActionLatency = performance.now() - started
+      observer.disconnect()
+    })
+    observer.observe(target, { attributes: true, attributeFilter: ['style'] })
+  })
+  await zoomButton.click()
+  await expect.poll(() => mapOrigin.getAttribute('style')).not.toBe(beforeAction)
+  const actionMs = await page.evaluate(() => (window as Window & { __mapActionLatency?: number }).__mapActionLatency ?? null)
+  const report = {
+    environment: { viewport: page.viewportSize(), browser: info.project.name, syntheticScenario: 'mixed 100 buildings / 50 resources / 30 monsters / radius 16' },
+    readyMs,
+    cssUiImageBytes: uiResponses.reduce((sum, entry) => sum + entry.bytes, 0),
+    cssUiImageRequests: uiResponses.length,
+    frameProfile,
+    actionResponseMs: actionMs,
+    mapCoverage: coverage,
+  }
+  console.log(`browser-performance-profile ${JSON.stringify(report)}`)
+  await info.attach('browser-performance-profile.json', { body: JSON.stringify(report, null, 2), contentType: 'application/json' })
+  expect(actionMs).not.toBeNull()
+  expect(coverage.coveredPercent).toBeLessThan(100)
+  expect(errors).toEqual([])
+  expect(unknown).toEqual([])
 })

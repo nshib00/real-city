@@ -19,6 +19,9 @@ jobs:
         working-directory: frontend
       - run: npx playwright test --config tests/e2e/playwright.config.ts
         working-directory: frontend
+      - name: Pixel snapshots for the theme rollback path
+        run: npx playwright test --config playwright.rollout.config.ts --project=390-portrait --project=1440-portrait
+        working-directory: frontend
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -26,6 +29,7 @@ jobs:
           path: |
             frontend/test-results
             frontend/playwright-report
+            frontend/rollout-results
   live:
     runs-on: ubuntu-latest
     timeout-minutes: 30

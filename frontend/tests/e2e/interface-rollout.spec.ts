@@ -3,6 +3,10 @@ import { mockInterfaceWorld } from './ui-fixture'
 
 test('смена темы сохраняет карту, выбор и черновик чата', async ({ page }, info) => {
   const { errors } = await mockInterfaceWorld(page)
+  const mutations: string[] = []
+  page.on('request', request => {
+    if (request.method() !== 'GET' && !request.url().includes('/players/me/presence')) mutations.push(`${request.method()} ${new URL(request.url()).pathname}`)
+  })
   await page.goto('/?perf=mixed&perfBuildings=24&perfMonsters=4&perfResources=8&perfTileRadius=12')
   const canvas = page.locator('.pixi-stage canvas')
   await expect(canvas).toBeVisible()
@@ -24,9 +28,11 @@ test('смена темы сохраняет карту, выбор и черн�
     await expect(page.locator('#game-inspector h2')).toHaveText(selected ?? '')
     await expect(page.getByLabel('Сообщение в чат', { exact: true })).toHaveValue('Черновик без отправки')
     await page.screenshot({ path: info.outputPath(`${theme}.png`), animations: 'disabled' })
+    await expect(page).toHaveScreenshot(`rollout-${theme}.png`, { animations: 'disabled', caret: 'hide' })
   }
   await page.getByRole('button', { name: 'Свернуть чат и события', exact: true }).click()
   await page.getByRole('button', { name: 'Развернуть чат и события', exact: true }).click()
   await expect(page.getByLabel('Сообщение в чат', { exact: true })).toHaveValue('Черновик без отправки')
   expect(errors).toEqual([])
+  expect(mutations).toEqual([])
 })
