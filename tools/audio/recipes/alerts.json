@@ -46,51 +46,6 @@
         }
       }
     },
-    "raid": {
-      "variants": [
-        {
-          "pitch": 0.96,
-          "texture": 0.94
-        },
-        {
-          "pitch": 1.04,
-          "texture": 1.07
-        }
-      ],
-      "candidates": {
-        "a": {
-          "duration": 0.58,
-          "layers": [
-            {
-              "wave": "noise",
-              "frequency": 230,
-              "gain": 0.55,
-              "duration": 0.4,
-              "adsr": [
-                0.003,
-                0.045,
-                0.26,
-                0.18
-              ],
-              "lowpass": 0.04
-            },
-            {
-              "wave": "sine",
-              "frequency": 130,
-              "gain": 0.3,
-              "duration": 0.49,
-              "adsr": [
-                0.003,
-                0.045,
-                0.26,
-                0.18
-              ],
-              "sweep": -170
-            }
-          ]
-        }
-      }
-    },
     "victory": {
       "variants": [
         {
@@ -187,11 +142,6 @@
       "sound_id": "combat.threat.nearby",
       "profile": "nearby",
       "seed": 6301
-    },
-    {
-      "sound_id": "combat.raid.started",
-      "profile": "raid",
-      "seed": 6302
     },
     {
       "sound_id": "combat.victory",

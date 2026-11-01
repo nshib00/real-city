@@ -79,7 +79,6 @@
 | `combat.monster.step` | `/assets/audio/combat/combat.monster.step.0.mp3?v=ce3006eed8a0` | Подтверждение атаки API или событие WS | `world` | `low` |
 | `combat.player.attack` | `/assets/audio/combat/combat.player.attack.0.mp3?v=9619ed70b042` | Подтверждение атаки API или событие WS | `world` | `high` |
 | `combat.player.hit` | `/assets/audio/combat/combat.player.hit.0.mp3?v=9b9e53bd54df` | Подтверждение атаки API или событие WS | `world` | `high` |
-| `combat.raid.started` | `/assets/audio/combat/combat.raid.started.0.mp3?v=baad077a0923` | Подтверждение атаки API или событие WS | `alerts` | `critical` |
 | `combat.retreat` | `/assets/audio/combat/combat.retreat.0.mp3?v=71115d5e4dc4` | Подтверждение атаки API или событие WS | `world` | `high` |
 | `combat.threat.nearby` | `/assets/audio/combat/combat.threat.nearby.0.mp3?v=1900394e2f51` | Подтверждение атаки API или событие WS | `alerts` | `critical` |
 | `combat.victory` | `/assets/audio/combat/combat.victory.0.mp3?v=b41024f0373f` | Подтверждение атаки API или событие WS | `world` | `high` |

@@ -79,7 +79,7 @@ def pool_for(sound_id: str) -> str:
         if 'step' in sound_id: return 'step'
         if any(x in sound_id for x in ('aggro', 'idle', 'retreat')): return 'breath'
         if any(x in sound_id for x in ('storm_coil', 'ember_wisp')): return 'glass'
-        if any(x in sound_id for x in ('cannon', 'colossus', 'brute', 'heavy', 'raid')): return 'heavy'
+        if any(x in sound_id for x in ('cannon', 'colossus', 'brute', 'heavy', 'building_attack')): return 'heavy'
         if any(x in sound_id for x in ('wood', 'stakes', 'bolt_thrower')): return 'wood'
         if any(x in sound_id for x in ('stone', 'guardian', 'tower', 'automaton')): return 'metal'
         if any(x in sound_id for x in ('loot', 'victory')): return 'coin'

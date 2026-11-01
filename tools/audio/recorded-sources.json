@@ -283,10 +283,6 @@
     ".cache/audio-sources/extracted/owlish/Impacts/djembe3.wav",
     ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav"
   ],
-  "combat.raid.started": [
-    ".cache/audio-sources/extracted/workshop/workshop/workshop - thuds.wav",
-    ".cache/audio-sources/extracted/workshop/workshop/workshop - wood on wood thuds.wav"
-  ],
   "combat.retreat": [
     ".cache/audio-sources/extracted/owlish/Human/breath-female.wav",
     ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav"
