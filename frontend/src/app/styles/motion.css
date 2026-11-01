@@ -1,6 +1,6 @@
 /* Непрозрачная поверхность даёт предсказуемый контраст над любой картой. */
 .ui-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
-.game-shell .action-feedback { position: absolute; z-index: 21; top: auto; left: auto; right: var(--safe-bottom); bottom: var(--safe-bottom); transform: none; width: min(240px, calc(100vw - 24px)); max-height: 22dvh; overflow-y: auto; padding: 6px; color: var(--text-primary); background: var(--surface-raised); border: 1px solid var(--border-interactive); border-radius: 6px; font-size: .75rem; }
+.game-shell .action-feedback { position: absolute; z-index: 21; top: auto; left: auto; right: 328px; bottom: var(--safe-bottom); transform: none; width: min(240px, calc(100vw - 24px)); max-height: 22dvh; overflow-y: auto; padding: 6px; color: var(--text-primary); background: var(--surface-raised); border: 1px solid var(--border-interactive); border-radius: 6px; font-size: .75rem; }
 .action-feedback button { color: inherit; background: var(--surface-canvas); border: 1px solid var(--border-interactive); font: inherit; }
 .action-state { padding: 6px; border-inline-start: 3px solid var(--state-info); animation: action-feedback-in 160ms ease-out; }
 .action-state strong, .action-state span { display: block; }
@@ -10,7 +10,8 @@
 .game-shell button:active:not(:disabled) { outline: 2px solid var(--color-focus); outline-offset: -3px; }
 .game-shell button[aria-busy='true'] { border-style: dashed; }
 @keyframes action-feedback-in { from { opacity: .4; } to { opacity: 1; } }
-@media (max-width: 760px), (max-height: 500px) and (max-width: 1000px) { .game-shell .action-feedback { bottom: calc(var(--safe-bottom) + 100px); max-height: 24dvh; } }
+@media (max-width: 1100px) { .game-shell .action-feedback { right: 304px; } }
+@media (max-width: 760px), (max-height: 500px) and (max-width: 1000px) { .game-shell .action-feedback { top: 224px; left: 12px; right: auto; bottom: auto; width: min(150px, calc(50vw - 18px)); max-height: 20dvh; } }
 @media (prefers-reduced-motion: reduce) {
   .game-shell *, .game-shell *::before, .game-shell *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

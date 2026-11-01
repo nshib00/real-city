@@ -273,7 +273,7 @@ test('доступные имена, возврат фокуса и восста
 })
 
 test('профиль карты: загрузка, кадры, реакция на действие и перекрытие UI', async ({ page }, info) => {
-  test.skip(info.project.name !== '1440-dpr1', 'Воспроизводимый профиль снимается на desktop 1440×900; мобильное устройство требует отдельного физического прогона.')
+  test.skip(!['390-dpr1', '1440-dpr1'].includes(info.project.name), 'Профиль снимается в desktop и mobile viewport на Chromium; мобильная эмуляция не заменяет физическое устройство.')
   const { errors, unknown } = await mockInterfaceWorld(page)
   const uiResponses: { url: string; bytes: number }[] = []
   page.on('response', async response => {
@@ -344,7 +344,7 @@ test('профиль карты: загрузка, кадры, реакция н
   await expect.poll(() => mapOrigin.getAttribute('style')).not.toBe(beforeAction)
   const actionMs = await page.evaluate(() => (window as Window & { __mapActionLatency?: number }).__mapActionLatency ?? null)
   const report = {
-    environment: { viewport: page.viewportSize(), browser: info.project.name, syntheticScenario: 'mixed 100 buildings / 50 resources / 30 monsters / radius 16' },
+    environment: { viewport: page.viewportSize(), browser: info.project.name, device: 'Chromium desktop; mobile viewport is emulated', syntheticScenario: 'mixed 100 buildings / 50 resources / 30 monsters / radius 16' },
     readyMs,
     cssUiImageBytes: uiResponses.reduce((sum, entry) => sum + entry.bytes, 0),
     cssUiImageRequests: uiResponses.length,

@@ -1,9 +1,18 @@
 import { act, fireEvent, render, screen, cleanup } from '@testing-library/react'
 import { afterEach, expect, it } from 'vitest'
 import { useState } from 'react'
-import { interfaceColors, overlayColors, setInterfaceTheme, useApplyInterfaceTheme, useInterfaceTheme } from './theme'
+import { configuredDefaultTheme, interfaceColors, overlayColors, resolveInterfaceTheme, setInterfaceTheme, useApplyInterfaceTheme, useInterfaceTheme } from './theme'
 
 afterEach(() => { cleanup(); setInterfaceTheme('classic'); localStorage.clear() })
+it('принимает только известные значения rollout-темы и сохраняет classic по умолчанию', () => {
+  expect(configuredDefaultTheme('aeolian')).toBe('aeolian')
+  expect(configuredDefaultTheme('classic')).toBe('classic')
+  expect(configuredDefaultTheme('unexpected')).toBe('classic')
+  expect(configuredDefaultTheme(undefined)).toBe('classic')
+  expect(resolveInterfaceTheme(null, 'aeolian')).toBe('aeolian')
+  expect(resolveInterfaceTheme('classic', 'aeolian')).toBe('classic')
+  expect(resolveInterfaceTheme('invalid', 'aeolian')).toBe('aeolian')
+})
 it('переключает оформление и откатывает его без потери формы и выбора', () => {
   function Surface() {
     useApplyInterfaceTheme()

@@ -14,6 +14,21 @@ test('real login, shared map, construction, harvest and WebSocket deltas', async
  await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
  await expect(page.locator('.pixi-stage canvas')).toBeVisible()
  await expect.poll(() => frames.some(f => f.type === 'ack' && f.payload?.command === 'subscribe')).toBe(true)
+ const canvas = page.locator('.pixi-stage canvas')
+ await canvas.evaluate(node => node.setAttribute('data-live-rollout-probe', 'retained'))
+ const mutationsDuringThemeSwitch: string[] = []
+ page.on('request', request => {
+  if (request.method() !== 'GET' && !request.url().includes('/players/me/presence')) mutationsDuringThemeSwitch.push(request.method())
+ })
+ const settings = page.locator('.interface-settings')
+ if (!await settings.getAttribute('open').then(value => value !== null)) await settings.locator('summary').click()
+ for (const theme of ['aeolian', 'classic']) {
+  await page.getByRole('combobox', { name: 'Оформление', exact: true }).selectOption(theme)
+  await expect(page.locator('html')).toHaveAttribute('data-interface-theme', theme)
+  await expect(canvas).toHaveAttribute('data-live-rollout-probe', 'retained')
+  await expect.poll(() => frames.some(f => f.type === 'ack' && f.payload?.command === 'subscribe')).toBe(true)
+ }
+ expect(mutationsDuringThemeSwitch).toEqual([])
  const token = await page.evaluate(() => localStorage.getItem('real-city.access-token'))
  const headers = { Authorization: `Bearer ${token}` }
  const snapshot = await (await request.get('/api/v1/world/chunks?x=0&y=0&radius=1', { headers })).json()

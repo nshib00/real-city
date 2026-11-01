@@ -6,8 +6,17 @@ export const overlayColors = Object.fromEntries(Object.entries(interfaceColors).
 export type InterfaceTheme = 'classic' | 'aeolian'
 const key = 'real-city.interface-theme'
 const listeners = new Set<() => void>()
+export function configuredDefaultTheme(value = import.meta.env.VITE_INTERFACE_THEME_DEFAULT): InterfaceTheme {
+  return value === 'aeolian' ? 'aeolian' : 'classic'
+}
+const defaultTheme = configuredDefaultTheme()
+export function resolveInterfaceTheme(saved: string | null, fallback = defaultTheme): InterfaceTheme {
+  return saved === 'aeolian' || saved === 'classic' ? saved : fallback
+}
 function readTheme(): InterfaceTheme {
-  try { return localStorage.getItem(key) === 'aeolian' ? 'aeolian' : 'classic' } catch { return 'classic' }
+  try {
+    return resolveInterfaceTheme(localStorage.getItem(key))
+  } catch { return defaultTheme }
 }
 let theme = readTheme()
 export function setInterfaceTheme(value: InterfaceTheme) {
