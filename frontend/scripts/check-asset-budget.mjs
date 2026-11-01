@@ -1,11 +1,14 @@
-import { readFile, readdir, stat } from 'node:fs/promises'
+import { access, readFile, readdir, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isRuntimeAsset } from './runtime-assets.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const assetsDir = path.join(root, 'public', 'assets')
-const maxTotalBytes = Number(process.env.ASSET_BUDGET_TOTAL_MB ?? 1200) * 1024 * 1024
+const maxTotalBytes = Number(process.env.ASSET_BUDGET_TOTAL_MB ?? 900) * 1024 * 1024
 const maxFileBytes = Number(process.env.ASSET_BUDGET_FILE_MB ?? 25) * 1024 * 1024
+const maxGlbBytes = Number(process.env.ASSET_BUDGET_GLB_MB ?? 450) * 1024 * 1024
+const maxPngBytes = Number(process.env.ASSET_BUDGET_PNG_MB ?? 420) * 1024 * 1024
 const audioDir = path.join(assetsDir, 'audio')
 const audioFamilies = new Set(['ui', 'economy', 'build', 'world', 'combat', 'social', 'ambience', 'music'])
 const audioFamilyLimit = 150 * 1024
@@ -14,17 +17,32 @@ const audioPreloadLimit = 300 * 1024
 
 const files = (await walk(assetsDir)).filter((file) => isRuntimeAsset(path.relative(assetsDir, file.path)))
 const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
+const glbBytes = files.filter((file) => file.path.endsWith('.glb')).reduce((sum, file) => sum + file.size, 0)
+const pngBytes = files.filter((file) => file.path.endsWith('.png')).reduce((sum, file) => sum + file.size, 0)
 const oversized = files.filter((file) => file.size > maxFileBytes).sort((left, right) => right.size - left.size)
 
-if (totalBytes > maxTotalBytes || oversized.length > 0) {
+if (totalBytes > maxTotalBytes || glbBytes > maxGlbBytes || pngBytes > maxPngBytes || oversized.length > 0) {
   console.error(`Runtime asset budget exceeded: ${formatBytes(totalBytes)} / ${formatBytes(maxTotalBytes)}.`)
+  console.error(`GLB: ${formatBytes(glbBytes)} / ${formatBytes(maxGlbBytes)}; PNG: ${formatBytes(pngBytes)} / ${formatBytes(maxPngBytes)}.`)
   for (const file of oversized.slice(0, 20)) {
     console.error(`Oversized asset: ${path.relative(root, file.path)} (${formatBytes(file.size)} / ${formatBytes(maxFileBytes)})`)
   }
   process.exit(1)
 }
 
-console.log(`Runtime asset budget ok: ${formatBytes(totalBytes)} across ${files.length} files.`)
+console.log(`Runtime asset budget ok: ${formatBytes(totalBytes)} across ${files.length} files; GLB ${formatBytes(glbBytes)}, PNG ${formatBytes(pngBytes)}.`)
+
+const resourceIconsDir = path.join(assetsDir, 'resources', 'icons')
+const resourceIconManifest = JSON.parse(await readFile(path.join(resourceIconsDir, 'manifest.json'), 'utf8'))
+for (const resource of resourceIconManifest.resources) {
+  const runtimeIcon = path.join(resourceIconsDir, 'runtime', resource.file.replace(/\.png$/, '.webp'))
+  try {
+    await access(runtimeIcon)
+  } catch {
+    console.error(`Missing runtime resource icon: ${path.relative(root, runtimeIcon)}`)
+    process.exit(1)
+  }
+}
 
 const audioFiles = (await walk(audioDir)).filter((file) => /\.(mp3|m4a|ogg|opus|wav)$/i.test(file.path))
 const audioByPath = new Map(audioFiles.map((file) => [path.relative(audioDir, file.path).split(path.sep).join('/'), file]))
@@ -95,26 +113,4 @@ function formatBytes(bytes) {
     return `${(bytes / 1024 / 1024).toFixed(1)} MB`
   }
   return `${(bytes / 1024).toFixed(1)} KB`
-}
-
-function isRuntimeAsset(relativePath) {
-  const normalized = relativePath.split(path.sep).join('/')
-  if (normalized.split('/').some((segment) => segment === 'preview' || segment.startsWith('backup_') || segment.endsWith('_test'))) {
-    return false
-  }
-  const fileName = path.basename(normalized).toLowerCase()
-  if (normalized.includes('.backup-')) {
-    return false
-  }
-  if (fileName.endsWith('.blend') || fileName.endsWith('.blend1')) {
-    return false
-  }
-  if (fileName.endsWith('.glb') && !['buildings/housing/stone_house/', 'buildings/housing/villa/', 'buildings/industry/']
-    .some((directory) => normalized.startsWith(directory))) {
-    return false
-  }
-  if (fileName.includes('contact_sheet') || fileName.includes('review') || fileName.includes('preview')) {
-    return false
-  }
-  return true
 }

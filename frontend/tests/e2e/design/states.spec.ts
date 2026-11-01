@@ -1,0 +1,21 @@
+import { test, expect } from 'playwright/test'
+
+test('компоненты: вкладки, диалог и возврат фокуса', async ({ page }) => {
+  await page.goto('/design.html')
+  const states = page.getByRole('region', { name: 'Дизайн-система' })
+  await expect(states.getByRole('button', { name: 'Ожидание сервера' }).first()).toBeDisabled()
+  await states.getByRole('tab', { name: 'Стоимость' }).first().focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(states.getByRole('tab', { name: 'Характеристики' }).first()).toBeFocused()
+  const opener = states.getByRole('button', { name: 'Открыть диалог' }).first()
+  await opener.click()
+  await expect(page.getByRole('dialog', { name: 'Стоимость строительства' })).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(opener).toBeFocused()
+  const drawer = states.getByRole('button', { name: 'Открыть панель' }).first()
+  await drawer.click()
+  await page.keyboard.press('Escape')
+  await expect(drawer).toBeFocused()
+  await states.scrollIntoViewIfNeeded()
+  await expect(page).toHaveScreenshot('component-states.png', { animations: 'disabled' })
+})
