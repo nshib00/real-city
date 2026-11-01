@@ -41,6 +41,11 @@ func (s *BuildingService) Place(ctx context.Context, input PlaceBuildingInput) (
 	if err != nil {
 		return building.Building{}, err
 	}
+	if waker, ok := s.monsters.(MonsterAwakener); ok {
+		if wakeErr := waker.WakeNearBuilding(ctx, item.MapID, item.Tile, item.Footprint, item.CreatedAt); wakeErr != nil {
+			s.log.Warn("monster.wake_near_building.failed", "building_id", item.ID, "error", wakeErr)
+		}
+	}
 	return
 }
 

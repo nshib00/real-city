@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/monster"
@@ -38,12 +39,12 @@ func NewMonsterRepo() *MonsterRepo {
 		{"monster_ruins_1", "spawn_ruins", monster.TypeRuinsGuardian, world.Coord{X: -8, Y: 12}},
 	} {
 		spec, _ := catalog.MonsterSpec(seed.kind)
-		item := fromSpec(seed.id, "dev-world", seed.tile, spec, now)
+		item := fromSpec(seed.id, "dev-world", world.NormalizeCoord(seed.tile), spec, now)
 		item.SpawnID = seed.spawnID
 		items[seed.id] = item
 	}
 	return &MonsterRepo{
-		items: items,
+		items:  items,
 		nextAI: make(map[monster.ID]time.Time),
 		spawns: map[monster.SpawnID]monster.SpawnPoint{
 			"spawn_roamers": {ID: "spawn_roamers", MapID: "dev-world", Type: monster.TypeRoamingMelee, Tile: world.Coord{X: 6, Y: -7}, Radius: 8, MaxAlive: 4, Cooldown: 10 * time.Minute, NextSpawnAt: now.Add(2 * time.Minute), CreatedAt: now, UpdatedAt: now},
@@ -129,6 +130,25 @@ func (r *MonsterRepo) ListActiveForTick(ctx context.Context, mapID string, now t
 		eligible = eligible[:limit]
 	}
 	return eligible, nil
+}
+
+func (r *MonsterRepo) WakeNearBuilding(ctx context.Context, mapID string, tile world.Coord, footprint building.Footprint, now time.Time) error {
+	ctx, releaseGate := memorytx.Guard(ctx)
+	defer releaseGate()
+	_ = ctx
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	extent := max(1, footprint.Width, footprint.Height) - 1
+	for id, item := range r.items {
+		if item.MapID != mapID || item.State != monster.StateWandering || !r.nextAI[id].After(now) {
+			continue
+		}
+		if world.WrappedDistance(item.Tile.X, tile.X) <= item.AggroRadius+extent &&
+			world.WrappedDistance(item.Tile.Y, tile.Y) <= item.AggroRadius+extent {
+			r.nextAI[id] = now
+		}
+	}
+	return nil
 }
 
 func (r *MonsterRepo) ListByViewport(ctx context.Context, mapID string, minX, minY, maxX, maxY int) ([]monster.Monster, error) {

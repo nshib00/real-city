@@ -92,6 +92,39 @@ func TestWanderingMonsterWaitsForNextDecision(t *testing.T) {
 	}
 }
 
+func TestNewBuildingWakesNearbyWanderingMonster(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters := memory.NewMonsterRepo()
+	for _, item := range []monster.Monster{
+		{ID: "near", MapID: service.DefaultWorldID, Type: monster.TypeRoamingMelee, State: monster.StateWandering,
+			Tile: world.Coord{X: 159, Y: 4}, Health: 100, AggroRadius: 5, UpdatedAt: now},
+		{ID: "far", MapID: service.DefaultWorldID, Type: monster.TypeRoamingMelee, State: monster.StateWandering,
+			Tile: world.Coord{X: 80, Y: 80}, Health: 100, AggroRadius: 5, UpdatedAt: now},
+	} {
+		if err := monsters.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+		if applied, err := monsters.UpdateIfCurrent(ctx, item, item); err != nil || !applied {
+			t.Fatalf("schedule %s: applied=%v err=%v", item.ID, applied, err)
+		}
+	}
+	if err := monsters.WakeNearBuilding(ctx, service.DefaultWorldID, world.Coord{X: 1, Y: 4}, building.Footprint{Width: 1, Height: 1}, now.Add(time.Second)); err != nil {
+		t.Fatal(err)
+	}
+	due, err := monsters.ListActiveForTick(ctx, service.DefaultWorldID, now.Add(time.Second), 100)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := map[monster.ID]bool{}
+	for _, item := range due {
+		found[item.ID] = true
+	}
+	if !found["near"] || found["far"] {
+		t.Fatalf("wrong wake set: near=%v far=%v", found["near"], found["far"])
+	}
+}
+
 func TestMonsterAIDamagesAndRuinsBuilding(t *testing.T) {
 	ctx := context.Background()
 	now := time.Now().UTC()

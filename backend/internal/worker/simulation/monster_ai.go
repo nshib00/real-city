@@ -15,6 +15,7 @@ import (
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
 	"real-city/backend/internal/service/worldgen"
+	"real-city/backend/pkg/apperror"
 )
 
 type MonsterAI struct {
@@ -54,6 +55,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 		return 0, err
 	}
 	chunkCache := make(map[world.ChunkCoord]world.Chunk)
+	buildingCache := newTickBuildingCache(ai.buildings)
 	processed := 0
 	for _, item := range items {
 		if limit > 0 && processed >= limit {
@@ -75,7 +77,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 			var path []world.Coord
 			var trapOwner string
 			var err error
-			updated, eventType, targetID, path, err = ai.step(txCtx, item, now, chunkCache)
+			updated, eventType, targetID, path, err = ai.stepCached(txCtx, item, now, chunkCache, buildingCache)
 			if err != nil || updated.ID == "" {
 				return err
 			}
@@ -103,7 +105,16 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 			if eventType == service.EventMonsterAttacked && updated.TargetType == "building" {
 				target, err := ai.buildings.FindByID(txCtx, building.ID(targetID))
 				if err != nil {
+					var appErr *apperror.Error
+					if errors.As(err, &appErr) && appErr.Kind == apperror.NotFound {
+						return errMonsterTickConflict
+					}
 					return err
+				}
+				if target.State == building.StateRuined || target.State == building.StatePlanned ||
+					target.Health <= 0 || building.IsTrapType(target.Type) ||
+					wrappedManhattan(updated.Tile, closestBuildingTile(updated.Tile, target)) > updated.AttackRange {
+					return errMonsterTickConflict
 				}
 				if updated.CreatorID != "" && target.OwnerID == updated.CreatorID {
 					return errMonsterTickConflict
@@ -168,7 +179,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 					}
 				}
 			}
-			if stateChanged || eventType != service.EventMonsterMoved {
+			if eventType != service.EventMonsterMoved {
 				return ai.monsters.AddEvent(txCtx, monster.Event{ID: fmt.Sprintf("monster_event_%s_%d", updated.ID, now.UnixNano()), MonsterID: updated.ID, Type: string(eventType), TargetID: targetID, Tile: updated.Tile, CreatedAt: now})
 			}
 			return nil
@@ -182,6 +193,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 			err = work(ctx)
 		}
 		if errors.Is(err, errMonsterTickConflict) {
+			buildingCache.clear()
 			continue
 		}
 		if err != nil {
@@ -189,6 +201,9 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 		}
 		if !applied {
 			continue
+		}
+		if damagedBuilding.ID != "" {
+			buildingCache.clear()
 		}
 		if ai.events != nil {
 			if damagedBuilding.ID != "" {
@@ -213,6 +228,10 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 }
 
 func (ai *MonsterAI) step(ctx context.Context, item monster.Monster, now time.Time, chunkCache map[world.ChunkCoord]world.Chunk) (monster.Monster, service.EventType, string, []world.Coord, error) {
+	return ai.stepCached(ctx, item, now, chunkCache, nil)
+}
+
+func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now time.Time, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) (monster.Monster, service.EventType, string, []world.Coord, error) {
 	ctx = context.WithValue(ctx, monsterTargetCacheKey{}, &monsterTargetCache{})
 	if item.CreatorID != "" && !item.ExpiresAt.After(now) {
 		item.State, item.Health, item.UpdatedAt = monster.StateDead, 0, now
@@ -220,7 +239,7 @@ func (ai *MonsterAI) step(ctx context.Context, item monster.Monster, now time.Ti
 	}
 	origin := item.Tile
 	excluded := make(map[building.ID]bool)
-	target, ok, err := ai.nearestTargetExcept(ctx, item, excluded)
+	target, ok, err := ai.nearestTargetExceptCached(ctx, item, excluded, buildingCache)
 	if err != nil {
 		return monster.Monster{}, "", "", nil, err
 	}
@@ -238,13 +257,13 @@ func (ai *MonsterAI) step(ctx context.Context, item monster.Monster, now time.Ti
 		if item.LastMovedAt.After(now) {
 			return item, service.EventMonsterMoved, string(target.ID), nil, nil
 		}
-		path, err := ai.nextPassablePath(ctx, item.Tile, targetTile, item.SpeedTiles, item.AttackRange, chunkCache)
+		path, err := ai.nextPassablePathCached(ctx, item.Tile, targetTile, item.SpeedTiles, item.AttackRange, chunkCache, buildingCache)
 		if err != nil {
 			return monster.Monster{}, "", "", nil, err
 		}
 		if len(path) == 0 {
 			excluded[target.ID] = true
-			target, ok, err = ai.nearestTargetExcept(ctx, item, excluded)
+			target, ok, err = ai.nearestTargetExceptCached(ctx, item, excluded, buildingCache)
 			if err != nil {
 				return monster.Monster{}, "", "", nil, err
 			}
@@ -289,7 +308,7 @@ func (ai *MonsterAI) step(ctx context.Context, item monster.Monster, now time.Ti
 		return item, service.EventMonsterMoved, "", nil, nil
 	}
 	wander := monster.WanderFrom(item.HomeTile, now.Unix()+int64(len(item.ID)), 5)
-	path, err := ai.nextPassablePath(ctx, item.Tile, wander, item.SpeedTiles, 0, chunkCache)
+	path, err := ai.nextPassablePathCached(ctx, item.Tile, wander, item.SpeedTiles, 0, chunkCache, buildingCache)
 	if err != nil {
 		return monster.Monster{}, "", "", nil, err
 	}
@@ -308,6 +327,10 @@ func (ai *MonsterAI) nearestTarget(ctx context.Context, item monster.Monster) (b
 }
 
 func (ai *MonsterAI) nearestTargetExcept(ctx context.Context, item monster.Monster, excluded map[building.ID]bool) (building.Building, bool, error) {
+	return ai.nearestTargetExceptCached(ctx, item, excluded, nil)
+}
+
+func (ai *MonsterAI) nearestTargetExceptCached(ctx context.Context, item monster.Monster, excluded map[building.ID]bool, buildingCache *tickBuildingCache) (building.Building, bool, error) {
 	radius := max(0, item.AggroRadius)
 	center := wrappedCoord(item.Tile)
 	cache, _ := ctx.Value(monsterTargetCacheKey{}).(*monsterTargetCache)
@@ -319,9 +342,9 @@ func (ai *MonsterAI) nearestTargetExcept(ctx context.Context, item monster.Monst
 		seen := make(map[building.ID]bool)
 		for _, offsetX := range viewportOffsets(center.X, radius) {
 			for _, offsetY := range viewportOffsets(center.Y, radius) {
-				items, err := ai.buildings.ListIntersectingFootprint(ctx, item.MapID,
-					center.X+offsetX-radius, center.Y+offsetY-radius,
-					center.X+offsetX+radius, center.Y+offsetY+radius)
+				minX, minY := center.X+offsetX-radius, center.Y+offsetY-radius
+				maxX, maxY := center.X+offsetX+radius, center.Y+offsetY+radius
+				items, err := ai.buildingsInRect(ctx, item.MapID, minX, minY, maxX, maxY, buildingCache)
 				if err != nil {
 					return building.Building{}, false, err
 				}
@@ -437,6 +460,10 @@ func (ai *MonsterAI) collidingMonster(ctx context.Context, item monster.Monster)
 }
 
 func (ai *MonsterAI) nextPassablePath(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, chunkCache map[world.ChunkCoord]world.Chunk) ([]world.Coord, error) {
+	return ai.nextPassablePathCached(ctx, from, to, speed, attackRange, chunkCache, nil)
+}
+
+func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) ([]world.Coord, error) {
 	from, to = wrappedCoord(from), wrappedCoord(to)
 	if wrappedManhattan(from, to) <= attackRange {
 		return nil, nil
@@ -446,9 +473,9 @@ func (ai *MonsterAI) nextPassablePath(ctx context.Context, from world.Coord, to 
 	if ai.buildings != nil {
 		for _, offsetX := range viewportOffsets(from.X, searchRadius) {
 			for _, offsetY := range viewportOffsets(from.Y, searchRadius) {
-				buildings, err := ai.buildings.ListIntersectingFootprint(ctx, service.DefaultWorldID,
-					from.X+offsetX-searchRadius, from.Y+offsetY-searchRadius,
-					from.X+offsetX+searchRadius, from.Y+offsetY+searchRadius)
+				minX, minY := from.X+offsetX-searchRadius, from.Y+offsetY-searchRadius
+				maxX, maxY := from.X+offsetX+searchRadius, from.Y+offsetY+searchRadius
+				buildings, err := ai.buildingsInRect(ctx, service.DefaultWorldID, minX, minY, maxX, maxY, buildingCache)
 				if err != nil {
 					return nil, err
 				}

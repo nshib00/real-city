@@ -7,6 +7,7 @@ import (
 	"errors"
 	"time"
 
+	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
@@ -99,6 +100,17 @@ func nextMonsterAIAt(next monster.Monster) time.Time {
 		return next.UpdatedAt.Add(2 * time.Second)
 	}
 	return next.UpdatedAt.Add(time.Second)
+}
+
+func (r *MonsterRepo) WakeNearBuilding(ctx context.Context, mapID string, tile world.Coord, footprint building.Footprint, now time.Time) error {
+	extent := max(1, footprint.Width, footprint.Height) - 1
+	_, err := execer(ctx, r.db).ExecContext(ctx, `
+		UPDATE monsters SET next_ai_at = $4
+		WHERE map_id = $1 AND state = 'wandering' AND next_ai_at > $4
+		  AND LEAST(ABS(tile_x - $2), $5 - ABS(tile_x - $2)) <= aggro_radius + $6
+		  AND LEAST(ABS(tile_y - $3), $5 - ABS(tile_y - $3)) <= aggro_radius + $6
+	`, mapID, tile.X, tile.Y, now, world.WorldSize, extent)
+	return err
 }
 
 func (r *MonsterRepo) CountAliveBySpawn(ctx context.Context, mapID string) (result map[monster.SpawnID]int, resultErr error) {

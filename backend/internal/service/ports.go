@@ -139,6 +139,11 @@ type MonsterRepository interface {
 	AddEvent(ctx context.Context, item monster.Event) error
 }
 
+// MonsterAwakener is an optional scheduler hook for newly placed world objects.
+type MonsterAwakener interface {
+	WakeNearBuilding(ctx context.Context, mapID string, tile world.Coord, footprint building.Footprint, now time.Time) error
+}
+
 type ActionRepository interface {
 	Append(ctx context.Context, item action.GameAction) error
 	AppendUnique(ctx context.Context, item action.GameAction) (bool, error)
