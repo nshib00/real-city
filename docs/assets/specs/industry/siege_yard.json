@@ -33,6 +33,27 @@
     "damaged": {"rule": "Деформированный пресс, пролом навеса и трещины основания; основные формы сохранены."},
     "ruined": {"rule": "Заваленный навес и разрушенный пресс без признаков работы."}
   },
+  "skill_profile": {
+    "base": ["blender-director", "genre-strategy-sim", "isometric-style", "fantasy-worlds", "stylized-style", "hand-painted-style"],
+    "asset_type": ["environment-artist", "hard-surface", "prop-artist"],
+    "production": ["materials", "texture-workflow", "lookdev", "lod-pipeline", "asset-optimization", "export-pipeline"],
+    "validation": ["qa-review"]
+  },
+  "lod_policy": {
+    "chain": [
+      {"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 700, "max": 9000}, "export": true},
+      {"name": "LOD1", "ratio": 0.45, "triangle_budget": {"min": 350, "max": 4500}, "export": true},
+      {"name": "LOD2", "ratio": 0.22, "triangle_budget": {"min": 200, "max": 2200}, "export": true}
+    ],
+    "preserve": ["footprint", "press silhouette", "canopy", "level 2 assembly chamber"],
+    "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}
+  },
+  "png_policy": {
+    "sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true,
+    "anchor": [256, 292], "render_lod": "LOD0",
+    "contact_sheet": {"enabled": true, "columns": 4, "include_states": ["active", "construction", "damaged", "ruined"]},
+    "alpha_bounds": {"min_opaque_pixels": 1200, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}
+  },
   "output": {"runtime_dir": "frontend/public/assets/buildings/industry/siege_yard", "source_dir": "frontend/src/assets/buildings/industry/siege_yard", "use_public_glb": true},
   "references": {"docs": ["docs/buildings/industry/siege-yard.md"], "art_guide": "docs/art/visual-style-guide.md"}
 }

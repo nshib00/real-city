@@ -1,7 +1,7 @@
 [
   {
-    "name": "dye_works_l01_construction_LOD0",
-    "asset_id": "dye_works",
+    "name": "resonance_laboratory_l01_construction_LOD0",
+    "asset_id": "resonance_laboratory",
     "level": 1,
     "state": "construction",
     "ground_found": true,
@@ -12,8 +12,8 @@
     "error": null
   },
   {
-    "name": "dye_works_l01_damaged_LOD0",
-    "asset_id": "dye_works",
+    "name": "resonance_laboratory_l01_damaged_LOD0",
+    "asset_id": "resonance_laboratory",
     "level": 1,
     "state": "damaged",
     "ground_found": true,
@@ -24,8 +24,8 @@
     "error": null
   },
   {
-    "name": "dye_works_l01_ruined_LOD0",
-    "asset_id": "dye_works",
+    "name": "resonance_laboratory_l01_ruined_LOD0",
+    "asset_id": "resonance_laboratory",
     "level": 1,
     "state": "ruined",
     "ground_found": true,

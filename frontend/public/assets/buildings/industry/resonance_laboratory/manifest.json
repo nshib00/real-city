@@ -1,0 +1,314 @@
+{
+  "asset_id": "resonance_laboratory",
+  "display_name": "Резонансная лаборатория",
+  "category": "industry",
+  "levels": [
+    1
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "source_blend": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_levels.blend",
+  "combined_glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_levels.glb",
+  "material_map": {
+    "coins": {
+      "visible_as": "плотная точная компоновка поздней мастерской",
+      "levels": [
+        1
+      ],
+      "priority": "accent"
+    },
+    "reinforced_concrete": {
+      "visible_as": "защитный фундамент и корпус",
+      "levels": [
+        1
+      ],
+      "priority": "primary"
+    },
+    "steel": {
+      "visible_as": "силовая рама и бронированный сердечник",
+      "levels": [
+        1
+      ],
+      "priority": "primary"
+    },
+    "electronics": {
+      "visible_as": "контактные панели и калибровочные приборы",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    },
+    "mechanism": {
+      "visible_as": "привод калибровочного кольца",
+      "levels": [
+        1
+      ],
+      "priority": "secondary"
+    },
+    "star_glass": {
+      "visible_as": "малые фиолетово-золотые вставки в центральном столе",
+      "levels": [
+        1
+      ],
+      "priority": "accent"
+    }
+  },
+  "items": [
+    {
+      "id": "resonance_laboratory_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 2776,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD0.glb",
+          "triangles": 2776
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD1.glb",
+          "triangles": 1480
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD2.glb",
+          "triangles": 976
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active.png"
+    },
+    {
+      "id": "resonance_laboratory_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1844,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD0.glb",
+          "triangles": 1844
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD1.glb",
+          "triangles": 834
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction.png"
+    },
+    {
+      "id": "resonance_laboratory_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 2112,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD0.glb",
+          "triangles": 2112
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD1.glb",
+          "triangles": 998
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD2.glb",
+          "triangles": 564
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged.png"
+    },
+    {
+      "id": "resonance_laboratory_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1952,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.094484329223633
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD0.glb",
+          "triangles": 1952
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined.png"
+    }
+  ],
+  "spec_path": "docs/assets/specs/industry/resonance_laboratory.json",
+  "generation_mode": "full",
+  "component_library_version": "2026.10.phase3.v11",
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0",
+        "ratio": 1.0,
+        "triangle_budget": {
+          "min": 700,
+          "max": 9000
+        },
+        "export": true
+      },
+      {
+        "name": "LOD1",
+        "ratio": 0.45,
+        "triangle_budget": {
+          "min": 350,
+          "max": 4500
+        },
+        "export": true
+      },
+      {
+        "name": "LOD2",
+        "ratio": 0.22,
+        "triangle_budget": {
+          "min": 200,
+          "max": 2200
+        },
+        "export": true
+      }
+    ],
+    "preserve": [
+      "ground footprint",
+      "calibration ring",
+      "armored hall",
+      "central table"
+    ],
+    "exports": {
+      "naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb",
+      "include_lod0": true,
+      "include_lod1": true,
+      "include_lod2": true
+    }
+  },
+  "png_policy": {
+    "sprite_size": [
+      512,
+      384
+    ],
+    "camera_profile": "real_city_isometric",
+    "transparent_background": true,
+    "anchor": [
+      256,
+      292
+    ],
+    "render_lod": "LOD0",
+    "contact_sheet": {
+      "enabled": true,
+      "columns": 4,
+      "include_states": [
+        "active",
+        "construction",
+        "damaged",
+        "ruined"
+      ]
+    },
+    "alpha_bounds": {
+      "min_opaque_pixels": 1200,
+      "max_crop_margin_px": 10,
+      "bottom_anchor_tolerance_px": 10
+    }
+  }
+}

@@ -8,6 +8,8 @@
 
 В колонках «Визуальная спека» и «Runtime manifest» указано лишь наличие основного файла. Это не подтверждает все уровни, состояния, успешную сборку или подключение в рендерере. Тестовые `villa_*test`, `*_v2`, `backup_*` и `*_pilot` не считаются production. Теперь **все 72 ID имеют основную визуальную и текстовую спеку**, в том числе 32 визуальных черновика для художественной приёмки; **50 типов имеют runtime manifest**. Для `defense_cannon` существуют два формата визуальной спеки (`.yaml` и `.json`), их нужно свести к одному источнику до автоматической генерации. Старые пометки «сверить числа» в колонке «Проверка» относятся к редактуре проектного текста и механике; действующие числа в таблицах выше уже синхронизированы.
 
+После исходного снимка добавлен production manifest для `siege_yard` (1 ноября 2026); число типов с runtime manifest в таблице теперь **51**.
+
 | Игровой ID | Категория | Уровни каталога | Основной текст | Визуальная спека | Runtime manifest | Проверка |
 | --- | --- | ---: | --- | --- | --- | --- |
 | `town_hall` | center | 1–15 | [town-hall.md](center/town-hall.md) | [town_hall.yaml](../assets/specs/center/town_hall.yaml) | есть | уровни и параметры сверены с каталогом |
@@ -80,8 +82,8 @@
 | `chemical_workshop` | industry | 1 | [chemical-workshop.md](industry/chemical-workshop.md) | [chemical_workshop.json](../assets/specs/industry/chemical_workshop.json) | нет | есть проектные поля |
 | `military_factory` | industry | 1–10 | [military-factory.md](industry/military-factory.md) | [military_factory.json](../assets/specs/industry/military_factory.json) | есть | есть проектные поля |
 | `precision_workshop` | industry | 1 | [precision-workshop.md](industry/precision-workshop.md) | [precision_workshop.json](../assets/specs/industry/precision_workshop.json) | нет | есть проектные поля |
-| `siege_yard` | industry | 1–2 | [siege-yard.md](industry/siege-yard.md) | [siege_yard.json](../assets/specs/industry/siege_yard.json) | нет | мины и проломные бомбы подключены |
-| `resonance_laboratory` | industry | 1 | [resonance-laboratory.md](industry/resonance-laboratory.md) | [resonance_laboratory.json](../assets/specs/industry/resonance_laboratory.json) | нет | производство резонансных зарядов подключено |
+| `siege_yard` | industry | 1–2 | [siege-yard.md](industry/siege-yard.md) | [siege_yard.json](../assets/specs/industry/siege_yard.json) | есть | модели уровней 1–2 и четырёх состояний подключены |
+| `resonance_laboratory` | industry | 1 | [resonance-laboratory.md](industry/resonance-laboratory.md) | [resonance_laboratory.json](../assets/specs/industry/resonance_laboratory.json) | есть | производство резонансных зарядов и модель подключены |
 
 ## Неоднозначные соответствия и следующие проверки
 

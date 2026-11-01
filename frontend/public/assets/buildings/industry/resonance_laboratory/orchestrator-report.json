@@ -1,0 +1,222 @@
+{
+  "asset_id": "resonance_laboratory",
+  "display_name": "Резонансная лаборатория",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "items": [
+    {
+      "id": "resonance_laboratory_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 2776,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD0.glb",
+          "triangles": 2776
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD1.glb",
+          "triangles": 1480
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD2.glb",
+          "triangles": 976
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_active.png"
+    },
+    {
+      "id": "resonance_laboratory_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1844,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD0.glb",
+          "triangles": 1844
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD1.glb",
+          "triangles": 834
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_construction.png"
+    },
+    {
+      "id": "resonance_laboratory_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 2112,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1549999713897705
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD0.glb",
+          "triangles": 2112
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD1.glb",
+          "triangles": 998
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD2.glb",
+          "triangles": 564
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_damaged.png"
+    },
+    {
+      "id": "resonance_laboratory_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 1952,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.094484329223633
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD0.glb",
+          "triangles": 1952
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD1.glb",
+          "triangles": 864
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD2.glb",
+          "triangles": 440
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_l01_ruined.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/resonance_laboratory/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/resonance_laboratory/resonance_laboratory_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v11",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "/home/nshib/projects/real-city/docs/assets/specs/industry/resonance_laboratory.json",
+  "token_budget_policy": {
+    "read_files": [
+      "docs/assets/specs/industry/resonance_laboratory.json",
+      "docs/buildings/industry/resonance-laboratory.md",
+      "docs/art/visual-style-guide.md"
+    ],
+    "skill_files": [
+      "skills/blender-skills/blender-director/SKILL.md",
+      "skills/blender-skills/genre-strategy-sim/SKILL.md",
+      "skills/blender-skills/isometric-style/SKILL.md",
+      "skills/blender-skills/fantasy-worlds/SKILL.md",
+      "skills/blender-skills/stylized-style/SKILL.md",
+      "skills/blender-skills/hand-painted-style/SKILL.md",
+      "skills/blender-skills/environment-artist/SKILL.md",
+      "skills/blender-skills/hard-surface/SKILL.md",
+      "skills/blender-skills/prop-artist/SKILL.md",
+      "skills/blender-skills/materials/SKILL.md",
+      "skills/blender-skills/texture-workflow/SKILL.md",
+      "skills/blender-skills/lookdev/SKILL.md",
+      "skills/blender-skills/lod-pipeline/SKILL.md",
+      "skills/blender-skills/asset-optimization/SKILL.md",
+      "skills/blender-skills/export-pipeline/SKILL.md",
+      "skills/blender-skills/qa-review/SKILL.md"
+    ],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: resonance_laboratory\ndisplay_name: Резонансная лаборатория\ncategory/kind: industry/building\nlevels: 1\nstates: active, construction, damaged, ruined\nstyle: aeolian_fantasy_midpoly\nmaterials: coins, reinforced_concrete, steel, electronics, mechanism, star_glass\nskills: blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style, environment-artist, hard-surface, prop-artist, materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: docs/assets/specs/industry/resonance_laboratory.json, docs/buildings/industry/resonance-laboratory.md, docs/art/visual-style-guide.md\nskill_files: skills/blender-skills/blender-director/SKILL.md, skills/blender-skills/genre-strategy-sim/SKILL.md, skills/blender-skills/isometric-style/SKILL.md, skills/blender-skills/fantasy-worlds/SKILL.md, skills/blender-skills/stylized-style/SKILL.md, skills/blender-skills/hand-painted-style/SKILL.md, skills/blender-skills/environment-artist/SKILL.md, skills/blender-skills/hard-surface/SKILL.md, skills/blender-skills/prop-artist/SKILL.md, skills/blender-skills/materials/SKILL.md, skills/blender-skills/texture-workflow/SKILL.md, skills/blender-skills/lookdev/SKILL.md, skills/blender-skills/lod-pipeline/SKILL.md, skills/blender-skills/asset-optimization/SKILL.md, skills/blender-skills/export-pipeline/SKILL.md, skills/blender-skills/qa-review/SKILL.md"
+}

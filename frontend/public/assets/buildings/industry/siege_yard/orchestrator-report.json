@@ -1,0 +1,391 @@
+{
+  "asset_id": "siege_yard",
+  "display_name": "Осадный двор",
+  "category": "industry",
+  "mode": "full",
+  "preview_status": null,
+  "levels": [
+    1,
+    2
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged",
+    "ruined"
+  ],
+  "items": [
+    {
+      "id": "siege_yard_l01_active",
+      "level": 1,
+      "state": "active",
+      "triangles": 2428,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.96750009059906
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_active_LOD0.glb",
+          "triangles": 2428
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_active_LOD1.glb",
+          "triangles": 1002
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_active_LOD2.glb",
+          "triangles": 448
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_active.png"
+    },
+    {
+      "id": "siege_yard_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "triangles": 1628,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9199999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_construction_LOD0.glb",
+          "triangles": 1628
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_construction_LOD1.glb",
+          "triangles": 666
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_construction_LOD2.glb",
+          "triangles": 296
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_construction.png"
+    },
+    {
+      "id": "siege_yard_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "triangles": 2132,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.96750009059906
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_damaged_LOD0.glb",
+          "triangles": 2132
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_damaged_LOD1.glb",
+          "triangles": 878
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_damaged_LOD2.glb",
+          "triangles": 392
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_damaged.png"
+    },
+    {
+      "id": "siege_yard_l01_ruined",
+      "level": 1,
+      "state": "ruined",
+      "triangles": 2000,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_ruined_LOD0.glb",
+          "triangles": 2000
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_ruined_LOD1.glb",
+          "triangles": 824
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_ruined_LOD2.glb",
+          "triangles": 368
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l01_ruined.png"
+    },
+    {
+      "id": "siege_yard_l02_active",
+      "level": 2,
+      "state": "active",
+      "triangles": 2960,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.96750009059906
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_active_LOD0.glb",
+          "triangles": 2960
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_active_LOD1.glb",
+          "triangles": 1224
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_active_LOD2.glb",
+          "triangles": 548
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_active_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_active.png"
+    },
+    {
+      "id": "siege_yard_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "triangles": 1804,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.9199999570846558
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_construction_LOD0.glb",
+          "triangles": 1804
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_construction_LOD1.glb",
+          "triangles": 738
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_construction_LOD2.glb",
+          "triangles": 328
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_construction_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_construction.png"
+    },
+    {
+      "id": "siege_yard_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "triangles": 2264,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.96750009059906
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_damaged_LOD0.glb",
+          "triangles": 2264
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_damaged_LOD1.glb",
+          "triangles": 932
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_damaged_LOD2.glb",
+          "triangles": 416
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_damaged_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_damaged.png"
+    },
+    {
+      "id": "siege_yard_l02_ruined",
+      "level": 2,
+      "state": "ruined",
+      "triangles": 2088,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          0.9600000381469727
+        ]
+      ],
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_ruined_LOD0.glb",
+          "triangles": 2088
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.45,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_ruined_LOD1.glb",
+          "triangles": 860
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.22,
+          "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_ruined_LOD2.glb",
+          "triangles": 384
+        }
+      ],
+      "glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_ruined_LOD0.glb",
+      "png": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_l02_ruined.png"
+    }
+  ],
+  "outputs": {
+    "blend": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_levels.blend",
+    "combined_glb": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_levels.glb",
+    "manifest": "frontend/public/assets/buildings/industry/siege_yard/manifest.json",
+    "contact_sheet": "frontend/public/assets/buildings/industry/siege_yard/siege_yard_full_contact_sheet.png"
+  },
+  "component_library_version": "2026.10.phase3.v11",
+  "generator": "tools/assets/blender/real_city/orchestrator.py",
+  "spec_path": "/home/nshib/projects/real-city/docs/assets/specs/industry/siege_yard.json",
+  "token_budget_policy": {
+    "read_files": [
+      "docs/assets/specs/industry/siege_yard.json",
+      "docs/buildings/industry/siege-yard.md",
+      "docs/art/visual-style-guide.md"
+    ],
+    "skill_files": [
+      "skills/blender-skills/blender-director/SKILL.md",
+      "skills/blender-skills/genre-strategy-sim/SKILL.md",
+      "skills/blender-skills/isometric-style/SKILL.md",
+      "skills/blender-skills/fantasy-worlds/SKILL.md",
+      "skills/blender-skills/stylized-style/SKILL.md",
+      "skills/blender-skills/hand-painted-style/SKILL.md",
+      "skills/blender-skills/environment-artist/SKILL.md",
+      "skills/blender-skills/hard-surface/SKILL.md",
+      "skills/blender-skills/prop-artist/SKILL.md",
+      "skills/blender-skills/materials/SKILL.md",
+      "skills/blender-skills/texture-workflow/SKILL.md",
+      "skills/blender-skills/lookdev/SKILL.md",
+      "skills/blender-skills/lod-pipeline/SKILL.md",
+      "skills/blender-skills/asset-optimization/SKILL.md",
+      "skills/blender-skills/export-pipeline/SKILL.md",
+      "skills/blender-skills/qa-review/SKILL.md"
+    ],
+    "long_logs": "write to output report files, not chat"
+  },
+  "production_brief": "asset_id: siege_yard\ndisplay_name: Осадный двор\ncategory/kind: industry/building\nlevels: 1-2\nstates: active, construction, damaged, ruined\nstyle: aeolian_fantasy_midpoly\nmaterials: coins, steel, reinforced_concrete, mechanism, armor_plates\nskills: blender-director, genre-strategy-sim, isometric-style, fantasy-worlds, stylized-style, hand-painted-style, environment-artist, hard-surface, prop-artist, materials, texture-workflow, lookdev, lod-pipeline, asset-optimization, export-pipeline, qa-review\nlod: LOD0, LOD1, LOD2\npng: [512, 384] anchor=[256, 292]\nread_files: docs/assets/specs/industry/siege_yard.json, docs/buildings/industry/siege-yard.md, docs/art/visual-style-guide.md\nskill_files: skills/blender-skills/blender-director/SKILL.md, skills/blender-skills/genre-strategy-sim/SKILL.md, skills/blender-skills/isometric-style/SKILL.md, skills/blender-skills/fantasy-worlds/SKILL.md, skills/blender-skills/stylized-style/SKILL.md, skills/blender-skills/hand-painted-style/SKILL.md, skills/blender-skills/environment-artist/SKILL.md, skills/blender-skills/hard-surface/SKILL.md, skills/blender-skills/prop-artist/SKILL.md, skills/blender-skills/materials/SKILL.md, skills/blender-skills/texture-workflow/SKILL.md, skills/blender-skills/lookdev/SKILL.md, skills/blender-skills/lod-pipeline/SKILL.md, skills/blender-skills/asset-optimization/SKILL.md, skills/blender-skills/export-pipeline/SKILL.md, skills/blender-skills/qa-review/SKILL.md"
+}

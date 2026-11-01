@@ -467,6 +467,16 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     modelLod: 'LOD0', revision: 'dye-works-2026-11-01',
   },
   {
+    kind: 'siege_yard', assetId: 'siege_yard', category: 'industry', displayName: 'Осадный двор',
+    levels: [1, 2], states: coreWithRuinedStates, spriteSource: 'public', modelSource: 'public',
+    modelLod: 'LOD0', revision: 'siege-yard-2026-11-01',
+  },
+  {
+    kind: 'resonance_laboratory', assetId: 'resonance_laboratory', category: 'industry', displayName: 'Резонансная лаборатория',
+    levels: [1], states: coreWithRuinedStates, spriteSource: 'public', modelSource: 'public',
+    modelLod: 'LOD0', revision: 'resonance-laboratory-2026-11-01',
+  },
+  {
     kind: 'paint_workshop', assetId: 'paint_workshop', category: 'industry', displayName: 'Красильная мастерская',
     levels: l1To10, states: coreStates, spriteSource: 'public', modelSource: 'public',
     modelLod: 'LOD0', revision: 'paint-workshop-2026-10-18',

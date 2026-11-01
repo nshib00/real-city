@@ -1732,6 +1732,18 @@ $real-city-blender-models продолжи по docs/assets/asset-generation-sta
 
 ## Orchestrator batches
 
+### Резонансная лаборатория — 2026-11-01
+
+- Создано отдельное семейство `resonance_laboratory`: единственный игровой уровень 1, состояния `active`, `construction`, `damaged`, `ruined`. Основной силуэт — калибровочное кольцо над бронированным столом; в стройке оно не завершено, при повреждении разорвано, в руинах погасло и частично обрушено. Карта ресурсов: железобетон — корпус и основание, сталь — кольцо и рама, механизмы — приводные ступицы, электроника — контактные панели, звёздное стекло — малая вставка в сердечнике.
+- Runtime: `frontend/public/assets/buildings/industry/resonance_laboratory/` — 4 PNG 512×384, 12 GLB LOD0–2, `.blend`, сводный GLB, manifest, report и contact sheets. Семейство подключено в `buildingAssetManifests.ts`.
+- Blender MCP `get_addon_status`, `get_scene_info` и камерный screenshot `active` выполнены; preview/full contact sheets просмотрены. LOD0: 1844–2776 треугольников. Валидаторы spec, PNG, LOD, manifest и ground прошли: 3 сравнения основания без расхождений. Фоновый Blender после успешного экспорта снова завис в PulseAudio; процесс остановлен после появления report и всех выходных файлов, контактный лист записан отдельно.
+
+### Осадный двор — 2026-11-01
+
+- Создано семейство `siege_yard` для обоих игровых уровней 1–2 и всех четырёх состояний: `active`, `construction`, `damaged`, `ruined`. Уровень 1 показывает открытый пресс и стеллаж мин; уровень 2 добавляет бронированную сборочную камеру и корпус проломной бомбы. Стройка, повреждение и руины имеют отдельную геометрию.
+- Runtime: `frontend/public/assets/buildings/industry/siege_yard/` — 8 PNG 512×384, 24 GLB LOD0–2, `siege_yard_levels.blend`, сводный GLB, manifest, report и полный contact sheet. Семейство подключено в `buildingAssetManifests.ts`.
+- Blender MCP `get_addon_status` и `get_scene_info` прошли; полный `.blend` загружен в live-сцену, камерный screenshot уровня 2 просмотрен. Preview/full contact sheets также проверены. Валидаторы spec/report, PNG, LOD, manifest и ground прошли: 6 сравнений основания, 0 расхождений. Фоновый Blender завершил экспорт, но остался висеть после сообщения о завершении из-за PulseAudio; процесс был остановлен после проверки всех файлов и report, а contact sheet записан отдельно.
+
 ### Красильня — 2026-11-01
 
 - Создано семейство `dye_works`: единственный каталоговый уровень 1, состояния `active`, `construction`, `damaged`, `ruined`. Не смешивать с `paint_workshop` и её уровнями 1–10. Художественное описание: `docs/assets/dye-works-model-brief.md`.

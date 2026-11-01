@@ -360,6 +360,16 @@ def _build_state_model(spec: AssetSpec, collection, mats: dict, *, level: int, s
 
         dye_works.add_dye_works(collection, mats, level=level, state=state)
         return
+    elif spec.asset_id == "siege_yard":
+        from .components import siege_yard
+
+        siege_yard.add_siege_yard(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "resonance_laboratory":
+        from .components import resonance_laboratory
+
+        resonance_laboratory.add_resonance_laboratory(collection, mats, level=level, state=state)
+        return
     elif spec.asset_id == "paint_workshop":
         from .components import paint_workshop
 
