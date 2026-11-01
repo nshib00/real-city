@@ -117,7 +117,7 @@ func (r *WorldRepo) GetOrCreateChunks(ctx context.Context, mapID string, coords 
 			chunks = append(chunks, chunk)
 			continue
 		}
-		chunk, err := r.createChunk(ctx, mapID, coord)
+		chunk, err := r.createChunkForKnownMap(ctx, mapID, coord)
 		if err != nil {
 			return nil, err
 		}
@@ -144,7 +144,7 @@ func (r *WorldRepo) GetOrCreateChunksFresh(ctx context.Context, mapID string, co
 			chunks = append(chunks, chunk)
 			continue
 		}
-		chunk, err := r.createChunk(ctx, mapID, coord)
+		chunk, err := r.createChunkForKnownMap(ctx, mapID, coord)
 		if err != nil {
 			return nil, err
 		}
@@ -291,10 +291,20 @@ func (r *WorldRepo) findChunks(ctx context.Context, mapID string, coords []world
 }
 
 func (r *WorldRepo) createChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (created world.Chunk, resultErr error) {
+	return r.createChunkWithMapCheck(ctx, mapID, coord, true)
+}
+
+func (r *WorldRepo) createChunkForKnownMap(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, error) {
+	return r.createChunkWithMapCheck(ctx, mapID, coord, false)
+}
+
+func (r *WorldRepo) createChunkWithMapCheck(ctx context.Context, mapID string, coord world.ChunkCoord, checkMap bool) (created world.Chunk, resultErr error) {
 	started := time.Now()
 	defer func() { observability.ObserveWorld("world.create_chunk", started, resultErr) }()
-	if err := r.ensureMap(ctx); err != nil {
-		return world.Chunk{}, err
+	if checkMap {
+		if err := r.ensureMap(ctx); err != nil {
+			return world.Chunk{}, err
+		}
 	}
 	generationStarted := time.Now()
 	chunk := r.generator.Chunk(coord)
