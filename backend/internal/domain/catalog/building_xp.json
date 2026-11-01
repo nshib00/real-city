@@ -1,0 +1,2987 @@
+{
+  "schema_version": 1,
+  "buildings": {
+    "town_hall": [
+      {
+        "level": 1,
+        "completion": 10,
+        "work": 0,
+        "destruction": 9
+      },
+      {
+        "level": 2,
+        "completion": 21,
+        "work": 0,
+        "destruction": 34
+      },
+      {
+        "level": 3,
+        "completion": 69,
+        "work": 0,
+        "destruction": 118
+      },
+      {
+        "level": 4,
+        "completion": 157,
+        "work": 0,
+        "destruction": 354
+      },
+      {
+        "level": 5,
+        "completion": 438,
+        "work": 0,
+        "destruction": 1057
+      },
+      {
+        "level": 6,
+        "completion": 981,
+        "work": 0,
+        "destruction": 3319
+      },
+      {
+        "level": 7,
+        "completion": 1584,
+        "work": 0,
+        "destruction": 10082
+      },
+      {
+        "level": 8,
+        "completion": 3028,
+        "work": 0,
+        "destruction": 32176
+      },
+      {
+        "level": 9,
+        "completion": 5364,
+        "work": 0,
+        "destruction": 100742
+      },
+      {
+        "level": 10,
+        "completion": 9218,
+        "work": 0,
+        "destruction": 306059
+      },
+      {
+        "level": 11,
+        "completion": 14761,
+        "work": 0,
+        "destruction": 338021
+      },
+      {
+        "level": 12,
+        "completion": 23117,
+        "work": 0,
+        "destruction": 372137
+      },
+      {
+        "level": 13,
+        "completion": 35693,
+        "work": 0,
+        "destruction": 409321
+      },
+      {
+        "level": 14,
+        "completion": 53479,
+        "work": 0,
+        "destruction": 451127
+      },
+      {
+        "level": 15,
+        "completion": 78643,
+        "work": 0,
+        "destruction": 498917
+      }
+    ],
+    "dugout": [
+      {
+        "level": 1,
+        "completion": 2,
+        "work": 0,
+        "destruction": 11
+      },
+      {
+        "level": 2,
+        "completion": 5,
+        "work": 0,
+        "destruction": 49
+      },
+      {
+        "level": 3,
+        "completion": 14,
+        "work": 0,
+        "destruction": 189
+      },
+      {
+        "level": 4,
+        "completion": 38,
+        "work": 0,
+        "destruction": 726
+      },
+      {
+        "level": 5,
+        "completion": 86,
+        "work": 0,
+        "destruction": 3102
+      }
+    ],
+    "wood_house": [
+      {
+        "level": 1,
+        "completion": 109,
+        "work": 0,
+        "destruction": 3952
+      },
+      {
+        "level": 2,
+        "completion": 176,
+        "work": 0,
+        "destruction": 5684
+      },
+      {
+        "level": 3,
+        "completion": 264,
+        "work": 0,
+        "destruction": 8313
+      },
+      {
+        "level": 4,
+        "completion": 386,
+        "work": 0,
+        "destruction": 11874
+      },
+      {
+        "level": 5,
+        "completion": 469,
+        "work": 0,
+        "destruction": 17639
+      },
+      {
+        "level": 6,
+        "completion": 594,
+        "work": 0,
+        "destruction": 24161
+      }
+    ],
+    "stone_house": [
+      {
+        "level": 1,
+        "completion": 766,
+        "work": 0,
+        "destruction": 29814
+      },
+      {
+        "level": 2,
+        "completion": 944,
+        "work": 0,
+        "destruction": 43024
+      },
+      {
+        "level": 3,
+        "completion": 1363,
+        "work": 0,
+        "destruction": 61992
+      },
+      {
+        "level": 4,
+        "completion": 1864,
+        "work": 0,
+        "destruction": 92431
+      },
+      {
+        "level": 5,
+        "completion": 2554,
+        "work": 0,
+        "destruction": 131686
+      },
+      {
+        "level": 6,
+        "completion": 3528,
+        "work": 0,
+        "destruction": 193771
+      }
+    ],
+    "apartment_house": [
+      {
+        "level": 1,
+        "completion": 231,
+        "work": 0,
+        "destruction": 262474
+      }
+    ],
+    "villa": [
+      {
+        "level": 1,
+        "completion": 213,
+        "work": 0,
+        "destruction": 306121
+      },
+      {
+        "level": 2,
+        "completion": 4529,
+        "work": 0,
+        "destruction": 335322
+      },
+      {
+        "level": 3,
+        "completion": 5951,
+        "work": 0,
+        "destruction": 363556
+      },
+      {
+        "level": 4,
+        "completion": 7824,
+        "work": 0,
+        "destruction": 406986
+      },
+      {
+        "level": 5,
+        "completion": 10698,
+        "work": 0,
+        "destruction": 436789
+      }
+    ],
+    "residential_skyscraper": [
+      {
+        "level": 5,
+        "completion": 396,
+        "work": 0,
+        "destruction": 494371
+      }
+    ],
+    "palace": [
+      {
+        "level": 5,
+        "completion": 784,
+        "work": 0,
+        "destruction": 435153
+      }
+    ],
+    "workshop": [
+      {
+        "level": 1,
+        "completion": 17,
+        "work": 5,
+        "destruction": 99
+      }
+    ],
+    "brick_kiln": [
+      {
+        "level": 1,
+        "completion": 93,
+        "work": 0,
+        "destruction": 548
+      }
+    ],
+    "brick_yard": [
+      {
+        "level": 1,
+        "completion": 326,
+        "work": 22,
+        "destruction": 2427
+      },
+      {
+        "level": 2,
+        "completion": 804,
+        "work": 32,
+        "destruction": 3808
+      },
+      {
+        "level": 3,
+        "completion": 1569,
+        "work": 42,
+        "destruction": 6463
+      },
+      {
+        "level": 4,
+        "completion": 2869,
+        "work": 52,
+        "destruction": 10728
+      },
+      {
+        "level": 5,
+        "completion": 4822,
+        "work": 62,
+        "destruction": 17104
+      },
+      {
+        "level": 6,
+        "completion": 7204,
+        "work": 72,
+        "destruction": 27606
+      },
+      {
+        "level": 7,
+        "completion": 9632,
+        "work": 82,
+        "destruction": 45339
+      },
+      {
+        "level": 8,
+        "completion": 13514,
+        "work": 92,
+        "destruction": 75146
+      },
+      {
+        "level": 9,
+        "completion": 16909,
+        "work": 102,
+        "destruction": 126762
+      },
+      {
+        "level": 10,
+        "completion": 22307,
+        "work": 112,
+        "destruction": 196257
+      }
+    ],
+    "glass_workshop": [
+      {
+        "level": 1,
+        "completion": 199,
+        "work": 16,
+        "destruction": 888
+      },
+      {
+        "level": 2,
+        "completion": 287,
+        "work": 20,
+        "destruction": 2083
+      },
+      {
+        "level": 3,
+        "completion": 397,
+        "work": 25,
+        "destruction": 4554
+      },
+      {
+        "level": 4,
+        "completion": 699,
+        "work": 32,
+        "destruction": 9124
+      },
+      {
+        "level": 5,
+        "completion": 931,
+        "work": 36,
+        "destruction": 18959
+      },
+      {
+        "level": 6,
+        "completion": 1199,
+        "work": 41,
+        "destruction": 43334
+      },
+      {
+        "level": 7,
+        "completion": 1789,
+        "work": 48,
+        "destruction": 72891
+      },
+      {
+        "level": 8,
+        "completion": 3083,
+        "work": 57,
+        "destruction": 128723
+      },
+      {
+        "level": 9,
+        "completion": 6778,
+        "work": 70,
+        "destruction": 302639
+      },
+      {
+        "level": 10,
+        "completion": 9184,
+        "work": 82,
+        "destruction": 374396
+      },
+      {
+        "level": 11,
+        "completion": 12311,
+        "work": 96,
+        "destruction": 432354
+      },
+      {
+        "level": 12,
+        "completion": 16402,
+        "work": 112,
+        "destruction": 497681
+      }
+    ],
+    "forge": [
+      {
+        "level": 1,
+        "completion": 86,
+        "work": 7,
+        "destruction": 501
+      }
+    ],
+    "weaving_yard": [
+      {
+        "level": 1,
+        "completion": 663,
+        "work": 22,
+        "destruction": 2444
+      },
+      {
+        "level": 2,
+        "completion": 1428,
+        "work": 32,
+        "destruction": 3829
+      },
+      {
+        "level": 3,
+        "completion": 2729,
+        "work": 42,
+        "destruction": 6458
+      },
+      {
+        "level": 4,
+        "completion": 4324,
+        "work": 52,
+        "destruction": 10179
+      },
+      {
+        "level": 5,
+        "completion": 6444,
+        "work": 62,
+        "destruction": 16594
+      },
+      {
+        "level": 6,
+        "completion": 8972,
+        "work": 72,
+        "destruction": 28877
+      },
+      {
+        "level": 7,
+        "completion": 12193,
+        "work": 82,
+        "destruction": 45201
+      },
+      {
+        "level": 8,
+        "completion": 16064,
+        "work": 92,
+        "destruction": 76892
+      },
+      {
+        "level": 9,
+        "completion": 21861,
+        "work": 102,
+        "destruction": 122381
+      },
+      {
+        "level": 10,
+        "completion": 26381,
+        "work": 112,
+        "destruction": 192337
+      }
+    ],
+    "dye_works": [
+      {
+        "level": 1,
+        "completion": 78,
+        "work": 0,
+        "destruction": 468
+      }
+    ],
+    "mechanical_workshop": [
+      {
+        "level": 1,
+        "completion": 654,
+        "work": 22,
+        "destruction": 2364
+      },
+      {
+        "level": 2,
+        "completion": 1387,
+        "work": 32,
+        "destruction": 4193
+      },
+      {
+        "level": 3,
+        "completion": 2738,
+        "work": 42,
+        "destruction": 7693
+      },
+      {
+        "level": 4,
+        "completion": 4384,
+        "work": 52,
+        "destruction": 13624
+      },
+      {
+        "level": 5,
+        "completion": 6279,
+        "work": 62,
+        "destruction": 24726
+      },
+      {
+        "level": 6,
+        "completion": 9156,
+        "work": 72,
+        "destruction": 43919
+      },
+      {
+        "level": 7,
+        "completion": 12951,
+        "work": 82,
+        "destruction": 78689
+      },
+      {
+        "level": 8,
+        "completion": 16904,
+        "work": 92,
+        "destruction": 130067
+      },
+      {
+        "level": 9,
+        "completion": 21523,
+        "work": 102,
+        "destruction": 234522
+      },
+      {
+        "level": 10,
+        "completion": 27943,
+        "work": 112,
+        "destruction": 441462
+      }
+    ],
+    "optical_workshop": [
+      {
+        "level": 1,
+        "completion": 63,
+        "work": 0,
+        "destruction": 381
+      }
+    ],
+    "mint": [
+      {
+        "level": 1,
+        "completion": 179,
+        "work": 0,
+        "destruction": 1089
+      }
+    ],
+    "coin_storage": [
+      {
+        "level": 1,
+        "completion": 28,
+        "work": 0,
+        "destruction": 164
+      },
+      {
+        "level": 2,
+        "completion": 55,
+        "work": 0,
+        "destruction": 356
+      },
+      {
+        "level": 3,
+        "completion": 149,
+        "work": 0,
+        "destruction": 736
+      },
+      {
+        "level": 4,
+        "completion": 317,
+        "work": 0,
+        "destruction": 1514
+      },
+      {
+        "level": 5,
+        "completion": 599,
+        "work": 0,
+        "destruction": 2981
+      },
+      {
+        "level": 6,
+        "completion": 1379,
+        "work": 0,
+        "destruction": 6402
+      },
+      {
+        "level": 7,
+        "completion": 3179,
+        "work": 0,
+        "destruction": 13053
+      },
+      {
+        "level": 8,
+        "completion": 7012,
+        "work": 0,
+        "destruction": 27264
+      },
+      {
+        "level": 9,
+        "completion": 15248,
+        "work": 0,
+        "destruction": 57557
+      },
+      {
+        "level": 10,
+        "completion": 34292,
+        "work": 0,
+        "destruction": 115897
+      },
+      {
+        "level": 11,
+        "completion": 75959,
+        "work": 0,
+        "destruction": 247109
+      },
+      {
+        "level": 12,
+        "completion": 156883,
+        "work": 0,
+        "destruction": 487263
+      }
+    ],
+    "market": [
+      {
+        "level": 1,
+        "completion": 12,
+        "work": 0,
+        "destruction": 117
+      }
+    ],
+    "tower": [
+      {
+        "level": 1,
+        "completion": 212,
+        "work": 0,
+        "destruction": 1271
+      }
+    ],
+    "defense_cannon": [
+      {
+        "level": 1,
+        "completion": 24,
+        "work": 0,
+        "destruction": 139
+      },
+      {
+        "level": 2,
+        "completion": 36,
+        "work": 0,
+        "destruction": 303
+      },
+      {
+        "level": 3,
+        "completion": 60,
+        "work": 0,
+        "destruction": 574
+      },
+      {
+        "level": 4,
+        "completion": 84,
+        "work": 0,
+        "destruction": 1167
+      },
+      {
+        "level": 5,
+        "completion": 127,
+        "work": 0,
+        "destruction": 2453
+      },
+      {
+        "level": 6,
+        "completion": 188,
+        "work": 0,
+        "destruction": 5039
+      },
+      {
+        "level": 7,
+        "completion": 373,
+        "work": 0,
+        "destruction": 10252
+      },
+      {
+        "level": 8,
+        "completion": 556,
+        "work": 0,
+        "destruction": 20353
+      },
+      {
+        "level": 9,
+        "completion": 764,
+        "work": 0,
+        "destruction": 41824
+      },
+      {
+        "level": 10,
+        "completion": 1059,
+        "work": 0,
+        "destruction": 85729
+      },
+      {
+        "level": 11,
+        "completion": 1451,
+        "work": 0,
+        "destruction": 166284
+      },
+      {
+        "level": 12,
+        "completion": 2222,
+        "work": 0,
+        "destruction": 342379
+      }
+    ],
+    "wooden_wall": [
+      {
+        "level": 1,
+        "completion": 15,
+        "work": 0,
+        "destruction": 19
+      },
+      {
+        "level": 2,
+        "completion": 30,
+        "work": 0,
+        "destruction": 44
+      },
+      {
+        "level": 3,
+        "completion": 58,
+        "work": 0,
+        "destruction": 106
+      }
+    ],
+    "stone_wall": [
+      {
+        "level": 4,
+        "completion": 64,
+        "work": 0,
+        "destruction": 254
+      },
+      {
+        "level": 5,
+        "completion": 168,
+        "work": 0,
+        "destruction": 562
+      },
+      {
+        "level": 6,
+        "completion": 318,
+        "work": 0,
+        "destruction": 1351
+      },
+      {
+        "level": 7,
+        "completion": 393,
+        "work": 0,
+        "destruction": 3099
+      }
+    ],
+    "concrete_wall": [
+      {
+        "level": 8,
+        "completion": 684,
+        "work": 0,
+        "destruction": 7649
+      },
+      {
+        "level": 9,
+        "completion": 1444,
+        "work": 0,
+        "destruction": 17681
+      },
+      {
+        "level": 10,
+        "completion": 2574,
+        "work": 0,
+        "destruction": 40919
+      }
+    ],
+    "modern_wall": [
+      {
+        "level": 11,
+        "completion": 3611,
+        "work": 0,
+        "destruction": 94058
+      },
+      {
+        "level": 12,
+        "completion": 5682,
+        "work": 0,
+        "destruction": 213842
+      },
+      {
+        "level": 13,
+        "completion": 10669,
+        "work": 0,
+        "destruction": 493817
+      }
+    ],
+    "road": [
+      {
+        "level": 1,
+        "completion": 4,
+        "work": 0,
+        "destruction": 12
+      }
+    ],
+    "standard_road": [
+      {
+        "level": 2,
+        "completion": 5,
+        "work": 0,
+        "destruction": 31
+      }
+    ],
+    "paved_road": [
+      {
+        "level": 3,
+        "completion": 24,
+        "work": 0,
+        "destruction": 78
+      }
+    ],
+    "alliance_house": [
+      {
+        "level": 1,
+        "completion": 126,
+        "work": 0,
+        "destruction": 749
+      }
+    ],
+    "field_bed": [
+      {
+        "level": 1,
+        "completion": 3,
+        "work": 4,
+        "destruction": 22
+      },
+      {
+        "level": 2,
+        "completion": 23,
+        "work": 7,
+        "destruction": 48
+      },
+      {
+        "level": 3,
+        "completion": 86,
+        "work": 10,
+        "destruction": 132
+      },
+      {
+        "level": 4,
+        "completion": 332,
+        "work": 14,
+        "destruction": 318
+      },
+      {
+        "level": 5,
+        "completion": 943,
+        "work": 20,
+        "destruction": 769
+      },
+      {
+        "level": 6,
+        "completion": 1446,
+        "work": 24,
+        "destruction": 1979
+      },
+      {
+        "level": 7,
+        "completion": 2394,
+        "work": 29,
+        "destruction": 4952
+      },
+      {
+        "level": 8,
+        "completion": 3927,
+        "work": 35,
+        "destruction": 13124
+      },
+      {
+        "level": 9,
+        "completion": 5724,
+        "work": 41,
+        "destruction": 30922
+      },
+      {
+        "level": 10,
+        "completion": 8951,
+        "work": 48,
+        "destruction": 82388
+      },
+      {
+        "level": 11,
+        "completion": 12502,
+        "work": 57,
+        "destruction": 192436
+      }
+    ],
+    "seed_garden": [
+      {
+        "level": 1,
+        "completion": 12,
+        "work": 2,
+        "destruction": 82
+      },
+      {
+        "level": 2,
+        "completion": 35,
+        "work": 3,
+        "destruction": 222
+      },
+      {
+        "level": 3,
+        "completion": 75,
+        "work": 4,
+        "destruction": 541
+      },
+      {
+        "level": 4,
+        "completion": 124,
+        "work": 5,
+        "destruction": 983
+      },
+      {
+        "level": 5,
+        "completion": 202,
+        "work": 6,
+        "destruction": 1587
+      },
+      {
+        "level": 6,
+        "completion": 322,
+        "work": 8,
+        "destruction": 2658
+      },
+      {
+        "level": 7,
+        "completion": 489,
+        "work": 10,
+        "destruction": 4343
+      },
+      {
+        "level": 8,
+        "completion": 649,
+        "work": 12,
+        "destruction": 6569
+      },
+      {
+        "level": 9,
+        "completion": 864,
+        "work": 15,
+        "destruction": 11437
+      },
+      {
+        "level": 10,
+        "completion": 1148,
+        "work": 18,
+        "destruction": 17108
+      }
+    ],
+    "herb_bed": [
+      {
+        "level": 1,
+        "completion": 869,
+        "work": 13,
+        "destruction": 4997
+      },
+      {
+        "level": 2,
+        "completion": 1326,
+        "work": 17,
+        "destruction": 8299
+      },
+      {
+        "level": 3,
+        "completion": 1981,
+        "work": 22,
+        "destruction": 13199
+      },
+      {
+        "level": 4,
+        "completion": 3029,
+        "work": 26,
+        "destruction": 21732
+      },
+      {
+        "level": 5,
+        "completion": 4397,
+        "work": 32,
+        "destruction": 35741
+      },
+      {
+        "level": 6,
+        "completion": 6367,
+        "work": 38,
+        "destruction": 55949
+      },
+      {
+        "level": 7,
+        "completion": 9068,
+        "work": 44,
+        "destruction": 93523
+      },
+      {
+        "level": 8,
+        "completion": 11941,
+        "work": 51,
+        "destruction": 149031
+      },
+      {
+        "level": 9,
+        "completion": 16962,
+        "work": 59,
+        "destruction": 245276
+      }
+    ],
+    "mushroom_grove": [
+      {
+        "level": 1,
+        "completion": 289,
+        "work": 9,
+        "destruction": 1693
+      },
+      {
+        "level": 2,
+        "completion": 609,
+        "work": 13,
+        "destruction": 3031
+      },
+      {
+        "level": 3,
+        "completion": 1117,
+        "work": 18,
+        "destruction": 5084
+      },
+      {
+        "level": 4,
+        "completion": 1964,
+        "work": 23,
+        "destruction": 8966
+      },
+      {
+        "level": 5,
+        "completion": 3273,
+        "work": 28,
+        "destruction": 15831
+      },
+      {
+        "level": 6,
+        "completion": 4883,
+        "work": 35,
+        "destruction": 28189
+      },
+      {
+        "level": 7,
+        "completion": 7589,
+        "work": 41,
+        "destruction": 49499
+      },
+      {
+        "level": 8,
+        "completion": 11063,
+        "work": 49,
+        "destruction": 85148
+      },
+      {
+        "level": 9,
+        "completion": 15466,
+        "work": 56,
+        "destruction": 149932
+      },
+      {
+        "level": 10,
+        "completion": 20629,
+        "work": 65,
+        "destruction": 260609
+      }
+    ],
+    "flax_field": [
+      {
+        "level": 1,
+        "completion": 40,
+        "work": 7,
+        "destruction": 211
+      },
+      {
+        "level": 2,
+        "completion": 98,
+        "work": 10,
+        "destruction": 516
+      },
+      {
+        "level": 3,
+        "completion": 68,
+        "work": 4,
+        "destruction": 579
+      },
+      {
+        "level": 4,
+        "completion": 117,
+        "work": 5,
+        "destruction": 1053
+      },
+      {
+        "level": 5,
+        "completion": 189,
+        "work": 6,
+        "destruction": 1726
+      },
+      {
+        "level": 6,
+        "completion": 288,
+        "work": 8,
+        "destruction": 2751
+      },
+      {
+        "level": 7,
+        "completion": 456,
+        "work": 10,
+        "destruction": 4668
+      },
+      {
+        "level": 8,
+        "completion": 619,
+        "work": 12,
+        "destruction": 7589
+      },
+      {
+        "level": 9,
+        "completion": 847,
+        "work": 15,
+        "destruction": 12457
+      },
+      {
+        "level": 10,
+        "completion": 1098,
+        "work": 18,
+        "destruction": 18461
+      }
+    ],
+    "reed_bed": [
+      {
+        "level": 1,
+        "completion": 194,
+        "work": 8,
+        "destruction": 1122
+      },
+      {
+        "level": 2,
+        "completion": 407,
+        "work": 12,
+        "destruction": 2089
+      },
+      {
+        "level": 3,
+        "completion": 918,
+        "work": 16,
+        "destruction": 3811
+      },
+      {
+        "level": 4,
+        "completion": 1614,
+        "work": 21,
+        "destruction": 6664
+      },
+      {
+        "level": 5,
+        "completion": 2742,
+        "work": 27,
+        "destruction": 12284
+      },
+      {
+        "level": 6,
+        "completion": 4279,
+        "work": 33,
+        "destruction": 21529
+      },
+      {
+        "level": 7,
+        "completion": 6718,
+        "work": 39,
+        "destruction": 40024
+      },
+      {
+        "level": 8,
+        "completion": 9519,
+        "work": 47,
+        "destruction": 73248
+      },
+      {
+        "level": 9,
+        "completion": 13759,
+        "work": 54,
+        "destruction": 123464
+      },
+      {
+        "level": 10,
+        "completion": 18534,
+        "work": 62,
+        "destruction": 231256
+      }
+    ],
+    "dye_garden": [
+      {
+        "level": 1,
+        "completion": 8312,
+        "work": 34,
+        "destruction": 29363
+      },
+      {
+        "level": 2,
+        "completion": 13409,
+        "work": 44,
+        "destruction": 48498
+      },
+      {
+        "level": 3,
+        "completion": 21539,
+        "work": 55,
+        "destruction": 83919
+      },
+      {
+        "level": 4,
+        "completion": 30938,
+        "work": 66,
+        "destruction": 139878
+      },
+      {
+        "level": 5,
+        "completion": 44968,
+        "work": 79,
+        "destruction": 238974
+      },
+      {
+        "level": 6,
+        "completion": 62572,
+        "work": 93,
+        "destruction": 405819
+      }
+    ],
+    "oilseed_field": [
+      {
+        "level": 1,
+        "completion": 2864,
+        "work": 21,
+        "destruction": 17599
+      },
+      {
+        "level": 2,
+        "completion": 4907,
+        "work": 28,
+        "destruction": 28367
+      },
+      {
+        "level": 3,
+        "completion": 7213,
+        "work": 35,
+        "destruction": 44023
+      },
+      {
+        "level": 4,
+        "completion": 10971,
+        "work": 43,
+        "destruction": 69483
+      },
+      {
+        "level": 5,
+        "completion": 16003,
+        "work": 52,
+        "destruction": 114474
+      },
+      {
+        "level": 6,
+        "completion": 22608,
+        "work": 61,
+        "destruction": 179964
+      },
+      {
+        "level": 7,
+        "completion": 29754,
+        "work": 71,
+        "destruction": 290944
+      }
+    ],
+    "sugar_bed": [
+      {
+        "level": 1,
+        "completion": 1409,
+        "work": 16,
+        "destruction": 8231
+      },
+      {
+        "level": 2,
+        "completion": 2392,
+        "work": 21,
+        "destruction": 13558
+      },
+      {
+        "level": 3,
+        "completion": 3674,
+        "work": 27,
+        "destruction": 20574
+      },
+      {
+        "level": 4,
+        "completion": 5877,
+        "work": 33,
+        "destruction": 33262
+      },
+      {
+        "level": 5,
+        "completion": 8156,
+        "work": 40,
+        "destruction": 50364
+      },
+      {
+        "level": 6,
+        "completion": 11706,
+        "work": 47,
+        "destruction": 76817
+      },
+      {
+        "level": 7,
+        "completion": 15594,
+        "work": 55,
+        "destruction": 122096
+      },
+      {
+        "level": 8,
+        "completion": 21294,
+        "work": 63,
+        "destruction": 194203
+      },
+      {
+        "level": 9,
+        "completion": 29942,
+        "work": 72,
+        "destruction": 292723
+      }
+    ],
+    "crystal_greenhouse": [
+      {
+        "level": 1,
+        "completion": 25913,
+        "work": 57,
+        "destruction": 30271
+      },
+      {
+        "level": 2,
+        "completion": 40716,
+        "work": 73,
+        "destruction": 79301
+      },
+      {
+        "level": 3,
+        "completion": 61759,
+        "work": 90,
+        "destruction": 193547
+      },
+      {
+        "level": 4,
+        "completion": 91928,
+        "work": 109,
+        "destruction": 499684
+      }
+    ],
+    "lumber_yard": [
+      {
+        "level": 1,
+        "completion": 15,
+        "work": 5,
+        "destruction": 94
+      },
+      {
+        "level": 2,
+        "completion": 169,
+        "work": 9,
+        "destruction": 184
+      },
+      {
+        "level": 3,
+        "completion": 429,
+        "work": 13,
+        "destruction": 371
+      },
+      {
+        "level": 4,
+        "completion": 1067,
+        "work": 19,
+        "destruction": 762
+      },
+      {
+        "level": 5,
+        "completion": 2074,
+        "work": 25,
+        "destruction": 1494
+      },
+      {
+        "level": 6,
+        "completion": 3759,
+        "work": 31,
+        "destruction": 3014
+      },
+      {
+        "level": 7,
+        "completion": 6028,
+        "work": 38,
+        "destruction": 6251
+      },
+      {
+        "level": 8,
+        "completion": 7989,
+        "work": 43,
+        "destruction": 12514
+      },
+      {
+        "level": 9,
+        "completion": 10567,
+        "work": 49,
+        "destruction": 27174
+      },
+      {
+        "level": 10,
+        "completion": 13099,
+        "work": 55,
+        "destruction": 52759
+      },
+      {
+        "level": 11,
+        "completion": 16677,
+        "work": 61,
+        "destruction": 105378
+      },
+      {
+        "level": 12,
+        "completion": 20013,
+        "work": 67,
+        "destruction": 229554
+      },
+      {
+        "level": 13,
+        "completion": 25697,
+        "work": 75,
+        "destruction": 448631
+      }
+    ],
+    "sand_quarry": [
+      {
+        "level": 1,
+        "completion": 23,
+        "work": 5,
+        "destruction": 138
+      },
+      {
+        "level": 2,
+        "completion": 162,
+        "work": 9,
+        "destruction": 302
+      },
+      {
+        "level": 3,
+        "completion": 427,
+        "work": 13,
+        "destruction": 644
+      },
+      {
+        "level": 4,
+        "completion": 989,
+        "work": 18,
+        "destruction": 1432
+      },
+      {
+        "level": 5,
+        "completion": 1776,
+        "work": 23,
+        "destruction": 3012
+      },
+      {
+        "level": 6,
+        "completion": 3424,
+        "work": 30,
+        "destruction": 6637
+      },
+      {
+        "level": 7,
+        "completion": 5861,
+        "work": 38,
+        "destruction": 14309
+      },
+      {
+        "level": 8,
+        "completion": 8526,
+        "work": 44,
+        "destruction": 30829
+      },
+      {
+        "level": 9,
+        "completion": 10917,
+        "work": 51,
+        "destruction": 67229
+      },
+      {
+        "level": 10,
+        "completion": 14309,
+        "work": 58,
+        "destruction": 141234
+      },
+      {
+        "level": 11,
+        "completion": 22277,
+        "work": 68,
+        "destruction": 309799
+      }
+    ],
+    "mine": [
+      {
+        "level": 1,
+        "completion": 60,
+        "work": 8,
+        "destruction": 409
+      },
+      {
+        "level": 2,
+        "completion": 111,
+        "work": 10,
+        "destruction": 893
+      },
+      {
+        "level": 3,
+        "completion": 209,
+        "work": 13,
+        "destruction": 1527
+      },
+      {
+        "level": 4,
+        "completion": 354,
+        "work": 16,
+        "destruction": 2657
+      },
+      {
+        "level": 5,
+        "completion": 484,
+        "work": 20,
+        "destruction": 3859
+      },
+      {
+        "level": 6,
+        "completion": 721,
+        "work": 24,
+        "destruction": 6713
+      },
+      {
+        "level": 7,
+        "completion": 982,
+        "work": 29,
+        "destruction": 9089
+      },
+      {
+        "level": 8,
+        "completion": 1114,
+        "work": 33,
+        "destruction": 15451
+      },
+      {
+        "level": 9,
+        "completion": 1447,
+        "work": 38,
+        "destruction": 30134
+      },
+      {
+        "level": 10,
+        "completion": 1722,
+        "work": 45,
+        "destruction": 66852
+      },
+      {
+        "level": 11,
+        "completion": 2006,
+        "work": 52,
+        "destruction": 144427
+      },
+      {
+        "level": 12,
+        "completion": 2393,
+        "work": 57,
+        "destruction": 225339
+      }
+    ],
+    "clay_quarry": [
+      {
+        "level": 1,
+        "completion": 36,
+        "work": 6,
+        "destruction": 223
+      },
+      {
+        "level": 2,
+        "completion": 186,
+        "work": 10,
+        "destruction": 442
+      },
+      {
+        "level": 3,
+        "completion": 462,
+        "work": 14,
+        "destruction": 824
+      },
+      {
+        "level": 4,
+        "completion": 1044,
+        "work": 19,
+        "destruction": 1723
+      },
+      {
+        "level": 5,
+        "completion": 1806,
+        "work": 24,
+        "destruction": 3424
+      },
+      {
+        "level": 6,
+        "completion": 3124,
+        "work": 30,
+        "destruction": 6497
+      },
+      {
+        "level": 7,
+        "completion": 5454,
+        "work": 37,
+        "destruction": 13289
+      },
+      {
+        "level": 8,
+        "completion": 8101,
+        "work": 44,
+        "destruction": 25129
+      },
+      {
+        "level": 9,
+        "completion": 10111,
+        "work": 49,
+        "destruction": 52034
+      },
+      {
+        "level": 10,
+        "completion": 13424,
+        "work": 56,
+        "destruction": 103012
+      },
+      {
+        "level": 11,
+        "completion": 16808,
+        "work": 62,
+        "destruction": 197402
+      },
+      {
+        "level": 12,
+        "completion": 23754,
+        "work": 71,
+        "destruction": 410299
+      }
+    ],
+    "iron_mine": [
+      {
+        "level": 1,
+        "completion": 20,
+        "work": 0,
+        "destruction": 162
+      }
+    ],
+    "copper_mine": [
+      {
+        "level": 1,
+        "completion": 629,
+        "work": 22,
+        "destruction": 2339
+      },
+      {
+        "level": 2,
+        "completion": 1442,
+        "work": 32,
+        "destruction": 3879
+      },
+      {
+        "level": 3,
+        "completion": 2659,
+        "work": 42,
+        "destruction": 6824
+      },
+      {
+        "level": 4,
+        "completion": 4302,
+        "work": 52,
+        "destruction": 11088
+      },
+      {
+        "level": 5,
+        "completion": 6411,
+        "work": 62,
+        "destruction": 18644
+      },
+      {
+        "level": 6,
+        "completion": 9376,
+        "work": 72,
+        "destruction": 31544
+      },
+      {
+        "level": 7,
+        "completion": 12666,
+        "work": 82,
+        "destruction": 50584
+      },
+      {
+        "level": 8,
+        "completion": 16124,
+        "work": 92,
+        "destruction": 84367
+      },
+      {
+        "level": 9,
+        "completion": 20699,
+        "work": 102,
+        "destruction": 142212
+      },
+      {
+        "level": 10,
+        "completion": 26498,
+        "work": 112,
+        "destruction": 231782
+      }
+    ],
+    "resin_kiln": [
+      {
+        "level": 1,
+        "completion": 643,
+        "work": 22,
+        "destruction": 2461
+      },
+      {
+        "level": 2,
+        "completion": 1371,
+        "work": 32,
+        "destruction": 3769
+      },
+      {
+        "level": 3,
+        "completion": 2646,
+        "work": 42,
+        "destruction": 6299
+      },
+      {
+        "level": 4,
+        "completion": 4357,
+        "work": 52,
+        "destruction": 10321
+      },
+      {
+        "level": 5,
+        "completion": 6474,
+        "work": 62,
+        "destruction": 17289
+      },
+      {
+        "level": 6,
+        "completion": 9259,
+        "work": 72,
+        "destruction": 27669
+      },
+      {
+        "level": 7,
+        "completion": 12593,
+        "work": 82,
+        "destruction": 45044
+      },
+      {
+        "level": 8,
+        "completion": 16179,
+        "work": 92,
+        "destruction": 72901
+      },
+      {
+        "level": 9,
+        "completion": 20324,
+        "work": 102,
+        "destruction": 118109
+      },
+      {
+        "level": 10,
+        "completion": 27103,
+        "work": 112,
+        "destruction": 202889
+      }
+    ],
+    "sulfur_spring": [
+      {
+        "level": 1,
+        "completion": 4042,
+        "work": 22,
+        "destruction": 5887
+      },
+      {
+        "level": 2,
+        "completion": 6458,
+        "work": 32,
+        "destruction": 9096
+      },
+      {
+        "level": 3,
+        "completion": 10109,
+        "work": 42,
+        "destruction": 15769
+      },
+      {
+        "level": 4,
+        "completion": 14127,
+        "work": 52,
+        "destruction": 25489
+      },
+      {
+        "level": 5,
+        "completion": 20287,
+        "work": 62,
+        "destruction": 40723
+      },
+      {
+        "level": 6,
+        "completion": 28938,
+        "work": 72,
+        "destruction": 67644
+      },
+      {
+        "level": 7,
+        "completion": 37767,
+        "work": 82,
+        "destruction": 109376
+      },
+      {
+        "level": 8,
+        "completion": 49099,
+        "work": 92,
+        "destruction": 184499
+      },
+      {
+        "level": 9,
+        "completion": 59204,
+        "work": 102,
+        "destruction": 314813
+      },
+      {
+        "level": 10,
+        "completion": 74219,
+        "work": 112,
+        "destruction": 488393
+      }
+    ],
+    "oil_well": [
+      {
+        "level": 1,
+        "completion": 43,
+        "work": 6,
+        "destruction": 262
+      },
+      {
+        "level": 2,
+        "completion": 5649,
+        "work": 30,
+        "destruction": 8706
+      },
+      {
+        "level": 3,
+        "completion": 35792,
+        "work": 70,
+        "destruction": 304216
+      }
+    ],
+    "stone_cutters": [
+      {
+        "level": 1,
+        "completion": 7,
+        "work": 4,
+        "destruction": 61
+      }
+    ],
+    "tile_factory": [
+      {
+        "level": 1,
+        "completion": 659,
+        "work": 22,
+        "destruction": 2391
+      },
+      {
+        "level": 2,
+        "completion": 1454,
+        "work": 32,
+        "destruction": 3873
+      },
+      {
+        "level": 3,
+        "completion": 2614,
+        "work": 42,
+        "destruction": 6571
+      },
+      {
+        "level": 4,
+        "completion": 4344,
+        "work": 52,
+        "destruction": 10689
+      },
+      {
+        "level": 5,
+        "completion": 6404,
+        "work": 62,
+        "destruction": 16467
+      },
+      {
+        "level": 6,
+        "completion": 9142,
+        "work": 72,
+        "destruction": 28326
+      },
+      {
+        "level": 7,
+        "completion": 12119,
+        "work": 82,
+        "destruction": 46876
+      },
+      {
+        "level": 8,
+        "completion": 16761,
+        "work": 92,
+        "destruction": 73389
+      },
+      {
+        "level": 9,
+        "completion": 21683,
+        "work": 102,
+        "destruction": 126619
+      },
+      {
+        "level": 10,
+        "completion": 27279,
+        "work": 112,
+        "destruction": 202262
+      }
+    ],
+    "cement_workshop": [
+      {
+        "level": 1,
+        "completion": 664,
+        "work": 22,
+        "destruction": 2367
+      },
+      {
+        "level": 2,
+        "completion": 1374,
+        "work": 32,
+        "destruction": 4029
+      },
+      {
+        "level": 3,
+        "completion": 2694,
+        "work": 42,
+        "destruction": 6239
+      },
+      {
+        "level": 4,
+        "completion": 4192,
+        "work": 52,
+        "destruction": 10859
+      },
+      {
+        "level": 5,
+        "completion": 6758,
+        "work": 62,
+        "destruction": 17839
+      },
+      {
+        "level": 6,
+        "completion": 8862,
+        "work": 72,
+        "destruction": 27433
+      },
+      {
+        "level": 7,
+        "completion": 12118,
+        "work": 82,
+        "destruction": 48694
+      },
+      {
+        "level": 8,
+        "completion": 16429,
+        "work": 92,
+        "destruction": 77204
+      },
+      {
+        "level": 9,
+        "completion": 21904,
+        "work": 102,
+        "destruction": 123364
+      },
+      {
+        "level": 10,
+        "completion": 27139,
+        "work": 112,
+        "destruction": 205047
+      }
+    ],
+    "concrete_plant": [
+      {
+        "level": 1,
+        "completion": 2844,
+        "work": 22,
+        "destruction": 3933
+      },
+      {
+        "level": 2,
+        "completion": 4319,
+        "work": 32,
+        "destruction": 6188
+      },
+      {
+        "level": 3,
+        "completion": 6557,
+        "work": 42,
+        "destruction": 10506
+      },
+      {
+        "level": 4,
+        "completion": 9067,
+        "work": 52,
+        "destruction": 17069
+      },
+      {
+        "level": 5,
+        "completion": 13284,
+        "work": 62,
+        "destruction": 26679
+      },
+      {
+        "level": 6,
+        "completion": 17894,
+        "work": 72,
+        "destruction": 45898
+      },
+      {
+        "level": 7,
+        "completion": 22444,
+        "work": 82,
+        "destruction": 72404
+      },
+      {
+        "level": 8,
+        "completion": 28587,
+        "work": 92,
+        "destruction": 118939
+      },
+      {
+        "level": 9,
+        "completion": 37269,
+        "work": 102,
+        "destruction": 195684
+      },
+      {
+        "level": 10,
+        "completion": 45073,
+        "work": 112,
+        "destruction": 300218
+      }
+    ],
+    "rope_yard": [
+      {
+        "level": 1,
+        "completion": 55,
+        "work": 7,
+        "destruction": 419
+      },
+      {
+        "level": 2,
+        "completion": 114,
+        "work": 9,
+        "destruction": 807
+      },
+      {
+        "level": 3,
+        "completion": 187,
+        "work": 12,
+        "destruction": 1488
+      },
+      {
+        "level": 4,
+        "completion": 308,
+        "work": 16,
+        "destruction": 2759
+      },
+      {
+        "level": 5,
+        "completion": 488,
+        "work": 21,
+        "destruction": 5003
+      },
+      {
+        "level": 6,
+        "completion": 708,
+        "work": 27,
+        "destruction": 8937
+      },
+      {
+        "level": 7,
+        "completion": 936,
+        "work": 34,
+        "destruction": 14377
+      },
+      {
+        "level": 8,
+        "completion": 1198,
+        "work": 42,
+        "destruction": 23094
+      }
+    ],
+    "paper_workshop": [
+      {
+        "level": 1,
+        "completion": 214,
+        "work": 16,
+        "destruction": 1438
+      },
+      {
+        "level": 2,
+        "completion": 464,
+        "work": 20,
+        "destruction": 2516
+      },
+      {
+        "level": 3,
+        "completion": 942,
+        "work": 24,
+        "destruction": 4466
+      },
+      {
+        "level": 4,
+        "completion": 1738,
+        "work": 28,
+        "destruction": 7594
+      },
+      {
+        "level": 5,
+        "completion": 2889,
+        "work": 32,
+        "destruction": 13543
+      },
+      {
+        "level": 6,
+        "completion": 4753,
+        "work": 36,
+        "destruction": 22239
+      },
+      {
+        "level": 7,
+        "completion": 7211,
+        "work": 40,
+        "destruction": 37864
+      },
+      {
+        "level": 8,
+        "completion": 9837,
+        "work": 44,
+        "destruction": 68713
+      },
+      {
+        "level": 9,
+        "completion": 13793,
+        "work": 48,
+        "destruction": 116039
+      },
+      {
+        "level": 10,
+        "completion": 18259,
+        "work": 52,
+        "destruction": 198284
+      }
+    ],
+    "paint_workshop": [
+      {
+        "level": 1,
+        "completion": 3954,
+        "work": 22,
+        "destruction": 5748
+      },
+      {
+        "level": 2,
+        "completion": 6729,
+        "work": 32,
+        "destruction": 9469
+      },
+      {
+        "level": 3,
+        "completion": 10281,
+        "work": 42,
+        "destruction": 15246
+      },
+      {
+        "level": 4,
+        "completion": 14347,
+        "work": 52,
+        "destruction": 24629
+      },
+      {
+        "level": 5,
+        "completion": 20487,
+        "work": 62,
+        "destruction": 39833
+      },
+      {
+        "level": 6,
+        "completion": 27478,
+        "work": 72,
+        "destruction": 65998
+      },
+      {
+        "level": 7,
+        "completion": 36154,
+        "work": 82,
+        "destruction": 110387
+      },
+      {
+        "level": 8,
+        "completion": 48046,
+        "work": 92,
+        "destruction": 177603
+      },
+      {
+        "level": 9,
+        "completion": 58784,
+        "work": 102,
+        "destruction": 282584
+      },
+      {
+        "level": 10,
+        "completion": 78227,
+        "work": 112,
+        "destruction": 466351
+      }
+    ],
+    "oil_press": [
+      {
+        "level": 1,
+        "completion": 661,
+        "work": 22,
+        "destruction": 2344
+      },
+      {
+        "level": 2,
+        "completion": 1449,
+        "work": 32,
+        "destruction": 3772
+      },
+      {
+        "level": 3,
+        "completion": 2697,
+        "work": 42,
+        "destruction": 6414
+      },
+      {
+        "level": 4,
+        "completion": 4169,
+        "work": 52,
+        "destruction": 10011
+      },
+      {
+        "level": 5,
+        "completion": 6516,
+        "work": 62,
+        "destruction": 16649
+      },
+      {
+        "level": 6,
+        "completion": 9304,
+        "work": 72,
+        "destruction": 27712
+      },
+      {
+        "level": 7,
+        "completion": 12941,
+        "work": 82,
+        "destruction": 45859
+      },
+      {
+        "level": 8,
+        "completion": 15754,
+        "work": 92,
+        "destruction": 72207
+      },
+      {
+        "level": 9,
+        "completion": 21842,
+        "work": 102,
+        "destruction": 127069
+      },
+      {
+        "level": 10,
+        "completion": 26639,
+        "work": 112,
+        "destruction": 206338
+      }
+    ],
+    "foundry": [
+      {
+        "level": 1,
+        "completion": 652,
+        "work": 22,
+        "destruction": 2314
+      },
+      {
+        "level": 2,
+        "completion": 1443,
+        "work": 32,
+        "destruction": 3909
+      },
+      {
+        "level": 3,
+        "completion": 2769,
+        "work": 42,
+        "destruction": 6789
+      },
+      {
+        "level": 4,
+        "completion": 4467,
+        "work": 52,
+        "destruction": 11736
+      },
+      {
+        "level": 5,
+        "completion": 6702,
+        "work": 62,
+        "destruction": 18734
+      },
+      {
+        "level": 6,
+        "completion": 9309,
+        "work": 72,
+        "destruction": 32194
+      },
+      {
+        "level": 7,
+        "completion": 12023,
+        "work": 82,
+        "destruction": 55828
+      },
+      {
+        "level": 8,
+        "completion": 16946,
+        "work": 92,
+        "destruction": 96081
+      },
+      {
+        "level": 9,
+        "completion": 21696,
+        "work": 102,
+        "destruction": 159849
+      },
+      {
+        "level": 10,
+        "completion": 26964,
+        "work": 112,
+        "destruction": 265349
+      }
+    ],
+    "steelworks": [
+      {
+        "level": 1,
+        "completion": 4009,
+        "work": 22,
+        "destruction": 5647
+      },
+      {
+        "level": 2,
+        "completion": 6546,
+        "work": 32,
+        "destruction": 9609
+      },
+      {
+        "level": 3,
+        "completion": 10199,
+        "work": 42,
+        "destruction": 14979
+      },
+      {
+        "level": 4,
+        "completion": 13971,
+        "work": 52,
+        "destruction": 24338
+      },
+      {
+        "level": 5,
+        "completion": 20374,
+        "work": 62,
+        "destruction": 41386
+      },
+      {
+        "level": 6,
+        "completion": 28078,
+        "work": 72,
+        "destruction": 66584
+      },
+      {
+        "level": 7,
+        "completion": 36864,
+        "work": 82,
+        "destruction": 116589
+      },
+      {
+        "level": 8,
+        "completion": 47514,
+        "work": 92,
+        "destruction": 181434
+      },
+      {
+        "level": 9,
+        "completion": 63358,
+        "work": 102,
+        "destruction": 297326
+      },
+      {
+        "level": 10,
+        "completion": 75469,
+        "work": 112,
+        "destruction": 493682
+      }
+    ],
+    "electronics_workshop": [
+      {
+        "level": 1,
+        "completion": 13999,
+        "work": 22,
+        "destruction": 8456
+      },
+      {
+        "level": 2,
+        "completion": 21027,
+        "work": 32,
+        "destruction": 12813
+      },
+      {
+        "level": 3,
+        "completion": 29774,
+        "work": 42,
+        "destruction": 20878
+      },
+      {
+        "level": 4,
+        "completion": 39728,
+        "work": 52,
+        "destruction": 32899
+      },
+      {
+        "level": 5,
+        "completion": 51246,
+        "work": 62,
+        "destruction": 51229
+      },
+      {
+        "level": 6,
+        "completion": 66699,
+        "work": 72,
+        "destruction": 80279
+      },
+      {
+        "level": 7,
+        "completion": 89432,
+        "work": 82,
+        "destruction": 126694
+      },
+      {
+        "level": 8,
+        "completion": 114374,
+        "work": 92,
+        "destruction": 209219
+      },
+      {
+        "level": 9,
+        "completion": 145726,
+        "work": 102,
+        "destruction": 319322
+      },
+      {
+        "level": 10,
+        "completion": 181364,
+        "work": 112,
+        "destruction": 483181
+      }
+    ],
+    "oil_refinery": [
+      {
+        "level": 1,
+        "completion": 316,
+        "work": 22,
+        "destruction": 2284
+      },
+      {
+        "level": 2,
+        "completion": 816,
+        "work": 32,
+        "destruction": 3789
+      },
+      {
+        "level": 3,
+        "completion": 1601,
+        "work": 42,
+        "destruction": 6342
+      },
+      {
+        "level": 4,
+        "completion": 2788,
+        "work": 52,
+        "destruction": 10307
+      },
+      {
+        "level": 5,
+        "completion": 4838,
+        "work": 62,
+        "destruction": 17587
+      },
+      {
+        "level": 6,
+        "completion": 6963,
+        "work": 72,
+        "destruction": 27934
+      },
+      {
+        "level": 7,
+        "completion": 9552,
+        "work": 82,
+        "destruction": 47456
+      },
+      {
+        "level": 8,
+        "completion": 12716,
+        "work": 92,
+        "destruction": 73403
+      },
+      {
+        "level": 9,
+        "completion": 17817,
+        "work": 102,
+        "destruction": 122809
+      },
+      {
+        "level": 10,
+        "completion": 22089,
+        "work": 112,
+        "destruction": 192016
+      }
+    ],
+    "chemical_workshop": [
+      {
+        "level": 1,
+        "completion": 30,
+        "work": 5,
+        "destruction": 243
+      }
+    ],
+    "military_factory": [
+      {
+        "level": 1,
+        "completion": 2699,
+        "work": 22,
+        "destruction": 4099
+      },
+      {
+        "level": 2,
+        "completion": 4062,
+        "work": 32,
+        "destruction": 6634
+      },
+      {
+        "level": 3,
+        "completion": 6541,
+        "work": 42,
+        "destruction": 10494
+      },
+      {
+        "level": 4,
+        "completion": 9746,
+        "work": 52,
+        "destruction": 18023
+      },
+      {
+        "level": 5,
+        "completion": 12849,
+        "work": 62,
+        "destruction": 29798
+      },
+      {
+        "level": 6,
+        "completion": 17082,
+        "work": 72,
+        "destruction": 48954
+      },
+      {
+        "level": 7,
+        "completion": 22956,
+        "work": 82,
+        "destruction": 83537
+      },
+      {
+        "level": 8,
+        "completion": 30487,
+        "work": 92,
+        "destruction": 135432
+      },
+      {
+        "level": 9,
+        "completion": 37654,
+        "work": 102,
+        "destruction": 221332
+      },
+      {
+        "level": 10,
+        "completion": 44909,
+        "work": 112,
+        "destruction": 360973
+      }
+    ],
+    "precision_workshop": [
+      {
+        "level": 1,
+        "completion": 28,
+        "work": 0,
+        "destruction": 397
+      }
+    ],
+    "siege_yard": [
+      {
+        "level": 1,
+        "completion": 17914,
+        "work": 48,
+        "destruction": 29916
+      },
+      {
+        "level": 2,
+        "completion": 42652,
+        "work": 75,
+        "destruction": 385758
+      }
+    ],
+    "resonance_laboratory": [
+      {
+        "level": 1,
+        "completion": 97064,
+        "work": 106,
+        "destruction": 475727
+      }
+    ],
+    "defense_stakes": [
+      {
+        "level": 1,
+        "completion": 8,
+        "work": 0,
+        "destruction": 47
+      },
+      {
+        "level": 2,
+        "completion": 14,
+        "work": 0,
+        "destruction": 149
+      },
+      {
+        "level": 3,
+        "completion": 23,
+        "work": 0,
+        "destruction": 436
+      },
+      {
+        "level": 4,
+        "completion": 39,
+        "work": 0,
+        "destruction": 1282
+      },
+      {
+        "level": 5,
+        "completion": 58,
+        "work": 0,
+        "destruction": 4036
+      },
+      {
+        "level": 6,
+        "completion": 93,
+        "work": 0,
+        "destruction": 12117
+      }
+    ],
+    "defense_resin_snare": [
+      {
+        "level": 1,
+        "completion": 392,
+        "work": 0,
+        "destruction": 2399
+      },
+      {
+        "level": 2,
+        "completion": 651,
+        "work": 0,
+        "destruction": 7063
+      },
+      {
+        "level": 3,
+        "completion": 1038,
+        "work": 0,
+        "destruction": 20967
+      },
+      {
+        "level": 4,
+        "completion": 1913,
+        "work": 0,
+        "destruction": 59581
+      }
+    ],
+    "defense_bolt_thrower": [
+      {
+        "level": 1,
+        "completion": 917,
+        "work": 0,
+        "destruction": 5344
+      },
+      {
+        "level": 2,
+        "completion": 1382,
+        "work": 0,
+        "destruction": 10036
+      },
+      {
+        "level": 3,
+        "completion": 2159,
+        "work": 0,
+        "destruction": 17954
+      },
+      {
+        "level": 4,
+        "completion": 3281,
+        "work": 0,
+        "destruction": 31573
+      },
+      {
+        "level": 5,
+        "completion": 5423,
+        "work": 0,
+        "destruction": 59342
+      },
+      {
+        "level": 6,
+        "completion": 7836,
+        "work": 0,
+        "destruction": 108712
+      },
+      {
+        "level": 7,
+        "completion": 11373,
+        "work": 0,
+        "destruction": 194894
+      },
+      {
+        "level": 8,
+        "completion": 16081,
+        "work": 0,
+        "destruction": 359424
+      }
+    ],
+    "defense_storm_coil": [
+      {
+        "level": 1,
+        "completion": 4634,
+        "work": 0,
+        "destruction": 26244
+      },
+      {
+        "level": 2,
+        "completion": 6913,
+        "work": 0,
+        "destruction": 48001
+      },
+      {
+        "level": 3,
+        "completion": 8933,
+        "work": 0,
+        "destruction": 79438
+      },
+      {
+        "level": 4,
+        "completion": 12841,
+        "work": 0,
+        "destruction": 131797
+      },
+      {
+        "level": 5,
+        "completion": 18832,
+        "work": 0,
+        "destruction": 228569
+      },
+      {
+        "level": 6,
+        "completion": 27581,
+        "work": 0,
+        "destruction": 388903
+      }
+    ],
+    "defense_automaton_bay": [
+      {
+        "level": 1,
+        "completion": 8614,
+        "work": 0,
+        "destruction": 28853
+      },
+      {
+        "level": 2,
+        "completion": 13612,
+        "work": 0,
+        "destruction": 61302
+      },
+      {
+        "level": 3,
+        "completion": 20206,
+        "work": 0,
+        "destruction": 113824
+      },
+      {
+        "level": 4,
+        "completion": 28841,
+        "work": 0,
+        "destruction": 234599
+      },
+      {
+        "level": 5,
+        "completion": 47188,
+        "work": 0,
+        "destruction": 445792
+      }
+    ],
+    "defense_guardian_enclosure": [
+      {
+        "level": 1,
+        "completion": 61392,
+        "work": 0,
+        "destruction": 31018
+      },
+      {
+        "level": 2,
+        "completion": 88556,
+        "work": 0,
+        "destruction": 62486
+      },
+      {
+        "level": 3,
+        "completion": 134719,
+        "work": 0,
+        "destruction": 123891
+      },
+      {
+        "level": 4,
+        "completion": 185024,
+        "work": 0,
+        "destruction": 250494
+      },
+      {
+        "level": 5,
+        "completion": 271121,
+        "work": 0,
+        "destruction": 490276
+      }
+    ],
+    "ruins_archive": [
+      {
+        "level": 1,
+        "completion": 2158,
+        "work": 0,
+        "destruction": 169584
+      }
+    ],
+    "ruins_bastion": [
+      {
+        "level": 1,
+        "completion": 4139,
+        "work": 0,
+        "destruction": 308942
+      }
+    ],
+    "ruins_greenhouse": [
+      {
+        "level": 1,
+        "completion": 2679,
+        "work": 0,
+        "destruction": 187906
+      }
+    ],
+    "ruins_mechanic_workshop": [
+      {
+        "level": 1,
+        "completion": 2954,
+        "work": 0,
+        "destruction": 227566
+      }
+    ],
+    "ruins_mint": [
+      {
+        "level": 1,
+        "completion": 3203,
+        "work": 0,
+        "destruction": 230532
+      }
+    ],
+    "ruins_ore_obelisk": [
+      {
+        "level": 1,
+        "completion": 3554,
+        "work": 0,
+        "destruction": 278264
+      }
+    ],
+    "ruins_rift_watch": [
+      {
+        "level": 1,
+        "completion": 4347,
+        "work": 0,
+        "destruction": 339184
+      }
+    ],
+    "ruins_river_lighthouse": [
+      {
+        "level": 1,
+        "completion": 4688,
+        "work": 0,
+        "destruction": 354918
+      }
+    ],
+    "ruins_storage": [
+      {
+        "level": 1,
+        "completion": 2387,
+        "work": 0,
+        "destruction": 177106
+      }
+    ],
+    "ruins_town_square": [
+      {
+        "level": 1,
+        "completion": 1948,
+        "work": 0,
+        "destruction": 144276
+      }
+    ],
+    "ruins_water_station": [
+      {
+        "level": 1,
+        "completion": 2812,
+        "work": 0,
+        "destruction": 208649
+      }
+    ],
+    "ruins_wind_shrine": [
+      {
+        "level": 1,
+        "completion": 3469,
+        "work": 0,
+        "destruction": 252633
+      }
+    ]
+  }
+}
