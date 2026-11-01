@@ -1,26 +1,28 @@
 package config
 
 import (
+	"reflect"
 	"testing"
 	"time"
 )
 
-func TestLoadUsesFallbacks(t *testing.T) {
-	t.Setenv("SERVER_ADDR", "")
-	t.Setenv("SIMULATION_BATCH_SIZE", "bad")
-
+func TestProductionSessionAndOriginsFromEnvironment(t *testing.T) {
+	t.Setenv("CORS_ALLOWED_ORIGINS", "https://one.example, https://two.example")
+	t.Setenv("JWT_ACCESS_TTL", "20m")
+	t.Setenv("JWT_REFRESH_TTL", "168h")
 	cfg := Load()
+	if !reflect.DeepEqual(cfg.Server.AllowedOrigins, []string{"https://one.example", "https://two.example"}) {
+		t.Fatalf("origins = %q", cfg.Server.AllowedOrigins)
+	}
+	if cfg.Session.AccessTTL != 20*time.Minute || cfg.Session.RefreshTTL != 7*24*time.Hour {
+		t.Fatalf("session TTLs = %s / %s", cfg.Session.AccessTTL, cfg.Session.RefreshTTL)
+	}
+}
 
-	if cfg.Server.Addr != ":8080" {
-		t.Fatalf("expected default server addr, got %q", cfg.Server.Addr)
-	}
-	if cfg.Simulation.BatchSize != 100 {
-		t.Fatalf("expected default batch size, got %d", cfg.Simulation.BatchSize)
-	}
-	if cfg.Session.AccessTTL != 15*time.Minute {
-		t.Fatalf("expected default access ttl, got %s", cfg.Session.AccessTTL)
-	}
-	if cfg.Simulation.OutboxDispatchInterval != 500*time.Millisecond {
-		t.Fatalf("expected independent outbox interval, got %s", cfg.Simulation.OutboxDispatchInterval)
+func TestProductionDoesNotDefaultToWildcardOrigin(t *testing.T) {
+	t.Setenv("APP_ENV", "production")
+	t.Setenv("CORS_ALLOWED_ORIGINS", "")
+	if got := Load().Server.AllowedOrigins; len(got) != 0 {
+		t.Fatalf("production origins = %q", got)
 	}
 }

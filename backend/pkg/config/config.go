@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -20,6 +21,7 @@ type Config struct {
 
 type ServerConfig struct {
 	Addr            string
+	AllowedOrigins  []string
 	ReadTimeout     time.Duration
 	WriteTimeout    time.Duration
 	ShutdownTimeout time.Duration
@@ -68,10 +70,16 @@ type ObservabilityConfig struct {
 }
 
 func Load() Config {
+	appEnv := env("APP_ENV", "development")
+	defaultOrigins := "*"
+	if appEnv == "production" {
+		defaultOrigins = ""
+	}
 	return Config{
-		AppEnv: env("APP_ENV", "development"),
+		AppEnv: appEnv,
 		Server: ServerConfig{
 			Addr:            env("SERVER_ADDR", ":8080"),
+			AllowedOrigins:  origins(env("CORS_ALLOWED_ORIGINS", defaultOrigins)),
 			ReadTimeout:     duration("SERVER_READ_TIMEOUT", 5*time.Second),
 			WriteTimeout:    duration("SERVER_WRITE_TIMEOUT", 10*time.Second),
 			ShutdownTimeout: duration("SERVER_SHUTDOWN_TIMEOUT", 10*time.Second),
@@ -112,6 +120,16 @@ func Load() Config {
 			MetricsAddr: env("WORKER_METRICS_ADDR", "127.0.0.1:9091"),
 		},
 	}
+}
+
+func origins(value string) []string {
+	var result []string
+	for _, origin := range strings.Split(value, ",") {
+		if origin = strings.TrimSpace(origin); origin != "" {
+			result = append(result, origin)
+		}
+	}
+	return result
 }
 
 func env(key, fallback string) string {

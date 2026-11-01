@@ -5,12 +5,19 @@
     header X-Frame-Options DENY
     header Permissions-Policy "camera=(), microphone=(), geolocation=()"
     @internal path /metrics /metrics/* /debug /debug/*
-    respond @internal 404
+    handle @internal {
+        respond 404
+    }
     handle /api/* {
         request_body {
             max_size 1MB
         }
-        reverse_proxy backend:8080
+        reverse_proxy backend:8080 {
+            transport http {
+                dial_timeout 5s
+                response_header_timeout 20s
+            }
+        }
     }
     handle /health {
         reverse_proxy backend:8080

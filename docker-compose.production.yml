@@ -37,9 +37,23 @@ services:
       POSTGRES_DSN: postgres://real_city:${POSTGRES_PASSWORD}@postgres:5432/real_city?sslmode=disable
       REDIS_ADDR: redis:6379
       SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET}
+      JWT_ACCESS_TTL: ${JWT_ACCESS_TTL:-15m}
+      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL:-720h}
+      CORS_ALLOWED_ORIGINS: https://${DOMAIN:?set DOMAIN}
       SIMULATION_EMBEDDED: 'true'
       STORAGE_PUBLIC_URL: https://${DOMAIN:?set DOMAIN}/assets
       LOG_LEVEL: info
+      SERVER_READ_TIMEOUT: ${SERVER_READ_TIMEOUT:-5s}
+      SERVER_WRITE_TIMEOUT: ${SERVER_WRITE_TIMEOUT:-10s}
+      SERVER_SHUTDOWN_TIMEOUT: ${SERVER_SHUTDOWN_TIMEOUT:-10s}
+      WS_PING_INTERVAL: ${WS_PING_INTERVAL:-25s}
+      WS_WRITE_TIMEOUT: ${WS_WRITE_TIMEOUT:-5s}
+      POSTGRES_MAX_OPEN_CONNS: ${POSTGRES_MAX_OPEN_CONNS:-20}
+      POSTGRES_MAX_IDLE_CONNS: ${POSTGRES_MAX_IDLE_CONNS:-10}
+      SIMULATION_TICK_INTERVAL: ${SIMULATION_TICK_INTERVAL:-1s}
+      SIMULATION_WORKER_COUNT: ${SIMULATION_WORKER_COUNT:-1}
+      SIMULATION_BATCH_SIZE: ${SIMULATION_BATCH_SIZE:-100}
+      SIMULATION_SHUTDOWN_TIMEOUT: ${SIMULATION_SHUTDOWN_TIMEOUT:-5s}
     depends_on:
       postgres: {condition: service_healthy}
       redis: {condition: service_healthy}
@@ -48,6 +62,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 6
+    stop_grace_period: 20s
   web:
     image: ${FRONTEND_IMAGE:?set FRONTEND_IMAGE to a versioned image}
     restart: unless-stopped

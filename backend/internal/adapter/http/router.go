@@ -1,7 +1,6 @@
 package httpadapter
 
 import (
-	"context"
 	"database/sql"
 	"encoding/json"
 	"log/slog"
@@ -16,30 +15,36 @@ import (
 )
 
 type RouterDeps struct {
-	Auth        *service.AuthService
-	Players     *service.PlayerService
-	Worlds      *service.WorldService
-	Forests     *service.ForestService
-	Buildings   *service.BuildingService
-	Economy     *service.EconomyService
-	Resources   *service.ResourceService
-	Production  *service.ProductionService
-	Fields      *service.FieldService
-	Population  *service.PopulationService
-	Monsters    *service.MonsterService
-	Combat      *service.CombatService
-	Threats     *service.ThreatService
-	Alliances   *service.AllianceService
-	Chat        *service.ChatService
-	Market      *service.MarketService
-	Tokens      *jwtadapter.Manager
-	Realtime    *wsadapter.Gateway
-	DBPool      *sql.DB
-	Idempotency middleware.IdempotencyStore
+	AppEnv         string
+	AllowedOrigins []string
+	Auth           *service.AuthService
+	Players        *service.PlayerService
+	Worlds         *service.WorldService
+	Forests        *service.ForestService
+	Buildings      *service.BuildingService
+	Economy        *service.EconomyService
+	Resources      *service.ResourceService
+	Production     *service.ProductionService
+	Fields         *service.FieldService
+	Population     *service.PopulationService
+	Monsters       *service.MonsterService
+	Combat         *service.CombatService
+	Threats        *service.ThreatService
+	Alliances      *service.AllianceService
+	Chat           *service.ChatService
+	Market         *service.MarketService
+	Tokens         *jwtadapter.Manager
+	Realtime       *wsadapter.Gateway
+	DBPool         *sql.DB
+	Idempotency    middleware.IdempotencyStore
 }
 
 func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux := http.NewServeMux()
+	var readiness *readinessProbe
+	if deps.DBPool != nil {
+		readiness = newReadinessProbe(deps.DBPool)
+	}
 	authenticated := func(tokens *jwtadapter.Manager, next http.Handler) http.Handler {
 		return middleware.Auth(tokens, next, deps.Players)
 	}
@@ -70,13 +75,9 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.HandleFunc("GET /health", health)
 	mux.HandleFunc("GET /healthz", health)
 	mux.HandleFunc("GET /ready", func(w http.ResponseWriter, r *http.Request) {
-		if deps.DBPool != nil {
-			ctx, cancel := context.WithTimeout(r.Context(), time.Second)
-			defer cancel()
-			if err := deps.DBPool.PingContext(ctx); err != nil {
-				JSON(w, http.StatusServiceUnavailable, Envelope{"status": "unavailable"})
-				return
-			}
+		if readiness != nil && !readiness.ready(r.Context()) {
+			JSON(w, http.StatusServiceUnavailable, Envelope{"status": "unavailable"})
+			return
 		}
 		JSON(w, http.StatusOK, Envelope{"status": "ready"})
 	})
@@ -163,13 +164,21 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 		middleware.Logger(log),
 		middleware.Metrics(httpMetrics, mux),
 		middleware.Recoverer(func(r *http.Request, recovered any, stack []byte) {
-			log.Error("http.panic", "event", "http.panic", "request_id", middleware.RequestIDFromContext(r.Context()), "path", r.URL.Path, "panic", recovered, "stack", string(stack))
+			logRecoveredPanic(log, deps.AppEnv, r, recovered, stack)
 		}),
-		middleware.CORS([]string{"*"}),
+		middleware.CORS(deps.AllowedOrigins),
 		middleware.BodyLimit(1<<20),
-		middleware.Timeout(5*time.Second),
+		middleware.Timeout(15*time.Second),
 		middleware.RateLimit(nil, middleware.DefaultRateLimitRules()),
 	)
+}
+
+func logRecoveredPanic(log *slog.Logger, appEnv string, r *http.Request, recovered any, stack []byte) {
+	attributes := []any{"event", "http.panic", "request_id", middleware.RequestIDFromContext(r.Context())}
+	if appEnv != "production" {
+		attributes = append(attributes, "path", r.URL.Path, "panic", recovered, "stack", string(stack))
+	}
+	log.Error("http.panic", attributes...)
 }
 
 func swaggerOpenAPI(w http.ResponseWriter, r *http.Request) {

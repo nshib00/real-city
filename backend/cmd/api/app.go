@@ -151,7 +151,7 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 		sim:      simulationRunner,
 		outbox:   outboxDispatcher,
 		server: &http.Server{
-			Handler:      httpadapter.NewRouter(log, httpadapter.RouterDeps{Auth: authService, Players: playerService, Worlds: worldService, Forests: forestService, Buildings: buildingService, Economy: economyService, Resources: resourceService, Production: productionService, Fields: fieldService, Population: populationService, Monsters: monsterService, Combat: combatService, Threats: threatService, Alliances: allianceService, Chat: chatService, Market: marketService, Tokens: tokenManager, Realtime: realtimeGateway, DBPool: dbPool, Idempotency: idempotencyStore}),
+			Handler:      httpadapter.NewRouter(log, httpadapter.RouterDeps{AppEnv: cfg.AppEnv, AllowedOrigins: cfg.Server.AllowedOrigins, Auth: authService, Players: playerService, Worlds: worldService, Forests: forestService, Buildings: buildingService, Economy: economyService, Resources: resourceService, Production: productionService, Fields: fieldService, Population: populationService, Monsters: monsterService, Combat: combatService, Threats: threatService, Alliances: allianceService, Chat: chatService, Market: marketService, Tokens: tokenManager, Realtime: realtimeGateway, DBPool: dbPool, Idempotency: idempotencyStore}),
 			Addr:         cfg.Server.Addr,
 			ReadTimeout:  cfg.Server.ReadTimeout,
 			WriteTimeout: cfg.Server.WriteTimeout,

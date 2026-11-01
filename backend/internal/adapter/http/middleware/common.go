@@ -30,12 +30,18 @@ func CORS(allowedOrigins []string) Middleware {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			origin := r.Header.Get("Origin")
-			if _, ok := allowed["*"]; ok || origin == "" {
-				w.Header().Set("Access-Control-Allow-Origin", "*")
-			} else if _, ok := allowed[origin]; ok {
-				w.Header().Set("Access-Control-Allow-Origin", origin)
-				w.Header().Set("Vary", "Origin")
+			_, wildcard := allowed["*"]
+			_, exact := allowed[origin]
+			if origin != "" && !wildcard && !exact {
+				http.Error(w, "origin is not allowed", http.StatusForbidden)
+				return
 			}
+			if origin != "" && wildcard {
+				w.Header().Set("Access-Control-Allow-Origin", "*")
+			} else if origin != "" && exact {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+			}
+			w.Header().Add("Vary", "Origin")
 			w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type, Idempotency-Key, X-Request-ID")
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
 			if r.Method == http.MethodOptions {

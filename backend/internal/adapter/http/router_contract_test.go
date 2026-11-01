@@ -37,6 +37,31 @@ func TestRouterMiddlewareSmoke(t *testing.T) {
 	if rec.Header().Get("X-Request-ID") != "smoke-request" {
 		t.Fatalf("missing request id header")
 	}
+	rec = httptest.NewRecorder()
+	router.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/ready", nil))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("readiness without database = %d", rec.Code)
+	}
+}
+
+func TestRouterRejectsForeignOrigin(t *testing.T) {
+	router := testRouterWithOrigins([]string{"https://city.example"})
+	for _, method := range []string{http.MethodOptions, http.MethodPost} {
+		req := httptest.NewRequest(method, "/api/v1/auth/login", nil)
+		req.Header.Set("Origin", "https://foreign.example")
+		rec := httptest.NewRecorder()
+		router.ServeHTTP(rec, req)
+		if rec.Code != http.StatusForbidden || rec.Header().Get("Access-Control-Allow-Origin") != "" {
+			t.Fatalf("foreign origin %s: status=%d allow=%q", method, rec.Code, rec.Header().Get("Access-Control-Allow-Origin"))
+		}
+	}
+	req := httptest.NewRequest(http.MethodOptions, "/api/v1/auth/login", nil)
+	req.Header.Set("Origin", "https://city.example")
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+	if rec.Code != http.StatusNoContent || rec.Header().Get("Access-Control-Allow-Origin") != "https://city.example" {
+		t.Fatalf("allowed origin: status=%d allow=%q", rec.Code, rec.Header().Get("Access-Control-Allow-Origin"))
+	}
 }
 
 func TestOpenAPIFreshness(t *testing.T) {
@@ -96,6 +121,10 @@ func readOpenAPIFile(t *testing.T) openAPIFile {
 }
 
 func testRouter() http.Handler {
+	return testRouterWithOrigins([]string{"*"})
+}
+
+func testRouterWithOrigins(origins []string) http.Handler {
 	players := memory.NewPlayerRepo()
 	sessions := memory.NewSessionStore()
 	tokens := jwtadapter.NewManager("route-contract-secret", 0, 0)
@@ -106,22 +135,23 @@ func testRouter() http.Handler {
 	socialRepo := memory.NewSocialRepo()
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, slog.Default())
 	return NewRouter(slog.Default(), RouterDeps{
-		Auth:       service.NewAuthService(players, sessions, tokens, slog.Default()),
-		Players:    service.NewPlayerService(players, sessions, slog.Default()),
-		Worlds:     service.NewWorldService(worldRepo, slog.Default()),
-		Forests:    service.NewForestService(worldRepo, economyService, slog.Default()),
-		Buildings:  service.NewBuildingService(buildingRepo, worldRepo, slog.Default()),
-		Economy:    economyService,
-		Resources:  service.NewResourceService(economyRepo, economyService, slog.Default()),
-		Production: service.NewProductionService(economyRepo, economyService, slog.Default()),
-		Fields:     service.NewFieldService(economyService, buildingRepo),
-		Population: service.NewPopulationService(economyService),
-		Monsters:   service.NewMonsterService(monsterRepo, slog.Default()),
-		Combat:     service.NewCombatService(service.NewMonsterService(monsterRepo, slog.Default()), slog.Default()),
-		Threats:    service.NewThreatService(monsterRepo),
-		Alliances:  service.NewAllianceService(socialRepo, economyService, slog.Default()),
-		Chat:       service.NewChatService(socialRepo, socialRepo, slog.Default()),
-		Market:     service.NewMarketService(socialRepo, economyService, slog.Default()),
-		Tokens:     tokens,
+		AllowedOrigins: origins,
+		Auth:           service.NewAuthService(players, sessions, tokens, slog.Default()),
+		Players:        service.NewPlayerService(players, sessions, slog.Default()),
+		Worlds:         service.NewWorldService(worldRepo, slog.Default()),
+		Forests:        service.NewForestService(worldRepo, economyService, slog.Default()),
+		Buildings:      service.NewBuildingService(buildingRepo, worldRepo, slog.Default()),
+		Economy:        economyService,
+		Resources:      service.NewResourceService(economyRepo, economyService, slog.Default()),
+		Production:     service.NewProductionService(economyRepo, economyService, slog.Default()),
+		Fields:         service.NewFieldService(economyService, buildingRepo),
+		Population:     service.NewPopulationService(economyService),
+		Monsters:       service.NewMonsterService(monsterRepo, slog.Default()),
+		Combat:         service.NewCombatService(service.NewMonsterService(monsterRepo, slog.Default()), slog.Default()),
+		Threats:        service.NewThreatService(monsterRepo),
+		Alliances:      service.NewAllianceService(socialRepo, economyService, slog.Default()),
+		Chat:           service.NewChatService(socialRepo, socialRepo, slog.Default()),
+		Market:         service.NewMarketService(socialRepo, economyService, slog.Default()),
+		Tokens:         tokens,
 	})
 }
