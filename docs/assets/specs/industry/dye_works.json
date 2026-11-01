@@ -46,7 +46,7 @@
       "priority": "accent"
     },
     "brick": {
-      "visible_as": "кирпичная кладка и дымоход",
+      "visible_as": "кирпичная кладка стен цеха и двух открытых красильных ванн",
       "levels": [
         1
       ],
@@ -255,11 +255,12 @@
   },
   "references": {
     "docs": [
-      "docs/buildings/industry/dye-works.md"
+      "docs/buildings/industry/dye-works.md",
+      "docs/assets/dye-works-model-brief.md"
     ],
     "art_guide": "docs/art/visual-style-guide.md",
-    "existing_generators": [],
-    "existing_assets": []
+    "existing_generators": ["tools/assets/blender/real_city/components/dye_works.py"],
+    "existing_assets": ["frontend/public/assets/buildings/industry/paint_workshop/paint_workshop_l01_active.png"]
   },
   "notes": [
     "Первичная visual-spec по действующему каталогу; художественную приёмку и генерацию выполнять по контракту 22.2."
