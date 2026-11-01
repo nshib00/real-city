@@ -1,0 +1,2071 @@
+{
+  "asset_id": "town_hall",
+  "display_name": "Ратуша",
+  "category": "center",
+  "levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "states": [
+    "active",
+    "construction",
+    "damaged"
+  ],
+  "sprite": {
+    "size": [
+      512,
+      384
+    ],
+    "anchor": [
+      256,
+      292
+    ]
+  },
+  "runtime_levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "playable_levels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "source_blends": [
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction.blend",
+    "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged.blend"
+  ],
+  "material_map": {
+    "wood": "walls and beams",
+    "stone": "foundation and masonry",
+    "brick": "late facade",
+    "windleaf": "early roof"
+  },
+  "lod_policy": {
+    "chain": [
+      {
+        "name": "LOD0"
+      },
+      {
+        "name": "LOD1"
+      },
+      {
+        "name": "LOD2"
+      }
+    ]
+  },
+  "generator": "tools/assets/blender/build_town_hall_vertical_states.py",
+  "backup": "tools/assets/backups/town_hall_before_vertical_2026-10-26.tar.gz",
+  "items": [
+    {
+      "id": "town_hall_l01_active",
+      "level": 1,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active_LOD0.glb",
+          "triangles": 3068
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active_LOD1.glb",
+          "triangles": 1786
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_active_LOD2.glb",
+          "triangles": 992
+        }
+      ],
+      "triangles": 3068,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.1659998893737793
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l01_construction",
+      "level": 1,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction_LOD0.glb",
+          "triangles": 3456
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction_LOD1.glb",
+          "triangles": 1996
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_construction_LOD2.glb",
+          "triangles": 1109
+        }
+      ],
+      "triangles": 3456,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7205957174301147
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l01_damaged",
+      "level": 1,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged_LOD0.glb",
+          "triangles": 3356
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged_LOD1.glb",
+          "triangles": 1944
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l01_damaged_LOD2.glb",
+          "triangles": 1083
+        }
+      ],
+      "triangles": 3356,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.7205957174301147
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l02_active",
+      "level": 2,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active_LOD0.glb",
+          "triangles": 3256
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active_LOD1.glb",
+          "triangles": 1888
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_active_LOD2.glb",
+          "triangles": 1032
+        }
+      ],
+      "triangles": 3256,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.381999969482422
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l02_construction",
+      "level": 2,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction_LOD0.glb",
+          "triangles": 3604
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction_LOD1.glb",
+          "triangles": 2078
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_construction_LOD2.glb",
+          "triangles": 1140
+        }
+      ],
+      "triangles": 3604,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.936469554901123
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l02_damaged",
+      "level": 2,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged_LOD0.glb",
+          "triangles": 3508
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged_LOD1.glb",
+          "triangles": 2028
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l02_damaged_LOD2.glb",
+          "triangles": 1117
+        }
+      ],
+      "triangles": 3508,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          1.936469554901123
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l03_active",
+      "level": 3,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active_LOD0.glb",
+          "triangles": 5056
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active_LOD1.glb",
+          "triangles": 2878
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_active_LOD2.glb",
+          "triangles": 1482
+        }
+      ],
+      "triangles": 5056,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.5380001068115234
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l03_construction",
+      "level": 3,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction_LOD0.glb",
+          "triangles": 5488
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction_LOD1.glb",
+          "triangles": 3108
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_construction_LOD2.glb",
+          "triangles": 1624
+        }
+      ],
+      "triangles": 5488,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0923492908477783
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l03_damaged",
+      "level": 3,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged_LOD0.glb",
+          "triangles": 5044
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged_LOD1.glb",
+          "triangles": 2872
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l03_damaged_LOD2.glb",
+          "triangles": 1506
+        }
+      ],
+      "triangles": 5044,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          2.0923492908477783
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l04_active",
+      "level": 4,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active_LOD0.glb",
+          "triangles": 6814
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active_LOD1.glb",
+          "triangles": 3846
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_active_LOD2.glb",
+          "triangles": 1968
+        }
+      ],
+      "triangles": 6814,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.5099997520446777
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l04_construction",
+      "level": 4,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction_LOD0.glb",
+          "triangles": 6124
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction_LOD1.glb",
+          "triangles": 3466
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_construction_LOD2.glb",
+          "triangles": 1810
+        }
+      ],
+      "triangles": 6124,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.3299999237060547
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l04_damaged",
+      "level": 4,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged_LOD0.glb",
+          "triangles": 6340
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged_LOD1.glb",
+          "triangles": 3585
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l04_damaged_LOD2.glb",
+          "triangles": 1855
+        }
+      ],
+      "triangles": 6340,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.3299999237060547
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l05_active",
+      "level": 5,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active_LOD0.glb",
+          "triangles": 8994
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active_LOD1.glb",
+          "triangles": 5044
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_active_LOD2.glb",
+          "triangles": 2530
+        }
+      ],
+      "triangles": 8994,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.6949996948242188
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l05_construction",
+      "level": 5,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction_LOD0.glb",
+          "triangles": 7944
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction_LOD1.glb",
+          "triangles": 4468
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_construction_LOD2.glb",
+          "triangles": 2302
+        }
+      ],
+      "triangles": 7944,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.515000104904175
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l05_damaged",
+      "level": 5,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged_LOD0.glb",
+          "triangles": 6656
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged_LOD1.glb",
+          "triangles": 3758
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l05_damaged_LOD2.glb",
+          "triangles": 1943
+        }
+      ],
+      "triangles": 6656,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.515000104904175
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l06_active",
+      "level": 6,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active_LOD0.glb",
+          "triangles": 10794
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active_LOD1.glb",
+          "triangles": 6034
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_active_LOD2.glb",
+          "triangles": 2998
+        }
+      ],
+      "triangles": 10794,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.859999895095825
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l06_construction",
+      "level": 6,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction_LOD0.glb",
+          "triangles": 8352
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction_LOD1.glb",
+          "triangles": 4692
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_construction_LOD2.glb",
+          "triangles": 2418
+        }
+      ],
+      "triangles": 8352,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.680000066757202
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l06_damaged",
+      "level": 6,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged_LOD0.glb",
+          "triangles": 7312
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged_LOD1.glb",
+          "triangles": 4118
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l06_damaged_LOD2.glb",
+          "triangles": 2119
+        }
+      ],
+      "triangles": 7312,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.680000066757202
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l07_active",
+      "level": 7,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active_LOD0.glb",
+          "triangles": 15452
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active_LOD1.glb",
+          "triangles": 8542
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_active_LOD2.glb",
+          "triangles": 3729
+        }
+      ],
+      "triangles": 15452,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.025000095367432
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l07_construction",
+      "level": 7,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction_LOD0.glb",
+          "triangles": 12490
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction_LOD1.glb",
+          "triangles": 6934
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_construction_LOD2.glb",
+          "triangles": 3121
+        }
+      ],
+      "triangles": 12490,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.8450000286102295
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l07_damaged",
+      "level": 7,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged_LOD0.glb",
+          "triangles": 11714
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged_LOD1.glb",
+          "triangles": 6505
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l07_damaged_LOD2.glb",
+          "triangles": 3032
+        }
+      ],
+      "triangles": 11714,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          3.8450000286102295
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l08_active",
+      "level": 8,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active_LOD0.glb",
+          "triangles": 15720
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active_LOD1.glb",
+          "triangles": 8682
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_active_LOD2.glb",
+          "triangles": 3815
+        }
+      ],
+      "triangles": 15720,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.190000057220459
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l08_construction",
+      "level": 8,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction_LOD0.glb",
+          "triangles": 13098
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction_LOD1.glb",
+          "triangles": 7261
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_construction_LOD2.glb",
+          "triangles": 3299
+        }
+      ],
+      "triangles": 13098,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.010000228881836
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l08_damaged",
+      "level": 8,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged_LOD0.glb",
+          "triangles": 11866
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged_LOD1.glb",
+          "triangles": 6589
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l08_damaged_LOD2.glb",
+          "triangles": 3090
+        }
+      ],
+      "triangles": 11866,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.010000228881836
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l09_active",
+      "level": 9,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active_LOD0.glb",
+          "triangles": 20886
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active_LOD1.glb",
+          "triangles": 11508
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_active_LOD2.glb",
+          "triangles": 5018
+        }
+      ],
+      "triangles": 20886,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.34499979019165
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l09_construction",
+      "level": 9,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction_LOD0.glb",
+          "triangles": 16426
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction_LOD1.glb",
+          "triangles": 9100
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_construction_LOD2.glb",
+          "triangles": 4078
+        }
+      ],
+      "triangles": 16426,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.164999961853027
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l09_damaged",
+      "level": 9,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged_LOD0.glb",
+          "triangles": 12538
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged_LOD1.glb",
+          "triangles": 6958
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l09_damaged_LOD2.glb",
+          "triangles": 3230
+        }
+      ],
+      "triangles": 12538,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.164999961853027
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l10_active",
+      "level": 10,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active_LOD0.glb",
+          "triangles": 21618
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active_LOD1.glb",
+          "triangles": 11916
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_active_LOD2.glb",
+          "triangles": 5254
+        }
+      ],
+      "triangles": 21618,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.519999980926514
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l10_construction",
+      "level": 10,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction_LOD0.glb",
+          "triangles": 16670
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction_LOD1.glb",
+          "triangles": 9230
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_construction_LOD2.glb",
+          "triangles": 4138
+        }
+      ],
+      "triangles": 16670,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.340000152587891
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l10_damaged",
+      "level": 10,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged_LOD0.glb",
+          "triangles": 13166
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged_LOD1.glb",
+          "triangles": 7302
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l10_damaged_LOD2.glb",
+          "triangles": 3401
+        }
+      ],
+      "triangles": 13166,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.340000152587891
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l11_active",
+      "level": 11,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active_LOD0.glb",
+          "triangles": 21910
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active_LOD1.glb",
+          "triangles": 12074
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_active_LOD2.glb",
+          "triangles": 5322
+        }
+      ],
+      "triangles": 21910,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.6100006103515625
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l11_construction",
+      "level": 11,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction_LOD0.glb",
+          "triangles": 16726
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction_LOD1.glb",
+          "triangles": 9264
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_construction_LOD2.glb",
+          "triangles": 4164
+        }
+      ],
+      "triangles": 16726,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.429999351501465
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l11_damaged",
+      "level": 11,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged_LOD0.glb",
+          "triangles": 13426
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged_LOD1.glb",
+          "triangles": 7445
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l11_damaged_LOD2.glb",
+          "triangles": 3460
+        }
+      ],
+      "triangles": 13426,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.429999351501465
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l12_active",
+      "level": 12,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active_LOD0.glb",
+          "triangles": 24664
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active_LOD1.glb",
+          "triangles": 13588
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_active_LOD2.glb",
+          "triangles": 6051
+        }
+      ],
+      "triangles": 24664,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.699999809265137
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l12_construction",
+      "level": 12,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction_LOD0.glb",
+          "triangles": 19074
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction_LOD1.glb",
+          "triangles": 10562
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_construction_LOD2.glb",
+          "triangles": 4751
+        }
+      ],
+      "triangles": 19074,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.519999980926514
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l12_damaged",
+      "level": 12,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged_LOD0.glb",
+          "triangles": 16118
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged_LOD1.glb",
+          "triangles": 8929
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l12_damaged_LOD2.glb",
+          "triangles": 4184
+        }
+      ],
+      "triangles": 16118,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.519999980926514
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l13_active",
+      "level": 13,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active_LOD0.glb",
+          "triangles": 24956
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active_LOD1.glb",
+          "triangles": 13746
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_active_LOD2.glb",
+          "triangles": 6099
+        }
+      ],
+      "triangles": 24956,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.789999961853027
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l13_construction",
+      "level": 13,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction_LOD0.glb",
+          "triangles": 19082
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction_LOD1.glb",
+          "triangles": 10568
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_construction_LOD2.glb",
+          "triangles": 4753
+        }
+      ],
+      "triangles": 19082,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.610000133514404
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l13_damaged",
+      "level": 13,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged_LOD0.glb",
+          "triangles": 16174
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged_LOD1.glb",
+          "triangles": 8963
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l13_damaged_LOD2.glb",
+          "triangles": 4171
+        }
+      ],
+      "triangles": 16174,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.610000133514404
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l14_active",
+      "level": 14,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active_LOD0.glb",
+          "triangles": 27710
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active_LOD1.glb",
+          "triangles": 15258
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_active_LOD2.glb",
+          "triangles": 6802
+        }
+      ],
+      "triangles": 27710,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.880000114440918
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l14_construction",
+      "level": 14,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction_LOD0.glb",
+          "triangles": 21736
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction_LOD1.glb",
+          "triangles": 12026
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_construction_LOD2.glb",
+          "triangles": 5460
+        }
+      ],
+      "triangles": 21736,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.699999809265137
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l14_damaged",
+      "level": 14,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged_LOD0.glb",
+          "triangles": 18860
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged_LOD1.glb",
+          "triangles": 10448
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l14_damaged_LOD2.glb",
+          "triangles": 4889
+        }
+      ],
+      "triangles": 18860,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.699999809265137
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l15_active",
+      "level": 15,
+      "state": "active",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active_LOD0.glb",
+          "triangles": 28002
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active_LOD1.glb",
+          "triangles": 15418
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_active_LOD2.glb",
+          "triangles": 6864
+        }
+      ],
+      "triangles": 28002,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.96999979019165
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l15_construction",
+      "level": 15,
+      "state": "construction",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction_LOD0.glb",
+          "triangles": 21628
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction_LOD1.glb",
+          "triangles": 11950
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_construction_LOD2.glb",
+          "triangles": 5426
+        }
+      ],
+      "triangles": 21628,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.789999961853027
+        ]
+      ]
+    },
+    {
+      "id": "town_hall_l15_damaged",
+      "level": 15,
+      "state": "damaged",
+      "png": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged.png",
+      "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged_LOD0.glb",
+      "blend": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged.blend",
+      "lods": [
+        {
+          "name": "LOD0",
+          "ratio": 1.0,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged_LOD0.glb",
+          "triangles": 19024
+        },
+        {
+          "name": "LOD1",
+          "ratio": 0.55,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged_LOD1.glb",
+          "triangles": 10538
+        },
+        {
+          "name": "LOD2",
+          "ratio": 0.28,
+          "glb": "frontend/public/assets/buildings/center/town_hall/town_hall_l15_damaged_LOD2.glb",
+          "triangles": 4917
+        }
+      ],
+      "triangles": 19024,
+      "bounds": [
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -1.7999999523162842,
+          1.7999999523162842
+        ],
+        [
+          -0.15000000596046448,
+          4.789999961853027
+        ]
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check Blender MCP connectivity assumptions from WSL."""
+"""Check the Blender addon socket configured for this project."""
 
 from __future__ import annotations
 
@@ -13,18 +13,19 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = ROOT / ".codex" / "config.toml"
-DEFAULT_HOST = "172.28.192.1"
-DEFAULT_PORT = 9877
+DEFAULT_HOST = "127.0.0.1"
+DEFAULT_PORT = 9876
 
 
-def check_bootstrap(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT, timeout: float = 2.5) -> dict[str, Any]:
+def check_bootstrap(host: str | None = None, port: int | None = None, timeout: float = 2.5) -> dict[str, Any]:
     config = read_config()
     env = (((config.get("mcp_servers") or {}).get("blender") or {}).get("env") or {})
-    configured_host = env.get("BLENDER_HOST")
-    configured_port = int(env.get("BLENDER_PORT", port))
+    configured_host = env.get("BLENDER_HOST", DEFAULT_HOST)
+    configured_port = int(env.get("BLENDER_PORT", DEFAULT_PORT))
+    host = host or configured_host
+    port = port or configured_port
     result = {
         "config": str(CONFIG_PATH.relative_to(ROOT)),
-        "expected_host": DEFAULT_HOST,
         "configured_host": configured_host,
         "configured_port": configured_port,
         "checked_host": host,
@@ -32,8 +33,8 @@ def check_bootstrap(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT, timeout:
         "tcp_connect": False,
         "warnings": [],
     }
-    if configured_host != DEFAULT_HOST:
-        result["warnings"].append("BLENDER_HOST should be 172.28.192.1 when Codex runs in WSL and Blender runs on Windows.")
+    if configured_host != host:
+        result["warnings"].append(f"Config host {configured_host} differs from checked host {host}.")
     if configured_port != port:
         result["warnings"].append(f"Config port {configured_port} differs from checked port {port}.")
     try:
@@ -53,8 +54,8 @@ def read_config() -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--host", default=DEFAULT_HOST)
-    parser.add_argument("--port", type=int, default=DEFAULT_PORT)
+    parser.add_argument("--host", default=None)
+    parser.add_argument("--port", type=int, default=None)
     parser.add_argument("--timeout", type=float, default=2.5)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()

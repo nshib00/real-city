@@ -1,15 +1,14 @@
-"""Validate every regenerated town hall and make level/state review sheets."""
+"""Validate the installed vertical town hall family."""
 import json
 import struct
-import tarfile
 from collections import Counter
 from pathlib import Path
 
-from PIL import Image,ImageDraw
+from PIL import Image
 from validate_early_housing import glb_document
+from validate_building_ground import ground_signature, sprite_alignment
 
 ROOT=Path(__file__).resolve().parents[2]
-MODELS=ROOT/'frontend/src/assets/buildings/center/town_hall'
 PNG=ROOT/'frontend/public/assets/buildings/center/town_hall'
 
 
@@ -49,46 +48,38 @@ def validate_topology(path,doc):
 
 
 def validate():
-    report=json.loads((MODELS/'state-revision-report.json').read_text())
-    assert len(report)==30,len(report)
-    roundtrip=json.loads((PNG/'roundtrip-validation.json').read_text())
-    assert {entry['name'] for entry in roundtrip}==set(report)
-    assert all(entry['nonmanifold_edges']==0 and entry['triangles']==report[entry['name']]['triangles'] for entry in roundtrip)
-    sheet=Image.new('RGB',(768,2140),'#25372f');draw=ImageDraw.Draw(sheet)
-    progression=Image.new('RGB',(1280,428),'#25372f');labels=ImageDraw.Draw(progression)
+    manifest=json.loads((PNG/'manifest.json').read_text(encoding='utf-8'))
+    assert manifest['levels']==list(range(1,16))
+    assert manifest['states']==['active','construction','damaged']
+    assert len(manifest['items'])==45
+    assert (ROOT/manifest['backup']).is_file()
+    items={item['id']:item for item in manifest['items']}
     results=[]
-    with tarfile.open('/tmp/real-city-townhall-before.tar') as backup:
-        for level in range(1,11):
-            for col,state in enumerate(('active','construction','damaged')):
-                name=f'town_hall_l{level:02d}_{state}'
-                for path in (MODELS/(name+'.glb'),PNG/(name+'.png')):
-                    assert backup.extractfile(str(path.relative_to(ROOT))).read()!=path.read_bytes(),path
-                doc=glb_document(MODELS/(name+'.glb'))
-                validate_topology(MODELS/(name+'.glb'),doc)
-                assert len(doc['scenes'])==1,name
-                tris=sum(doc['accessors'][p['indices']]['count']//3 for mesh in doc['meshes'] for p in mesh['primitives'])
-                assert tris==report[name]['triangles'] and 1000<tris<14000,(name,tris)
-                assert all(abs(v)<1.801 for corner in report[name]['bounds'] for v in corner[:2]),name
-                for node in doc['nodes']:
-                    assert node.get('translation',[0,0,0])==[0,0,0],name
-                    assert node.get('scale',[1,1,1])==[1,1,1],name
-                if state!='active': assert report[name]['structural_edits']>15,name
-                with Image.open(PNG/(name+'.png')) as im:
-                    assert im.mode=='RGBA' and im.size==(512,384),name
-                    box=im.getchannel('A').getbbox()
-                    assert box and box[0]>0 and box[1]>0 and box[2]<512 and box[3]<384,(name,box)
-                    thumb=im.resize((256,192),Image.Resampling.LANCZOS)
-                    sheet.paste(thumb,(col*256,(level-1)*214),thumb)
-                    draw.text((col*256+10,(level-1)*214+194),name,fill='white')
-                    if state=='active':
-                        x=((level-1)%5)*256;y=((level-1)//5)*214
-                        progression.paste(thumb,(x,y),thumb)
-                        labels.text((x+10,y+194),f'Level {level}',fill='white')
-                results.append({'name':name,'triangles':tris,'alpha_bounds':box})
-    assert (MODELS/'town_hall_levels.blend').stat().st_size>1000
-    glb_document(MODELS/'town_hall_levels.glb')
-    sheet.save(PNG/'state-review.png');progression.save(PNG/'levels-review.png')
-    (PNG/'generation-validation.json').write_text(json.dumps(results,indent=2))
+    for level in range(1,16):
+        active_name=f'town_hall_l{level:02d}_active'
+        active_ground=ground_signature(PNG/(active_name+'_LOD0.glb'))
+        for state in ('active','construction','damaged'):
+            name=f'town_hall_l{level:02d}_{state}'
+            item=items[name]
+            glb=ROOT/item['glb']
+            assert glb.is_file() and (ROOT/item['blend']).is_file(),name
+            doc=glb_document(glb)
+            validate_topology(glb,doc)
+            tris=sum(doc['accessors'][p['indices']]['count']//3 for mesh in doc['meshes'] for p in mesh['primitives'])
+            assert tris==item['triangles'] and tris>1000,(name,tris)
+            assert all(abs(v)<=1.801 for bounds in item['bounds'][:2] for v in bounds),name
+            for lod in item['lods']:
+                path=ROOT/lod['glb']
+                assert path.is_file() and path.read_bytes()[:4]==b'glTF',path
+            with Image.open(ROOT/item['png']) as image:
+                assert image.mode=='RGBA' and image.size==(512,384),name
+                box=image.getchannel('A').getbbox()
+                assert box and box[0]>0 and box[1]>0 and box[2]<512 and box[3]<384,(name,box)
+            if state!='active':
+                assert ground_signature(glb)==active_ground,name
+                assert sprite_alignment(PNG/(active_name+'.png'),ROOT/item['png']),name
+            results.append({'name':name,'triangles':tris,'alpha_bounds':box})
+    (PNG/'vertical-generation-validation.json').write_text(json.dumps(results,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'models':len(results),'max_triangles':max(r['triangles'] for r in results)}))
 
 

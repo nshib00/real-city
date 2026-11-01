@@ -8,7 +8,7 @@
 - `docs/assets/specs/<category>/<asset_id>.yaml` или `docs/assets/specs/template.yaml`.
 - Релевантный файл из `docs/buildings/**`.
 - `docs/art/visual-style-guide.md`.
-- `skills/real-city-blender-models/SKILL.md` и только нужные references из `skills/real-city-blender-models/references/`.
+- `.agents/skills/real-city-blender-models/SKILL.md` и только нужные references из `.agents/skills/real-city-blender-models/references/`.
 - Для frontend-подключения: `docs/frontend/rendering-and-assets.md`, `frontend/src/game/renderers/buildingAssetManifests.ts`, `frontend/src/game/renderers/buildingRegistry.ts`.
 
 ## Перед Генерацией

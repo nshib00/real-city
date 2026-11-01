@@ -1,4 +1,17 @@
-# Troubleshooting Blender MCP В WSL/Windows
+# Подключение Blender MCP
+
+Сейчас проект использует системный Blender 5.2.2 в Linux. Аддон `blender_mcp.py` установлен в `~/.config/blender/5.2/scripts/addons`, а MCP-мост — в `~/.local/share/real-city-blender-mcp/venv`. Настройки подключения находятся в `.codex/config.toml`: `127.0.0.1:9876`. Blender должен быть запущен с графическим интерфейсом; режим `-b` не обрабатывает команды аддона.
+
+Проверка подключения:
+
+```bash
+python3 tools/assets/blender_mcp_bootstrap.py
+codex mcp list
+```
+
+После изменения MCP-конфига перезапусти клиент Codex, чтобы новые инструменты появились в его списке. Порт аддона должен совпадать с `BLENDER_PORT` в конфиге.
+
+## Прежнее подключение через WSL/Windows
 
 Codex работает внутри WSL Debian, а Blender обычно запущен в Windows. У них разные loopback-интерфейсы, поэтому из WSL нельзя использовать `127.0.0.1` или `localhost` для подключения к Windows-приложению.
 
@@ -51,7 +64,7 @@ curl http://172.28.192.1:27123
 python3 tools/assets/blender_mcp_bootstrap.py
 ```
 
-Он должен проверить доступность addon, scene info, host `172.28.192.1` и записать понятную ошибку подключения. Если bootstrap не проходит, не считать модель созданной: можно подготовить spec/brief, но генерацию через Blender нужно повторить после восстановления MCP.
+Скрипт проверяет TCP-подключение к адресу и порту из `.codex/config.toml`. Проверка `get_scene_info` через MCP дополнительно подтверждает, что Blender обрабатывает команды. Если соединение недоступно, генерацию через Blender нужно повторить после восстановления MCP.
 
 ## Repair После Сбоя
 

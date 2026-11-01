@@ -1,0 +1,452 @@
+[
+  {
+    "name": "town_hall_l01_active",
+    "triangles": 3068,
+    "alpha_bounds": [
+      117,
+      189,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l01_construction",
+    "triangles": 3456,
+    "alpha_bounds": [
+      117,
+      193,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l01_damaged",
+    "triangles": 3356,
+    "alpha_bounds": [
+      117,
+      201,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l02_active",
+    "triangles": 3256,
+    "alpha_bounds": [
+      117,
+      178,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l02_construction",
+    "triangles": 3604,
+    "alpha_bounds": [
+      117,
+      184,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l02_damaged",
+    "triangles": 3508,
+    "alpha_bounds": [
+      117,
+      190,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l03_active",
+    "triangles": 5056,
+    "alpha_bounds": [
+      117,
+      171,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l03_construction",
+    "triangles": 5488,
+    "alpha_bounds": [
+      117,
+      176,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l03_damaged",
+    "triangles": 5044,
+    "alpha_bounds": [
+      117,
+      182,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l04_active",
+    "triangles": 6814,
+    "alpha_bounds": [
+      117,
+      125,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l04_construction",
+    "triangles": 6124,
+    "alpha_bounds": [
+      117,
+      134,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l04_damaged",
+    "triangles": 6340,
+    "alpha_bounds": [
+      117,
+      134,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l05_active",
+    "triangles": 8994,
+    "alpha_bounds": [
+      117,
+      116,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l05_construction",
+    "triangles": 7944,
+    "alpha_bounds": [
+      117,
+      125,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l05_damaged",
+    "triangles": 6656,
+    "alpha_bounds": [
+      117,
+      125,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l06_active",
+    "triangles": 10794,
+    "alpha_bounds": [
+      117,
+      108,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l06_construction",
+    "triangles": 8352,
+    "alpha_bounds": [
+      117,
+      117,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l06_damaged",
+    "triangles": 7312,
+    "alpha_bounds": [
+      117,
+      117,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l07_active",
+    "triangles": 15452,
+    "alpha_bounds": [
+      117,
+      101,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l07_construction",
+    "triangles": 12490,
+    "alpha_bounds": [
+      117,
+      109,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l07_damaged",
+    "triangles": 11714,
+    "alpha_bounds": [
+      117,
+      109,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l08_active",
+    "triangles": 15720,
+    "alpha_bounds": [
+      117,
+      93,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l08_construction",
+    "triangles": 13098,
+    "alpha_bounds": [
+      117,
+      101,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l08_damaged",
+    "triangles": 11866,
+    "alpha_bounds": [
+      117,
+      101,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l09_active",
+    "triangles": 20886,
+    "alpha_bounds": [
+      117,
+      86,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l09_construction",
+    "triangles": 16426,
+    "alpha_bounds": [
+      117,
+      94,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l09_damaged",
+    "triangles": 12538,
+    "alpha_bounds": [
+      117,
+      94,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l10_active",
+    "triangles": 21618,
+    "alpha_bounds": [
+      117,
+      77,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l10_construction",
+    "triangles": 16670,
+    "alpha_bounds": [
+      117,
+      86,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l10_damaged",
+    "triangles": 13166,
+    "alpha_bounds": [
+      117,
+      86,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l11_active",
+    "triangles": 21910,
+    "alpha_bounds": [
+      117,
+      73,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l11_construction",
+    "triangles": 16726,
+    "alpha_bounds": [
+      117,
+      82,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l11_damaged",
+    "triangles": 13426,
+    "alpha_bounds": [
+      117,
+      82,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l12_active",
+    "triangles": 24664,
+    "alpha_bounds": [
+      117,
+      69,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l12_construction",
+    "triangles": 19074,
+    "alpha_bounds": [
+      117,
+      77,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l12_damaged",
+    "triangles": 16118,
+    "alpha_bounds": [
+      117,
+      77,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l13_active",
+    "triangles": 24956,
+    "alpha_bounds": [
+      117,
+      65,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l13_construction",
+    "triangles": 19082,
+    "alpha_bounds": [
+      117,
+      73,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l13_damaged",
+    "triangles": 16174,
+    "alpha_bounds": [
+      117,
+      73,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l14_active",
+    "triangles": 27710,
+    "alpha_bounds": [
+      117,
+      60,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l14_construction",
+    "triangles": 21736,
+    "alpha_bounds": [
+      117,
+      69,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l14_damaged",
+    "triangles": 18860,
+    "alpha_bounds": [
+      117,
+      69,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l15_active",
+    "triangles": 28002,
+    "alpha_bounds": [
+      117,
+      56,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l15_construction",
+    "triangles": 21628,
+    "alpha_bounds": [
+      117,
+      65,
+      395,
+      368
+    ]
+  },
+  {
+    "name": "town_hall_l15_damaged",
+    "triangles": 19024,
+    "alpha_bounds": [
+      117,
+      65,
+      395,
+      368
+    ]
+  }
+]

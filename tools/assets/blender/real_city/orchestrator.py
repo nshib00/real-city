@@ -161,7 +161,11 @@ def generate_batch(config: BatchConfig) -> dict[str, Any]:
                 "bounds": geometry.collection_bounds(collection),
             }
             if export_lods:
-                lods = export.export_lod_glbs(name, collection, output.runtime_dir, list(spec.lod_policy.get("chain") or []), scene=asset_scene)
+                lod_builder = None
+                if spec.asset_id == "dye_works":
+                    from .components.dye_works import build_lod
+                    lod_builder = lambda lod_name: build_lod(level, state, lod_name, mats)
+                lods = export.export_lod_glbs(name, collection, output.runtime_dir, list(spec.lod_policy.get("chain") or []), scene=asset_scene, lod_builder=lod_builder)
                 item["lods"] = [_rel_lod(record, output.runtime_dir, spec) for record in lods]
                 lod0 = next((record for record in item["lods"] if record["name"] == "LOD0"), item["lods"][0] if item["lods"] else None)
                 item["glb"] = lod0["glb"] if lod0 else None
@@ -350,6 +354,11 @@ def _build_state_model(spec: AssetSpec, collection, mats: dict, *, level: int, s
         from .components import weaving_yard
 
         weaving_yard.add_weaving_yard(collection, mats, level=level, state=state)
+        return
+    elif spec.asset_id == "dye_works":
+        from .components import dye_works
+
+        dye_works.add_dye_works(collection, mats, level=level, state=state)
         return
     elif spec.asset_id == "paint_workshop":
         from .components import paint_workshop

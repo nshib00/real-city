@@ -18,11 +18,10 @@
 | `glass_workshop` | 1–9 | да | 1, 2, 3, 4, 5, 6, 7, 8, 9 | 1, 2, 3, 4, 5, 6, 7, 8, 9 | 1, 2, 3, 4, 5, 6, 7, 8, 9 | —/—/— | да | да | active, construction, damaged, idle_no_input, idle_no_fuel, ready, ruined | да | нужно: LOD, лишние уровни 10, 11, 12 |
 | `forge` | 1 | да | — | — | — | — | — | — | — | нет | нет manifest |
 | `weaving_yard` | 1–10 | да | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10/1, 2, 3, 4, 5, 6, 7, 8, 9, 10/1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | да | да | active, construction, damaged | да | полно |
-| `dye_works` | 1 | да | — | — | — | — | — | — | — | нет | нет manifest |
+| `dye_works` | 1 | да | 1 | 1 | 1 | 1/1/1 | да | да | active, construction, damaged, ruined | да | готово |
 | `mechanical_workshop` | 1–10 | да | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10/1, 2, 3, 4, 5, 6, 7, 8, 9, 10/1, 2, 3, 4, 5, 6, 7, 8, 9, 10 | да | да | active, construction, damaged | да | полно |
 | `optical_workshop` | 1 | да | — | — | — | — | — | — | — | нет | нет manifest |
 | `mint` | 1 | да | — | — | — | — | — | — | — | нет | нет manifest |
-| `warehouse` | 1 | да | — | — | — | — | — | — | — | нет | нет manifest |
 | `coin_storage` | 1–12 | да | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 | —/—/— | да | нет | active, construction, damaged, ruined | да | нужно: LOD, report |
 | `market` | 1 | да | — | — | — | — | — | — | — | нет | нет manifest |
 | `tower` | 1 | да | 1 | 1 | 1 | 1/1/1 | да | да | construction, active, damaged | да | полно |

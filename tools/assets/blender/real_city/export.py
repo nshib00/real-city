@@ -66,7 +66,7 @@ def export_state_assets(name: str, collection, output_dir: Path, *, render: bool
     }
 
 
-def export_lod_glbs(name: str, collection, output_dir: Path, lod_chain: list[dict], *, scene=None) -> list[dict]:
+def export_lod_glbs(name: str, collection, output_dir: Path, lod_chain: list[dict], *, scene=None, lod_builder=None) -> list[dict]:
     """Export a per-state LOD chain.
 
     LOD0 is exported from the source collection. Lower LODs are exported from
@@ -87,7 +87,8 @@ def export_lod_glbs(name: str, collection, output_dir: Path, lod_chain: list[dic
             export_glb(path, collection=collection)
             triangles = collection_triangle_count(collection)
         else:
-            temp = _copy_collection_for_lod(collection, f"{name}_{lod_name}_tmp", ratio)
+            temp = (lod_builder(lod_name) if lod_builder else
+                    _copy_collection_for_lod(collection, f"{name}_{lod_name}_tmp", ratio))
             try:
                 export_glb(path, collection=temp)
                 triangles = collection_triangle_count(temp)

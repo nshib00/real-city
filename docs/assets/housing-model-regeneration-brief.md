@@ -88,4 +88,4 @@ python3 tools/assets/validate_early_housing.py --backup /tmp/real-city-housing-b
 6. Повторно импортировать GLB для проверки и перерендерить целевые PNG с камерой и anchor существующего пайплайна.
 7. Проверить все восемь уровней и три состояния на прозрачном фоне и при игровом размере; проверить загрузку спрайтов и отсутствие обрезания.
 
-Источники требований: `docs/art/visual-style-guide.md`, `docs/buildings/houses/dugout.md`, `docs/buildings/houses/wood-house.md`, `docs/assets/blender-models-web-pipeline.md`, `skills/real-city-blender-models/SKILL.md`.
+Источники требований: `docs/art/visual-style-guide.md`, `docs/buildings/houses/dugout.md`, `docs/buildings/houses/wood-house.md`, `docs/assets/blender-models-web-pipeline.md`, `.agents/skills/real-city-blender-models/SKILL.md`.

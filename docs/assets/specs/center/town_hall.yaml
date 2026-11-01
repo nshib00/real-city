@@ -58,6 +58,31 @@ levels:
     cost_resources: [coins, brick, premium_planks, super-mushrooms, glass]
     triangle_budget: { min: 8500, max: 13000 }
     adds: [central_tower, balcony, flags, premium_wood_accents]
+  - level: 11
+    visual_goal: Кирпичная башня с открытым часовым механизмом; архивное крыло с темными премиальными балками и застекленной галереей.
+    cost_resources: [coins, brick, premium_planks, glass, mechanism]
+    triangle_budget: { min: 9000, max: 14000 }
+    adds: [mechanical_clock_face, archive_wing, premium_beams, glazed_gallery]
+  - level: 12
+    visual_goal: Симметричное административное крыло, крупные окна в усиленных рамах, каменный портик и широкая входная лестница.
+    cost_resources: [coins, stone_block, premium_planks, glass, mechanism]
+    triangle_budget: { min: 9500, max: 15000 }
+    adds: [symmetrical_archive_wing, reinforced_window_frames, stone_portico, public_steps]
+  - level: 13
+    visual_goal: Усиленный железобетонный пояс под каменно-кирпичным фасадом, стальные связи на углах и башне, приподнятые боковые корпуса.
+    cost_resources: [coins, steel, reinforced_concrete, glass, mechanism]
+    triangle_budget: { min: 10000, max: 16000 }
+    adds: [reinforced_civic_frame, steel_corner_ties, taller_wings, expanded_clock_tower]
+  - level: 14
+    visual_goal: Встроенные в башню и крылья сигнальные фонари, тонкие металлические линии и компактный маяк связи над часами.
+    cost_resources: [coins, steel, reinforced_concrete, electronics, mechanism]
+    triangle_budget: { min: 10500, max: 17000 }
+    adds: [integrated_signal_lanterns, civic_signal_beacon, fine_metal_conduits]
+  - level: 15
+    visual_goal: Завершенный городской ансамбль с центральной башней, уравновешенными крыльями, стальными опорами, застекленной галереей и малой звездно-стеклянной печатью над входом.
+    cost_resources: [coins, steel, reinforced_concrete, electronics, mechanism, star_glass]
+    triangle_budget: { min: 11000, max: 18000 }
+    adds: [final_civic_ensemble, steel_supports, full_glazed_gallery, star_glass_city_seal]
 
 material_map:
   wood:
@@ -71,7 +96,7 @@ material_map:
   glass:
     visible_as: теплые административные окна, крупнее и чаще на поздних уровнях
     priority: accent
-    levels: [3, 4, 5, 9, 10]
+    levels: [3, 4, 5, 9, 10, 11, 12, 13, 14, 15]
   mushrooms:
     visible_as: небольшие лесные/городские декоративные детали у основания, без превращения в грибной дом
     priority: accent
@@ -87,23 +112,43 @@ material_map:
   stone_block:
     visible_as: крупные угловые блоки, каменные стены и башенное основание
     priority: primary
-    levels: [7, 8, 9]
+    levels: [7, 8, 9, 12]
   brick:
     visible_as: кирпичные вставки, черепичная крыша, поздний фасад
     priority: primary
-    levels: [8, 9, 10]
+    levels: [8, 9, 10, 11, 12, 13, 14, 15]
   premium_planks:
-    visible_as: аккуратные темные балки, балкон и декоративные элементы финального уровня
-    priority: accent
-    levels: [10]
+    visible_as: темные точные балки архивной галереи, входного портика и балконов поздней ратуши
+    priority: secondary
+    levels: [10, 11, 12]
   super-mushrooms:
     visible_as: редкие яркие декоративные элементы площади, не основной материал
     priority: accent
     levels: [10]
+  mechanism:
+    visible_as: открытые циферблаты, часовые передачи и встроенные городские механизмы
+    priority: secondary
+    levels: [11, 12, 13, 14, 15]
+  steel:
+    visible_as: видимые стяжки, опоры и усиленные рамы поздних крыльев и башни
+    priority: secondary
+    levels: [13, 14, 15]
+  reinforced_concrete:
+    visible_as: прочный цоколь и структурные пояса; материал остается частично закрыт кирпичной и каменной отделкой
+    priority: primary
+    levels: [13, 14, 15]
+  electronics:
+    visible_as: небольшие теплые сигнальные фонари и компактный встроенный маяк связи без экранов и внешних антенн
+    priority: accent
+    levels: [14, 15]
+  star_glass:
+    visible_as: маленькая звездчатая печать над входом с мягким внутренним бликом; без свечения фасада
+    priority: accent
+    levels: [15]
   coins:
     visible_as: порядок площади, ящики чертежей, доска объявлений, флаги и городские props
     priority: accent
-    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 level_progression:
   mass:
@@ -111,11 +156,11 @@ level_progression:
   height:
     rule: Центральная башня растет постепенно и остается главным ориентиром.
   materials:
-    rule: Ранние уровни деревянно-листовые, средние деревянно-каменные, поздние каменно-кирпичные.
+    rule: Ранние уровни деревянно-листовые, средние деревянно-каменные, поздние каменно-кирпичные; уровни 13-15 получают скрытый железобетонный каркас, стальные связи, встроенную электронику и один малый акцент из звездного стекла.
   props:
     rule: "Props подчеркивают управление и строительство: чертежи, доска объявлений, флаги, часы, площадь."
   late_elements:
-    rule: Часы, кирпич, боковые башенки и балкон появляются только на 8-10 уровнях.
+    rule: Часы и кирпичная архитектура появляются на 8-10 уровнях; механизм, архивная галерея и усиленные опоры развиваются на 11-13; сигнальные фонари — на 14; звездное стекло — только на 15.
   constraints:
     - Не превращать ратушу в замок, храм или дворец.
     - Сохранять вход и маленькую площадь на одной стороне.

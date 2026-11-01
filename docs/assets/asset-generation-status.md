@@ -2,6 +2,8 @@
 
 Для актуальной матрицы покрытия 71 игрового типа см. [реестр ассетов](building-asset-coverage.md). Этот журнал сохраняет историю отдельных партий и не заменяет машинную сверку уровней и состояний.
 
+- Ратуша, завершение вертикальной тестовой серии и подключение к игре, 2026-10-26: на основе существующих `active` 1–15 собраны состояния `construction` и `damaged` генератором `tools/assets/blender/build_town_hall_vertical_states.py`. Все 45 вариантов имеют `.blend`, PNG 512×384 и GLB LOD0–2 в `frontend/public/assets/buildings/center/town_hall/`; там же находятся новый `manifest.json` и `vertical-state-review.png`. Перед заменой прежние public PNG и исходные GLB/сцены сохранены в `tools/assets/backups/town_hall_before_vertical_2026-10-26.tar.gz`; старая src-серия оставлена на месте. Реестр frontend теперь выбирает публичные модели 1–15, но игровой каталог по-прежнему разрешает улучшения лишь до уровня 10. Проверены 45 PNG и GLB, топология LOD0, 30 совпадений основания, LOD и manifest; live Blender MCP открыл сцену 15-го уровня и выполнил рендер для визуальной проверки. MCP `look` не смог передать viewport из Windows в WSL из-за устаревшего дополнения, поэтому снимок проверен через файл live-рендера. Максимум LOD0 — 28 002 треугольника, выше старого бюджета спеки 13 000: оптимизация старших моделей остаётся отдельной работой.
+
 - Оружие и бомбы, 2026-10-25: девять инвентарных ресурсов категории `weapons` собраны в отдельной Blender-сцене `frontend/public/assets/resources/icons/weapon_resources.blend`, экспортированы как девять GLB и девять PNG 256×256 с прозрачностью. Генератор — `tools/assets/blender/generate_weapon_resource_models.py`, визуальный бриф — `docs/assets/weapon-resource-models.md`. Каталог `manifest.json` и ресурсный HUD используют новые PNG; GLB доступны для будущих 3D-превью. Контактные листы и проверка `tools/assets/validate_weapon_resource_models.py` подтверждают читаемость 24/32/48 px, замкнутость геометрии и максимум 4780 треугольников. Штатный glTF-экспортёр установленного Blender 5.2 повреждён отсутствующим модулем, поэтому партия использовала статический GLB-экспортёр генератора; результат проверен структурно и по геометрии.
 
 - Древний колосс: существующая ригованная модель `ancient_colossus.blend` увеличена в 2 раза по всем трём осям; обновлены анимированный GLB и PNG-превью. В игровом рендерере размер атласного кадра поднят с 250 до 420 px: максимальная видимая ширина любого кадра с учётом положения якоря — 239,6 px при ширине клетки 240 px. Опора и логическое размещение остаются на одной клетке; высокий силуэт поднимается над ней. Фоновый Blender 5.2.1 подтвердил сохранение 52 мешей и пяти анимаций, валидатор атласа, TypeScript и тесты рендерера прошли. Live-инспекция через Blender MCP не состоялась из-за сброса соединения; новое превью просмотрено отдельно.
@@ -120,7 +122,7 @@
 ## Как использовать
 
 - В новых запросах можно писать: "продолжи по `docs/assets/asset-generation-status.md`".
-- Подробные правила стиля держи в `skills/real-city-blender-models/SKILL.md`.
+- Подробные правила стиля держи в `.agents/skills/real-city-blender-models/SKILL.md`.
 - Большие Blender-логи не вставляй в чат; проверяй конкретный локальный файл лога и пересказывай только итог или ошибку.
 - Финальный ответ по ассетам проси в коротком формате: что изменено, куда
   сохранено, какие проверки прошли, что осталось.
@@ -304,7 +306,7 @@
 - Все 12 уровней и состояния `active`, `construction`, `damaged`, `ruined` доступны в frontend registry; `idle_no_ammo` отображается в инспекторе.
 
 - Стиль Real City для Blender-моделей закреплен в
-  `skills/real-city-blender-models/SKILL.md` и `docs/art/visual-style-guide.md`.
+  `.agents/skills/real-city-blender-models/SKILL.md` и `docs/art/visual-style-guide.md`.
 - Для построек используются active/construction/damaged состояния.
 - Для construction/damaged основание земли должно совпадать с active того же
   уровня по геометрии, материалам, UV, положению, камере и anchor.
@@ -1729,6 +1731,15 @@ $real-city-blender-models продолжи по docs/assets/asset-generation-sta
 - Проверки spec с generation report, PNG, ground (20 сравнений, 0 расхождений), LOD, manifest и 22 frontend Vitest прошли. Каталог содержит уровни 1–10 с ценами по таблице баланса; идентификаторы ресурсов в spec и отчёте приведены к каталогу.
 
 ## Orchestrator batches
+
+### Красильня — 2026-11-01
+
+- Создано семейство `dye_works`: единственный каталоговый уровень 1, состояния `active`, `construction`, `damaged`, `ruined`. Не смешивать с `paint_workshop` и её уровнями 1–10. Художественное описание: `docs/assets/dye-works-model-brief.md`.
+- Runtime: `frontend/public/assets/buildings/industry/dye_works/`: 4 PNG 512×384, 12 GLB LOD0–2, `dye_works_levels.blend`, сводный GLB, manifest, generation/orchestrator reports, полный contact sheet и `dye_works_viewport_review.png`. Семейство подключено к frontend registry.
+- Blender MCP: `get_addon_status`, `get_scene_info`, генерация preview/full и `look` в игровой камере выполнены; рендеры и viewport просмотрены. Полигоны LOD0: active 3926, construction 2144, damaged 2004, ruined 976.
+- Финальные LOD1/2 собраны отдельно с цельными стенами: автоматическое упрощение отдельных кирпичей давало щели. LOD1: 968–1628 треугольников, LOD2: 424–604. Дальний LOD дополнительно импортирован из GLB в Blender и проверен рендером.
+- Проверки spec/report, PNG, LOD, manifest и ground прошли: 3 сравнения основания, 0 расхождений. TypeScript и 26 тестов building registry прошли.
+- Системный `/usr/bin/blender` имеет несовместимые версии OCIO 2.4.2 и конфигурации 2.5, поэтому не поддерживает AgX. Для генерации через тот же локальный MCP использован `blender-5.2.2-linux-x64/blender` из проекта: его OCIO и AgX работают. Аддон и адрес остаются локальными, `127.0.0.1:9876`.
 
 - 2026-10-19: `dye_garden` `full` levels `1,2,3,4,5,6` states `construction,stage01,stage02,stage03,stage04,active,damaged,ruined`; manifest `frontend/public/assets/buildings/fields/dye_garden/manifest.json`; contact sheet `frontend/public/assets/buildings/fields/dye_garden/dye_garden_full_contact_sheet.png`; report `frontend/public/assets/buildings/fields/dye_garden/orchestrator-report.json`.
 - 2026-10-19: `defense_guardian_enclosure` `full` levels `1,2,3,4,5` states `construction,active,no_keeper,damaged,ruined`; manifest `frontend/public/assets/buildings/defense/defense_guardian_enclosure/manifest.json`; contact sheet `frontend/public/assets/buildings/defense/defense_guardian_enclosure/defense_guardian_enclosure_full_contact_sheet.png`; report `frontend/public/assets/buildings/defense/defense_guardian_enclosure/orchestrator-report.json`.

@@ -176,7 +176,7 @@ LOD-политика:
 | # | Что | Файлы | Статус |
 |---|---|---|---|
 | 8.1 | Обновить `docs/assets/blender-models-web-pipeline.md` под новую factory-архитектуру | `docs/assets/blender-models-web-pipeline.md` | ✅ |
-| 8.2 | Обновить skill `skills/real-city-blender-models/SKILL.md`: сначала spec/API/orchestrator, затем MCP | `skills/real-city-blender-models/SKILL.md` | ✅ |
+| 8.2 | Обновить skill `.agents/skills/real-city-blender-models/SKILL.md`: сначала spec/API/orchestrator, затем MCP | `.agents/skills/real-city-blender-models/SKILL.md` | ✅ |
 | 8.3 | Добавить checklist для Codex: какие файлы читать, какой preview делать, какие проверки запускать | `docs/assets/blender-generation-checklist.md` | ✅ |
 | 8.4 | Описать troubleshooting WSL/Windows Blender paths и `172.28.192.1` | `docs/assets/blender-mcp-troubleshooting.md` | ✅ |
 | 8.5 | Описать правила обновления `asset-generation-status.md` и хранения больших логов | `docs/assets/asset-generation-status.md` | ✅ |
