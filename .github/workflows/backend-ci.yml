@@ -1,0 +1,84 @@
+name: backend
+on: [push, pull_request]
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
+      - name: Format
+        run: test -z "$(gofmt -l backend)"
+      - name: Vet
+        working-directory: backend
+        run: go vet ./...
+      - name: Unit and race tests
+        working-directory: backend
+        run: |
+          mkdir -p ../artifacts/backend
+          go version > ../artifacts/backend/go-version.txt
+          go test -race -json ./... | tee ../artifacts/backend/unit-race.jsonl
+      - name: Build all commands
+        working-directory: backend
+        run: go build ./cmd/...
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-unit-matrices
+          path: artifacts/backend
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: real_city
+          POSTGRES_PASSWORD: real_city
+          POSTGRES_DB: real_city
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: --health-cmd 'redis-cli ping' --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      POSTGRES_DSN: postgres://real_city:real_city@localhost:5432/real_city?sslmode=disable
+      TEST_POSTGRES_DSN: postgres://real_city:real_city@localhost:5432/real_city?sslmode=disable
+      TEST_REDIS_ADDR: localhost:6379
+      REDIS_ADDR: localhost:6379
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
+      - name: Apply migrations twice
+        working-directory: backend
+        run: |
+          go run ./cmd/migrate up
+          go run ./cmd/migrate up
+          go run ./cmd/migrate status
+      - name: Upgrade existing schema and preserve player data
+        run: |
+          mkdir -p artifacts/backend
+          bash scripts/test-migration-upgrade.sh 2>&1 | tee artifacts/backend/migration-upgrade.log
+      - name: Acceptance tooling regressions
+        run: python3 -m unittest discover -s tests/e2e/api -p 'test_*.py' -v
+      - name: Repository persistence, rollback and concurrency
+        working-directory: backend
+        run: go test -race -json ./internal/adapter/postgres ./internal/adapter/redis | tee ../artifacts/backend/postgres-race.jsonl
+      - name: Real API and worker restart
+        run: |
+          bash scripts/test-gameplay-local.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-postgres-acceptance
+          path: artifacts/backend

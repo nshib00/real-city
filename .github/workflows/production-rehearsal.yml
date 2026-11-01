@@ -1,0 +1,34 @@
+name: production-rehearsal
+on:
+  workflow_dispatch:
+    inputs:
+      previous_backend:
+        description: 'Previous backend release image (immutable tag or digest)'
+        required: true
+        type: string
+      previous_frontend:
+        description: 'Previous frontend release image (immutable tag or digest)'
+        required: true
+        type: string
+  pull_request:
+    paths: ['backend/**', 'frontend/**', 'shared/**', 'deploy/**', 'docker-compose.production.yml', 'scripts/*production*', '.github/workflows/production-rehearsal.yml']
+permissions:
+  contents: read
+jobs:
+  rehearsal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Production rehearsal in isolated Compose project
+        env:
+          REAL_CITY_ACCEPTANCE_ARTIFACTS: artifacts/production
+          REAL_CITY_SKIP_ROLLBACK: ${{ github.event_name == 'workflow_dispatch' && '0' || '1' }}
+          REAL_CITY_PREVIOUS_BACKEND_IMAGE: ${{ inputs.previous_backend }}
+          REAL_CITY_PREVIOUS_FRONTEND_IMAGE: ${{ inputs.previous_frontend }}
+        run: bash scripts/test-production-local.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: production-rehearsal
+          path: artifacts/production

@@ -1,0 +1,90 @@
+name: browser-e2e
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  interface:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npx playwright test --config tests/e2e/playwright.config.ts
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: interface-diagnostics
+          path: |
+            frontend/test-results
+            frontend/playwright-report
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [desktop, mobile]
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_USER: real_city, POSTGRES_PASSWORD: real_city, POSTGRES_DB: real_city }
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+    env:
+      POSTGRES_DSN: postgres://real_city:real_city@localhost:5432/real_city?sslmode=disable
+      REDIS_ADDR: localhost:6379
+      SERVER_ADDR: 127.0.0.1:18080
+      REAL_CITY_API_URL: http://127.0.0.1:18080
+      SIMULATION_EMBEDDED: 'true'
+      REAL_CITY_E2E_PASSWORD: 'E2eDisposablePass123!'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Migrate and start API
+        working-directory: backend
+        run: |
+          go run ./cmd/migrate up
+          for platform in desktop mobile; do
+            for suffix in a b; do
+              APP_ENV=test ADMIN_EMAIL="e2e-$platform-$suffix@example.invalid" ADMIN_NAME="E2E$platform$suffix" ADMIN_PASSWORD="$REAL_CITY_E2E_PASSWORD" go run ./cmd/test-admin
+            done
+          done
+          go build -o /tmp/real-city-api ./cmd/api
+          /tmp/real-city-api >/tmp/real-city-api.log 2>&1 &
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:18080/health; then exit 0; fi; sleep 1; done
+          cat /tmp/real-city-api.log
+          exit 1
+      - run: npm run test:e2e -- --project=${{ matrix.project }}
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-diagnostics-${{ matrix.project }}
+          path: |
+            frontend/test-results
+            frontend/playwright-report
+            /tmp/real-city-api.log
