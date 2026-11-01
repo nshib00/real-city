@@ -8,7 +8,13 @@
     "build": "tsc -b && vite build",
     "test": "vitest run",
     "lint": "tsc --noEmit",
-    "assets:budget": "node scripts/check-asset-budget.mjs"
+    "assets:budget": "node --test scripts/runtime-assets.test.mjs && node scripts/check-ui-assets.mjs && node scripts/check-asset-budget.mjs",
+    "assets:ui": "node scripts/check-ui-assets.mjs",
+    "test:e2e": "node node_modules/playwright/cli.js test",
+    "test:design": "node node_modules/playwright/cli.js test --config playwright.design.config.ts",
+    "test:interface": "node node_modules/playwright/cli.js test --config playwright.interface.config.ts",
+    "test:ui-review": "node node_modules/playwright/cli.js test --config playwright.review.config.ts",
+    "test:e2e:list": "node node_modules/playwright/cli.js test --list"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.8",
@@ -29,6 +35,7 @@
     "@types/react-dom": "^19.0.2",
     "@types/three": "^0.185.4",
     "jsdom": "^25.0.1",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "playwright": "1.62.1"
   }
 }

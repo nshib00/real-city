@@ -1,6 +1,7 @@
 COMPOSE := docker compose -f docker-compose.yml -f docker-compose.dev.yml
 COMPOSE_OBSERVABILITY := $(COMPOSE) -f docker-compose.observability.yml
 COMPOSE_TEST := docker compose -p real-city-test -f docker-compose.test.yml
+COMPOSE_LAPTOP := $(COMPOSE_TEST) -f docker-compose.laptop.yml
 POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
 TEST_POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
 BLENDER ?= blender
@@ -17,10 +18,12 @@ BLENDER ?= blender
 test: backend-test frontend-test
 
 catalog-check:
+	python3 tools/player/generate_levels.py --check
 	python3 tools/buildings/check_balance_snapshot.py
 	python3 docs/buildings/audit-catalogs.py
 	python3 docs/buildings/check-coverage.py
 	python3 docs/buildings/sync-runtime-tables.py --check
+	python3 docs/buildings/sync-xp-tables.py --check
 	cmp data/balance/v2.json backend/internal/domain/catalog/balance.v2.json
 	cd backend && GOCACHE=/tmp/real-city-go-cache go test ./internal/domain/catalog
 
@@ -113,3 +116,34 @@ asset-pipeline-blender-roundtrip:
 asset-pipeline-local: asset-pipeline-smoke asset-contact-sheets asset-pipeline-blender-roundtrip
 	PYTHONPATH=tools/assets python3 -B tools/assets/validate_building_manifests.py
 	PYTHONPATH=tools/assets python3 -B tools/assets/validate_building_ground.py
+
+.PHONY: gameplay-restart-test
+gameplay-restart-test:
+	bash scripts/test-gameplay-restart.sh
+
+.PHONY: contracts-check contracts-generate
+contracts-check:
+	bash scripts/check-contracts.sh
+contracts-generate:
+	python3 tools/sync_api_contracts.py
+
+.PHONY: laptop-build laptop-up laptop-stop laptop-config laptop-measure
+laptop-build:
+	$(COMPOSE_LAPTOP) --parallel 1 build backend frontend
+
+# Сборка вынесена отдельно: обычный запуск не запускает компиляторы.
+laptop-up:
+	$(COMPOSE_LAPTOP) stop frontend backend
+	$(COMPOSE_LAPTOP) up -d --no-build --wait postgres redis
+	$(COMPOSE_LAPTOP) run --rm --no-deps backend /app/migrate up
+	$(COMPOSE_LAPTOP) exec -T postgres psql -X -U real_city -d real_city -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS pg_stat_statements'
+	$(COMPOSE_LAPTOP) up -d --no-build backend frontend
+
+laptop-stop:
+	$(COMPOSE_LAPTOP) stop frontend backend redis postgres
+
+laptop-config:
+	$(COMPOSE_LAPTOP) config --quiet
+
+laptop-measure:
+	bash scripts/measure-laptop-resources.sh

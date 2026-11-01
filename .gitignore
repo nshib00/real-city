@@ -8,6 +8,8 @@ build/
 frontend/dist/
 backend/bin/
 coverage/
+test-results/
+playwright-report/
 *.tsbuildinfo
 
 # Local environment
@@ -91,6 +93,8 @@ frontend/public/assets/**/work/
 !frontend/public/assets/buildings/housing/stone_house/*.glb
 !frontend/public/assets/buildings/housing/stone_house/*.blend
 !frontend/public/assets/buildings/housing/villa/*.glb
+!frontend/public/assets/buildings/center/town_hall/*.glb
+!frontend/public/assets/buildings/center/town_hall/*.blend
 # Monster master files and animated runtime previews.
 !frontend/public/assets/monsters/*/*.blend
 !frontend/public/assets/monsters/*/*.glb
@@ -162,11 +166,16 @@ tools/audio/review/
 *.7z
 *.rar
 *.gz
+!tools/assets/backups/town_hall_before_vertical_2026-10-26.tar.gz
 *.bz2
 *.xz
 *.iso
 
 # Dumps and local databases
+frontend/design-results/
+frontend/interface-results/
+frontend/review-results/
+output/playwright/
 *.dump
 *.sql.gz
 *.sql.bz2

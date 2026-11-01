@@ -1,0 +1,41 @@
+# Использовать поверх docker-compose.test.yml с тем же project name real-city-test.
+services:
+  postgres:
+    cpus: 0.75
+    mem_limit: 768m
+    command: [postgres, -c, shared_buffers=128MB, -c, work_mem=4MB, -c, maintenance_work_mem=64MB, -c, max_connections=30, -c, max_parallel_workers_per_gather=0, -c, shared_preload_libraries=pg_stat_statements]
+    logging: &bounded-logs
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "2"
+  redis:
+    cpus: 0.25
+    mem_limit: 192m
+    logging: *bounded-logs
+  backend:
+    cpus: 1.5
+    mem_limit: 768m
+    environment:
+      GOMAXPROCS: "2"
+      GOMEMLIMIT: 512MiB
+      POSTGRES_MAX_OPEN_CONNS: "5"
+      POSTGRES_MAX_IDLE_CONNS: "2"
+      LOG_LEVEL: info
+      SIMULATION_EMBEDDED: "true"
+      SIMULATION_WORKER_COUNT: "1"
+    logging: *bounded-logs
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      DOMAIN: ":80"
+    ports:
+      - "127.0.0.1:15173:80"
+    cpus: 0.5
+    mem_limit: 128m
+    logging: *bounded-logs
+    depends_on:
+      backend:
+        condition: service_started

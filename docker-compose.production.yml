@@ -1,0 +1,65 @@
+name: real-city-production
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: real_city
+      POSTGRES_USER: real_city
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U real_city -d real_city']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes: [redis_data:/data]
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  backend:
+    image: ${BACKEND_IMAGE:?set BACKEND_IMAGE to a versioned image}
+    read_only: true
+    tmpfs: ['/tmp:size=16m,mode=1777']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      SERVER_ADDR: :8080
+      POSTGRES_DSN: postgres://real_city:${POSTGRES_PASSWORD}@postgres:5432/real_city?sslmode=disable
+      REDIS_ADDR: redis:6379
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET}
+      SIMULATION_EMBEDDED: 'true'
+      STORAGE_PUBLIC_URL: https://${DOMAIN:?set DOMAIN}/assets
+      LOG_LEVEL: info
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:8080/ready']
+      interval: 10s
+      timeout: 3s
+      retries: 6
+  web:
+    image: ${FRONTEND_IMAGE:?set FRONTEND_IMAGE to a versioned image}
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN}
+    ports: ['80:80', '443:443', '443:443/udp']
+    volumes: [caddy_data:/data, caddy_config:/config]
+    depends_on:
+      backend: {condition: service_healthy}
+
+volumes:
+  postgres_data:
+  redis_data:
+  caddy_data:
+  caddy_config:
