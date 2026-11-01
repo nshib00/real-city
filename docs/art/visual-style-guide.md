@@ -18,7 +18,7 @@
 - `shared/catalog/` - актуальные игровые id, категории и цепочки.
 - `reference/images/` - локальные визуальные референсы изометрической карты, плотности, читаемости и насыщенности.
 - `reference/buildings/` - справочник оригинальной игры только для анализа категорий, прогрессий, механик и плотности объектов.
-- `skills/blender-skills/` - технические Blender-навыки, которые должны использоваться вместе с Real City style guide.
+- `.agents/skills/blender-skills/` - технические Blender-навыки, которые должны использоваться вместе с Real City style guide.
 
 Из референсов можно переносить только общие принципы:
 
@@ -460,15 +460,15 @@ Construction-state показывает незавершенное целево�
 
 При создании или ревью моделей использовать этот документ вместе с локальными skills:
 
-- `skills/blender-skills/blender-director` - планирование пайплайна и production brief;
-- `skills/blender-skills/fantasy-worlds` - фентезийная архитектура и material honesty;
-- `skills/blender-skills/stylized-style` - shape language, цвет, hand-painted/NPR-подход;
-- `skills/blender-skills/isometric-style` - orthographic iso, footprint, scale readability;
-- `skills/blender-skills/asset-optimization` - бюджеты, LOD, cleanup, validation;
-- `skills/blender-skills/materials`, `uv-workflow`, `texture-workflow`, `export-pipeline` - когда требуются материалы, UV, текстуры и экспорт;
-- `skills/blender-skills/vegetation-artist`, `environment-artist`, `prop-artist`, `creature-artist`, `animation` - по типу ассета.
+- `.agents/skills/blender-skills/blender-director` - планирование пайплайна и production brief;
+- `.agents/skills/blender-skills/fantasy-worlds` - фентезийная архитектура и material honesty;
+- `.agents/skills/blender-skills/stylized-style` - shape language, цвет, hand-painted/NPR-подход;
+- `.agents/skills/blender-skills/isometric-style` - orthographic iso, footprint, scale readability;
+- `.agents/skills/blender-skills/asset-optimization` - бюджеты, LOD, cleanup, validation;
+- `.agents/skills/blender-skills/materials`, `uv-workflow`, `texture-workflow`, `export-pipeline` - когда требуются материалы, UV, текстуры и экспорт;
+- `.agents/skills/blender-skills/vegetation-artist`, `environment-artist`, `prop-artist`, `creature-artist`, `animation` - по типу ассета.
 
-Не использовать `skills/blender-skills/lowpoly-style` как основной стиль Real City. Он допустим только для дальних LOD, collision/proxy, технических блок-аутов или временных placeholder, которые не выдаются за финальный ассет.
+Не использовать `.agents/skills/blender-skills/lowpoly-style` как основной стиль Real City. Он допустим только для дальних LOD, collision/proxy, технических блок-аутов или временных placeholder, которые не выдаются за финальный ассет.
 
 ## Production brief для каждого ассета
 

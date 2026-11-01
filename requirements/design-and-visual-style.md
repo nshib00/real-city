@@ -126,7 +126,6 @@ UI должен быть плотным, читаемым и пригодным 
 
 - house;
 - workshop;
-- warehouse;
 - market;
 - tower;
 - wall;
