@@ -1,14 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { getInventory } from '../../shared/api/economy'
+import { useGameStore } from '../../game/state/useGameStore'
 
 export function useInventory() {
+  const connected = useGameStore((state) => state.realtimeStatus === 'connected')
   return useQuery({
     queryKey: ['economy', 'inventory'],
     queryFn: getInventory,
     retry: false,
     staleTime: 5000,
-    refetchInterval: 5000,
+    refetchInterval: connected ? 30_000 : 5000,
   })
 }
 

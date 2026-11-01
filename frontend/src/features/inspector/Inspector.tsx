@@ -19,7 +19,7 @@ import { deleteBuilding as deleteBuildingRequest, patchBuilding, placeBuilding, 
 import { ruinRestoration } from './ruinRestoration'
 import { playBuildingSound } from '../buildings/buildingAudio'
 import { ApiClientError } from '../../shared/api/client'
-import { advanceField, harvestField, listProductionJobs, patchResourceNode, type InventoryResponse } from '../../shared/api/economy'
+import { advanceField, harvestField, patchResourceNode, type InventoryResponse } from '../../shared/api/economy'
 import { createAttackMonster, getCombatRules, listPendingWeaponAttacks, useWeaponOnBuilding, useWeaponOnMonster, toMonster, type MonsterLootResponse, type MonsterResponse, type PendingWeaponAttack } from '../../shared/api/monsters'
 import { weaponFuseLabel } from './weaponFuse'
 import { IconButton, Modal, SegmentedControl, Tabs } from '../../shared/ui'
@@ -30,6 +30,7 @@ import { ownershipOf } from '../../shared/ui/ownership'
 import { ObjectMarks } from '../../shared/ui/ObjectMarks'
 import { getPublicPlayer } from '../auth/api'
 import { inventoryAmount, useInventory } from '../economy/useInventory'
+import { useProductionJobs } from '../production/useProductionJobs'
 import { fieldHarvestSound, playConfirmedCoinChange, playConfirmedRareReward, resourceGatherSound } from '../economy/economyAudio'
 import { fieldCropSpec } from '../fields/fieldGrowth'
 import { ResourceIcon } from '../resources/ResourceIcon'
@@ -86,13 +87,14 @@ export function Inspector() {
   const queryClient = useQueryClient()
   const inventoryQuery = useInventory()
   const player = useAuthStore((state) => state.player)
+  const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const pendingWeaponsQuery = useQuery({
     queryKey: ['combat', 'attacks'],
     queryFn: listPendingWeaponAttacks,
     enabled: Boolean(player),
-    refetchInterval: 5000,
+    refetchInterval: (query) => query.state.data?.attacks.length ? 5000 : realtimeStatus === 'connected' ? 30_000 : 10_000,
   })
-  const oilJobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, enabled: Boolean(player), refetchInterval: 5000 })
+  const oilJobsQuery = useProductionJobs(Boolean(player))
   const activeTile = selectedTile ?? hoveredTile
   const selectedBuilding = buildings.find((building) => building.id === selectedBuildingId) ?? null
   const canManageSelectedBuilding = Boolean(selectedBuilding && player && selectedBuilding.owner === player.id)

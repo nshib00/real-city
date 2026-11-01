@@ -4,12 +4,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { playUiSound } from '../../audio/playUiSound'
 import type { InventoryResponse } from '../../shared/api/economy'
 import { playConfirmedCoinChange, playConfirmedRareReward, productionMaterialVariant } from '../economy/economyAudio'
-import { listProductionJobs, listProductionRecipes, patchProductionJob, startProduction } from '../../shared/api/economy'
+import { listProductionRecipes, patchProductionJob, startProduction } from '../../shared/api/economy'
 import { useGameStore } from '../../game/state/useGameStore'
 import { useAuthStore } from '../auth/useAuthStore'
 import { ResourceIcon } from '../resources/ResourceIcon'
 import { formatRemaining } from '../../shared/time/formatRemaining'
 import { updateProductionCache } from './updateProductionCache'
+import { useProductionJobs } from './useProductionJobs'
 import { showToast } from '../notifications/toast'
 import { useInventory, inventoryAmount, availablePopulation } from '../economy/useInventory'
 
@@ -22,7 +23,7 @@ export function ProductionPanel() {
   const inventoryQuery = useInventory()
   const inventory = inventoryQuery.data?.inventory.items
   const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes, retry: false, staleTime: 5 * 60_000, gcTime: 30 * 60_000 })
-  const jobsQuery = useQuery({ queryKey: ['production', 'jobs'], queryFn: listProductionJobs, retry: false, refetchInterval: 5000 })
+  const jobsQuery = useProductionJobs()
   const previousJobs = useRef<Map<string, string> | null>(null)
   useEffect(() => {
     if (!jobsQuery.data) return
