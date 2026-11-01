@@ -17,6 +17,7 @@
 
 ## Общие правила
 
+- [Баланс и правила наград XP](experience.md)
 - [Шаблон характеристик постройки](building-characteristics-template.md)
 - [Реестр покрытия построек](catalog-coverage.md)
 - [Шаблон industry-постройки](tables/templates/industry-building-template.md)

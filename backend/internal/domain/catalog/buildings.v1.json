@@ -2028,31 +2028,6 @@
       "health": 100
     },
     {
-      "type": "warehouse",
-      "category": "storage",
-      "name": "Склад материалов",
-      "level": 1,
-      "footprint": {
-        "width": 1,
-        "height": 1
-      },
-      "buildSeconds": 120,
-      "population": 2,
-      "cost": [
-        {
-          "resource": "wood",
-          "amount": 80
-        },
-        {
-          "resource": "stone",
-          "amount": 30
-        }
-      ],
-      "firstLevel": true,
-      "upgradeTo": [],
-      "health": 100
-    },
-    {
       "type": "coin_storage",
       "category": "storage",
       "name": "Хранилище монет",

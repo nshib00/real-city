@@ -22,7 +22,6 @@
 | `mechanical_workshop` | 10 | совпадает |
 | `optical_workshop` | 1 | совпадает |
 | `mint` | 1 | совпадает |
-| `warehouse` | 1 | совпадает |
 | `coin_storage` | 12 | совпадает |
 | `market` | 1 | совпадает |
 | `tower` | 1 | совпадает |

@@ -1,41 +1,88 @@
 package catalog
 
-import "real-city/backend/internal/domain/building"
+import (
+	_ "embed"
+	"encoding/json"
+	"fmt"
+	"sync"
+
+	"real-city/backend/internal/domain/building"
+)
 
 type BuildingXP struct {
-	Completion  int
-	Work        int
-	Destruction int
+	Completion  int `json:"completion"`
+	Work        int `json:"work"`
+	Destruction int `json:"destruction"`
 }
 
-var buildingXP = map[building.Type][]BuildingXP{
-	building.TypeSeedGarden: {
-		{12, 2, 80}, {35, 3, 230}, {75, 4, 520}, {130, 5, 950}, {210, 6, 1600},
-		{325, 8, 2600}, {470, 10, 4200}, {650, 12, 6800}, {880, 15, 11000}, {1150, 18, 17500},
-	},
-	building.TypeFlaxField: {
-		{40, 7, 215}, {98, 10, 527}, {68, 4, 560}, {118, 5, 1020}, {190, 6, 1700},
-		{300, 8, 2850}, {440, 10, 4700}, {620, 12, 7600}, {830, 15, 12200}, {1080, 18, 19000},
-	},
-	building.TypeGlassWorkshop: {
-		{200, 16, 918}, {289, 20, 2011}, {404, 25, 4685}, {695, 32, 9113}, {913, 36, 19322},
-		{1210, 41, 45120}, {1788, 48, 71481}, {3012, 57, 130827}, {6557, 70, 297600},
-	},
-	building.TypeMine: {
-		{60, 8, 420}, {115, 10, 870}, {203, 13, 1550}, {346, 16, 2560}, {505, 20, 3910},
-		{713, 24, 6700}, {955, 29, 9210}, {1152, 33, 15750}, {1435, 38, 30213}, {1700, 45, 67155},
-		{2035, 52, 140560}, {2340, 57, 226700},
-	},
-	building.TypeRopeYard: {
-		{55, 7, 430}, {110, 9, 820}, {190, 12, 1500}, {310, 16, 2750},
-		{480, 21, 5100}, {690, 27, 8800}, {930, 34, 14200}, {1220, 42, 23000},
-	},
+//go:embed building_xp.json
+var buildingXPJSON []byte
+
+var buildingXPOnce sync.Once
+var buildingXP map[building.Type]map[int]BuildingXP
+
+func loadBuildingXP() {
+	var data struct {
+		SchemaVersion int `json:"schema_version"`
+		Buildings     map[building.Type][]struct {
+			Level int `json:"level"`
+			BuildingXP
+		} `json:"buildings"`
+	}
+	if err := json.Unmarshal(buildingXPJSON, &data); err != nil {
+		panic(err)
+	}
+	if data.SchemaVersion != 1 {
+		panic("unsupported building XP schema")
+	}
+	buildingXP = make(map[building.Type]map[int]BuildingXP, len(data.Buildings))
+	for kind, rows := range data.Buildings {
+		levels := make(map[int]BuildingXP, len(rows))
+		for _, row := range rows {
+			if _, exists := levels[row.Level]; exists || row.Level < 1 || row.Completion <= 0 || row.Destruction <= 0 || row.Destruction > 500000 || row.Work < 0 {
+				panic(fmt.Sprintf("invalid building XP: %s/%d", kind, row.Level))
+			}
+			levels[row.Level] = row.BuildingXP
+		}
+		buildingXP[kind] = levels
+	}
+	// Fail on missing policies when a new building or level is introduced.
+	specs := AllBuildings()
+	for _, ruin := range RuinSpecs {
+		specs = append(specs, ruin)
+	}
+	if len(specs) != len(buildingXP) {
+		panic("building XP types do not match building catalog")
+	}
+	for _, spec := range specs {
+		working := spec.Category == "fields" || spec.Type == building.TypeOilWell
+		for _, recipe := range ProductionRecipes {
+			working = working || recipe.BuildingType == string(spec.Type)
+		}
+		levels := spec.UpgradeLevels
+		if len(levels) == 0 {
+			levels = []BuildingUpgradeLevel{{Level: spec.Level}}
+		}
+		if len(levels) != len(buildingXP[spec.Type]) {
+			panic(fmt.Sprintf("incomplete building XP levels: %s", spec.Type))
+		}
+		previousDestruction := 0
+		for _, level := range levels {
+			xp, ok := buildingXP[spec.Type][level.Level]
+			if !ok {
+				panic(fmt.Sprintf("missing building XP: %s/%d", spec.Type, level.Level))
+			}
+			if xp.Destruction <= previousDestruction || (working && xp.Work <= 0) {
+				panic(fmt.Sprintf("invalid building XP policy: %s/%d", spec.Type, level.Level))
+			}
+			previousDestruction = xp.Destruction
+		}
+	}
 }
+
+func ValidateBuildingXP() { buildingXPOnce.Do(loadBuildingXP) }
 
 func ExperienceForBuilding(kind building.Type, level int) BuildingXP {
-	levels := buildingXP[kind]
-	if level < 1 || level > len(levels) {
-		return BuildingXP{}
-	}
-	return levels[level-1]
+	ValidateBuildingXP()
+	return buildingXP[kind][level]
 }

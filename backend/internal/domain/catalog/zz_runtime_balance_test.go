@@ -17,10 +17,10 @@ func TestRuntimeBalanceSnapshot(t *testing.T) {
 	if _, err := decodeRuntimeBalance(raw); err != nil {
 		t.Fatal(err)
 	}
-	if len(Resources) != 78 || len(monsterSpecs) != 8 || len(PlayerWeapons) != 9 {
+	if len(Resources) != 80 || len(monsterSpecs) != 8 || len(PlayerWeapons) != 9 {
 		t.Fatalf("unexpected active balance: resources=%d monsters=%d weapons=%d", len(Resources), len(monsterSpecs), len(PlayerWeapons))
 	}
-	if RaidRules().RaidDamage <= 0 {
+	if CombatRules().SummonCostCoins <= 0 {
 		t.Fatal("PvP balance was not loaded")
 	}
 }

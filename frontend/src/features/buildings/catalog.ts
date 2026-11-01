@@ -2,6 +2,7 @@ import { buildingCatalog } from '../../../../shared/catalog/buildings'
 import type { BuildingCatalogItem as SharedBuildingCatalogItem } from '../../../../shared/catalog/buildings'
 import type { BuildingKind, PlacedBuilding } from '../../game/state/useGameStore'
 import { resolveBuildingSpriteAsset } from '../../game/renderers/buildingRegistry'
+import { formatRemaining } from '../../shared/time/formatRemaining'
 
 export type BuildCatalogItem = {
   kind: BuildingKind
@@ -20,8 +21,7 @@ export function buildTimeToSeconds(time: string) {
   if (time === 'мгновенно') {
     return 0
   }
-  const [minutes, seconds] = time.split(':').map(Number)
-  return minutes * 60 + seconds
+  return time.split(':').reduce((total, part) => total * 60 + Number(part), 0)
 }
 
 const descriptions: Record<BuildingKind, string> = {
@@ -37,7 +37,6 @@ const descriptions: Record<BuildingKind, string> = {
   oilseed_field: 'Дает масличные растения для масла и ламповых цепочек.',
   sugar_bed: 'Выращивает сахарный стебель для торговли, алхимии и событий.',
   crystal_greenhouse: 'Поздняя оранжерея для кристальных плодов.',
-  warehouse: 'Складирует производственные запасы без лимитов ресурсов.',
   coin_storage: 'Увеличивает лимит монет. Остальные ресурсы лимита не имеют.',
   workshop: 'Обжигает кирпичи, собирает охотничьи капканы и пороховые бомбы.',
   brick_kiln: 'Перерабатывает глину и уголь в кирпичи для стен и городских зданий.',
@@ -141,9 +140,7 @@ function formatSeconds(seconds: number) {
   if (seconds <= 0) {
     return 'мгновенно'
   }
-  const minutes = Math.floor(seconds / 60)
-  const rest = seconds % 60
-  return `${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')}`
+  return formatRemaining(seconds * 1000)
 }
 
 function resourceLabel(resource: string) {

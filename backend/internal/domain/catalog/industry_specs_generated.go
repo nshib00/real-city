@@ -27,18 +27,6 @@ func init() {
 			{Level: 10, BuildDuration: 1590 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 2250000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "mechanism", Amount: 25}}},
 		},
 	}
-	buildingXP[building.TypeBrickYard] = []BuildingXP{
-		{Completion: 320, Work: 22, Destruction: 2380},
-		{Completion: 800, Work: 32, Destruction: 3185},
-		{Completion: 1600, Work: 42, Destruction: 3990},
-		{Completion: 2900, Work: 52, Destruction: 4795},
-		{Completion: 4700, Work: 62, Destruction: 5600},
-		{Completion: 7100, Work: 72, Destruction: 6405},
-		{Completion: 9900, Work: 82, Destruction: 7210},
-		{Completion: 13200, Work: 92, Destruction: 8015},
-		{Completion: 17300, Work: 102, Destruction: 8820},
-		{Completion: 22500, Work: 112, Destruction: 9625},
-	}
 	industryLevelRecipes["brick_yard_batch"] = []economy.ProductionRecipe{
 		{ID: "brick_yard_batch", Name: "Кирпичный двор", BuildingType: "brick_yard", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "clay", Amount: 24}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "brick", Amount: 4}}, FuelPerRun: 0},
 		{ID: "brick_yard_batch", Name: "Кирпичный двор", BuildingType: "brick_yard", RequiredLevel: 2, Duration: 21 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "clay", Amount: 30}, {Resource: "coal", Amount: 5}}, Output: []economy.ResourceAmount{{Resource: "brick", Amount: 6}}, FuelPerRun: 0},
@@ -68,18 +56,6 @@ func init() {
 			{Level: 9, BuildDuration: 1450 * time.Minute, Population: 22, Health: 2520, Cost: []building.Cost{{Resource: "coins", Amount: 3084000}, {Resource: "steel", Amount: 93}, {Resource: "reinforced_concrete", Amount: 23}}},
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 3946000}, {Resource: "steel", Amount: 102}, {Resource: "reinforced_concrete", Amount: 25}}},
 		},
-	}
-	buildingXP[building.TypeFoundry] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
 	}
 	industryLevelRecipes["iron_ingot_batch"] = []economy.ProductionRecipe{
 		{ID: "iron_ingot_batch", Name: "Литейная", BuildingType: "foundry", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "iron_ore", Amount: 18}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "iron_ingot", Amount: 3}}, FuelPerRun: 0},
@@ -111,18 +87,6 @@ func init() {
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 2825000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "steel", Amount: 109}}},
 		},
 	}
-	buildingXP[building.TypeOilPress] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
-	}
 	industryLevelRecipes["plant_oil_batch"] = []economy.ProductionRecipe{
 		{ID: "plant_oil_batch", Name: "Маслобойня", BuildingType: "oil_press", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "oil_plants", Amount: 20}}, Output: []economy.ResourceAmount{{Resource: "plant_oil", Amount: 3}}, FuelPerRun: 6},
 		{ID: "plant_oil_batch", Name: "Маслобойня", BuildingType: "oil_press", RequiredLevel: 2, Duration: 21 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "oil_plants", Amount: 25}}, Output: []economy.ResourceAmount{{Resource: "plant_oil", Amount: 4}}, FuelPerRun: 8},
@@ -152,18 +116,6 @@ func init() {
 			{Level: 9, BuildDuration: 1230 * time.Minute, Population: 22, Health: 2520, Cost: []building.Cost{{Resource: "coins", Amount: 2054000}, {Resource: "reinforced_concrete", Amount: 21}, {Resource: "reinforced_beams", Amount: 23}}},
 			{Level: 10, BuildDuration: 1590 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 2672000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "reinforced_beams", Amount: 25}}},
 		},
-	}
-	buildingXP[building.TypeOilRefinery] = []BuildingXP{
-		{Completion: 320, Work: 22, Destruction: 2380},
-		{Completion: 800, Work: 32, Destruction: 3185},
-		{Completion: 1600, Work: 42, Destruction: 3990},
-		{Completion: 2900, Work: 52, Destruction: 4795},
-		{Completion: 4700, Work: 62, Destruction: 5600},
-		{Completion: 7100, Work: 72, Destruction: 6405},
-		{Completion: 9900, Work: 82, Destruction: 7210},
-		{Completion: 13200, Work: 92, Destruction: 8015},
-		{Completion: 17300, Work: 102, Destruction: 8820},
-		{Completion: 22500, Work: 112, Destruction: 9625},
 	}
 	industryLevelRecipes["fuel_from_oil"] = []economy.ProductionRecipe{
 		{ID: "fuel_from_oil", Name: "Нефтеперерабатывающий завод", BuildingType: "oil_refinery", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "oil", Amount: 20}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "fuel", Amount: 5}}, FuelPerRun: 0},
@@ -195,18 +147,6 @@ func init() {
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 2409000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "steel", Amount: 109}}},
 		},
 	}
-	buildingXP[building.TypeResinKiln] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
-	}
 	industryLevelRecipes["resin_batch"] = []economy.ProductionRecipe{
 		{ID: "resin_batch", Name: "Смолокурня", BuildingType: "resin_kiln", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "wood", Amount: 25}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "resin", Amount: 5}}, FuelPerRun: 0},
 		{ID: "resin_batch", Name: "Смолокурня", BuildingType: "resin_kiln", RequiredLevel: 2, Duration: 21 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "wood", Amount: 32}, {Resource: "coal", Amount: 5}}, Output: []economy.ResourceAmount{{Resource: "resin", Amount: 7}}, FuelPerRun: 0},
@@ -236,18 +176,6 @@ func init() {
 			{Level: 9, BuildDuration: 2830 * time.Minute, Population: 26, Health: 4180, Cost: []building.Cost{{Resource: "coins", Amount: 7195000}, {Resource: "reinforced_beams", Amount: 21}, {Resource: "super_mechanism", Amount: 3}}},
 			{Level: 10, BuildDuration: 3510 * time.Minute, Population: 27, Health: 4500, Cost: []building.Cost{{Resource: "coins", Amount: 8964000}, {Resource: "reinforced_beams", Amount: 23}, {Resource: "super_mechanism", Amount: 3}}},
 		},
-	}
-	buildingXP[building.TypeSteelworks] = []BuildingXP{
-		{Completion: 3900, Work: 22, Destruction: 5670},
-		{Completion: 6500, Work: 32, Destruction: 6790},
-		{Completion: 9900, Work: 42, Destruction: 7910},
-		{Completion: 14500, Work: 52, Destruction: 9030},
-		{Completion: 20500, Work: 62, Destruction: 10150},
-		{Completion: 28000, Work: 72, Destruction: 11270},
-		{Completion: 37000, Work: 82, Destruction: 12390},
-		{Completion: 48000, Work: 92, Destruction: 13510},
-		{Completion: 61000, Work: 102, Destruction: 14630},
-		{Completion: 76000, Work: 112, Destruction: 15750},
 	}
 	industryLevelRecipes["steel_batch"] = []economy.ProductionRecipe{
 		{ID: "steel_batch", Name: "Сталеплавильный завод", BuildingType: "steelworks", RequiredLevel: 1, Duration: 29 * time.Minute, Workers: 11, Input: []economy.ResourceAmount{{Resource: "iron_ingot", Amount: 16}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "steel", Amount: 3}}, FuelPerRun: 0},
@@ -279,18 +207,6 @@ func init() {
 			{Level: 10, BuildDuration: 3510 * time.Minute, Population: 27, Health: 4500, Cost: []building.Cost{{Resource: "coins", Amount: 7600000}, {Resource: "aeolian_alloy", Amount: 3}, {Resource: "light_crystal", Amount: 3}}},
 		},
 	}
-	buildingXP[building.TypeSulfurSpring] = []BuildingXP{
-		{Completion: 3900, Work: 22, Destruction: 5670},
-		{Completion: 6500, Work: 32, Destruction: 6790},
-		{Completion: 9900, Work: 42, Destruction: 7910},
-		{Completion: 14500, Work: 52, Destruction: 9030},
-		{Completion: 20500, Work: 62, Destruction: 10150},
-		{Completion: 28000, Work: 72, Destruction: 11270},
-		{Completion: 37000, Work: 82, Destruction: 12390},
-		{Completion: 48000, Work: 92, Destruction: 13510},
-		{Completion: 61000, Work: 102, Destruction: 14630},
-		{Completion: 76000, Work: 112, Destruction: 15750},
-	}
 	industryLevelRecipes["sulfur_batch"] = []economy.ProductionRecipe{
 		{ID: "sulfur_batch", Name: "Серный источник", BuildingType: "sulfur_spring", RequiredLevel: 1, Duration: 29 * time.Minute, Workers: 11, Input: []economy.ResourceAmount{}, Output: []economy.ResourceAmount{{Resource: "sulfur", Amount: 7}}, FuelPerRun: 6},
 		{ID: "sulfur_batch", Name: "Серный источник", BuildingType: "sulfur_spring", RequiredLevel: 2, Duration: 33 * time.Minute, Workers: 13, Input: []economy.ResourceAmount{}, Output: []economy.ResourceAmount{{Resource: "sulfur", Amount: 10}}, FuelPerRun: 8},
@@ -320,18 +236,6 @@ func init() {
 			{Level: 9, BuildDuration: 6960 * time.Minute, Population: 29, Health: 5780, Cost: []building.Cost{{Resource: "coins", Amount: 14100000}, {Resource: "aeolian_alloy", Amount: 3}, {Resource: "super_mechanism", Amount: 3}}},
 			{Level: 10, BuildDuration: 8280 * time.Minute, Population: 30, Health: 6200, Cost: []building.Cost{{Resource: "coins", Amount: 17500000}, {Resource: "aeolian_alloy", Amount: 3}, {Resource: "super_mechanism", Amount: 3}}},
 		},
-	}
-	buildingXP[building.TypeElectronics] = []BuildingXP{
-		{Completion: 14000, Work: 22, Destruction: 8470},
-		{Completion: 20500, Work: 32, Destruction: 9940},
-		{Completion: 29000, Work: 42, Destruction: 11410},
-		{Completion: 39500, Work: 52, Destruction: 12880},
-		{Completion: 53000, Work: 62, Destruction: 14350},
-		{Completion: 69000, Work: 72, Destruction: 15820},
-		{Completion: 89000, Work: 82, Destruction: 17290},
-		{Completion: 113000, Work: 92, Destruction: 18760},
-		{Completion: 141000, Work: 102, Destruction: 20230},
-		{Completion: 175000, Work: 112, Destruction: 21700},
 	}
 	industryLevelRecipes["electronics_batch"] = []economy.ProductionRecipe{
 		{ID: "electronics_batch", Name: "Электронная мастерская", BuildingType: "electronics_workshop", RequiredLevel: 1, Duration: 35 * time.Minute, Workers: 14, Input: []economy.ResourceAmount{{Resource: "copper_parts", Amount: 12}, {Resource: "glass", Amount: 8}, {Resource: "mechanism", Amount: 5}}, Output: []economy.ResourceAmount{{Resource: "electronics", Amount: 2}}, FuelPerRun: 6},
@@ -363,18 +267,6 @@ func init() {
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 6438000}, {Resource: "reinforced_beams", Amount: 23}, {Resource: "electronics", Amount: 3}}},
 		},
 	}
-	buildingXP[building.TypeMechanicalShop] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
-	}
 	industryLevelRecipes["copper_parts_batch"] = []economy.ProductionRecipe{
 		{ID: "copper_parts_batch", Name: "Механическая мастерская", BuildingType: "mechanical_workshop", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "copper", Amount: 14}, {Resource: "iron_ingot", Amount: 10}}, Output: []economy.ResourceAmount{{Resource: "copper_parts", Amount: 3}}, FuelPerRun: 6},
 		{ID: "copper_parts_batch", Name: "Механическая мастерская", BuildingType: "mechanical_workshop", RequiredLevel: 2, Duration: 21 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "copper", Amount: 18}, {Resource: "iron_ingot", Amount: 12}}, Output: []economy.ResourceAmount{{Resource: "copper_parts", Amount: 4}}, FuelPerRun: 8},
@@ -404,18 +296,6 @@ func init() {
 			{Level: 9, BuildDuration: 2830 * time.Minute, Population: 26, Health: 4180, Cost: []building.Cost{{Resource: "coins", Amount: 5631000}, {Resource: "reinforced_beams", Amount: 21}, {Resource: "light_crystal", Amount: 3}}},
 			{Level: 10, BuildDuration: 3510 * time.Minute, Population: 27, Health: 4500, Cost: []building.Cost{{Resource: "coins", Amount: 7015000}, {Resource: "reinforced_beams", Amount: 23}, {Resource: "light_crystal", Amount: 3}}},
 		},
-	}
-	buildingXP[building.TypePaintWorkshop] = []BuildingXP{
-		{Completion: 3900, Work: 22, Destruction: 5670},
-		{Completion: 6500, Work: 32, Destruction: 6790},
-		{Completion: 9900, Work: 42, Destruction: 7910},
-		{Completion: 14500, Work: 52, Destruction: 9030},
-		{Completion: 20500, Work: 62, Destruction: 10150},
-		{Completion: 28000, Work: 72, Destruction: 11270},
-		{Completion: 37000, Work: 82, Destruction: 12390},
-		{Completion: 48000, Work: 92, Destruction: 13510},
-		{Completion: 61000, Work: 102, Destruction: 14630},
-		{Completion: 76000, Work: 112, Destruction: 15750},
 	}
 	industryLevelRecipes["paint_batch"] = []economy.ProductionRecipe{
 		{ID: "paint_batch", Name: "Красильная мастерская", BuildingType: "paint_workshop", RequiredLevel: 1, Duration: 29 * time.Minute, Workers: 11, Input: []economy.ResourceAmount{{Resource: "dyes", Amount: 15}, {Resource: "plant_oil", Amount: 11}}, Output: []economy.ResourceAmount{{Resource: "paints", Amount: 3}}, FuelPerRun: 6},
@@ -447,18 +327,6 @@ func init() {
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 3531000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "steel", Amount: 109}}},
 		},
 	}
-	buildingXP[building.TypeCopperMine] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
-	}
 	industryLevelRecipes["copper_mine_batch"] = []economy.ProductionRecipe{
 		{ID: "copper_mine_batch", Name: "Медный рудник", BuildingType: "copper_mine", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{}, Output: []economy.ResourceAmount{{Resource: "copper", Amount: 8}}, FuelPerRun: 6},
 		{ID: "copper_mine_batch", Name: "Медный рудник", BuildingType: "copper_mine", RequiredLevel: 2, Duration: 21 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{}, Output: []economy.ResourceAmount{{Resource: "copper", Amount: 11}}, FuelPerRun: 8},
@@ -488,18 +356,6 @@ func init() {
 			{Level: 9, BuildDuration: 1450 * time.Minute, Population: 22, Health: 2520, Cost: []building.Cost{{Resource: "coins", Amount: 2435000}, {Resource: "reinforced_concrete", Amount: 21}, {Resource: "reinforced_beams", Amount: 23}}},
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 3115000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "reinforced_beams", Amount: 25}}},
 		},
-	}
-	buildingXP[building.TypeCementWorkshop] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
 	}
 	industryLevelRecipes["cement_batch"] = []economy.ProductionRecipe{
 		{ID: "cement_batch", Name: "Цементный цех", BuildingType: "cement_workshop", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "stone", Amount: 18}, {Resource: "clay", Amount: 18}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "cement", Amount: 3}}, FuelPerRun: 0},
@@ -531,18 +387,6 @@ func init() {
 			{Level: 10, BuildDuration: 2730 * time.Minute, Population: 23, Health: 3200, Cost: []building.Cost{{Resource: "coins", Amount: 4600000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "reinforced_beams", Amount: 25}}},
 		},
 	}
-	buildingXP[building.TypeConcretePlant] = []BuildingXP{
-		{Completion: 2800, Work: 22, Destruction: 3955},
-		{Completion: 4200, Work: 32, Destruction: 4760},
-		{Completion: 6500, Work: 42, Destruction: 5565},
-		{Completion: 9400, Work: 52, Destruction: 6370},
-		{Completion: 13000, Work: 62, Destruction: 7175},
-		{Completion: 17600, Work: 72, Destruction: 7980},
-		{Completion: 23100, Work: 82, Destruction: 8785},
-		{Completion: 29600, Work: 92, Destruction: 9590},
-		{Completion: 37200, Work: 102, Destruction: 10395},
-		{Completion: 46000, Work: 112, Destruction: 11200},
-	}
 	industryLevelRecipes["concrete_batch"] = []economy.ProductionRecipe{
 		{ID: "concrete_batch", Name: "Бетонный завод", BuildingType: "concrete_plant", RequiredLevel: 1, Duration: 25 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "cement", Amount: 18}, {Resource: "sand", Amount: 36}, {Resource: "stone", Amount: 36}}, Output: []economy.ResourceAmount{{Resource: "concrete", Amount: 4}}, FuelPerRun: 6},
 		{ID: "concrete_batch", Name: "Бетонный завод", BuildingType: "concrete_plant", RequiredLevel: 2, Duration: 29 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "cement", Amount: 23}, {Resource: "sand", Amount: 46}, {Resource: "stone", Amount: 46}}, Output: []economy.ResourceAmount{{Resource: "concrete", Amount: 6}}, FuelPerRun: 8},
@@ -572,18 +416,6 @@ func init() {
 			{Level: 9, BuildDuration: 1050 * time.Minute, Population: 20, Health: 1780, Cost: []building.Cost{{Resource: "coins", Amount: 1380000}, {Resource: "reinforced_concrete", Amount: 21}, {Resource: "glass", Amount: 100}}},
 			{Level: 10, BuildDuration: 1350 * time.Minute, Population: 21, Health: 1950, Cost: []building.Cost{{Resource: "coins", Amount: 1850000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "glass", Amount: 109}}},
 		},
-	}
-	buildingXP[building.TypePaperWorkshop] = []BuildingXP{
-		{Completion: 220, Work: 16, Destruction: 1470},
-		{Completion: 480, Work: 20, Destruction: 2065},
-		{Completion: 950, Work: 24, Destruction: 2660},
-		{Completion: 1750, Work: 28, Destruction: 3255},
-		{Completion: 3000, Work: 32, Destruction: 3850},
-		{Completion: 4750, Work: 36, Destruction: 4445},
-		{Completion: 7100, Work: 40, Destruction: 5040},
-		{Completion: 10100, Work: 44, Destruction: 5635},
-		{Completion: 13800, Work: 48, Destruction: 6230},
-		{Completion: 18500, Work: 52, Destruction: 6825},
 	}
 	industryLevelRecipes["paper_batch"] = []economy.ProductionRecipe{
 		{ID: "paper_batch", Name: "Бумажная мастерская", BuildingType: "paper_workshop", RequiredLevel: 1, Duration: 13 * time.Minute, Workers: 5, Input: []economy.ResourceAmount{{Resource: "reed", Amount: 18}}, Output: []economy.ResourceAmount{{Resource: "paper", Amount: 3}}, FuelPerRun: 0},
@@ -615,18 +447,6 @@ func init() {
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 2908000}, {Resource: "reinforced_beams", Amount: 23}, {Resource: "super-fiber", Amount: 109}}},
 		},
 	}
-	buildingXP[building.TypeWeavingYard] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
-	}
 	industryLevelRecipes["fabric_batch"] = []economy.ProductionRecipe{
 		{ID: "fabric_batch", Name: "Ткацкая мастерская", BuildingType: "weaving_yard", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "fiber", Amount: 24}}, Output: []economy.ResourceAmount{{Resource: "fabric", Amount: 4}}, FuelPerRun: 6},
 		{ID: "fabric_batch", Name: "Ткацкая мастерская", BuildingType: "weaving_yard", RequiredLevel: 2, Duration: 21 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "fiber", Amount: 30}}, Output: []economy.ResourceAmount{{Resource: "fabric", Amount: 6}}, FuelPerRun: 8},
@@ -657,18 +477,6 @@ func init() {
 			{Level: 10, BuildDuration: 2730 * time.Minute, Population: 23, Health: 3200, Cost: []building.Cost{{Resource: "coins", Amount: 5586000}, {Resource: "reinforced_beams", Amount: 23}, {Resource: "electronics", Amount: 3}}},
 		},
 	}
-	buildingXP[building.TypeMilitaryPlant] = []BuildingXP{
-		{Completion: 2800, Work: 22, Destruction: 3955},
-		{Completion: 4200, Work: 32, Destruction: 4760},
-		{Completion: 6500, Work: 42, Destruction: 5565},
-		{Completion: 9400, Work: 52, Destruction: 6370},
-		{Completion: 13000, Work: 62, Destruction: 7175},
-		{Completion: 17600, Work: 72, Destruction: 7980},
-		{Completion: 23100, Work: 82, Destruction: 8785},
-		{Completion: 29600, Work: 92, Destruction: 9590},
-		{Completion: 37200, Work: 102, Destruction: 10395},
-		{Completion: 46000, Work: 112, Destruction: 11200},
-	}
 	industryLevelRecipes["explosives_batch"] = []economy.ProductionRecipe{
 		{ID: "explosives_batch", Name: "Военный завод", BuildingType: "military_factory", RequiredLevel: 1, Duration: 25 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "sulfur", Amount: 12}, {Resource: "fabric", Amount: 8}}, Output: []economy.ResourceAmount{{Resource: "explosives", Amount: 2}}, FuelPerRun: 6},
 		{ID: "explosives_batch", Name: "Военный завод", BuildingType: "military_factory", RequiredLevel: 2, Duration: 29 * time.Minute, Workers: 9, Input: []economy.ResourceAmount{{Resource: "sulfur", Amount: 15}, {Resource: "fabric", Amount: 11}}, Output: []economy.ResourceAmount{{Resource: "explosives", Amount: 3}}, FuelPerRun: 8},
@@ -698,18 +506,6 @@ func init() {
 			{Level: 9, BuildDuration: 1450 * time.Minute, Population: 22, Health: 2520, Cost: []building.Cost{{Resource: "coins", Amount: 2110000}, {Resource: "reinforced_concrete", Amount: 21}, {Resource: "mechanism", Amount: 3}}},
 			{Level: 10, BuildDuration: 1860 * time.Minute, Population: 23, Health: 2750, Cost: []building.Cost{{Resource: "coins", Amount: 2700000}, {Resource: "reinforced_concrete", Amount: 23}, {Resource: "mechanism", Amount: 3}}},
 		},
-	}
-	buildingXP[building.TypeTileFactory] = []BuildingXP{
-		{Completion: 650, Work: 22, Destruction: 2380},
-		{Completion: 1400, Work: 32, Destruction: 3185},
-		{Completion: 2700, Work: 42, Destruction: 3990},
-		{Completion: 4300, Work: 52, Destruction: 4795},
-		{Completion: 6500, Work: 62, Destruction: 5600},
-		{Completion: 9200, Work: 72, Destruction: 6405},
-		{Completion: 12500, Work: 82, Destruction: 7210},
-		{Completion: 16400, Work: 92, Destruction: 8015},
-		{Completion: 21100, Work: 102, Destruction: 8820},
-		{Completion: 27000, Work: 112, Destruction: 9625},
 	}
 	industryLevelRecipes["tile_batch"] = []economy.ProductionRecipe{
 		{ID: "tile_batch", Name: "Черепичный завод", BuildingType: "tile_factory", RequiredLevel: 1, Duration: 17 * time.Minute, Workers: 7, Input: []economy.ResourceAmount{{Resource: "clay", Amount: 28}, {Resource: "coal", Amount: 4}}, Output: []economy.ResourceAmount{{Resource: "tile", Amount: 3}}, FuelPerRun: 0},

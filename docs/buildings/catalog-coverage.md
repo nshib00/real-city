@@ -1,16 +1,16 @@
 # Реестр покрытия построек
 
-**Актуализация 25 октября 2026:** каталог содержит 73 ID. Во всех 73 основных документах есть действующая таблица каждого уровня из канонического JSON. `make catalog-check` сверяет таблицы, shared/backend и проверяет схему баланса. API `GET /api/v1/buildings/catalog?scope=all` раскрывает те же 73 типа и уровни. Исходная числовая проверка приведена в [отчёте сверки](catalog-parity.md).
+**Актуализация 25 октября 2026:** каталог содержит 72 ID. Во всех 72 основных документах есть действующая таблица каждого уровня из канонического JSON. `make catalog-check` сверяет таблицы, shared/backend и проверяет схему баланса. API `GET /api/v1/buildings/catalog?scope=all` раскрывает те же 72 типа и уровни. Исходная числовая проверка приведена в [отчёте сверки](catalog-parity.md).
 
 Фактическое наличие `.blend`, PNG, LOD, manifest, report и frontend lookup по каждому игровому уровню сверяется в [реестре ассетов](../assets/building-asset-coverage.md), который обновляется скриптом `python3 docs/assets/scan-building-assets.py`.
 
-Снимок каталогов на 25 октября 2026 года. Источник игровых ID и уровней — `data/buildings/catalog-v1.json`; из него генерируется `shared/catalog/buildings.ts`, а backend читает встроенную копию. Наличие ID перепроверено по `backend/internal/domain/building/building.go`. В обоих runtime-каталогах **73 одинаковых ID**, отсутствующих или повторяющихся игровых ID нет. Каждому ID сопоставлен один основной текстовый документ. Числа уровней ниже отражают каталог, а не обещание полноты моделей.
+Снимок каталогов на 25 октября 2026 года. Источник игровых ID и уровней — `data/buildings/catalog-v1.json`; из него генерируется `shared/catalog/buildings.ts`, а backend читает встроенную копию. Наличие ID перепроверено по `backend/internal/domain/building/building.go`. В обоих runtime-каталогах **72 одинаковых ID**, отсутствующих или повторяющихся игровых ID нет. Каждому ID сопоставлен один основной текстовый документ. Числа уровней ниже отражают каталог, а не обещание полноты моделей.
 
-В колонках «Визуальная спека» и «Runtime manifest» указано лишь наличие основного файла. Это не подтверждает все уровни, состояния, успешную сборку или подключение в рендерере. Тестовые `villa_*test`, `*_v2`, `backup_*` и `*_pilot` не считаются production. Теперь **все 73 ID имеют основную визуальную и текстовую спеку**, в том числе 32 визуальных черновика для художественной приёмки; **50 типов имеют runtime manifest**. Для `defense_cannon` существуют два формата визуальной спеки (`.yaml` и `.json`), их нужно свести к одному источнику до автоматической генерации. Старые пометки «сверить числа» в колонке «Проверка» относятся к редактуре проектного текста и механике; действующие числа в таблицах выше уже синхронизированы.
+В колонках «Визуальная спека» и «Runtime manifest» указано лишь наличие основного файла. Это не подтверждает все уровни, состояния, успешную сборку или подключение в рендерере. Тестовые `villa_*test`, `*_v2`, `backup_*` и `*_pilot` не считаются production. Теперь **все 72 ID имеют основную визуальную и текстовую спеку**, в том числе 32 визуальных черновика для художественной приёмки; **50 типов имеют runtime manifest**. Для `defense_cannon` существуют два формата визуальной спеки (`.yaml` и `.json`), их нужно свести к одному источнику до автоматической генерации. Старые пометки «сверить числа» в колонке «Проверка» относятся к редактуре проектного текста и механике; действующие числа в таблицах выше уже синхронизированы.
 
 | Игровой ID | Категория | Уровни каталога | Основной текст | Визуальная спека | Runtime manifest | Проверка |
 | --- | --- | ---: | --- | --- | --- | --- |
-| `town_hall` | center | 1–10 | [town-hall.md](center/town-hall.md) | [town_hall.yaml](../assets/specs/center/town_hall.yaml) | нет | сверить числа |
+| `town_hall` | center | 1–15 | [town-hall.md](center/town-hall.md) | [town_hall.yaml](../assets/specs/center/town_hall.yaml) | есть | уровни и параметры сверены с каталогом |
 | `dugout` | housing | 1–5 | [dugout.md](houses/dugout.md) | [dugout.yaml](../assets/specs/housing/dugout.yaml) | нет | сверить числа |
 | `wood_house` | housing | 1–6 | [wood-house.md](houses/wood-house.md) | [wood_house.yaml](../assets/specs/housing/wood_house.yaml) | нет | сверить числа |
 | `stone_house` | housing | 1–6 | [stone-house.md](houses/stone-house.md) | [stone_house.json](../assets/specs/housing/stone_house.json) | есть | баланс и модели уровней 1–6 |
@@ -24,11 +24,10 @@
 | `glass_workshop` | industry | 1–12 | [glass-workshop.md](industry/glass-workshop.md) | [glass_workshop.json](../assets/specs/industry/glass_workshop.json) | есть | модели и баланс уровней 1–12 |
 | `forge` | industry | 1 | [forge.md](industry/forge.md) | [forge.json](../assets/specs/industry/forge.json) | нет | есть проектные поля |
 | `weaving_yard` | industry | 1–10 | [weaving-yard.md](industry/weaving-yard.md) | [weaving_yard.json](../assets/specs/industry/weaving_yard.json) | есть | есть проектные поля |
-| `dye_works` | industry | 1 | [dye-works.md](industry/dye-works.md) | [dye_works.json](../assets/specs/industry/dye_works.json) | нет | есть проектные поля |
+| `dye_works` | industry | 1 | [dye-works.md](industry/dye-works.md) | [dye_works.json](../assets/specs/industry/dye_works.json) | есть | есть проектные поля |
 | `mechanical_workshop` | industry | 1–10 | [mechanical-workshop.md](industry/mechanical-workshop.md) | [mechanical_workshop.json](../assets/specs/industry/mechanical_workshop.json) | есть | есть проектные поля |
 | `optical_workshop` | industry | 1 | [optical-workshop.md](industry/optical-workshop.md) | [optical_workshop.json](../assets/specs/industry/optical_workshop.json) | нет | есть проектные поля |
 | `mint` | industry | 1 | [mint.md](industry/mint.md) | [mint.json](../assets/specs/industry/mint.json) | нет | есть проектные поля |
-| `warehouse` | storage | 1 | [warehouse.md](storage/warehouse.md) | [warehouse.json](../assets/specs/storage/warehouse.json) | нет | есть проектные поля |
 | `coin_storage` | storage | 1–12 | [coin-storage.md](storage/coin-storage.md) | [coin_storage.json](../assets/specs/storage/coin_storage.json) | есть | сверить числа |
 | `market` | trade | 1 | [market.md](trade/market.md) | [market.json](../assets/specs/trade/market.json) | нет | есть проектные поля |
 | `tower` | defense | 1 | [tower.md](defense/tower.md) | [tower.json](../assets/specs/defense/tower.json) | есть | сверить механику |

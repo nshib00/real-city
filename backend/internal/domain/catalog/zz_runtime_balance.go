@@ -22,13 +22,15 @@ var activeDefenseWeapons map[string][]DefenseWeaponStats
 var activeCannons []CannonStats
 
 type PvPRules struct {
-	RaidTravelSeconds   int `json:"raid_travel_seconds"`
-	RaidDamage          int `json:"raid_damage"`
-	RaidRangeTiles      int `json:"raid_range_tiles"`
-	RaidCooldownSeconds int `json:"raid_cooldown_seconds"`
+	AttackRangeTiles      int `json:"attack_range_tiles"`
+	AttackCooldownSeconds int `json:"attack_cooldown_seconds"`
+	SummonCostCoins       int `json:"summon_cost_coins"`
+	SummonCooldownSeconds int `json:"summon_cooldown_seconds"`
+	SummonMaxAlive        int `json:"summon_max_alive"`
+	SummonLifetimeSeconds int `json:"summon_lifetime_seconds"`
 }
 
-func RaidRules() PvPRules { return activePvPRules }
+func CombatRules() PvPRules { return activePvPRules }
 
 type runtimeBalance struct {
 	SchemaVersion  int                                   `json:"schema_version"`
@@ -60,7 +62,7 @@ func decodeRuntimeBalance(data []byte) (runtimeBalance, error) {
 	if len(snapshot.Resources) == 0 || len(snapshot.Recipes) == 0 || len(snapshot.Monsters) == 0 || len(snapshot.Weapons) == 0 {
 		return snapshot, fmt.Errorf("incomplete runtime balance")
 	}
-	if snapshot.PvP.RaidTravelSeconds <= 0 || snapshot.PvP.RaidDamage <= 0 || snapshot.PvP.RaidRangeTiles <= 0 || snapshot.PvP.RaidCooldownSeconds <= 0 {
+	if snapshot.PvP.AttackRangeTiles <= 0 || snapshot.PvP.AttackCooldownSeconds <= 0 || snapshot.PvP.SummonCostCoins <= 0 || snapshot.PvP.SummonCooldownSeconds <= 0 || snapshot.PvP.SummonMaxAlive <= 0 || snapshot.PvP.SummonLifetimeSeconds <= 0 {
 		return snapshot, fmt.Errorf("invalid PvP rules")
 	}
 	if len(snapshot.Cannons) == 0 || len(snapshot.DefenseWeapons) != 3 {
@@ -86,9 +88,14 @@ func decodeRuntimeBalance(data []byte) (runtimeBalance, error) {
 				return fmt.Errorf("invalid resource in recipe %s: %s", item.ID, amount.Resource)
 			}
 		}
+		rareChances := map[economy.ResourceType]float64{}
 		for _, rare := range item.RareOutput {
 			if !resources[rare.Resource] || rare.Amount <= 0 || rare.Chance <= 0 || rare.Chance > 1 {
 				return fmt.Errorf("invalid rare output in recipe: %s", item.ID)
+			}
+			rareChances[rare.Resource] += rare.Chance
+			if rareChances[rare.Resource] > 1.000000001 {
+				return fmt.Errorf("rare alternatives exceed 100%% in recipe: %s", item.ID)
 			}
 		}
 		return nil

@@ -547,6 +547,20 @@
       "Category": "rare",
       "HasLimit": false,
       "Description": "Редкая чистая фракция глины из глиняного карьера."
+    },
+    {
+      "Type": "stone_heart",
+      "Name": "Каменное сердце",
+      "Category": "rare",
+      "HasLimit": false,
+      "Description": ""
+    },
+    {
+      "Type": "fine_rope",
+      "Name": "Качественная веревка",
+      "Category": "rare",
+      "HasLimit": false,
+      "Description": ""
     }
   ],
   "recipes": [
@@ -1521,6 +1535,62 @@
       "RareOutput": null,
       "FuelPerRun": 0,
       "RequiredLevel": 1,
+      "AutoCollectable": false
+    },
+    {
+      "ID": "mine_run",
+      "Name": "Добыча в шахте",
+      "BuildingType": "mine",
+      "RequiredLevel": 1,
+      "Duration": 330000000000,
+      "Workers": 5,
+      "Input": [],
+      "Output": [
+        {
+          "Resource": "stone",
+          "Amount": 5
+        }
+      ],
+      "FuelPerRun": 0,
+      "RareOutput": [
+        {
+          "Resource": "coal",
+          "Amount": 1,
+          "Chance": 0.3
+        },
+        {
+          "Resource": "copper",
+          "Amount": 1,
+          "Chance": 0.005
+        }
+      ],
+      "AutoCollectable": false
+    },
+    {
+      "ID": "rope_yard_run",
+      "Name": "Скрутка веревок",
+      "BuildingType": "rope_yard",
+      "RequiredLevel": 1,
+      "Duration": 390000000000,
+      "Workers": 3,
+      "Input": [
+        {
+          "Resource": "flax",
+          "Amount": 14
+        }
+      ],
+      "Output": [
+        {
+          "Resource": "rope",
+          "Amount": 7
+        },
+        {
+          "Resource": "coins",
+          "Amount": 18
+        }
+      ],
+      "FuelPerRun": 0,
+      "RareOutput": null,
       "AutoCollectable": false
     }
   ],
@@ -21608,6 +21678,1591 @@
         "RequiredLevel": 10,
         "AutoCollectable": false
       }
+    ],
+    "mine_run": [
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 1,
+        "Duration": 330000000000,
+        "Workers": 5,
+        "Input": [],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 5
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.005
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 2,
+        "Duration": 430000000000,
+        "Workers": 6,
+        "Input": [],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 8
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.45
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2,
+            "Chance": 0.05
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.01
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0005
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 3,
+        "Duration": 615000000000,
+        "Workers": 7,
+        "Input": [],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 10
+          }
+        ],
+        "FuelPerRun": 4,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.7
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2,
+            "Chance": 0.07
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.015
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.001
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 4,
+        "Duration": 890000000000,
+        "Workers": 9,
+        "Input": [],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 13
+          },
+          {
+            "Resource": "coal",
+            "Amount": 1
+          }
+        ],
+        "FuelPerRun": 7,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.1
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.02
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0015
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 5,
+        "Duration": 1110000000000,
+        "Workers": 11,
+        "Input": [],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 17
+          },
+          {
+            "Resource": "coal",
+            "Amount": 1
+          }
+        ],
+        "FuelPerRun": 11,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.125
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.025
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 6,
+        "Duration": 1245000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 1
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 21
+          },
+          {
+            "Resource": "coal",
+            "Amount": 1
+          }
+        ],
+        "FuelPerRun": 15,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.17
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.04
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0029
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 7,
+        "Duration": 1440000000000,
+        "Workers": 15,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 1
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 25
+          },
+          {
+            "Resource": "coal",
+            "Amount": 1
+          }
+        ],
+        "FuelPerRun": 19,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.25
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.06
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.004
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 8,
+        "Duration": 1630000000000,
+        "Workers": 18,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 1
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 30
+          },
+          {
+            "Resource": "coal",
+            "Amount": 1
+          }
+        ],
+        "FuelPerRun": 24,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.35
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.09
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.005
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 9,
+        "Duration": 1850000000000,
+        "Workers": 20,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 1
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 34
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 30,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.1
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.13
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.006
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 10,
+        "Duration": 2075000000000,
+        "Workers": 22,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 1
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 40
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 34,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.15
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.165
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0067
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.01
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 11,
+        "Duration": 2470000000000,
+        "Workers": 25,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 44
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 42,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.23
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.2
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0075
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.012
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.015
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "mine_run",
+        "Name": "Добыча в шахте",
+        "BuildingType": "mine",
+        "RequiredLevel": 12,
+        "Duration": 2810000000000,
+        "Workers": 28,
+        "Input": [
+          {
+            "Resource": "explosives",
+            "Amount": 2
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "stone",
+            "Amount": 49
+          },
+          {
+            "Resource": "coal",
+            "Amount": 2
+          }
+        ],
+        "FuelPerRun": 47,
+        "RareOutput": [
+          {
+            "Resource": "coal",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "copper",
+            "Amount": 1,
+            "Chance": 0.3
+          },
+          {
+            "Resource": "stone_heart",
+            "Amount": 1,
+            "Chance": 0.0083
+          },
+          {
+            "Resource": "iron_ore",
+            "Amount": 1,
+            "Chance": 0.014
+          },
+          {
+            "Resource": "copper",
+            "Amount": 2,
+            "Chance": 0.023
+          }
+        ],
+        "AutoCollectable": false
+      }
+    ],
+    "rope_yard_run": [
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 1,
+        "Duration": 390000000000,
+        "Workers": 3,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 14
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 7
+          },
+          {
+            "Resource": "coins",
+            "Amount": 18
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": null,
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 2,
+        "Duration": 620000000000,
+        "Workers": 4,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 23
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 10
+          },
+          {
+            "Resource": "coins",
+            "Amount": 31
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": null,
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 3,
+        "Duration": 900000000000,
+        "Workers": 5,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 34
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 14
+          },
+          {
+            "Resource": "coins",
+            "Amount": 50
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.004
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 4,
+        "Duration": 1260000000000,
+        "Workers": 6,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 48
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 19
+          },
+          {
+            "Resource": "coins",
+            "Amount": 78
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.008
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 5,
+        "Duration": 1680000000000,
+        "Workers": 7,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 66
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 25
+          },
+          {
+            "Resource": "coins",
+            "Amount": 118
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.013
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 6,
+        "Duration": 2100000000000,
+        "Workers": 9,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 90
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 33
+          },
+          {
+            "Resource": "coins",
+            "Amount": 170
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.02
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 7,
+        "Duration": 2580000000000,
+        "Workers": 11,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 118
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 43
+          },
+          {
+            "Resource": "coins",
+            "Amount": 238
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.029
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      },
+      {
+        "ID": "rope_yard_run",
+        "Name": "Скрутка веревок",
+        "BuildingType": "rope_yard",
+        "RequiredLevel": 8,
+        "Duration": 3120000000000,
+        "Workers": 13,
+        "Input": [
+          {
+            "Resource": "flax",
+            "Amount": 150
+          }
+        ],
+        "Output": [
+          {
+            "Resource": "rope",
+            "Amount": 55
+          },
+          {
+            "Resource": "coins",
+            "Amount": 330
+          }
+        ],
+        "FuelPerRun": 0,
+        "RareOutput": [
+          {
+            "Resource": "fine_rope",
+            "Amount": 1,
+            "Chance": 0.04
+          }
+        ],
+        "AutoCollectable": false
+      }
     ]
   },
   "monsters": [
@@ -21783,10 +23438,12 @@
     }
   ],
   "pvp": {
-    "raid_travel_seconds": 30,
-    "raid_damage": 25,
-    "raid_range_tiles": 8,
-    "raid_cooldown_seconds": 60
+    "attack_range_tiles": 12,
+    "attack_cooldown_seconds": 10,
+    "summon_cost_coins": 250,
+    "summon_cooldown_seconds": 60,
+    "summon_max_alive": 3,
+    "summon_lifetime_seconds": 600
   },
   "defense_weapons": {
     "defense_bolt_thrower": [

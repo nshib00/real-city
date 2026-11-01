@@ -252,6 +252,150 @@
               "amount": 78
             }
           ]
+        },
+        {
+          "level": 11,
+          "buildSeconds": 39600,
+          "population": 3,
+          "health": 4250,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 1400000
+            },
+            {
+              "resource": "brick",
+              "amount": 160
+            },
+            {
+              "resource": "premium_planks",
+              "amount": 7
+            },
+            {
+              "resource": "glass",
+              "amount": 110
+            },
+            {
+              "resource": "mechanism",
+              "amount": 12
+            }
+          ]
+        },
+        {
+          "level": 12,
+          "buildSeconds": 54000,
+          "population": 3,
+          "health": 5100,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 2200000
+            },
+            {
+              "resource": "stone_block",
+              "amount": 240
+            },
+            {
+              "resource": "premium_planks",
+              "amount": 12
+            },
+            {
+              "resource": "glass",
+              "amount": 160
+            },
+            {
+              "resource": "mechanism",
+              "amount": 24
+            }
+          ]
+        },
+        {
+          "level": 13,
+          "buildSeconds": 72000,
+          "population": 3,
+          "health": 6100,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 3400000
+            },
+            {
+              "resource": "steel",
+              "amount": 90
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 60
+            },
+            {
+              "resource": "glass",
+              "amount": 220
+            },
+            {
+              "resource": "mechanism",
+              "amount": 40
+            }
+          ]
+        },
+        {
+          "level": 14,
+          "buildSeconds": 93600,
+          "population": 3,
+          "health": 7300,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 5100000
+            },
+            {
+              "resource": "steel",
+              "amount": 150
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 110
+            },
+            {
+              "resource": "electronics",
+              "amount": 35
+            },
+            {
+              "resource": "mechanism",
+              "amount": 65
+            }
+          ]
+        },
+        {
+          "level": 15,
+          "buildSeconds": 118800,
+          "population": 3,
+          "health": 8750,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 7500000
+            },
+            {
+              "resource": "steel",
+              "amount": 240
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 180
+            },
+            {
+              "resource": "electronics",
+              "amount": 70
+            },
+            {
+              "resource": "mechanism",
+              "amount": 100
+            },
+            {
+              "resource": "star_glass",
+              "amount": 3
+            }
+          ]
         }
       ]
     },
@@ -839,11 +983,102 @@
       ],
       "health": 9500,
       "upgradeLevels": [
-        { "level": 1, "buildSeconds": 64800, "population": 42, "health": 9500, "cost": [{ "resource": "stone", "amount": 260 }, { "resource": "glass", "amount": 80 }] },
-        { "level": 2, "buildSeconds": 72000, "population": 46, "health": 11000, "cost": [{ "resource": "coins", "amount": 420000 }, { "resource": "stone_block", "amount": 115 }, { "resource": "glass", "amount": 95 }] },
-        { "level": 3, "buildSeconds": 86400, "population": 50, "health": 13000, "cost": [{ "resource": "coins", "amount": 560000 }, { "resource": "stone_block", "amount": 150 }, { "resource": "glass", "amount": 125 }] },
-        { "level": 4, "buildSeconds": 100800, "population": 55, "health": 15500, "cost": [{ "resource": "coins", "amount": 760000 }, { "resource": "brick", "amount": 180 }, { "resource": "glass", "amount": 160 }] },
-        { "level": 5, "buildSeconds": 129600, "population": 60, "health": 18500, "cost": [{ "resource": "coins", "amount": 1050000 }, { "resource": "brick", "amount": 240 }, { "resource": "glass", "amount": 210 }] }
+        {
+          "level": 1,
+          "buildSeconds": 64800,
+          "population": 42,
+          "health": 9500,
+          "cost": [
+            {
+              "resource": "stone",
+              "amount": 260
+            },
+            {
+              "resource": "glass",
+              "amount": 80
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "buildSeconds": 72000,
+          "population": 46,
+          "health": 11000,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 420000
+            },
+            {
+              "resource": "stone_block",
+              "amount": 115
+            },
+            {
+              "resource": "glass",
+              "amount": 95
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "buildSeconds": 86400,
+          "population": 50,
+          "health": 13000,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 560000
+            },
+            {
+              "resource": "stone_block",
+              "amount": 150
+            },
+            {
+              "resource": "glass",
+              "amount": 125
+            }
+          ]
+        },
+        {
+          "level": 4,
+          "buildSeconds": 100800,
+          "population": 55,
+          "health": 15500,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 760000
+            },
+            {
+              "resource": "brick",
+              "amount": 180
+            },
+            {
+              "resource": "glass",
+              "amount": 160
+            }
+          ]
+        },
+        {
+          "level": 5,
+          "buildSeconds": 129600,
+          "population": 60,
+          "health": 18500,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 1050000
+            },
+            {
+              "resource": "brick",
+              "amount": 240
+            },
+            {
+              "resource": "glass",
+              "amount": 210
+            }
+          ]
+        }
       ]
     },
     {
@@ -1446,9 +1681,90 @@
             }
           ]
         },
-        { "level": 10, "buildSeconds": 68400, "population": 27, "health": 3300, "cost": [{ "resource": "coins", "amount": 2650000 }, { "resource": "reinforced_concrete", "amount": 20 }, { "resource": "reinforced_beams", "amount": 4 }, { "resource": "mechanism", "amount": 15 }, { "resource": "star_glass", "amount": 2 }] },
-        { "level": 11, "buildSeconds": 82800, "population": 30, "health": 3850, "cost": [{ "resource": "coins", "amount": 3650000 }, { "resource": "reinforced_concrete", "amount": 28 }, { "resource": "reinforced_beams", "amount": 7 }, { "resource": "mechanism", "amount": 20 }, { "resource": "star_glass", "amount": 3 }] },
-        { "level": 12, "buildSeconds": 100800, "population": 34, "health": 4500, "cost": [{ "resource": "coins", "amount": 5000000 }, { "resource": "reinforced_concrete", "amount": 38 }, { "resource": "reinforced_beams", "amount": 10 }, { "resource": "mechanism", "amount": 28 }, { "resource": "star_glass", "amount": 4 }] }
+        {
+          "level": 10,
+          "buildSeconds": 68400,
+          "population": 27,
+          "health": 3300,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 2650000
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 20
+            },
+            {
+              "resource": "reinforced_beams",
+              "amount": 4
+            },
+            {
+              "resource": "mechanism",
+              "amount": 15
+            },
+            {
+              "resource": "star_glass",
+              "amount": 2
+            }
+          ]
+        },
+        {
+          "level": 11,
+          "buildSeconds": 82800,
+          "population": 30,
+          "health": 3850,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 3650000
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 28
+            },
+            {
+              "resource": "reinforced_beams",
+              "amount": 7
+            },
+            {
+              "resource": "mechanism",
+              "amount": 20
+            },
+            {
+              "resource": "star_glass",
+              "amount": 3
+            }
+          ]
+        },
+        {
+          "level": 12,
+          "buildSeconds": 100800,
+          "population": 34,
+          "health": 4500,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 5000000
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 38
+            },
+            {
+              "resource": "reinforced_beams",
+              "amount": 10
+            },
+            {
+              "resource": "mechanism",
+              "amount": 28
+            },
+            {
+              "resource": "star_glass",
+              "amount": 4
+            }
+          ]
+        }
       ]
     },
     {
@@ -2031,31 +2347,6 @@
         {
           "resource": "metal",
           "amount": 45
-        }
-      ],
-      "firstLevel": true,
-      "upgradeTo": [],
-      "health": 100
-    },
-    {
-      "type": "warehouse",
-      "category": "storage",
-      "name": "Склад материалов",
-      "level": 1,
-      "footprint": {
-        "width": 1,
-        "height": 1
-      },
-      "buildSeconds": 120,
-      "population": 2,
-      "cost": [
-        {
-          "resource": "wood",
-          "amount": 80
-        },
-        {
-          "resource": "stone",
-          "amount": 30
         }
       ],
       "firstLevel": true,
@@ -8746,9 +9037,86 @@
       "firstLevel": true,
       "upgradeTo": [],
       "upgradeLevels": [
-        { "level": 1, "buildSeconds": 600, "population": 5, "health": 220, "cost": [{ "resource": "coins", "amount": 1100 }, { "resource": "metal", "amount": 20 }, { "resource": "planks", "amount": 30 }] },
-        { "level": 2, "buildSeconds": 7200, "population": 21, "health": 2500, "cost": [{ "resource": "coins", "amount": 500000 }, { "resource": "reinforced_concrete", "amount": 15 }, { "resource": "mechanism", "amount": 6 }, { "resource": "iron_ingot", "amount": 10 }, { "resource": "premium_planks", "amount": 3 }] },
-        { "level": 3, "buildSeconds": 28800, "population": 27, "health": 5000, "cost": [{ "resource": "coins", "amount": 3500000 }, { "resource": "super_mechanism", "amount": 3 }, { "resource": "iron_ingot", "amount": 30 }, { "resource": "reinforced_beams", "amount": 4 }, { "resource": "light_crystal", "amount": 2 }, { "resource": "aeolian_alloy", "amount": 3 }] }
+        {
+          "level": 1,
+          "buildSeconds": 600,
+          "population": 5,
+          "health": 220,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 1100
+            },
+            {
+              "resource": "metal",
+              "amount": 20
+            },
+            {
+              "resource": "planks",
+              "amount": 30
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "buildSeconds": 7200,
+          "population": 21,
+          "health": 2500,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 500000
+            },
+            {
+              "resource": "reinforced_concrete",
+              "amount": 15
+            },
+            {
+              "resource": "mechanism",
+              "amount": 6
+            },
+            {
+              "resource": "iron_ingot",
+              "amount": 10
+            },
+            {
+              "resource": "premium_planks",
+              "amount": 3
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "buildSeconds": 28800,
+          "population": 27,
+          "health": 5000,
+          "cost": [
+            {
+              "resource": "coins",
+              "amount": 3500000
+            },
+            {
+              "resource": "super_mechanism",
+              "amount": 3
+            },
+            {
+              "resource": "iron_ingot",
+              "amount": 30
+            },
+            {
+              "resource": "reinforced_beams",
+              "amount": 4
+            },
+            {
+              "resource": "light_crystal",
+              "amount": 2
+            },
+            {
+              "resource": "aeolian_alloy",
+              "amount": 3
+            }
+          ]
+        }
       ]
     },
     {

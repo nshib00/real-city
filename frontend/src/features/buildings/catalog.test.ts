@@ -9,7 +9,7 @@ describe('build catalog availability', () => {
     expect(new Set(buildCatalog.map((item) => item.kind))).toEqual(
       new Set(buildingCatalog.filter((item) => item.firstLevel).map((item) => item.type)),
     )
-    expect(buildCatalog.some((item) => item.kind === 'warehouse')).toBe(true)
+    expect(buildCatalog.map((item) => item.kind)).not.toContain('warehouse')
     expect(buildCatalog.some((item) => item.kind === 'stone_wall')).toBe(true)
     expect(buildCatalog.some((item) => item.kind === 'concrete_wall')).toBe(true)
     expect(buildCatalog.some((item) => item.kind === 'modern_wall')).toBe(true)

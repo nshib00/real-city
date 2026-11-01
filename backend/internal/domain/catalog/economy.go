@@ -15,6 +15,8 @@ type ResourceSpec struct {
 }
 
 var Resources = []ResourceSpec{
+	{Type: economy.ResourceStoneHeart, Name: "Каменное сердце", Category: "rare"},
+	{Type: economy.ResourceFineRope, Name: "Качественная веревка", Category: "rare"},
 	{Type: economy.ResourceThrowingKnives, Name: "Метательные клинки", Category: "weapons"},
 	{Type: economy.ResourceHuntingTraps, Name: "Охотничий капкан", Category: "weapons"},
 	{Type: economy.ResourceBlackpowderBomb, Name: "Пороховая бомба", Category: "weapons"},
@@ -298,8 +300,22 @@ func RecipeForBuildingLevel(id string, level int) (economy.ProductionRecipe, boo
 }
 
 func IsIndustryLevelRecipe(id string) bool {
+	if id == "mine_run" || id == "rope_yard_run" {
+		return len(recipeLevels[id]) > 0
+	}
 	_, ok := industryLevelRecipes[id]
 	return ok
+}
+
+func IndustryRecipeLevels(id string) int {
+	if levels := recipeLevels[id]; len(levels) > 0 {
+		maxLevel := 0
+		for _, r := range levels {
+			maxLevel = max(maxLevel, r.RequiredLevel)
+		}
+		return maxLevel
+	}
+	return len(industryLevelRecipes[id])
 }
 
 func industryExtraRecipe(id string) (string, int, bool) {
