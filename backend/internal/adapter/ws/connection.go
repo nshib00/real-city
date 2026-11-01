@@ -17,6 +17,8 @@ import (
 const (
 	opText  = 1
 	opClose = 8
+	opPing  = 9
+	opPong  = 10
 )
 
 type Connection struct {
@@ -25,6 +27,7 @@ type Connection struct {
 	conn          net.Conn
 	reader        *bufio.Reader
 	send          chan Envelope
+	control       chan []byte
 	sendMu        sync.Mutex
 	nextEventSeq  uint64
 	subs          SubscriptionSet
@@ -46,6 +49,7 @@ func NewConnection(conn net.Conn, reader *bufio.Reader, playerID player.ID, send
 		conn:     conn,
 		reader:   reader,
 		send:     make(chan Envelope, sendQueue),
+		control:  make(chan []byte, 4),
 		subs:     NewSubscriptionSet(),
 		rate:     NewRateLimiter(20, time.Second),
 		closed:   make(chan struct{}),
@@ -122,36 +126,63 @@ func (c *Connection) Apply(command ClientCommand) {
 }
 
 func (c *Connection) ReadCommand() (ClientCommand, error) {
-	if !c.rate.Allow(time.Now()) {
-		return ClientCommand{}, errors.New("rate limit exceeded")
+	for {
+		if !c.rate.Allow(time.Now()) {
+			return ClientCommand{}, errors.New("rate limit exceeded")
+		}
+		opcode, data, err := readFrame(c.reader)
+		if err != nil {
+			return ClientCommand{}, err
+		}
+		switch opcode {
+		case opClose:
+			return ClientCommand{}, io.EOF
+		case opPing:
+			select {
+			case c.control <- data:
+			case <-c.closed:
+				return ClientCommand{}, net.ErrClosed
+			default:
+				return ClientCommand{}, errors.New("websocket control queue full")
+			}
+			continue
+		case opPong:
+			continue
+		case opText:
+			var command ClientCommand
+			if err := json.Unmarshal(data, &command); err != nil {
+				return ClientCommand{}, err
+			}
+			return command, nil
+		default:
+			return ClientCommand{}, errors.New("unsupported websocket frame")
+		}
 	}
-	opcode, data, err := readFrame(c.reader)
-	if err != nil {
-		return ClientCommand{}, err
-	}
-	if opcode == opClose {
-		return ClientCommand{}, io.EOF
-	}
-	var command ClientCommand
-	if err := json.Unmarshal(data, &command); err != nil {
-		return ClientCommand{}, err
-	}
-	return command, nil
 }
 
 func (c *Connection) WriteLoop() {
 	for {
 		select {
+		case payload := <-c.control:
+			if err := c.writeFrame(opPong, payload); err != nil {
+				c.Close("write_failed")
+				return
+			}
+			continue
+		default:
+		}
+		select {
+		case payload := <-c.control:
+			if err := c.writeFrame(opPong, payload); err != nil {
+				c.Close("write_failed")
+				return
+			}
 		case message := <-c.send:
 			data, err := json.Marshal(message)
 			if err != nil {
 				continue
 			}
-			_ = c.conn.SetWriteDeadline(time.Now().Add(5 * time.Second))
-			if err := writeTextFrame(c.conn, data); err != nil {
-				if c.transport != nil {
-					c.transport.writeErrors.Add(1)
-				}
+			if err := c.writeFrame(opText, data); err != nil {
 				c.Close("write_failed")
 				return
 			}
@@ -163,6 +194,17 @@ func (c *Connection) WriteLoop() {
 			return
 		}
 	}
+}
+
+func (c *Connection) writeFrame(opcode byte, data []byte) error {
+	_ = c.conn.SetWriteDeadline(time.Now().Add(5 * time.Second))
+	if err := writeFrame(c.conn, opcode, data); err != nil {
+		if c.transport != nil {
+			c.transport.writeErrors.Add(1)
+		}
+		return err
+	}
+	return nil
 }
 
 func (c *Connection) Close(reason string) {
@@ -223,7 +265,11 @@ func readFrame(reader *bufio.Reader) (byte, []byte, error) {
 }
 
 func writeTextFrame(writer io.Writer, payload []byte) error {
-	header := []byte{0x80 | opText}
+	return writeFrame(writer, opText, payload)
+}
+
+func writeFrame(writer io.Writer, opcode byte, payload []byte) error {
+	header := []byte{0x80 | opcode}
 	switch {
 	case len(payload) < 126:
 		header = append(header, byte(len(payload)))

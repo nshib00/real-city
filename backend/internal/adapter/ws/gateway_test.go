@@ -1,6 +1,7 @@
 package ws
 
 import (
+	"bufio"
 	"io"
 	"log/slog"
 	"net"
@@ -13,6 +14,35 @@ import (
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/service"
 )
+
+func TestConnectionRepliesToPingAndKeepsReadingCommands(t *testing.T) {
+	server, peer := net.Pipe()
+	defer peer.Close()
+	conn := NewConnection(server, bufio.NewReader(server), player.ID("ping-player"), 4)
+	defer conn.Close("test")
+	go conn.WriteLoop()
+	commands := make(chan ClientCommand, 1)
+	errors := make(chan error, 1)
+	go func() {
+		command, err := conn.ReadCommand()
+		commands <- command
+		errors <- err
+	}()
+	_ = peer.SetDeadline(time.Now().Add(time.Second))
+	if err := writeFrame(peer, opPing, []byte("probe")); err != nil {
+		t.Fatal(err)
+	}
+	opcode, payload, err := readFrame(bufio.NewReader(peer))
+	if err != nil || opcode != opPong || string(payload) != "probe" {
+		t.Fatalf("pong: opcode=%d payload=%q err=%v", opcode, payload, err)
+	}
+	if err := writeTextFrame(peer, []byte(`{"type":"subscribe","chunk_ids":["dev-world:0:0"]}`)); err != nil {
+		t.Fatal(err)
+	}
+	if command, err := <-commands, <-errors; err != nil || command.Type != "subscribe" {
+		t.Fatalf("command after ping: %+v, %v", command, err)
+	}
+}
 
 func TestGatewayUpgradeFailureMetric(t *testing.T) {
 	gateway := NewGateway(nil, service.NewEventBus(1), slog.New(slog.NewTextHandler(io.Discard, nil)))
