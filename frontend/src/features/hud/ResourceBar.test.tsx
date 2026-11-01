@@ -35,7 +35,7 @@ describe('ResourceBar', () => {
     expect(screen.queryByLabelText('Нефть: 0')).toBeNull()
     expect(screen.queryByLabelText('Бензин: 0')).toBeNull()
     expect(screen.getByLabelText('Ресурсы').querySelector('.resource-chip')?.getAttribute('aria-label')).toBe('Постройки: 0/8')
-    expect(screen.getByLabelText('Монеты: 50/2000').querySelector('img')?.getAttribute('src')).toContain('/assets/resources/icons/coins.png')
+    expect(screen.getByLabelText('Монеты: 50/2000').querySelector('img')?.getAttribute('src')).toContain('/assets/resources/icons/runtime/coins.webp')
     expect(screen.queryByRole('group', { name: 'Оружие и бомбы' })).toBeNull()
 
     fireEvent.click(screen.getByLabelText('Реестр ресурсов'))

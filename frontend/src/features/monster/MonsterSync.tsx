@@ -16,7 +16,7 @@ export function MonsterSync() {
     queryKey: ['monsters', centerChunk.x, centerChunk.y, viewport.radius],
     queryFn: () => listMonsters({ x: queryCenter.x, y: queryCenter.y, radius: radiusTiles }),
     retry: false,
-    refetchInterval: realtimeStatus === 'connected' ? 30_000 : 8000,
+    refetchInterval: realtimeStatus === 'connected' ? 60_000 : 8000,
     staleTime: 5000,
   })
 

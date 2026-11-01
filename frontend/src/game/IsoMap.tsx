@@ -18,7 +18,7 @@ import { resolvePerformanceScenarioFromSearch, type PerformanceScenario } from '
 import { PixiStage } from './renderer/PixiStage'
 import { AccessibleMapSelection } from './AccessibleMapSelection'
 import { renderPerformanceSnapshot, type RenderPerformanceSnapshot } from './renderer/renderPerformanceMetrics'
-import { filterVisibleMapObjects, occupiedTileKeys } from './renderer/visibleObjects'
+import { filterVisibleIndexedMapObjects, filterVisibleMapObjects, indexMapObjects, occupiedTileKeys } from './renderer/visibleObjects'
 import { useGameStore } from './state/useGameStore'
 import type { PlacedBuilding } from './state/useGameStore'
 import type { WorldTile } from '../shared/contracts'
@@ -141,15 +141,18 @@ export function IsoMap() {
   )
   const resourceVisibilityOptions = useMemo(() => ({ ...visibilityOptions, maxScreenExtent: 96 }), [visibilityOptions])
   const monsterVisibilityOptions = useMemo(() => ({ ...visibilityOptions, maxScreenExtent: 420 }), [visibilityOptions])
-  const visibleBuildings = useMemo(() => filterVisibleMapObjects(renderBuildings, visibilityOptions), [renderBuildings, visibilityOptions])
+  const buildingSpatialIndex = useMemo(() => indexMapObjects(renderBuildings), [renderBuildings])
+  const resourceSpatialIndex = useMemo(() => indexMapObjects(renderResourceNodes), [renderResourceNodes])
+  const monsterSpatialIndex = useMemo(() => indexMapObjects(renderMonsters), [renderMonsters])
+  const visibleBuildings = useMemo(() => filterVisibleIndexedMapObjects(buildingSpatialIndex, visibilityOptions), [buildingSpatialIndex, visibilityOptions])
   const buildingOccupiedTiles = useMemo(() => occupiedTileKeys(visibleBuildings), [visibleBuildings])
-  const visibleResourceNodes = useMemo(() => filterVisibleMapObjects(renderResourceNodes, resourceVisibilityOptions), [renderResourceNodes, resourceVisibilityOptions])
-  const visibleMonsters = useMemo(() => filterVisibleMapObjects(renderMonsters, monsterVisibilityOptions), [renderMonsters, monsterVisibilityOptions])
+  const visibleResourceNodes = useMemo(() => filterVisibleIndexedMapObjects(resourceSpatialIndex, resourceVisibilityOptions), [resourceSpatialIndex, resourceVisibilityOptions])
+  const visibleMonsters = useMemo(() => filterVisibleIndexedMapObjects(monsterSpatialIndex, monsterVisibilityOptions), [monsterSpatialIndex, monsterVisibilityOptions])
   const lootCenter = useMemo(() => wrapGridCoord({ x: centerChunk.x * CHUNK_SIZE + Math.floor(CHUNK_SIZE / 2), y: centerChunk.y * CHUNK_SIZE + Math.floor(CHUNK_SIZE / 2) }), [centerChunk])
   const lootQuery = useQuery({
     queryKey: ['monster-loot', lootCenter.x, lootCenter.y, visibleChunkRadius],
     queryFn: () => listMonsterLoot({ x: lootCenter.x, y: lootCenter.y, radius: Math.min(128, (visibleChunkRadius + 1) * CHUNK_SIZE) }),
-    refetchInterval: 8000,
+    refetchInterval: realtimeStatus === 'connected' ? 30_000 : 8000,
     retry: false,
   })
   const visibleLoot = useMemo(() => filterVisibleMapObjects((lootQuery.data?.loot ?? []).map((drop) => ({ ...drop, tile: { x: drop.tile_x, y: drop.tile_y } })), resourceVisibilityOptions), [lootQuery.data, resourceVisibilityOptions])
@@ -162,7 +165,7 @@ export function IsoMap() {
     queryKey: ['players', 'nearby', lootCenter.x, lootCenter.y, nearbyRadius],
     queryFn: () => listNearbyPlayers(lootCenter, nearbyRadius),
     enabled: Boolean(player),
-    refetchInterval: 5000,
+    refetchInterval: realtimeStatus === 'connected' ? 30_000 : 5000,
     retry: false,
   })
   const visiblePlayers = useMemo(() => filterVisibleMapObjects((nearbyQuery.data?.players ?? []).map((other) => ({ ...other, tile: { x: other.tile_x, y: other.tile_y } })), resourceVisibilityOptions), [nearbyQuery.data, resourceVisibilityOptions])

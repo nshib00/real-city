@@ -6,12 +6,12 @@ import manifest from '../../../public/assets/resources/icons/manifest.json'
 
 describe('resource icons', () => {
   it('uses the legacy resource set and never constructs paths from unknown ids', () => {
-    expect(resourceIconUrl('wood')).toBe(`/assets/resources/icons/wood.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
-    expect(resourceIconUrl('aeolian-crystal')).toBe(`/assets/resources/icons/aeolian-crystal.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
+    expect(resourceIconUrl('wood')).toBe(`/assets/resources/icons/runtime/wood.webp?v=${RESOURCE_ICON_ASSET_REVISION}`)
+    expect(resourceIconUrl('aeolian-crystal')).toBe(`/assets/resources/icons/runtime/aeolian-crystal.webp?v=${RESOURCE_ICON_ASSET_REVISION}`)
     expect(resourceIconUrl('kaolin')).toBe('/assets/resources/icons/kaolin.svg')
-    expect(resourceIconUrl('quiet_powder')).toContain('/assets/resources/icons/silent_powder.png')
-    expect(resourceIconUrl('plant_oil')).toContain('/assets/resources/icons/vegetable_oil.png')
-    expect(resourceIconUrl('oleoresin')).toContain('/assets/resources/icons/sap.png')
+    expect(resourceIconUrl('quiet_powder')).toContain('/assets/resources/icons/runtime/silent_powder.webp')
+    expect(resourceIconUrl('plant_oil')).toContain('/assets/resources/icons/runtime/vegetable_oil.webp')
+    expect(resourceIconUrl('oleoresin')).toContain('/assets/resources/icons/runtime/sap.webp')
     expect(resourceIconUrl('../unknown')).toContain('/assets/ui/icons/shortage.svg')
   })
 
@@ -33,7 +33,7 @@ describe('resource icons', () => {
         name: item.name,
         file: `${item.id}.png`,
       }))
-      expect(resourceIconUrl(item.id)).toBe(`/assets/resources/icons/${item.id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`)
+      expect(resourceIconUrl(item.id)).toBe(`/assets/resources/icons/runtime/${item.id}.webp?v=${RESOURCE_ICON_ASSET_REVISION}`)
     }
   })
 })

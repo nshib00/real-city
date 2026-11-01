@@ -21,6 +21,7 @@ import { buildingHitAtClick, createRenderedTileLookup } from './mapHitTarget'
 import { pixiMutationCounts, recordPixiChildMutation, recordPixiFrame, recordPixiRedraw, registerPixiContext } from './renderPerformanceMetrics'
 import { isRaisedTerrain, preloadTerrainPngTextures, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
 import { tileOccupancyKey } from './visibleObjects'
+import { indexWorldTiles, worldTilesNear, type WorldTileIndex } from './worldTileIndex'
 import { observeWorldMotion, worldMotionEnabled } from './motionPolicy'
 import type { TerritoryCell } from '../territory'
 import { defenseRangeCells } from '../defenseRange'
@@ -126,6 +127,7 @@ export function PixiStage({
 }: PixiStageProps) {
   const renderedTileAtCoord = useMemo(() => createRenderedTileLookup(tiles, WORLD_WRAP_TILES), [tiles])
   const renderedTiles = useMemo(() => tiles.filter((tile) => renderedTileAtCoord(tile) === tile), [tiles, renderedTileAtCoord])
+  const renderedTileIndex = useMemo(() => indexWorldTiles(renderedTiles), [renderedTiles])
   const hostRef = useRef<HTMLDivElement | null>(null)
   const appRef = useRef<Application | null>(null)
   const terrainSpritesRef = useRef<Container | null>(null)
@@ -138,6 +140,7 @@ export function PixiStage({
   const territoryRef = useRef<Graphics | null>(null)
   const overlayRef = useRef<Graphics | null>(null)
   const tilesRef = useRef<WorldTile[]>(renderedTiles)
+  const tileIndexRef = useRef<WorldTileIndex>(renderedTileIndex)
   const territoriesRef = useRef(territories)
   territoriesRef.current = territories
   const occupiedTilesRef = useRef<Set<string>>(occupiedTiles)
@@ -159,6 +162,7 @@ export function PixiStage({
   const resourceHitAreasRef = useRef<ResourceHitArea[]>([])
   const monsterHitAreasRef = useRef<MonsterHitArea[]>([])
   const redrawRef = useRef<(() => void) | null>(null)
+  const redrawFrameRef = useRef<number | null>(null)
 
   function redraw() {
     const app = appRef.current
@@ -182,6 +186,7 @@ export function PixiStage({
       terrain,
       overlay,
       tilesRef.current,
+      tileIndexRef.current,
       occupiedTilesRef.current,
       buildingsRef.current,
       allBuildingsRef.current,
@@ -221,7 +226,13 @@ export function PixiStage({
     }, before)
   }
 
-  redrawRef.current = redraw
+  redrawRef.current = () => {
+    if (redrawFrameRef.current !== null) return
+    redrawFrameRef.current = window.requestAnimationFrame(() => {
+      redrawFrameRef.current = null
+      redraw()
+    })
+  }
   useEffect(() => { redrawRef.current?.() }, [territories])
 
   useEffect(() => observeWorldMotion(() => redrawRef.current?.()), [])
@@ -341,6 +352,8 @@ export function PixiStage({
 
     return () => {
       disposed = true
+      if (redrawFrameRef.current !== null) window.cancelAnimationFrame(redrawFrameRef.current)
+      redrawFrameRef.current = null
       window.removeEventListener('real-city:retry-renderer', retry)
       stopVisibility?.()
       app?.destroy()
@@ -358,6 +371,7 @@ export function PixiStage({
 
   useEffect(() => {
     tilesRef.current = renderedTiles
+    tileIndexRef.current = renderedTileIndex
     occupiedTilesRef.current = occupiedTiles
     buildingsRef.current = buildings
     allBuildingsRef.current = allBuildings
@@ -377,7 +391,7 @@ export function PixiStage({
     if (app && terrainSprites && objectSprites && terrain && overlay) {
       redraw()
     }
-  }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, renderedTiles, resources, selectedBuildingId, selectedMonsterId, selectedTile, viewerId])
+  }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, renderedTiles, renderedTileIndex, resources, selectedBuildingId, selectedMonsterId, selectedTile, viewerId])
 
   return (
     <div
@@ -433,6 +447,7 @@ function drawStage(
   terrain: Graphics,
   overlay: Graphics,
   tiles: WorldTile[],
+  tileIndex: WorldTileIndex,
   _occupiedTiles: Set<string>,
   buildings: PlacedBuilding[],
   allBuildings: PlacedBuilding[],
@@ -470,7 +485,7 @@ function drawStage(
   const activeResourceIds = new Set<string>()
 
   const visibleTiles: { tile: WorldTile; x: number; y: number; sortKey: number }[] = []
-  for (const tile of tiles) {
+  for (const tile of worldTilesNear(tileIndex, centerGrid, tileReach)) {
     if (wrappedGridDistance(tile.x, centerGrid.x) > tileReach || wrappedGridDistance(tile.y, centerGrid.y) > tileReach) continue
     const pos = nearestWrappedScreenCoord(tile, screenTarget)
     const x = origin.x + pos.x * camera.zoom

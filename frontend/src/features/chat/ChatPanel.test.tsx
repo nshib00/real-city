@@ -60,3 +60,14 @@ it('does not read a hidden browser tab and offers an explicit retry after read f
  expect(api.read).toHaveBeenLastCalledWith('global','m2')
  client.clear()
 })
+
+it('does not poll the alliance channel without membership', async () => {
+ useAuthStore.setState({player:{id:'solo',profile:{group_id:''}} as never})
+ api.list.mockResolvedValue({messages:[],read_state:{unread:0}})
+ const client=new QueryClient({defaultOptions:{queries:{retry:false}}})
+ render(<QueryClientProvider client={client}><ChatPanel /></QueryClientProvider>)
+ await waitFor(() => expect(api.list).toHaveBeenCalledWith('global'))
+ expect(api.list).not.toHaveBeenCalledWith('alliance')
+ expect(screen.getByRole('button',{name:'Союз'}).hasAttribute('disabled')).toBe(true)
+ client.clear()
+})

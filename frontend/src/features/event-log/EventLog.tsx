@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { ChevronDown, ChevronUp, MessageSquare } from '../../shared/ui/icons'
 
 import { useGameStore } from '../../game/state/useGameStore'
 import { IconButton, Tabs } from '../../shared/ui'
-import { ChatPanel } from '../chat/ChatPanel'
 import { useChatChannels } from '../chat/useChatChannels'
 import { useAuthStore } from '../auth/useAuthStore'
 import { useEventReadState } from './useEventReadState'
@@ -12,9 +11,11 @@ const tabs = [
   { id: 'events', label: 'События' },
   { id: 'chat', label: 'Чат' },
 ] as const
+const ChatPanel = lazy(() => import('../chat/ChatPanel').then((module) => ({ default: module.ChatPanel })))
 
 export function EventLog() {
   const [activeTab, setActiveTab] = useState<'events' | 'chat'>('events')
+  const [chatMounted, setChatMounted] = useState(false)
   const playerId = useAuthStore((state) => state.player?.id)
   const chatQueries = useChatChannels()
   const isChatCollapsed = useGameStore((state) => state.uiPreferences.isChatCollapsed)
@@ -26,11 +27,16 @@ export function EventLog() {
   const unread = useEventReadState(playerId, cannonShots.map((shot) => shot.id), !isChatCollapsed && activeTab === 'events')
   const chatUnread = chatQueries.reduce((sum, query) => sum + (query.data?.read_state?.unread ?? 0), 0)
   const tabItems = tabs.map((tab) => ({ ...tab, badge: (tab.id === 'events' ? unread : chatUnread) || undefined }))
-  const groupedShots = [...new Map(cannonShots.map((shot) => [shot.buildingId + ':' + shot.monsterId, {
-    ...shot,
-    count: cannonShots.filter((other) => other.buildingId === shot.buildingId && other.monsterId === shot.monsterId).length,
-    totalDamage: cannonShots.filter((other) => other.buildingId === shot.buildingId && other.monsterId === shot.monsterId).reduce((sum, other) => sum + other.damage, 0),
-  }])).values()]
+  const groupedShots = useMemo(() => {
+    const groups = new Map<string, typeof cannonShots[number] & { count: number; totalDamage: number }>()
+    for (const shot of cannonShots) {
+      const key = `${shot.buildingId}:${shot.monsterId}`
+      const previous = groups.get(key)
+      groups.set(key, { ...shot, count: (previous?.count ?? 0) + 1, totalDamage: (previous?.totalDamage ?? 0) + shot.damage })
+    }
+    return [...groups.values()]
+  }, [cannonShots])
+  const buildingsById = useMemo(() => new Map(buildings.map((building) => [building.id, building])), [buildings])
   const setChatCollapsed = useGameStore((state) => state.setChatCollapsed)
   const collapsedLabel = activeTab === 'chat' ? 'Чат свернут' : 'Журнал свернут'
 
@@ -52,15 +58,15 @@ export function EventLog() {
       </div>
       {realtimeStatus !== 'connected' ? <p className="connection-note" role="status">Связь с миром потеряна или восстанавливается. Новые события могут задерживаться.</p> : null}
       <div hidden={isChatCollapsed}>
-        <Tabs items={tabItems} active={activeTab} onChange={setActiveTab}>
+        <Tabs items={tabItems} active={activeTab} onChange={(next) => { setActiveTab(next); if (next === 'chat') setChatMounted(true) }}>
           <div hidden={activeTab !== 'events'}>
                 {groupedShots.map((shot) => <p key={shot.id}>
                   Оборона против монстра {shot.monsterId}: попаданий {shot.count}, урон {shot.totalDamage}.
-                  {buildings.some((building) => building.id === shot.buildingId) ? <button type="button" onClick={() => { const building = buildings.find((item) => item.id === shot.buildingId); if (building) { focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight }); selectBuilding(building.id) } }}>К постройке</button> : null}
+                  {buildingsById.has(shot.buildingId) ? <button type="button" onClick={() => { const building = buildingsById.get(shot.buildingId); if (building) { focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight }); selectBuilding(building.id) } }}>К постройке</button> : null}
                 </p>)}
                 {!cannonShots.length ? <p>Новых событий обороны нет. Здесь появятся подтверждённые попадания ваших защитных построек.</p> : null}
           </div>
-          <div hidden={activeTab !== 'chat'}><ChatPanel key={playerId ?? 'anonymous'} visible={!isChatCollapsed && activeTab === 'chat'} /></div>
+          <div hidden={activeTab !== 'chat'}>{chatMounted ? <Suspense fallback={null}><ChatPanel key={playerId ?? 'anonymous'} visible={!isChatCollapsed && activeTab === 'chat'} /></Suspense> : null}</div>
         </Tabs>
       </div>
     </section>

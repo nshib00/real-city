@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "name": "dye_works_l01_construction_LOD0",
+    "asset_id": "dye_works",
+    "level": 1,
+    "state": "construction",
+    "ground_found": true,
+    "matches_active": true,
+    "active_parts": 5,
+    "state_parts": 5,
+    "sprite_aligned": true,
+    "error": null
+  },
+  {
+    "name": "dye_works_l01_damaged_LOD0",
+    "asset_id": "dye_works",
+    "level": 1,
+    "state": "damaged",
+    "ground_found": true,
+    "matches_active": true,
+    "active_parts": 5,
+    "state_parts": 5,
+    "sprite_aligned": true,
+    "error": null
+  },
+  {
+    "name": "dye_works_l01_ruined_LOD0",
+    "asset_id": "dye_works",
+    "level": 1,
+    "state": "ruined",
+    "ground_found": true,
+    "matches_active": true,
+    "active_parts": 5,
+    "state_parts": 5,
+    "sprite_aligned": true,
+    "error": null
+  }
+]

@@ -174,8 +174,8 @@ describe('Inspector', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Выбрать оружие' }))
     const menu = screen.getByRole('dialog', { name: 'Оружие против монстра' })
-    expect(menu.querySelector('img[src*="throwing_knives.svg"]')).toBeTruthy()
-    expect(menu.querySelector('img[src*="blackpowder_bomb.svg"]')).toBeTruthy()
+    expect(menu.querySelector('img[src*="throwing_knives.webp"]')).toBeTruthy()
+    expect(menu.querySelector('img[src*="blackpowder_bomb.webp"]')).toBeTruthy()
     expect(screen.getByText('мгновенно')).toBeTruthy()
     expect(screen.getByText('через 40 с')).toBeTruthy()
     fireEvent.click(screen.getByRole('radio', { name: /Пороховая бомба/ }))

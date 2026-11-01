@@ -11,7 +11,7 @@ export function ResourceNodeSync() {
     queryKey: ['resources', 'nodes'],
     queryFn: listResourceNodes,
     retry: false,
-    refetchInterval: realtimeStatus === 'connected' ? 30_000 : 15000,
+    refetchInterval: realtimeStatus === 'connected' ? 60_000 : 15000,
   })
 
   useEffect(() => {

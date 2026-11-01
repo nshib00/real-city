@@ -9,7 +9,7 @@ type ResourceIconProps = {
   decorative?: boolean
 }
 
-export const RESOURCE_ICON_ASSET_REVISION = 'weapon-icons-2026-10-25'
+export const RESOURCE_ICON_ASSET_REVISION = 'resource-icons-webp-2026-11-01'
 const knownResources = new Set(resourceCatalog.map((item) => item.id))
 // Старые имена файлов сохранены после переименования ресурсов в каталоге.
 const legacyNames: Record<string, string> = { quiet_powder: 'silent_powder', plant_oil: 'vegetable_oil', oleoresin: 'sap', fine_rope: 'rope', tile: 'runic_tile' }
@@ -17,7 +17,7 @@ const legacyNames: Record<string, string> = { quiet_powder: 'silent_powder', pla
 export function resourceIconUrl(id: string) {
   if (!knownResources.has(id)) return `/assets/ui/icons/shortage.svg?v=${RESOURCE_ICON_ASSET_REVISION}`
   if (id === 'kaolin') return '/assets/resources/icons/kaolin.svg'
-  return `/assets/resources/icons/${legacyNames[id] ?? id}.png?v=${RESOURCE_ICON_ASSET_REVISION}`
+  return `/assets/resources/icons/runtime/${legacyNames[id] ?? id}.webp?v=${RESOURCE_ICON_ASSET_REVISION}`
 }
 
 export function ResourceIcon({ id, label, className, decorative = false }: ResourceIconProps) {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { filterVisibleMapObjects, isMapObjectVisible, occupiedTileKeys, tileOccupancyKey } from './visibleObjects'
+import { filterVisibleIndexedMapObjects, filterVisibleMapObjects, indexMapObjects, isMapObjectVisible, occupiedTileKeys, tileOccupancyKey } from './visibleObjects'
 
 const camera = { x: 0, y: 0, zoom: 1 }
 const viewportSize = { width: 1280, height: 720 }
@@ -61,5 +61,21 @@ describe('visible map objects', () => {
 
     expect(tileOccupancyKey({ x: 4, y: 8 })).toBe('4:8')
     expect(occupiedTileKeys(objects)).toEqual(new Set(['4:8', '5:8']))
+  })
+
+  it('matches the full visibility scan across camera positions and world seams', () => {
+    const objects = Array.from({ length: 2600 }, (_, id) => ({ id, tile: { x: (id * 37) % 160, y: (id * 73) % 160 } }))
+    const index = indexMapObjects(objects)
+    for (const camera of [
+      { x: 0, y: 0, zoom: 1 },
+      { x: -2700, y: 1400, zoom: 0.6 },
+      { x: 24, y: 2192, zoom: 1.6 },
+      { x: 30000, y: -32000, zoom: 1.2 },
+    ]) {
+      for (const maxScreenExtent of [96, 420, 720]) {
+        const options = { camera, viewportSize, maxScreenExtent }
+        expect(filterVisibleIndexedMapObjects(index, options).map(({ id }) => id)).toEqual(filterVisibleMapObjects(objects, options).map(({ id }) => id))
+      }
+    }
   })
 })

@@ -18,6 +18,7 @@ export function ChatPanel({ visible = true }: { visible?: boolean }) {
   const [historyOwner, setHistoryOwner] = useState('')
   const [soundEnabled, setSoundEnabled] = useState(chatSoundEnabled)
   const player = useAuthStore((state) => state.player)
+  const hasAlliance = Boolean(player?.profile?.group_id)
   const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const seenByChannel = useRef(new Map<ChatMessage['channel'], Set<string>>())
   const queryClient = useQueryClient()
@@ -33,6 +34,7 @@ export function ChatPanel({ visible = true }: { visible?: boolean }) {
     },
   })
   useEffect(() => { setHistory([]); setHistoryCursor(undefined) }, [channel, player?.id])
+  useEffect(() => { if (!hasAlliance && channel === 'alliance') setChannel('global') }, [channel, hasAlliance])
   const currentMessages = messagesQuery.data?.messages ?? []
   const ownsHistory = historyOwner === `${player?.id}:${channel}`
   const messages = [...currentMessages, ...(ownsHistory ? history : []).filter((message) => !currentMessages.some((latest) => latest.id === message.id))]
@@ -95,7 +97,7 @@ export function ChatPanel({ visible = true }: { visible?: boolean }) {
       <label><input type="checkbox" checked={soundEnabled} onChange={(event) => { setSoundEnabled(event.target.checked); setChatSoundEnabled(event.target.checked) }} /> Уведомления чата</label>
       <div className="chat-channels">
         {channels.map((item, index) => (
-          <button key={item.id} type="button" aria-pressed={channel === item.id} onClick={() => setChannel(item.id)}>
+          <button key={item.id} type="button" aria-pressed={channel === item.id} disabled={item.id === 'alliance' && !hasAlliance} onClick={() => setChannel(item.id)}>
             {item.label}{channelQueries[index].data?.read_state?.unread ? ` (${channelQueries[index].data?.read_state?.unread})` : ''}
           </button>
         ))}
