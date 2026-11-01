@@ -81,9 +81,9 @@ func TestAdditionalIndustryRecipesFollowSpecifications(t *testing.T) {
 		output  economy.ResourceAmount
 		fuel    int
 	}{
-		{"reinforced_concrete_batch", 6, 60, []economy.ResourceAmount{{economy.ResourceConcrete, 12}, {economy.ResourceSteel, 3}}, economy.ResourceAmount{economy.ResourceReinforcedConc, 8}, 18},
-		{"armor_plates_batch", 5, 65, []economy.ResourceAmount{{economy.ResourceSteel, 8}, {economy.ResourceConcrete, 10}}, economy.ResourceAmount{economy.ResourceArmorPlates, 4}, 20},
-		{"rune_tile_batch", 8, 90, []economy.ResourceAmount{{economy.ResourceTile, 12}, {economy.ResourceQuietPowder, 1}, {economy.ResourceMemoryShard, 1}, {economy.ResourceCoal, 25}}, economy.ResourceAmount{economy.ResourceRuneTile, 1}, 0},
+		{"reinforced_concrete_batch", 6, 60, []economy.ResourceAmount{{Resource: economy.ResourceConcrete, Amount: 12}, {Resource: economy.ResourceSteel, Amount: 3}}, economy.ResourceAmount{Resource: economy.ResourceReinforcedConc, Amount: 8}, 18},
+		{"armor_plates_batch", 5, 65, []economy.ResourceAmount{{Resource: economy.ResourceSteel, Amount: 8}, {Resource: economy.ResourceConcrete, Amount: 10}}, economy.ResourceAmount{Resource: economy.ResourceArmorPlates, Amount: 4}, 20},
+		{"rune_tile_batch", 8, 90, []economy.ResourceAmount{{Resource: economy.ResourceTile, Amount: 12}, {Resource: economy.ResourceQuietPowder, Amount: 1}, {Resource: economy.ResourceMemoryShard, Amount: 1}, {Resource: economy.ResourceCoal, Amount: 25}}, economy.ResourceAmount{Resource: economy.ResourceRuneTile, Amount: 1}, 0},
 	}
 	for _, test := range cases {
 		recipe, ok := RecipeForBuildingLevel(test.id, test.minimum)

@@ -48,6 +48,14 @@ func TestTickBuildingCacheReusesNearbyReadsAndInvalidates(t *testing.T) {
 	if repo.reads != 5 {
 		t.Fatalf("expected fresh read after invalidation, got %d", repo.reads)
 	}
+	if err := repo.Delete(ctx, item.ID); err != nil {
+		t.Fatal(err)
+	}
+	nextTick := newTickBuildingCache(repo)
+	found, err := nextTick.listInRect(ctx, service.DefaultWorldID, 32, 32, 33, 33)
+	if err != nil || len(found) != 0 {
+		t.Fatalf("next tick reused removed building: %+v, %v", found, err)
+	}
 }
 
 type countingMonsterEventRepo struct {

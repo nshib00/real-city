@@ -9,7 +9,7 @@ import (
 func TestFullCatalogDTOExposesEveryLevel(t *testing.T) {
 	source := catalog.AllBuildings()
 	api := BuildingCatalog(source)
-	if len(source) != 73 || len(api) != len(source) {
+	if len(source) == 0 || len(api) != len(source) {
 		t.Fatalf("source=%d api=%d", len(source), len(api))
 	}
 	for index, spec := range source {

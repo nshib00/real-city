@@ -15,18 +15,18 @@ func TestCannonLevelsMatchSpecification(t *testing.T) {
 		cost                                      []building.Cost
 		ammo                                      economy.ResourceType
 	}{
-		{8, 2, 260, 2, 55, []building.Cost{{"coins", 1750}, {"planks", 12}, {"rope", 3}}, economy.ResourceStone},
-		{12, 2, 310, 2, 68, []building.Cost{{"coins", 2600}, {"planks", 20}, {"rope", 5}}, economy.ResourceStone},
-		{18, 3, 370, 3, 82, []building.Cost{{"coins", 3900}, {"planks", 18}, {"stone_block", 12}, {"iron_ingot", 2}}, economy.ResourceStone},
-		{25, 3, 450, 3, 100, []building.Cost{{"coins", 5800}, {"stone_block", 20}, {"iron_ingot", 6}}, economy.ResourceStone},
-		{35, 4, 540, 3, 122, []building.Cost{{"coins", 8500}, {"stone_block", 30}, {"iron_ingot", 10}}, economy.ResourceStone},
-		{50, 4, 650, 4, 148, []building.Cost{{"coins", 12500}, {"stone_block", 40}, {"iron_ingot", 16}}, economy.ResourceStone},
-		{70, 5, 780, 4, 180, []building.Cost{{"coins", 18500}, {"stone_block", 55}, {"mechanism", 6}}, economy.ResourceExplosives},
-		{95, 5, 930, 4, 215, []building.Cost{{"coins", 28000}, {"stone_block", 70}, {"mechanism", 10}, {"armor_plates", 4}}, economy.ResourceExplosives},
-		{130, 6, 1100, 5, 255, []building.Cost{{"coins", 42000}, {"stone_block", 85}, {"mechanism", 14}, {"armor_plates", 8}}, economy.ResourceExplosives},
-		{175, 6, 1300, 5, 300, []building.Cost{{"coins", 65000}, {"mechanism", 18}, {"armor_plates", 14}, {"electronics", 4}}, economy.ResourceExplosives},
-		{230, 7, 1530, 5, 350, []building.Cost{{"coins", 98000}, {"mechanism", 24}, {"armor_plates", 22}, {"electronics", 8}}, economy.ResourceExplosives},
-		{300, 8, 1800, 6, 410, []building.Cost{{"coins", 150000}, {"mechanism", 30}, {"armor_plates", 32}, {"electronics", 14}}, economy.ResourceExplosives},
+		{8, 2, 260, 2, 55, []building.Cost{{Resource: "coins", Amount: 1750}, {Resource: "planks", Amount: 12}, {Resource: "rope", Amount: 3}}, economy.ResourceStone},
+		{12, 2, 310, 2, 68, []building.Cost{{Resource: "coins", Amount: 2600}, {Resource: "planks", Amount: 20}, {Resource: "rope", Amount: 5}}, economy.ResourceStone},
+		{18, 3, 370, 3, 82, []building.Cost{{Resource: "coins", Amount: 3900}, {Resource: "planks", Amount: 18}, {Resource: "stone_block", Amount: 12}, {Resource: "iron_ingot", Amount: 2}}, economy.ResourceStone},
+		{25, 3, 450, 3, 100, []building.Cost{{Resource: "coins", Amount: 5800}, {Resource: "stone_block", Amount: 20}, {Resource: "iron_ingot", Amount: 6}}, economy.ResourceStone},
+		{35, 4, 540, 3, 122, []building.Cost{{Resource: "coins", Amount: 8500}, {Resource: "stone_block", Amount: 30}, {Resource: "iron_ingot", Amount: 10}}, economy.ResourceStone},
+		{50, 4, 650, 4, 148, []building.Cost{{Resource: "coins", Amount: 12500}, {Resource: "stone_block", Amount: 40}, {Resource: "iron_ingot", Amount: 16}}, economy.ResourceStone},
+		{70, 5, 780, 4, 180, []building.Cost{{Resource: "coins", Amount: 18500}, {Resource: "stone_block", Amount: 55}, {Resource: "mechanism", Amount: 6}}, economy.ResourceExplosives},
+		{95, 5, 930, 4, 215, []building.Cost{{Resource: "coins", Amount: 28000}, {Resource: "stone_block", Amount: 70}, {Resource: "mechanism", Amount: 10}, {Resource: "armor_plates", Amount: 4}}, economy.ResourceExplosives},
+		{130, 6, 1100, 5, 255, []building.Cost{{Resource: "coins", Amount: 42000}, {Resource: "stone_block", Amount: 85}, {Resource: "mechanism", Amount: 14}, {Resource: "armor_plates", Amount: 8}}, economy.ResourceExplosives},
+		{175, 6, 1300, 5, 300, []building.Cost{{Resource: "coins", Amount: 65000}, {Resource: "mechanism", Amount: 18}, {Resource: "armor_plates", Amount: 14}, {Resource: "electronics", Amount: 4}}, economy.ResourceExplosives},
+		{230, 7, 1530, 5, 350, []building.Cost{{Resource: "coins", Amount: 98000}, {Resource: "mechanism", Amount: 24}, {Resource: "armor_plates", Amount: 22}, {Resource: "electronics", Amount: 8}}, economy.ResourceExplosives},
+		{300, 8, 1800, 6, 410, []building.Cost{{Resource: "coins", Amount: 150000}, {Resource: "mechanism", Amount: 30}, {Resource: "armor_plates", Amount: 32}, {Resource: "electronics", Amount: 14}}, economy.ResourceExplosives},
 	}
 	definition := Buildings[building.TypeDefenseCannon]
 	if !definition.CountsTowardLimit || definition.Footprint != (building.Footprint{Width: 1, Height: 1}) || len(definition.UpgradeLevels) != len(want) {
