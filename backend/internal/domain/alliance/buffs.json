@@ -1,0 +1,38 @@
+[
+  {
+    "id": "build_speed",
+    "name": "Быстрая стройка",
+    "effect": "build_speed",
+    "percent": 3,
+    "max_level": 5,
+    "resource": "wood",
+    "base_cost": 25
+  },
+  {
+    "id": "repair_speed",
+    "name": "Быстрый ремонт",
+    "effect": "repair_speed",
+    "percent": 4,
+    "max_level": 5,
+    "resource": "wood",
+    "base_cost": 25
+  },
+  {
+    "id": "logistics",
+    "name": "Эффективная добыча",
+    "effect": "harvest",
+    "percent": 2,
+    "max_level": 5,
+    "resource": "wood",
+    "base_cost": 25
+  },
+  {
+    "id": "defense",
+    "name": "Общая защита",
+    "effect": "defense",
+    "percent": 2,
+    "max_level": 5,
+    "resource": "wood",
+    "base_cost": 25
+  }
+]
