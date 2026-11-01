@@ -1,54 +1,138 @@
 # Real City
 
-`Real City` - браузерная multiplayer-стратегия на одной общей постоянной карте.
+Real City — браузерная многопользовательская стратегия на общей постоянной карте. Игроки строят поселения, развивают производство, занимают ресурсные узлы, защищают территорию и взаимодействуют друг с другом. Состояние мира и результаты действий определяет сервер; симуляция продолжается и вне браузера игрока.
 
-## Структура
+## Игровые принципы
 
-- `backend/` - авторитетный Go API, realtime gateway и будущая симуляция мира.
-- `frontend/` - Vite + React + TypeScript клиент с игровой картой первым экраном.
-- `shared/` - общие TypeScript-контракты для координат, чанков, объектов, событий и API-ошибок.
-- `docs/` - планы и проектная документация.
-- `reference/` - локальные референсы механик и визуального направления.
+- Все игроки строят на одной общей карте, а не в отдельных экземплярах мира.
+- Размещение, ресурсы, владение, бой, таймеры и поведение монстров проверяются сервером.
+- Территория, расстояние, дороги и оборона влияют на развитие и конфликты.
+- Постройки могут подвергаться атакам оружием и созданными игроками монстрами; отдельной системы рейдов нет.
+- Мир и визуальный стиль Real City самостоятельны и не используют названия или материалы игр-референсов.
 
-## Команды разработки
+Текущее описание реализованных правил и экранов находится в [руководстве игрока](docs/game-design/player-guide.md). Это описание кода и интерфейса; готовность конкретного сценария к выпуску проверяется отдельно.
+
+## Технологии
+
+| Часть | Стек |
+| --- | --- |
+| Backend и игровая симуляция | Go 1.24, HTTP API, WebSocket, PostgreSQL, Redis |
+| Клиент | React 19, TypeScript, Vite 6 |
+| Карта и графика | Pixi.js для 2D-карты, Three.js для 3D-моделей |
+| Состояние клиента | TanStack Query и Zustand |
+| Контракты | Общие TypeScript-типы и синхронизация API-контрактов |
+| Проверки | Go test, Vitest, Playwright, проверки каталогов и ассетов |
+| Локальная инфраструктура | Docker Compose |
+
+## Быстрый запуск
+
+Нужны Go 1.24, Node.js 22 с npm, Docker Compose и GNU Make. Для клиентских проверок сначала установите зависимости.
+
+### 1. Запустите PostgreSQL и Redis
+
+Из корня репозитория:
 
 ```bash
-make test
-make backend-test
-make frontend-test
-make backend-run
+make db-up
+```
+
+Compose использует локальные значения для разработки: база `real_city`, пользователь и пароль `real_city`; PostgreSQL доступен на `localhost:5432`, Redis — на `localhost:6379`.
+
+### 2. Подготовьте базу и запустите backend
+
+```bash
+make migrate-up
 make backend-run-local
+```
+
+Backend доступен на `http://localhost:8080`. Для локального запуска используются параметры из [`backend/.env.example`](backend/.env.example). Замените `SESSION_SECRET` на случайное значение для любого окружения, которое не является одноразовой локальной разработкой.
+
+### 3. Запустите клиент
+
+В другом терминале:
+
+```bash
+cd frontend
+npm install
+cd ..
 make frontend-dev
 ```
 
-Для локальной инфраструктуры:
+Откройте <http://localhost:5173>. Vite проксирует `/api` на backend по адресу `http://localhost:8080`; другой адрес можно задать переменной `VITE_API_PROXY_TARGET`.
+
+Чтобы остановить базовые сервисы разработки:
 
 ```bash
-make backend-up
 make backend-down
-make db-up
-make migrate-up
-make migrate-down
-make migrate-status
-make create-test-admin
 ```
 
-`make create-test-admin` запускает отдельную тестовую базу и создаёт администратора
-`admin@example.com` с паролем `admin12345`. Баланс каждого ресурса, включая монеты,
-устанавливается не ниже 2 000 000 000. Повторный запуск пополняет потраченные ресурсы.
-Все виды оружия и бомб пополняются до 2 147 483 647 штук каждого вида.
-Для других учётных данных задайте `ADMIN_EMAIL`, `ADMIN_NAME` и `ADMIN_PASSWORD`.
-Тестовый API запускается командой `make test-backend-up` на порту 18080.
+Команды Compose, конфигурация тестовой базы и известные ограничения совместной игры в локальной сети описаны в [руководстве локального запуска](docs/operations/local-multiplayer.md).
 
-## Локальная наблюдаемость
+## Команды разработки
 
-Prometheus и Grafana запускаются отдельным Compose overlay только по явной команде:
+Запускайте команды из корня репозитория, если не указано иное.
 
-```bash
-make observability-up
-make observability-targets
-make observability-down
-bash scripts/check-observability.sh
-```
+| Команда | Действие |
+| --- | --- |
+| `make test` | Go- и frontend unit-тесты |
+| `make backend-test` | `go test ./...` для backend |
+| `make frontend-test` | Vitest для frontend |
+| `make catalog-check` | Проверка баланса, каталогов и таблиц прогрессии |
+| `make contracts-check` | Проверка синхронизации API-контрактов |
+| `make backend-up` | Миграции и запуск backend через Compose |
+| `make backend-down` | Остановка dev Compose-стека |
+| `make frontend-dev` | Vite dev-сервер на `0.0.0.0:5173` |
+| `make frontend-dev-test` | Vite с прокси тестового API на `localhost:18080` |
+| `make test-backend-up` | Тестовые PostgreSQL/Redis и backend на порту `18080` |
+| `make test-backend-down` | Остановка тестового Compose-проекта |
+| `make observability-up` | Backend, Prometheus и Grafana |
+| `make observability-down` | Остановка Prometheus и Grafana |
 
-Prometheus: <http://127.0.0.1:9090/targets>. Grafana: <http://127.0.0.1:3000/>; начальный вход `admin` / `admin`. Перед запуском можно задать `GRAFANA_ADMIN_USER` и `GRAFANA_ADMIN_PASSWORD` в окружении. Данные сохраняются в Compose volumes после `observability-down`. Проверка конфигурации использует Docker для `promtool`, если он не установлен локально. Подробности, включая worker, диагностику панелей и базовую линию, описаны в [руководстве по наблюдаемости](docs/operations/observability.md).
+Frontend-команды также доступны из `frontend/`: `npm run build`, `npm run lint`, `npm run test`, `npm run test:e2e` и `npm run assets:budget`. `npm run lint` выполняет проверку TypeScript (`tsc --noEmit`). E2E-команды запускаются через Playwright и могут требовать запущенного приложения.
+
+Для тестового администратора используйте `make create-test-admin`. Команда работает с отдельным тестовым Compose-проектом и создаёт `admin@example.com` / `admin12345`; при необходимости задайте `ADMIN_EMAIL`, `ADMIN_NAME` и `ADMIN_PASSWORD`. Учётные данные предназначены только для локальной тестовой среды. Дополнительные условия описаны в [`scripts/create-test-admin.sh`](scripts/create-test-admin.sh) и тестовой конфигурации.
+
+## Структура репозитория
+
+| Каталог | Содержимое |
+| --- | --- |
+| `backend/` | Go API, доменная логика, адаптеры PostgreSQL/Redis/WebSocket, миграции, симуляция и worker |
+| `frontend/` | React-клиент, игровой экран, карта, интерфейс, ассеты и frontend-тесты |
+| `shared/` | Общие клиентские типы и контракты |
+| `data/` | Версионируемые данные баланса и игровые таблицы |
+| `docs/` | Архитектура, дизайн игры, эксплуатация, QA и планы |
+| `tools/` | Инструменты каталогов, баланса, аудио и 3D-ассетов |
+| `scripts/` | Локальные проверки, диагностика, резервное копирование и эксплуатационные сценарии |
+| `deploy/` | Файлы для развёртывания |
+| `reference/` | Локальные визуальные и исследовательские материалы |
+
+## Архитектура и разработка
+
+Backend разделяет доменную логику, прикладные сервисы и адаптеры хранения/транспорта. HTTP API версии `/api/v1` обслуживает игровые действия и данные клиента; WebSocket используется для realtime-событий. PostgreSQL хранит авторитетное игровое состояние, Redis поддерживает инфраструктурные задачи. Симуляция обычно встроена в API (`SIMULATION_EMBEDDED=true`); отдельный worker нельзя запускать одновременно с тем же встроенным контуром.
+
+Frontend отображает игровую карту и панели, отправляет действия через API и применяет обновления мира. Клиентские координаты и результаты расчётов не считаются доверенными. Подробности:
+
+- [Обзор frontend](docs/frontend/overview.md)
+- [API и realtime](docs/frontend/api-and-realtime.md)
+- [Обзор API и его правила](docs/architecture/api.md)
+- [Общая архитектура](docs/architecture/overview.md)
+- [Каталоги зданий и баланс](docs/buildings/README.md)
+
+Новые изменения должны сохранять серверную авторитетность, проверять игровые действия на сервере и расширять общие контракты согласованно. Перед изменением проекта изучите [`AGENTS.md`](AGENTS.md) и профильную документацию.
+
+## Документация по задачам
+
+- [Руководство игрока](docs/game-design/player-guide.md) — текущие правила и возможности интерфейса.
+- [Локальная совместная игра](docs/operations/local-multiplayer.md) — запуск для нескольких браузеров и ограничения текущей конфигурации.
+- [Качество и выпуск](docs/operations/quality-and-release.md) — проверки перед выпуском.
+- [Наблюдаемость](docs/operations/observability.md) — Prometheus, Grafana и диагностика.
+- [Администрирование](docs/operations/administration.md) — административные операции.
+- [Развёртывание](docs/operations/deploy.md) и [production](docs/operations/production.md) — настройка, резервные копии и обновление.
+- [Frontend-документация](docs/frontend/README.md) — интерфейс, карта, тестирование и визуальные материалы.
+- [Пайплайн игровых ассетов](docs/assets/asset-generation-status.md) — модели и ресурсы.
+
+## Production
+
+Production Compose-конфигурация находится в [`docker-compose.production.yml`](docker-compose.production.yml). Она ожидает версионированные образы backend и frontend, домен и секреты из локального `.env`. Не используйте dev-пароли и не публикуйте секреты в Git. Перед выпуском делайте резервную копию и проверяйте её восстановление; миграции production нельзя откатывать без отдельного плана восстановления данных.
+
+Полные инструкции по образам, HTTPS, health checks, обновлению, backup и откату приведены в [руководстве production](docs/operations/production.md) и [руководстве развёртывания](docs/operations/deploy.md).
