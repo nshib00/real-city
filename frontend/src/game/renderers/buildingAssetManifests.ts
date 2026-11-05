@@ -85,6 +85,7 @@ const modularRoadRender = {
     fallbackFormat: 'png',
   },
 } as const
+export const ROAD_KITS_REVISION = 'road-kits-v2-2026-11-02'
 
 export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
   {
@@ -615,6 +616,7 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    revision: ROAD_KITS_REVISION,
     ...modularRoadRender,
   },
   {
@@ -627,6 +629,7 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    revision: ROAD_KITS_REVISION,
     ...modularRoadRender,
   },
   {
@@ -639,6 +642,7 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public',
     modelSource: 'public',
     shapeDefault: 'single',
+    revision: ROAD_KITS_REVISION,
     ...modularRoadRender,
   },
   {

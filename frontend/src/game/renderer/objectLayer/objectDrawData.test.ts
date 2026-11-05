@@ -25,7 +25,7 @@ describe('object draw data', () => {
     const neighbor = building({ id: 'road-2', kind: 'standard_road', tile: { x: 1, y: 0 } })
 
     expect(buildingDrawCommands([road], { allBuildings: [road, neighbor] })[0]).toMatchObject({
-      textureUrl: '/assets/buildings/roads/common_road/common_road_end_e_active.png',
+      textureUrl: '/assets/buildings/roads/common_road/common_road_end_e_active.png?v=road-kits-v2-2026-11-02',
       anchor: { x: 0.5, y: 0.625 },
       size: { width: 256, height: 256 },
     })
