@@ -14,7 +14,7 @@ const towerLevels = buildingCatalog.find(item => item.type === 'tower')?.upgrade
 
 export function towerDetectionActive(tower: PlacedBuilding): boolean {
   const maxHealth = towerLevels?.find(level => level.level === tower.level)?.health
-  return tower.kind === 'tower' && (tower.state === 'active' || tower.state === 'damaged')
+  return tower.kind === 'tower' && tower.towerWatchkeeperAssigned === true && (tower.state === 'active' || tower.state === 'damaged')
     && Boolean(maxHealth && tower.health * 4 > maxHealth)
 }
 

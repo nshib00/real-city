@@ -12,6 +12,7 @@ export type BuildingResponse = {
   health: number
   max_health?: number
   cannon_enabled?: boolean
+  tower_watchkeeper_assigned?: boolean
   cannon_next_attack_at?: string | null
   cannon_target_id?: string
   cannon_range?: number
@@ -129,6 +130,7 @@ export function toPlacedBuilding(response: BuildingResponse): PlacedBuilding {
     health: response.health,
     maxHealth: response.max_health,
     cannonEnabled: response.cannon_enabled,
+    towerWatchkeeperAssigned: response.tower_watchkeeper_assigned === true,
     cannonNextAttackAt: response.cannon_next_attack_at ? Date.parse(response.cannon_next_attack_at) : null,
     cannonTargetId: response.cannon_target_id,
     cannonRange: response.cannon_range,

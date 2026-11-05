@@ -56,6 +56,32 @@ describe('world realtime reducer', () => {
     expect(queryClient.getQueryData<{ buildings: { id: string }[] }>(visibleKey)?.buildings[0].id).toBe('foreign-house')
   })
 
+  it('tracks watchkeeper assignment from normalized and raw building events', () => {
+    const state = useGameStore.getState()
+    const handlers = {
+      queryClient: new QueryClient(), updateWorldTile: state.updateWorldTile, addBuilding: state.addBuilding,
+      deleteBuilding: state.deleteBuilding, upsertResourceNode: state.upsertResourceNode, upsertMonster: state.upsertMonster,
+    }
+    const building = {
+      id: 'tower', owner_id: 'owner', type: 'tower', name: 'Сторожевая башня', level: 1,
+      state: 'active', health: 100, tile_x: 1, tile_y: 1,
+      started_at: '2026-11-05T00:00:00Z', completes_at: null,
+    }
+    const emit = (payload: unknown, id: string) => applyRealtimeEvent({
+      type: 'world.building.updated', event_id: id, seq: 1,
+      sent_at: '2026-11-05T00:00:00Z', payload_version: 1, payload: { building: payload },
+    }, handlers)
+    emit({ ...building, tower_watchkeeper_assigned: true }, 'assigned')
+    expect(useGameStore.getState().buildings[0].towerWatchkeeperAssigned).toBe(true)
+    emit({ ID: 'tower', OwnerID: 'owner', Type: 'tower', Name: 'Сторожевая башня', Level: 1,
+      State: 'active', Health: 100, Tile: { X: 1, Y: 1 }, StartedAt: '2026-11-05T00:00:00Z',
+      CompletesAt: null, TowerWatchkeeperAssigned: false }, 'unassigned-raw')
+    expect(useGameStore.getState().buildings[0].towerWatchkeeperAssigned).toBe(false)
+    emit({ ...building, tower_watchkeeper_assigned: true }, 'assigned-again')
+    emit(building, 'legacy-without-field')
+    expect(useGameStore.getState().buildings[0].towerWatchkeeperAssigned).toBe(false)
+  })
+
   it('moves nearby player balloons immediately and removes them from old viewports', () => {
     useAuthStore.setState({ player: null })
     const queryClient = new QueryClient()

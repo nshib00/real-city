@@ -99,6 +99,7 @@ export type PlacedBuilding = {
   health: number
   maxHealth?: number
   cannonEnabled?: boolean
+  towerWatchkeeperAssigned?: boolean
   cannonNextAttackAt?: number | null
   cannonTargetId?: string
   cannonRange?: number

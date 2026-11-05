@@ -68,6 +68,7 @@ export type BuildingPayload = {
     level: number
     state: 'planned' | 'building' | 'active' | 'damaged' | 'ruined'
     health: number
+    tower_watchkeeper_assigned?: boolean
     tile_x: number
     tile_y: number
     rotation?: number

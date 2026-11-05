@@ -274,6 +274,7 @@ function normalizeBuildingEvent(value: BuildingPayload['building']): BuildingRes
     created_at: raw.CreatedAt ? String(raw.CreatedAt) : undefined,
     completes_at: raw.CompletesAt ? String(raw.CompletesAt) : null,
     cannon_enabled: Boolean(raw.CannonEnabled),
+    tower_watchkeeper_assigned: raw.TowerWatchkeeperAssigned === true,
     cannon_next_attack_at: raw.CannonNextAttackAt ? String(raw.CannonNextAttackAt) : null,
     cannon_target_id: String(raw.CannonTargetID ?? ''),
     cannon_range: previous?.cannonRange, cannon_damage: previous?.cannonDamage,
