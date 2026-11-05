@@ -4,12 +4,17 @@ import { combatDistanceGain, defenseSound, weaponSound } from '../../audio/sound
 import { spatialSound } from '../../audio/spatialAudio'
 import { playCombatSound } from '../../audio/voiceManager'
 import type { SoundId } from '../../audio/soundEvents'
-import { wrappedGridDistance } from '../../game/coordinates/iso'
+import { CHUNK_SIZE, WORLD_WRAP_TILES, tileToChunk, wrappedGridDistance } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
 import { useAuthStore } from '../auth/useAuthStore'
 
 const monsterKinds = new Set(['roaming_melee', 'resource_guardian', 'ruins_guardian', 'forest_stalker', 'spore_beast', 'ironback_brute', 'ember_wisp', 'ancient_colossus'])
-const MONSTER_AUDIO_RADIUS_TILES = 6
+
+function wrappedChunkDistance(a: number, b: number): number {
+  const chunkCount = WORLD_WRAP_TILES / CHUNK_SIZE
+  const distance = Math.abs(a - b) % chunkCount
+  return Math.min(distance, chunkCount - distance)
+}
 
 function gainAt(tile: { x: number; y: number } | undefined): number {
   if (typeof document !== 'undefined' && document.hidden) return 0
@@ -20,12 +25,16 @@ function gainAt(tile: { x: number; y: number } | undefined): number {
 function monsterGainAt(tile: { x: number; y: number } | undefined): number {
   if (!tile || (typeof document !== 'undefined' && document.hidden)) return 0
   const { viewport } = useGameStore.getState()
+  const centerChunk = tileToChunk(viewport.center)
+  const monsterChunk = tileToChunk(tile)
+  if (wrappedChunkDistance(centerChunk.x, monsterChunk.x) > viewport.radius ||
+      wrappedChunkDistance(centerChunk.y, monsterChunk.y) > viewport.radius) return 0
   const distance = Math.hypot(
     wrappedGridDistance(tile.x, viewport.center.x),
     wrappedGridDistance(tile.y, viewport.center.y),
   )
-  if (distance > MONSTER_AUDIO_RADIUS_TILES) return 0
-  return Math.max(0.12, 1 - distance / MONSTER_AUDIO_RADIUS_TILES)
+  const maxVisibleDistance = Math.SQRT2 * (viewport.radius + 1) * CHUNK_SIZE
+  return Math.max(0.12, 1 - distance / maxVisibleDistance)
 }
 
 function panAt(tile: { x: number; y: number } | undefined): number {

@@ -23,7 +23,7 @@ describe('combat event sounds', () => {
     expect(monsterActionSound('unknown', 'death')).toBe('combat.monster.death')
   })
 
-  it('sounds aggro only on a known transition and does not sound distant movement', () => {
+  it('sounds aggro only on a known transition and does not sound movement beyond the viewport', () => {
     const monster = { id: 'm1', type: 'forest_stalker' as const, state: 'aggro' as const, tile_x: 2, tile_y: 2, health: 100, damage: 10 }
     playCombatEvent(envelope('monster.moved', { monster }))
     expect(playCombatSound).not.toHaveBeenCalled()
@@ -32,6 +32,18 @@ describe('combat event sounds', () => {
     expect(playCombatSound).toHaveBeenCalledWith('combat.monster.forest_stalker.aggro', expect.any(Number), 'monster.moved-1:aggro', expect.any(Number))
     vi.clearAllMocks()
     playCombatEvent(envelope('monster.moved', { monster: { ...monster, tile_x: 80, tile_y: 0 } }))
+    expect(playCombatSound).not.toHaveBeenCalled()
+  })
+
+  it('plays monster sounds at the outer visible chunk and across the world seam', () => {
+    const monster = { id: 'm1', type: 'forest_stalker', state: 'aggro', tile_x: 63, tile_y: 31, health: 100, damage: 10 }
+    playCombatEvent(envelope('monster.attacked', { monster }))
+    expect(playCombatSound).toHaveBeenCalledWith('combat.monster.forest_stalker.attack', expect.any(Number), 'monster.attacked-1:attack', expect.any(Number))
+    vi.clearAllMocks()
+    playCombatEvent(envelope('monster.attacked', { monster: { ...monster, tile_x: 159, tile_y: 0 } }))
+    expect(playCombatSound).toHaveBeenCalledWith('combat.monster.forest_stalker.attack', expect.any(Number), 'monster.attacked-1:attack', expect.any(Number))
+    vi.clearAllMocks()
+    playCombatEvent(envelope('monster.attacked', { monster: { ...monster, tile_x: 64, tile_y: 0 } }))
     expect(playCombatSound).not.toHaveBeenCalled()
   })
 
