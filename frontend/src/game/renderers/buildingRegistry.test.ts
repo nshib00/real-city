@@ -136,7 +136,7 @@ describe('building asset registry', () => {
 
   it('resolves modular path assets through the same registry', () => {
     expect(resolveBuildingSpriteAsset(building({ kind: 'standard_road' }), { shape: 'straight_ew' })).toBe(
-      '/assets/buildings/roads/common_road/common_road_straight_ew_active.png?v=road-kits-v2-2026-11-02',
+      '/assets/buildings/roads/common_road/common_road_straight_ew_active.png?v=road-kits-v3-2026-11-05',
     )
   })
 

@@ -85,7 +85,7 @@ const modularRoadRender = {
     fallbackFormat: 'png',
   },
 } as const
-export const ROAD_KITS_REVISION = 'road-kits-v2-2026-11-02'
+export const ROAD_KITS_REVISION = 'road-kits-v3-2026-11-05'
 
 export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
   {
