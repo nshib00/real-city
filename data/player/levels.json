@@ -1,7 +1,7 @@
 [
   {
     "level": 1,
-    "title": "Искра",
+    "title": "Новичок",
     "xp": 0,
     "icon": "level-01",
     "unlocks": [
@@ -13,7 +13,7 @@
   },
   {
     "level": 2,
-    "title": "Очаг",
+    "title": "Следопыт",
     "xp": 200,
     "icon": "level-02",
     "unlocks": [
@@ -25,7 +25,7 @@
   },
   {
     "level": 3,
-    "title": "Первые крыши",
+    "title": "Сборщик",
     "xp": 700,
     "icon": "level-03",
     "unlocks": [
@@ -37,7 +37,7 @@
   },
   {
     "level": 4,
-    "title": "Улица",
+    "title": "Хранитель",
     "xp": 1900,
     "icon": "level-04",
     "unlocks": [
@@ -49,7 +49,7 @@
   },
   {
     "level": 5,
-    "title": "Квартал",
+    "title": "Мастер",
     "xp": 4700,
     "icon": "level-05",
     "unlocks": [
@@ -61,7 +61,7 @@
   },
   {
     "level": 6,
-    "title": "Площадь",
+    "title": "Навигатор",
     "xp": 11200,
     "icon": "level-06",
     "unlocks": [
@@ -73,7 +73,7 @@
   },
   {
     "level": 7,
-    "title": "Район",
+    "title": "Тактик",
     "xp": 26200,
     "icon": "level-07",
     "unlocks": [
@@ -85,7 +85,7 @@
   },
   {
     "level": 8,
-    "title": "Город",
+    "title": "Посредник",
     "xp": 61200,
     "icon": "level-08",
     "unlocks": [
@@ -97,7 +97,7 @@
   },
   {
     "level": 9,
-    "title": "Большой город",
+    "title": "Стратег",
     "xp": 141200,
     "icon": "level-09",
     "unlocks": [
@@ -109,7 +109,7 @@
   },
   {
     "level": 10,
-    "title": "Городской пояс",
+    "title": "Ветеран",
     "xp": 321200,
     "icon": "level-10",
     "unlocks": [
@@ -121,7 +121,7 @@
   },
   {
     "level": 11,
-    "title": "Город-сад",
+    "title": "Наставник",
     "xp": 721200,
     "icon": "level-11",
     "unlocks": [
@@ -133,7 +133,7 @@
   },
   {
     "level": 12,
-    "title": "Кристальный город",
+    "title": "Парагон",
     "xp": 1621200,
     "icon": "level-12",
     "unlocks": [
@@ -145,7 +145,7 @@
   },
   {
     "level": 13,
-    "title": "Высокий горизонт",
+    "title": "Провидец",
     "xp": 3621200,
     "icon": "level-13",
     "unlocks": [
@@ -157,7 +157,7 @@
   },
   {
     "level": 14,
-    "title": "Сердце Эолии",
+    "title": "Легенда",
     "xp": 8121200,
     "icon": "level-14",
     "unlocks": [
@@ -169,7 +169,7 @@
   },
   {
     "level": 15,
-    "title": "Эолия вечная",
+    "title": "Вершитель",
     "xp": 18121200,
     "icon": "level-15",
     "unlocks": [

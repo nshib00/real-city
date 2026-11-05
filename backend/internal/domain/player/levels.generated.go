@@ -5,21 +5,21 @@ type LevelUnlock struct { Label string `json:"label"`; Status string `json:"stat
 type LevelDefinition struct { Level int `json:"level"`; Title string `json:"title"`; XP int `json:"xp"`; Icon string `json:"icon"`; Unlocks []LevelUnlock `json:"unlocks"` }
 
 var LevelCatalog = []LevelDefinition{
- {1,"Искра",0,"level-01",[]LevelUnlock{{"Базовое строительство и чат","available"}}},
- {2,"Очаг",200,"level-02",[]LevelUnlock{{"Дороги и значок профиля","planned"}}},
- {3,"Первые крыши",700,"level-03",[]LevelUnlock{{"Улучшения и инспектор производства","planned"}}},
- {4,"Улица",1900,"level-04",[]LevelUnlock{{"Оборонный статус и журнал угроз","planned"}}},
- {5,"Квартал",4700,"level-05",[]LevelUnlock{{"Рынок и титул профиля","planned"}}},
- {6,"Площадь",11200,"level-06",[]LevelUnlock{{"Складские уведомления и три значка","planned"}}},
- {7,"Район",26200,"level-07",[]LevelUnlock{{"Приоритеты логистики и специализации","planned"}}},
- {8,"Город",61200,"level-08",[]LevelUnlock{{"Групповой вклад и дипломатические метки","planned"}}},
- {9,"Большой город",141200,"level-09",[]LevelUnlock{{"Фильтры событий и обзор угроз","planned"}}},
- {10,"Городской пояс",321200,"level-10",[]LevelUnlock{{"Престижная рамка и история достижений","planned"}}},
- {11,"Город-сад",721200,"level-11",[]LevelUnlock{{"Групповая статистика","planned"}}},
- {12,"Кристальный город",1621200,"level-12",[]LevelUnlock{{"Престижный медальон и архив","planned"}}},
- {13,"Высокий горизонт",3621200,"level-13",[]LevelUnlock{{"Косметические варианты профиля","planned"}}},
- {14,"Сердце Эолии",8121200,"level-14",[]LevelUnlock{{"Избранные достижения","planned"}}},
- {15,"Эолия вечная",18121200,"level-15",[]LevelUnlock{{"Максимальный престиж и дальнейший учёт XP","planned"}}},
+ {1,"Новичок",0,"level-01",[]LevelUnlock{{"Базовое строительство и чат","available"}}},
+ {2,"Следопыт",200,"level-02",[]LevelUnlock{{"Дороги и значок профиля","planned"}}},
+ {3,"Сборщик",700,"level-03",[]LevelUnlock{{"Улучшения и инспектор производства","planned"}}},
+ {4,"Хранитель",1900,"level-04",[]LevelUnlock{{"Оборонный статус и журнал угроз","planned"}}},
+ {5,"Мастер",4700,"level-05",[]LevelUnlock{{"Рынок и титул профиля","planned"}}},
+ {6,"Навигатор",11200,"level-06",[]LevelUnlock{{"Складские уведомления и три значка","planned"}}},
+ {7,"Тактик",26200,"level-07",[]LevelUnlock{{"Приоритеты логистики и специализации","planned"}}},
+ {8,"Посредник",61200,"level-08",[]LevelUnlock{{"Групповой вклад и дипломатические метки","planned"}}},
+ {9,"Стратег",141200,"level-09",[]LevelUnlock{{"Фильтры событий и обзор угроз","planned"}}},
+ {10,"Ветеран",321200,"level-10",[]LevelUnlock{{"Престижная рамка и история достижений","planned"}}},
+ {11,"Наставник",721200,"level-11",[]LevelUnlock{{"Групповая статистика","planned"}}},
+ {12,"Парагон",1621200,"level-12",[]LevelUnlock{{"Престижный медальон и архив","planned"}}},
+ {13,"Провидец",3621200,"level-13",[]LevelUnlock{{"Косметические варианты профиля","planned"}}},
+ {14,"Легенда",8121200,"level-14",[]LevelUnlock{{"Избранные достижения","planned"}}},
+ {15,"Вершитель",18121200,"level-15",[]LevelUnlock{{"Максимальный престиж и дальнейший учёт XP","planned"}}},
 }
 
 var levelThresholds = func() []int {
