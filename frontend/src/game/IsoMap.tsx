@@ -97,6 +97,7 @@ export function IsoMap() {
   const [rendererReady, setRendererReady] = useState(false)
   const [rendererFailed, setRendererFailed] = useState(false)
   const [relocationRotation, setRelocationRotation] = useState(0)
+  const rejectedRelocationIdRef = useRef<string | null>(null)
   const activePointers = useRef(new Set<number>())
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
@@ -125,17 +126,12 @@ export function IsoMap() {
   const placementValidity = placementPreview ? validatePlacementPreview({ kind: placementPreview.kind, tile: previewTile, buildings, worldTiles: mapTiles, monsters, ownerId: player?.id }) : null
   const missingCenterTile = mapTiles.length > 0 && !mapTilesByKey.has(tileActionKey(wrapGridCoord(roundGridCoord(renderCenter))))
   const realtimeStatus = useGameStore((state) => state.realtimeStatus)
-  const relocatingBuilding = relocatingBuildingId ? buildings.find((item) => item.id === relocatingBuildingId) : null
-  const relocationFootprint = relocatingBuilding ? (() => {
-    const width = relocatingBuilding.footprintW ?? 1
-    const height = relocatingBuilding.footprintH ?? 1
-    return (relocationRotation - (relocatingBuilding.rotation ?? 0) + 4) % 2 === 1
-      ? { width: height, height: width } : { width, height }
-  })() : null
+  const relocationCandidate = relocatingBuildingId ? buildings.find((item) => item.id === relocatingBuildingId) : null
+  const legacyRelocation = Boolean(relocationCandidate && ((relocationCandidate.footprintW ?? 1) > 1 || (relocationCandidate.footprintH ?? 1) > 1))
+  const relocatingBuilding = legacyRelocation ? null : relocationCandidate
   const relocationPreview = relocatingBuilding && hoveredTile ? validatePlacementPreview({
     kind: relocatingBuilding.kind,
     tile: hoveredTile,
-    footprint: relocationFootprint ?? undefined,
     buildings,
     worldTiles: mapTiles,
     monsters,
@@ -145,6 +141,16 @@ export function IsoMap() {
   useEffect(() => {
     setRelocationRotation(relocatingBuilding?.rotation ?? 0)
   }, [relocatingBuildingId])
+  useEffect(() => {
+    if (!relocatingBuildingId) {
+      rejectedRelocationIdRef.current = null
+      return
+    }
+    if (!legacyRelocation || rejectedRelocationIdRef.current === relocatingBuildingId) return
+    rejectedRelocationIdRef.current = relocatingBuildingId
+    showToast('warning', 'Постройки больше одной клетки нельзя перемещать')
+    setRelocatingBuildingId(null)
+  }, [legacyRelocation, relocatingBuildingId, setRelocatingBuildingId])
   useEffect(() => {
     if (!relocatingBuildingId) return
     const cancelOnEscape = (event: KeyboardEvent) => {
@@ -323,7 +329,6 @@ export function IsoMap() {
       const preview = validatePlacementPreview({
         kind: relocatingBuilding.kind,
         tile,
-        footprint: relocationFootprint ?? undefined,
         buildings,
         worldTiles: mapTiles,
         monsters,
@@ -615,7 +620,7 @@ export function IsoMap() {
           const pos = nearestWrappedScreenCoord(previewTile, gridToScreen(renderCenter))
           return <div className={`map-placement-preview${placementValidity?.valid === false ? ' map-placement-preview-invalid' : ''}`} style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)` }} aria-hidden="true">
             <img src={placementPreview.previewImage} alt="" draggable={false} />
-            <svg className="placement-footprint" viewBox={`${-32 * placementPreview.footprint.height} -16 ${32 * (placementPreview.footprint.width + placementPreview.footprint.height)} ${16 * (placementPreview.footprint.width + placementPreview.footprint.height)}`} style={{ width: 32 * (placementPreview.footprint.width + placementPreview.footprint.height), height: 16 * (placementPreview.footprint.width + placementPreview.footprint.height) }}><polygon points={`0,-16 ${32 * placementPreview.footprint.width},${16 * (placementPreview.footprint.width - 1)} ${32 * (placementPreview.footprint.width - placementPreview.footprint.height)},${16 * (placementPreview.footprint.width + placementPreview.footprint.height - 1)} ${-32 * placementPreview.footprint.height},${16 * (placementPreview.footprint.height - 1)}`} /></svg>
+            <SingleTilePlacementOutline />
           </div>
         })() : null}
         {relocatingBuilding && hoveredTile ? (() => {
@@ -623,7 +628,7 @@ export function IsoMap() {
           const asset = buildingSpriteAsset(relocatingBuilding)
           return asset ? <div className={`map-placement-preview${relocationPreview?.valid === false ? ' map-placement-preview-invalid' : ''}`} style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)` }} aria-hidden="true">
             <img src={asset} alt="" draggable={false} />
-            {relocationFootprint ? <svg className="placement-footprint" viewBox={`${-32 * relocationFootprint.height} -16 ${32 * (relocationFootprint.width + relocationFootprint.height)} ${16 * (relocationFootprint.width + relocationFootprint.height)}`} style={{ width: 32 * (relocationFootprint.width + relocationFootprint.height), height: 16 * (relocationFootprint.width + relocationFootprint.height) }}><polygon points={`0,-16 ${32 * relocationFootprint.width},${16 * (relocationFootprint.width - 1)} ${32 * (relocationFootprint.width - relocationFootprint.height)},${16 * (relocationFootprint.width + relocationFootprint.height - 1)} ${-32 * relocationFootprint.height},${16 * (relocationFootprint.height - 1)}`} /></svg> : null}
+            <SingleTilePlacementOutline />
           </div> : null
         })() : null}
         {selectedBuildingId && (() => {
@@ -717,6 +722,10 @@ export function IsoMap() {
       ) : null}
     </section>
   )
+}
+
+function SingleTilePlacementOutline() {
+  return <svg className="placement-footprint" viewBox="-32 -16 64 32" style={{ width: 64, height: 32 }}><polygon points="0,-16 32,0 0,16 -32,0" /></svg>
 }
 
 function deriveVisibleChunkRadius(stageSize: { width: number; height: number }, zoom: number) {

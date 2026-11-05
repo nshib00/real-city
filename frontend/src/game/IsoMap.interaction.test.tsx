@@ -247,24 +247,27 @@ describe('IsoMap production interactions', () => {
     expect(pixiMocks.latestProps?.targetTileOnly).toBe(false)
   })
 
-  it('rotates the relocation footprint before sending the move', async () => {
-    vi.mocked(relocateBuilding).mockResolvedValue({ building: {
-      id: 'lumber-yard-1', owner_id: 'player-1', type: 'lumber_yard', name: 'Лесопильный двор',
-      level: 1, state: 'active', health: 100, tile_x: 2, tile_y: 1,
-      rotation: 1, footprint_w: 1, footprint_h: 2,
-      started_at: '2026-09-29T10:00:00Z', completes_at: null,
-    } })
+  it('does not offer relocation for a legacy multi-cell building', async () => {
+    const warnings: string[] = []
+    const onToast = (event: Event) => warnings.push((event as CustomEvent<{ message: string }>).detail.message)
+    window.addEventListener('real-city:toast', onToast)
     useGameStore.setState((state) => ({
       buildings: [{ ...state.buildings[0], footprintW: 2, footprintH: 1 }],
-      selectedBuildingId: 'lumber-yard-1', relocatingBuildingId: 'lumber-yard-1',
+      selectedBuildingId: 'lumber-yard-1', relocatingBuildingId: 'lumber-yard-1', hoveredTile: { x: 2, y: 1 },
     }))
-    renderWithClient(<IsoMap />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Повернуть (R): 0°' }))
-    fireEvent.click(screen.getByTestId('pixi-forest-b'))
-
-    await waitFor(() => expect(relocateBuilding).toHaveBeenCalledWith('lumber-yard-1', { x: 2, y: 1 }, 1))
-    await waitFor(() => expect(useGameStore.getState().buildings[0].footprintH).toBe(2))
+    try {
+      renderWithClient(<IsoMap />)
+      await waitFor(() => expect(useGameStore.getState().relocatingBuildingId).toBeNull())
+      expect(pixiMocks.latestProps?.targetTileOnly).toBe(false)
+      expect(screen.queryByRole('button', { name: /Повернуть \(R\)/ })).toBeNull()
+      expect(document.querySelector('.map-placement-preview')).toBeNull()
+      expect(warnings.filter((message) => message === 'Постройки больше одной клетки нельзя перемещать')).toHaveLength(1)
+      fireEvent.click(screen.getByTestId('pixi-forest-b'))
+      expect(relocateBuilding).not.toHaveBeenCalled()
+      expect(useGameStore.getState().buildings[0]).toMatchObject({ footprintW: 2, footprintH: 1 })
+    } finally {
+      window.removeEventListener('real-city:toast', onToast)
+    }
   })
 
   it('renders a nearby player with their nickname and level', async () => {
@@ -439,6 +442,8 @@ describe('IsoMap production interactions', () => {
     await waitFor(() => expect(pixiMocks.latestProps?.tiles).toHaveLength(1))
 
     expect(document.querySelector('.map-placement-preview img')).toBeTruthy()
+    expect(document.querySelector('.map-placement-preview svg')?.getAttribute('viewBox')).toBe('-32 -16 64 32')
+    expect(document.querySelector('.map-placement-preview polygon')?.getAttribute('points')).toBe('0,-16 32,0 0,16 -32,0')
     fireEvent.click(screen.getByTestId('pixi-forest-b'))
 
     expect(useGameStore.getState().selectedTile).toEqual({ x: 2, y: 1 })
