@@ -93,6 +93,7 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 	marketService := service.NewMarketService(socialRepo, economyService, log)
 	actionRepo := buildActionStore(db)
 	outboxRepo := buildOutboxStore(db)
+	towerAlerts := buildTowerAlertStore(db)
 	uow := buildUnitOfWork(db)
 	economyService.SetUnitOfWork(uow)
 	productionService.SetUnitOfWork(uow)
@@ -143,7 +144,9 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 		monsterAI.SetBuildingService(buildingService)
 		monsterAI.SetMoveInterval(cfg.Simulation.TickInterval)
 		simulationRunner.SetMonsterAI(monsterAI)
-		simulationRunner.SetTowerDetector(simulation.NewTowerDetector(buildingRepo, monsterRepo, eventBus))
+		towerDetector := simulation.NewTowerDetector(buildingRepo, monsterRepo, eventBus)
+		towerDetector.SetAlertRepository(towerAlerts, db == nil)
+		simulationRunner.SetTowerDetector(towerDetector)
 		simulationRunner.SetCannonService(service.NewCannonService(buildingRepo, monsterRepo, economyRepo, worldRepo, uow, monsterService, economyService, eventBus, log))
 		simulationRunner.SetCombatService(combatService)
 	}
@@ -160,7 +163,7 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 		sim:      simulationRunner,
 		outbox:   outboxDispatcher,
 		server: &http.Server{
-			Handler:      httpadapter.NewRouter(log, httpadapter.RouterDeps{AppEnv: cfg.AppEnv, AllowedOrigins: cfg.Server.AllowedOrigins, Auth: authService, Players: playerService, Worlds: worldService, Forests: forestService, Buildings: buildingService, Economy: economyService, Resources: resourceService, Production: productionService, Fields: fieldService, Population: populationService, Monsters: monsterService, Combat: combatService, Threats: threatService, Alliances: allianceService, Chat: chatService, Market: marketService, Tokens: tokenManager, Realtime: realtimeGateway, DBPool: dbPool, Idempotency: idempotencyStore}),
+			Handler:      httpadapter.NewRouter(log, httpadapter.RouterDeps{AppEnv: cfg.AppEnv, AllowedOrigins: cfg.Server.AllowedOrigins, Auth: authService, Players: playerService, Worlds: worldService, Forests: forestService, Buildings: buildingService, Economy: economyService, Resources: resourceService, Production: productionService, Fields: fieldService, Population: populationService, Monsters: monsterService, Combat: combatService, Threats: threatService, Alliances: allianceService, Chat: chatService, Market: marketService, TowerAlerts: towerAlerts, Tokens: tokenManager, Realtime: realtimeGateway, DBPool: dbPool, Idempotency: idempotencyStore}),
 			Addr:         cfg.Server.Addr,
 			ReadTimeout:  cfg.Server.ReadTimeout,
 			WriteTimeout: cfg.Server.WriteTimeout,
@@ -233,6 +236,13 @@ func buildOutboxStore(db *postgresadapter.DB) service.OutboxRepository {
 		return postgresadapter.NewOutboxRepo(db.Pool())
 	}
 	return memory.NewOutboxRepo()
+}
+
+func buildTowerAlertStore(db *postgresadapter.DB) service.TowerAlertRepository {
+	if db != nil {
+		return postgresadapter.NewTowerAlertRepo(db.Pool())
+	}
+	return memory.NewTowerAlertRepo()
 }
 
 func buildUnitOfWork(db *postgresadapter.DB) service.UnitOfWork {

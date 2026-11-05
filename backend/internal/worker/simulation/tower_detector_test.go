@@ -85,6 +85,43 @@ func TestTowerDetectorPrivateThreatAndDeduplication(t *testing.T) {
 	}
 }
 
+func TestTowerDetectorPersistentHistoryChoosesStableSource(t *testing.T) {
+	ctx := context.Background()
+	buildings, monsters := memory.NewBuildingRepo(), memory.NewMonsterRepo()
+	for _, item := range []building.Building{
+		{ID: "home", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTownHall, State: building.StateActive, Health: 100},
+		{ID: "z-tower", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, TowerWatchkeeperAssigned: true},
+		{ID: "a-tower", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, TowerWatchkeeperAssigned: true},
+	} {
+		if err := buildings.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := monsters.Create(ctx, testThreat(world.Coord{})); err != nil {
+		t.Fatal(err)
+	}
+	repo := memory.NewTowerAlertRepo()
+	bus := service.NewEventBus(4)
+	stream := bus.Subscribe(ctx)
+	now := time.Date(2026, 11, 5, 12, 0, 0, 0, time.UTC)
+	for i := 0; i < 4; i++ {
+		detector := NewTowerDetector(buildings, monsters, bus)
+		detector.SetAlertRepository(repo, true)
+		count, err := detector.Tick(ctx, now.Add(time.Duration(i)*towerScanInterval))
+		if err != nil || count != map[bool]int{true: 1, false: 0}[i == 0] {
+			t.Fatalf("scan %d: count=%d err=%v", i, count, err)
+		}
+	}
+	alert := (<-stream).Payload.(service.TowerThreatPayload)
+	if alert.TowerID != "a-tower" || alert.IncidentID == "" {
+		t.Fatalf("unstable source or missing incident: %+v", alert)
+	}
+	items, err := repo.ListForPlayer(ctx, "owner", 10, time.Time{}, "")
+	if err != nil || len(items) != 1 || items[0].TowerID != "a-tower" {
+		t.Fatalf("history: %+v %v", items, err)
+	}
+}
+
 func TestTowerDetectorLimitsRepositoryScans(t *testing.T) {
 	ctx := context.Background()
 	buildings := &countingTowerBuildings{BuildingRepository: memory.NewBuildingRepo()}

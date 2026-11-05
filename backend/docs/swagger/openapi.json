@@ -2204,6 +2204,31 @@
         "summary": "Threats"
       }
     },
+    "/tower-alerts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "List private tower alert history"
+      }
+    },
     "/world": {
       "get": {
         "responses": {

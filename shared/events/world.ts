@@ -138,6 +138,7 @@ export type DefenseTriggeredPayload = {
 }
 
 export type TowerThreatPayload = {
+  incident_id?: string
   tower_id: string
   monster_id: string
   monster_type: string

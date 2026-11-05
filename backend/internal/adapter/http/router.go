@@ -33,6 +33,7 @@ type RouterDeps struct {
 	Alliances      *service.AllianceService
 	Chat           *service.ChatService
 	Market         *service.MarketService
+	TowerAlerts    service.TowerAlertRepository
 	Tokens         *jwtadapter.Manager
 	Realtime       *wsadapter.Gateway
 	DBPool         *sql.DB
@@ -55,6 +56,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	economyHandler := handler.NewEconomyHandler(deps.Economy, deps.Resources, deps.Production, deps.Fields, deps.Population)
 	monsterHandler := handler.NewMonsterHandler(deps.Monsters, deps.Combat, deps.Threats)
 	combatHandler := handler.NewCombatHandler(deps.Combat)
+	towerAlertHandler := handler.NewTowerAlertHandler(deps.TowerAlerts)
 	allianceHandler := handler.NewAllianceHandler(deps.Alliances)
 	chatHandler := handler.NewChatHandler(deps.Chat)
 	marketHandler := handler.NewMarketHandler(deps.Market)
@@ -139,6 +141,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("POST /api/v1/monsters/{id}/weapons", idempotentAuth(monsterHandler.UseWeapon))
 	mux.Handle("GET /api/v1/combat/attacks", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.PendingWeapons)))
 	mux.Handle("GET /api/v1/combat/history", authenticated(deps.Tokens, http.HandlerFunc(combatHandler.History)))
+	mux.Handle("GET /api/v1/tower-alerts", authenticated(deps.Tokens, http.HandlerFunc(towerAlertHandler.List)))
 	mux.Handle("POST /api/v1/monster-loot/{id}/claim", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.ClaimLoot)))
 	mux.Handle("POST /api/v1/alliances/members/{id}/leadership", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.TransferLeadership)))
 	mux.Handle("DELETE /api/v1/alliances/me", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Leave)))

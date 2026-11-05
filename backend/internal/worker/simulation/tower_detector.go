@@ -2,6 +2,7 @@ package simulation
 
 import (
 	"context"
+	"sort"
 	"sync"
 	"time"
 
@@ -35,6 +36,8 @@ type TowerDetector struct {
 	buildings service.BuildingRepository
 	monsters  service.MonsterRepository
 	events    *service.EventBus
+	alerts    service.TowerAlertRepository
+	direct    bool
 	seen      map[towerThreatKey]towerThreatState
 	nextScan  time.Time
 }
@@ -43,11 +46,25 @@ func NewTowerDetector(buildings service.BuildingRepository, monsters service.Mon
 	return &TowerDetector{buildings: buildings, monsters: monsters, events: events, seen: make(map[towerThreatKey]towerThreatState)}
 }
 
+// Memory storage uses direct delivery; PostgreSQL stores a durable outbox event.
+func (d *TowerDetector) SetAlertRepository(repo service.TowerAlertRepository, direct bool) {
+	d.alerts = repo
+	d.direct = direct
+}
+
 func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	if now.Before(d.nextScan) {
 		return 0, nil
+	}
+	var generation int64
+	if d.alerts != nil {
+		var err error
+		generation, err = d.alerts.BeginScan(ctx, service.DefaultWorldID)
+		if err != nil {
+			return 0, err
+		}
 	}
 	structures, err := d.buildings.ListByMap(ctx, service.DefaultWorldID)
 	if err != nil {
@@ -61,7 +78,21 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 			towers[structure.OwnerID] = append(towers[structure.OwnerID], structure)
 		}
 	}
+	for owner := range towers {
+		sort.Slice(towers[owner], func(i, j int) bool {
+			a, b := towers[owner][i], towers[owner][j]
+			if a.CreatedAt.Equal(b.CreatedAt) {
+				return a.ID < b.ID
+			}
+			return a.CreatedAt.Before(b.CreatedAt)
+		})
+	}
 	if len(towers) == 0 {
+		if d.alerts != nil {
+			if _, err := d.alerts.Reconcile(ctx, service.DefaultWorldID, generation, now, nil); err != nil {
+				return 0, err
+			}
+		}
 		clear(d.seen)
 		d.nextScan = now.Add(towerScanInterval)
 		return 0, nil
@@ -71,6 +102,7 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 		return 0, err
 	}
 	inside := make(map[towerThreatKey]bool)
+	observations := make([]service.TowerObservation, 0)
 	sent := 0
 	for _, creature := range creatures {
 		if !creature.Alive() || creature.TargetType != "building" || creature.TargetID == "" ||
@@ -89,6 +121,14 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 				continue
 			}
 			inside[key] = true
+			if d.alerts != nil {
+				observations = append(observations, service.TowerObservation{
+					OwnerID: player.ID(target.OwnerID), TowerID: string(tower.ID), MonsterID: string(creature.ID),
+					MonsterType: string(creature.Type), TileX: creature.Tile.X, TileY: creature.Tile.Y,
+					TargetBuildingID: string(target.ID),
+				})
+				break
+			}
 			previous := d.seen[key]
 			if previous.inside || now.Sub(previous.lastSent) < towerAlertCooldown {
 				previous.inside = true
@@ -108,6 +148,28 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 			sent++
 			break
 		}
+	}
+	if d.alerts != nil {
+		created, err := d.alerts.Reconcile(ctx, service.DefaultWorldID, generation, now, observations)
+		if err != nil {
+			return 0, err
+		}
+		if d.direct {
+			for _, alert := range created {
+				if err := d.events.Publish(service.Event{
+					Type: service.EventTowerThreatDetected, PlayerID: alert.OwnerID, CreatedAt: alert.DetectedAt,
+					Payload: service.TowerThreatPayload{
+						IncidentID: alert.IncidentID, TowerID: alert.TowerID, MonsterID: alert.MonsterID,
+						MonsterType: alert.MonsterType, TileX: alert.TileX, TileY: alert.TileY,
+						TargetBuildingID: alert.TargetBuildingID, DetectedAt: alert.DetectedAt,
+					},
+				}); err != nil {
+					return 0, err
+				}
+			}
+		}
+		d.nextScan = now.Add(towerScanInterval)
+		return len(created), nil
 	}
 	for key, previous := range d.seen {
 		if inside[key] {

@@ -120,6 +120,7 @@ type DefenseTriggeredPayload struct {
 }
 
 type TowerThreatPayload struct {
+	IncidentID       string    `json:"incident_id,omitempty"`
 	TowerID          string    `json:"tower_id"`
 	MonsterID        string    `json:"monster_id"`
 	MonsterType      string    `json:"monster_type"`
