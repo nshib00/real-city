@@ -4,15 +4,28 @@ import { combatDistanceGain, defenseSound, weaponSound } from '../../audio/sound
 import { spatialSound } from '../../audio/spatialAudio'
 import { playCombatSound } from '../../audio/voiceManager'
 import type { SoundId } from '../../audio/soundEvents'
+import { wrappedGridDistance } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
 import { useAuthStore } from '../auth/useAuthStore'
 
 const monsterKinds = new Set(['roaming_melee', 'resource_guardian', 'ruins_guardian', 'forest_stalker', 'spore_beast', 'ironback_brute', 'ember_wisp', 'ancient_colossus'])
+const MONSTER_AUDIO_RADIUS_TILES = 6
 
 function gainAt(tile: { x: number; y: number } | undefined): number {
   if (typeof document !== 'undefined' && document.hidden) return 0
   const { viewport } = useGameStore.getState()
   return combatDistanceGain(tile, viewport.center, viewport.radius)
+}
+
+function monsterGainAt(tile: { x: number; y: number } | undefined): number {
+  if (!tile || (typeof document !== 'undefined' && document.hidden)) return 0
+  const { viewport } = useGameStore.getState()
+  const distance = Math.hypot(
+    wrappedGridDistance(tile.x, viewport.center.x),
+    wrappedGridDistance(tile.y, viewport.center.y),
+  )
+  if (distance > MONSTER_AUDIO_RADIUS_TILES) return 0
+  return Math.max(0.12, 1 - distance / MONSTER_AUDIO_RADIUS_TILES)
 }
 
 function panAt(tile: { x: number; y: number } | undefined): number {
@@ -61,7 +74,7 @@ export function playCombatEvent(event: RealtimeEnvelope): void {
   const monster = payload?.monster
   if (!monster) return
   const tile = monster.Tile ? { x: monster.Tile.X, y: monster.Tile.Y } : monster.tile_x !== undefined && monster.tile_y !== undefined ? { x: monster.tile_x, y: monster.tile_y } : undefined
-  const gain = gainAt(tile)
+  const gain = monsterGainAt(tile)
   if (!gain) return
   const pan = panAt(tile)
   const previous = useGameStore.getState().monsters.find((item) => item.id === monster.id)
@@ -77,7 +90,7 @@ export function playCombatEvent(event: RealtimeEnvelope): void {
       if (ownTarget) playCombatSound('combat.threat.nearby', 1, `${event.event_id}:threat`)
     } else if (monster.state === 'wandering' && previous?.state === 'aggro' && previous.targetId) {
       const wasOwnTarget = useGameStore.getState().buildings.some((item) => item.id === previous.targetId && item.owner === ownerId)
-      if (wasOwnTarget) playCombatSound('combat.retreat', 1, `${event.event_id}:retreat`)
+      if (wasOwnTarget) playCombatSound('combat.retreat', gain, `${event.event_id}:retreat`, pan)
     } else if (previous && tile && (previous.tile.x !== tile.x || previous.tile.y !== tile.y)) {
       playCombatSound('combat.monster.step', gain * 0.55, `${event.event_id}:step`, pan)
     } else if (monster.state === 'idle') {

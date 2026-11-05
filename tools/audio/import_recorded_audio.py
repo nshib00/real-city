@@ -13,6 +13,7 @@ EXTRACTED = SOURCES / 'extracted'
 PUBLIC = ROOT / 'frontend/public/assets/audio'
 MASTERS = ROOT / 'tools/audio/master'
 MANIFEST = ROOT / 'frontend/src/audio/soundManifest.ts'
+SOURCE_OVERRIDES = ROOT / 'tools/audio/source-overrides.json'
 FFMPEG = ROOT / '.cache/audio-deps/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v7.0.2'
 
 
@@ -106,6 +107,7 @@ def render(source: Path, output: Path, *, seconds: float, offset: float = 0, amb
 def main() -> None:
     from validate_audio import validate_wav
     manifest = json.loads(MANIFEST.read_text().split('// DATA:', 1)[1].splitlines()[0])
+    overrides = json.loads(SOURCE_OVERRIDES.read_text())['sounds'] if SOURCE_OVERRIDES.exists() else {}
     provenance = {}
     ambience = {
         'grass': ('park-wind.wav', 8), 'forest': ('park-birds.wav', 12),
@@ -118,7 +120,14 @@ def main() -> None:
         family = sound_id.split('.')[0]
         provenance[sound_id] = []
         for index in range(len(variants)):
-            if family == 'ambience':
+            override = overrides.get(sound_id)
+            if override:
+                selection = override[index % len(override)]
+                source = ROOT / 'tools/audio/sources' / selection['source']
+                offset = float(selection.get('offset', 0))
+                seconds = float(selection.get('duration', 1.35 if family == 'combat' else 0.95))
+                ambient = False
+            elif family == 'ambience':
                 name, offset = ambience[sound_id.split('.')[1]]
                 source = SOURCES / name if name else POOLS['machine'][index % len(POOLS['machine'])]
                 seconds = 6 if name is None else 8

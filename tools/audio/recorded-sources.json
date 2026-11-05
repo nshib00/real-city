@@ -124,12 +124,12 @@
     ".cache/audio-sources/extracted/more/Money/Money_09.wav"
   ],
   "combat.monster.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+    "tools/audio/sources/monster-snarls/monster-snarls.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarls.ogg"
   ],
   "combat.monster.ancient_colossus.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav",
-    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav"
+    "tools/audio/sources/monster-snarls/monster-snarl-5.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarl-5.ogg"
   ],
   "combat.monster.ancient_colossus.attack": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - metal drop 2.wav",
@@ -152,8 +152,8 @@
     ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
   ],
   "combat.monster.ember_wisp.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+    "tools/audio/sources/monster-snarls/monsters-snarls-3.ogg",
+    "tools/audio/sources/monster-snarls/monsters-snarls-3.ogg"
   ],
   "combat.monster.ember_wisp.attack": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - dull pings 4.wav",
@@ -168,8 +168,8 @@
     ".cache/audio-sources/extracted/rubberduck/glass_05.ogg"
   ],
   "combat.monster.forest_stalker.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav",
-    ".cache/audio-sources/extracted/owlish/Human/breath-male.wav"
+    "tools/audio/sources/monster-snarls/monster-snarls.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarls.ogg"
   ],
   "combat.monster.forest_stalker.attack": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 4.wav",
@@ -188,12 +188,12 @@
     ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav"
   ],
   "combat.monster.idle": [
-    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+    "tools/audio/sources/monster-snarls/monster-snarls-2.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarls-2.ogg"
   ],
   "combat.monster.ironback_brute.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav",
-    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav"
+    "tools/audio/sources/monster-snarls/monster-snarl-5.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarl-5.ogg"
   ],
   "combat.monster.ironback_brute.attack": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - thuds.wav",
@@ -208,8 +208,8 @@
     ".cache/audio-sources/extracted/owlish/Impacts/clamour1.wav"
   ],
   "combat.monster.resource_guardian.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav",
-    ".cache/audio-sources/extracted/owlish/Human/breath-male.wav"
+    "tools/audio/sources/monster-snarls/monsters-snarls-3.ogg",
+    "tools/audio/sources/monster-snarls/monsters-snarls-3.ogg"
   ],
   "combat.monster.resource_guardian.attack": [
     ".cache/audio-sources/extracted/rubberduck/metal_10.ogg",
@@ -224,8 +224,8 @@
     ".cache/audio-sources/extracted/rubberduck/metal_02.ogg"
   ],
   "combat.monster.roaming_melee.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav",
-    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav"
+    "tools/audio/sources/monster-snarls/monster-snarl-attack.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarl-attack.ogg"
   ],
   "combat.monster.roaming_melee.attack": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - ratchet2.wav",
@@ -240,8 +240,8 @@
     ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav"
   ],
   "combat.monster.ruins_guardian.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav",
-    ".cache/audio-sources/extracted/owlish/Human/freakedbreath.wav"
+    "tools/audio/sources/monster-snarls/monster-snarl-5.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarl-5.ogg"
   ],
   "combat.monster.ruins_guardian.attack": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - clink1.wav",
@@ -256,8 +256,8 @@
     ".cache/audio-sources/extracted/rubberduck/metal_07.ogg"
   ],
   "combat.monster.spore_beast.aggro": [
-    ".cache/audio-sources/extracted/owlish/Human/breath-male.wav",
-    ".cache/audio-sources/extracted/owlish/Human/gasp1.wav"
+    "tools/audio/sources/monster-snarls/monster-snarls-2.ogg",
+    "tools/audio/sources/monster-snarls/monster-snarls-2.ogg"
   ],
   "combat.monster.spore_beast.attack": [
     ".cache/audio-sources/extracted/owlish/Impacts/djembe1.wav",
@@ -284,8 +284,8 @@
     ".cache/audio-sources/extracted/owlish/Impacts/fruit1.wav"
   ],
   "combat.retreat": [
-    ".cache/audio-sources/extracted/owlish/Human/breath-female.wav",
-    ".cache/audio-sources/extracted/owlish/Human/breath-female2.wav"
+    "tools/audio/sources/grass-footsteps/grassy-footstep2.wav",
+    "tools/audio/sources/grass-footsteps/grassy-footstep3.wav"
   ],
   "combat.threat.nearby": [
     ".cache/audio-sources/extracted/workshop/workshop/workshop - metal hammering 2.wav",

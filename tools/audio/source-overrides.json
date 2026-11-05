@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "sounds": {
+    "combat.monster.aggro": [
+      { "source": "monster-snarls/monster-snarls.ogg", "offset": 0.2, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarls.ogg", "offset": 4.95, "duration": 0.48 }
+    ],
+    "combat.monster.roaming_melee.aggro": [
+      { "source": "monster-snarls/monster-snarl-attack.ogg", "offset": 0, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarl-attack.ogg", "offset": 1.6, "duration": 0.48 }
+    ],
+    "combat.monster.resource_guardian.aggro": [
+      { "source": "monster-snarls/monsters-snarls-3.ogg", "offset": 0.13, "duration": 0.48 },
+      { "source": "monster-snarls/monsters-snarls-3.ogg", "offset": 2.9, "duration": 0.48 }
+    ],
+    "combat.monster.ruins_guardian.aggro": [
+      { "source": "monster-snarls/monster-snarl-5.ogg", "offset": 0.26, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarl-5.ogg", "offset": 2.01, "duration": 0.48 }
+    ],
+    "combat.monster.forest_stalker.aggro": [
+      { "source": "monster-snarls/monster-snarls.ogg", "offset": 0.2, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarls.ogg", "offset": 9.55, "duration": 0.48 }
+    ],
+    "combat.monster.spore_beast.aggro": [
+      { "source": "monster-snarls/monster-snarls-2.ogg", "offset": 0, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarls-2.ogg", "offset": 4.45, "duration": 0.48 }
+    ],
+    "combat.monster.ironback_brute.aggro": [
+      { "source": "monster-snarls/monster-snarl-5.ogg", "offset": 4.01, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarl-5.ogg", "offset": 6.31, "duration": 0.48 }
+    ],
+    "combat.monster.ember_wisp.aggro": [
+      { "source": "monster-snarls/monsters-snarls-3.ogg", "offset": 6.15, "duration": 0.48 },
+      { "source": "monster-snarls/monsters-snarls-3.ogg", "offset": 9.46, "duration": 0.48 }
+    ],
+    "combat.monster.ancient_colossus.aggro": [
+      { "source": "monster-snarls/monster-snarl-5.ogg", "offset": 8.91, "duration": 0.48 },
+      { "source": "monster-snarls/monster-snarl-5.ogg", "offset": 10.94, "duration": 0.48 }
+    ],
+    "combat.monster.idle": [
+      { "source": "monster-snarls/monster-snarls-2.ogg", "offset": 0.4, "duration": 0.3 },
+      { "source": "monster-snarls/monster-snarls-2.ogg", "offset": 1.2, "duration": 0.3 }
+    ],
+    "combat.retreat": [
+      { "source": "grass-footsteps/grassy-footstep2.wav", "offset": 0, "duration": 0.42 },
+      { "source": "grass-footsteps/grassy-footstep3.wav", "offset": 0, "duration": 0.42 }
+    ]
+  }
+}
