@@ -7,7 +7,8 @@ import type { RenderQuality } from '../auth/types'
 import { useAuthStore } from '../auth/useAuthStore'
 import { Modal } from '../../shared/ui/Modal'
 
-import { levelThresholds, playerProgress, levelIcons } from './levels'
+import { levelThresholds, playerProgress } from './levels'
+import { LevelEmblem } from './LevelEmblem'
 import { ProfileScores } from './ProfileScores'
 
 export function ProfilePanel() {
@@ -122,7 +123,6 @@ export function ProfilePanel() {
   const nextLevelXP = nextThreshold === undefined ? 0 : nextThreshold - levelStartXP
   const remainingXP = nextThreshold === undefined ? 0 : nextThreshold - totalXP
   const progress = playerProgress(totalXP)
-  const LevelIcon = levelIcons[progress.icon as keyof typeof levelIcons]
   const xpPercent = progress.percent
   const xpLabel = nextLevelXP > 0 ? `${levelXP}/${nextLevelXP}` : `${levelXP}`
 
@@ -134,7 +134,7 @@ export function ProfilePanel() {
             {profile.avatar_url ? <img src={profile.avatar_url} alt="" /> : avatarLabel}
           </span>
           <span className="profile-level-badge" title={`Уровень ${level}`}>
-            <LevelIcon size={12} /> {level}
+            <LevelEmblem level={level} size="medium" /> {level}
           </span>
           <span className="profile-xp-mini" aria-hidden="true">
             <span style={{ width: `${xpPercent}%` }} />
@@ -153,9 +153,11 @@ export function ProfilePanel() {
             <span className="profile-avatar profile-avatar-large" aria-hidden="true">
               {profile.avatar_url ? <img src={profile.avatar_url} alt="" /> : avatarLabel}
             </span>
+            <LevelEmblem level={level} size="large" className="profile-level-hero" />
             <div>
               <strong>{profile.display_name}</strong>
               <span>{profile.city_name}</span>
+              <span className="profile-level-title">Уровень {level} · {progress.title}</span>
             </div>
           </div>
 
@@ -171,6 +173,7 @@ export function ProfilePanel() {
               <Star size={16} />
               <span>Уровень</span>
               <strong>{level}</strong>
+              <small>{progress.title}</small>
             </article>
             <article>
               <span>XP</span>
@@ -182,7 +185,7 @@ export function ProfilePanel() {
             </article>
           </div>
 
-          <p>{progress.title}</p>
+          <p className="profile-level-description">{progress.title}</p>
           <ul aria-label="Возможности уровня">{progress.unlocks.map((unlock) => <li key={unlock.label}>{unlock.label}{unlock.status === 'planned' ? ' — запланировано' : ''}</li>)}</ul>
           <div className="profile-xp-detail" aria-label={`Опыт: ${xpLabel}`}>
             <span>

@@ -1,0 +1,527 @@
+{
+  "asset_id": "player_level_emblems",
+  "style_profile": "aeolian_fantasy_midpoly",
+  "camera": {
+    "type": "orthographic",
+    "view": "front_three_quarter",
+    "transparent": true
+  },
+  "sizes": {
+    "small": 32,
+    "medium": 64,
+    "large": 128
+  },
+  "source_blend": "tools/assets/blender/source/player_level_emblems.blend",
+  "levels": [
+    {
+      "level": 1,
+      "title": "Искра",
+      "triangles": 1820,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-01/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-01/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-01/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 2,
+      "title": "Очаг",
+      "triangles": 2268,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-02/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-02/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-02/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 3,
+      "title": "Первые крыши",
+      "triangles": 1996,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-03/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-03/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-03/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 4,
+      "title": "Улица",
+      "triangles": 1900,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-04/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-04/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-04/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 5,
+      "title": "Квартал",
+      "triangles": 2180,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-05/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-05/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-05/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 6,
+      "title": "Площадь",
+      "triangles": 2060,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-06/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-06/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-06/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 7,
+      "title": "Район",
+      "triangles": 2320,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-07/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-07/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-07/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 8,
+      "title": "Город",
+      "triangles": 2296,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-08/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-08/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-08/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 9,
+      "title": "Большой город",
+      "triangles": 2436,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-09/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-09/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-09/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 10,
+      "title": "Городской пояс",
+      "triangles": 2472,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-10/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-10/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-10/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 11,
+      "title": "Город-сад",
+      "triangles": 3032,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-11/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-11/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-11/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 12,
+      "title": "Кристальный город",
+      "triangles": 2196,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-12/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-12/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-12/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 13,
+      "title": "Высокий горизонт",
+      "triangles": 2816,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-13/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-13/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-13/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 14,
+      "title": "Сердце Эолии",
+      "triangles": 2708,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-14/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-14/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-14/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "level": 15,
+      "title": "Эолия вечная",
+      "triangles": 2576,
+      "alpha_bounds_512": [
+        56,
+        54,
+        455,
+        458
+      ],
+      "variants": {
+        "small": {
+          "path": "frontend/public/assets/player-levels/level-15/small.png",
+          "size": [
+            32,
+            32
+          ]
+        },
+        "medium": {
+          "path": "frontend/public/assets/player-levels/level-15/medium.png",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "large": {
+          "path": "frontend/public/assets/player-levels/level-15/large.png",
+          "size": [
+            128,
+            128
+          ]
+        }
+      }
+    }
+  ]
+}

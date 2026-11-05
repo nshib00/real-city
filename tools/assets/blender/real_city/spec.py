@@ -280,9 +280,9 @@ def validate_asset_spec_dict(data: dict[str, Any]) -> list[str]:
     if not isinstance(png_policy, dict):
         errors.append("png_policy must be an object")
     else:
-        square_sprite = data.get("asset_id") in ("wooden_wall", "stone_wall", "concrete_wall", "modern_wall", "copper_mine")
+        square_sprite = data.get("asset_id") in ("wooden_wall", "stone_wall", "concrete_wall", "modern_wall", "copper_mine", "player_level_emblems")
         expected_size = (512, 512) if square_sprite else SPRITE_SIZE
-        expected_anchor = (256, 320) if square_sprite else ANCHOR
+        expected_anchor = (256, 256) if data.get("asset_id") == "player_level_emblems" else (256, 320) if square_sprite else ANCHOR
         if tuple(png_policy.get("sprite_size", ())) != expected_size:
             errors.append(f"png_policy.sprite_size must be {list(expected_size)}")
         if tuple(png_policy.get("anchor", ())) != expected_anchor:
