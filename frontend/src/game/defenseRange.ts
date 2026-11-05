@@ -10,15 +10,23 @@ const key = ({ x, y }: Coord) => `${wrap(x)}:${wrap(y)}`
 const footprints = new Map(buildingCatalog.map(item => [item.type as string, item.footprint]))
 const transparent = new Set(['road', 'standard_road', 'paved_road', 'defense_stakes', 'defense_resin_snare'])
 const towerDetectionRadii = [6, 8, 10, 12, 14, 16] as const
+const towerLevels = buildingCatalog.find(item => item.type === 'tower')?.upgradeLevels
 
-/** Проектная геометрическая зона дозора; серверные тревоги пока не реализованы. */
+export function towerDetectionActive(tower: PlacedBuilding): boolean {
+  const maxHealth = towerLevels?.find(level => level.level === tower.level)?.health
+  return tower.kind === 'tower' && (tower.state === 'active' || tower.state === 'damaged')
+    && Boolean(maxHealth && tower.health * 4 > maxHealth)
+}
+
+/** Потенциальная зона обнаружения по серверной манхэттенской дальности. */
 export function towerDetectionRangeCells(tower: PlacedBuilding, tiles: readonly WorldTile[]): DefenseRangeCell[] {
-  if (tower.kind !== 'tower' || tower.state === 'ruined' || tower.health <= 0) return []
+  if (!towerDetectionActive(tower)) return []
   const radius = towerDetectionRadii[tower.level - 1]
   if (!radius) return []
   const loaded = new Set(tiles.map(key))
   const cells = new Map<string, Coord>()
   for (let dx = -radius; dx <= radius; dx++) for (let dy = -radius; dy <= radius; dy++) {
+    if (Math.abs(dx) + Math.abs(dy) > radius) continue
     const target = { x: tower.tile.x + dx, y: tower.tile.y + dy }
     if (loaded.has(key(target))) cells.set(key(target), { x: wrap(target.x), y: wrap(target.y) })
   }

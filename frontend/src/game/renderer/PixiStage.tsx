@@ -24,7 +24,7 @@ import { tileOccupancyKey } from './visibleObjects'
 import { indexWorldTiles, worldTilesNear, type WorldTileIndex } from './worldTileIndex'
 import { observeWorldMotion, worldMotionEnabled } from './motionPolicy'
 import type { TerritoryCell } from '../territory'
-import { defenseRangeCells, towerDetectionRangeCells } from '../defenseRange'
+import { defenseRangeCells, towerDetectionActive, towerDetectionRangeCells } from '../defenseRange'
 
 type Camera = {
   x: number
@@ -411,7 +411,7 @@ export function PixiStage({
     }
   }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, renderedTiles, renderedTileIndex, resources, selectedBuildingId, selectedMonsterId, selectedTile, viewerId])
 
-  const selectedTowerForLabel = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && item.kind === 'tower' && item.state !== 'ruined' && item.health > 0) : null
+  const selectedTowerForLabel = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && towerDetectionActive(item)) : null
 
   return (
     <div
@@ -454,7 +454,7 @@ export function PixiStage({
       onPointerLeave={() => onHoverTile(null)}
     >
       {selectedTowerForLabel && <div style={{ position: 'absolute', zIndex: 1, left: 12, top: 12, pointerEvents: 'none', padding: '5px 9px', border: '1px solid #6bd8ff', borderRadius: 5, background: 'rgba(9, 35, 52, .88)', color: '#b9eeff', fontSize: 12, fontWeight: 600 }}>
-        Проектная зона дозора · оповещения пока недоступны
+        Зона дозора · тревога о монстре, идущем к вашей постройке
       </div>}
     </div>
   )

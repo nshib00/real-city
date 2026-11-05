@@ -48,13 +48,15 @@ it('не обещает видимость через незагруженный
 it('показывает геометрическую зону дозора башни по уровням с замыканием карты', () => {
   const tiles = Array.from({ length: 33 }, (_, x) => Array.from({ length: 33 }, (_, y) => ({ x: (x + 144) % 160, y: (y + 144) % 160, terrain: 'grass' } as WorldTile))).flat()
   for (let level = 1; level <= 6; level++) {
-    const tower = { ...cannon, kind: 'tower' as const, tile: { x: 0, y: 0 }, level, health: 100 }
+    const tower = { ...cannon, kind: 'tower' as const, state: 'active' as const, tile: { x: 0, y: 0 }, level, health: 520 }
     const radius = level * 2 + 4
     const cells = towerDetectionRangeCells(tower, tiles)
-    expect(cells).toHaveLength((radius * 2 + 1) ** 2)
+    expect(cells).toHaveLength(1 + 2 * radius * (radius + 1))
     expect(contains(cells, 160 - radius, 0)).toBe(true)
-    expect(contains(cells, radius, radius)).toBe(true)
+    expect(contains(cells, radius, radius)).toBe(false)
     expect(contains(cells, radius + 1, 0)).toBe(false)
   }
   expect(towerDetectionRangeCells({ ...cannon, kind: 'tower', level: 1, health: 0 }, tiles)).toEqual([])
+  expect(towerDetectionRangeCells({ ...cannon, kind: 'tower', level: 6, state: 'active', health: 130 }, tiles)).toEqual([])
+  expect(towerDetectionRangeCells({ ...cannon, kind: 'tower', level: 1, state: 'building', health: 100 }, tiles)).toEqual([])
 })
