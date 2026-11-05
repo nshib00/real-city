@@ -126,13 +126,28 @@ func TestBuildingRelocationChecksOwnershipAndFootprint(t *testing.T) {
 	}
 	item := building.Building{ID: "moving", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeWoodHouse,
 		Level: 1, State: building.StateActive, Health: 200, Tile: world.Coord{X: 4, Y: 4},
-		Footprint: building.Footprint{Width: 2, Height: 1}, UpdatedAt: now.Add(-time.Second)}
+		Footprint: building.Footprint{Width: 1, Height: 1}, UpdatedAt: now.Add(-time.Second)}
 	blocker := building.Building{ID: "blocker", MapID: DefaultWorldID, OwnerID: "p2", Type: building.TypeDugout,
-		State: building.StateActive, Tile: world.Coord{X: 7, Y: 5}, Footprint: building.Footprint{Width: 1, Height: 1}}
+		State: building.StateActive, Tile: world.Coord{X: 7, Y: 5}, Footprint: building.Footprint{Width: 2, Height: 1}}
 	for _, b := range []building.Building{item, blocker} {
 		if err := repo.Create(ctx, b); err != nil {
 			t.Fatal(err)
 		}
+	}
+	if _, err := service.Upgrade(ctx, blocker.ID, "p2"); err == nil {
+		t.Fatal("legacy multi-tile building was upgraded")
+	}
+	if _, err := service.Relocate(ctx, blocker.ID, "p2", world.Coord{X: 8, Y: 7}, 1); err == nil {
+		t.Fatal("legacy multi-tile building was moved")
+	}
+	updatedBlocker := blocker
+	updatedBlocker.Health = 50
+	if err := repo.Update(ctx, updatedBlocker); err != nil {
+		t.Fatalf("legacy building state could not be saved: %v", err)
+	}
+	updatedBlocker.Footprint = building.Footprint{Width: 1, Height: 1}
+	if err := repo.Update(ctx, updatedBlocker); err == nil {
+		t.Fatal("legacy building footprint was silently shrunk")
 	}
 	if _, err := service.Relocate(ctx, item.ID, "p2", world.Coord{X: 6, Y: 5}, 0); err == nil {
 		t.Fatal("another player relocated the building")
@@ -154,7 +169,7 @@ func TestBuildingRelocationChecksOwnershipAndFootprint(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if moved.Tile != (world.Coord{X: 5, Y: 5}) || moved.Rotation != 1 || moved.Footprint != (building.Footprint{Width: 1, Height: 2}) {
+	if moved.Tile != (world.Coord{X: 5, Y: 5}) || moved.Rotation != 1 || moved.Footprint != (building.Footprint{Width: 1, Height: 1}) {
 		t.Fatalf("unexpected relocated building: %#v", moved)
 	}
 	stored, err := repo.FindByID(ctx, item.ID)
@@ -170,8 +185,8 @@ func TestBuildingRelocationChecksOwnershipAndFootprint(t *testing.T) {
 		}
 	}
 	if err := repo.Create(ctx, building.Building{ID: "seam-blocker", MapID: DefaultWorldID, OwnerID: "p2",
-		Type: building.TypeDugout, State: building.StateActive, Tile: world.Coord{X: 0, Y: 5},
-		Footprint: building.Footprint{Width: 1, Height: 1}}); err != nil {
+		Type: building.TypeDugout, State: building.StateActive, Tile: world.Coord{X: 159, Y: 5},
+		Footprint: building.Footprint{Width: 2, Height: 1}}); err != nil {
 		t.Fatal(err)
 	}
 	if _, err := service.Relocate(ctx, item.ID, "p1", world.Coord{X: 159, Y: 5}, 2); err == nil {
@@ -197,7 +212,7 @@ func TestBuildingRelocationNotifiesAllOldAndNewFootprintChunks(t *testing.T) {
 		}
 	}
 	item := building.Building{ID: "moving", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeWoodHouse,
-		State: building.StateActive, Tile: world.Coord{X: 31, Y: 5}, Footprint: building.Footprint{Width: 2, Height: 1}}
+		State: building.StateActive, Tile: world.Coord{X: 31, Y: 5}, Footprint: building.Footprint{Width: 1, Height: 1}}
 	if err := repo.Create(ctx, item); err != nil {
 		t.Fatal(err)
 	}
@@ -205,17 +220,16 @@ func TestBuildingRelocationNotifiesAllOldAndNewFootprintChunks(t *testing.T) {
 		t.Fatal(err)
 	}
 	got := map[string]EventType{}
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 2; i++ {
 		select {
 		case event := <-stream:
 			got[event.ChunkID] = event.Type
 		default:
-			t.Fatalf("expected three chunk events, got %v", got)
+			t.Fatalf("expected two chunk events, got %v", got)
 		}
 	}
 	for chunk, kind := range map[string]EventType{
 		"dev-world:0:0": EventBuildingRemoved,
-		"dev-world:1:0": EventBuildingRemoved,
 		"dev-world:2:0": EventBuildingUpdated,
 	} {
 		if got[chunk] != kind {

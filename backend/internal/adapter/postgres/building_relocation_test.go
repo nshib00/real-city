@@ -32,8 +32,8 @@ func TestRelocateIfCurrentChecksWrappedOccupiedTiles(t *testing.T) {
 	}
 	now := time.Now().UTC().Truncate(time.Microsecond)
 	for _, args := range [][]any{
-		{"moving", "test-world", "dugout", "active", 5, 5, 2, 1, 0, now},
-		{"blocker", "test-world", "dugout", "active", 0, 5, 1, 1, 0, now},
+		{"moving", "test-world", "dugout", "active", 5, 5, 1, 1, 0, now},
+		{"blocker", "test-world", "dugout", "active", world.WorldSize - 1, 5, 2, 1, 0, now},
 	} {
 		if _, err := db.ExecContext(ctx, `INSERT INTO buildings VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`, args...); err != nil {
 			t.Fatal(err)
@@ -41,10 +41,10 @@ func TestRelocateIfCurrentChecksWrappedOccupiedTiles(t *testing.T) {
 	}
 	previous := building.Building{ID: "moving", MapID: "test-world", Type: building.TypeDugout,
 		State: building.StateActive, Tile: world.Coord{X: 5, Y: 5},
-		Footprint: building.Footprint{Width: 2, Height: 1}, UpdatedAt: now}
+		Footprint: building.Footprint{Width: 1, Height: 1}, UpdatedAt: now}
 	repo := NewBuildingRepo(db)
 	next := previous
-	next.Tile = world.Coord{X: world.WorldSize - 1, Y: 5}
+	next.Tile = world.Coord{X: 0, Y: 5}
 	next.UpdatedAt = now.Add(time.Second)
 	changed, err := repo.RelocateIfCurrent(ctx, previous, next)
 	if err != nil || changed {
@@ -54,5 +54,13 @@ func TestRelocateIfCurrentChecksWrappedOccupiedTiles(t *testing.T) {
 	changed, err = repo.RelocateIfCurrent(ctx, previous, next)
 	if err != nil || !changed {
 		t.Fatalf("free destination was rejected: changed=%v err=%v", changed, err)
+	}
+}
+
+func TestBuildingRepoRejectsNewMultiTileBuilding(t *testing.T) {
+	repo := NewBuildingRepo(nil)
+	err := repo.Create(context.Background(), building.Building{Footprint: building.Footprint{Width: 2, Height: 1}})
+	if err == nil {
+		t.Fatal("multi-tile building reached the repository insert")
 	}
 }

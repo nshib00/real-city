@@ -368,6 +368,9 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 	if _, ok := r.buildings[b.ID]; !ok {
 		return apperror.New(apperror.NotFound, "building not found")
 	}
+	if b.Footprint != r.buildings[b.ID].Footprint {
+		return apperror.WithFields(apperror.Validation, "building footprint cannot change", map[string]string{"footprint": "cannot change"})
+	}
 	if r.buildings[b.ID].State == building.StateRuined && b.State != building.StateRuined {
 		return apperror.New(apperror.Conflict, "destroyed building cannot be restored by a stale update")
 	}
@@ -376,6 +379,9 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 }
 
 func (r *BuildingRepo) RelocateIfCurrent(ctx context.Context, previous, next building.Building) (bool, error) {
+	if previous.Footprint != (building.Footprint{Width: 1, Height: 1}) || next.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return false, apperror.WithFields(apperror.Validation, "building footprint must be 1x1", map[string]string{"footprint": "must be 1x1"})
+	}
 	ctx, releaseGate := memorytx.Guard(ctx)
 	defer releaseGate()
 	_ = ctx

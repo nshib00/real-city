@@ -27,8 +27,8 @@ type PlacementStats struct {
 }
 
 func ValidatePlacement(input PlacementInput) error {
-	if input.Footprint.Width <= 0 || input.Footprint.Height <= 0 {
-		return apperror.WithFields(apperror.Validation, "building footprint must be positive", map[string]string{"footprint": "must be positive"})
+	if input.Footprint.Width != 1 || input.Footprint.Height != 1 {
+		return apperror.WithFields(apperror.Validation, "building footprint must be 1x1", map[string]string{"footprint": "must be 1x1"})
 	}
 	if input.Type != TypeTownHall && input.RequiresTownHall && !input.HasTownHall {
 		return apperror.New(apperror.Conflict, "сначала постройте ратушу")

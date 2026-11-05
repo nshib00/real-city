@@ -105,7 +105,7 @@ func TestBuildingUpgradeAwardsDestinationSpecification(t *testing.T) {
 			service := NewBuildingService(buildings, nil, slog.Default())
 			service.SetExperience(xp)
 			service.SetNowForTest(func() time.Time { return now })
-			if err := buildings.Create(ctx, building.Building{ID: "upgrade", OwnerID: "p1", Type: tc.kind, Level: tc.level, State: building.StateActive, Health: 100}); err != nil {
+			if err := buildings.Create(ctx, building.Building{ID: "upgrade", OwnerID: "p1", Type: tc.kind, Level: tc.level, State: building.StateActive, Health: 100, Footprint: building.Footprint{Width: 1, Height: 1}}); err != nil {
 				t.Fatal(err)
 			}
 			item, err := service.UpgradeTo(ctx, "upgrade", "p1", tc.target)

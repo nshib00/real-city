@@ -22,6 +22,9 @@ func NewBuildingRepo(db *sql.DB) *BuildingRepo {
 
 func (r *BuildingRepo) Create(ctx context.Context, b building.Building) (resultErr error) {
 	defer observe("building.insert", time.Now(), &resultErr)
+	if b.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return apperror.WithFields(apperror.Validation, "building footprint must be 1x1", map[string]string{"footprint": "must be 1x1"})
+	}
 	_, err := execer(ctx, r.db).ExecContext(ctx, `
 		INSERT INTO buildings (
 			id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
@@ -268,6 +271,7 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 			field_super_crop = $14, updated_at = $15,
 			cannon_enabled = $16, cannon_next_attack_at = $17, cannon_target_id = $18, trap_charges = $19, rotation = $20
 		WHERE id = $1 AND (state <> 'ruined' OR $5 = 'ruined')
+			AND footprint_w = $7 AND footprint_h = $8
 	`, b.ID, b.Type, b.Name, b.Level, b.State, b.Health, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.UpdatedAt, b.CannonEnabled, b.CannonNextAttackAt, b.CannonTargetID, b.TrapCharges, b.Rotation)
 	if err != nil {
 		return err
@@ -277,12 +281,19 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 		return err
 	}
 	if affected == 0 {
+		current, findErr := r.FindByID(ctx, b.ID)
+		if findErr == nil && current.Footprint != b.Footprint {
+			return apperror.WithFields(apperror.Validation, "building footprint cannot change", map[string]string{"footprint": "cannot change"})
+		}
 		return apperror.New(apperror.NotFound, "building not found")
 	}
 	return nil
 }
 
 func (r *BuildingRepo) RelocateIfCurrent(ctx context.Context, previous, next building.Building) (bool, error) {
+	if previous.Footprint != (building.Footprint{Width: 1, Height: 1}) || next.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return false, apperror.WithFields(apperror.Validation, "building footprint must be 1x1", map[string]string{"footprint": "must be 1x1"})
+	}
 	result, err := execer(ctx, r.db).ExecContext(ctx, `
 		UPDATE buildings AS target
 		SET tile_x = $2, tile_y = $3, footprint_w = $4, footprint_h = $5,

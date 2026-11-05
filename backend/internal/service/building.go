@@ -89,6 +89,9 @@ func (s *BuildingService) place(ctx context.Context, input PlaceBuildingInput) (
 	if !ok {
 		return building.Building{}, apperror.WithFields(apperror.Validation, "unknown building type", map[string]string{"type": string(input.Type)})
 	}
+	if spec.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return building.Building{}, apperror.New(apperror.Validation, "постройка должна занимать одну клетку")
+	}
 	if input.Type == building.TypeStoneHouse {
 		return building.Building{}, apperror.New(apperror.Conflict, "stone house requires wooden house level 6 upgrade")
 	}
@@ -419,6 +422,9 @@ func (s *BuildingService) upgradeTo(ctx context.Context, id building.ID, playerI
 	if err != nil {
 		return building.Building{}, err
 	}
+	if item.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return building.Building{}, apperror.New(apperror.Conflict, "постройку старого размера нельзя улучшить до переноса данных")
+	}
 	if item.State != building.StateActive {
 		return building.Building{}, apperror.New(apperror.Conflict, "only active buildings can be upgraded")
 	}
@@ -428,6 +434,9 @@ func (s *BuildingService) upgradeTo(ctx context.Context, id building.ID, playerI
 	next, ok := nextUpgradeTo(item, targetType)
 	if !ok {
 		return building.Building{}, apperror.New(apperror.Validation, "building has no available upgrade for selected target")
+	}
+	if next.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return building.Building{}, apperror.New(apperror.Validation, "улучшенная постройка должна занимать одну клетку")
 	}
 	duration, err := s.buffedDuration(ctx, playerID, next.BuildDuration, "build_speed")
 	if err != nil {
@@ -458,9 +467,6 @@ func (s *BuildingService) upgradeTo(ctx context.Context, id building.ID, playerI
 	item.State = state
 	item.Health = buildingHealth(next)
 	item.Footprint = next.Footprint
-	if item.Rotation%2 == 1 {
-		item.Footprint.Width, item.Footprint.Height = item.Footprint.Height, item.Footprint.Width
-	}
 	item.StartedAt = now
 	item.CompletesAt = completesAt
 	item.UpdatedAt = now
@@ -844,6 +850,9 @@ func (s *BuildingService) relocate(ctx context.Context, id building.ID, playerID
 	if err != nil {
 		return building.Building{}, err
 	}
+	if item.Footprint != (building.Footprint{Width: 1, Height: 1}) {
+		return building.Building{}, apperror.New(apperror.Conflict, "постройку старого размера нельзя переместить до переноса данных")
+	}
 	if (item.Type == building.TypeOilWell || catalog.IsRuin(item.Type)) && item.Tile != destination {
 		return building.Building{}, apperror.New(apperror.Conflict, "эту постройку нельзя перенести с исходной клетки")
 	}
@@ -859,11 +868,7 @@ func (s *BuildingService) relocate(ctx context.Context, id building.ID, playerID
 	if err := s.requireIdleBuilding(ctx, item); err != nil {
 		return building.Building{}, err
 	}
-	width, height := item.Footprint.Width, item.Footprint.Height
-	if (rotation-item.Rotation+4)%2 == 1 {
-		width, height = height, width
-	}
-	footprint := building.Footprint{Width: width, Height: height}
+	footprint := building.Footprint{Width: 1, Height: 1}
 	tiles, err := s.placementTiles(ctx, destination, footprint)
 	if err != nil {
 		return building.Building{}, err

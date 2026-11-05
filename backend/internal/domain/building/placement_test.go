@@ -53,6 +53,30 @@ func TestValidatePlacementAllowsSingleTownHall(t *testing.T) {
 	}
 }
 
+func TestValidatePlacementRejectsNonSingleTileFootprint(t *testing.T) {
+	for _, footprint := range []Footprint{{}, {Width: 2, Height: 1}, {Width: 1, Height: 2}} {
+		err := ValidatePlacement(PlacementInput{
+			Type: TypeTownHall, Tile: world.Tile{Coord: world.Coord{X: 1, Y: 1}, Terrain: world.TerrainGrass},
+			Footprint: footprint, BuildingLimit: 8,
+		})
+		if err == nil {
+			t.Fatalf("accepted footprint %+v", footprint)
+		}
+	}
+}
+
+func TestValidatePlacementRespectsLegacyOccupiedTiles(t *testing.T) {
+	err := ValidatePlacement(PlacementInput{
+		Type:      TypeTownHall,
+		Tile:      world.Tile{Coord: world.Coord{X: 2, Y: 1}, Terrain: world.TerrainGrass},
+		Footprint: Footprint{Width: 1, Height: 1}, BuildingLimit: 8,
+		Existing: []Building{{Type: TypeDugout, State: StateActive, Tile: world.Coord{X: 1, Y: 1}, Footprint: Footprint{Width: 2, Height: 1}}},
+	})
+	if err == nil {
+		t.Fatal("legacy building's second tile was treated as free")
+	}
+}
+
 func TestRoadDoesNotUseBuildingLimit(t *testing.T) {
 	for _, buildingType := range []Type{TypeRoad, TypeStandardRoad, TypePavedRoad} {
 		err := ValidatePlacement(PlacementInput{
