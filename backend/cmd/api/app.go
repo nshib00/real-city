@@ -5,7 +5,9 @@ import (
 	"database/sql"
 	"fmt"
 	"log/slog"
+	"net"
 	"net/http"
+	"net/http/pprof"
 	"time"
 
 	httpadapter "real-city/backend/internal/adapter/http"
@@ -13,6 +15,7 @@ import (
 	jwtadapter "real-city/backend/internal/adapter/jwt"
 	"real-city/backend/internal/adapter/memory"
 	postgresadapter "real-city/backend/internal/adapter/postgres"
+	redisadapter "real-city/backend/internal/adapter/redis"
 	wsadapter "real-city/backend/internal/adapter/ws"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/observability"
@@ -66,6 +69,9 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 	playerService.SetProfileSources(buildingRepo, socialRepo)
 	experienceService := service.NewExperienceService(playerRepo, log)
 	worldService := service.NewWorldService(worldRepo, log)
+	if db != nil && cfg.Redis.Addr != "" {
+		worldService.SetCache(&redisadapter.GameCache{Addr: cfg.Redis.Addr, Password: cfg.Redis.Password, DB: cfg.Redis.DB})
+	}
 	buildingService := service.NewBuildingService(buildingRepo, worldRepo, log)
 	buildingService.SetPvPProtection(playerRepo)
 	economyService := service.NewEconomyService(economyRepo, buildingRepo, log)
@@ -141,6 +147,8 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 		simulationRunner.SetCombatService(combatService)
 	}
 	realtimeGateway := wsadapter.NewGateway(tokenManager, eventBus, log)
+	realtimeGateway.SetPingInterval(cfg.WebSocket.PingInterval)
+	realtimeGateway.SetCacheInvalidator(worldService.InvalidateEvent)
 	realtimeGateway.SetAccessValidator(playerService)
 
 	return &app{
@@ -234,6 +242,19 @@ func buildUnitOfWork(db *postgresadapter.DB) service.UnitOfWork {
 }
 
 func (a *app) run(ctx context.Context) error {
+	var profiler *http.Server
+	if a.cfg.Observability.PprofAddr != "" {
+		if !loopbackAddress(a.cfg.Observability.PprofAddr) {
+			return fmt.Errorf("PPROF_ADDR must bind to a loopback address")
+		}
+		mux := http.NewServeMux()
+		mux.HandleFunc("GET /debug/pprof/", pprof.Index)
+		mux.HandleFunc("GET /debug/pprof/cmdline", pprof.Cmdline)
+		mux.HandleFunc("GET /debug/pprof/profile", pprof.Profile)
+		mux.HandleFunc("GET /debug/pprof/symbol", pprof.Symbol)
+		mux.HandleFunc("GET /debug/pprof/trace", pprof.Trace)
+		profiler = &http.Server{Addr: a.cfg.Observability.PprofAddr, Handler: mux, ReadHeaderTimeout: 5 * time.Second}
+	}
 	if !a.cfg.Simulation.Embedded && a.db == nil {
 		return fmt.Errorf("standalone simulation requires a shared PostgreSQL connection")
 	}
@@ -256,6 +277,9 @@ func (a *app) run(ctx context.Context) error {
 		observability.EnableSimulation()
 	}
 	errCh := make(chan error, 3)
+	if profiler != nil {
+		go func() { errCh <- profiler.ListenAndServe() }()
+	}
 	if a.sim != nil {
 		go func() {
 			a.log.Info("simulation.worker.start", "event", "simulation.worker.start")
@@ -284,6 +308,11 @@ func (a *app) run(ctx context.Context) error {
 		if err := a.server.Shutdown(shutdownCtx); err != nil {
 			return err
 		}
+		if profiler != nil {
+			if err := profiler.Shutdown(shutdownCtx); err != nil {
+				return err
+			}
+		}
 		return nil
 	case err := <-errCh:
 		if err == http.ErrServerClosed || err == context.Canceled {
@@ -291,4 +320,16 @@ func (a *app) run(ctx context.Context) error {
 		}
 		return err
 	}
+}
+
+func loopbackAddress(addr string) bool {
+	host, _, err := net.SplitHostPort(addr)
+	if err != nil {
+		return false
+	}
+	if host == "localhost" {
+		return true
+	}
+	ip := net.ParseIP(host)
+	return ip != nil && ip.IsLoopback()
 }

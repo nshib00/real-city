@@ -70,7 +70,7 @@ export class RealtimeClient {
 
   close() {
     this.closedByUser = true
-    if (this.reconnectTimer) {
+    if (this.reconnectTimer !== null) {
       window.clearTimeout(this.reconnectTimer)
       this.reconnectTimer = null
     }
@@ -162,6 +162,7 @@ export class RealtimeClient {
     if (this.closedByUser) {
       return
     }
+    if (this.reconnectTimer !== null) return
     this.setStatus('reconnecting')
     this.reconnectAttempt += 1
     // Spread reconnects after a server/network outage across a bounded window.

@@ -35,7 +35,24 @@ class FakeSocket {
 }
 
 describe('realtime sequence', () => {
-  afterEach(() => { vi.unstubAllGlobals(); FakeSocket.instances = [] })
+  afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); vi.unstubAllGlobals(); FakeSocket.instances = [] })
+
+  it('schedules one bounded retry after repeated close notifications', () => {
+    vi.useFakeTimers()
+    vi.spyOn(Math, 'random').mockReturnValue(0)
+    vi.stubGlobal('WebSocket', FakeSocket)
+    const client = new RealtimeClient()
+    client.connect()
+    const socket = FakeSocket.instances[0]
+    socket.readyState = 3
+    socket.onclose?.()
+    socket.onclose?.()
+    vi.advanceTimersByTime(1499)
+    expect(FakeSocket.instances).toHaveLength(1)
+    vi.advanceTimersByTime(1)
+    expect(FakeSocket.instances).toHaveLength(2)
+    client.close()
+  })
 
   it('resyncs after malformed or incompatible frames and accepts the next valid event', () => {
     vi.stubGlobal('WebSocket', FakeSocket)

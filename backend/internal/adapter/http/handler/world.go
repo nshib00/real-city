@@ -7,6 +7,7 @@ import (
 	"hash/fnv"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"real-city/backend/internal/adapter/http/dto"
 	"real-city/backend/internal/adapter/http/middleware"
@@ -74,6 +75,24 @@ func (h *WorldHandler) Viewport(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *WorldHandler) writeChunks(w http.ResponseWriter, r *http.Request, chunks []world.Chunk) {
+	known, err := parseKnownChunkVersions(r.URL.Query().Get("known"))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if known != nil {
+		changed := make([]world.Chunk, 0, len(chunks))
+		for _, chunk := range chunks {
+			version, exists := known[chunk.Coord]
+			if !exists || version != chunk.Version {
+				changed = append(changed, chunk)
+			}
+		}
+		// A diff response depends on the client's versions and must not share the full-response ETag cache.
+		w.Header().Set("Cache-Control", "private, no-store")
+		writeJSON(w, http.StatusOK, envelope{"chunks": dto.Chunks(changed)})
+		return
+	}
 	if writeNotModified(w, r, chunks) {
 		return
 	}
@@ -92,6 +111,31 @@ func (h *WorldHandler) writeChunks(w http.ResponseWriter, r *http.Request, chunk
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(data)
+}
+
+func parseKnownChunkVersions(raw string) (map[world.ChunkCoord]int64, error) {
+	if raw == "" {
+		return nil, nil
+	}
+	parts := strings.Split(raw, ",")
+	if len(parts) > 49 {
+		return nil, apperror.New(apperror.Validation, "too many known chunk versions")
+	}
+	known := make(map[world.ChunkCoord]int64, len(parts))
+	for _, part := range parts {
+		values := strings.Split(part, ":")
+		if len(values) != 3 {
+			return nil, apperror.New(apperror.Validation, "invalid known chunk version")
+		}
+		x, xErr := strconv.Atoi(values[0])
+		y, yErr := strconv.Atoi(values[1])
+		version, versionErr := strconv.ParseInt(values[2], 10, 64)
+		if xErr != nil || yErr != nil || versionErr != nil || x < 0 || y < 0 || x >= world.WorldChunks || y >= world.WorldChunks || version < 0 {
+			return nil, apperror.New(apperror.Validation, "invalid known chunk version")
+		}
+		known[world.ChunkCoord{X: x, Y: y}] = version
+	}
+	return known, nil
 }
 
 func writeNotModified(w http.ResponseWriter, r *http.Request, chunks []world.Chunk) bool {

@@ -11,9 +11,29 @@ import (
 	"testing"
 	"time"
 
+	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/service"
 )
+
+func TestGatewayCoalescesBurstMovementWithinChunk(t *testing.T) {
+	bus := service.NewEventBus(16)
+	gateway := NewGateway(nil, bus, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	defer gateway.Shutdown()
+	for _, chunk := range []string{"dev-world:0:0", "dev-world:0:0", "dev-world:1:0"} {
+		if err := bus.Publish(service.Event{Type: service.EventMonsterMoved, ChunkID: chunk, Payload: service.MonsterPayload{Monster: monster.Monster{ID: monster.ID("same")}}}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	deadline := time.Now().Add(time.Second)
+	for gateway.Stats().EventsSent < 2 && time.Now().Before(deadline) {
+		time.Sleep(time.Millisecond)
+	}
+	stats := gateway.Stats()
+	if stats.EventsSent != 2 || stats.Coalesced != 1 {
+		t.Fatalf("movement stats: %+v", stats)
+	}
+}
 
 func TestConnectionRepliesToPingAndKeepsReadingCommands(t *testing.T) {
 	server, peer := net.Pipe()
@@ -41,6 +61,20 @@ func TestConnectionRepliesToPingAndKeepsReadingCommands(t *testing.T) {
 	}
 	if command, err := <-commands, <-errors; err != nil || command.Type != "subscribe" {
 		t.Fatalf("command after ping: %+v, %v", command, err)
+	}
+}
+
+func TestConnectionSendsHeartbeat(t *testing.T) {
+	server, peer := net.Pipe()
+	defer peer.Close()
+	conn := NewConnection(server, bufio.NewReader(server), player.ID("heartbeat"), 2)
+	conn.pingInterval = 10 * time.Millisecond
+	defer conn.Close("test")
+	go conn.WriteLoop()
+	_ = peer.SetReadDeadline(time.Now().Add(time.Second))
+	opcode, _, err := readFrame(bufio.NewReader(peer))
+	if err != nil || opcode != opPing {
+		t.Fatalf("heartbeat opcode=%d err=%v", opcode, err)
 	}
 }
 

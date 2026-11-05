@@ -37,6 +37,7 @@ type Connection struct {
 	closed        chan struct{}
 	disconnectLog func(reason string)
 	transport     *TransportMetrics
+	pingInterval  time.Duration
 }
 
 func NewConnection(conn net.Conn, reader *bufio.Reader, playerID player.ID, sendQueue int) *Connection {
@@ -44,15 +45,16 @@ func NewConnection(conn net.Conn, reader *bufio.Reader, playerID player.ID, send
 		sendQueue = 64
 	}
 	return &Connection{
-		id:       randomID(),
-		playerID: playerID,
-		conn:     conn,
-		reader:   reader,
-		send:     make(chan Envelope, sendQueue),
-		control:  make(chan []byte, 4),
-		subs:     NewSubscriptionSet(),
-		rate:     NewRateLimiter(20, time.Second),
-		closed:   make(chan struct{}),
+		id:           randomID(),
+		playerID:     playerID,
+		conn:         conn,
+		reader:       reader,
+		send:         make(chan Envelope, sendQueue),
+		control:      make(chan []byte, 4),
+		subs:         NewSubscriptionSet(),
+		rate:         NewRateLimiter(20, time.Second),
+		closed:       make(chan struct{}),
+		pingInterval: 25 * time.Second,
 	}
 }
 
@@ -161,6 +163,8 @@ func (c *Connection) ReadCommand() (ClientCommand, error) {
 }
 
 func (c *Connection) WriteLoop() {
+	ticker := time.NewTicker(c.pingInterval)
+	defer ticker.Stop()
 	for {
 		select {
 		case payload := <-c.control:
@@ -172,6 +176,11 @@ func (c *Connection) WriteLoop() {
 		default:
 		}
 		select {
+		case <-ticker.C:
+			if err := c.writeFrame(opPing, nil); err != nil {
+				c.Close("ping_failed")
+				return
+			}
 		case payload := <-c.control:
 			if err := c.writeFrame(opPong, payload); err != nil {
 				c.Close("write_failed")

@@ -1,21 +1,25 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query'
+import type { QueryClient } from '@tanstack/react-query'
 
 import { normalizeChunk } from '../../../../shared/world/coordinates'
 import { getChunks } from '../../shared/api/world'
+import type { ChunksResponse } from '../../shared/api/world'
 import type { WorldChunk } from '../../shared/contracts'
 
 export function useVisibleChunks(center: { x: number; y: number }, radius = 1) {
+  const queryClient = useQueryClient()
   return useQuery({
-    ...visibleChunksQueryOptions(center, radius),
+    ...visibleChunksQueryOptions(center, radius, queryClient),
     placeholderData: keepPreviousData,
   })
 }
 
-export function visibleChunksQueryOptions(center: { x: number; y: number }, radius = 1) {
+export function visibleChunksQueryOptions(center: { x: number; y: number }, radius = 1, queryClient?: QueryClient) {
   center = normalizeChunk(center)
+  const queryKey = ['world', 'chunks', center.x, center.y, radius] as const
   return {
-    queryKey: ['world', 'chunks', center.x, center.y, radius] as const,
-    queryFn: () => getChunks(center, radius),
+    queryKey,
+    queryFn: () => getChunks(center, radius, queryClient?.getQueryData<ChunksResponse>(queryKey)),
     staleTime: 60_000,
     gcTime: 10 * 60_000,
   }

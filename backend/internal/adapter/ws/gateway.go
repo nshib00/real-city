@@ -38,13 +38,28 @@ type Gateway struct {
 	mu            sync.RWMutex
 	seq           atomic.Uint64
 	eventsSent    atomic.Uint64
+	coalesced     atomic.Uint64
 	fanoutTotal   atomic.Uint64
 	drops         atomic.Uint64
 	eventBusDrops atomic.Uint64
 	resyncPending atomic.Bool
 	transport     TransportMetrics
+	invalidate    func(context.Context, service.Event)
+	pingInterval  time.Duration
 	ctx           context.Context
 	cancel        context.CancelFunc
+}
+
+func (g *Gateway) SetCacheInvalidator(invalidate func(context.Context, service.Event)) {
+	g.mu.Lock()
+	g.invalidate = invalidate
+	g.mu.Unlock()
+}
+
+func (g *Gateway) SetPingInterval(interval time.Duration) {
+	if interval > 0 {
+		g.pingInterval = interval
+	}
 }
 
 func (g *Gateway) SetAccessValidator(v interface {
@@ -109,6 +124,9 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	g.transport.upgradesOK.Add(1)
 	client := NewConnection(conn, reader, playerID, 64)
+	if g.pingInterval > 0 {
+		client.pingInterval = g.pingInterval
+	}
 	client.transport = &g.transport
 	client.disconnectLog = func(reason string) {
 		g.unregister(client)
@@ -207,18 +225,82 @@ func (g *Gateway) readLoop(client *Connection) {
 }
 
 func (g *Gateway) forwardEvents(events <-chan service.Event) {
-	for event := range events {
-		g.transport.ObserveEventLag(event.CreatedAt)
-		envelope := EventEnvelope(event, g.nextSeq())
-		targets := g.targetConnections(event)
-		g.eventsSent.Add(1)
-		g.fanoutTotal.Add(uint64(len(targets)))
-		g.transport.ObserveFanout(len(targets))
-		for _, conn := range targets {
-			if !conn.EnqueueEvent(envelope) {
-				g.drops.Add(1)
-				g.log.Warn("ws.message_dropped", "event", "ws.message_dropped", "connection_id", conn.ID(), "player_id", conn.PlayerID(), "message_type", envelope.Type)
+	ticker := time.NewTicker(10 * time.Millisecond)
+	defer ticker.Stop()
+	pending := make([]service.Event, 0, 64)
+	positions := make(map[string]int)
+	flush := func() {
+		for _, event := range pending {
+			g.forwardEvent(event)
+		}
+		pending = pending[:0]
+		clear(positions)
+	}
+	for {
+		select {
+		case <-g.ctx.Done():
+			return
+		case <-ticker.C:
+			flush()
+		case event, ok := <-events:
+			if !ok {
+				flush()
+				return
 			}
+			g.mu.RLock()
+			invalidate := g.invalidate
+			g.mu.RUnlock()
+			if invalidate != nil {
+				invalidate(g.ctx, event)
+			}
+			g.transport.ObserveEventLag(event.CreatedAt)
+			key := coalescibleMovementKey(event)
+			if key == "" {
+				flush()
+				g.forwardEvent(event)
+				continue
+			}
+			if index, exists := positions[key]; exists {
+				pending[index] = event
+				g.coalesced.Add(1)
+			} else {
+				positions[key] = len(pending)
+				pending = append(pending, event)
+			}
+			if len(pending) >= 128 {
+				flush()
+			}
+		}
+	}
+}
+
+func coalescibleMovementKey(event service.Event) string {
+	if event.ChunkID == "" || event.PlayerID != "" || event.Alliance != "" {
+		return ""
+	}
+	switch event.Type {
+	case service.EventMonsterMoved:
+		if payload, ok := event.Payload.(service.MonsterPayload); ok && payload.Monster.ID != "" {
+			return "monster:" + string(payload.Monster.ID) + ":" + event.ChunkID
+		}
+	case service.EventPresenceMoved:
+		if payload, ok := event.Payload.(service.PresenceMovedPayload); ok && payload.Player.PlayerID != "" {
+			return "player:" + string(payload.Player.PlayerID) + ":" + event.ChunkID
+		}
+	}
+	return ""
+}
+
+func (g *Gateway) forwardEvent(event service.Event) {
+	envelope := EventEnvelope(event, g.nextSeq())
+	targets := g.targetConnections(event)
+	g.eventsSent.Add(1)
+	g.fanoutTotal.Add(uint64(len(targets)))
+	g.transport.ObserveFanout(len(targets))
+	for _, conn := range targets {
+		if !conn.EnqueueEvent(envelope) {
+			g.drops.Add(1)
+			g.log.Warn("ws.message_dropped", "event", "ws.message_dropped", "connection_id", conn.ID(), "player_id", conn.PlayerID(), "message_type", envelope.Type)
 		}
 	}
 }
@@ -300,6 +382,7 @@ type Stats struct {
 	PrivateSubscriptions  int
 	AllianceSubscriptions int
 	EventsSent            uint64
+	Coalesced             uint64
 	FanoutTotal           uint64
 	Drops                 uint64
 	EventBusDrops         uint64
@@ -320,6 +403,7 @@ func (g *Gateway) Stats() Stats {
 		PrivateSubscriptions:  indexedSubscriptionCount(g.privateSubs),
 		AllianceSubscriptions: indexedSubscriptionCount(g.allianceSubs),
 		EventsSent:            g.eventsSent.Load(),
+		Coalesced:             g.coalesced.Load(),
 		FanoutTotal:           g.fanoutTotal.Load(),
 		Drops:                 g.drops.Load(),
 		EventBusDrops:         g.eventBusDrops.Load(),

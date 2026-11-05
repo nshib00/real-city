@@ -14,6 +14,17 @@ describe('canonical coordinates at the API boundary', () => {
     getViewport({ x: -1, y: 320 })
     expect(request).toHaveBeenLastCalledWith('/world/viewport?x=159&y=0&radius=48')
   })
+  it('merges a version diff with cached chunks, including a changed chunk', async () => {
+    const previous = { chunks: [
+      { map_id: 'dev-world', chunk_x: 0, chunk_y: 0, version: 2, tiles: [] },
+      { map_id: 'dev-world', chunk_x: 1, chunk_y: 0, version: 2, tiles: [] },
+    ] }
+    const updated = { map_id: 'dev-world', chunk_x: 1, chunk_y: 0, version: 3, tiles: [] }
+    request.mockResolvedValueOnce({ chunks: [updated] })
+    const result = await getChunks({ x: 0, y: 0 }, 1, previous)
+    expect(request.mock.calls[0][0]).toContain('known=0%3A0%3A2%2C1%3A0%3A2')
+    expect(result.chunks).toEqual([previous.chunks[0], updated])
+  })
   it.each([{ x: -1, y: 320 }, { x: 159, y: 0 }, { x: 319, y: -160 }])('normalizes equivalent corners %j', (tile) => {
     chopForest(tile)
     expect(JSON.parse(request.mock.calls.at(-1)![1].body)).toEqual({ tile_x: 159, tile_y: 0 })

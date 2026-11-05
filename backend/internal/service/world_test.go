@@ -5,10 +5,44 @@ import (
 	"io"
 	"log/slog"
 	"testing"
+	"time"
 
 	"real-city/backend/internal/adapter/memory"
 	"real-city/backend/internal/domain/world"
 )
+
+type testWorldCache struct{ values map[string][]byte }
+
+func (c *testWorldCache) Get(_ context.Context, key string) ([]byte, bool, error) {
+	v, ok := c.values[key]
+	return v, ok, nil
+}
+func (c *testWorldCache) Set(_ context.Context, key string, value []byte, _ time.Duration) error {
+	c.values[key] = value
+	return nil
+}
+func (c *testWorldCache) Delete(_ context.Context, key string) error {
+	delete(c.values, key)
+	return nil
+}
+
+func TestWorldChunkCacheInvalidatesOnMapEvent(t *testing.T) {
+	service := NewWorldService(memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	cache := &testWorldCache{values: map[string][]byte{}}
+	service.SetCache(cache)
+	coord := world.ChunkCoord{X: 0, Y: 0}
+	if _, err := service.GetChunk(context.Background(), coord); err != nil {
+		t.Fatal(err)
+	}
+	key := chunkCacheKey(DefaultWorldID, coord)
+	if _, ok := cache.values[key]; !ok {
+		t.Fatal("chunk was not cached")
+	}
+	service.InvalidateEvent(context.Background(), Event{Type: EventBuildingUpdated, ChunkID: world.ChunkID(DefaultWorldID, coord)})
+	if _, ok := cache.values[key]; ok {
+		t.Fatal("chunk remained cached after map update")
+	}
+}
 
 func TestWorldServiceLoadsVisibleChunks(t *testing.T) {
 	service := NewWorldService(memory.NewWorldRepo(), slog.New(slog.NewTextHandler(io.Discard, nil)))
