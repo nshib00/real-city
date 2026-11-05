@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import './AccessibleMapSelection.css'
 import { useGameStore } from './state/useGameStore'
 import { WORLD_WRAP_TILES, wrapGridCoord } from './coordinates/iso'
 

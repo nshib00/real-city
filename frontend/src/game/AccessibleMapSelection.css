@@ -1,0 +1,21 @@
+.map-coordinate-selection.map-coordinate-selection {
+  width: max-content;
+  max-width: min(100%, 360px);
+  padding-inline-end: 0;
+}
+
+.map-coordinate-selection.map-coordinate-selection > summary {
+  justify-content: center;
+  text-align: center;
+}
+
+.map-coordinate-selection.map-coordinate-selection > form button {
+  border-radius: var(--ui-radius-sm);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-sky) 40%, transparent), 0 0 10px color-mix(in srgb, var(--color-sky) 28%, transparent);
+}
+
+.map-coordinate-selection.map-coordinate-selection > form button:hover:not(:disabled),
+.map-coordinate-selection.map-coordinate-selection > form button:focus-visible {
+  border-color: var(--color-sky);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-sky) 32%, transparent), 0 0 12px color-mix(in srgb, var(--color-sky) 45%, transparent);
+}
