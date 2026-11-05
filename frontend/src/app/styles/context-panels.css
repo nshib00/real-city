@@ -15,6 +15,7 @@
 .build-card { position: relative; box-sizing: border-box; grid-template-rows: 180px minmax(165px, auto) 0; min-height: 420px; padding-bottom: 62px; }
 .build-card-actions { position: absolute; right: 10px; bottom: 10px; display: flex; justify-content: flex-end; align-items: center; gap: 6px; max-width: calc(100% - 20px); min-height: 44px; }
 .build-card-body { align-content: start; }
+.build-card-body .build-card-population { display: inline-flex; align-items: center; gap: 3px; margin-left: auto; white-space: nowrap; }
 .build-card-body .build-cost { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px; min-height: 32px; overflow: visible; text-overflow: clip; }
 .build-card-body .build-cost > span { display: inline-flex; align-items: center; gap: 3px; overflow: visible; text-overflow: clip; white-space: nowrap; }
 .build-list::-webkit-scrollbar { width: 16px; }

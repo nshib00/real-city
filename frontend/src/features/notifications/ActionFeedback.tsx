@@ -11,6 +11,9 @@ export function ActionFeedback() {
   const [online, setOnline] = useState(() => navigator.onLine)
   const [feedback, setFeedback] = useState<{ phase: ActionPhase; reason?: string } | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(() => {
+    try { return localStorage.getItem('real-city.action-feedback-collapsed') === 'true' } catch { return false }
+  })
   const [effects, setEffects] = useState(() => {
     try { return localStorage.getItem('real-city.ui-effects') !== 'off' } catch { return true }
   })
@@ -37,12 +40,29 @@ export function ActionFeedback() {
         : { phase: 'error', reason: actionErrorReason(error) })
     }
   }), [client])
-  return <aside className="action-feedback" aria-label="Ответ сервера и эффекты">
-    {!online ? <ActionState phase="offline" reason="Проверьте соединение. Не повторяйте запрос, пока не проверите результат в мире." /> : pending > 0 ? <ActionState phase="pending" reason={`Запросов в очереди: ${pending}. Ресурсы и результат обновятся после ответа сервера.`} /> : feedback && <ActionState {...feedback} />}
-    <details className="interface-settings" open={settingsOpen} onToggle={(event) => setSettingsOpen(event.currentTarget.open)}>
-    <summary>Интерфейс</summary>
-    <button type="button" aria-pressed={effects} onClick={() => setEffects(!effects)}>Эффекты: {effects ? 'включены' : 'выключены'}</button>
-    <label className="interface-theme-control">Оформление<select value={theme} onChange={(event) => setInterfaceTheme(event.target.value === 'aeolian' ? 'aeolian' : 'classic')}><option value="classic">Классическое</option><option value="aeolian">Эолия</option></select></label>
-    </details>
+  return <aside className={`action-feedback${collapsed ? ' is-collapsed' : ''}`} aria-label="Ответ сервера и эффекты">
+    <header className="action-feedback-header">
+      <span>Действия сервера</span>
+      <button
+        className="action-feedback-toggle"
+        type="button"
+        aria-label={collapsed ? 'Раскрыть окно действий сервера' : 'Скрыть окно действий сервера'}
+        aria-expanded={!collapsed}
+        title={collapsed ? 'Раскрыть' : 'Скрыть'}
+        onClick={() => {
+          const next = !collapsed
+          setCollapsed(next)
+          try { localStorage.setItem('real-city.action-feedback-collapsed', String(next)) } catch { /* Состояние действует до перезагрузки. */ }
+        }}
+      >{collapsed ? '⌄' : '⌃'}</button>
+    </header>
+    {!collapsed ? <div className="action-feedback-content">
+      {!online ? <ActionState phase="offline" reason="Проверьте соединение. Не повторяйте запрос, пока не проверите результат в мире." /> : pending > 0 ? <ActionState phase="pending" reason={`Запросов в очереди: ${pending}. Ресурсы и результат обновятся после ответа сервера.`} /> : feedback && <ActionState {...feedback} />}
+      <details className="interface-settings" open={settingsOpen} onToggle={(event) => setSettingsOpen(event.currentTarget.open)}>
+        <summary>Интерфейс</summary>
+        <button type="button" aria-pressed={effects} onClick={() => setEffects(!effects)}>Эффекты: {effects ? 'включены' : 'выключены'}</button>
+        <label className="interface-theme-control">Оформление<select value={theme} onChange={(event) => setInterfaceTheme(event.target.value === 'aeolian' ? 'aeolian' : 'classic')}><option value="classic">Классическое</option><option value="aeolian">Эолия</option></select></label>
+      </details>
+    </div> : null}
   </aside>
 }

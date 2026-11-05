@@ -8,16 +8,7 @@
     width: 248px;
   }
 
-  .notification-stack {
-    top: 84px;
-    right: 12px;
-    width: 228px;
-  }
-
-  .notification-stack:not(.notification-stack-collapsed) {
-    max-height: 188px;
-    overflow: hidden;
-  }
+  .notification-launcher { top: 84px; right: 12px; }
 }
 
 @media (max-width: 900px) {
@@ -122,17 +113,7 @@
     overflow-y: auto;
   }
 
-  .notification-stack {
-    top: 132px;
-    right: 12px;
-    width: 208px;
-    max-height: 48px;
-    overflow: hidden;
-  }
-
-  .notification-stack:not(.notification-stack-collapsed) {
-    max-height: 188px;
-  }
+  .notification-launcher { top: 132px; right: 12px; }
 
   .drawer {
     top: 132px;
@@ -160,16 +141,11 @@
 /* Игровая карта сохраняет полный размер; панели занимают только края. */
 .game-shell { height: 100dvh; --safe-top: max(12px, env(safe-area-inset-top)); --safe-bottom: max(12px, env(safe-area-inset-bottom)); isolation: isolate; }
 .game-shell .resource-bar { top: var(--safe-top); left: 356px; right: 316px; max-height: 76px; background: var(--color-panel-strong); }
-.resource-pinned { display: grid; grid-template-columns: auto auto; gap: 2px 6px; flex-shrink: 0; }
-.resource-pinned small { grid-column: 1 / -1; font-size: var(--text-xs); }
 .resource-material-group { display: flex; gap: 10px; border-inline: 1px solid var(--material-brass); padding-inline: 10px; }
-.hud-protection { min-width: 108px; font-size: var(--text-xs); }
-.hud-shortage { min-width: 160px; color: var(--color-warning); border: 1px dashed currentColor; padding: 4px; }
 .game-shell .tool-bar { top: 104px; bottom: auto; max-height: calc(100dvh - 348px); overflow-y: auto; overflow-x: hidden; gap: 4px; }
 .tool-context { font-size: var(--text-xs); overflow-wrap: anywhere; display: grid; gap: 6px; }
 .tool-context button { min-height: 44px; padding: 2px; }
 .game-shell .map-widget { bottom: 132px; }
-.game-shell .notification-stack { max-height: 180px; overflow-y: auto; }
 .game-shell .map-widget-panel { position: absolute; bottom: 0; left: 56px; max-height: calc(100dvh - 180px); overflow: auto; background: var(--color-panel-strong); }
 .world-map-legend { display: flex; flex-wrap: wrap; gap: 8px; font-size: var(--text-xs); }
 .world-building-marker[data-owner="foreign"] { border-radius: 0; rotate: 45deg; border: 2px solid var(--color-warning); }
@@ -184,7 +160,7 @@
   .game-shell .profile-panel { left: 12px; width: 220px; }
   .game-shell .resource-bar { left: 244px; right: 12px; }
   .game-shell .inspector { top: 104px; bottom: 132px; width: 280px; }
-  .game-shell .notification-stack { top: auto; bottom: 132px; right: 304px; width: 208px; }
+  .game-shell .notification-launcher { top: auto; bottom: 132px; right: 304px; }
 }
 @media (max-width: 700px) {
   .game-shell .profile-panel { top: var(--safe-top); width: 160px; min-height: 52px; grid-template-columns: 36px 1fr; }
@@ -197,7 +173,7 @@
   .game-shell .inspector { top: auto; left: 12px; right: 12px; width: auto; bottom: 108px; height: auto; max-height: 30dvh; }
   .game-shell .inspector .tabs { display: block; }
   .game-shell .inspector-actions { display: flex; }
-  .game-shell .notification-stack { top: auto; bottom: 108px; right: 12px; width: 180px; max-height: 22dvh; }
+  .game-shell .notification-launcher { top: auto; bottom: 108px; right: 12px; }
   .game-shell .event-log { bottom: 108px; max-height: 22dvh; }
   .world-status, .placement-status { left: 12px; bottom: auto; top: 164px; max-width: calc(100% - 24px); }
   .placement-status { top: 252px; }

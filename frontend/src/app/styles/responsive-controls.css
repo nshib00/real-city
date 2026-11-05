@@ -15,7 +15,6 @@
 .game-shell .drawer, .game-shell .build-menu { max-height: calc(var(--visible-height, 100dvh) - 24px); overflow-y: auto; overscroll-behavior: contain; }
 .game-shell .drawer { top: max(12px, var(--visible-top, 0px)); bottom: auto; height: calc(var(--visible-height, 100dvh) - 24px); }
 .game-shell .resource-bar { overflow-x: auto; overscroll-behavior-x: contain; }
-.game-shell .resource-pinned { height: auto; min-height: 44px; padding-block: 4px; gap: 0 6px; }
 .game-shell .resource-chip { flex-shrink: 0; }
 .game-shell .resource-chip small { color: var(--color-muted); }
 .game-shell .map-navigation { bottom: 200px; }
@@ -44,9 +43,7 @@
   .game-shell .inspector-actions { display: flex; flex-wrap: wrap; }
   .game-shell .event-log { left: 12px; right: auto; bottom: calc(var(--safe-bottom) + 312px); width: calc(100% - 24px); min-height: 52px; max-height: min(44dvh, calc(100dvh - 484px)); z-index: 24; overflow-y: auto; }
   .game-shell .event-log-collapsed { width: min(264px, calc(100% - 24px)); max-height: 64px; overflow: hidden; }
-  .event-log-collapsed > .connection-note, .notification-stack-collapsed > .connection-note { display: none; }
-  .game-shell .notification-stack { top: 156px; bottom: auto; right: 12px; width: min(280px, calc(100% - 24px)); max-height: 22dvh; }
-  .game-shell .notification-stack-collapsed { max-height: 64px; }
+  .game-shell .notification-launcher { top: 156px; bottom: auto; right: 12px; }
   .game-shell .map-navigation { left: 12px; bottom: calc(var(--safe-bottom) + 108px); max-width: calc(100% - 24px); }
   .game-shell .build-menu { height: calc(var(--visible-height, 100dvh) - 24px); }
   .game-shell .build-menu-backdrop.build-menu-backdrop-collapsed { padding-bottom: calc(var(--safe-bottom) + 108px); }
@@ -59,7 +56,7 @@
   .game-shell .production-panel { top: 84px; left: 390px; right: auto; width: 142px; }
   .game-shell .production-panel:has(> details[open]) { left: 12px; right: 12px; width: auto; max-height: 55dvh; }
   .game-shell .map-navigation { bottom: calc(var(--safe-bottom) + 76px); }
-  .game-shell .notification-stack { top: 84px; right: 12px; }
+  .game-shell .notification-launcher { top: 84px; right: 12px; }
   .game-shell .map-widget { top: 154px; bottom: auto; right: 12px; }
   .world-status, .placement-status { top: 154px; left: 312px; max-width: 228px; }
 }

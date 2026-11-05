@@ -7,6 +7,7 @@ type ResourceIconProps = {
   label: string
   className?: string
   decorative?: boolean
+  iconVariant?: 'default' | 'asset'
 }
 
 export const RESOURCE_ICON_ASSET_REVISION = 'resource-icons-webp-2026-11-01'
@@ -20,7 +21,7 @@ export function resourceIconUrl(id: string) {
   return `/assets/resources/icons/runtime/${legacyNames[id] ?? id}.webp?v=${RESOURCE_ICON_ASSET_REVISION}`
 }
 
-export function ResourceIcon({ id, label, className, decorative = false }: ResourceIconProps) {
+export function ResourceIcon({ id, label, className, decorative = false, iconVariant = 'default' }: ResourceIconProps) {
   const [renderedIconAvailable, setRenderedIconAvailable] = useState(true)
 
   useEffect(() => {
@@ -29,7 +30,11 @@ export function ResourceIcon({ id, label, className, decorative = false }: Resou
 
   return (
     <span className={`resource-icon resource-icon-${id}${className ? ` ${className}` : ''}`} title={label} role={decorative ? undefined : 'img'} aria-hidden={decorative || undefined} aria-label={decorative ? undefined : label}>
-      {renderedIconAvailable ? (
+      {id === 'population' && iconVariant !== 'asset' ? (
+        <svg className="resource-icon-render resource-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M5 4h4v5H5zM3 21v-7l2-2h4l2 2v7m4-15h4v5h-4zm-2 15v-5l2-2h4l2 2v5" />
+        </svg>
+      ) : renderedIconAvailable ? (
         <img
           src={resourceIconUrl(id)}
           alt=""

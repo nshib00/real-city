@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Shield } from '../../shared/ui/icons'
 
@@ -36,7 +37,7 @@ function AdminControls() {
   if (player?.role !== 'admin') return null
   return <>
     <IconButton label="Администрирование" icon={Shield} onClick={() => setOpen(true)} />
-    <Modal title="Администрирование" open={open} onClose={() => setOpen(false)}>
+    {createPortal(<Modal title="Администрирование" open={open} onClose={() => setOpen(false)} className="admin-modal">
       <h3>Игроки</h3>
       <label>Причина изменения аккаунта или решения модератора <input aria-label="Причина решения" value={reason} maxLength={500} onChange={(event) => setReason(event.target.value)} /></label>
       {players.data?.players.map((item) => <article key={item.id}>
@@ -56,6 +57,6 @@ function AdminControls() {
       <h3>Изменения аккаунтов</h3>
       {accounts.data?.actions.map((item) => <p key={item.id}>{new Date(item.created_at).toLocaleString('ru-RU')} · {item.actor_id} → {item.player_id} · {item.status}, {item.role}: {item.reason}</p>)}
       {players.error || messages.error || audit.error || accounts.error || moderate.error || changeAccount.error ? <p role="alert">Не удалось выполнить административный запрос. Проверьте соединение и права доступа.</p> : null}
-    </Modal>
+    </Modal>, document.body)}
   </>
 }

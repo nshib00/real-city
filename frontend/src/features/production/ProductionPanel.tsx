@@ -81,7 +81,7 @@ export function ProductionPanel() {
           return (
             <article className="production-card" key={recipe.id}>
               <strong>{recipe.name}</strong>
-              <span>{formatSeconds(recipe.duration_sec)} · рабочих {recipe.workers}</span>
+              <span>{formatSeconds(recipe.duration_sec)} · рабочих {recipe.workers} <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></span>
               <div className="production-cost">
                 <small>Расход:</small>
                 {recipe.input.map((item) => (

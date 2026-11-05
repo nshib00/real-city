@@ -1,16 +1,16 @@
-import { Bell, ChevronDown, ChevronUp } from '../../shared/ui/icons'
+import { Bell } from '../../shared/ui/icons'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
+import { Modal } from '../../shared/ui'
 import { useGameStore } from '../../game/state/useGameStore'
-import { IconButton } from '../../shared/ui'
 import { request } from '../../shared/api/client'
 import { useAuthStore } from '../auth/useAuthStore'
 import type { CombatRecord } from '../../../../shared/events/combat'
 
 export function NotificationCenter() {
-  const collapsed = useGameStore((state) => state.uiPreferences.areNotificationsCollapsed)
-  const setCollapsed = useGameStore((state) => state.setNotificationsCollapsed)
+  const [open, setOpen] = useState(false)
   const player = useAuthStore((state) => state.player)
   const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const buildings = useGameStore((state) => state.buildings)
@@ -52,25 +52,18 @@ export function NotificationCenter() {
   const notifications = [...groups.values()].sort((a, b) => Number(b.record.owner_id === player?.id) - Number(a.record.owner_id === player?.id) || Number(b.record.destroyed) - Number(a.record.destroyed) || Date.parse(b.record.created_at) - Date.parse(a.record.created_at))
 
   return (
-    <section className={collapsed ? 'notification-stack notification-stack-collapsed' : 'notification-stack'} aria-label="Уведомления">
+    <>
       <p className="ui-sr-only" role="status" aria-atomic="true">{announcement}</p>
-      <header className="notification-header">
-        <span>
-          <Bell size={16} aria-hidden="true" />
-          Уведомления
-          <strong aria-label="Непрочитанные уведомления">{unread}</strong>
-        </span>
-        <IconButton
-          label={collapsed ? 'Развернуть уведомления' : 'Свернуть уведомления'}
-          icon={collapsed ? ChevronDown : ChevronUp}
-          active={collapsed}
-          sound={collapsed ? 'ui.toggle.on' : 'ui.toggle.off'}
-          onClick={() => setCollapsed(!collapsed)}
-        />
-      </header>
-      {realtimeStatus !== 'connected' ? <p className="connection-note" role="status">Нет связи с миром. История может обновляться с задержкой.</p> : null}
-      {collapsed ? null : (
-        <div className="notification-list">
+      <div className="notification-launcher">
+        <button className="notification-launcher-button" type="button" aria-label={`Уведомления${unread ? `: ${unread} непрочитанных` : ''}`} title="Уведомления" onClick={() => setOpen(true)}>
+          <Bell size={22} aria-hidden="true" />
+          {unread > 0 ? <span className="notification-launcher-count" aria-hidden="true">{unread > 99 ? '99+' : unread}</span> : null}
+        </button>
+      </div>
+      {createPortal(<Modal title="Уведомления" open={open} onClose={() => setOpen(false)} className="notification-modal">
+        <div className="notification-dialog-content">
+          {realtimeStatus !== 'connected' ? <p className="connection-note" role="status">Нет связи с миром. История может обновляться с задержкой.</p> : null}
+          <div className="notification-list">
           {history.isPending && player ? <p role="status">Загружаем боевые события…</p> : null}
           {history.error ? <p role="alert">Не удалось загрузить журнал боя. <button type="button" onClick={() => void history.refetch()}>Повторить</button></p> : null}
           {unread ? <button type="button" onClick={() => setRead({ playerId: player?.id, ids: records.map((record) => record.id) })}>Отметить прочитанными</button> : null}
@@ -83,8 +76,9 @@ export function NotificationCenter() {
               {buildings.some((building) => building.id === record.building_id) ? <button type="button" onClick={() => { const building = buildings.find((item) => item.id === record.building_id); if (building) { focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight }); selectBuilding(building.id) } }}>Показать на карте</button> : <small>Объект уничтожен или находится вне загруженной области.</small>}
             </article>
           ))}
+          </div>
         </div>
-      )}
-    </section>
+      </Modal>, document.body)}
+    </>
   )
 }

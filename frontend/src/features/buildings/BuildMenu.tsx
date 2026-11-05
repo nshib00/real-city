@@ -1,4 +1,4 @@
-import { Building2, Check, ChevronLeft, ChevronRight, Clock, Eye, UsersRound, X } from '../../shared/ui/icons'
+import { Building2, Check, ChevronLeft, ChevronRight, Clock, Eye, X } from '../../shared/ui/icons'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -143,7 +143,7 @@ export function BuildMenu() {
                   <span>{getBuildHint({ placementReason: placement.reason, lockedByTownHall, lockedTownHall, shortage, fallback: item.description })}</span>
                   <small>
                     <Clock size={13} aria-hidden="true" /> {item.time}
-                    <UsersRound size={13} aria-hidden="true" /> {item.population}
+                    <span className="build-card-population">{item.population} <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></span>
                   </small>
                   {!inventory && !item.free ? <small role="status">{inventoryQuery.error ? 'Запасы не загружены. Повторите загрузку.' : 'Проверяем запасы…'}</small> : null}
                   <em className="build-cost">
