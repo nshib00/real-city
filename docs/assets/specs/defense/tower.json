@@ -2,33 +2,64 @@
   "asset_id": "tower",
   "category": "defense",
   "kind": "building",
+  "catalog_status": "registered",
   "display_name": "Сторожевая башня",
   "style_profile": "aeolian_fantasy_midpoly",
   "footprint": {"width": 1, "height": 1},
   "states": ["construction", "active", "damaged"],
   "levels": [
-    {"level": 1, "visual_goal": "Каменный цоколь, высокая деревянная смотровая площадка с лестницей, открытым обзором и сигнальным фонарём.", "cost_resources": ["coins", "wood", "stone", "planks", "iron_ingot"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["stone_plinth", "timber_frame", "observation_deck", "signal_lantern"]}
+    {"level": 1, "visual_goal": "Сторожевая башня: базовый локальный дозор. Каменный цоколь, высокая деревянная площадка, лестница, фонарь и лёгкий навес.", "cost_resources": ["coins", "wood", "stone", "planks", "iron_ingot"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["stone_plinth", "timber_frame", "observation_deck", "stairs", "signal_lantern"]}
+  ],
+  "concept_levels": [
+    {"level": 2, "visual_goal": "Описание-образ «Башня дозора»: более высокий открытый пост с расширенным балконом и хорошо читаемым вымпелом.", "cost_resources": ["coins", "wood", "stone", "planks", "iron_ingot"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["raised_frame", "extended_balcony", "wind_pennant"]},
+    {"level": 3, "visual_goal": "Описание-образ «Зеркальная башня»: точка наблюдения с медной зрительной трубой, крупной стеклянной линзой и поворотной стойкой.", "cost_resources": ["coins", "stone_block", "iron_ingot", "glass", "mechanism"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["brass_telescope", "glass_lens", "pivot_mount"]},
+    {"level": 4, "visual_goal": "Описание-образ «Сигнальная башня»: передача тревоги через большой фонарь, колокол и парные отражающие пластины.", "cost_resources": ["coins", "stone_block", "glass", "copper_parts", "mechanism"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["large_signal_lantern", "bell", "signal_reflectors"]},
+    {"level": 5, "visual_goal": "Описание-образ «Башня ретрансляции»: сеть связи показана закрытым связным барабаном, защищёнными медными тягами и сигнальными рычагами.", "cost_resources": ["coins", "stone_block", "copper_parts", "mechanism", "electronics"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["relay_drum", "protected_copper_lines", "signal_arms"]},
+    {"level": 6, "visual_goal": "Описание-образ «Маяк Эолии»: поздний компактный маячный венец с редким эолийским кристаллом внутри фонаря и направленными отражателями.", "cost_resources": ["coins", "stone_block", "copper_parts", "mechanism", "electronics"], "triangle_budget": {"min": 500, "max": 5000}, "adds": ["aeolian_crystal_beacon", "directional_reflectors", "reinforced_crown"]}
   ],
   "material_map": {
-    "wood": {"visible_as": "четыре опорных столба, раскосы, перила и лестница", "priority": "primary", "levels": [1]},
-    "stone": {"visible_as": "кладка цоколя и четыре башмака опор", "priority": "primary", "levels": [1]},
-    "planks": {"visible_as": "дощатый настил, ступени и лёгкий навес", "priority": "primary", "levels": [1]},
-    "iron_ingot": {"visible_as": "железные обоймы, заклёпки и каркас фонаря", "priority": "secondary", "levels": [1]}
+    "wood": {"visible_as": "стойки, раскосы, лестница, настил и ограждения ранних уровней", "priority": "primary", "levels": [1, 2]},
+    "stone": {"visible_as": "каменный цоколь и опорные башмаки", "priority": "primary", "levels": [1, 2]},
+    "planks": {"visible_as": "дощатый настил, ступени, балкон и лёгкий навес", "priority": "primary", "levels": [1, 2]},
+    "iron_ingot": {"visible_as": "железные обоймы, крепления и фонарный каркас", "priority": "secondary", "levels": [1, 2, 3]},
+    "stone_block": {"visible_as": "более ровная кладка цоколя и усиленные каменные опоры поздних уровней", "priority": "primary", "levels": [3, 4, 5, 6]},
+    "glass": {"visible_as": "линза зрительной трубы и сигнального фонаря", "priority": "secondary", "levels": [3, 4]},
+    "copper_parts": {"visible_as": "отражающие пластины, медные тяги и соединения ретранслятора", "priority": "secondary", "levels": [4, 5, 6]},
+    "mechanism": {"visible_as": "поворотное крепление трубы, сигнальные рычаги и узел передачи", "priority": "secondary", "levels": [3, 4, 5, 6]},
+    "electronics": {"visible_as": "компактный прибор внутри связного барабана; показывать как фэнтезийную мастерскую механику, не как современную аппаратуру", "priority": "accent", "levels": [5, 6]},
+    "aeolian_crystal": {"visible_as": "единственный кристалл-маяк внутри верхнего фонаря", "priority": "accent", "levels": [6], "notes": "Сдержанное свечение, не окрашивать всю башню в фиолетовый."}
   },
-  "level_progression": {"mass": {"rule": "Только один уровень по каталогу; апгрейды не заданы."}, "height": {"rule": "Высокий настил различим с изометрической камеры."}, "materials": {"rule": "Дерево, камень, доски и железо читаются в основной конструкции."}, "props": {"rule": "Фонарь обозначает наблюдение, без оружия и боевой анимации."}},
+  "level_progression": {
+    "mass": {"rule": "Сохранять узнаваемые цоколь, стойки и открытую площадку; каждый уровень получает отдельную mesh-вариацию с новыми читаемыми компонентами."},
+    "height": {"rule": "Наращивать высоту постепенно; не выходить основанием и крупными навесами за footprint 1×1."},
+    "materials": {"rule": "Переходить от дерева, камня и досок к обработанному камню, стеклу, меди и позднему механизму; стоимость должна читаться в конструкции."},
+    "props": {"rule": "Сигнальные приборы растут от простого фонаря к трубе, колоколу, отражателям и связному устройству."},
+    "late_elements": {"rule": "Уровень 6 получает один редкий эолийский кристалл в маячном фонаре; не использовать повсеместное фиолетовое свечение."},
+    "constraints": ["Название постройки всегда «Сторожевая башня», а уровень показывать только числом.", "Фразы в концепт-уровнях являются образами и основой дизайна, а не отдельными названиями.", "Башня не является турелью: исключить стволы, боеприпасы и атакующие эффекты.", "В каталоге и runtime существует только уровень 1. concept_levels 2–6 — проектные идеи, не доступные игроку и не являющиеся частью asset-coverage."]
+  },
   "state_policy": {
-    "construction": {"visual_goal": "Каменный цоколь, частично поставленные стойки, открытый каркас без настила и навеса, материалы на земле."},
-    "active": {"visual_goal": "Завершённая площадка, перила, лестница, фонарь и лёгкий навес."},
-    "damaged": {"visual_goal": "Сломана часть настила, перил и навеса; фонарь упал, обломки лежат на земле."}
+    "construction": {"visual_goal": "Незавершённые цоколь, стойки, настил и сигнальный прибор соответствующего уровня; открытый каркас, частичные перила и навес, леса и раздельные строительные материалы. Готовую башню с лесами не использовать."},
+    "active": {"visual_goal": "Завершённая башня заданного уровня; все новые элементы апгрейда видны и читаемы с изометрической камеры."},
+    "damaged": {"visual_goal": "Сохраняет узнаваемый силуэт, но имеет крупное повреждение настила/навеса, сломанную опору или перила и упавший сигнальный элемент; обломки отдельны от клетки земли."}
   },
-  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["prop-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
+  "skill_profile": {"base": ["blender-director", "genre-strategy-sim", "fantasy-worlds", "stylized-style", "isometric-style", "hand-painted-style"], "asset_type": ["environment-artist", "prop-artist", "hard-surface"], "production": ["materials", "lod-pipeline", "asset-optimization", "export-pipeline"], "validation": ["qa-review"]},
   "lod_policy": {"chain": [
     {"name": "LOD0", "ratio": 1.0, "triangle_budget": {"min": 500, "max": 5000}, "export": true},
     {"name": "LOD1", "ratio": 0.55, "triangle_budget": {"min": 250, "max": 3200}, "export": true},
     {"name": "LOD2", "ratio": 0.28, "triangle_budget": {"min": 120, "max": 1900}, "export": true}
-  ], "preserve": ["ground", "plinth", "legs", "deck", "lantern"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
+  ], "preserve": ["ground", "stone_plinth", "timber_legs", "deck", "signal_device", "level_silhouette"], "exports": {"naming": "{asset_id}_l{level:02d}_{state}_{lod}.glb", "include_lod0": true, "include_lod1": true, "include_lod2": true}},
   "png_policy": {"sprite_size": [512, 384], "camera_profile": "real_city_isometric", "transparent_background": true, "anchor": [256, 292], "render_lod": "LOD0", "contact_sheet": {"enabled": true, "columns": 3, "include_states": ["construction", "active", "damaged"]}, "alpha_bounds": {"min_opaque_pixels": 1000, "max_crop_margin_px": 10, "bottom_anchor_tolerance_px": 10}},
   "output": {"runtime_dir": "frontend/public/assets/buildings/defense/tower", "use_public_glb": true},
-  "references": {"docs": ["docs/buildings/defense/tower.md", "docs/art/visual-style-guide.md"], "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/center/town_hall", "frontend/public/assets/buildings/housing/dugout"]},
-  "notes": ["ID и один уровень соответствуют игровому каталогу. Башня не имеет заданной автоматической атаки."]
+  "references": {"docs": ["docs/buildings/defense/tower.md", "docs/game-design/tower-role-and-upgrades.md", "docs/art/visual-style-guide.md", "docs/game-design/visual-style-and-setting-options.md"], "art_guide": "docs/art/visual-style-guide.md", "existing_generators": ["tools/assets/blender/real_city/orchestrator.py"], "existing_assets": ["frontend/public/assets/buildings/center/town_hall", "frontend/public/assets/buildings/housing/dugout"]},
+  "notes": [
+    "Моделировать яркий стилизованный mid-poly объект Эолии с тёплым камнем и деревом, объёмными досками, фасками на крупных кромках и функциональными соединениями; не делать примитивную кубическую башню или grimdark-объект.",
+    "Масштаб — одна клетка карты; origin/pivot — центр основания клетки. Основание и footprint остаются в ромбе 1×1. Применить transforms, проверить нормали и исключить из экспорта тестовые камеры, свет и скрытые объекты.",
+    "Создать раздельные коллекции и смысловые меши tower_l{уровень}_{состояние}: ground, stone_base, timber_frame, stairs, deck, railings, signal_device, roof, construction_overlay, damage_overlay. Земля клетки должна совпадать по геометрии, материалам, UV и положению между тремя состояниями одного уровня.",
+    "Каждый из уровней 1–6 — своя накопительная геометрическая вариация, а не только масштаб/перекраска. Следовать описаниям уровня: 1 — простая площадка и фонарь; 2 — высокий ограждённый балкон и вымпел; 3 — крупная медная зрительная труба со стеклянной линзой; 4 — большой фонарь, колокол и отражатели; 5 — закрытый связной барабан, медные тяги и сигнальные рычаги; 6 — маячный венец, несколько отражателей и один эолийский кристалл.",
+    "Крупные формы должны читаться с камеры изометрической стратегии. Пропустить микродетали, невидимые на игровом масштабе. Открытая конструкция должна обозначать наблюдение, а не крепость или огневую позицию. Не моделировать стволы, бойницы для оружия, стрелы, боеприпасы, прицелы или атакующую анимацию.",
+    "Для каждого уровня изготовить active, construction и damaged. Construction — реальная недостроенная стадия с отсутствующими частями и открытым каркасом, леса/материалы отдельными объектами. Damaged — геометрически сломанные опора/настил/навес и упавшие детали; не заменять разрушение трещинами или потемнением.",
+    "Палитра: песочно-серый камень, тёплая древесина, светлые доски, приглушённая медь, прозрачное или голубоватое стекло. Кристалл уровня 6 — ограниченный акцент. Не изображать монеты; затраченные материальные ресурсы показывать в конструктивных частях башни.",
+    "Экспортировать GLB каждого уровня/состояния/LOD с именем tower_l{level:02d}_{state}_{lod}.glb и хранить исходную сцену .blend. Для PNG соблюдать 512×384, real_city_isometric, прозрачный фон, anchor [256,292]; контактный лист содержит все уровни и состояния. После экспорта повторно импортировать и проверить pivot, масштаб, материалы и читаемость.",
+    "В каталоге сейчас есть только уровень 1. Уровни 2–6 — визуально-игровое проектное предложение, не действующие игровые параметры. Башня не имеет заданной автоматической атаки."
+  ]
 }
