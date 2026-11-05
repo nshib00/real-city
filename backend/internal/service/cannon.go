@@ -234,6 +234,11 @@ func (s *CannonService) chooseTarget(ctx context.Context, cannon building.Buildi
 		if !item.Alive() || (item.CreatorID != "" && item.CreatorID == cannon.OwnerID) || defenseDistance(item.Tile, cannon.Tile) > radius {
 			continue
 		}
+		// The coil arcs to targets within range even when terrain or buildings
+		// obstruct a direct projectile, including airborne monsters.
+		if cannon.Type == building.TypeDefenseStormCoil {
+			return item, true, nil
+		}
 		clear, err := s.lineOfSight(ctx, cannon, item.Tile)
 		if err != nil {
 			return monster.Monster{}, false, err

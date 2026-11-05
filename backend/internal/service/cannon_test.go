@@ -198,6 +198,35 @@ func TestDefenseWeaponLineOfSightRespectsWrappedBlocker(t *testing.T) {
 	}
 }
 
+func TestStormCoilTargetsMonstersBehindCover(t *testing.T) {
+	for _, kind := range []monster.Type{monster.TypeRoamingMelee, monster.TypeEmberWisp} {
+		t.Run(string(kind), func(t *testing.T) {
+			ctx := context.Background()
+			buildings := memory.NewBuildingRepo()
+			monsters := memory.NewMonsterRepo()
+			if err := buildings.Create(ctx, building.Building{ID: "wall", MapID: DefaultWorldID, Type: building.TypeStoneWall,
+				State: building.StateActive, Tile: world.Coord{X: 1}, Footprint: building.Footprint{Width: 1, Height: 1}}); err != nil {
+				t.Fatal(err)
+			}
+			if err := monsters.Create(ctx, monster.Monster{ID: "target", MapID: DefaultWorldID, Type: kind,
+				State: monster.StateIdle, Tile: world.Coord{X: 2}, Health: 100, MaxHealth: 100}); err != nil {
+				t.Fatal(err)
+			}
+			svc := NewCannonService(buildings, monsters, nil, nil, nil, nil, nil, nil, slog.Default())
+			coil := building.Building{MapID: DefaultWorldID, Type: building.TypeDefenseStormCoil, Tile: world.Coord{}}
+			target, ok, err := svc.chooseTarget(ctx, coil, 2)
+			if err != nil || !ok || target.ID != "target" {
+				t.Fatalf("coil target=%s ok=%v err=%v", target.ID, ok, err)
+			}
+			coil.Type = building.TypeDefenseBoltThrower
+			_, ok, err = svc.chooseTarget(ctx, coil, 2)
+			if err != nil || ok {
+				t.Fatalf("bolt thrower must respect cover: ok=%v err=%v", ok, err)
+			}
+		})
+	}
+}
+
 func TestCannonFiresAtNearestMonsterAndSpendsOneCharge(t *testing.T) {
 	ctx := context.Background()
 	now := time.Date(2026, 10, 17, 12, 0, 0, 0, time.UTC)
