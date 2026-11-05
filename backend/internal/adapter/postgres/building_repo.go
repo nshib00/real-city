@@ -30,10 +30,10 @@ func (r *BuildingRepo) Create(ctx context.Context, b building.Building) (resultE
 			id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
 			field_stage_ready_at, field_super_crop, created_at, updated_at,
-			cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
-	`, b.ID, b.MapID, b.OwnerID, b.Type, b.Name, b.Level, b.State, b.Health, b.Tile.X, b.Tile.Y, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.CreatedAt, b.UpdatedAt, b.CannonEnabled, b.CannonNextAttackAt, b.CannonTargetID, b.TrapCharges, b.Rotation)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)
+	`, b.ID, b.MapID, b.OwnerID, b.Type, b.Name, b.Level, b.State, b.Health, b.Tile.X, b.Tile.Y, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.CreatedAt, b.UpdatedAt, b.CannonEnabled, b.CannonNextAttackAt, b.CannonTargetID, b.TrapCharges, b.Rotation, b.TowerWatchkeeperAssigned)
 	return err
 }
 
@@ -41,7 +41,7 @@ func (r *BuildingRepo) FindByID(ctx context.Context, id building.ID) (building.B
 	query := `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings
 		WHERE id = $1
  `
@@ -56,7 +56,7 @@ func (r *BuildingRepo) ListByPlayer(ctx context.Context, playerID player.ID) ([]
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings
 		WHERE owner_id = $1
 		ORDER BY created_at, id
@@ -104,7 +104,7 @@ func (r *BuildingRepo) ListByMap(ctx context.Context, mapID string) ([]building.
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings
 		WHERE map_id = $1
 		ORDER BY created_at, id
@@ -135,7 +135,7 @@ func (r *BuildingRepo) listByViewport(ctx context.Context, mapID string, minX, m
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings
 		WHERE map_id = $1
 		  AND tile_x <= $4
@@ -158,7 +158,7 @@ func (r *BuildingRepo) ListDue(ctx context.Context, now time.Time, limit int) ([
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings
 		WHERE state = $1 AND completes_at IS NOT NULL AND completes_at <= $2
 		ORDER BY completes_at, id
@@ -178,7 +178,7 @@ func (r *BuildingRepo) ListRuinedRuins(ctx context.Context, limit int) ([]buildi
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings WHERE state = 'ruined' AND type LIKE 'ruins_%'
 		ORDER BY updated_at, id LIMIT $1
 	`, limit)
@@ -196,7 +196,7 @@ func (r *BuildingRepo) ListReadyCannons(ctx context.Context, mapID string, now t
 	rows, err := execer(ctx, r.db).QueryContext(ctx, `
 		SELECT id, map_id, owner_id, type, name, level, state, health, tile_x, tile_y,
 			footprint_w, footprint_h, started_at, completes_at, field_stage, field_stage_started_at,
-			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation
+			field_stage_ready_at, field_super_crop, created_at, updated_at, cannon_enabled, cannon_next_attack_at, cannon_target_id, trap_charges, rotation, tower_watchkeeper_assigned
 		FROM buildings
 		WHERE map_id = $1 AND type IN ($2, 'defense_bolt_thrower', 'defense_storm_coil') AND state IN ($3, $6) AND cannon_enabled = TRUE AND id > $7
 			AND (cannon_next_attack_at IS NULL OR cannon_next_attack_at <= $4)
@@ -248,6 +248,7 @@ func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expe
 		SET health = GREATEST(0, health - $3),
 			state = CASE WHEN health <= $3 THEN $4 WHEN state IN ($8, $10) THEN state ELSE $5 END,
 			cannon_enabled = CASE WHEN health <= $3 THEN false ELSE cannon_enabled END,
+			tower_watchkeeper_assigned = CASE WHEN health <= $3 THEN false ELSE tower_watchkeeper_assigned END,
 			updated_at = $6
 		WHERE id = $1 AND health = $2 AND health > 0 AND state IN ($7, $5, $8, $10) AND ($9 = '' OR owner_id = $9)
 	`, id, expectedHealth, damage, building.StateRuined, building.StateDamaged, now, building.StateActive, building.StateBuilding, owner, building.StateRepairing)
@@ -269,10 +270,10 @@ func (r *BuildingRepo) Update(ctx context.Context, b building.Building) error {
 			footprint_w = $7, footprint_h = $8, started_at = $9, completes_at = $10,
 			field_stage = $11, field_stage_started_at = $12, field_stage_ready_at = $13,
 			field_super_crop = $14, updated_at = $15,
-			cannon_enabled = $16, cannon_next_attack_at = $17, cannon_target_id = $18, trap_charges = $19, rotation = $20
+			cannon_enabled = $16, cannon_next_attack_at = $17, cannon_target_id = $18, trap_charges = $19, rotation = $20, tower_watchkeeper_assigned = $21
 		WHERE id = $1 AND (state <> 'ruined' OR $5 = 'ruined')
 			AND footprint_w = $7 AND footprint_h = $8
-	`, b.ID, b.Type, b.Name, b.Level, b.State, b.Health, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.UpdatedAt, b.CannonEnabled, b.CannonNextAttackAt, b.CannonTargetID, b.TrapCharges, b.Rotation)
+	`, b.ID, b.Type, b.Name, b.Level, b.State, b.Health, b.Footprint.Width, b.Footprint.Height, b.StartedAt, b.CompletesAt, b.FieldStage, b.FieldStageStartedAt, b.FieldStageReadyAt, b.FieldSuperCrop, b.UpdatedAt, b.CannonEnabled, b.CannonNextAttackAt, b.CannonTargetID, b.TrapCharges, b.Rotation, b.TowerWatchkeeperAssigned)
 	if err != nil {
 		return err
 	}
@@ -371,6 +372,7 @@ func scanBuilding(row scanner) (building.Building, error) {
 		&item.CannonTargetID,
 		&item.TrapCharges,
 		&item.Rotation,
+		&item.TowerWatchkeeperAssigned,
 	)
 	if errors.Is(err, sql.ErrNoRows) {
 		return building.Building{}, apperror.New(apperror.NotFound, "building not found")

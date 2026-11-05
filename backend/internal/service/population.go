@@ -37,6 +37,9 @@ func (s *PopulationService) Summary(ctx context.Context, playerID player.ID) (pl
 			if item.FieldStageStartedAt != nil {
 				busy.Fields += buildingPopulation(item)
 			}
+			if (catalog.IsDefenseWeapon(item.Type) && item.CannonEnabled) || (item.Type == building.TypeTower && item.TowerWatchkeeperAssigned) {
+				busy.Defense++
+			}
 		}
 	}
 	jobs, err := s.economy.repo.ListProductionJobs(ctx, playerID)
@@ -58,6 +61,6 @@ func (s *PopulationService) Summary(ctx context.Context, playerID player.ID) (pl
 		}
 	}
 	free := inventory.Items[economy.ResourcePopulation]
-	total := free + busy.Builders + busy.Production + busy.Fields + busy.Repair
+	total := free + busy.Builders + busy.Production + busy.Fields + busy.Defense + busy.Repair
 	return player.NewPopulation(total, busy), nil
 }

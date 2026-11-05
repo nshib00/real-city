@@ -96,6 +96,17 @@ func (s *BuildingService) SetCannonEnabled(ctx context.Context, id building.ID, 
 	}
 	return
 }
+func (s *BuildingService) SetTowerWatchkeeper(ctx context.Context, id building.ID, p player.ID, assigned bool) (item building.Building, err error) {
+	err = s.buildingTransaction(ctx, id, func(ctx context.Context) error {
+		var e error
+		item, e = s.setTowerWatchkeeper(ctx, id, p, assigned)
+		return e
+	})
+	if err != nil {
+		return building.Building{}, err
+	}
+	return
+}
 func (s *BuildingService) ReloadTrap(ctx context.Context, id building.ID, p player.ID) (item building.Building, err error) {
 	err = s.buildingTransaction(ctx, id, func(ctx context.Context) error { var e error; item, e = s.reloadTrap(ctx, id, p); return e })
 	if err != nil {

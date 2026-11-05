@@ -27,48 +27,49 @@ type RushCompletionResponse struct {
 }
 
 type BuildingResponse struct {
-	ID                    string     `json:"id"`
-	MapID                 string     `json:"map_id"`
-	OwnerID               string     `json:"owner_id"`
-	Type                  string     `json:"type"`
-	Name                  string     `json:"name"`
-	Level                 int        `json:"level"`
-	State                 string     `json:"state"`
-	Health                int        `json:"health"`
-	MaxHealth             int        `json:"max_health"`
-	DemolitionRefundCoins int        `json:"demolition_refund_coins"`
-	TileX                 int        `json:"tile_x"`
-	TileY                 int        `json:"tile_y"`
-	Rotation              int        `json:"rotation"`
-	FootprintW            int        `json:"footprint_w"`
-	FootprintH            int        `json:"footprint_h"`
-	StartedAt             time.Time  `json:"started_at"`
-	CompletesAt           *time.Time `json:"completes_at"`
-	FieldStage            int        `json:"field_stage,omitempty"`
-	GrowthStage           int        `json:"growth_stage,omitempty"`
-	CropStage             int        `json:"crop_stage,omitempty"`
-	SuperStage            int        `json:"super_stage,omitempty"`
-	FieldStageStartedAt   *time.Time `json:"field_stage_started_at,omitempty"`
-	FieldStageReadyAt     *time.Time `json:"field_stage_ready_at,omitempty"`
-	FieldStageReady       bool       `json:"field_stage_ready,omitempty"`
-	IsSuperCrop           bool       `json:"is_super_crop,omitempty"`
-	SuperCrop             bool       `json:"super_crop,omitempty"`
-	CreatedAt             time.Time  `json:"created_at"`
-	UpdatedAt             time.Time  `json:"updated_at"`
-	CannonEnabled         bool       `json:"cannon_enabled,omitempty"`
-	CannonNextAttackAt    *time.Time `json:"cannon_next_attack_at,omitempty"`
-	CannonTargetID        string     `json:"cannon_target_id,omitempty"`
-	CannonRange           int        `json:"cannon_range,omitempty"`
-	CannonDamage          int        `json:"cannon_damage,omitempty"`
-	CannonAmmo            string     `json:"cannon_ammo,omitempty"`
-	CannonCooldownSeconds int        `json:"cannon_cooldown_seconds,omitempty"`
-	CannonDamageType      string     `json:"cannon_damage_type,omitempty"`
-	TrapCharges           int        `json:"trap_charges"`
-	TrapMaxCharges        int        `json:"trap_max_charges,omitempty"`
-	TrapDamage            int        `json:"trap_damage,omitempty"`
-	DefenseSlots          int        `json:"defense_slots,omitempty"`
-	DefensePatrolRadius   int        `json:"defense_patrol_radius,omitempty"`
-	DefenseStaffRole      string     `json:"defense_staff_role,omitempty"`
+	ID                       string     `json:"id"`
+	MapID                    string     `json:"map_id"`
+	OwnerID                  string     `json:"owner_id"`
+	Type                     string     `json:"type"`
+	Name                     string     `json:"name"`
+	Level                    int        `json:"level"`
+	State                    string     `json:"state"`
+	Health                   int        `json:"health"`
+	MaxHealth                int        `json:"max_health"`
+	DemolitionRefundCoins    int        `json:"demolition_refund_coins"`
+	TileX                    int        `json:"tile_x"`
+	TileY                    int        `json:"tile_y"`
+	Rotation                 int        `json:"rotation"`
+	FootprintW               int        `json:"footprint_w"`
+	FootprintH               int        `json:"footprint_h"`
+	StartedAt                time.Time  `json:"started_at"`
+	CompletesAt              *time.Time `json:"completes_at"`
+	FieldStage               int        `json:"field_stage,omitempty"`
+	GrowthStage              int        `json:"growth_stage,omitempty"`
+	CropStage                int        `json:"crop_stage,omitempty"`
+	SuperStage               int        `json:"super_stage,omitempty"`
+	FieldStageStartedAt      *time.Time `json:"field_stage_started_at,omitempty"`
+	FieldStageReadyAt        *time.Time `json:"field_stage_ready_at,omitempty"`
+	FieldStageReady          bool       `json:"field_stage_ready,omitempty"`
+	IsSuperCrop              bool       `json:"is_super_crop,omitempty"`
+	SuperCrop                bool       `json:"super_crop,omitempty"`
+	CreatedAt                time.Time  `json:"created_at"`
+	UpdatedAt                time.Time  `json:"updated_at"`
+	CannonEnabled            bool       `json:"cannon_enabled,omitempty"`
+	TowerWatchkeeperAssigned bool       `json:"tower_watchkeeper_assigned"`
+	CannonNextAttackAt       *time.Time `json:"cannon_next_attack_at,omitempty"`
+	CannonTargetID           string     `json:"cannon_target_id,omitempty"`
+	CannonRange              int        `json:"cannon_range,omitempty"`
+	CannonDamage             int        `json:"cannon_damage,omitempty"`
+	CannonAmmo               string     `json:"cannon_ammo,omitempty"`
+	CannonCooldownSeconds    int        `json:"cannon_cooldown_seconds,omitempty"`
+	CannonDamageType         string     `json:"cannon_damage_type,omitempty"`
+	TrapCharges              int        `json:"trap_charges"`
+	TrapMaxCharges           int        `json:"trap_max_charges,omitempty"`
+	TrapDamage               int        `json:"trap_damage,omitempty"`
+	DefenseSlots             int        `json:"defense_slots,omitempty"`
+	DefensePatrolRadius      int        `json:"defense_patrol_radius,omitempty"`
+	DefenseStaffRole         string     `json:"defense_staff_role,omitempty"`
 }
 
 type BuildingCatalogResponse struct {
@@ -105,29 +106,30 @@ type BuildingCost struct {
 
 func Building(b building.Building) BuildingResponse {
 	response := BuildingResponse{
-		ID:                    string(b.ID),
-		MapID:                 b.MapID,
-		OwnerID:               string(b.OwnerID),
-		Type:                  string(b.Type),
-		Name:                  b.Name,
-		Level:                 b.Level,
-		State:                 string(b.State),
-		Health:                b.Health,
-		MaxHealth:             maxHealth(b),
-		DemolitionRefundCoins: catalog.DemolitionRefundCoins(b.Type, b.Level),
-		TileX:                 b.Tile.X,
-		TileY:                 b.Tile.Y,
-		Rotation:              b.Rotation,
-		FootprintW:            b.Footprint.Width,
-		FootprintH:            b.Footprint.Height,
-		StartedAt:             b.StartedAt,
-		CompletesAt:           b.CompletesAt,
-		CreatedAt:             b.CreatedAt,
-		UpdatedAt:             b.UpdatedAt,
-		CannonEnabled:         b.CannonEnabled,
-		CannonNextAttackAt:    b.CannonNextAttackAt,
-		CannonTargetID:        b.CannonTargetID,
-		TrapCharges:           b.TrapCharges,
+		ID:                       string(b.ID),
+		MapID:                    b.MapID,
+		OwnerID:                  string(b.OwnerID),
+		Type:                     string(b.Type),
+		Name:                     b.Name,
+		Level:                    b.Level,
+		State:                    string(b.State),
+		Health:                   b.Health,
+		MaxHealth:                maxHealth(b),
+		DemolitionRefundCoins:    catalog.DemolitionRefundCoins(b.Type, b.Level),
+		TileX:                    b.Tile.X,
+		TileY:                    b.Tile.Y,
+		Rotation:                 b.Rotation,
+		FootprintW:               b.Footprint.Width,
+		FootprintH:               b.Footprint.Height,
+		StartedAt:                b.StartedAt,
+		CompletesAt:              b.CompletesAt,
+		CreatedAt:                b.CreatedAt,
+		UpdatedAt:                b.UpdatedAt,
+		CannonEnabled:            b.CannonEnabled,
+		TowerWatchkeeperAssigned: b.TowerWatchkeeperAssigned,
+		CannonNextAttackAt:       b.CannonNextAttackAt,
+		CannonTargetID:           b.CannonTargetID,
+		TrapCharges:              b.TrapCharges,
 	}
 	if catalog.IsDefenseWeapon(b.Type) {
 		if stats, ok := catalog.DefenseWeaponLevel(b.Type, b.Level); ok {

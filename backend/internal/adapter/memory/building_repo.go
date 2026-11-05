@@ -351,6 +351,7 @@ func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expe
 	if item.Health == 0 {
 		item.State = building.StateRuined
 		item.CannonEnabled = false
+		item.TowerWatchkeeperAssigned = false
 	} else if item.State != building.StateBuilding && item.State != building.StateRepairing {
 		item.State = building.StateDamaged
 	}

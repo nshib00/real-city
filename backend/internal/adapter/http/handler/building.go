@@ -157,6 +157,13 @@ func (h *BuildingHandler) Patch(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item)})
+	case "assign_watchkeeper", "remove_watchkeeper":
+		item, err := h.buildings.SetTowerWatchkeeper(r.Context(), id, playerID, req.Action == "assign_watchkeeper")
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item)})
 	case "reload_trap":
 		item, err := h.buildings.ReloadTrap(r.Context(), id, playerID)
 		if err != nil {
@@ -165,7 +172,7 @@ func (h *BuildingHandler) Patch(w http.ResponseWriter, r *http.Request) {
 		}
 		writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item)})
 	default:
-		writeError(w, apperror.WithFields(apperror.Validation, "unsupported building action", map[string]string{"action": "must be complete, rush_complete, cancel, repair, relocate, upgrade, enable_cannon, disable_cannon or reload_trap"}))
+		writeError(w, apperror.WithFields(apperror.Validation, "unsupported building action", map[string]string{"action": "must be complete, rush_complete, cancel, repair, relocate, upgrade, enable_cannon, disable_cannon, assign_watchkeeper, remove_watchkeeper or reload_trap"}))
 	}
 }
 

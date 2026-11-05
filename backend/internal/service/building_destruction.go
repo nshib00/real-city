@@ -28,6 +28,9 @@ func (s *BuildingService) HandleDestruction(ctx context.Context, before, after b
 	if catalog.IsDefenseWeapon(before.Type) && before.CannonEnabled {
 		workers++
 	}
+	if before.Type == building.TypeTower && before.TowerWatchkeeperAssigned {
+		workers++
+	}
 	if s.economy != nil {
 		if repairs, ok := s.buildings.(RepairRepository); ok {
 			job, err := repairs.PendingRepair(ctx, before.ID)
@@ -70,6 +73,7 @@ func (s *BuildingService) HandleDestruction(ctx context.Context, before, after b
 	after.CompletesAt = nil
 	clearWindleafCycle(&after)
 	after.CannonEnabled = false
+	after.TowerWatchkeeperAssigned = false
 	after.CannonNextAttackAt = nil
 	after.CannonTargetID = ""
 	if before.Type == building.TypeOilWell || catalog.IsRuin(before.Type) {

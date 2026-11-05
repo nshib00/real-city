@@ -23,8 +23,8 @@ func TestTowerDetectorPrivateThreatAndDeduplication(t *testing.T) {
 	target := building.Building{ID: "home", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTownHall, State: building.StateActive, Health: 100, Tile: world.Coord{X: 0, Y: 0}}
 	for _, item := range []building.Building{
 		target,
-		{ID: "tower1", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, Tile: world.Coord{X: 159, Y: 0}},
-		{ID: "tower2", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, Tile: world.Coord{X: 158, Y: 0}},
+		{ID: "tower1", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, Tile: world.Coord{X: 159, Y: 0}, TowerWatchkeeperAssigned: true},
+		{ID: "tower2", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, Tile: world.Coord{X: 158, Y: 0}, TowerWatchkeeperAssigned: true},
 	} {
 		if err := buildings.Create(ctx, item); err != nil {
 			t.Fatal(err)
@@ -138,6 +138,11 @@ func TestTowerDetectorFiltersInactiveTowerAndIrrelevantMonsters(t *testing.T) {
 		want    int
 	}{
 		{name: "level two boundary", tower: testTower(2, 150, world.Coord{}), monster: testThreat(world.Coord{X: 8, Y: 0}), want: 1},
+		{name: "no watchkeeper", tower: func() building.Building {
+			b := testTower(1, 100, world.Coord{})
+			b.TowerWatchkeeperAssigned = false
+			return b
+		}(), monster: testThreat(world.Coord{X: 1, Y: 0})},
 		{name: "level two outside", tower: testTower(2, 150, world.Coord{}), monster: testThreat(world.Coord{X: 9, Y: 0})},
 		{name: "level six boundary", tower: testTower(6, 520, world.Coord{}), monster: testThreat(world.Coord{X: 16, Y: 0}), want: 1},
 		{name: "level six quarter health", tower: testTower(6, 130, world.Coord{}), monster: testThreat(world.Coord{X: 1, Y: 0})},
@@ -174,7 +179,7 @@ func TestTowerDetectorFiltersInactiveTowerAndIrrelevantMonsters(t *testing.T) {
 }
 
 func testTower(level, health int, tile world.Coord) building.Building {
-	return building.Building{ID: "tower", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: level, State: building.StateActive, Health: health, Tile: tile}
+	return building.Building{ID: "tower", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: level, State: building.StateActive, Health: health, Tile: tile, TowerWatchkeeperAssigned: true}
 }
 
 func testThreat(tile world.Coord) monster.Monster {

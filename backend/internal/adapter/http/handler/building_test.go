@@ -6,16 +6,65 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"real-city/backend/internal/adapter/http/middleware"
 	"real-city/backend/internal/adapter/memory"
 	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/catalog"
+	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
 )
+
+func TestWatchkeeperActionRequiresOwnerAndTower(t *testing.T) {
+	ctx := context.Background()
+	repo := memory.NewBuildingRepo()
+	for _, item := range []building.Building{
+		{ID: "tower", OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100},
+		{ID: "house", OwnerID: "owner", Type: building.TypeDugout, Level: 1, State: building.StateActive, Health: 100},
+	} {
+		if err := repo.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	economyRepo := memory.NewEconomyRepo()
+	eco := service.NewEconomyService(economyRepo, repo, slog.Default())
+	stock, err := eco.Inventory(ctx, "owner")
+	if err != nil {
+		t.Fatal(err)
+	}
+	stock.Items[economy.ResourcePopulation] = 1
+	if err := economyRepo.SaveInventory(ctx, stock); err != nil {
+		t.Fatal(err)
+	}
+	buildingService := service.NewBuildingService(repo, memory.NewWorldRepo(), slog.Default())
+	buildingService.SetEconomy(eco)
+	h := NewBuildingHandler(buildingService)
+	patch := func(id string, actor player.ID, action string) *httptest.ResponseRecorder {
+		t.Helper()
+		req := httptest.NewRequest(http.MethodPatch, "/buildings/"+id, strings.NewReader(`{"action":"`+action+`"}`))
+		req.SetPathValue("id", id)
+		req = req.WithContext(middleware.WithPlayerID(req.Context(), actor))
+		response := httptest.NewRecorder()
+		h.Patch(response, req)
+		return response
+	}
+	if got := patch("tower", "intruder", "assign_watchkeeper"); got.Code == http.StatusOK {
+		t.Fatal("non-owner assigned watchkeeper")
+	}
+	if got := patch("house", "owner", "assign_watchkeeper"); got.Code == http.StatusOK {
+		t.Fatal("non-tower accepted watchkeeper")
+	}
+	if got := patch("tower", "owner", "assign_watchkeeper"); got.Code != http.StatusOK || !strings.Contains(got.Body.String(), `"tower_watchkeeper_assigned":true`) {
+		t.Fatalf("assignment response: %d %s", got.Code, got.Body.String())
+	}
+	if got := patch("tower", "owner", "remove_watchkeeper"); got.Code != http.StatusOK || !strings.Contains(got.Body.String(), `"tower_watchkeeper_assigned":false`) {
+		t.Fatalf("removal response: %d %s", got.Code, got.Body.String())
+	}
+}
 
 func TestBuildingListIncludesNearbyOtherPlayers(t *testing.T) {
 	repo := memory.NewBuildingRepo()

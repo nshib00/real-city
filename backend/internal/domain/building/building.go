@@ -106,29 +106,30 @@ type Cost struct {
 }
 
 type Building struct {
-	ID                  ID
-	MapID               string
-	OwnerID             string
-	Type                Type
-	Name                string
-	Level               int
-	State               State
-	Health              int
-	Tile                world.Coord
-	Footprint           Footprint
-	Rotation            int
-	StartedAt           time.Time
-	CompletesAt         *time.Time
-	FieldStage          int
-	FieldStageStartedAt *time.Time
-	FieldStageReadyAt   *time.Time
-	FieldSuperCrop      bool
-	CreatedAt           time.Time
-	UpdatedAt           time.Time
-	CannonEnabled       bool
-	CannonNextAttackAt  *time.Time
-	CannonTargetID      string
-	TrapCharges         int
+	ID                       ID
+	MapID                    string
+	OwnerID                  string
+	Type                     Type
+	Name                     string
+	Level                    int
+	State                    State
+	Health                   int
+	Tile                     world.Coord
+	Footprint                Footprint
+	Rotation                 int
+	StartedAt                time.Time
+	CompletesAt              *time.Time
+	FieldStage               int
+	FieldStageStartedAt      *time.Time
+	FieldStageReadyAt        *time.Time
+	FieldSuperCrop           bool
+	CreatedAt                time.Time
+	UpdatedAt                time.Time
+	CannonEnabled            bool
+	TowerWatchkeeperAssigned bool
+	CannonNextAttackAt       *time.Time
+	CannonTargetID           string
+	TrapCharges              int
 }
 
 func (b Building) IsRoad() bool {

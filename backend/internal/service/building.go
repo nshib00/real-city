@@ -535,6 +535,39 @@ func (s *BuildingService) setCannonEnabled(ctx context.Context, id building.ID, 
 	return item, nil
 }
 
+func (s *BuildingService) setTowerWatchkeeper(ctx context.Context, id building.ID, playerID player.ID, assigned bool) (building.Building, error) {
+	item, err := s.requireOwned(ctx, id, playerID)
+	if err != nil {
+		return building.Building{}, err
+	}
+	if item.Type != building.TypeTower {
+		return building.Building{}, apperror.New(apperror.Validation, "building is not a watchtower")
+	}
+	if item.TowerWatchkeeperAssigned == assigned {
+		return item, nil
+	}
+	if assigned {
+		if (item.State != building.StateActive && item.State != building.StateDamaged) || item.Health <= 0 {
+			return building.Building{}, apperror.New(apperror.Conflict, "watchtower must be active")
+		}
+		if s.economy == nil {
+			return building.Building{}, apperror.New(apperror.Conflict, "population service is unavailable")
+		}
+		if err := s.reservePopulation(ctx, playerID, 1, "tower:watchkeeper:"+string(id)); err != nil {
+			return building.Building{}, err
+		}
+	} else if err := s.releasePopulation(ctx, playerID, 1, "tower:watchkeeper:release:"+string(id)); err != nil {
+		return building.Building{}, err
+	}
+	item.TowerWatchkeeperAssigned = assigned
+	item.UpdatedAt = s.now()
+	if err := s.buildings.Update(ctx, item); err != nil {
+		return building.Building{}, err
+	}
+	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item})
+	return item, nil
+}
+
 func (s *BuildingService) reloadTrap(ctx context.Context, id building.ID, playerID player.ID) (building.Building, error) {
 	item, err := s.requireOwned(ctx, id, playerID)
 	if err != nil {
@@ -719,6 +752,9 @@ func (s *BuildingService) demolish(ctx context.Context, id building.ID, playerID
 	if catalog.IsDefenseWeapon(item.Type) && item.CannonEnabled {
 		releasedPopulation++
 	}
+	if item.Type == building.TypeTower && item.TowerWatchkeeperAssigned {
+		releasedPopulation++
+	}
 	if s.economy != nil && s.economy.repo != nil {
 		jobs, err := s.economy.repo.ListProductionJobs(ctx, playerID)
 		if err != nil {
@@ -823,6 +859,11 @@ func (s *BuildingService) cancel(ctx context.Context, id building.ID, playerID p
 	}
 	if catalog.IsDefenseWeapon(item.Type) && item.CannonEnabled {
 		if err := s.releasePopulation(ctx, playerID, 1, "cannon:garrison:cancel:"+string(item.ID)); err != nil {
+			return err
+		}
+	}
+	if item.Type == building.TypeTower && item.TowerWatchkeeperAssigned {
+		if err := s.releasePopulation(ctx, playerID, 1, "tower:watchkeeper:cancel:"+string(item.ID)); err != nil {
 			return err
 		}
 	}

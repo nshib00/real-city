@@ -125,7 +125,7 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 }
 
 func towerActive(tower building.Building) bool {
-	if tower.Type != building.TypeTower || tower.OwnerID == "" || tower.Level < 1 || tower.Level > len(towerRadii) ||
+	if tower.Type != building.TypeTower || !tower.TowerWatchkeeperAssigned || tower.OwnerID == "" || tower.Level < 1 || tower.Level > len(towerRadii) ||
 		(tower.State != building.StateActive && tower.State != building.StateDamaged) {
 		return false
 	}
