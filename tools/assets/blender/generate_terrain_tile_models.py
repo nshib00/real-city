@@ -11,7 +11,7 @@ from mathutils import Vector
 
 ROOT=Path(__file__).resolve().parents[3]
 OUT_DIR=ROOT/'frontend/public/assets/terrain/tiles'
-TERRAIN=('grass','forest','forest_thinned','forest_sparse','water','mountain','road','oil_well','ruins')
+TERRAIN=('grass','forest','forest_thinned','forest_sparse','water','mountain','oil_well','ruins')
 spec=importlib.util.spec_from_file_location('terrain_geometry',Path(__file__).with_name('regenerate_early_housing.py'))
 H=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(H)
@@ -123,17 +123,6 @@ def mountain():
     for x,y in ((1.2,-.8),(-1.3,.8)): tuft(x,y)
 
 
-def road():
-    base()
-    H.box('road_lane_x',(0,0,.008),(3.6,.94,.016),'earth',0)
-    H.box('road_lane_y',(0,0,.009),(.94,3.6,.018),'earth',0)
-    for axis in range(2):
-        for side in (-1,1):
-            for step in (-1.42,-1.06,-.70,.70,1.06,1.42):
-                x,y=(step,side*.48) if axis==0 else (side*.48,step)
-                H.box('road_edging',(x,y,.045),(.27,.12,.08) if axis==0 else (.12,.27,.08),'stone',.025)
-
-
 def oil_well():
     base()
     rock('broken_earth_lip',(-.18,-.03,.035),(1.02,.76,.045),'earth',8)
@@ -188,13 +177,13 @@ def prepare():
     delta=world_to_camera_view(SCENE,SCENE.camera,Vector((0,0,0))).y-initial
     SCENE.camera.data.shift_y=((1-320/512)-initial)*.1/delta
     builders={'grass':meadow,'forest':lambda:forest(3),'forest_thinned':lambda:forest(2),
-              'forest_sparse':lambda:forest(1),'water':water,'mountain':mountain,'road':road,
+              'forest_sparse':lambda:forest(1),'water':water,'mountain':mountain,
               'oil_well':oil_well,'ruins':ruins}
     for name,builder in builders.items():
         c=bpy.data.collections.new('terrain_tile_'+name);SCENE.collection.children.link(c)
         COLLECTIONS[name]=c;H.COL=c;H.PREFIX='SM_terrain_'+name
         builder();H.clean_meshes(c)
-    print('Prepared nine terrain models in a separate scene')
+    print('Prepared eight terrain models in a separate scene')
 
 
 def show(name):

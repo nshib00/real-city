@@ -53,9 +53,9 @@ describe('terrain textures', () => {
     ]))
   })
 
-  it('provides a regenerated road sprite', () => {
+  it('uses the new ground-road model for legacy road terrain', () => {
     expect(hasTerrainTexture({ terrain: 'road' })).toBe(true)
-    expect(terrainTextureUrl({ terrain: 'road' })).toBe('/assets/terrain/tiles/runtime/road.webp')
+    expect(terrainTextureUrl({ terrain: 'road' })).toBe('/assets/buildings/roads/ground_road/ground_road_cross_active.png?v=road-kits-v2-2026-11-02')
   })
 
   it('places raised terrain in the depth-sorted object layer', () => {

@@ -60,16 +60,6 @@
     ]
   },
   {
-    "terrain": "road",
-    "triangles": 1092,
-    "alpha_bounds": [
-      15,
-      199,
-      497,
-      443
-    ]
-  },
-  {
     "terrain": "oil_well",
     "triangles": 3388,
     "alpha_bounds": [

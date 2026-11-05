@@ -48,12 +48,6 @@
       "png": "mountain.png",
       "glb": "mountain.glb"
     },
-    "road": {
-      "triangles": 1092,
-      "objects": 27,
-      "png": "road.png",
-      "glb": "road.glb"
-    },
     "oil_well": {
       "triangles": 3388,
       "objects": 53,

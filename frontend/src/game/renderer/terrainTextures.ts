@@ -1,4 +1,5 @@
 import type { WorldTile } from '../../shared/contracts'
+import { ROAD_KITS_REVISION } from '../renderers/buildingAssetManifests'
 
 const RUINS_VARIANTS = [
   'ruins_town_square',
@@ -40,6 +41,9 @@ export const TERRAIN_SPRITE = {
 export function terrainRuntimeTextureUrl(tile: TerrainTile) {
   if (!TEXTURED_TERRAINS.has(tile.terrain)) {
     return undefined
+  }
+  if (tile.terrain === 'road') {
+    return `/assets/buildings/roads/ground_road/ground_road_cross_active.png?v=${ROAD_KITS_REVISION}`
   }
   let sprite: string = tile.terrain
   if (tile.terrain === 'forest') {

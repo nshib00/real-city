@@ -23,7 +23,7 @@ Blender-генератор для полноценного набора PNG:
 blender --background --python tools/assets/blender/generate_terrain_tile_models.py
 ```
 
-Blender-рендеры сохраняются рядом как `grass.png`, `forest.png`, `water.png`, `mountain.png`, `road.png`, `oil_well.png`, `ruins.png` и две плотности леса.
+Blender-рендеры сохраняются рядом как `grass.png`, `forest.png`, `water.png`, `mountain.png`, `oil_well.png`, `ruins.png` и две плотности леса. Клетка местности `road` использует новый `ground_road_cross_active.png` из набора построек дорог; прежний отдельный тайл дороги удалён.
 Идентификаторы совпадают с terrain API, поэтому эти PNG можно подключать без переименования.
 
 Горы (`mountain`) на карте используют три варианта из `mountain_detail_staging/`:

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public/assets/terrain/tiles')
 const output = path.join(root, 'runtime')
 const variants = [
-  'grass', 'forest', 'forest_thinned', 'forest_sparse', 'water', 'road', 'oil_well', 'ruins',
+  'grass', 'forest', 'forest_thinned', 'forest_sparse', 'water', 'oil_well', 'ruins',
   'ruins_town_square', 'ruins_archive', 'ruins_mint', 'ruins_storage', 'ruins_greenhouse',
   'ruins_water_station', 'ruins_bastion', 'ruins_mechanic_workshop', 'ruins_wind_shrine',
   'ruins_ore_obelisk', 'ruins_rift_watch', 'ruins_river_lighthouse',

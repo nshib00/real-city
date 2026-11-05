@@ -30,11 +30,6 @@
     "nonmanifold_edges": 0
   },
   {
-    "terrain": "road",
-    "triangles": 1092,
-    "nonmanifold_edges": 0
-  },
-  {
     "terrain": "oil_well",
     "triangles": 3388,
     "nonmanifold_edges": 0

@@ -9,7 +9,7 @@ from validate_early_housing import glb_document
 
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'frontend/public/assets/terrain/tiles'
-NAMES=('grass','forest','forest_thinned','forest_sparse','water','mountain','road','oil_well','ruins')
+NAMES=('grass','forest','forest_thinned','forest_sparse','water','mountain','oil_well','ruins')
 
 
 def validate():
@@ -23,7 +23,7 @@ def validate():
     with tarfile.open('/tmp/real-city-terrain-before.tar') as backup:
         for i,name in enumerate(NAMES):
             path=OUT/(name+'.png')
-            if name not in ('road','forest_thinned','forest_sparse'):
+            if name not in ('forest_thinned','forest_sparse'):
                 assert backup.extractfile(str(path.relative_to(ROOT))).read()!=path.read_bytes(),name
             with Image.open(path) as im:
                 assert im.mode=='RGBA' and im.size==(512,512),name
