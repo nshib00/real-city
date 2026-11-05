@@ -2740,7 +2740,27 @@
       ],
       "firstLevel": true,
       "upgradeTo": [],
-      "health": 100
+      "health": 100,
+      "upgradeLevels": [
+        { "level": 1, "buildSeconds": 240, "population": 2, "health": 100, "cost": [
+          { "resource": "coins", "amount": 15000 }, { "resource": "wood", "amount": 140 }, { "resource": "stone", "amount": 90 }, { "resource": "planks", "amount": 40 }, { "resource": "iron_ingot", "amount": 12 }
+        ] },
+        { "level": 2, "buildSeconds": 480, "population": 2, "health": 150, "cost": [
+          { "resource": "coins", "amount": 36000 }, { "resource": "wood", "amount": 240 }, { "resource": "stone", "amount": 160 }, { "resource": "planks", "amount": 80 }, { "resource": "iron_ingot", "amount": 30 }
+        ] },
+        { "level": 3, "buildSeconds": 900, "population": 3, "health": 220, "cost": [
+          { "resource": "coins", "amount": 60000 }, { "resource": "stone_block", "amount": 120 }, { "resource": "iron_ingot", "amount": 36 }, { "resource": "glass", "amount": 18 }, { "resource": "mechanism", "amount": 12 }
+        ] },
+        { "level": 4, "buildSeconds": 1500, "population": 3, "health": 300, "cost": [
+          { "resource": "coins", "amount": 100000 }, { "resource": "stone_block", "amount": 180 }, { "resource": "glass", "amount": 30 }, { "resource": "copper_parts", "amount": 24 }, { "resource": "mechanism", "amount": 28 }
+        ] },
+        { "level": 5, "buildSeconds": 2400, "population": 4, "health": 400, "cost": [
+          { "resource": "coins", "amount": 160000 }, { "resource": "stone_block", "amount": 240 }, { "resource": "copper_parts", "amount": 48 }, { "resource": "mechanism", "amount": 45 }, { "resource": "electronics", "amount": 12 }
+        ] },
+        { "level": 6, "buildSeconds": 3600, "population": 4, "health": 520, "cost": [
+          { "resource": "coins", "amount": 240000 }, { "resource": "stone_block", "amount": 340 }, { "resource": "copper_parts", "amount": 72 }, { "resource": "mechanism", "amount": 65 }, { "resource": "electronics", "amount": 30 }
+        ] }
+      ]
     },
     {
       "type": "defense_cannon",
