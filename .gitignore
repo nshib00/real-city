@@ -99,6 +99,13 @@ frontend/public/assets/**/work/
 !frontend/public/assets/buildings/housing/villa/*.glb
 !frontend/public/assets/buildings/center/town_hall/*.glb
 !frontend/public/assets/buildings/center/town_hall/*.blend
+# Editable and runtime assets for the three modular road kits.
+!frontend/public/assets/buildings/roads/ground_road/*.glb
+!frontend/public/assets/buildings/roads/ground_road/*.blend
+!frontend/public/assets/buildings/roads/common_road/*.glb
+!frontend/public/assets/buildings/roads/common_road/*.blend
+!frontend/public/assets/buildings/roads/paved_road/*.glb
+!frontend/public/assets/buildings/roads/paved_road/*.blend
 # Monster master files and animated runtime previews.
 !frontend/public/assets/monsters/*/*.blend
 !frontend/public/assets/monsters/*/*.glb
@@ -158,6 +165,7 @@ frontend/public/assets/**/work/
 *.ogg
 *.mp3
 !tools/audio/master/*.wav
+!tools/audio/sources/**
 !frontend/public/assets/audio/build/
 !frontend/public/assets/audio/**/*.mp3
 tools/audio/review/
@@ -189,3 +197,25 @@ output/playwright/
 *.db
 *.db-shm
 *.db-wal
+
+# Автоматические Blender-бэкапы и резервные каталоги
+*.blend[0-9]
+**/backup_*/
+**/*.backup-*/
+/tools/assets/backups/
+
+# Воспроизводимые обзоры — после переноса выбранных итоговых кадров
+/frontend/public/assets/**/*_contact_sheet.png
+/frontend/public/assets/**/*_review.png
+/frontend/public/assets/**/*_viewport*.png
+/frontend/public/assets/**/*_test/
+/frontend/public/assets/**/preview/
+
+# Локальные инструменты и результаты прогонов
+/blender-*-linux-*/
+/.playwright-cli/
+/frontend/rollout-results/
+/tools/assets/staging/
+
+# Локальные исходные WAV-кандидаты: в репозитории остаются только сведения об источниках.
+/tools/assets/audio/defense-candidates/*.wav
