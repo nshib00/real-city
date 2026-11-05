@@ -1,14 +1,22 @@
 package httpadapter
 
+import "strings"
+
 func OpenAPISpec() map[string]any {
-	return map[string]any{
+	spec := map[string]any{
 		"openapi": "3.0.3",
 		"info": map[string]any{
 			"title":   "Real City API",
 			"version": "0.12.0",
 		},
 		"servers": []map[string]any{{"url": "/api/v1"}},
+		"security": []map[string][]string{{"bearerAuth": {}}},
 		"paths": map[string]any{
+			"/health":                           map[string]any{"get": rootOperation("Liveness probe")},
+			"/healthz":                          map[string]any{"get": rootOperation("Liveness probe (legacy alias)")},
+			"/ready":                            map[string]any{"get": rootOperation("Readiness probe; checks database connectivity when configured")},
+			"/metrics":                          map[string]any{"get": rootOperation("Prometheus metrics")},
+			"/swagger/openapi.json":             map[string]any{"get": rootOperation("OpenAPI contract document")},
 			"/alliances/me":                      map[string]any{"delete": operation("Leave alliance; last leader dissolves it"), "get": operation("Alliance profile")},
 			"/alliances/members/{id}":            map[string]any{"delete": operation("Kick a lower-ranked alliance member")},
 			"/buildings/{id}":                    map[string]any{"delete": operation("Delete building"), "get": operation("Get building"), "patch": operation("Update building")},
@@ -71,7 +79,7 @@ func OpenAPISpec() map[string]any {
 			"/fields/windleaf/advance":           map[string]any{"post": operation("POST /fields/windleaf/advance")},
 			"/fields/windleaf/harvest":           map[string]any{"post": operation("Harvest windleaf field")},
 			"/monster-loot/{id}/claim":           map[string]any{"post": operation("Claim public monster loot drop")},
-			"/monsters/{id}/weapons":             map[string]any{"post": operation("Use weapon against monster")},
+			"/monsters/{id}/weapons":             map[string]any{"post": idempotentOperation("Use weapon against monster")},
 			"/players/me/presence":               map[string]any{"post": operation("POST /players/me/presence")},
 			"/world/tiles/chop-forest":           map[string]any{"post": operation("Chop forest tile")},
 		},
@@ -92,6 +100,36 @@ func OpenAPISpec() map[string]any {
 			},
 		},
 	}
+	// These operations are intentionally reachable without a player session.
+	publicOperations := map[string][]string{
+		"/auth/register": {"post"}, "/auth/login": {"post"}, "/auth/refresh": {"post"},
+		"/world": {"get"}, "/world/chunks": {"get"}, "/world/viewport": {"get"},
+		"/buildings/catalog": {"get"}, "/resources/nodes": {"get"},
+		"/production/recipes": {"get"}, "/monsters/catalog": {"get"},
+		"/monsters": {"get"}, "/monster-loot": {"get"}, "/threats": {"get"},
+		"/combat/rules": {"get"}, "/players/levels": {"get"}, "/market/orders": {"get"},
+	}
+	paths := spec["paths"].(map[string]any)
+	for path, raw := range paths {
+		if !strings.Contains(path, "{id}") {
+			continue
+		}
+		for _, rawOperation := range raw.(map[string]any) {
+			operation := rawOperation.(map[string]any)
+			parameters, _ := operation["parameters"].([]map[string]any)
+			operation["parameters"] = append(parameters, map[string]any{
+				"name": "id", "in": "path", "required": true,
+				"schema": map[string]any{"type": "string"},
+			})
+		}
+	}
+	for path, methods := range publicOperations {
+		operations := paths[path].(map[string]any)
+		for _, method := range methods {
+			operations[method].(map[string]any)["security"] = []map[string][]string{}
+		}
+	}
+	return spec
 }
 
 func path(method string, summary string) map[string]any {
@@ -105,9 +143,18 @@ func operation(summary string) map[string]any {
 			"200": map[string]any{"description": "OK"},
 			"400": map[string]any{"description": "Bad request"},
 			"401": map[string]any{"description": "Unauthorized"},
+			"409": map[string]any{"description": "Conflict"},
+			"429": map[string]any{"description": "Rate limit exceeded"},
 			"500": map[string]any{"description": "Internal error"},
 		},
 	}
+}
+
+func rootOperation(summary string) map[string]any {
+	item := operation(summary)
+	item["servers"] = []map[string]any{{"url": "/"}}
+	item["security"] = []map[string][]string{}
+	return item
 }
 
 func idempotentOperation(summary string) map[string]any {
@@ -117,7 +164,7 @@ func idempotentOperation(summary string) map[string]any {
 		"in":          "header",
 		"required":    true,
 		"description": "Required for unsafe POST operations that create durable gameplay state.",
-		"schema":      map[string]any{"type": "string", "minLength": 8},
+		"schema":      map[string]any{"type": "string", "minLength": 8, "maxLength": 128},
 	}}
 	return item
 }

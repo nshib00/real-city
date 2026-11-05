@@ -51,7 +51,7 @@ function needsIdempotencyKey(path: string, method = 'GET') {
   if (method.toUpperCase() !== 'POST') {
     return false
   }
-  return path === '/buildings' || path === '/combat/monsters' || /^\/buildings\/[^/]+\/weapons$/.test(path) || path === '/market/orders' || path === '/alliances/invites'
+  return path === '/buildings' || path === '/combat/monsters' || /^\/(?:buildings|monsters)\/[^/]+\/weapons$/.test(path) || path === '/market/orders' || path === '/alliances/invites' || path === '/alliances/treasury/spend'
 }
 
 function createIdempotencyKey() {

@@ -1,422 +1,2321 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "Real City API",
-    "version": "0.12.0"
-  },
-  "servers": [
-    {
-      "url": "/api/v1"
-    }
-  ],
-  "paths": {
-    "/alliances/me": {
-      "delete": {
-        "summary": "Leave alliance; last leader dissolves it"
-      },
-      "get": {
-        "summary": "Alliance profile"
-      }
-    },
-    "/alliances/members/{id}": {
-      "delete": {
-        "summary": "Kick a lower-ranked alliance member"
-      }
-    },
-    "/buildings/{id}": {
-      "delete": {
-        "summary": "Delete building"
-      },
-      "get": {
-        "summary": "Get building"
-      },
-      "patch": {
-        "summary": "Update building"
-      }
-    },
-    "/market/orders/{id}": {
-      "delete": {
-        "summary": "Cancel market order"
-      }
-    },
-    "/players/me": {
-      "delete": {
-        "summary": "Delete current player"
-      },
-      "get": {
-        "summary": "Current player profile"
-      },
-      "patch": {
-        "summary": "Update current player profile"
-      }
-    },
-    "/admin/accounts/audit": {
-      "get": {
-        "summary": "GET /admin/accounts/audit"
-      }
-    },
-    "/admin/audit": {
-      "get": {
-        "summary": "GET /admin/audit"
-      }
-    },
-    "/admin/chat/messages": {
-      "get": {
-        "summary": "GET /admin/chat/messages"
-      }
-    },
-    "/admin/players": {
-      "get": {
-        "summary": "GET /admin/players"
-      }
-    },
-    "/admin/status": {
-      "get": {
-        "summary": "Administrator-only process diagnostics"
-      }
-    },
-    "/buildings": {
-      "get": {
-        "summary": "List player buildings or visible world buildings"
-      },
-      "post": {
-        "summary": "Place building"
-      }
-    },
-    "/buildings/catalog": {
-      "get": {
-        "summary": "Building catalog; scope=all includes every type and level"
-      }
-    },
-    "/buildings/{id}/repair": {
-      "get": {
-        "summary": "Repair price, worker reservation, duration and pending job"
-      }
-    },
-    "/chat/messages": {
-      "get": {
-        "summary": "List chat messages"
-      },
-      "post": {
-        "summary": "Send chat message"
-      }
-    },
-    "/combat/attacks": {
-      "get": {
-        "summary": "List pending weapon attacks"
-      }
-    },
-    "/combat/history": {
-      "get": {
-        "summary": "GET /combat/history"
-      }
-    },
-    "/combat/rules": {
-      "get": {
-        "summary": "PvP rules and monster creation cost"
-      }
-    },
-    "/economy/inventory": {
-      "get": {
-        "summary": "Inventory"
-      }
-    },
-    "/economy/population": {
-      "get": {
-        "summary": "Population summary"
-      }
-    },
-    "/economy/transactions": {
-      "get": {
-        "summary": "Economy transactions"
-      }
-    },
-    "/market/orders": {
-      "get": {
-        "summary": "List market orders"
-      },
-      "post": {
-        "summary": "Create market order"
-      }
-    },
-    "/monster-loot": {
-      "get": {
-        "summary": "List public monster loot drops"
-      }
-    },
-    "/monsters": {
-      "get": {
-        "summary": "List monsters"
-      }
-    },
-    "/monsters/catalog": {
-      "get": {
-        "summary": "Monster catalog"
-      }
-    },
-    "/monsters/{id}": {
-      "get": {
-        "summary": "Monster details"
-      }
-    },
-    "/players/levels": {
-      "get": {
-        "summary": "Shared catalog of player levels and planned unlocks"
-      }
-    },
-    "/players/nearby": {
-      "get": {
-        "summary": "GET /players/nearby"
-      }
-    },
-    "/players/{id}": {
-      "get": {
-        "summary": "Public player profile"
-      }
-    },
-    "/players/{id}/profile": {
-      "get": {
-        "summary": "Public profile with approximate settlement and aggregate scores"
-      }
-    },
-    "/production/jobs": {
-      "get": {
-        "summary": "List production jobs"
-      },
-      "post": {
-        "summary": "Start production"
-      }
-    },
-    "/production/recipes": {
-      "get": {
-        "summary": "Production recipes"
-      }
-    },
-    "/resources/nodes": {
-      "get": {
-        "summary": "Resource nodes"
-      }
-    },
-    "/threats": {
-      "get": {
-        "summary": "Threats"
-      }
-    },
-    "/world": {
-      "get": {
-        "summary": "Current world summary"
-      }
-    },
-    "/world/chunks": {
-      "get": {
-        "summary": "Visible chunks"
-      }
-    },
-    "/world/viewport": {
-      "get": {
-        "summary": "Viewport snapshot"
-      }
-    },
-    "/admin/chat/messages/{id}": {
-      "patch": {
-        "summary": "PATCH /admin/chat/messages/{id}"
-      }
-    },
-    "/admin/players/{id}": {
-      "patch": {
-        "summary": "PATCH /admin/players/{id}"
-      }
-    },
-    "/alliances/invites/{id}": {
-      "patch": {
-        "summary": "Accept or decline invite"
-      }
-    },
-    "/alliances/roles": {
-      "patch": {
-        "summary": "Set alliance role"
-      }
-    },
-    "/chat/read": {
-      "patch": {
-        "summary": "Advance own visible channel read cursor"
-      }
-    },
-    "/players/me/password": {
-      "patch": {
-        "summary": "Change password"
-      }
-    },
-    "/production/jobs/{id}": {
-      "patch": {
-        "summary": "Patch production job"
-      }
-    },
-    "/resources/nodes/{id}": {
-      "patch": {
-        "summary": "Claim or harvest resource node"
-      }
-    },
-    "/alliances": {
-      "post": {
-        "summary": "Create alliance"
-      }
-    },
-    "/alliances/buffs": {
-      "post": {
-        "summary": "Upgrade alliance buff"
-      }
-    },
-    "/alliances/invites": {
-      "post": {
-        "summary": "Create alliance invite"
-      }
-    },
-    "/alliances/members/{id}/leadership": {
-      "post": {
-        "summary": "Transfer alliance leadership"
-      }
-    },
-    "/alliances/territory-aid": {
-      "post": {
-        "summary": "Add alliance territory aid"
-      }
-    },
-    "/alliances/treasury/donations": {
-      "post": {
-        "summary": "Donate to alliance treasury"
-      }
-    },
-    "/alliances/treasury/spend": {
-      "post": {
-        "summary": "Transfer treasury resources to a member"
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "summary": "Login player"
-      }
-    },
-    "/auth/logout": {
-      "post": {
-        "summary": "Logout current session"
-      }
-    },
-    "/auth/refresh": {
-      "post": {
-        "summary": "Refresh tokens"
-      }
-    },
-    "/auth/register": {
-      "post": {
-        "summary": "Register player"
-      }
-    },
-    "/buildings/{id}/weapons": {
-      "post": {
-        "summary": "Use inventory weapon against rival building",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Idempotency-Key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 8,
-              "maxLength": 128
-            }
-          }
-        ]
-      }
-    },
-    "/combat/monsters": {
-      "post": {
-        "summary": "Create monster against rival buildings",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Idempotency-Key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 8,
-              "maxLength": 128
-            }
-          }
-        ]
-      }
-    },
-    "/fields/advance": {
-      "post": {
-        "summary": "POST /fields/advance"
-      }
-    },
-    "/fields/harvest": {
-      "post": {
-        "summary": "POST /fields/harvest"
-      }
-    },
-    "/fields/windleaf/advance": {
-      "post": {
-        "summary": "POST /fields/windleaf/advance"
-      }
-    },
-    "/fields/windleaf/harvest": {
-      "post": {
-        "summary": "Harvest windleaf field"
-      }
-    },
-    "/monster-loot/{id}/claim": {
-      "post": {
-        "summary": "Claim public monster loot drop"
-      }
-    },
-    "/monsters/{id}/weapons": {
-      "post": {
-        "summary": "Use weapon against monster"
-      }
-    },
-    "/players/me/presence": {
-      "post": {
-        "summary": "POST /players/me/presence"
-      }
-    },
-    "/world/tiles/chop-forest": {
-      "post": {
-        "summary": "Chop forest tile"
-      }
-    }
-  },
   "components": {
     "schemas": {
       "Error": {
-        "type": "object",
-        "required": [
-          "kind",
-          "message"
-        ],
         "properties": {
+          "fields": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
           "kind": {
             "type": "string"
           },
           "message": {
             "type": "string"
-          },
-          "fields": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
           }
-        }
+        },
+        "required": [
+          "kind",
+          "message"
+        ],
+        "type": "object"
       }
     },
     "securitySchemes": {
       "bearerAuth": {
-        "type": "http",
+        "bearerFormat": "JWT",
         "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "type": "http"
       }
     }
-  }
+  },
+  "info": {
+    "title": "Real City API",
+    "version": "0.12.0"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/admin/accounts/audit": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "GET /admin/accounts/audit"
+      }
+    },
+    "/admin/audit": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "GET /admin/audit"
+      }
+    },
+    "/admin/chat/messages": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "GET /admin/chat/messages"
+      }
+    },
+    "/admin/chat/messages/{id}": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "PATCH /admin/chat/messages/{id}"
+      }
+    },
+    "/admin/players": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "GET /admin/players"
+      }
+    },
+    "/admin/players/{id}": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "PATCH /admin/players/{id}"
+      }
+    },
+    "/admin/status": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Administrator-only process diagnostics"
+      }
+    },
+    "/alliances": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Create alliance"
+      }
+    },
+    "/alliances/buffs": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Upgrade alliance buff"
+      }
+    },
+    "/alliances/invites": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Create alliance invite"
+      }
+    },
+    "/alliances/invites/{id}": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Accept or decline invite"
+      }
+    },
+    "/alliances/me": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Leave alliance; last leader dissolves it"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Alliance profile"
+      }
+    },
+    "/alliances/members/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Kick a lower-ranked alliance member"
+      }
+    },
+    "/alliances/members/{id}/leadership": {
+      "post": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Transfer alliance leadership"
+      }
+    },
+    "/alliances/roles": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Set alliance role"
+      }
+    },
+    "/alliances/territory-aid": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Add alliance territory aid"
+      }
+    },
+    "/alliances/treasury/donations": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Donate to alliance treasury"
+      }
+    },
+    "/alliances/treasury/spend": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Transfer treasury resources to a member"
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Login player"
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Logout current session"
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Refresh tokens"
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Register player"
+      }
+    },
+    "/buildings": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "List player buildings or visible world buildings"
+      },
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Place building"
+      }
+    },
+    "/buildings/catalog": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Building catalog; scope=all includes every type and level"
+      }
+    },
+    "/buildings/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Delete building"
+      },
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Get building"
+      },
+      "patch": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Update building"
+      }
+    },
+    "/buildings/{id}/repair": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Repair price, worker reservation, duration and pending job"
+      }
+    },
+    "/buildings/{id}/weapons": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Use inventory weapon against rival building"
+      }
+    },
+    "/chat/messages": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "List chat messages"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Send chat message"
+      }
+    },
+    "/chat/read": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Advance own visible channel read cursor"
+      }
+    },
+    "/combat/attacks": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "List pending weapon attacks"
+      }
+    },
+    "/combat/history": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "GET /combat/history"
+      }
+    },
+    "/combat/monsters": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Create monster against rival buildings"
+      }
+    },
+    "/combat/rules": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "PvP rules and monster creation cost"
+      }
+    },
+    "/economy/inventory": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Inventory"
+      }
+    },
+    "/economy/population": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Population summary"
+      }
+    },
+    "/economy/transactions": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Economy transactions"
+      }
+    },
+    "/fields/advance": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "POST /fields/advance"
+      }
+    },
+    "/fields/harvest": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "POST /fields/harvest"
+      }
+    },
+    "/fields/windleaf/advance": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "POST /fields/windleaf/advance"
+      }
+    },
+    "/fields/windleaf/harvest": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Harvest windleaf field"
+      }
+    },
+    "/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "servers": [
+          {
+            "url": "/"
+          }
+        ],
+        "summary": "Liveness probe"
+      }
+    },
+    "/healthz": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "servers": [
+          {
+            "url": "/"
+          }
+        ],
+        "summary": "Liveness probe (legacy alias)"
+      }
+    },
+    "/market/orders": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "List market orders"
+      },
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Create market order"
+      }
+    },
+    "/market/orders/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Cancel market order"
+      }
+    },
+    "/metrics": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "servers": [
+          {
+            "url": "/"
+          }
+        ],
+        "summary": "Prometheus metrics"
+      }
+    },
+    "/monster-loot": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "List public monster loot drops"
+      }
+    },
+    "/monster-loot/{id}/claim": {
+      "post": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Claim public monster loot drop"
+      }
+    },
+    "/monsters": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "List monsters"
+      }
+    },
+    "/monsters/catalog": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Monster catalog"
+      }
+    },
+    "/monsters/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Monster details"
+      }
+    },
+    "/monsters/{id}/weapons": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Required for unsafe POST operations that create durable gameplay state.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 8,
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Use weapon against monster"
+      }
+    },
+    "/players/levels": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Shared catalog of player levels and planned unlocks"
+      }
+    },
+    "/players/me": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Delete current player"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Current player profile"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Update current player profile"
+      }
+    },
+    "/players/me/password": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Change password"
+      }
+    },
+    "/players/me/presence": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "POST /players/me/presence"
+      }
+    },
+    "/players/nearby": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "GET /players/nearby"
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Public player profile"
+      }
+    },
+    "/players/{id}/profile": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Public profile with approximate settlement and aggregate scores"
+      }
+    },
+    "/production/jobs": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "List production jobs"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Start production"
+      }
+    },
+    "/production/jobs/{id}": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Patch production job"
+      }
+    },
+    "/production/recipes": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Production recipes"
+      }
+    },
+    "/ready": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "servers": [
+          {
+            "url": "/"
+          }
+        ],
+        "summary": "Readiness probe; checks database connectivity when configured"
+      }
+    },
+    "/resources/nodes": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Resource nodes"
+      }
+    },
+    "/resources/nodes/{id}": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Claim or harvest resource node"
+      }
+    },
+    "/swagger/openapi.json": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "servers": [
+          {
+            "url": "/"
+          }
+        ],
+        "summary": "OpenAPI contract document"
+      }
+    },
+    "/threats": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Threats"
+      }
+    },
+    "/world": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Current world summary"
+      }
+    },
+    "/world/chunks": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Visible chunks"
+      }
+    },
+    "/world/tiles/chop-forest": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "summary": "Chop forest tile"
+      }
+    },
+    "/world/viewport": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        },
+        "security": [],
+        "summary": "Viewport snapshot"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ]
 }

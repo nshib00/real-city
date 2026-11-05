@@ -47,7 +47,7 @@ func Idempotency(store IdempotencyStore, ttl time.Duration) Middleware {
 				next.ServeHTTP(w, r)
 				return
 			}
-			key := r.Header.Get("Idempotency-Key")
+			key := strings.TrimSpace(r.Header.Get("Idempotency-Key"))
 			if len(key) < 8 || len(key) > 128 {
 				writeMiddlewareError(w, http.StatusBadRequest, apperror.New(apperror.Validation, "Idempotency-Key must contain 8 to 128 characters"))
 				return
@@ -64,7 +64,9 @@ func Idempotency(store IdempotencyStore, ttl time.Duration) Middleware {
 			}
 			identity := sha256.Sum256([]byte(actor + "\x00" + r.Method + "\x00" + r.URL.Path + "\x00" + key))
 			cacheKey := hex.EncodeToString(identity[:])
-			requestHash := sha256.Sum256(body)
+			// Query parameters and content type can change the meaning of a POST as
+			// much as its body. Bind retries to the full request semantics.
+			requestHash := sha256.Sum256([]byte(r.URL.RawQuery + "\x00" + r.Header.Get("Content-Type") + "\x00" + string(body)))
 			fingerprint := hex.EncodeToString(requestHash[:])
 			if locker, ok := store.(IdempotencyLocker); ok {
 				unlock, err := locker.Lock(r.Context(), cacheKey)
@@ -211,10 +213,10 @@ func requiresIdempotency(r *http.Request) bool {
 		return false
 	}
 	switch r.URL.Path {
-	case "/api/v1/buildings", "/api/v1/combat/monsters", "/api/v1/market/orders", "/api/v1/alliances/invites":
+	case "/api/v1/buildings", "/api/v1/combat/monsters", "/api/v1/market/orders", "/api/v1/alliances/invites", "/api/v1/alliances/treasury/spend":
 		return true
 	default:
-		return strings.HasPrefix(r.URL.Path, "/api/v1/buildings/") && strings.HasSuffix(r.URL.Path, "/weapons")
+		return (strings.HasPrefix(r.URL.Path, "/api/v1/buildings/") || strings.HasPrefix(r.URL.Path, "/api/v1/monsters/")) && strings.HasSuffix(r.URL.Path, "/weapons")
 	}
 }
 

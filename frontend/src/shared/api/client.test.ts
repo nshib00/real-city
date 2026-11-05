@@ -24,12 +24,22 @@ describe('api client', () => {
 
   it('adds idempotency keys to unsafe durable POST routes', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }))
+    const routes = [
+      '/buildings',
+      '/buildings/building-1/weapons',
+      '/monsters/monster-1/weapons',
+      '/combat/monsters',
+      '/market/orders',
+      '/alliances/invites',
+      '/alliances/treasury/spend',
+    ]
 
-    await request('/market/orders', { method: 'POST', body: JSON.stringify({}) })
+    for (const path of routes) await request(path, { method: 'POST', body: JSON.stringify({}) })
 
-    const init = fetchMock.mock.calls[0][1] as RequestInit
-    const headers = init.headers as Headers
-    expect(headers.get('Idempotency-Key')).toBeTruthy()
+    for (const [, init] of fetchMock.mock.calls) {
+      const headers = (init as RequestInit).headers as Headers
+      expect(headers.get('Idempotency-Key')).toBeTruthy()
+    }
   })
 
   it('preserves an attack key after refreshing an expired access token', async () => {

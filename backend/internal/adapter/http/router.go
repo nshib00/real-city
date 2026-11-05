@@ -136,7 +136,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("POST /api/v1/fields/windleaf/advance", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
 	mux.Handle("POST /api/v1/fields/windleaf/harvest", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
 	mux.Handle("GET /api/v1/monsters/{id}", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.Get)))
-	mux.Handle("POST /api/v1/monsters/{id}/weapons", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.UseWeapon)))
+	mux.Handle("POST /api/v1/monsters/{id}/weapons", idempotentAuth(monsterHandler.UseWeapon))
 	mux.Handle("GET /api/v1/combat/attacks", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.PendingWeapons)))
 	mux.Handle("GET /api/v1/combat/history", authenticated(deps.Tokens, http.HandlerFunc(combatHandler.History)))
 	mux.Handle("POST /api/v1/monster-loot/{id}/claim", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.ClaimLoot)))

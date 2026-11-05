@@ -7,6 +7,8 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"reflect"
+	"strings"
 	"testing"
 
 	jwtadapter "real-city/backend/internal/adapter/jwt"
@@ -71,41 +73,43 @@ func TestOpenAPIFreshness(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("swagger status = %d", rec.Code)
 	}
-	var runtimeSpec struct {
-		Paths map[string]any `json:"paths"`
-	}
+	var runtimeSpec map[string]any
 	if err := json.Unmarshal(rec.Body.Bytes(), &runtimeSpec); err != nil {
 		t.Fatalf("decode runtime openapi: %v", err)
 	}
 	fileSpec := readOpenAPIFile(t)
-	if len(fileSpec.Paths) != len(runtimeSpec.Paths) {
-		t.Fatal("OpenAPI path counts differ")
+	if !reflect.DeepEqual(fileSpec, runtimeSpec) {
+		t.Fatal("generated OpenAPI file differs from the runtime contract; run go run ./cmd/openapi-gen from backend/")
 	}
-	for path, raw := range fileSpec.Paths {
-		expected := raw.(map[string]any)
-		actualRaw, ok := runtimeSpec.Paths[path]
-		if !ok {
-			t.Fatalf("runtime missing %s", path)
-		}
-		actual := actualRaw.(map[string]any)
-		if len(expected) != len(actual) {
-			t.Fatalf("OpenAPI methods differ for %s", path)
-		}
-		for method, value := range expected {
-			got, ok := actual[method]
-			if !ok {
-				t.Fatalf("runtime missing %s %s", method, path)
+	paths := runtimeSpec["paths"].(map[string]any)
+	for path, raw := range paths {
+		operations := raw.(map[string]any)
+		for method := range operations {
+			if strings.Contains(path, "{id}") {
+				operation := operations[method].(map[string]any)
+				parameters, ok := operation["parameters"].([]any)
+				if !ok || len(parameters) == 0 {
+					t.Errorf("OpenAPI operation %s %s is missing the id path parameter", strings.ToUpper(method), path)
+				}
 			}
-			if value.(map[string]any)["summary"] != got.(map[string]any)["summary"] {
-				t.Fatalf("OpenAPI summary differs for %s %s", method, path)
+			requestPath := strings.ReplaceAll(path, "{id}", "contract-id")
+			if !strings.HasPrefix(path, "/health") && path != "/ready" && path != "/metrics" && path != "/swagger/openapi.json" {
+				requestPath = "/api/v1" + requestPath
+			}
+			req := httptest.NewRequest(strings.ToUpper(method), requestPath, nil)
+			rec := httptest.NewRecorder()
+			router.ServeHTTP(rec, req)
+			if rec.Code == http.StatusNotFound && strings.HasPrefix(rec.Header().Get("Content-Type"), "text/plain") {
+				t.Errorf("OpenAPI operation %s %s is not mounted in the router", strings.ToUpper(method), path)
+			}
+			if rec.Code == http.StatusMethodNotAllowed {
+				t.Errorf("OpenAPI operation %s %s is mounted with another method", strings.ToUpper(method), path)
 			}
 		}
 	}
 }
 
-type openAPIFile struct {
-	Paths map[string]any `json:"paths"`
-}
+type openAPIFile = map[string]any
 
 func readOpenAPIFile(t *testing.T) openAPIFile {
 	t.Helper()

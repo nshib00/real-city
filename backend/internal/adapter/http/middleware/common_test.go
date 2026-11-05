@@ -110,6 +110,62 @@ func TestIdempotencyRejectsChangedBody(t *testing.T) {
 	}
 }
 
+func TestIdempotencyRejectsChangedQuery(t *testing.T) {
+	calls := 0
+	handler := Chain(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		w.WriteHeader(http.StatusCreated)
+	}), Idempotency(NewMemoryIdempotencyStore(time.Now), time.Hour))
+	for i, query := range []string{"mode=buy", "mode=sell"} {
+		req := httptest.NewRequest(http.MethodPost, "/api/v1/market/orders?"+query, strings.NewReader(`{"resource":"wood"}`))
+		req.Header.Set("Idempotency-Key", "same-key-query")
+		rec := httptest.NewRecorder()
+		handler.ServeHTTP(rec, req)
+		want := http.StatusCreated
+		if i == 1 {
+			want = http.StatusConflict
+		}
+		if rec.Code != want {
+			t.Fatalf("request %d: status %d, want %d", i, rec.Code, want)
+		}
+	}
+	if calls != 1 {
+		t.Fatalf("handler calls = %d", calls)
+	}
+}
+
+func TestIdempotencyRequiredOnlyForUnsafeCreationRoutes(t *testing.T) {
+	store := NewMemoryIdempotencyStore(time.Now)
+	for _, path := range []string{
+		"/api/v1/buildings",
+		"/api/v1/buildings/b-1/weapons",
+		"/api/v1/monsters/m-1/weapons",
+		"/api/v1/combat/monsters",
+		"/api/v1/market/orders",
+		"/api/v1/alliances/invites",
+		"/api/v1/alliances/treasury/spend",
+	} {
+		req := httptest.NewRequest(http.MethodPost, path, strings.NewReader(`{}`))
+		rec := httptest.NewRecorder()
+		Idempotency(store, time.Hour)(http.HandlerFunc(func(http.ResponseWriter, *http.Request) {
+			t.Errorf("route %s reached handler without key", path)
+		})).ServeHTTP(rec, req)
+		if rec.Code != http.StatusBadRequest {
+			t.Errorf("route %s status = %d, want %d", path, rec.Code, http.StatusBadRequest)
+		}
+	}
+	for _, path := range []string{"/api/v1/chat/messages", "/api/v1/alliances/treasury/donations"} {
+		req := httptest.NewRequest(http.MethodPost, path, strings.NewReader(`{}`))
+		rec := httptest.NewRecorder()
+		Idempotency(store, time.Hour)(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			w.WriteHeader(http.StatusNoContent)
+		})).ServeHTTP(rec, req)
+		if rec.Code != http.StatusNoContent {
+			t.Errorf("route %s status = %d, want %d", path, rec.Code, http.StatusNoContent)
+		}
+	}
+}
+
 func TestIdempotencySerializesConcurrentRequests(t *testing.T) {
 	var calls atomic.Int32
 	handler := Chain(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
