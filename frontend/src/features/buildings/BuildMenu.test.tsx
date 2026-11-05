@@ -263,7 +263,7 @@ describe('BuildMenu', () => {
     renderWithClient(<BuildMenu />)
 
     const roadCard = screen.getByLabelText('Построить Грунтовая дорога').closest('.build-card')
-    expect(roadCard?.querySelector('img')?.getAttribute('src')).toBe('/assets/buildings/roads/ground_road/ground_road_straight_ew_active.png?v=road-kits-v2-2026-11-02')
+    expect(roadCard?.querySelector('img')?.getAttribute('src')).toBe('/assets/buildings/roads/ground_road/ground_road_straight_ew_active.png?v=road-kits-v3-2026-11-05')
     expect(roadCard?.textContent).toContain('150')
     expect(roadCard?.textContent).toContain('3')
   })
@@ -294,10 +294,10 @@ describe('BuildMenu', () => {
     expect(coinStorageCard?.querySelector('[title^="Камень:"]')).toBeNull()
 
     expect(screen.getByLabelText('Построить Обычная дорога').closest('.build-card')?.querySelector('img')?.getAttribute('src')).toBe(
-      '/assets/buildings/roads/common_road/common_road_straight_ew_active.png?v=road-kits-v2-2026-11-02',
+      '/assets/buildings/roads/common_road/common_road_straight_ew_active.png?v=road-kits-v3-2026-11-05',
     )
     expect(screen.getByLabelText('Построить Мостовая').closest('.build-card')?.querySelector('img')?.getAttribute('src')).toBe(
-      '/assets/buildings/roads/paved_road/paved_road_straight_ew_active.png?v=road-kits-v2-2026-11-02',
+      '/assets/buildings/roads/paved_road/paved_road_straight_ew_active.png?v=road-kits-v3-2026-11-05',
     )
     expect(screen.getByLabelText('Построить Каменная стена').closest('.build-card')?.querySelector('img')?.getAttribute('src')).toBe(
       '/assets/buildings/roads/stone_wall/stone_wall_l04_straight_ew_active.png',
