@@ -67,6 +67,7 @@ type StorageConfig struct {
 type ObservabilityConfig struct {
 	LogLevel    string
 	MetricsAddr string
+	PprofAddr   string
 }
 
 func Load() Config {
@@ -118,6 +119,7 @@ func Load() Config {
 		Observability: ObservabilityConfig{
 			LogLevel:    env("LOG_LEVEL", "info"),
 			MetricsAddr: env("WORKER_METRICS_ADDR", "127.0.0.1:9091"),
+			PprofAddr:   env("PPROF_ADDR", ""),
 		},
 	}
 }

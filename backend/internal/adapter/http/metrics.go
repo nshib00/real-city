@@ -76,6 +76,8 @@ func writeWSMetrics(out observability.Writer, realtime *wsadapter.Gateway) {
 	out.Sample("real_city_ws_alliance_subscriptions", nil, float64(stats.AllianceSubscriptions))
 	out.Family("real_city_ws_events_sent_total", "Events received by gateway from EventBus.", "counter")
 	out.Sample("real_city_ws_events_sent_total", nil, float64(stats.EventsSent))
+	out.Family("real_city_ws_events_coalesced_total", "Movement events replaced by a newer event for the same object and chunk.", "counter")
+	out.Sample("real_city_ws_events_coalesced_total", nil, float64(stats.Coalesced))
 	out.Family("real_city_ws_fanout_total", "Recipients selected for events before enqueue.", "counter")
 	out.Sample("real_city_ws_fanout_total", nil, float64(stats.FanoutTotal))
 	out.Family("real_city_ws_fanout_size", "Recipients selected per EventBus event.", "histogram")

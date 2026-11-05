@@ -46,7 +46,9 @@ export function registerPixiContext() {
 export function recordPixiFrame(nowMs: number) {
   frameTimes.push(nowMs)
   const cutoff = nowMs - FRAME_WINDOW_MS
-  frameTimes = frameTimes.filter((time) => time >= cutoff)
+  let expired = 0
+  while (expired < frameTimes.length && frameTimes[expired] < cutoff) expired++
+  if (expired) frameTimes.splice(0, expired)
 }
 
 export function recordPixiChildMutation(createdCount: number, destroyedCount: number) {

@@ -167,6 +167,8 @@ export function PixiStage({
   const monsterHitAreasRef = useRef<MonsterHitArea[]>([])
   const redrawRef = useRef<(() => void) | null>(null)
   const redrawFrameRef = useRef<number | null>(null)
+  const terrainDirtyRef = useRef(true)
+  const terrainSnapshotRef = useRef<{ tiles: WorldTile[]; width: number; height: number; x: number; y: number; zoom: number } | null>(null)
 
   function redraw() {
     const app = appRef.current
@@ -178,6 +180,11 @@ export function PixiStage({
     if (!app || !terrainSprites || !objectSprites || !terrain || !overlay || !territory) {
       return
     }
+    const cameraState = cameraRef.current
+    const previousTerrain = terrainSnapshotRef.current
+    const redrawTerrain = terrainDirtyRef.current || !previousTerrain || previousTerrain.tiles !== tilesRef.current
+      || previousTerrain.width !== app.screen.width || previousTerrain.height !== app.screen.height
+      || previousTerrain.x !== cameraState.x || previousTerrain.y !== cameraState.y || previousTerrain.zoom !== cameraState.zoom
     const before = import.meta.env.DEV ? pixiMutationCounts() : null
     const drawn = drawStage(
       app,
@@ -207,10 +214,16 @@ export function PixiStage({
       monsterHitAreasRef.current,
       monsterRenderMemoryRef.current,
       monsterGroupsRef.current,
-      () => redrawRef.current?.(),
+      () => { terrainDirtyRef.current = true; redrawRef.current?.() },
       territoriesRef.current,
       territory,
+      redrawTerrain,
+      visibleTileCountRef.current,
     )
+    if (redrawTerrain) {
+      terrainDirtyRef.current = false
+      terrainSnapshotRef.current = { tiles: tilesRef.current, width: app.screen.width, height: app.screen.height, ...cameraState }
+    }
     buildingDrawCommandsRef.current = drawn.buildingCommands
     visibleTileCountRef.current = drawn.visibleTiles
     if (before) recordPixiRedraw({
@@ -472,6 +485,8 @@ function drawStage(
   requestRedraw: () => void,
   territories: TerritoryCell[],
   territoryOverlay: Graphics,
+  redrawTerrain: boolean,
+  previousVisibleTiles: number,
 ) {
   const width = app.screen.width
   const height = app.screen.height
@@ -482,7 +497,7 @@ function drawStage(
   buildingHitAreas.length = 0
   resourceHitAreas.length = 0
   monsterHitAreas.length = 0
-  terrain.clear()
+  if (redrawTerrain) terrain.clear()
   overlay.clear()
   territoryOverlay.clear()
   const activeTerrainKeys = new Set<string>()
@@ -490,19 +505,21 @@ function drawStage(
   const activeResourceIds = new Set<string>()
 
   const visibleTiles: { tile: WorldTile; x: number; y: number; sortKey: number }[] = []
-  for (const tile of worldTilesNear(tileIndex, centerGrid, tileReach)) {
-    if (wrappedGridDistance(tile.x, centerGrid.x) > tileReach || wrappedGridDistance(tile.y, centerGrid.y) > tileReach) continue
-    const pos = nearestWrappedScreenCoord(tile, screenTarget)
-    const x = origin.x + pos.x * camera.zoom
-    const y = origin.y + pos.y * camera.zoom
-    const spriteScale = TILE_WIDTH * camera.zoom / TERRAIN_SPRITE.footprintWidth
-    const halfWidth = TERRAIN_SPRITE.width * spriteScale / 2
-    const topHeight = TERRAIN_SPRITE.height * TERRAIN_SPRITE.anchorY * spriteScale
-    const bottomHeight = (TILE_HEIGHT * camera.zoom) / 2
-    if (x + halfWidth < 0 || x - halfWidth > width || y + bottomHeight < 0 || y - topHeight > height) {
-      continue
+  if (redrawTerrain) {
+    for (const tile of worldTilesNear(tileIndex, centerGrid, tileReach)) {
+      if (wrappedGridDistance(tile.x, centerGrid.x) > tileReach || wrappedGridDistance(tile.y, centerGrid.y) > tileReach) continue
+      const pos = nearestWrappedScreenCoord(tile, screenTarget)
+      const x = origin.x + pos.x * camera.zoom
+      const y = origin.y + pos.y * camera.zoom
+      const spriteScale = TILE_WIDTH * camera.zoom / TERRAIN_SPRITE.footprintWidth
+      const halfWidth = TERRAIN_SPRITE.width * spriteScale / 2
+      const topHeight = TERRAIN_SPRITE.height * TERRAIN_SPRITE.anchorY * spriteScale
+      const bottomHeight = (TILE_HEIGHT * camera.zoom) / 2
+      if (x + halfWidth < 0 || x - halfWidth > width || y + bottomHeight < 0 || y - topHeight > height) {
+        continue
+      }
+      visibleTiles.push({ tile, x, y, sortKey: projectedObjectSortKey(pos, -0.25) })
     }
-    visibleTiles.push({ tile, x, y, sortKey: projectedObjectSortKey(pos, -0.25) })
   }
 
   for (const { tile, x, y, sortKey } of visibleTiles) {
@@ -570,7 +587,7 @@ function drawStage(
     activeResourceIds.add(command.id)
     drawResourceNode(objectSprites, resourceSpriteCache, command, origin, screenTarget, camera.zoom, resourceHitAreas)
   }
-  pruneRetainedChildren(terrainSpriteCache, activeTerrainKeys)
+  if (redrawTerrain) pruneRetainedChildren(terrainSpriteCache, activeTerrainKeys)
   pruneRetainedChildren(buildingSpriteCache, activeBuildingIds)
   pruneRetainedChildren(resourceSpriteCache, activeResourceIds)
   const nowMs = performance.now()
@@ -584,7 +601,7 @@ function drawStage(
     screenTarget,
     camera.zoom,
   )
-  return { buildingCommands, visibleTiles: visibleTiles.length }
+  return { buildingCommands, visibleTiles: redrawTerrain ? visibleTiles.length : previousVisibleTiles }
 }
 
 function isRoadBuilding(building: PlacedBuilding) {
@@ -687,7 +704,7 @@ function drawBuildingOverlayCommands(
     const graphic = getOrCreateGraphics(target, cache, key)
     graphic.clear()
     graphic.zIndex = projectedObjectSortKey(pos, 0.6)
-    const top = y - command.size.height * command.anchor.y * zoom - 8 * zoom
+    const top = y - command.size.height * command.anchor.y * zoom * 0.5 - 3 * zoom
     drawHealthBar(graphic, x, top, Math.max(24, Math.min(58, command.size.width * 0.7)) * zoom, zoom, ratio)
   }
   pruneRetainedChildren(cache, activeKeys)

@@ -12,6 +12,22 @@ import urllib.error
 import urllib.request
 
 
+def metrics(base_url):
+    try:
+        with urllib.request.urlopen(base_url + "/metrics", timeout=5) as response:
+            lines = response.read().decode().splitlines()
+    except Exception:
+        return {}
+    wanted = (
+        'real_city_simulation_heartbeat_timestamp_seconds ',
+        'real_city_simulation_tick_duration_seconds_sum{mode="scheduled",result="ok"}',
+        'real_city_simulation_tick_duration_seconds_count{mode="scheduled",result="ok"}',
+        'real_city_ws_messages_dropped_total ',
+        'real_city_ws_eventbus_drops_total ',
+    )
+    return {name.strip(): float(next((line.split()[-1] for line in lines if line.startswith(name)), "0")) for name in wanted}
+
+
 def request(base_url, path):
     started = time.perf_counter()
     try:
@@ -30,6 +46,7 @@ def request(base_url, path):
 
 
 def run(name, base_url, paths, seconds, workers):
+    before = metrics(base_url)
     started_utc = datetime.datetime.now(datetime.timezone.utc).isoformat()
     deadline = time.monotonic() + seconds
     started = time.monotonic()
@@ -45,7 +62,13 @@ def run(name, base_url, paths, seconds, workers):
     elapsed = time.monotonic() - started
     latencies = sorted(value for status, value in results if status == 200)
     statuses = dict(Counter(str(status) for status, _ in results))
-    return {
+    after = metrics(base_url)
+    tick_sum = 'real_city_simulation_tick_duration_seconds_sum{mode="scheduled",result="ok"}'
+    tick_count = 'real_city_simulation_tick_duration_seconds_count{mode="scheduled",result="ok"}'
+    ticks = after.get(tick_count, 0) - before.get(tick_count, 0)
+    tick_duration = after.get(tick_sum, 0) - before.get(tick_sum, 0)
+    heartbeat = after.get('real_city_simulation_heartbeat_timestamp_seconds', 0)
+    result = {
         "scenario": name,
         "start_utc": started_utc,
         "end_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -59,6 +82,15 @@ def run(name, base_url, paths, seconds, workers):
         "p95_ms": round(latencies[min(len(latencies) - 1, int(len(latencies) * 0.95))], 2) if latencies else None,
         "max_ms": round(max(latencies), 2) if latencies else None,
     }
+    if before and after:
+        result.update({
+            "simulation_ticks": int(ticks),
+            "simulation_tick_average_ms": round(tick_duration / ticks * 1000, 2) if ticks else None,
+            "simulation_heartbeat_age_seconds": round(time.time() - heartbeat, 2) if heartbeat else None,
+            "ws_drops_delta": after.get('real_city_ws_messages_dropped_total', 0) - before.get('real_city_ws_messages_dropped_total', 0),
+            "eventbus_drops_delta": after.get('real_city_ws_eventbus_drops_total', 0) - before.get('real_city_ws_eventbus_drops_total', 0),
+        })
+    return result
 
 
 def main():
