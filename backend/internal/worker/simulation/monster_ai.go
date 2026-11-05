@@ -257,7 +257,7 @@ func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now t
 		if item.LastMovedAt.After(now) {
 			return item, service.EventMonsterMoved, string(target.ID), nil, nil
 		}
-		path, err := ai.nextPassablePathCached(ctx, item.Tile, targetTile, item.SpeedTiles, item.AttackRange, chunkCache, buildingCache)
+		path, err := ai.nextPassablePathCached(ctx, item.Tile, targetTile, item.SpeedTiles, item.AttackRange, item.Type == monster.TypeEmberWisp, chunkCache, buildingCache)
 		if err != nil {
 			return monster.Monster{}, "", "", nil, err
 		}
@@ -308,7 +308,7 @@ func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now t
 		return item, service.EventMonsterMoved, "", nil, nil
 	}
 	wander := monster.WanderFrom(item.HomeTile, now.Unix()+int64(len(item.ID)), 5)
-	path, err := ai.nextPassablePathCached(ctx, item.Tile, wander, item.SpeedTiles, 0, chunkCache, buildingCache)
+	path, err := ai.nextPassablePathCached(ctx, item.Tile, wander, item.SpeedTiles, 0, item.Type == monster.TypeEmberWisp, chunkCache, buildingCache)
 	if err != nil {
 		return monster.Monster{}, "", "", nil, err
 	}
@@ -460,10 +460,10 @@ func (ai *MonsterAI) collidingMonster(ctx context.Context, item monster.Monster)
 }
 
 func (ai *MonsterAI) nextPassablePath(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, chunkCache map[world.ChunkCoord]world.Chunk) ([]world.Coord, error) {
-	return ai.nextPassablePathCached(ctx, from, to, speed, attackRange, chunkCache, nil)
+	return ai.nextPassablePathCached(ctx, from, to, speed, attackRange, false, chunkCache, nil)
 }
 
-func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) ([]world.Coord, error) {
+func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, flying bool, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) ([]world.Coord, error) {
 	from, to = wrappedCoord(from), wrappedCoord(to)
 	if wrappedManhattan(from, to) <= attackRange {
 		return nil, nil
@@ -480,6 +480,9 @@ func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coor
 					return nil, err
 				}
 				for _, item := range buildings {
+					if flying && item.Type != building.TypeConcreteWall && item.Type != building.TypeModernWall {
+						continue
+					}
 					for _, tile := range item.OccupiedTiles() {
 						occupied[wrappedCoord(tile)] = true
 					}

@@ -299,6 +299,39 @@ func TestMonsterPathAvoidsTerrainAndPlayerBuildings(t *testing.T) {
 	}
 }
 
+func TestEmberWispFliesAcrossBuildingsExceptHighWalls(t *testing.T) {
+	for _, tc := range []struct {
+		kind      building.Type
+		fliesOver bool
+	}{
+		{building.TypeStoneWall, true},
+		{building.TypeLumberYard, true},
+		{building.TypeConcreteWall, false},
+		{building.TypeModernWall, false},
+	} {
+		t.Run(string(tc.kind), func(t *testing.T) {
+			ctx := context.Background()
+			buildings := memory.NewBuildingRepo()
+			if err := buildings.Create(ctx, building.Building{ID: "obstacle", MapID: service.DefaultWorldID, Type: tc.kind,
+				State: building.StateActive, Tile: world.Coord{X: 41, Y: 40}, Footprint: building.Footprint{Width: 1, Height: 1}}); err != nil {
+				t.Fatal(err)
+			}
+			ai := NewMonsterAI(nil, buildings, nil, nil, slog.Default())
+			path, err := ai.nextPassablePathCached(ctx, world.Coord{X: 40, Y: 40}, world.Coord{X: 43, Y: 40}, 3, 0, true, make(map[world.ChunkCoord]world.Chunk), nil)
+			if err != nil || len(path) == 0 {
+				t.Fatalf("path=%v err=%v", path, err)
+			}
+			crosses := false
+			for _, tile := range path {
+				crosses = crosses || tile == (world.Coord{X: 41, Y: 40})
+			}
+			if crosses != tc.fliesOver {
+				t.Fatalf("path=%v crosses obstacle=%v want=%v", path, crosses, tc.fliesOver)
+			}
+		})
+	}
+}
+
 func TestMonsterAITargetPreferencesAndFallback(t *testing.T) {
 	cases := []struct {
 		name      string
