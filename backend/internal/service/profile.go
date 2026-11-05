@@ -34,7 +34,7 @@ func (s *PlayerService) enrichProfile(ctx context.Context, p player.Player) (pla
 	selected := p.Profile.HomeCenterID
 	p.Profile.HomeCenterID = ""
 	for _, b := range owned {
-		if b.State == building.StateRuined || b.State == building.StateBuilding {
+		if b.State == building.StateRuined || b.State == building.StateBuilding || b.State == building.StateRepairing {
 			continue
 		}
 		if b.Type == building.TypeTownHall && (p.Profile.HomeCenterID == "" || string(b.ID) == selected) {

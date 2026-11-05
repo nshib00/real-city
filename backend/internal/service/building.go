@@ -696,6 +696,17 @@ func (s *BuildingService) demolish(ctx context.Context, id building.ID, playerID
 	if item.State == building.StateBuilding && item.CompletesAt != nil {
 		releasedPopulation += buildingPopulation(item)
 	}
+	if repairs, ok := s.buildings.(RepairRepository); ok {
+		job, repairErr := repairs.PendingRepair(ctx, id)
+		if repairErr == nil {
+			releasedPopulation += job.Workers
+			if err := repairs.FinishRepair(ctx, job.ID, "cancelled"); err != nil {
+				return err
+			}
+		} else if !isNotFound(repairErr) {
+			return repairErr
+		}
+	}
 	if item.FieldStageStartedAt != nil {
 		releasedPopulation += buildingPopulation(item)
 	}
@@ -889,12 +900,30 @@ func (s *BuildingService) relocate(ctx context.Context, id building.ID, playerID
 	if !changed {
 		return building.Building{}, apperror.New(apperror.Conflict, "постройка или целевые клетки изменились; попробуйте ещё раз")
 	}
-	if s.events != nil && previous.Tile != item.Tile && world.ChunkForTile(previous.Tile) != world.ChunkForTile(item.Tile) {
-		publishEvent(ctx, s.events, Event{Type: EventBuildingRemoved, ChunkID: world.ChunkID(previous.MapID, world.ChunkForTile(previous.Tile)), PlayerID: playerID,
-			Payload: BuildingRemovedPayload{BuildingID: item.ID, Reason: "moved"}})
+	if s.events != nil {
+		oldChunks := buildingOccupiedChunks(previous)
+		newChunks := buildingOccupiedChunks(item)
+		for chunk := range oldChunks {
+			if newChunks[chunk] {
+				continue
+			}
+			publishEvent(ctx, s.events, Event{Type: EventBuildingRemoved, ChunkID: world.ChunkID(previous.MapID, chunk), PlayerID: playerID,
+				Payload: BuildingRemovedPayload{BuildingID: item.ID, Reason: "moved", TileX: previous.Tile.X, TileY: previous.Tile.Y}})
+		}
+		for chunk := range newChunks {
+			publishEvent(ctx, s.events, Event{Type: EventBuildingUpdated, ChunkID: world.ChunkID(item.MapID, chunk), PlayerID: playerID,
+				Payload: BuildingPayload{Building: item, Reason: "relocated"}})
+		}
 	}
-	s.publish(ctx, EventBuildingUpdated, item, BuildingPayload{Building: item, Reason: "relocated"})
 	return item, nil
+}
+
+func buildingOccupiedChunks(item building.Building) map[world.ChunkCoord]bool {
+	chunks := make(map[world.ChunkCoord]bool)
+	for _, tile := range item.OccupiedTiles() {
+		chunks[world.ChunkForTile(tile)] = true
+	}
+	return chunks
 }
 
 func (s *BuildingService) publish(ctx context.Context, eventType EventType, item building.Building, payload any) {

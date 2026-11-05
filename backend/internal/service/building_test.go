@@ -161,6 +161,67 @@ func TestBuildingRelocationChecksOwnershipAndFootprint(t *testing.T) {
 	if err != nil || stored.Tile != moved.Tile || stored.Footprint != moved.Footprint {
 		t.Fatalf("relocation not persisted: %#v, %v", stored, err)
 	}
+	if _, _, err := worlds.GetOrCreateChunk(ctx, DefaultWorldID, world.ChunkForTile(world.Coord{X: 159, Y: 5})); err != nil {
+		t.Fatal(err)
+	}
+	for _, coord := range []world.Coord{{X: 159, Y: 5}, {X: 0, Y: 5}} {
+		if err := worlds.UpdateTile(ctx, world.Tile{MapID: DefaultWorldID, Coord: coord, Chunk: world.ChunkForTile(coord), Terrain: world.TerrainGrass}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := repo.Create(ctx, building.Building{ID: "seam-blocker", MapID: DefaultWorldID, OwnerID: "p2",
+		Type: building.TypeDugout, State: building.StateActive, Tile: world.Coord{X: 0, Y: 5},
+		Footprint: building.Footprint{Width: 1, Height: 1}}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.Relocate(ctx, item.ID, "p1", world.Coord{X: 159, Y: 5}, 2); err == nil {
+		t.Fatal("relocation across the world seam overlapped another building")
+	}
+}
+
+func TestBuildingRelocationNotifiesAllOldAndNewFootprintChunks(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	repo := memory.NewBuildingRepo()
+	worlds := memory.NewWorldRepo()
+	service := NewBuildingService(repo, worlds, slog.New(slog.NewTextHandler(io.Discard, nil)))
+	events := NewEventBus(8)
+	service.SetEventBus(events)
+	stream := events.Subscribe(ctx)
+	for _, coord := range []world.Coord{{X: 64, Y: 5}, {X: 65, Y: 5}} {
+		if _, _, err := worlds.GetOrCreateChunk(ctx, DefaultWorldID, world.ChunkForTile(coord)); err != nil {
+			t.Fatal(err)
+		}
+		if err := worlds.UpdateTile(ctx, world.Tile{MapID: DefaultWorldID, Coord: coord, Chunk: world.ChunkForTile(coord), Terrain: world.TerrainGrass}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	item := building.Building{ID: "moving", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeWoodHouse,
+		State: building.StateActive, Tile: world.Coord{X: 31, Y: 5}, Footprint: building.Footprint{Width: 2, Height: 1}}
+	if err := repo.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.Relocate(ctx, item.ID, "p1", world.Coord{X: 64, Y: 5}, 0); err != nil {
+		t.Fatal(err)
+	}
+	got := map[string]EventType{}
+	for i := 0; i < 3; i++ {
+		select {
+		case event := <-stream:
+			got[event.ChunkID] = event.Type
+		default:
+			t.Fatalf("expected three chunk events, got %v", got)
+		}
+	}
+	for chunk, kind := range map[string]EventType{
+		"dev-world:0:0": EventBuildingRemoved,
+		"dev-world:1:0": EventBuildingRemoved,
+		"dev-world:2:0": EventBuildingUpdated,
+	} {
+		if got[chunk] != kind {
+			t.Fatalf("chunk %s: event %s, want %s", chunk, got[chunk], kind)
+		}
+	}
 }
 
 func TestRepairRestoresCurrentLevelHealth(t *testing.T) {

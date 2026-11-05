@@ -14,11 +14,12 @@ import { InitialLoadingScreen } from '../features/loading/InitialLoadingScreen'
 import { useOwnershipContext } from '../features/alliance/useOwnership'
 import { occupiedTerritory } from './territory'
 import { canChopForestTile } from '../features/world/forestActions'
-import { CHUNK_SIZE, gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, tileToChunk, wrapGridCoord } from './coordinates/iso'
+import { CHUNK_SIZE, WORLD_WRAP_TILES, gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, tileToChunk, wrapGridCoord } from './coordinates/iso'
 import { resolvePerformanceScenarioFromSearch, type PerformanceScenario } from './dev/performanceScenarios'
 import { PixiStage } from './renderer/PixiStage'
 import { AccessibleMapSelection } from './AccessibleMapSelection'
 import { renderPerformanceSnapshot, type RenderPerformanceSnapshot } from './renderer/renderPerformanceMetrics'
+import { beginMapMeasure, endMapMeasure } from './performance/marks'
 import { filterVisibleIndexedMapObjects, filterVisibleMapObjects, indexMapObjects, occupiedTileKeys } from './renderer/visibleObjects'
 import { useGameStore } from './state/useGameStore'
 import type { PlacedBuilding } from './state/useGameStore'
@@ -45,6 +46,7 @@ import { mapObjectZIndex } from './renderer/depth'
 const RECENT_CHOP_TILE_TTL_MS = 10_000
 
 export function IsoMap() {
+  useEffect(() => { beginMapMeasure('map-ready') }, [])
   const mapPowerSave = useGameStore((state) => state.uiPreferences.mapPowerSave)
   const ownership = useOwnershipContext()
   useEffect(() => startAmbience(), [])
@@ -69,6 +71,7 @@ export function IsoMap() {
   const selectTile = useGameStore((state) => state.selectTile)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
+  const setRepairMenuBuildingId = useGameStore((state) => state.setRepairMenuBuildingId)
   const selectMonster = useGameStore((state) => state.selectMonster)
   const hoverTile = useGameStore((state) => state.hoverTile)
   const worldTiles = useGameStore((state) => state.worldTiles)
@@ -93,6 +96,7 @@ export function IsoMap() {
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
   const [rendererReady, setRendererReady] = useState(false)
   const [rendererFailed, setRendererFailed] = useState(false)
+  const [relocationRotation, setRelocationRotation] = useState(0)
   const activePointers = useRef(new Set<number>())
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
   const viewportCenterRef = useRef(viewport.center)
@@ -106,6 +110,9 @@ export function IsoMap() {
   const centerChunk = useMemo(() => tileToChunk(wrapGridCoord(renderCenter)), [renderCenter])
   const visibleChunkRadius = useMemo(() => deriveVisibleChunkRadius(stageSize, camera.zoom), [camera.zoom, stageSize])
   const chunksQuery = useVisibleChunks(centerChunk, visibleChunkRadius)
+  useEffect(() => {
+    if (rendererReady && chunksQuery.data) endMapMeasure('map-ready')
+  }, [rendererReady, chunksQuery.data])
   const tiles = useMemo(() => flattenChunkTiles(chunksQuery.data?.chunks), [chunksQuery.data?.chunks])
   const renderBuildings = performanceScenario?.buildings ?? buildings
   const renderResourceNodes = performanceScenario?.resources ?? resourceNodes
@@ -119,10 +126,16 @@ export function IsoMap() {
   const missingCenterTile = mapTiles.length > 0 && !mapTilesByKey.has(tileActionKey(wrapGridCoord(roundGridCoord(renderCenter))))
   const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const relocatingBuilding = relocatingBuildingId ? buildings.find((item) => item.id === relocatingBuildingId) : null
+  const relocationFootprint = relocatingBuilding ? (() => {
+    const width = relocatingBuilding.footprintW ?? 1
+    const height = relocatingBuilding.footprintH ?? 1
+    return (relocationRotation - (relocatingBuilding.rotation ?? 0) + 4) % 2 === 1
+      ? { width: height, height: width } : { width, height }
+  })() : null
   const relocationPreview = relocatingBuilding && hoveredTile ? validatePlacementPreview({
     kind: relocatingBuilding.kind,
     tile: hoveredTile,
-    footprint: { width: relocatingBuilding.footprintW ?? 1, height: relocatingBuilding.footprintH ?? 1 },
+    footprint: relocationFootprint ?? undefined,
     buildings,
     worldTiles: mapTiles,
     monsters,
@@ -130,9 +143,17 @@ export function IsoMap() {
     skipTownHallCheck: true,
   }) : null
   useEffect(() => {
+    setRelocationRotation(relocatingBuilding?.rotation ?? 0)
+  }, [relocatingBuildingId])
+  useEffect(() => {
     if (!relocatingBuildingId) return
     const cancelOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setRelocatingBuildingId(null)
+      const target = event.target
+      const editing = target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+      if (!editing && !event.ctrlKey && !event.metaKey && !event.altKey && event.key.toLowerCase() === 'r' && !event.repeat) {
+        setRelocationRotation((rotation) => (rotation + 1) % 4)
+      }
     }
     window.addEventListener('keydown', cancelOnEscape)
     return () => window.removeEventListener('keydown', cancelOnEscape)
@@ -213,14 +234,6 @@ export function IsoMap() {
       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
     },
     onError: (error) => showToast('warning', error instanceof Error ? error.message : 'Не удалось переместить постройку'),
-  })
-  const repairBuildingMutation = useMutation({
-    mutationFn: (id: string) => patchBuilding(id, 'repair'),
-    onSuccess: (result) => {
-      if (result.building) addBuilding(toPlacedBuilding(result.building))
-      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
-    },
-    onError: (error) => showToast('warning', error instanceof Error ? error.message : 'Не удалось починить постройку'),
   })
   const recipesQuery = useQuery({ queryKey: ['production', 'recipes'], queryFn: listProductionRecipes, staleTime: 5 * 60_000, gcTime: 30 * 60_000 })
   const jobsQuery = useProductionJobs()
@@ -310,7 +323,7 @@ export function IsoMap() {
       const preview = validatePlacementPreview({
         kind: relocatingBuilding.kind,
         tile,
-        footprint: { width: relocatingBuilding.footprintW ?? 1, height: relocatingBuilding.footprintH ?? 1 },
+        footprint: relocationFootprint ?? undefined,
         buildings,
         worldTiles: mapTiles,
         monsters,
@@ -321,7 +334,7 @@ export function IsoMap() {
         showToast('warning', preview.reason ?? 'На эту клетку нельзя переместить постройку')
         return
       }
-      relocateMutation.mutate({ id: relocatingBuilding.id, tile, rotation: relocatingBuilding.rotation ?? 0 })
+      relocateMutation.mutate({ id: relocatingBuilding.id, tile, rotation: relocationRotation })
       return
     }
     if (!selectedTile || selectedTile.x !== tile.x || selectedTile.y !== tile.y || selectedBuildingId || selectedMonsterId) playUiSound('ui.select.tile')
@@ -362,7 +375,8 @@ export function IsoMap() {
 
   function handleBuildingClick(building: PlacedBuilding) {
     if (tool === 'repair' && player && building.owner === player.id) {
-      if (!repairBuildingMutation.isPending) repairBuildingMutation.mutate(building.id)
+      selectBuilding(building.id)
+      setRepairMenuBuildingId(building.id)
       return
     }
     if (selectedBuildingId !== building.id) playUiSound('ui.select.building')
@@ -459,7 +473,9 @@ export function IsoMap() {
     if (tiles.length === 0 || chunksQuery.isPlaceholderData) return
     const optimisticTiles = optimisticChopResultTilesRef.current
     const recentChopTiles = recentChopTilesRef.current
-    setWorldTiles(mergeTransientWorldTiles(tiles, useGameStore.getState().worldTiles, optimisticTiles, recentChopTiles, centerChunk, visibleChunkRadius))
+    const currentTiles = useGameStore.getState().worldTiles
+    const nextTiles = mergeTransientWorldTiles(tiles, currentTiles, optimisticTiles, recentChopTiles, centerChunk, visibleChunkRadius)
+    if (!sameWorldTileReferences(currentTiles, nextTiles)) setWorldTiles(nextTiles)
   }, [setWorldTiles, tiles, chunksQuery.isPlaceholderData, centerChunk.x, centerChunk.y, visibleChunkRadius])
 
   useEffect(() => {
@@ -584,6 +600,7 @@ export function IsoMap() {
       </div>
       {relocatingBuilding ? <div className="map-relocation-hint" role="status">
         <span>Перемещение: {relocatingBuilding.name}. Выберите клетку на карте. Esc — отмена.</span>
+        <button type="button" onClick={() => setRelocationRotation((rotation) => (rotation + 1) % 4)} disabled={relocateMutation.isPending}>Повернуть (R): {relocationRotation * 90}°</button>
         {relocationPreview && !relocationPreview.valid ? <span>{relocationPreview.reason}</span> : null}
         {relocateMutation.isPending ? <span>Перемещаем…</span> : null}
         <button type="button" onClick={() => setRelocatingBuildingId(null)} disabled={relocateMutation.isPending}>Отменить</button>
@@ -606,6 +623,7 @@ export function IsoMap() {
           const asset = buildingSpriteAsset(relocatingBuilding)
           return asset ? <div className={`map-placement-preview${relocationPreview?.valid === false ? ' map-placement-preview-invalid' : ''}`} style={{ transform: `translate(${pos.x}px, ${pos.y - 30}px)` }} aria-hidden="true">
             <img src={asset} alt="" draggable={false} />
+            {relocationFootprint ? <svg className="placement-footprint" viewBox={`${-32 * relocationFootprint.height} -16 ${32 * (relocationFootprint.width + relocationFootprint.height)} ${16 * (relocationFootprint.width + relocationFootprint.height)}`} style={{ width: 32 * (relocationFootprint.width + relocationFootprint.height), height: 16 * (relocationFootprint.width + relocationFootprint.height) }}><polygon points={`0,-16 ${32 * relocationFootprint.width},${16 * (relocationFootprint.width - 1)} ${32 * (relocationFootprint.width - relocationFootprint.height)},${16 * (relocationFootprint.width + relocationFootprint.height - 1)} ${-32 * relocationFootprint.height},${16 * (relocationFootprint.height - 1)}`} /></svg> : null}
           </div> : null
         })() : null}
         {selectedBuildingId && (() => {
@@ -738,9 +756,17 @@ function MapPerformanceHud({
 
 function useRenderPerformanceSnapshot() {
   const [snapshot, setSnapshot] = useState<RenderPerformanceSnapshot>(() => renderPerformanceSnapshot())
+  const lastWarningAt = useRef(0)
 
   useEffect(() => {
-    const interval = window.setInterval(() => setSnapshot(renderPerformanceSnapshot()), 1000)
+    const interval = window.setInterval(() => {
+      const next = renderPerformanceSnapshot()
+      setSnapshot(next)
+      if (import.meta.env.DEV && next.activePixiContexts > 0 && next.fps > 0 && next.fps < 25 && Date.now() - lastWarningAt.current > 30_000) {
+        console.warn('real-city performance: low map FPS', next)
+        lastWarningAt.current = Date.now()
+      }
+    }, 1000)
     return () => window.clearInterval(interval)
   }, [])
 
@@ -805,7 +831,8 @@ function mergeTransientWorldTiles(
   // clips off-screen tiles, and the extra ring is discarded as the camera moves.
   const merged = new Map(currentTiles.filter((tile) => {
     const chunk = tileToChunk(tile)
-    return Math.abs(chunk.x - centerChunk.x) <= radius + 1 && Math.abs(chunk.y - centerChunk.y) <= radius + 1
+    return wrappedChunkDistance(chunk.x, centerChunk.x) <= radius + 1
+      && wrappedChunkDistance(chunk.y, centerChunk.y) <= radius + 1
   }).map((tile) => [tileActionKey(tile), tile]))
   for (const tile of tiles) {
     const key = tileActionKey(tile)
@@ -827,6 +854,18 @@ function mergeTransientWorldTiles(
     merged.set(key, tile)
   }
   return [...merged.values()]
+}
+
+function sameWorldTileReferences(current: WorldTile[], next: WorldTile[]) {
+  if (current.length !== next.length) return false
+  const byKey = new Map(current.map((tile) => [tileActionKey(tile), tile]))
+  return next.every((tile) => byKey.get(tileActionKey(tile)) === tile)
+}
+
+function wrappedChunkDistance(a: number, b: number) {
+  const size = WORLD_WRAP_TILES / CHUNK_SIZE
+  const distance = ((a - b) % size + size) % size
+  return Math.min(distance, size - distance)
 }
 
 function rememberRecentChopTile(chopTiles: Map<string, { tile: WorldTile; expiresAt: number }>, tile: WorldTile) {

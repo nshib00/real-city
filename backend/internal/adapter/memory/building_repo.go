@@ -344,14 +344,14 @@ func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expe
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	item, ok := r.buildings[id]
-	if !ok || (len(expectedOwner) > 0 && item.OwnerID != expectedOwner[0]) || item.Health != expectedHealth || item.Health <= 0 || damage <= 0 || (item.State != building.StateActive && item.State != building.StateDamaged && item.State != building.StateBuilding) {
+	if !ok || (len(expectedOwner) > 0 && item.OwnerID != expectedOwner[0]) || item.Health != expectedHealth || item.Health <= 0 || damage <= 0 || (item.State != building.StateActive && item.State != building.StateDamaged && item.State != building.StateBuilding && item.State != building.StateRepairing) {
 		return building.Building{}, false, nil
 	}
 	item.Health = max(0, item.Health-damage)
 	if item.Health == 0 {
 		item.State = building.StateRuined
 		item.CannonEnabled = false
-	} else if item.State != building.StateBuilding {
+	} else if item.State != building.StateBuilding && item.State != building.StateRepairing {
 		item.State = building.StateDamaged
 	}
 	item.UpdatedAt = now

@@ -4,7 +4,7 @@ import type { WorldTile } from '../../shared/contracts'
 
 export type ToolMode = 'select' | 'build' | 'road' | 'repair' | 'attack'
 export type RealtimeStatus = 'connecting' | 'connected' | 'reconnecting' | 'offline'
-export type BuildingState = 'planned' | 'building' | 'active' | 'damaged' | 'ruined'
+export type BuildingState = 'planned' | 'building' | 'repairing' | 'active' | 'damaged' | 'ruined'
 export type BuildingKind =
   | `ruins_${string}`
   | 'town_hall'
@@ -212,6 +212,7 @@ type GameState = {
   tool: ToolMode
   selectedTile: TileCoord | null
   selectedBuildingId: string | null
+  repairMenuBuildingId: string | null
   selectedMonsterId: string | null
   hoveredTile: TileCoord | null
   placementPreviewKind: BuildingKind | null
@@ -237,6 +238,7 @@ type GameState = {
   setRelocatingBuildingId: (id: string | null) => void
   selectTile: (tile: TileCoord) => void
   selectBuilding: (buildingId: string) => void
+  setRepairMenuBuildingId: (buildingId: string | null) => void
   selectMonster: (monsterId: string) => void
   hoverTile: (tile: TileCoord | null) => void
   setPlacementPreviewKind: (kind: BuildingKind | null) => void
@@ -275,6 +277,7 @@ export const useGameStore = create<GameState>((set) => ({
   tool: 'select',
   selectedTile: null,
   selectedBuildingId: null,
+  repairMenuBuildingId: null,
   selectedMonsterId: null,
   hoveredTile: null,
   placementPreviewKind: null,
@@ -334,6 +337,7 @@ export const useGameStore = create<GameState>((set) => ({
         tool: 'select',
       }
     }),
+  setRepairMenuBuildingId: (repairMenuBuildingId) => set({ repairMenuBuildingId }),
   selectMonster: (selectedMonsterId) =>
     set((state) => {
       const monster = findByIndexedId(state.monsters, state.monsterIndexById, selectedMonsterId)
@@ -433,7 +437,7 @@ export const useGameStore = create<GameState>((set) => ({
       let buildings: PlacedBuilding[] | null = null
       for (let index = 0; index < state.buildings.length; index += 1) {
         const building = state.buildings[index]
-        const completed = building.status === 'construction' && building.completesAt && building.completesAt <= now
+        const completed = building.status === 'construction' && building.state !== 'repairing' && building.completesAt && building.completesAt <= now
           ? { ...building, status: 'active' as const, state: 'active' as const, completesAt: null }
           : building
         const next = completed.fieldStageReadyAt && completed.fieldStageReadyAt <= now && !completed.fieldStageReady

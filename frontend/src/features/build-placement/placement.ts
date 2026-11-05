@@ -1,6 +1,7 @@
 import type { BuildingKind, MonsterEntity, PlacedBuilding } from '../../game/state/useGameStore'
 import type { TerrainType, WorldTile } from '../../shared/contracts'
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
+import { normalizeTile } from '../../../../shared/world/coordinates'
 
 const buildingFootprints = new Map<string, { width: number; height: number }>(buildingCatalog.map((item) => [item.type, item.footprint]))
 const trapKinds = new Set<BuildingKind>(['defense_stakes', 'defense_resin_snare'])
@@ -40,8 +41,8 @@ export function validatePlacementPreview(input: {
     if (building.state === 'ruined') return false
     if ((trapKinds.has(input.kind) && roadKinds.has(building.kind)) || (roadKinds.has(input.kind) && trapKinds.has(building.kind))) return false
     const occupied = buildingFootprints.get(building.kind)
-    return footprint.some((tile) => tile.x >= building.tile.x && tile.x < building.tile.x + (building.footprintW ?? occupied?.width ?? 1)
-      && tile.y >= building.tile.y && tile.y < building.tile.y + (building.footprintH ?? occupied?.height ?? 1))
+    return footprint.some((tile) => footprintTiles(building.tile, { width: building.footprintW ?? occupied?.width ?? 1,
+      height: building.footprintH ?? occupied?.height ?? 1 }).some((other) => other.x === tile.x && other.y === tile.y))
   })) {
     return { valid: false, reason: 'Клетка уже занята' }
   }
@@ -80,7 +81,7 @@ function footprintTiles(origin: { x: number; y: number }, footprint: { width: nu
   const tiles: { x: number; y: number }[] = []
   for (let y = 0; y < height; y += 1) {
     for (let x = 0; x < width; x += 1) {
-      tiles.push({ x: origin.x + x, y: origin.y + y })
+      tiles.push(normalizeTile({ x: origin.x + x, y: origin.y + y }))
     }
   }
   return tiles

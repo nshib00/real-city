@@ -247,6 +247,26 @@ describe('IsoMap production interactions', () => {
     expect(pixiMocks.latestProps?.targetTileOnly).toBe(false)
   })
 
+  it('rotates the relocation footprint before sending the move', async () => {
+    vi.mocked(relocateBuilding).mockResolvedValue({ building: {
+      id: 'lumber-yard-1', owner_id: 'player-1', type: 'lumber_yard', name: 'Лесопильный двор',
+      level: 1, state: 'active', health: 100, tile_x: 2, tile_y: 1,
+      rotation: 1, footprint_w: 1, footprint_h: 2,
+      started_at: '2026-09-29T10:00:00Z', completes_at: null,
+    } })
+    useGameStore.setState((state) => ({
+      buildings: [{ ...state.buildings[0], footprintW: 2, footprintH: 1 }],
+      selectedBuildingId: 'lumber-yard-1', relocatingBuildingId: 'lumber-yard-1',
+    }))
+    renderWithClient(<IsoMap />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Повернуть (R): 0°' }))
+    fireEvent.click(screen.getByTestId('pixi-forest-b'))
+
+    await waitFor(() => expect(relocateBuilding).toHaveBeenCalledWith('lumber-yard-1', { x: 2, y: 1 }, 1))
+    await waitFor(() => expect(useGameStore.getState().buildings[0].footprintH).toBe(2))
+  })
+
   it('renders a nearby player with their nickname and level', async () => {
     vi.mocked(listNearbyPlayers).mockResolvedValue({
       players: [{ player_id: 'player-2', name: 'Аэрон', level: 4, tile_x: 1, tile_y: 1 }],

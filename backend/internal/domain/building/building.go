@@ -13,6 +13,7 @@ type State string
 const (
 	StatePlanned      State = "planned"
 	StateBuilding     State = "building"
+	StateRepairing    State = "repairing"
 	StateActive       State = "active"
 	StateDamaged      State = "damaged"
 	StateRuined       State = "ruined"

@@ -243,11 +243,11 @@ func (r *BuildingRepo) DamageIfCurrent(ctx context.Context, id building.ID, expe
 	result, err := execer(ctx, r.db).ExecContext(ctx, `
 		UPDATE buildings
 		SET health = GREATEST(0, health - $3),
-			state = CASE WHEN health <= $3 THEN $4 WHEN state = $8 THEN state ELSE $5 END,
+			state = CASE WHEN health <= $3 THEN $4 WHEN state IN ($8, $10) THEN state ELSE $5 END,
 			cannon_enabled = CASE WHEN health <= $3 THEN false ELSE cannon_enabled END,
 			updated_at = $6
-		WHERE id = $1 AND health = $2 AND health > 0 AND state IN ($7, $5, $8) AND ($9 = '' OR owner_id = $9)
-	`, id, expectedHealth, damage, building.StateRuined, building.StateDamaged, now, building.StateActive, building.StateBuilding, owner)
+		WHERE id = $1 AND health = $2 AND health > 0 AND state IN ($7, $5, $8, $10) AND ($9 = '' OR owner_id = $9)
+	`, id, expectedHealth, damage, building.StateRuined, building.StateDamaged, now, building.StateActive, building.StateBuilding, owner, building.StateRepairing)
 	if err != nil {
 		return building.Building{}, false, err
 	}
@@ -295,12 +295,17 @@ func (r *BuildingRepo) RelocateIfCurrent(ctx context.Context, previous, next bui
 					AND occupied.state <> 'ruined'
 					AND NOT (($12 AND occupied.type IN ('road', 'standard_road', 'paved_road'))
 						OR ($13 AND occupied.type IN ('defense_stakes', 'defense_resin_snare')))
-					AND occupied.tile_x < $2 + $4 AND occupied.tile_x + GREATEST(occupied.footprint_w, 1) > $2
-					AND occupied.tile_y < $3 + $5 AND occupied.tile_y + GREATEST(occupied.footprint_h, 1) > $3
+					AND EXISTS (
+						SELECT 1 FROM generate_series(-1, 1) AS sx, generate_series(-1, 1) AS sy
+						WHERE occupied.tile_x + sx * $15::integer < $2::integer + $4::integer
+							AND occupied.tile_x + sx * $15::integer + GREATEST(occupied.footprint_w, 1) > $2::integer
+							AND occupied.tile_y + sy * $15::integer < $3::integer + $5::integer
+							AND occupied.tile_y + sy * $15::integer + GREATEST(occupied.footprint_h, 1) > $3::integer
+						)
 			)
 	`, previous.ID, next.Tile.X, next.Tile.Y, next.Footprint.Width, next.Footprint.Height,
 		next.Rotation, next.UpdatedAt, previous.Tile.X, previous.Tile.Y, previous.Rotation,
-		previous.UpdatedAt, building.IsTrapType(next.Type), building.IsRoadType(next.Type), previous.State)
+		previous.UpdatedAt, building.IsTrapType(next.Type), building.IsRoadType(next.Type), previous.State, world.WorldSize)
 	if err != nil {
 		return false, err
 	}

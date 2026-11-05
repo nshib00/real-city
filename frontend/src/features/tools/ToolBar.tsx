@@ -57,7 +57,7 @@ export function ToolBar() {
       })}
       <div className="tool-context" role="status">
         <strong>{preview?.name ?? tools.find((item) => item.id === activeTool)?.label}</strong>
-        {preview || activeTool === 'repair' || activeTool === 'attack' ? <span>{preview ? preview.cost.map((cost) => `${cost.label}: ${cost.amount}`).join(', ') || 'Бесплатно' : activeTool === 'repair' ? 'Цена — в карточке постройки' : 'Расход оружия — в карточке цели'}</span> : null}
+        {preview || activeTool === 'repair' || activeTool === 'attack' ? <span>{preview ? preview.cost.map((cost) => `${cost.label}: ${cost.amount}`).join(', ') || 'Бесплатно' : activeTool === 'repair' ? 'Выберите постройку, чтобы открыть меню ремонта' : 'Расход оружия — в карточке цели'}</span> : null}
         {activeTool !== 'select' || preview ? <button type="button" onClick={() => setTool('select')}>Отмена (Esc)</button> : null}
       </div>
       <IconButton label="Экономный режим карты" icon={Settings} active={mapPowerSave} onClick={() => setMapPowerSave(!mapPowerSave)} />

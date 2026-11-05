@@ -124,7 +124,7 @@ export function toPlacedBuilding(response: BuildingResponse): PlacedBuilding {
     rotation: response.rotation ?? 0,
     footprintW: response.footprint_w,
     footprintH: response.footprint_h,
-    status: response.state === 'building' || response.state === 'planned' ? 'construction' : 'active',
+    status: response.state === 'building' || response.state === 'planned' || response.state === 'repairing' ? 'construction' : 'active',
     state: response.state,
     health: response.health,
     maxHealth: response.max_health,

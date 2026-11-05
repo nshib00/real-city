@@ -19,7 +19,7 @@ func (s *BuildingService) HandleDestruction(ctx context.Context, before, after b
 		return nil
 	}
 	workers := 0
-	if before.CompletesAt != nil {
+	if before.State == building.StateBuilding && before.CompletesAt != nil {
 		workers += buildingPopulation(before)
 	}
 	if before.FieldStageStartedAt != nil {

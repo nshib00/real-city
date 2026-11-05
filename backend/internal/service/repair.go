@@ -119,8 +119,16 @@ func (s *BuildingService) Repair(ctx context.Context, id building.ID, p player.I
 		if _, e = s.economy.Spend(WithoutCatchUp(ctx), p, cost, "repair:reserve"); e != nil {
 			return e
 		}
-		job := building.RepairJob{ID: fmt.Sprintf("repair_%s_%d", id, s.now().UnixNano()), BuildingID: id, PlayerID: string(p), BuildingType: b.Type, Level: b.Level, Workers: quote.Workers, DueAt: s.now().Add(time.Duration(quote.DurationSeconds) * time.Second), Status: "pending"}
+		now := s.now()
+		dueAt := now.Add(time.Duration(quote.DurationSeconds) * time.Second)
+		job := building.RepairJob{ID: fmt.Sprintf("repair_%s_%d", id, now.UnixNano()), BuildingID: id, PlayerID: string(p), BuildingType: b.Type, Level: b.Level, Workers: quote.Workers, DueAt: dueAt, Status: "pending"}
 		if e = repo.CreateRepair(ctx, job); e != nil {
+			return e
+		}
+		b.State = building.StateRepairing
+		b.CompletesAt = &dueAt
+		b.UpdatedAt = now
+		if e = s.buildings.Update(ctx, b); e != nil {
 			return e
 		}
 		publishEvent(ctx, s.events, Event{Type: EventBuildingUpdated, PlayerID: p, ChunkID: world.ChunkID(b.MapID, world.ChunkForTile(b.Tile)), Payload: BuildingPayload{Building: b, Reason: "repair_started"}})
@@ -156,9 +164,10 @@ func (s *BuildingService) CompleteRepairs(ctx context.Context, now time.Time, li
 				return e
 			}
 			status := "cancelled"
-			if e == nil && b.OwnerID == job.PlayerID && b.Type == job.BuildingType && b.Level == job.Level && b.Health > 0 && (b.State == building.StateActive || b.State == building.StateDamaged) {
+			if e == nil && b.OwnerID == job.PlayerID && b.Type == job.BuildingType && b.Level == job.Level && b.Health > 0 && (b.State == building.StateRepairing || b.State == building.StateActive || b.State == building.StateDamaged) {
 				b.Health = buildingHealthForLevel(b.Type, b.Level)
 				b.State = building.StateActive
+				b.CompletesAt = nil
 				b.UpdatedAt = now
 				if e = s.buildings.Update(ctx, b); e != nil {
 					return e

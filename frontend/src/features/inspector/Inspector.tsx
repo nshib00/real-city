@@ -57,6 +57,7 @@ export function Inspector() {
   const disclosure = useRef<HTMLButtonElement>(null)
   const [activeTab, setActiveTab] = useState<InspectorTab>('tile')
   const [upgradeOpen, setUpgradeOpen] = useState(false)
+  const [repairOpen, setRepairOpen] = useState(false)
   const [modelPreviewOpen, setModelPreviewOpen] = useState(false)
   const [upgradeError, setUpgradeError] = useState('')
   const [constructionError, setConstructionError] = useState('')
@@ -70,6 +71,8 @@ export function Inspector() {
   const buildings = useGameStore((state) => state.buildings)
   const resourceNodes = useGameStore((state) => state.resourceNodes)
   const selectedBuildingId = useGameStore((state) => state.selectedBuildingId)
+  const repairMenuBuildingId = useGameStore((state) => state.repairMenuBuildingId)
+  const setRepairMenuBuildingId = useGameStore((state) => state.setRepairMenuBuildingId)
   const relocatingBuildingId = useGameStore((state) => state.relocatingBuildingId)
   const setRelocatingBuildingId = useGameStore((state) => state.setRelocatingBuildingId)
   const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
@@ -77,6 +80,12 @@ export function Inspector() {
   const damageEvents = useGameStore(state => state.buildingDamageEvents)
   const tool = useGameStore((state) => state.tool)
   useEffect(() => { if (tool === 'build') setExpanded(false) }, [tool])
+  useEffect(() => { setRepairOpen(false) }, [selectedBuildingId])
+  useEffect(() => {
+    if (!repairMenuBuildingId) return
+    if (repairMenuBuildingId === selectedBuildingId) setRepairOpen(true)
+    setRepairMenuBuildingId(null)
+  }, [repairMenuBuildingId, selectedBuildingId, setRepairMenuBuildingId])
   const setTool = useGameStore((state) => state.setTool)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const deleteBuilding = useGameStore((state) => state.deleteBuilding)
@@ -119,7 +128,7 @@ export function Inspector() {
   const nextUpgrades = selectedBuilding && canManageSelectedBuilding ? getNextUpgrades(selectedBuilding) : []
   const selectedBuildingHasModel = selectedBuilding ? canResolveBuildingModelAsset(selectedBuilding) : false
   const selectedBuildingMaxHealth = selectedBuilding ? maxHealthForBuilding(selectedBuilding) : 100
-  const rushCost = selectedBuilding?.status === 'construction' && selectedBuilding.completesAt ? rushCompletionCrystalCost(selectedBuilding.completesAt - constructionNow) : 0
+  const rushCost = selectedBuilding?.status === 'construction' && selectedBuilding.state !== 'repairing' && selectedBuilding.completesAt ? rushCompletionCrystalCost(selectedBuilding.completesAt - constructionNow) : 0
   const crystals = inventoryAmount(inventoryQuery.data?.inventory.items, 'aeolian-crystal')
   const cannonCharges = selectedBuilding?.cannonAmmo ? inventoryAmount(inventoryQuery.data?.inventory.items, selectedBuilding.cannonAmmo) : 0
   const cannonIdleReason = selectedBuilding && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) && selectedBuilding.cannonEnabled
@@ -224,6 +233,7 @@ export function Inspector() {
         addBuilding(toPlacedBuilding(result.building))
       }
       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      setRepairOpen(false)
     },
     onError: (error) => { playUiSound('ui.action.invalid'); showToast('warning', formatActionError(error)) },
   })
@@ -391,7 +401,7 @@ export function Inspector() {
       <div id="inspector-details" className="inspector-details">
       {(selectedBuilding || selectedMonster || selectedResourceNode) && <ObjectMarks ownership={selectedOwnership} selected threat={objectThreat}
         category={selectedBuilding ? buildingCatalog.find(item => item.type === selectedBuilding.kind)?.category : undefined}
-        status={selectedBuilding ? selectedBuilding.state === 'building' ? 'building' : selectedBuilding.health < selectedBuildingMaxHealth ? 'damage' : 'ready' : selectedResourceNode?.state === 'depleted' ? 'depleted' : undefined}
+        status={selectedBuilding ? selectedBuilding.state === 'building' || selectedBuilding.state === 'repairing' ? 'building' : selectedBuilding.health < selectedBuildingMaxHealth ? 'damage' : 'ready' : selectedResourceNode?.state === 'depleted' ? 'depleted' : undefined}
         rare={Boolean(selectedResourceNode && resourceCatalog.find(item => item.id === selectedResourceNode.resource)?.category === 'rare')} />}
       <section className="inspector-context" aria-label="Действие с целью">
         <strong>{selectedMonster ? 'Угроза' : selectedBuilding ? canManageSelectedBuilding ? 'Ваша постройка' : selectedOwnership === 'ally' ? 'Союзная постройка' : selectedOwnership === 'neutral' ? 'Нейтральная постройка' : 'Чужая постройка' : selectedResourceNode ? 'Ресурсный узел' : selectedRuin ? 'Руины' : 'Участок мира'}</strong>
@@ -405,7 +415,7 @@ export function Inspector() {
           </> : selectedRuin ? <button type="button" disabled={ruinOccupied || ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>{ruinOccupied ? 'Восстановление недоступно' : 'Захватить и восстановить'}</button>
           : <button type="button" disabled={!activeTile} onClick={() => setBuildMenuOpen(true)}>Открыть строительство</button>}
         {!activeTile && !selectedBuilding && !selectedMonster ? <small>Выберите клетку или объект на карте.</small> : null}
-        {selectedBuilding ? <small>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}. {selectedBuilding.status === 'construction' ? 'Строительство: управление и срок во вкладке «Объект».' : canManageSelectedBuilding && !nextUpgrades.length ? 'Следующий уровень улучшения недоступен.' : ''}</small> : null}
+        {selectedBuilding ? <small>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}. {selectedBuilding.state === 'repairing' ? 'Ремонт: оставшееся время во вкладке «Объект».' : selectedBuilding.status === 'construction' ? 'Строительство: управление и срок во вкладке «Объект».' : canManageSelectedBuilding && !nextUpgrades.length ? 'Следующий уровень улучшения недоступен.' : ''}</small> : null}
         {selectedRuin && !selectedBuilding ? <small>Восстановление: {selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет.</small> : null}
         {selectedBuilding && !canManageSelectedBuilding && !canAttackSelectedBuilding ? <small>Атака доступна только по действующей уязвимой постройке.</small> : null}
         {resourceMutation.error || ruinMutation.error ? <p role="alert">{(resourceMutation.error ?? ruinMutation.error)?.message}</p> : null}
@@ -481,11 +491,11 @@ export function Inspector() {
               <span className="building-owner">Владелец: <Star size={15} aria-label="Уровень" /> {ownerLevel ?? '—'} · {ownerName ?? 'Игрок'}</span>
               {selectedBuilding.owner ? <PublicProfileButton key={selectedBuilding.owner} playerId={selectedBuilding.owner} /> : null}
               {!canManageSelectedBuilding ? <span>Чужая постройка: управление недоступно</span> : null}
-              <span>Состояние: {selectedBuilding.state === 'ruined' ? 'разрушена' : selectedBuilding.status === 'construction' ? 'строится' : selectedBuilding.state === 'damaged' ? 'повреждена' : 'работает'}</span>
+              <span>Состояние: {selectedBuilding.state === 'ruined' ? 'разрушена' : selectedBuilding.state === 'repairing' ? 'ремонтируется' : selectedBuilding.status === 'construction' ? 'строится' : selectedBuilding.state === 'damaged' ? 'повреждена' : 'работает'}</span>
               {selectedBuilding.kind === 'oil_well' ? (
                 <>
                   <span>Запас нефти: {selectedOilNode ? `${selectedOilNode.amount.toLocaleString('ru-RU')}/${selectedOilNode.maxAmount.toLocaleString('ru-RU')}` : 'загрузка'}</span>
-                  <span>Добыча: {selectedBuilding.level === 1 ? '100 нефти за 30 мин. · 15 рабочих' : selectedBuilding.level === 2 ? '250 нефти за 25 мин. · 21 рабочий' : '400 нефти за 60 мин. · 27 рабочих'}</span>
+                  <span>Добыча: {selectedBuilding.level === 1 ? '100 нефти за 30 мин. · 15 рабочих' : selectedBuilding.level === 2 ? '250 нефти за 25 мин. · 21 рабочий' : '400 нефти за 60 мин. · 27 рабочих'} <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></span>
                   {selectedOilJob ? <span>{selectedOilJob.state === 'ready' ? 'Добыча завершена — соберите нефть' : `До конца добычи: ${formatRemaining(Math.max(0, Date.parse(selectedOilJob.completes_at) - constructionNow))}`}</span> : null}
                   {canManageSelectedBuilding && selectedBuilding.status === 'active' ? <span>Запустить добычу или собрать нефть можно нажатием на вышку либо в панели «Производство».</span> : null}
                 </>
@@ -495,7 +505,7 @@ export function Inspector() {
                   <span>Радиус: {selectedBuilding.cannonRange ?? '—'} кл. · Урон: {selectedBuilding.cannonDamage ?? '—'}</span>
                   {canManageSelectedBuilding ? (
                     <>
-                      <span>Перезарядка: {selectedBuilding.cannonCooldownSeconds ?? 12} с · Гарнизон: {selectedBuilding.cannonEnabled ? '1 житель' : 'нет'}</span>
+                      <span>Перезарядка: {selectedBuilding.cannonCooldownSeconds ?? 12} с · Гарнизон: {selectedBuilding.cannonEnabled ? <>1 житель <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></> : 'нет'}</span>
                       {selectedBuilding.cannonAmmo ? <span>Заряды: {cannonCharges} ({selectedBuilding.cannonAmmo === 'explosives' ? 'взрывчатка' : selectedBuilding.cannonAmmo === 'fuel' ? 'бензин' : 'камень'})</span> : <span>Боеприпасы не требуются</span>}
                       <span>Автоатака: {selectedBuilding.cannonEnabled ? cannonIdleReason ?? 'включена' : 'выключена'}</span>
                       {selectedBuilding.cannonTargetId ? <span>Последняя цель: {selectedBuilding.cannonTargetId}</span> : null}
@@ -519,7 +529,7 @@ export function Inspector() {
                   <span>Создание защитников пока недоступно</span>
                 </>
               ) : null}
-              {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>До завершения: {formatRemaining(selectedBuilding.completesAt - constructionNow)}</span> : null}
+              {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>{selectedBuilding.state === 'repairing' ? 'До конца ремонта: ' : 'До завершения: '}{formatRemaining(selectedBuilding.completesAt - constructionNow)}</span> : null}
               {selectedFieldSpec && selectedBuilding.status === 'active' && selectedFieldStage > 0 ? (
                 <>
                   <span>Фаза роста: {selectedFieldStage}/{selectedFieldMaxStage}{selectedBuilding.isSuperCrop ? ' · супер-цикл' : ''}</span>
@@ -528,8 +538,8 @@ export function Inspector() {
                   {!selectedFieldStageReady && selectedFieldNextAt ? <span>До конца фазы: {formatRemaining(selectedFieldNextAt - constructionNow)}</span> : null}
                 </>
               ) : null}
-              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
-              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
+              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
+              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
               {canManageSelectedBuilding && !selectedBuilding.kind.startsWith('ruins_') ? <span>Улучшение выполняется из меню этой постройки.</span> : null}
               <HealthBar health={selectedBuilding.health} maxHealth={selectedBuildingMaxHealth} />
               {modelPreviewOpen ? <BuildingModelPreview building={selectedBuilding} className="inspector-model-preview" /> : null}
@@ -576,7 +586,7 @@ export function Inspector() {
                 disabled={trapMutation.isPending || selectedBuilding.status !== 'active' || selectedBuilding.state === 'ruined' || (selectedBuilding.trapCharges ?? 0) >= (selectedBuilding.trapMaxCharges ?? 0)}
                 onClick={() => { setCannonError(''); trapMutation.mutate(selectedBuilding.id) }} />
             ) : null}
-            {canManageSelectedBuilding && selectedBuilding.status === 'construction' ? (
+            {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' ? (
               <IconButton
                 label={`Завершить за ${rushCost} крист.`}
                 icon={Gem}
@@ -587,27 +597,20 @@ export function Inspector() {
                 }}
               />
             ) : null}
-            {canManageSelectedBuilding && selectedBuilding.status === 'construction' ? (
+            {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' ? (
               <IconButton label="Отменить строительство" icon={Trash2} disabled={cancelConstructionMutation.isPending}
                 onClick={() => cancelConstructionMutation.mutate(selectedBuilding.id)} />
             ) : null}
             {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && selectedBuilding.health < selectedBuildingMaxHealth ? (
-              <><IconButton label="Починить" icon={Repair} disabled={repairMutation.isPending || Boolean(repairQuery.data?.repair.job)}
-                onClick={() => repairMutation.mutate(selectedBuilding.id)} />
-              {repairQuery.error ? <p role="status">Условия ремонта не загружены. <button type="button" onClick={() => void repairQuery.refetch()}>Повторить</button></p> : null}
-              {repairQuery.data ? <div aria-label="Условия ремонта">
-                {repairQuery.data.repair.job ? `Ремонт: осталось ${formatRemaining(Date.parse(repairQuery.data.repair.job.due_at) - constructionNow)}. Завершение подтвердит сервер.` : <>
-                  <span>Рабочих: {repairQuery.data.repair.workers}; время: {repairQuery.data.repair.duration_seconds} с.</span>
-                  {repairQuery.data.repair.cost.map((item) => <span key={item.resource}><ResourceIcon id={item.resource} label={resourceLabel(item.resource)} />{resourceLabel(item.resource)}: {item.amount} </span>)}
-                </>}
-              </div> : null}</>
+              <IconButton label="Ремонт" icon={Repair} disabled={repairMutation.isPending}
+                onClick={() => setRepairOpen(true)} />
             ) : null}
             {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && !selectedBuilding.kind.startsWith('ruins_') && selectedBuilding.kind !== 'oil_well' ? (
               <>
                 <IconButton label={relocatingBuildingId === selectedBuilding.id ? 'Отменить перенос' : 'Переместить'} icon={Move}
                   active={relocatingBuildingId === selectedBuilding.id}
                   onClick={() => setRelocatingBuildingId(relocatingBuildingId === selectedBuilding.id ? null : selectedBuilding.id)} />
-                <IconButton label="Повернуть на 90°" icon={RotateCw} disabled={rotateMutation.isPending}
+                <IconButton label="Повернуть на 90°" icon={RotateCw} disabled={rotateMutation.isPending || relocatingBuildingId === selectedBuilding.id}
                   onClick={() => rotateMutation.mutate(selectedBuilding)} />
               </>
             ) : null}
@@ -697,6 +700,28 @@ export function Inspector() {
           }
         }}
       />
+      {createPortal(<Modal title="Ремонт постройки" open={repairOpen && canManageSelectedBuilding && Boolean(selectedBuilding)} onClose={() => { if (!repairMutation.isPending) setRepairOpen(false) }} className="repair-modal">
+        <div className="upgrade-dialog">
+          <strong>{selectedBuilding?.name}</strong>
+          {repairQuery.isPending ? <p role="status">Загружаем условия ремонта…</p> : null}
+          {repairQuery.error ? <p role="alert">Условия ремонта не загружены. <button type="button" onClick={() => void repairQuery.refetch()}>Повторить</button></p> : null}
+          {repairQuery.data?.repair.job ? (
+            <p>Ремонт уже выполняется. Осталось {formatRemaining(Date.parse(repairQuery.data.repair.job.due_at) - constructionNow)}.</p>
+          ) : repairQuery.data ? (
+            <>
+              <p>Время ремонта: {formatDuration(repairQuery.data.repair.duration_seconds)} · Рабочие: {repairQuery.data.repair.workers} <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></p>
+              <div className="upgrade-cost repair-cost">
+                <span>Стоимость ремонта</span>
+                {repairQuery.data.repair.cost.map((item) => <em key={item.resource} title={`${resourceLabel(item.resource)}: ${item.amount}`}><ResourceIcon id={item.resource} label={resourceLabel(item.resource)} />{item.amount}</em>)}
+              </div>
+            </>
+          ) : null}
+          <div className="upgrade-actions">
+            <button className="text-button" type="button" disabled={repairMutation.isPending} onClick={() => setRepairOpen(false)}>Отмена</button>
+            <button className="text-button text-button-primary" type="button" disabled={repairMutation.isPending || repairQuery.isPending || Boolean(repairQuery.error) || !repairQuery.data || Boolean(repairQuery.data.repair.job)} onClick={() => { if (selectedBuilding) repairMutation.mutate(selectedBuilding.id) }}>Отремонтировать</button>
+          </div>
+        </div>
+      </Modal>, document.body)}
       <Modal title={selectedBuilding?.kind === 'oil_well' ? 'Продать нефтяную вышку' : selectedBuilding?.kind.startsWith('ruins_') ? 'Продать руину' : 'Подтвердите снос'} open={deleteOpen && canManageSelectedBuilding} onClose={() => { if (!deleteMutation.isPending) setDeleteOpen(false) }}>
         <div className="upgrade-dialog">
           <p>{selectedBuilding?.kind === 'oil_well' || selectedBuilding?.kind.startsWith('ruins_') ? 'Продать' : 'Удалить'} «{selectedBuilding?.name}»? Действие нельзя отменить. Текущая работа прекратится.</p>
@@ -779,8 +804,8 @@ function UpgradeModal({
             <div key={item.label}>
               <dt>{item.label}</dt>
               <dd>
-                <span>{item.before}</span>
-                <strong>{item.after}</strong>
+                <span>{item.before}{item.label === 'Строители' ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</span>
+                <strong>{item.after}{item.label === 'Строители' ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</strong>
               </dd>
             </div>
           ))}

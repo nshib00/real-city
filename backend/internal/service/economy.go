@@ -276,7 +276,7 @@ func (s *EconomyService) ensureTownHallStarterPopulation(ctx context.Context, pl
 		if item.Type == building.TypeTownHall && (item.State == building.StateActive || item.State == building.StateDamaged) {
 			hasActiveTownHall = true
 		}
-		if item.State == building.StateBuilding || item.State == building.StatePlanned {
+		if item.State == building.StateBuilding || item.State == building.StateRepairing || item.State == building.StatePlanned {
 			hasActiveConstruction = true
 		}
 	}
