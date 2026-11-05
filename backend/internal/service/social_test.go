@@ -3,7 +3,9 @@ package service
 import (
 	"context"
 	"log/slog"
+	"sync"
 	"testing"
+	"time"
 
 	"real-city/backend/internal/adapter/memory"
 	"real-city/backend/internal/domain/alliance"
@@ -64,6 +66,39 @@ func TestChatFlagsModerationAndRestrictsAllianceChannel(t *testing.T) {
 	}
 	if !msg.Flagged {
 		t.Fatalf("message with url must be flagged")
+	}
+}
+
+func TestChatMessagesHaveUniqueIDsAtSameTimestamp(t *testing.T) {
+	repo := memory.NewSocialRepo()
+	s := NewChatService(repo, repo, slog.Default())
+	now := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
+	s.now = func() time.Time { return now }
+	ids := make(chan chat.MessageID, 32)
+	var workers sync.WaitGroup
+	for i := 0; i < cap(ids); i++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			message, err := s.Send(context.Background(), "player-1", chat.ChannelGlobal, "", "test")
+			if err != nil {
+				t.Error(err)
+				return
+			}
+			ids <- message.ID
+		}()
+	}
+	workers.Wait()
+	close(ids)
+	seen := map[chat.MessageID]bool{}
+	for id := range ids {
+		if seen[id] {
+			t.Fatalf("duplicate ID: %s", id)
+		}
+		seen[id] = true
+	}
+	if len(seen) != cap(ids) {
+		t.Fatalf("sent %d messages, want %d", len(seen), cap(ids))
 	}
 }
 

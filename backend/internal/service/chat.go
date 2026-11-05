@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"log/slog"
 	"time"
 
@@ -53,7 +52,7 @@ func (s *ChatService) send(ctx context.Context, playerID player.ID, channel chat
 		return chat.Message{}, err
 	}
 	msg := chat.Message{
-		ID:         chat.MessageID(fmt.Sprintf("chat_%d", s.now().UnixNano())),
+		ID:         chat.MessageID(newID("chat")),
 		Channel:    channel,
 		AuthorID:   playerID,
 		AllianceID: allianceID,
@@ -69,6 +68,7 @@ func (s *ChatService) send(ctx context.Context, playerID player.ID, channel chat
 		}
 	}
 	if err := s.repo.AddMessage(ctx, msg); err != nil {
+		s.log.Error("chat.message.save_failed", "event", "chat.message.save_failed", "player_id", playerID, "channel", channel, "error", err)
 		return chat.Message{}, err
 	}
 	s.publishMessage(ctx, msg)
