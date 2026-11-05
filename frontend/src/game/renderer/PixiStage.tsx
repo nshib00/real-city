@@ -24,7 +24,7 @@ import { tileOccupancyKey } from './visibleObjects'
 import { indexWorldTiles, worldTilesNear, type WorldTileIndex } from './worldTileIndex'
 import { observeWorldMotion, worldMotionEnabled } from './motionPolicy'
 import type { TerritoryCell } from '../territory'
-import { defenseRangeCells } from '../defenseRange'
+import { defenseRangeCells, towerDetectionRangeCells } from '../defenseRange'
 
 type Camera = {
   x: number
@@ -411,6 +411,8 @@ export function PixiStage({
     }
   }, [allBuildings, buildings, camera, hoveredTile, monsters, occupiedTiles, renderedTiles, renderedTileIndex, resources, selectedBuildingId, selectedMonsterId, selectedTile, viewerId])
 
+  const selectedTowerForLabel = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && item.kind === 'tower' && item.state !== 'ruined' && item.health > 0) : null
+
   return (
     <div
       className="pixi-stage"
@@ -450,7 +452,11 @@ export function PixiStage({
         onHoverTile(rawTile ? renderedTileAtCoord(rawTile) : null)
       }}
       onPointerLeave={() => onHoverTile(null)}
-    />
+    >
+      {selectedTowerForLabel && <div style={{ position: 'absolute', zIndex: 1, left: 12, top: 12, pointerEvents: 'none', padding: '5px 9px', border: '1px solid #6bd8ff', borderRadius: 5, background: 'rgba(9, 35, 52, .88)', color: '#b9eeff', fontSize: 12, fontWeight: 600 }}>
+        Проектная зона дозора · оповещения пока недоступны
+      </div>}
+    </div>
   )
 }
 
@@ -567,6 +573,21 @@ function drawStage(
         const a = corners[i], b = corners[(i+1)%4]
         overlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0x351316, width: 5, alpha: .95 })
         overlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0xff5555, width: 2.5, alpha: 1 })
+      })
+    }
+  }
+  const selectedTower = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && item.kind === 'tower') : null
+  if (selectedTower) {
+    for (const cell of towerDetectionRangeCells(selectedTower, tiles)) {
+      const pos = nearestWrappedScreenCoord(cell, screenTarget)
+      const x = origin.x + pos.x * camera.zoom, y = origin.y + pos.y * camera.zoom
+      const w = TILE_WIDTH * camera.zoom / 2, h = TILE_HEIGHT * camera.zoom / 2
+      const corners = [[x, y-h], [x+w, y], [x, y+h], [x-w, y]]
+      cell.edges.forEach((edge, i) => {
+        if (!edge) return
+        const a = corners[i], b = corners[(i+1)%4]
+        overlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0x143b52, width: 5, alpha: .95 })
+        overlay.moveTo(a[0], a[1]).lineTo(b[0], b[1]).stroke({ color: 0x6bd8ff, width: 2.5, alpha: 1 })
       })
     }
   }

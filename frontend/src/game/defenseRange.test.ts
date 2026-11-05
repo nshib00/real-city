@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { defenseRangeCells } from './defenseRange'
+import { defenseRangeCells, towerDetectionRangeCells } from './defenseRange'
 import type { PlacedBuilding } from './state/useGameStore'
 import type { WorldTile } from '../shared/contracts'
 
@@ -43,4 +43,18 @@ it('не обещает видимость через незагруженный
   expect(defenseRangeCells({ ...cannon, cannonRange: undefined }, [], ground)).toEqual([])
   const partial = ground.filter(tile => tile.x !== 7 || tile.y !== 136)
   expect(contains(defenseRangeCells(cannon, [cannon], partial), 9, 135)).toBe(false)
+})
+
+it('показывает геометрическую зону дозора башни по уровням с замыканием карты', () => {
+  const tiles = Array.from({ length: 33 }, (_, x) => Array.from({ length: 33 }, (_, y) => ({ x: (x + 144) % 160, y: (y + 144) % 160, terrain: 'grass' } as WorldTile))).flat()
+  for (let level = 1; level <= 6; level++) {
+    const tower = { ...cannon, kind: 'tower' as const, tile: { x: 0, y: 0 }, level, health: 100 }
+    const radius = level * 2 + 4
+    const cells = towerDetectionRangeCells(tower, tiles)
+    expect(cells).toHaveLength((radius * 2 + 1) ** 2)
+    expect(contains(cells, 160 - radius, 0)).toBe(true)
+    expect(contains(cells, radius, radius)).toBe(true)
+    expect(contains(cells, radius + 1, 0)).toBe(false)
+  }
+  expect(towerDetectionRangeCells({ ...cannon, kind: 'tower', level: 1, health: 0 }, tiles)).toEqual([])
 })

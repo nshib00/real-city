@@ -256,14 +256,16 @@ describe('building asset registry', () => {
     expect(buildingAssetState(building({ kind: 'defense_cannon', state: 'damaged', health: 80, maxHealth: 100 }))).toBe('damaged')
   })
 
-  it('resolves watchtower construction, active and damaged assets', () => {
-    for (const state of ['construction', 'active', 'damaged'] as const) {
-      const tower = building({ kind: 'tower', level: 1, status: state === 'construction' ? 'construction' : 'active', state: state === 'construction' ? 'building' : 'active', health: state === 'damaged' ? 10 : 100 })
-      const base = `/assets/buildings/defense/tower/tower_l01_${state}`
-      expect(resolveBuildingSpriteAsset(tower)).toContain(`${base}.png`)
-      expect(resolveBuildingModelAsset(tower)).toContain(`${base}_LOD0.glb`)
+  it('resolves all watchtower levels and states', () => {
+    for (let level = 1; level <= 6; level++) {
+      for (const state of ['construction', 'active', 'damaged', 'ruined'] as const) {
+        const tower = building({ kind: 'tower', level, status: state === 'construction' ? 'construction' : 'active', state: state === 'construction' ? 'building' : state, health: state === 'ruined' ? 0 : state === 'damaged' ? 10 : 100 })
+        const base = `/assets/buildings/defense/tower/tower_l${String(level).padStart(2, '0')}_${state}`
+        expect(resolveBuildingSpriteAsset(tower)).toContain(`${base}.png`)
+        expect(resolveBuildingModelAsset(tower)).toContain(`${base}_LOD0.glb`)
+      }
     }
-    expect(buildingAssetState(building({ kind: 'tower', state: 'ruined', health: 0 }))).toBe('damaged')
+    expect(buildingAssetState(building({ kind: 'tower', state: 'ruined', health: 0 }))).toBe('ruined')
   })
 })
 

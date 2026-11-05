@@ -9,6 +9,21 @@ const wrap = (n: number) => ((n % WORLD_WRAP_TILES) + WORLD_WRAP_TILES) % WORLD_
 const key = ({ x, y }: Coord) => `${wrap(x)}:${wrap(y)}`
 const footprints = new Map(buildingCatalog.map(item => [item.type as string, item.footprint]))
 const transparent = new Set(['road', 'standard_road', 'paved_road', 'defense_stakes', 'defense_resin_snare'])
+const towerDetectionRadii = [6, 8, 10, 12, 14, 16] as const
+
+/** Проектная геометрическая зона дозора; серверные тревоги пока не реализованы. */
+export function towerDetectionRangeCells(tower: PlacedBuilding, tiles: readonly WorldTile[]): DefenseRangeCell[] {
+  if (tower.kind !== 'tower' || tower.state === 'ruined' || tower.health <= 0) return []
+  const radius = towerDetectionRadii[tower.level - 1]
+  if (!radius) return []
+  const loaded = new Set(tiles.map(key))
+  const cells = new Map<string, Coord>()
+  for (let dx = -radius; dx <= radius; dx++) for (let dy = -radius; dy <= radius; dy++) {
+    const target = { x: tower.tile.x + dx, y: tower.tile.y + dy }
+    if (loaded.has(key(target))) cells.set(key(target), { x: wrap(target.x), y: wrap(target.y) })
+  }
+  return [...cells.values()].map(cell => ({ ...cell, edges: [[0, -1], [1, 0], [0, 1], [-1, 0]].map(([dx, dy]) => !cells.has(key({ x: cell.x + dx, y: cell.y + dy }))) }))
+}
 
 /** Та же линия Брезенхэма и квадратная дальность, что на сервере; конечная клетка не блокирует саму себя. */
 export function defenseRangeCells(cannon: PlacedBuilding, buildings: readonly PlacedBuilding[], tiles: readonly WorldTile[]): DefenseRangeCell[] {

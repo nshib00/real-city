@@ -127,8 +127,8 @@ export const buildingAssetManifests: readonly BuildingAssetManifest[] = [
     spriteSource: 'public', modelSource: 'public', modelLod: 'LOD0' },
   {
     kind: 'tower', assetId: 'tower', category: 'defense', displayName: 'Сторожевая башня',
-    levels: [1], states: coreStates, spriteSource: 'public', modelSource: 'public',
-    modelLod: 'LOD0', revision: 'watchtower-2026-10-17',
+    levels: l1To6, states: coreWithRuinedStates, spriteSource: 'public', modelSource: 'public',
+    modelLod: 'LOD0', revision: 'watchtower-l01-l06-2026-11-05',
   },
   {
     kind: 'town_hall',
