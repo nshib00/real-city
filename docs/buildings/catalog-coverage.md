@@ -32,7 +32,7 @@
 | `mint` | industry | 1 | [mint.md](industry/mint.md) | [mint.json](../assets/specs/industry/mint.json) | нет | есть проектные поля |
 | `coin_storage` | storage | 1–12 | [coin-storage.md](storage/coin-storage.md) | [coin_storage.json](../assets/specs/storage/coin_storage.json) | есть | сверить числа |
 | `market` | trade | 1 | [market.md](trade/market.md) | [market.json](../assets/specs/trade/market.json) | нет | есть проектные поля |
-| `tower` | defense | 1 | [tower.md](defense/tower.md) | [tower.json](../assets/specs/defense/tower.json) | есть | сверить механику |
+| `tower` | defense | 1–6 | [tower.md](defense/tower.md) | [tower.json](../assets/specs/defense/tower.json) | есть | сверить механику |
 | `defense_cannon` | defense | 1–12 | [cannon.md](defense/cannon.md) | [defense_cannon.yaml](../assets/specs/defense/defense_cannon.yaml) | есть | есть проектные поля |
 | `defense_stakes` | defense | 1–6 | [stakes.md](defense/stakes.md) | [defense_stakes.json](../assets/specs/defense/defense_stakes.json) | есть | есть проектные поля |
 | `defense_resin_snare` | defense | 1–4 | [resin-snare.md](defense/resin-snare.md) | [defense_resin_snare.json](../assets/specs/defense/defense_resin_snare.json) | есть | есть проектные поля |
