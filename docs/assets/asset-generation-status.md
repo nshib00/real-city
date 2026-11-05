@@ -177,7 +177,7 @@
 - Мастерская автоматонов `defense_automaton_bay`: 5 уровней × 6 состояний (`construction`, `active`, `no_mechanic`, `no_fuel`, `damaged`, `ruined`) выпущены 2026-10-17 через Blender MCP; 30 PNG, 90 LOD GLB, master `.blend`, manifest/report/contact sheet. Механика проектная, в игровом каталоге мастерской пока нет.
 - Смоляная западня `defense_resin_snare`: 4 уровня × 6 состояний (`construction`, `armed`, `triggered`, `empty`, `damaged`, `ruined`) выпущены 2026-10-17 через Blender MCP; 24 PNG, 72 LOD GLB, master `.blend`, manifest/report/contact sheet. Игровая механика остаётся проектной и не подключена к каталогу.
 - Грозовая катушка `defense_storm_coil`: 6 уровней × 6 состояний (`construction`, `active`, `no_fuel`, `no_crew`, `damaged`, `ruined`) выпущены 2026-10-17 через Blender MCP; 36 PNG, 108 LOD GLB, master `.blend`, manifest/report/contact sheet. Игровая механика остаётся проектной и не подключена к каталогу.
-- Сторожевая башня `tower`: один уровень × три состояния (`construction`, `active`, `damaged`) выпущены 2026-10-17 через Blender MCP; 3 PNG, 9 LOD GLB, master `.blend`, manifest/report/contact sheet. Семейство подключено к frontend registry, механика атаки в спецификации не задана.
+- Сторожевая башня `tower`: уровни 1–6 × четыре состояния (`construction`, `active`, `damaged`, `ruined`) выпущены 2026-11-05; 24 PNG, 72 LOD GLB, 24 исходных `.blend`, 24 полных GLB, manifest/report/contact sheet. Модели уровней 2–6 подготовлены для отдельного подключения игровых апгрейдов; башня не атакует.
 - Болтомёт `defense_bolt_thrower`: 8 уровней × 5 состояний выпущены 2026-10-17 через Blender MCP; 40 PNG, 120 LOD GLB, master `.blend`, manifest/report/contact sheet. Игровая механика орудия пока проектная и не подключена к каталогу.
 - Колья `defense_stakes`: 6 уровней × 6 состояний выпущены 2026-10-17 через Blender MCP; 36 PNG, 108 LOD GLB, master `.blend`, manifest/report/contact sheet. Asset spec соответствует `docs/buildings/defense/stakes.md`; игровая механика ловушки пока остаётся проектной.
 - Пушка `defense_cannon`: 12 уровней × 4 геометрических состояния выпущены 2026-10-17 через Blender MCP; 48 PNG, 144 LOD GLB, master `.blend`, manifest/report/contact sheet. `idle_no_ammo` использует active-геометрию и UI-индикатор. Пушка подключена к каталогам, строительству, автоатаке и frontend registry.
@@ -262,11 +262,12 @@
 - Runtime-папка: `frontend/public/assets/buildings/defense/tower/`.
 - Contact sheet: `frontend/public/assets/buildings/defense/tower/tower_full_contact_sheet.png`.
 
-Состояние на 2026-10-17:
-- Созданы `construction`, `active`, `damaged` для единственного уровня каталога: 3 PNG, 9 GLB (LOD0/LOD1/LOD2), master `.blend`, combined GLB, manifest/report. Исходные модели: 2288–4680 треугольников.
-- Blender MCP `get_addon_status`/`get_scene_info` и рендер живой сцены выполнены; все состояния и contact sheet визуально проверены. `look` не завершился из-за таймаута автоодобрения; screenshot-review выполнен рендером через MCP.
-- Проверки прошли: asset spec, manifest, sprites, LOD, ground/PNG alignment, frontend registry (13 тестов), `git diff --check`.
-- Башня подключена к frontend registry. В `docs/buildings/defense/tower.md` для неё не задана автоматическая атака; модель не содержит оружия.
+Состояние на 2026-11-05:
+- Созданы 6 уровней × 4 состояния: 24 PNG, 72 LOD GLB, 24 исходных `.blend`, 24 полных GLB, manifest/report/contact sheet. Диапазон LOD0: 1804–4972 треугольника; уровни 2–6 пока не подключены к игровым апгрейдам.
+- Из-за ограничения 8 ГБ RAM каждый вариант экспортирован отдельным Blender-процессом через `tools/assets/generate_watchtower_staged.py`; исходники и полные GLB перечислены в manifest массивами `source_blends` и `combined_glbs`.
+- Blender MCP `get_addon_status`/`get_scene_info` выполнены; уровень 6 в `active` и `ruined` проверен через `look` во временной сцене. LOD0 GLB уровня 6 повторно импортирован: 112 мешей, 13 материалов, клетка 3,58×3,58, pivot (0, 0, 0); после QA исходная сцена пользователя восстановлена. Контактный лист всех 24 вариантов и active-спрайты в размере 128×96 визуально осмотрены; для уровней 3–5 усилены силуэтные приборы.
+- Проверки прошли: профильный `validate_watchtower.py`, asset spec, manifest, sprites, LOD, ground (18 сравнений, без расхождений), Python compile и `git diff --check`.
+- В frontend registry подключён только уровень 1; игровые апгрейды и подсветка радиуса относятся к следующему пункту. Башня не атакует и не содержит оружия.
 
 ## Болтомёт
 
