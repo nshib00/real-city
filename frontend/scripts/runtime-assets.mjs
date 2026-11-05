@@ -5,6 +5,9 @@ const runtimeGlbDirectories = [
   'buildings/housing/stone_house/',
   'buildings/housing/villa/',
   'buildings/industry/',
+  'buildings/roads/ground_road/',
+  'buildings/roads/common_road/',
+  'buildings/roads/paved_road/',
 ]
 
 export function isRuntimeAsset(relativePath) {

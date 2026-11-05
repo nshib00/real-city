@@ -15,6 +15,7 @@ type level struct {
 	Population   int            `json:"population"`
 	Health       int            `json:"health"`
 	Cost         map[string]int `json:"cost"`
+	NextType     string         `json:"nextType,omitempty"`
 }
 
 func costs(items []building.Cost) map[string]int {
@@ -39,7 +40,7 @@ func main() {
 		}
 		levels := make([]level, 0, len(item.UpgradeLevels))
 		for _, upgrade := range item.UpgradeLevels {
-			levels = append(levels, level{Level: upgrade.Level, BuildSeconds: int(upgrade.BuildDuration.Seconds()), Population: upgrade.Population, Health: upgrade.Health, Cost: costs(upgrade.Cost)})
+			levels = append(levels, level{Level: upgrade.Level, BuildSeconds: int(upgrade.BuildDuration.Seconds()), Population: upgrade.Population, Health: upgrade.Health, Cost: costs(upgrade.Cost), NextType: string(upgrade.NextType)})
 		}
 		if len(levels) == 0 {
 			levels = append(levels, level{Level: item.Level, BuildSeconds: int(item.BuildDuration.Seconds()), Population: item.Population, Health: item.Health, Cost: costs(item.Cost)})
@@ -51,7 +52,10 @@ func main() {
 		result[key] = map[string]any{
 			"name": item.Name, "category": item.Category,
 			"footprint": map[string]int{"width": item.Footprint.Width, "height": item.Footprint.Height},
-			"upgradeTo": upgrades, "levels": levels,
+			"level":     item.Level, "buildSeconds": int(item.BuildDuration.Seconds()),
+			"population": item.Population, "health": item.Health, "cost": costs(item.Cost),
+			"firstLevel": catalog.CanPlaceDirectly(item.Type),
+			"upgradeTo":  upgrades, "levels": levels,
 		}
 	}
 	if err := json.NewEncoder(os.Stdout).Encode(result); err != nil {

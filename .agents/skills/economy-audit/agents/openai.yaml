@@ -1,0 +1,4 @@
+interface:
+  display_name: "Economy Audit"
+  short_description: "Полный аудит экономики и цепочек ресурсов Real City"
+  default_prompt: "Проведи полный актуальный аудит экономики Real City и обнови docs/game-design/economy-audit.md."

@@ -112,7 +112,11 @@ def validate_against_project(spec: AssetSpec, catalog: dict[str, CatalogEntry]) 
     if not checklist.exists():
         errors.append("style validation checklist is missing: docs/assets/blender-generation-checklist.md")
     profile = spec.png_policy
-    expected_camera = "real_city_modular_wall" if spec.asset_id in ("wooden_wall", "stone_wall", "concrete_wall", "modern_wall") else "real_city_isometric"
+    expected_camera = (
+        "level_emblem_orthographic_three_quarter" if spec.asset_id == "player_level_emblems"
+        else "real_city_modular_wall" if spec.asset_id in ("wooden_wall", "stone_wall", "concrete_wall", "modern_wall")
+        else "real_city_isometric"
+    )
     if profile.get("camera_profile") != expected_camera:
         errors.append(f"png_policy.camera_profile must be {expected_camera}")
     return errors

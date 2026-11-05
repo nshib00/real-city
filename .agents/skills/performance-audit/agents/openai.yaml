@@ -1,0 +1,4 @@
+interface:
+  display_name: "Performance Audit"
+  short_description: "Подробный аудит производительности фронтенда и бэкенда"
+  default_prompt: "Проведи полный аудит производительности Real City по фронтенду и бэкенду и обнови docs/performance/performance-audit.md."

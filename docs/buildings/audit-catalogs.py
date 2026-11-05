@@ -37,13 +37,16 @@ def main() -> None:
             findings.append(f"`{type_id}`: отсутствует в backend")
             continue
         issues = []
-        for key in ("name", "category"):
+        for key in ("name", "category", "level", "buildSeconds", "population", "health", "firstLevel"):
             if item[key] != server[key]:
                 issues.append(f"{key}: shared={item[key]!r}, backend={server[key]!r}")
         if server["footprint"] is not None and item["footprint"] != server["footprint"]:
             issues.append(f"footprint: shared={item['footprint']}, backend={server['footprint']}")
         if set(item["upgradeTo"]) != set(server["upgradeTo"]):
             issues.append(f"upgradeTo: shared={item['upgradeTo']}, backend={server['upgradeTo']}")
+        shared_cost = {part["resource"]: part["amount"] for part in item["cost"]}
+        if shared_cost != server["cost"]:
+            issues.append(f"стоимость базового уровня: shared={shared_cost}, backend={server['cost']}")
         frontend_levels = item.get("upgradeLevels") or [item]
         shared_levels = {int(level["level"]): level for level in frontend_levels}
         server_levels = {int(level["level"]): level for level in server["levels"]}
@@ -59,6 +62,8 @@ def main() -> None:
             a_cost = {part["resource"]: part["amount"] for part in a["cost"]}
             if a_cost != b["cost"]:
                 issues.append(f"L{level} стоимость: shared={a_cost}, backend={b['cost']}")
+            if a.get("nextType", "") != b.get("nextType", ""):
+                issues.append(f"L{level} переход: shared={a.get('nextType')}, backend={b.get('nextType')}")
         if issues:
             findings.extend(f"`{type_id}`: {issue}" for issue in issues)
         rows.append(f"| `{type_id}` | {len(shared_levels)} | {'совпадает' if not issues else '; '.join(issues)} |")
@@ -67,7 +72,7 @@ def main() -> None:
     report = [
         "# Сверка игрового каталога построек",
         "",
-        "Отчёт сформирован `python3 docs/buildings/audit-catalogs.py`. Сравниваются ID, русское имя, категория, размер клетки, переходы апгрейда и **каждый игровой уровень**: время в секундах, строители, HP и стоимость по `resource_id`. Frontend импортирует generated `shared/catalog/buildings.ts`, а API `/api/v1/buildings/catalog` отдаёт runtime backend-каталог; оба используют `data/buildings/catalog-v2.json`. Текстовые документы и экранные описания требуют отдельной редакторской сверки.",
+        "Отчёт сформирован `python3 docs/buildings/audit-catalogs.py`. Сравниваются ID, русское имя, категория, доступность первого уровня, базовые цена/HP/время/строители, размер клетки, переходы апгрейда и **каждый игровой уровень**: время в секундах, строители, HP, цена и переход. Frontend импортирует generated `shared/catalog/buildings.ts`, API `/api/v1/buildings/catalog?scope=all` отдаёт все runtime-типы и уровни; отдельный handler-тест проверяет также обычный список доступных для размещения типов. Оба каталога происходят из `data/buildings/catalog-v2.json`. Текстовые документы и экранные описания требуют отдельной редакторской сверки.",
         "",
         "| ID | Число уровней | Shared ↔ backend |",
         "| --- | ---: | --- |",
