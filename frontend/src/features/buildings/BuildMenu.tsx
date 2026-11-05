@@ -69,7 +69,7 @@ export function BuildMenu() {
     if (!availableOnly) return true
     return (Boolean(inventory) || Boolean(item.free)) && !(item.kind !== 'town_hall' && !hasTownHall) && !(item.kind === 'town_hall' && hasTownHall)
       && !getShortage(item, inventory, freePopulation)
-      && validatePlacementPreview({ kind: item.kind, tile: selectedTile, terrain: selectedWorldTile?.terrain, footprint: item.footprint, worldTiles, buildings, ownerId: player?.id, monsters }).valid
+      && validatePlacementPreview({ kind: item.kind, tile: selectedTile, terrain: selectedWorldTile?.terrain, worldTiles, buildings, ownerId: player?.id, monsters }).valid
   })
 
   useEffect(() => {
@@ -130,7 +130,7 @@ export function BuildMenu() {
           {visibleCatalog.map((item) => {
             const lockedByTownHall = item.kind !== 'town_hall' && !hasTownHall
             const lockedTownHall = item.kind === 'town_hall' && hasTownHall
-            const placement = validatePlacementPreview({ kind: item.kind, tile: selectedTile, terrain: selectedWorldTile?.terrain, footprint: item.footprint, worldTiles, buildings, ownerId: player?.id, monsters })
+            const placement = validatePlacementPreview({ kind: item.kind, tile: selectedTile, terrain: selectedWorldTile?.terrain, worldTiles, buildings, ownerId: player?.id, monsters })
             const shortage = getShortage(item, inventory, freePopulation)
             const disabled = (!inventory && !item.free) || !placement.valid || lockedByTownHall || lockedTownHall || shortage !== null
             return (

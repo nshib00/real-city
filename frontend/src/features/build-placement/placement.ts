@@ -27,6 +27,10 @@ export function validatePlacementPreview(input: {
   if (!input.tile) {
     return { valid: false, reason: 'Выберите клетку на карте' }
   }
+  const catalogFootprint = buildingFootprints.get(input.kind)
+  if (isMultiTileFootprint(catalogFootprint) || isMultiTileFootprint(input.footprint)) {
+    return { valid: false, reason: 'Постройки больше одной клетки нельзя размещать или перемещать' }
+  }
   const ownerBuildings = input.ownerId ? input.buildings.filter((building) => building.owner === input.ownerId) : input.buildings
   const hasTownHall = ownerBuildings.some((building) => building.kind === 'town_hall')
   if (!input.skipTownHallCheck && input.kind !== 'town_hall' && !hasTownHall) {
@@ -35,7 +39,7 @@ export function validatePlacementPreview(input: {
   if (!input.skipTownHallCheck && input.kind === 'town_hall' && hasTownHall) {
     return { valid: false, reason: 'Ратуша может быть только одна' }
   }
-  const footprint = footprintTiles(input.tile, input.footprint)
+  const footprint = footprintTiles(input.tile)
   if (input.buildings.some((building) => {
     if (building.id === input.ignoreBuildingId) return false
     if (building.state === 'ruined') return false
@@ -51,7 +55,7 @@ export function validatePlacementPreview(input: {
   }
   const terrainTiles = footprint.map((coord) => input.worldTiles?.find((tile) => tile.x === coord.x && tile.y === coord.y)?.terrain ?? (coord.x === input.tile?.x && coord.y === input.tile.y ? input.terrain : null))
   if (terrainTiles.some((terrain) => terrain === 'forest')) {
-    return { valid: false, reason: isMultiTileFootprint(input.footprint) ? 'Сначала срубите лес на клетках под постройкой' : 'Сначала срубите лес на этой клетке' }
+    return { valid: false, reason: 'Сначала срубите лес на этой клетке' }
   }
   if (terrainTiles.some((terrain) => terrain === 'water' || terrain === 'mountain')) {
     return { valid: false, reason: 'На реках и горах строить нельзя' }

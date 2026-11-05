@@ -47,14 +47,9 @@ describe('validatePlacementPreview', () => {
     })
   })
 
-  it('blocks a footprint that overlaps another player building', () => {
-    const buildings = [{
-      id: 'foreign-building', kind: 'dugout' as const, name: 'Землянка', level: 1,
-      tile: { x: 3, y: 4 }, status: 'active' as const, health: 100,
-      owner: 'p2', startedAt: 0, completesAt: null,
-    }]
-    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 2, y: 4 }, footprint: { width: 2, height: 1 }, buildings, ownerId: 'p1' })).toEqual({
-      valid: false, reason: 'Клетка уже занята',
+  it('rejects a multi-cell placement or relocation footprint', () => {
+    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 2, y: 4 }, footprint: { width: 2, height: 1 }, buildings: [] })).toEqual({
+      valid: false, reason: 'Постройки больше одной клетки нельзя размещать или перемещать',
     })
   })
 
@@ -74,8 +69,8 @@ describe('validatePlacementPreview', () => {
       status: 'active' as const, health: 100, owner: 'p2', startedAt: 0, completesAt: null,
     }]
     expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 0, y: 4 }, buildings }).reason).toBe('Клетка уже занята')
-    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 159, y: 4 }, footprint: { width: 2, height: 1 },
-      buildings: [{ ...buildings[0], tile: { x: 0, y: 4 }, footprintW: 1 }] }).reason).toBe('Клетка уже занята')
+    expect(validatePlacementPreview({ kind: 'town_hall', tile: { x: 1, y: 4 },
+      buildings: [{ ...buildings[0], tile: { x: 0, y: 4 } }] }).reason).toBe('Клетка уже занята')
   })
 
   it('allows a trap on a road but blocks a second trap', () => {
@@ -105,7 +100,6 @@ describe('validatePlacementPreview', () => {
         kind: 'town_hall',
         tile: { x: 0, y: 0 },
         terrain: 'grass',
-        footprint: { width: 1, height: 1 },
         worldTiles: [
           { x: 0, y: 0, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 3 },
         ],

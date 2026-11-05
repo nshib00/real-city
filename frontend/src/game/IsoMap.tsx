@@ -122,7 +122,7 @@ export function IsoMap() {
   const mapTilesByKey = useMemo(() => new Map(mapTiles.map((tile) => [tileActionKey(tile), tile])), [mapTiles])
   const placementPreview = placementPreviewKind ? buildCatalog.find((item) => item.kind === placementPreviewKind) : undefined
   const previewTile = hoveredTile ?? selectedTile
-  const placementValidity = placementPreview ? validatePlacementPreview({ kind: placementPreview.kind, tile: previewTile, footprint: placementPreview.footprint, buildings, worldTiles: mapTiles, monsters, ownerId: player?.id }) : null
+  const placementValidity = placementPreview ? validatePlacementPreview({ kind: placementPreview.kind, tile: previewTile, buildings, worldTiles: mapTiles, monsters, ownerId: player?.id }) : null
   const missingCenterTile = mapTiles.length > 0 && !mapTilesByKey.has(tileActionKey(wrapGridCoord(roundGridCoord(renderCenter))))
   const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const relocatingBuilding = relocatingBuildingId ? buildings.find((item) => item.id === relocatingBuildingId) : null

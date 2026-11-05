@@ -59,7 +59,7 @@ export function AeolianPrototype() {
         {step === 'tile' && <><p>Трава · свободное место. Проверку правил выполняет сервер в игре.</p><button onClick={() => open('catalog')}>Открыть строительство</button></>}
         {(step === 'catalog' || step === 'preview') && <>
           <img className="aeolian-preview" src={`${asset}active.png`} alt="Землянка, уровень 1" />
-          <h4>{house.name}</h4><p>Жильё · {house.footprint.width}×{house.footprint.height} · население +{house.population}</p>
+          <h4>{house.name}</h4><p>Жильё · население +{house.population}</p>
           <p>Стоимость: {cost || 'Бесплатно'}</p><p>Время строительства: {house.buildSeconds} с</p>
           <p role="status">{offline ? '⚠ Нет связи. Дождитесь подключения.' : poor ? '⚠ Недостаточно ресурсов. Пополните запасы.' : '✓ В макете ресурсов достаточно.'}</p>
           {step === 'catalog' ? <button disabled={blocked} onClick={() => open('preview')}>Предпросмотр размещения</button> : <><p>Контур выбранного тайла показывает место размещения.</p><button disabled={blocked} onClick={() => open('building')}>Разместить в макете</button></>}
