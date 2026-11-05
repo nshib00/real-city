@@ -8,46 +8,37 @@ footprint: { width: 1, height: 1 }
 states: [active]
 
 levels:
-  - { level: 1, visual_goal: Искра внутри эмалевого медальона., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 2, visual_goal: Камни очага и тёплое пламя., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 3, visual_goal: Три первые крыши., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 4, visual_goal: Дома соединены улицей., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 5, visual_goal: Дома окружают общий двор квартала., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 6, visual_goal: Фонтан отмечает центр площади., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 7, visual_goal: Плотная застройка района., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 8, visual_goal: Городской силуэт с центральной башней., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 9, visual_goal: Большой город с высокой центральной башней., triangle_budget: { min: 250, max: 2600 } }
-  - { level: 10, visual_goal: Кварталы объединены городским кольцом., triangle_budget: { min: 250, max: 2600 } }
-  - { level: 11, visual_goal: Дома вплетены в зелёные кроны., triangle_budget: { min: 250, max: 3200 } }
-  - { level: 12, visual_goal: Кристальные кварталы вокруг аметистового центра., triangle_budget: { min: 250, max: 2400 } }
-  - { level: 13, visual_goal: Высокие шпили под диском восхода., triangle_budget: { min: 250, max: 3000 } }
-  - { level: 14, visual_goal: Центральная башня, кристалл и сияющие окна., triangle_budget: { min: 250, max: 3000 } }
-  - { level: 15, visual_goal: Цельный город в двух ветровых дугах., triangle_budget: { min: 250, max: 3000 } }
+  - { level: 1, visual_goal: Один янтарный ромб-искра., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 2, visual_goal: Узкий наконечник компаса., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 3, visual_goal: Две перекрещенные рукояти., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 4, visual_goal: Щит с центральной заклёпкой., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 5, visual_goal: Шестизубое колесо., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 6, visual_goal: Стрелка между разомкнутыми дугами., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 7, visual_goal: Три узла и угловой маршрут., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 8, visual_goal: Две встречные дуги с узлом., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 9, visual_goal: Асимметричная четырёхлучевая звезда., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 10, visual_goal: Круглая медаль с диагональной насечкой., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 11, visual_goal: Огонь над двумя фигурами., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 12, visual_goal: Кристаллический V-шеврон., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 13, visual_goal: Геометрическое око., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 14, visual_goal: Звезда в разомкнутом венце., triangle_budget: { min: 250, max: 2400 } }
+  - { level: 15, visual_goal: Трёхцветная вертикальная призма., triangle_budget: { min: 250, max: 2400 } }
 
 material_map:
-  brass:
-    visible_as: Единый фасетированный кант и небольшие заклёпки медальона.
-    priority: primary
-    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  enamel:
-    visible_as: Цветные лицевые пластины, меняющие оттенок по ходу прогрессии.
-    priority: secondary
-    levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  city_materials:
-    visible_as: Светлая штукатурка, тёплая кладка, цветная черепица, зелень и редкий аметист.
-    priority: secondary
-    levels: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  bronze: { visible_as: Общий фасетированный кант., priority: primary, levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+  enamel: { visible_as: Тёмный графитовый диск., priority: secondary, levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+  accents: { visible_as: Светлый металл и ограниченные бирюзовые, янтарные и белые акценты., priority: secondary, levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
 
 level_progression:
-  mass: { rule: Медальон остаётся одного размера; центральная композиция растёт от символа к городу. }
-  height: { rule: Силуэт постепенно становится выше, чтобы ступени были различимы в мелком интерфейсе. }
-  materials: { rule: Сохранять общий латунный кант; добавлять черепицу, зелень и редкий кристалл по описанию уровня. }
-  props: { rule: Один крупный центральный мотив и несколько вспомогательных форм, без мелких нечитаемых деталей. }
-  late_elements: { rule: Городской пояс, сад, кристалл и ветровые дуги появляются только на поддерживающих их уровнях. }
+  mass: { rule: Общий медальон постоянен; каждый уровень имеет самостоятельный центральный символ. }
+  height: { rule: Глубина рельефа подчёркивает грани без изменения масштаба кадра. }
+  materials: { rule: Единые графит, бронза и светлый металл; ограниченные цветовые акценты. }
+  props: { rule: Один крупный читаемый мотив согласно Blender-ТЗ. }
+  late_elements: { rule: Поздние уровни отличаются формой, а не накоплением декора. }
   constraints:
-    - Не изображать профессии, титулы, роли, оружие или буквенные/цифровые знаки внутри модели.
-    - Все модели имеют общий масштаб, ракурс, свет, пропорции медальона и фон с alpha 0.
-    - Проверять силуэт при отображении 32×32 px.
+    - Без букв, цифр, городских гербов и мелких надписей.
+    - Единые масштаб, ракурс, свет и прозрачный фон.
+    - Проверять силуэт на 24 и 32 px.
 
 state_policy:
   active: { rule: Завершённая чистая эмблема уровня без дополнительных состояний. }
@@ -60,10 +51,10 @@ skill_profile:
 
 lod_policy:
   chain:
-    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 250, max: 6000 }, export: false }
-    - { name: LOD1, ratio: 0.5, triangle_budget: { min: 150, max: 3000 }, export: false }
-    - { name: LOD2, ratio: 0.25, triangle_budget: { min: 80, max: 1500 }, export: false }
-  preserve: [outer coin silhouette, main city-growth motif, color separation at 32 px]
+    - { name: LOD0, ratio: 1.0, triangle_budget: { min: 250, max: 2400 }, export: false }
+    - { name: LOD1, ratio: 0.5, triangle_budget: { min: 125, max: 1200 }, export: false }
+    - { name: LOD2, ratio: 0.25, triangle_budget: { min: 60, max: 600 }, export: false }
+  preserve: [outer coin silhouette, distinct status symbol, color separation at 24 px]
   exports:
     naming: "player_level_{level:02d}_{lod}.glb"
     include_lod0: false
@@ -77,7 +68,7 @@ png_policy:
   anchor: [256, 256]
   render_lod: LOD0
   contact_sheet: { enabled: true, columns: 5, include_states: [active] }
-  alpha_bounds: { min_opaque_pixels: 250, max_crop_margin_px: 8, bottom_anchor_tolerance_px: 8 }
+  framing: Fixed centered frame; do not crop individual alpha bounds.
 
 output:
   runtime_dir: frontend/public/assets/player-levels
@@ -85,10 +76,10 @@ output:
   use_public_glb: false
 
 references:
-  docs: [docs/assets/player-level-emblems.md, docs/game-design/player-level-names.md]
+  docs: [docs/assets/player-level-emblems.md, docs/game-design/player-status-levels-proposal.md]
   art_guide: docs/art/visual-style-guide.md
   existing_generators: [tools/assets/blender/real_city/components/aeolian.py, tools/assets/blender/real_city/geometry.py]
-  existing_assets: [frontend/public/assets/buildings/center/town_hall, frontend/public/assets/buildings/housing/dugout]
+  legacy_assets: [frontend/public/assets/player-levels]
 
 notes:
   - Runtime variants are PNG at 32x32, 64x64 and 128x128. Render a 512x512 master then downsample.
