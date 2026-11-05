@@ -35,6 +35,5 @@ type PublicProfile struct {
 	Title            string            `json:"title"`
 	Level            int               `json:"level"`
 	GroupID          string            `json:"group_id,omitempty"`
-	Scores           map[string]int    `json:"scores"`
 	SettlementRegion *SettlementRegion `json:"settlement_region,omitempty"`
 }

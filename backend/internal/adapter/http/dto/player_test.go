@@ -1,6 +1,7 @@
 package dto
 
 import (
+	"encoding/json"
 	"testing"
 
 	"real-city/backend/internal/domain/player"
@@ -25,5 +26,23 @@ func TestPlayerLevelProgressMatchesSpecification(t *testing.T) {
 		if test.next > 0 && (profile.NextLevelXP == nil || *profile.NextLevelXP != test.next) {
 			t.Fatalf("unexpected next level XP at %d: %#v", test.xp, profile.NextLevelXP)
 		}
+	}
+}
+
+func TestPlayerProfileOmitsRemovedScores(t *testing.T) {
+	response := Player(player.Player{Profile: player.Profile{XP: 100}})
+	raw, err := json.Marshal(response.Profile)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var fields map[string]any
+	if err := json.Unmarshal(raw, &fields); err != nil {
+		t.Fatal(err)
+	}
+	if _, exists := fields["scores"]; exists {
+		t.Fatal("profile must not expose removed scores")
+	}
+	if _, exists := fields["xp"]; !exists {
+		t.Fatal("profile must retain XP")
 	}
 }

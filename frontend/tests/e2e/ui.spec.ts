@@ -25,7 +25,7 @@ test.describe('strategy interface smoke', () => {
       await page.getByLabel('Открыть профиль игрока').click()
       const profile = page.getByRole('dialog', { name: 'Профиль', exact: true })
       await expect(profile).toBeVisible()
-      await expect(profile.getByLabel('Показатели профиля')).toContainText('Экономика')
+      await expect(profile.getByLabel('Показатели профиля')).toHaveCount(0)
       const box = await profile.boundingBox()
       expect(box).not.toBeNull()
       expect(box!.x).toBeGreaterThanOrEqual(0)

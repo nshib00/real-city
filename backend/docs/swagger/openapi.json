@@ -1943,7 +1943,7 @@
             "description": "Internal error"
           }
         },
-        "summary": "Public profile with approximate settlement and aggregate scores"
+        "summary": "Public profile with approximate settlement region"
       }
     },
     "/production/jobs": {

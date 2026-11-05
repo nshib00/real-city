@@ -50,7 +50,6 @@ type Profile struct {
 	Title        string          `json:"title"`
 	GroupID      string          `json:"group_id,omitempty"`
 	HomeCenterID string          `json:"home_center_id,omitempty"`
-	Scores       map[string]int  `json:"scores,omitempty"`
 	DisplayName  string          `json:"display_name"`
 	CityName     string          `json:"city_name"`
 	AvatarURL    string          `json:"avatar_url"`

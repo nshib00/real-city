@@ -8,6 +8,5 @@ export type PublicPlayerProfile = ProfileAppearance & {
  display_name: string
  level: number
  group_id?: string
- scores: Record<string, number>
  settlement_region?: { district_x: number; district_y: number }
 }

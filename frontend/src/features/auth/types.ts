@@ -15,7 +15,6 @@ export type PlayerProfile = {
  title?: string
  group_id?: string
  home_center_id?: string
- scores?: Record<string, number>
   display_name: string
   city_name: string
   avatar_url: string

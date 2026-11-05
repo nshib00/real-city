@@ -12,7 +12,6 @@ type Profile struct {
 	Title        string                 `json:"title"`
 	GroupID      string                 `json:"group_id,omitempty"`
 	HomeCenterID string                 `json:"home_center_id,omitempty"`
-	Scores       map[string]int         `json:"scores,omitempty"`
 	DisplayName  string                 `json:"display_name"`
 	CityName     string                 `json:"city_name"`
 	AvatarURL    string                 `json:"avatar_url"`
@@ -62,7 +61,7 @@ func Player(p player.Player) PlayerResponse {
 		Status: p.Status,
 		Role:   p.Role,
 		Profile: Profile{
-			AvatarID: p.Profile.AvatarID, BannerID: p.Profile.BannerID, Title: p.Profile.Title, GroupID: p.Profile.GroupID, HomeCenterID: p.Profile.HomeCenterID, Scores: p.Profile.Scores,
+			AvatarID: p.Profile.AvatarID, BannerID: p.Profile.BannerID, Title: p.Profile.Title, GroupID: p.Profile.GroupID, HomeCenterID: p.Profile.HomeCenterID,
 			DisplayName:  p.Profile.DisplayName,
 			CityName:     p.Profile.CityName,
 			AvatarURL:    p.Profile.AvatarURL,

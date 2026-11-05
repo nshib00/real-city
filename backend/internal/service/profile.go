@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"real-city/backend/internal/domain/building"
-	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 )
@@ -14,7 +13,6 @@ func (s *PlayerService) SetProfileSources(buildings BuildingRepository, alliance
 }
 func (s *PlayerService) enrichProfile(ctx context.Context, p player.Player) (player.Player, error) {
 	p.Profile.GroupID = ""
-	p.Profile.Scores = map[string]int{"economy": 0, "production": 0, "storage": 0, "defense": 0}
 	if s.alliances != nil {
 		a, _, err := s.alliances.FindByPlayer(ctx, p.ID)
 		if err != nil && !isNotFound(err) {
@@ -40,21 +38,6 @@ func (s *PlayerService) enrichProfile(ctx context.Context, p player.Player) (pla
 		if b.Type == building.TypeTownHall && (p.Profile.HomeCenterID == "" || string(b.ID) == selected) {
 			p.Profile.HomeCenterID = string(b.ID)
 		}
-		spec, ok := catalog.GetBuilding(b.Type)
-		if !ok {
-			continue
-		}
-		category := spec.Category
-		score := max(1, b.Level) * 10
-		switch category {
-		case "industry", "fields":
-			p.Profile.Scores["production"] += score
-		case "storage":
-			p.Profile.Scores["storage"] += score
-		case "defense":
-			p.Profile.Scores["defense"] += score
-		}
-		p.Profile.Scores["economy"] += score
 	}
 	return p, nil
 }
@@ -67,7 +50,7 @@ func (s *PlayerService) PublicProfile(ctx context.Context, id player.ID) (player
 	if err != nil {
 		return player.PublicProfile{}, err
 	}
-	view := player.PublicProfile{PlayerID: p.ID, DisplayName: p.Profile.DisplayName, AvatarID: p.Profile.AvatarID, BannerID: p.Profile.BannerID, Title: p.Profile.Title, Level: p.Profile.Level, GroupID: p.Profile.GroupID, Scores: p.Profile.Scores}
+	view := player.PublicProfile{PlayerID: p.ID, DisplayName: p.Profile.DisplayName, AvatarID: p.Profile.AvatarID, BannerID: p.Profile.BannerID, Title: p.Profile.Title, Level: p.Profile.Level, GroupID: p.Profile.GroupID}
 	if s.buildings != nil && p.Profile.HomeCenterID != "" {
 		b, e := s.buildings.FindByID(ctx, building.ID(p.Profile.HomeCenterID))
 		if e != nil {

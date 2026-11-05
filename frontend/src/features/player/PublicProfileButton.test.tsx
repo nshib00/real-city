@@ -23,19 +23,18 @@ it('renders only allowed public fields even when the response contains private d
   } } as never)
   const client = mount()
   expect(await screen.findByText('Строитель')).toBeTruthy()
-  expect(screen.getByText('Экономика')).toBeTruthy()
-  expect(screen.queryByText(/secret@example|987654|private_stock/)).toBeNull()
+  expect(screen.queryByText(/Экономика|secret@example|987654|private_stock/)).toBeNull()
   expect(getPublicProfile).toHaveBeenCalledWith('owner')
   client.clear()
 })
 
 it('offers retry after a failed request', async () => {
   vi.mocked(getPublicProfile).mockRejectedValueOnce(new Error('offline')).mockResolvedValueOnce({ profile: {
-    player_id: 'owner', display_name: 'Владелец', level: 1, scores: {},
+    player_id: 'owner', display_name: 'Владелец', level: 1,
   } } as never)
   const client = mount()
   fireEvent.click(await screen.findByText('Повторить'))
   expect(await screen.findByText('Владелец')).toBeTruthy()
-  expect(screen.getByText('Показатели пока недоступны.')).toBeTruthy()
+  expect(screen.queryByLabelText('Показатели профиля')).toBeNull()
   client.clear()
 })

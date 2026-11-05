@@ -9,7 +9,6 @@ import { Modal } from '../../shared/ui/Modal'
 
 import { levelThresholds, playerProgress } from './levels'
 import { LevelEmblem } from './LevelEmblem'
-import { ProfileScores } from './ProfileScores'
 
 export function ProfilePanel() {
   const { player, setPlayer } = useAuthStore()
@@ -162,7 +161,6 @@ export function ProfilePanel() {
           </div>
 
           {profile.title ? <p>{profile.title}</p> : null}
-          <ProfileScores scores={profile.scores} />
           <div className="profile-stat-grid">
             <article>
               <UserRound size={16} />

@@ -60,6 +60,7 @@ describe('ProfilePanel', () => {
     fireEvent.click(screen.getByLabelText('Открыть профиль игрока'))
 
     expect(screen.getByRole('dialog', { name: 'Профиль' }).closest('.profile-modal-backdrop')).toBeTruthy()
+    expect(screen.queryByLabelText('Показатели профиля')).toBeNull()
     expect(screen.getAllByText('Северный рубеж').length).toBeGreaterThan(0)
     expect(screen.getByLabelText('Опыт: 300/1200')).toBeTruthy()
     expect(screen.getByText('До следующего уровня: 900 XP')).toBeTruthy()

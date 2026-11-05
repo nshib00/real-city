@@ -45,7 +45,7 @@ func OpenAPISpec() map[string]any {
 			"/players/levels":                    map[string]any{"get": operation("Shared catalog of player levels and planned unlocks")},
 			"/players/nearby":                    map[string]any{"get": operation("GET /players/nearby")},
 			"/players/{id}":                      map[string]any{"get": operation("Public player profile")},
-			"/players/{id}/profile":              map[string]any{"get": operation("Public profile with approximate settlement and aggregate scores")},
+			"/players/{id}/profile":              map[string]any{"get": operation("Public profile with approximate settlement region")},
 			"/production/jobs":                   map[string]any{"get": operation("List production jobs"), "post": operation("Start production")},
 			"/production/recipes":                map[string]any{"get": operation("Production recipes")},
 			"/resources/nodes":                   map[string]any{"get": operation("Resource nodes")},

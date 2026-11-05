@@ -35,7 +35,6 @@ export async function mockInterfaceWorld(page: Page, options: { objects?: boolea
       created_at: reviewTime, updated_at: reviewTime,
       profile: { display_name: 'Город Эолии', city_name: 'Тихая долина', avatar_url: '', level: 3, xp: 1000,
         next_level_xp: 1900, updated_at: reviewTime,
-        scores: { economy: 60, production: 30, storage: 20, defense: 10 },
         settings: { notifications: { attack_alerts: true, production_ready: true, market_updates: false }, render_quality: 'low' } },
     } })
     if (path === '/players/me/presence') return route.fulfill({ json: { status: 'ok' } })

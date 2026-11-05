@@ -37,7 +37,7 @@ func TestPublicProfileDoesNotExposePrivateData(t *testing.T) {
 	raw, _ := json.Marshal(view)
 	var values map[string]any
 	json.Unmarshal(raw, &values)
-	for _, key := range []string{"email", "xp", "settings", "home_center_id", "avatar_url", "tile_x", "tile_y"} {
+	for _, key := range []string{"email", "xp", "settings", "home_center_id", "avatar_url", "tile_x", "tile_y", "scores"} {
 		if _, ok := values[key]; ok {
 			t.Fatalf("leaked %s", key)
 		}

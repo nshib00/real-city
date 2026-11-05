@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import { getPublicProfile } from '../../shared/api/playerProfile'
 import { Modal } from '../../shared/ui/Modal'
 import { useAuthStore } from '../auth/useAuthStore'
-import { ProfileScores } from './ProfileScores'
 
 export function PublicProfileButton({ playerId }: { playerId: string }) {
   const [open, setOpen] = useState(false)
@@ -23,7 +22,6 @@ export function PublicProfileButton({ playerId }: { playerId: string }) {
         <p>Уровень {profile.level}</p>
         {profile.title ? <p>{profile.title}</p> : null}
         {profile.group_id ? <p>Союз: {profile.group_id}</p> : null}
-        <ProfileScores scores={profile.scores} />
       </> : null}
     </Modal>
   </>
