@@ -57,7 +57,7 @@ func (r *TowerAlertRepo) Reconcile(_ context.Context, mapID string, generation i
 			IncidentID: toweralert.IncidentID(mapID, observation.OwnerID, observation.MonsterID, state.Episode),
 			OwnerID:    observation.OwnerID, TowerID: observation.TowerID, MonsterID: observation.MonsterID,
 			MonsterType: observation.MonsterType, TileX: observation.TileX, TileY: observation.TileY,
-			TargetBuildingID: observation.TargetBuildingID, DetectedAt: now,
+			TargetBuildingID: observation.TargetBuildingID, RelayTowerIDs: append([]string{}, observation.RelayTowerIDs...), DetectedAt: now,
 		}
 		r.incidents = append(r.incidents, item)
 		created = append(created, item)

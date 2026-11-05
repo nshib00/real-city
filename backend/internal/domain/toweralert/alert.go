@@ -17,6 +17,7 @@ type Observation struct {
 	TileX            int
 	TileY            int
 	TargetBuildingID string
+	RelayTowerIDs    []string
 }
 
 type Alert struct {
@@ -28,6 +29,7 @@ type Alert struct {
 	TileX            int       `json:"tile_x"`
 	TileY            int       `json:"tile_y"`
 	TargetBuildingID string    `json:"target_building_id"`
+	RelayTowerIDs    []string  `json:"relay_tower_ids"`
 	DetectedAt       time.Time `json:"detected_at"`
 }
 

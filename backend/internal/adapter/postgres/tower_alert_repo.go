@@ -93,6 +93,11 @@ func (r *TowerAlertRepo) Reconcile(ctx context.Context, mapID string, generation
 			if _, err := exec.ExecContext(txCtx, `INSERT INTO tower_alert_recipients(incident_id,player_id,detected_at) VALUES($1,$2,$3)`, item.IncidentID, observation.OwnerID, now); err != nil {
 				return err
 			}
+			for _, relayID := range observation.RelayTowerIDs {
+				if _, err := exec.ExecContext(txCtx, `INSERT INTO tower_alert_relays(incident_id,tower_id) VALUES($1,$2) ON CONFLICT DO NOTHING`, item.IncidentID, relayID); err != nil {
+					return err
+				}
+			}
 			payload, err := json.Marshal(service.TowerThreatPayload{IncidentID: item.IncidentID, TowerID: item.TowerID, MonsterID: item.MonsterID, MonsterType: item.MonsterType, TileX: item.TileX, TileY: item.TileY, TargetBuildingID: item.TargetBuildingID, DetectedAt: now})
 			if err != nil {
 				return err
@@ -125,7 +130,8 @@ func (r *TowerAlertRepo) ListForPlayer(ctx context.Context, playerID player.ID, 
 		cursor = before
 	}
 	rows, err := r.db.QueryContext(ctx, `
-		SELECT i.id,i.tower_id,i.monster_id,i.monster_type,i.tile_x,i.tile_y,i.target_building_id,i.detected_at
+		SELECT i.id,i.tower_id,i.monster_id,i.monster_type,i.tile_x,i.tile_y,i.target_building_id,i.detected_at,
+			(SELECT COALESCE(json_agg(relay.tower_id ORDER BY relay.tower_id),'[]'::json) FROM tower_alert_relays relay WHERE relay.incident_id=i.id)
 		FROM tower_alert_recipients r JOIN tower_alert_incidents i ON i.id=r.incident_id
 		WHERE r.player_id=$1 AND ($2::timestamptz IS NULL OR (r.detected_at,r.incident_id)<($2,$3))
 		ORDER BY r.detected_at DESC,r.incident_id DESC LIMIT $4
@@ -137,7 +143,11 @@ func (r *TowerAlertRepo) ListForPlayer(ctx context.Context, playerID player.ID, 
 	items := make([]service.TowerAlert, 0)
 	for rows.Next() {
 		var item service.TowerAlert
-		if err := rows.Scan(&item.IncidentID, &item.TowerID, &item.MonsterID, &item.MonsterType, &item.TileX, &item.TileY, &item.TargetBuildingID, &item.DetectedAt); err != nil {
+		var relays []byte
+		if err := rows.Scan(&item.IncidentID, &item.TowerID, &item.MonsterID, &item.MonsterType, &item.TileX, &item.TileY, &item.TargetBuildingID, &item.DetectedAt, &relays); err != nil {
+			return nil, err
+		}
+		if err := json.Unmarshal(relays, &item.RelayTowerIDs); err != nil {
 			return nil, err
 		}
 		item.OwnerID = playerID

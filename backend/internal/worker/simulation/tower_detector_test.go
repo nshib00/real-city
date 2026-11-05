@@ -2,6 +2,8 @@ package simulation
 
 import (
 	"context"
+	"slices"
+	"strings"
 	"testing"
 	"time"
 
@@ -119,6 +121,72 @@ func TestTowerDetectorPersistentHistoryChoosesStableSource(t *testing.T) {
 	items, err := repo.ListForPlayer(ctx, "owner", 10, time.Time{}, "")
 	if err != nil || len(items) != 1 || items[0].TowerID != "a-tower" {
 		t.Fatalf("history: %+v %v", items, err)
+	}
+}
+
+func TestTowerRelayRadiusWrapAndBoundary(t *testing.T) {
+	for _, test := range []struct {
+		level int
+		want  string
+	}{
+		{4, "r8"}, {5, "r12,r8"}, {6, "r12,r16,r8"},
+	} {
+		source := building.Building{ID: "source", MapID: service.DefaultWorldID, Level: test.level, Tile: world.Coord{X: 159}}
+		active := []building.Building{
+			source,
+			{ID: "r8", MapID: service.DefaultWorldID, Tile: world.Coord{X: 7}},
+			{ID: "r12", MapID: service.DefaultWorldID, Tile: world.Coord{X: 11}},
+			{ID: "r16", MapID: service.DefaultWorldID, Tile: world.Coord{X: 15}},
+			{ID: "outside", MapID: service.DefaultWorldID, Tile: world.Coord{X: 16}},
+		}
+		if got := strings.Join(towerRelayIDs(source, active), ","); got != test.want {
+			t.Fatalf("level %d relays=%q want %q", test.level, got, test.want)
+		}
+	}
+}
+
+func TestTowerDetectorOwnRelayHistoryWithoutExtraEvent(t *testing.T) {
+	ctx := context.Background()
+	buildings, monsters := memory.NewBuildingRepo(), memory.NewMonsterRepo()
+	for _, item := range []building.Building{
+		{ID: "home", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTownHall, State: building.StateActive, Health: 100, Tile: world.Coord{X: 159}},
+		{ID: "source", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 4, State: building.StateActive, Health: 300, TowerWatchkeeperAssigned: true, Tile: world.Coord{X: 159}},
+		{ID: "relay", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, TowerWatchkeeperAssigned: true, Tile: world.Coord{X: 7}},
+		{ID: "inactive", MapID: service.DefaultWorldID, OwnerID: "owner", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, Tile: world.Coord{X: 6}},
+		{ID: "foreign", MapID: service.DefaultWorldID, OwnerID: "other", Type: building.TypeTower, Level: 1, State: building.StateActive, Health: 100, TowerWatchkeeperAssigned: true, Tile: world.Coord{X: 6}},
+	} {
+		if err := buildings.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := monsters.Create(ctx, testThreat(world.Coord{X: 159})); err != nil {
+		t.Fatal(err)
+	}
+	repo := memory.NewTowerAlertRepo()
+	bus := service.NewEventBus(4)
+	stream := bus.Subscribe(ctx)
+	detector := NewTowerDetector(buildings, monsters, bus)
+	detector.SetAlertRepository(repo, true)
+	now := time.Date(2026, 11, 5, 12, 0, 0, 0, time.UTC)
+	if count, err := detector.Tick(ctx, now); err != nil || count != 1 {
+		t.Fatalf("first scan: %d %v", count, err)
+	}
+	if count, err := detector.Tick(ctx, now.Add(towerScanInterval)); err != nil || count != 0 {
+		t.Fatalf("duplicate scan: %d %v", count, err)
+	}
+	items, err := repo.ListForPlayer(ctx, "owner", 10, time.Time{}, "")
+	if err != nil || len(items) != 1 || items[0].TowerID != "source" || !slices.Equal(items[0].RelayTowerIDs, []string{"relay"}) {
+		t.Fatalf("owner relay history: %+v %v", items, err)
+	}
+	other, err := repo.ListForPlayer(ctx, "other", 10, time.Time{}, "")
+	if err != nil || len(other) != 0 {
+		t.Fatalf("other history: %+v %v", other, err)
+	}
+	<-stream
+	select {
+	case event := <-stream:
+		t.Fatalf("extra owner event for relay: %+v", event)
+	default:
 	}
 }
 

@@ -15,6 +15,7 @@ import (
 )
 
 var towerRadii = [...]int{6, 8, 10, 12, 14, 16}
+var towerRelayRadii = [...]int{0, 0, 0, 8, 12, 16}
 
 const towerAlertCooldown = time.Minute
 const towerScanInterval = 5 * time.Second
@@ -81,6 +82,9 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 	for owner := range towers {
 		sort.Slice(towers[owner], func(i, j int) bool {
 			a, b := towers[owner][i], towers[owner][j]
+			if a.Level != b.Level {
+				return a.Level > b.Level
+			}
 			if a.CreatedAt.Equal(b.CreatedAt) {
 				return a.ID < b.ID
 			}
@@ -125,7 +129,7 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 				observations = append(observations, service.TowerObservation{
 					OwnerID: player.ID(target.OwnerID), TowerID: string(tower.ID), MonsterID: string(creature.ID),
 					MonsterType: string(creature.Type), TileX: creature.Tile.X, TileY: creature.Tile.Y,
-					TargetBuildingID: string(target.ID),
+					TargetBuildingID: string(target.ID), RelayTowerIDs: towerRelayIDs(tower, towers[target.OwnerID]),
 				})
 				break
 			}
@@ -184,6 +188,21 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 	}
 	d.nextScan = now.Add(towerScanInterval)
 	return sent, nil
+}
+
+func towerRelayIDs(source building.Building, active []building.Building) []string {
+	if source.Level < 4 || source.Level > len(towerRelayRadii) {
+		return nil
+	}
+	radius := towerRelayRadii[source.Level-1]
+	ids := make([]string, 0)
+	for _, target := range active {
+		if target.ID != source.ID && target.MapID == source.MapID && world.WrappedManhattan(source.Tile, target.Tile) <= radius {
+			ids = append(ids, string(target.ID))
+		}
+	}
+	sort.Strings(ids)
+	return ids
 }
 
 func towerActive(tower building.Building) bool {

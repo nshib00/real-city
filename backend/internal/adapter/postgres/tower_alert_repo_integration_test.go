@@ -40,7 +40,7 @@ func TestTowerAlertAtomicHistoryAndOutbox(t *testing.T) {
 		t.Fatal(err)
 	}
 	now := time.Date(2026, 11, 5, 12, 0, 0, 0, time.UTC)
-	observation := toweralert.Observation{OwnerID: owner, TowerID: "tower", MonsterID: "monster", MonsterType: "forest_stalker"}
+	observation := toweralert.Observation{OwnerID: owner, TowerID: "tower", MonsterID: "monster", MonsterType: "forest_stalker", RelayTowerIDs: []string{"relay-b", "relay-a"}}
 	if _, err := repo.Reconcile(ctx, mapID, generation, now, []toweralert.Observation{observation}); err == nil {
 		t.Fatal("missing recipient player should roll back the incident")
 	}
@@ -58,11 +58,14 @@ func TestTowerAlertAtomicHistoryAndOutbox(t *testing.T) {
 	if err := db.QueryRowContext(ctx, `SELECT count(*) FROM outbox_events WHERE id=$1 AND player_id=$2 AND chunk_id='' AND alliance=''`, "tower-alert:"+created[0].IncidentID, owner).Scan(&count); err != nil || count != 1 {
 		t.Fatalf("private outbox count=%d err=%v", count, err)
 	}
+	if err := db.QueryRowContext(ctx, `SELECT count(*) FROM tower_alert_relays WHERE incident_id=$1`, created[0].IncidentID).Scan(&count); err != nil || count != 2 {
+		t.Fatalf("persisted relay count=%d err=%v", count, err)
+	}
 	if duplicate, err := repo.Reconcile(ctx, mapID, generation, now, []toweralert.Observation{observation}); err != nil || len(duplicate) != 0 {
 		t.Fatalf("duplicate generation: %+v %v", duplicate, err)
 	}
 	items, err := NewTowerAlertRepo(db).ListForPlayer(ctx, owner, 10, time.Time{}, "")
-	if err != nil || len(items) != 1 || items[0].IncidentID != created[0].IncidentID {
+	if err != nil || len(items) != 1 || items[0].IncidentID != created[0].IncidentID || len(items[0].RelayTowerIDs) != 2 || items[0].RelayTowerIDs[0] != "relay-a" {
 		t.Fatalf("history: %+v %v", items, err)
 	}
 	other, err := repo.ListForPlayer(ctx, "other", 10, time.Time{}, "")
