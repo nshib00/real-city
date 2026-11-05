@@ -24,6 +24,7 @@ export type WorldEventType =
   | 'monster.loot.claimed'
   | 'cannon.shot'
   | 'defense.triggered'
+  | 'tower.threat.detected'
   | 'alliance.created'
   | 'alliance.invite.created'
   | 'alliance.invite.accepted'
@@ -133,4 +134,14 @@ export type DefenseTriggeredPayload = {
   monster_id: string
   tile_x: number
   tile_y: number
+}
+
+export type TowerThreatPayload = {
+  tower_id: string
+  monster_id: string
+  monster_type: string
+  tile_x: number
+  tile_y: number
+  target_building_id: string
+  detected_at: string
 }

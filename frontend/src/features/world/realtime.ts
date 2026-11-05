@@ -18,7 +18,7 @@ import { useAuthStore } from '../auth/useAuthStore'
 import { showToast } from '../notifications/toast'
 import type { CombatRecord } from '../../../../shared/events/combat'
 import type { MarketOrderPayload } from '../../../../shared/events/market'
-import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload } from '../../../../shared/events/world'
+import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload, TowerThreatPayload } from '../../../../shared/events/world'
 
 const DEFAULT_WORLD_ID = 'dev-world'
 
@@ -121,6 +121,13 @@ export function applyRealtimeEvent(
     void handlers.queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
   }
   switch (event.type) {
+    case 'tower.threat.detected': {
+      const threat = event.payload as TowerThreatPayload | undefined
+      if (threat && event.player_id === useAuthStore.getState().player?.id) {
+        showToast('warning', `Сторожевая башня заметила монстра у вашей постройки: (${threat.tile_x}, ${threat.tile_y}).`)
+      }
+      return
+    }
     case 'combat.resolved': {
       const record = event.payload as CombatRecord | undefined
       void handlers.queryClient.invalidateQueries({ queryKey: ['combat', 'history'] })

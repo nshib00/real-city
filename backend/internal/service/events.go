@@ -14,26 +14,27 @@ import (
 type EventType string
 
 const (
-	EventTileChanged        EventType = "world.tile.changed"
-	EventBuildingPlaced     EventType = "world.building.placed"
-	EventBuildingUpdated    EventType = "world.building.updated"
-	EventBuildingRemoved    EventType = "world.building.removed"
-	EventResourceChanged    EventType = "world.resource.changed"
-	EventProductionDone     EventType = "economy.production.completed"
-	EventInventoryChanged   EventType = "economy.inventory.changed"
-	EventPresenceChanged    EventType = "presence.changed"
-	EventPresenceMoved      EventType = "presence.moved"
-	EventCombatResolved     EventType = "combat.resolved"
-	EventMonsterSpawned     EventType = "monster.spawned"
-	EventMonsterMoved       EventType = "monster.moved"
-	EventMonsterAttacked    EventType = "monster.attacked"
-	EventMonsterDamaged     EventType = "monster.damaged"
-	EventMonsterDied        EventType = "monster.died"
-	EventMonsterDespawned   EventType = "monster.despawned"
-	EventMonsterLootDropped EventType = "monster.loot.dropped"
-	EventMonsterLootClaimed EventType = "monster.loot.claimed"
-	EventCannonShot         EventType = "cannon.shot"
-	EventDefenseTriggered   EventType = "defense.triggered"
+	EventTileChanged         EventType = "world.tile.changed"
+	EventBuildingPlaced      EventType = "world.building.placed"
+	EventBuildingUpdated     EventType = "world.building.updated"
+	EventBuildingRemoved     EventType = "world.building.removed"
+	EventResourceChanged     EventType = "world.resource.changed"
+	EventProductionDone      EventType = "economy.production.completed"
+	EventInventoryChanged    EventType = "economy.inventory.changed"
+	EventPresenceChanged     EventType = "presence.changed"
+	EventPresenceMoved       EventType = "presence.moved"
+	EventCombatResolved      EventType = "combat.resolved"
+	EventMonsterSpawned      EventType = "monster.spawned"
+	EventMonsterMoved        EventType = "monster.moved"
+	EventMonsterAttacked     EventType = "monster.attacked"
+	EventMonsterDamaged      EventType = "monster.damaged"
+	EventMonsterDied         EventType = "monster.died"
+	EventMonsterDespawned    EventType = "monster.despawned"
+	EventMonsterLootDropped  EventType = "monster.loot.dropped"
+	EventMonsterLootClaimed  EventType = "monster.loot.claimed"
+	EventCannonShot          EventType = "cannon.shot"
+	EventDefenseTriggered    EventType = "defense.triggered"
+	EventTowerThreatDetected EventType = "tower.threat.detected"
 )
 
 type Event struct {
@@ -116,6 +117,16 @@ type DefenseTriggeredPayload struct {
 	MonsterID    string `json:"monster_id"`
 	TileX        int    `json:"tile_x"`
 	TileY        int    `json:"tile_y"`
+}
+
+type TowerThreatPayload struct {
+	TowerID          string    `json:"tower_id"`
+	MonsterID        string    `json:"monster_id"`
+	MonsterType      string    `json:"monster_type"`
+	TileX            int       `json:"tile_x"`
+	TileY            int       `json:"tile_y"`
+	TargetBuildingID string    `json:"target_building_id"`
+	DetectedAt       time.Time `json:"detected_at"`
 }
 
 type ChatMessagePayload struct{ Message chat.Message }

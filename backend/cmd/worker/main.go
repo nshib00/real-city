@@ -109,6 +109,7 @@ func run(ctx context.Context, cfg config.Config, log *slog.Logger) error {
 	monsterAI.SetBuildingService(buildingService)
 	monsterAI.SetMoveInterval(cfg.Simulation.TickInterval)
 	sim.SetMonsterAI(monsterAI)
+	sim.SetTowerDetector(simulation.NewTowerDetector(buildingRepo, monsterRepo, eventBus))
 	sim.SetCannonService(service.NewCannonService(buildingRepo, monsterRepo, economyRepo, worldRepo, uow, monsterService, economyService, eventBus, log))
 	sim.SetCombatService(combatService)
 	observability.EnableSimulation()

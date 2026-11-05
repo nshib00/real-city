@@ -107,3 +107,27 @@ func TestStandaloneWorkerEventReachesAPIBusWithClientPayload(t *testing.T) {
 		t.Fatalf("missing events: %#v", seen)
 	}
 }
+
+func TestStandaloneTowerThreatRetainsPrivatePayload(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	repo := memory.NewOutboxRepo()
+	workerBus := service.NewEventBus(2)
+	workerBus.SetForwarder(service.NewOutboxForwarder(repo))
+	apiBus := service.NewEventBus(2)
+	stream := apiBus.Subscribe(ctx)
+	now := time.Now().UTC()
+	want := service.TowerThreatPayload{TowerID: "tower", MonsterID: "monster", MonsterType: "forest_stalker", TileX: 7, TileY: 9, TargetBuildingID: "home", DetectedAt: now}
+	if err := workerBus.Publish(service.Event{Type: service.EventTowerThreatDetected, PlayerID: "owner", CreatedAt: now, Payload: want}); err != nil {
+		t.Fatal(err)
+	}
+	dispatcher := NewOutboxDispatcher(repo, apiBus, slog.New(slog.NewTextHandler(io.Discard, nil)), config.SimulationConfig{BatchSize: 10, LockTTL: time.Second})
+	dispatcher.now = func() time.Time { return now }
+	if count, err := dispatcher.Dispatch(ctx); count != 1 || err != nil {
+		t.Fatalf("dispatch=%d err=%v", count, err)
+	}
+	got := <-stream
+	if got.PlayerID != "owner" || got.ChunkID != "" || got.Alliance != "" || got.Payload != want {
+		t.Fatalf("private alert changed in outbox: %#v", got)
+	}
+}

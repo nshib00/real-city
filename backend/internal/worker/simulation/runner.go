@@ -26,6 +26,7 @@ type Runner struct {
 	forests    *service.ForestService
 	spawner    *MonsterSpawner
 	monsters   *MonsterAI
+	towers     *TowerDetector
 	cannons    *service.CannonService
 	combat     *service.CombatService
 	log        *slog.Logger
@@ -40,6 +41,7 @@ type TickResult struct {
 	ResourcesRespawned  int
 	MonstersSpawned     int
 	MonstersProcessed   int
+	TowerAlerts         int
 	CannonsFired        int
 	Failures            int
 }
@@ -60,6 +62,8 @@ func NewRunner(actions service.ActionRepository, uow service.UnitOfWork, buildin
 func (r *Runner) SetMonsterAI(monsters *MonsterAI) {
 	r.monsters = monsters
 }
+
+func (r *Runner) SetTowerDetector(towers *TowerDetector) { r.towers = towers }
 
 func (r *Runner) SetCannonService(cannons *service.CannonService) {
 	r.cannons = cannons
@@ -186,6 +190,13 @@ func (r *Runner) tick(ctx context.Context, mode string) (result TickResult, err 
 		if mode == "scheduled" {
 			observability.Stage("monster_ai", stageStart, result.MonstersProcessed, boolCount(err != nil), r.cfg.BatchSize, err)
 		}
+		if err != nil {
+			result.Failures++
+			return result, err
+		}
+	}
+	if r.towers != nil {
+		result.TowerAlerts, err = r.towers.Tick(ctx, now)
 		if err != nil {
 			result.Failures++
 			return result, err

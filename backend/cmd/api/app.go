@@ -143,6 +143,7 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 		monsterAI.SetBuildingService(buildingService)
 		monsterAI.SetMoveInterval(cfg.Simulation.TickInterval)
 		simulationRunner.SetMonsterAI(monsterAI)
+		simulationRunner.SetTowerDetector(simulation.NewTowerDetector(buildingRepo, monsterRepo, eventBus))
 		simulationRunner.SetCannonService(service.NewCannonService(buildingRepo, monsterRepo, economyRepo, worldRepo, uow, monsterService, economyService, eventBus, log))
 		simulationRunner.SetCombatService(combatService)
 	}

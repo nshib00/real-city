@@ -141,6 +141,8 @@ func decodePayload(item outbox.OutboxEvent) (any, error) {
 		payload = &service.CannonShotPayload{}
 	case service.EventDefenseTriggered:
 		payload = &service.DefenseTriggeredPayload{}
+	case service.EventTowerThreatDetected:
+		payload = &service.TowerThreatPayload{}
 	default:
 		payload = &map[string]any{}
 	}
@@ -171,6 +173,8 @@ func decodePayload(item outbox.OutboxEvent) (any, error) {
 	case *service.CannonShotPayload:
 		return *typed, nil
 	case *service.DefenseTriggeredPayload:
+		return *typed, nil
+	case *service.TowerThreatPayload:
 		return *typed, nil
 	default:
 		return *payload.(*map[string]any), nil
