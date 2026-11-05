@@ -2,7 +2,7 @@
   "id": "paved_road",
   "building_type": "road",
   "display_name": "Мостовая",
-  "style": "Aeolian handcrafted modular roads v2",
+  "style": "Aeolian handcrafted full-cell roads v3",
   "size": [
     512,
     512
@@ -40,519 +40,519 @@
     "ruined"
   ],
   "port": {
-    "width": 2.2,
+    "width": 3.6,
     "height": 0.055
   },
   "assets": {
     "paved_road_single_active": {
       "shape": "single",
       "state": "active",
-      "triangles": 492,
-      "objects": 41,
+      "triangles": 480,
+      "objects": 40,
       "png": "paved_road_single_active.png",
       "glb": "paved_road_single_active.glb"
     },
     "paved_road_single_construction": {
       "shape": "single",
       "state": "construction",
-      "triangles": 552,
-      "objects": 46,
+      "triangles": 540,
+      "objects": 45,
       "png": "paved_road_single_construction.png",
       "glb": "paved_road_single_construction.glb"
     },
     "paved_road_single_damaged": {
       "shape": "single",
       "state": "damaged",
-      "triangles": 576,
-      "objects": 48,
+      "triangles": 564,
+      "objects": 47,
       "png": "paved_road_single_damaged.png",
       "glb": "paved_road_single_damaged.glb"
     },
     "paved_road_single_ruined": {
       "shape": "single",
       "state": "ruined",
-      "triangles": 660,
-      "objects": 55,
+      "triangles": 648,
+      "objects": 54,
       "png": "paved_road_single_ruined.png",
       "glb": "paved_road_single_ruined.glb"
     },
     "paved_road_end_n_active": {
       "shape": "end_n",
       "state": "active",
-      "triangles": 608,
-      "objects": 50,
+      "triangles": 588,
+      "objects": 49,
       "png": "paved_road_end_n_active.png",
       "glb": "paved_road_end_n_active.glb"
     },
     "paved_road_end_n_construction": {
       "shape": "end_n",
       "state": "construction",
-      "triangles": 656,
-      "objects": 54,
+      "triangles": 636,
+      "objects": 53,
       "png": "paved_road_end_n_construction.png",
       "glb": "paved_road_end_n_construction.glb"
     },
     "paved_road_end_n_damaged": {
       "shape": "end_n",
       "state": "damaged",
-      "triangles": 692,
-      "objects": 57,
+      "triangles": 672,
+      "objects": 56,
       "png": "paved_road_end_n_damaged.png",
       "glb": "paved_road_end_n_damaged.glb"
     },
     "paved_road_end_n_ruined": {
       "shape": "end_n",
       "state": "ruined",
-      "triangles": 764,
-      "objects": 63,
+      "triangles": 744,
+      "objects": 62,
       "png": "paved_road_end_n_ruined.png",
       "glb": "paved_road_end_n_ruined.glb"
     },
     "paved_road_end_e_active": {
       "shape": "end_e",
       "state": "active",
-      "triangles": 572,
-      "objects": 47,
+      "triangles": 552,
+      "objects": 46,
       "png": "paved_road_end_e_active.png",
       "glb": "paved_road_end_e_active.glb"
     },
     "paved_road_end_e_construction": {
       "shape": "end_e",
       "state": "construction",
-      "triangles": 620,
-      "objects": 51,
+      "triangles": 600,
+      "objects": 50,
       "png": "paved_road_end_e_construction.png",
       "glb": "paved_road_end_e_construction.glb"
     },
     "paved_road_end_e_damaged": {
       "shape": "end_e",
       "state": "damaged",
-      "triangles": 656,
-      "objects": 54,
+      "triangles": 636,
+      "objects": 53,
       "png": "paved_road_end_e_damaged.png",
       "glb": "paved_road_end_e_damaged.glb"
     },
     "paved_road_end_e_ruined": {
       "shape": "end_e",
       "state": "ruined",
-      "triangles": 740,
-      "objects": 61,
+      "triangles": 720,
+      "objects": 60,
       "png": "paved_road_end_e_ruined.png",
       "glb": "paved_road_end_e_ruined.glb"
     },
     "paved_road_end_s_active": {
       "shape": "end_s",
       "state": "active",
-      "triangles": 608,
-      "objects": 50,
+      "triangles": 588,
+      "objects": 49,
       "png": "paved_road_end_s_active.png",
       "glb": "paved_road_end_s_active.glb"
     },
     "paved_road_end_s_construction": {
       "shape": "end_s",
       "state": "construction",
-      "triangles": 668,
-      "objects": 55,
+      "triangles": 648,
+      "objects": 54,
       "png": "paved_road_end_s_construction.png",
       "glb": "paved_road_end_s_construction.glb"
     },
     "paved_road_end_s_damaged": {
       "shape": "end_s",
       "state": "damaged",
-      "triangles": 692,
-      "objects": 57,
+      "triangles": 672,
+      "objects": 56,
       "png": "paved_road_end_s_damaged.png",
       "glb": "paved_road_end_s_damaged.glb"
     },
     "paved_road_end_s_ruined": {
       "shape": "end_s",
       "state": "ruined",
-      "triangles": 752,
-      "objects": 62,
+      "triangles": 732,
+      "objects": 61,
       "png": "paved_road_end_s_ruined.png",
       "glb": "paved_road_end_s_ruined.glb"
     },
     "paved_road_end_w_active": {
       "shape": "end_w",
       "state": "active",
-      "triangles": 572,
-      "objects": 47,
+      "triangles": 552,
+      "objects": 46,
       "png": "paved_road_end_w_active.png",
       "glb": "paved_road_end_w_active.glb"
     },
     "paved_road_end_w_construction": {
       "shape": "end_w",
       "state": "construction",
-      "triangles": 620,
-      "objects": 51,
+      "triangles": 600,
+      "objects": 50,
       "png": "paved_road_end_w_construction.png",
       "glb": "paved_road_end_w_construction.glb"
     },
     "paved_road_end_w_damaged": {
       "shape": "end_w",
       "state": "damaged",
-      "triangles": 656,
-      "objects": 54,
+      "triangles": 636,
+      "objects": 53,
       "png": "paved_road_end_w_damaged.png",
       "glb": "paved_road_end_w_damaged.glb"
     },
     "paved_road_end_w_ruined": {
       "shape": "end_w",
       "state": "ruined",
-      "triangles": 740,
-      "objects": 61,
+      "triangles": 720,
+      "objects": 60,
       "png": "paved_road_end_w_ruined.png",
       "glb": "paved_road_end_w_ruined.glb"
     },
     "paved_road_straight_ns_active": {
       "shape": "straight_ns",
       "state": "active",
-      "triangles": 724,
-      "objects": 59,
+      "triangles": 696,
+      "objects": 58,
       "png": "paved_road_straight_ns_active.png",
       "glb": "paved_road_straight_ns_active.glb"
     },
     "paved_road_straight_ns_construction": {
       "shape": "straight_ns",
       "state": "construction",
-      "triangles": 760,
-      "objects": 62,
+      "triangles": 732,
+      "objects": 61,
       "png": "paved_road_straight_ns_construction.png",
       "glb": "paved_road_straight_ns_construction.glb"
     },
     "paved_road_straight_ns_damaged": {
       "shape": "straight_ns",
       "state": "damaged",
-      "triangles": 808,
-      "objects": 66,
+      "triangles": 780,
+      "objects": 65,
       "png": "paved_road_straight_ns_damaged.png",
       "glb": "paved_road_straight_ns_damaged.glb"
     },
     "paved_road_straight_ns_ruined": {
       "shape": "straight_ns",
       "state": "ruined",
-      "triangles": 892,
-      "objects": 73,
+      "triangles": 864,
+      "objects": 72,
       "png": "paved_road_straight_ns_ruined.png",
       "glb": "paved_road_straight_ns_ruined.glb"
     },
     "paved_road_straight_ew_active": {
       "shape": "straight_ew",
       "state": "active",
-      "triangles": 652,
-      "objects": 53,
+      "triangles": 624,
+      "objects": 52,
       "png": "paved_road_straight_ew_active.png",
       "glb": "paved_road_straight_ew_active.glb"
     },
     "paved_road_straight_ew_construction": {
       "shape": "straight_ew",
       "state": "construction",
-      "triangles": 700,
-      "objects": 57,
+      "triangles": 672,
+      "objects": 56,
       "png": "paved_road_straight_ew_construction.png",
       "glb": "paved_road_straight_ew_construction.glb"
     },
     "paved_road_straight_ew_damaged": {
       "shape": "straight_ew",
       "state": "damaged",
-      "triangles": 736,
-      "objects": 60,
+      "triangles": 708,
+      "objects": 59,
       "png": "paved_road_straight_ew_damaged.png",
       "glb": "paved_road_straight_ew_damaged.glb"
     },
     "paved_road_straight_ew_ruined": {
       "shape": "straight_ew",
       "state": "ruined",
-      "triangles": 796,
-      "objects": 65,
+      "triangles": 768,
+      "objects": 64,
       "png": "paved_road_straight_ew_ruined.png",
       "glb": "paved_road_straight_ew_ruined.glb"
     },
     "paved_road_corner_ne_active": {
       "shape": "corner_ne",
       "state": "active",
-      "triangles": 688,
-      "objects": 56,
+      "triangles": 660,
+      "objects": 55,
       "png": "paved_road_corner_ne_active.png",
       "glb": "paved_road_corner_ne_active.glb"
     },
     "paved_road_corner_ne_construction": {
       "shape": "corner_ne",
       "state": "construction",
-      "triangles": 736,
-      "objects": 60,
+      "triangles": 708,
+      "objects": 59,
       "png": "paved_road_corner_ne_construction.png",
       "glb": "paved_road_corner_ne_construction.glb"
     },
     "paved_road_corner_ne_damaged": {
       "shape": "corner_ne",
       "state": "damaged",
-      "triangles": 772,
-      "objects": 63,
+      "triangles": 744,
+      "objects": 62,
       "png": "paved_road_corner_ne_damaged.png",
       "glb": "paved_road_corner_ne_damaged.glb"
     },
     "paved_road_corner_ne_ruined": {
       "shape": "corner_ne",
       "state": "ruined",
-      "triangles": 856,
-      "objects": 70,
+      "triangles": 828,
+      "objects": 69,
       "png": "paved_road_corner_ne_ruined.png",
       "glb": "paved_road_corner_ne_ruined.glb"
     },
     "paved_road_corner_es_active": {
       "shape": "corner_es",
       "state": "active",
-      "triangles": 688,
-      "objects": 56,
+      "triangles": 660,
+      "objects": 55,
       "png": "paved_road_corner_es_active.png",
       "glb": "paved_road_corner_es_active.glb"
     },
     "paved_road_corner_es_construction": {
       "shape": "corner_es",
       "state": "construction",
-      "triangles": 724,
-      "objects": 59,
+      "triangles": 696,
+      "objects": 58,
       "png": "paved_road_corner_es_construction.png",
       "glb": "paved_road_corner_es_construction.glb"
     },
     "paved_road_corner_es_damaged": {
       "shape": "corner_es",
       "state": "damaged",
-      "triangles": 772,
-      "objects": 63,
+      "triangles": 744,
+      "objects": 62,
       "png": "paved_road_corner_es_damaged.png",
       "glb": "paved_road_corner_es_damaged.glb"
     },
     "paved_road_corner_es_ruined": {
       "shape": "corner_es",
       "state": "ruined",
-      "triangles": 856,
-      "objects": 70,
+      "triangles": 828,
+      "objects": 69,
       "png": "paved_road_corner_es_ruined.png",
       "glb": "paved_road_corner_es_ruined.glb"
     },
     "paved_road_corner_sw_active": {
       "shape": "corner_sw",
       "state": "active",
-      "triangles": 688,
-      "objects": 56,
+      "triangles": 660,
+      "objects": 55,
       "png": "paved_road_corner_sw_active.png",
       "glb": "paved_road_corner_sw_active.glb"
     },
     "paved_road_corner_sw_construction": {
       "shape": "corner_sw",
       "state": "construction",
-      "triangles": 724,
-      "objects": 59,
+      "triangles": 696,
+      "objects": 58,
       "png": "paved_road_corner_sw_construction.png",
       "glb": "paved_road_corner_sw_construction.glb"
     },
     "paved_road_corner_sw_damaged": {
       "shape": "corner_sw",
       "state": "damaged",
-      "triangles": 772,
-      "objects": 63,
+      "triangles": 744,
+      "objects": 62,
       "png": "paved_road_corner_sw_damaged.png",
       "glb": "paved_road_corner_sw_damaged.glb"
     },
     "paved_road_corner_sw_ruined": {
       "shape": "corner_sw",
       "state": "ruined",
-      "triangles": 844,
-      "objects": 69,
+      "triangles": 816,
+      "objects": 68,
       "png": "paved_road_corner_sw_ruined.png",
       "glb": "paved_road_corner_sw_ruined.glb"
     },
     "paved_road_corner_wn_active": {
       "shape": "corner_wn",
       "state": "active",
-      "triangles": 688,
-      "objects": 56,
+      "triangles": 660,
+      "objects": 55,
       "png": "paved_road_corner_wn_active.png",
       "glb": "paved_road_corner_wn_active.glb"
     },
     "paved_road_corner_wn_construction": {
       "shape": "corner_wn",
       "state": "construction",
-      "triangles": 724,
-      "objects": 59,
+      "triangles": 696,
+      "objects": 58,
       "png": "paved_road_corner_wn_construction.png",
       "glb": "paved_road_corner_wn_construction.glb"
     },
     "paved_road_corner_wn_damaged": {
       "shape": "corner_wn",
       "state": "damaged",
-      "triangles": 772,
-      "objects": 63,
+      "triangles": 744,
+      "objects": 62,
       "png": "paved_road_corner_wn_damaged.png",
       "glb": "paved_road_corner_wn_damaged.glb"
     },
     "paved_road_corner_wn_ruined": {
       "shape": "corner_wn",
       "state": "ruined",
-      "triangles": 832,
-      "objects": 68,
+      "triangles": 804,
+      "objects": 67,
       "png": "paved_road_corner_wn_ruined.png",
       "glb": "paved_road_corner_wn_ruined.glb"
     },
     "paved_road_t_nes_active": {
       "shape": "t_nes",
       "state": "active",
-      "triangles": 804,
-      "objects": 65,
+      "triangles": 768,
+      "objects": 64,
       "png": "paved_road_t_nes_active.png",
       "glb": "paved_road_t_nes_active.glb"
     },
     "paved_road_t_nes_construction": {
       "shape": "t_nes",
       "state": "construction",
-      "triangles": 852,
-      "objects": 69,
+      "triangles": 816,
+      "objects": 68,
       "png": "paved_road_t_nes_construction.png",
       "glb": "paved_road_t_nes_construction.glb"
     },
     "paved_road_t_nes_damaged": {
       "shape": "t_nes",
       "state": "damaged",
-      "triangles": 888,
-      "objects": 72,
+      "triangles": 852,
+      "objects": 71,
       "png": "paved_road_t_nes_damaged.png",
       "glb": "paved_road_t_nes_damaged.glb"
     },
     "paved_road_t_nes_ruined": {
       "shape": "t_nes",
       "state": "ruined",
-      "triangles": 948,
-      "objects": 77,
+      "triangles": 912,
+      "objects": 76,
       "png": "paved_road_t_nes_ruined.png",
       "glb": "paved_road_t_nes_ruined.glb"
     },
     "paved_road_t_esw_active": {
       "shape": "t_esw",
       "state": "active",
-      "triangles": 768,
-      "objects": 62,
+      "triangles": 732,
+      "objects": 61,
       "png": "paved_road_t_esw_active.png",
       "glb": "paved_road_t_esw_active.glb"
     },
     "paved_road_t_esw_construction": {
       "shape": "t_esw",
       "state": "construction",
-      "triangles": 816,
-      "objects": 66,
+      "triangles": 780,
+      "objects": 65,
       "png": "paved_road_t_esw_construction.png",
       "glb": "paved_road_t_esw_construction.glb"
     },
     "paved_road_t_esw_damaged": {
       "shape": "t_esw",
       "state": "damaged",
-      "triangles": 852,
-      "objects": 69,
+      "triangles": 816,
+      "objects": 68,
       "png": "paved_road_t_esw_damaged.png",
       "glb": "paved_road_t_esw_damaged.glb"
     },
     "paved_road_t_esw_ruined": {
       "shape": "t_esw",
       "state": "ruined",
-      "triangles": 888,
-      "objects": 72,
+      "triangles": 852,
+      "objects": 71,
       "png": "paved_road_t_esw_ruined.png",
       "glb": "paved_road_t_esw_ruined.glb"
     },
     "paved_road_t_swn_active": {
       "shape": "t_swn",
       "state": "active",
-      "triangles": 804,
-      "objects": 65,
+      "triangles": 768,
+      "objects": 64,
       "png": "paved_road_t_swn_active.png",
       "glb": "paved_road_t_swn_active.glb"
     },
     "paved_road_t_swn_construction": {
       "shape": "t_swn",
       "state": "construction",
-      "triangles": 864,
-      "objects": 70,
+      "triangles": 828,
+      "objects": 69,
       "png": "paved_road_t_swn_construction.png",
       "glb": "paved_road_t_swn_construction.glb"
     },
     "paved_road_t_swn_damaged": {
       "shape": "t_swn",
       "state": "damaged",
-      "triangles": 888,
-      "objects": 72,
+      "triangles": 852,
+      "objects": 71,
       "png": "paved_road_t_swn_damaged.png",
       "glb": "paved_road_t_swn_damaged.glb"
     },
     "paved_road_t_swn_ruined": {
       "shape": "t_swn",
       "state": "ruined",
-      "triangles": 924,
-      "objects": 75,
+      "triangles": 888,
+      "objects": 74,
       "png": "paved_road_t_swn_ruined.png",
       "glb": "paved_road_t_swn_ruined.glb"
     },
     "paved_road_t_wne_active": {
       "shape": "t_wne",
       "state": "active",
-      "triangles": 768,
-      "objects": 62,
+      "triangles": 732,
+      "objects": 61,
       "png": "paved_road_t_wne_active.png",
       "glb": "paved_road_t_wne_active.glb"
     },
     "paved_road_t_wne_construction": {
       "shape": "t_wne",
       "state": "construction",
-      "triangles": 828,
-      "objects": 67,
+      "triangles": 792,
+      "objects": 66,
       "png": "paved_road_t_wne_construction.png",
       "glb": "paved_road_t_wne_construction.glb"
     },
     "paved_road_t_wne_damaged": {
       "shape": "t_wne",
       "state": "damaged",
-      "triangles": 852,
-      "objects": 69,
+      "triangles": 816,
+      "objects": 68,
       "png": "paved_road_t_wne_damaged.png",
       "glb": "paved_road_t_wne_damaged.glb"
     },
     "paved_road_t_wne_ruined": {
       "shape": "t_wne",
       "state": "ruined",
-      "triangles": 936,
-      "objects": 76,
+      "triangles": 900,
+      "objects": 75,
       "png": "paved_road_t_wne_ruined.png",
       "glb": "paved_road_t_wne_ruined.glb"
     },
     "paved_road_cross_active": {
       "shape": "cross",
       "state": "active",
-      "triangles": 884,
-      "objects": 71,
+      "triangles": 840,
+      "objects": 70,
       "png": "paved_road_cross_active.png",
       "glb": "paved_road_cross_active.glb"
     },
     "paved_road_cross_construction": {
       "shape": "cross",
       "state": "construction",
-      "triangles": 920,
-      "objects": 74,
+      "triangles": 876,
+      "objects": 73,
       "png": "paved_road_cross_construction.png",
       "glb": "paved_road_cross_construction.glb"
     },
     "paved_road_cross_damaged": {
       "shape": "cross",
       "state": "damaged",
-      "triangles": 968,
-      "objects": 78,
+      "triangles": 924,
+      "objects": 77,
       "png": "paved_road_cross_damaged.png",
       "glb": "paved_road_cross_damaged.glb"
     },
     "paved_road_cross_ruined": {
       "shape": "cross",
       "state": "ruined",
-      "triangles": 1052,
-      "objects": 85,
+      "triangles": 1008,
+      "objects": 84,
       "png": "paved_road_cross_ruined.png",
       "glb": "paved_road_cross_ruined.glb"
     }

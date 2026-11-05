@@ -29,7 +29,7 @@ KITS = {
     "common_road": {"name": "Обычная дорога", "surface": (0.53, 0.51, 0.43), "light": (0.70, 0.67, 0.56), "dark": (0.36, 0.37, 0.32), "edge": (0.67, 0.61, 0.48), "slab": (0.53, 0.51, 0.43)},
     "paved_road": {"name": "Мостовая", "surface": (0.48, 0.47, 0.42), "light": (0.75, 0.70, 0.60), "dark": (0.32, 0.33, 0.31), "edge": (0.68, 0.57, 0.44), "slab": (0.56, 0.55, 0.49)},
 }
-GRID = (-1.8, -1.1, 1.1, 1.8)
+TILE_HALF = 1.8
 PORT_Z = 0.055
 
 
@@ -125,42 +125,24 @@ def make_chip(collection, name, x, y, rx, ry, mat, rng, height=0.015):
     return obj
 
 
-def road_cells(dirs):
-    cells = {(1, 1)}
-    for d, cell in (("w", (0, 1)), ("e", (2, 1)), ("s", (1, 0)), ("n", (1, 2))):
-        if d in dirs:
-            cells.add(cell)
-    return cells
-
-
 def road_mesh(collection, dirs, mat):
-    """One closed mesh with shared top vertices; no overlapping center plates."""
-    cells = road_cells(dirs)
-    vertices, faces, lookup = [], [], {}
-
-    def v(co):
-        key = tuple(round(x, 6) for x in co)
-        if key not in lookup:
-            lookup[key] = len(vertices)
-            vertices.append(co)
-        return lookup[key]
-
-    for i, j in sorted(cells):
-        x0, x1, y0, y1 = GRID[i], GRID[i + 1], GRID[j], GRID[j + 1]
-        top = [v(p) for p in ((x0, y0, PORT_Z), (x1, y0, PORT_Z), (x1, y1, PORT_Z), (x0, y1, PORT_Z))]
-        bot = [v(p) for p in ((x0, y0, 0.028), (x1, y0, 0.028), (x1, y1, 0.028), (x0, y1, 0.028))]
-        faces.append(tuple(top))
-        faces.append(tuple(reversed(bot)))
-        for neighbor, edge in (
-            ((i, j - 1), (0, 1)), ((i + 1, j), (1, 2)),
-            ((i, j + 1), (2, 3)), ((i - 1, j), (3, 0)),
-        ):
-            if neighbor not in cells:
-                a, b = edge
-                faces.append((top[b], top[a], bot[a], bot[b]))
+    """A single full-cell paved surface; directions are indicated by edge dressing."""
+    h = TILE_HALF
+    vertices = [(-h, -h, PORT_Z), (h, -h, PORT_Z),
+                (h, h, PORT_Z), (-h, h, PORT_Z),
+                (-h, -h, 0.028), (h, -h, 0.028),
+                (h, h, 0.028), (-h, h, 0.028)]
+    faces = [(0, 1, 2, 3), (7, 6, 5, 4),
+             (1, 0, 4, 5), (2, 1, 5, 6),
+             (3, 2, 6, 7), (0, 3, 7, 4)]
     mesh = bpy.data.meshes.new("SM_road_connected_surface")
     mesh.from_pydata(vertices, [], faces)
     mesh.update()
+    uv = mesh.uv_layers.new(name="road_xy")
+    for polygon in mesh.polygons:
+        for loop_index in polygon.loop_indices:
+            point = mesh.vertices[mesh.loops[loop_index].vertex_index].co
+            uv.data[loop_index].uv = ((point.x + h) / (2 * h), (point.y + h) / (2 * h))
     obj = bpy.data.objects.new(mesh.name, mesh)
     collection.objects.link(obj)
     mesh.materials.append(mat)
@@ -211,14 +193,14 @@ def dress(collection, kit, state, dirs, mats, seed):
             if free_point(x, y, 0.15):
                 make_chip(collection, "SM_graded_stone", x, y, rng.uniform(0.04, 0.11), rng.uniform(0.035, 0.09), mats["light" if idx % 3 else "dark"], rng, 0.014)
 
-    # Exterior shoulder stones follow the open mask and never cross a port.
+    # Inset edge cues mark closed sides without removing any road area.
     for x, y, horizontal in ((-1.17, 0, False), (1.17, 0, False), (0, -1.17, True), (0, 1.17, True)):
         if not inside(x, y, dirs, 0.01):
             if kit != "ground_road":
-                make_box(collection, "SM_shoulder_edge", (x, y, 0.073), (1.28, 0.075, 0.038) if horizontal else (0.075, 1.28, 0.038), mats["edge"])
+                make_box(collection, "SM_shoulder_edge", (x * 1.3, y * 1.3, 0.073), (2.7, 0.075, 0.038) if horizontal else (0.075, 2.7, 0.038), mats["edge"])
             else:
                 for offset in (-0.38, 0, 0.38):
-                    px, py = (offset, y) if horizontal else (x, offset)
+                    px, py = (offset, y * 1.3) if horizontal else (x * 1.3, offset)
                     make_box(collection, "SM_clay_shoulder", (px, py, 0.063), (0.28, 0.13, 0.016), mats["light"], rng.uniform(-0.2, 0.2))
 
     if state == "construction":
@@ -273,7 +255,6 @@ def main():
     parser.add_argument("--preview", action="store_true")
     args = parser.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
     scene = setup()
-    grass = material("MAT_road_grass", (0.43, 0.50, 0.30))
     for kit in args.kits:
         colors = KITS[kit]
         mats = {role: material("MAT_" + kit + "_" + role, colors[role]) for role in ("surface", "light", "dark", "edge", "slab")}
@@ -288,7 +269,6 @@ def main():
                 collection = bpy.data.collections.new(name)
                 scene.collection.children.link(collection)
                 kit_collections.append(collection)
-                make_box(collection, "SM_road_grass_tile", (0, 0, 0.002), (3.6, 3.6, 0.006), grass)
                 surface = road_mesh(collection, SHAPES[shape], mats["surface"])
                 seed = int.from_bytes(hashlib.sha256(name.encode()).digest()[:8], "big")
                 dress(collection, kit, state, SHAPES[shape], mats, seed)
@@ -309,7 +289,7 @@ def main():
                 else:
                     collection.hide_render = True
         if not args.preview:
-            (out / "manifest.json").write_text(json.dumps({"id": kit, "building_type": "road", "display_name": colors["name"], "style": "Aeolian handcrafted modular roads v2", "size": [512, 512], "footprint": 3.6, "anchor": [256, 320], "levels": [1], "shapes": list(SHAPES), "states": list(STATES), "port": {"width": 2.2, "height": PORT_Z}, "assets": records}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            (out / "manifest.json").write_text(json.dumps({"id": kit, "building_type": "road", "display_name": colors["name"], "style": "Aeolian handcrafted full-cell roads v3", "size": [512, 512], "footprint": 3.6, "anchor": [256, 320], "levels": [1], "shapes": list(SHAPES), "states": list(STATES), "port": {"width": 3.6, "height": PORT_Z}, "assets": records}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             for collection in kit_collections:
                 collection.hide_render = False
             bpy.ops.wm.save_as_mainfile(filepath=str(out / f"{kit}.blend"))

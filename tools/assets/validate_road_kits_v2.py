@@ -1,6 +1,7 @@
 """Check complete road-kit exports and their shared open-port contract."""
 
 import json
+from collections import Counter
 import struct
 import sys
 from pathlib import Path
@@ -27,7 +28,12 @@ def glb_surface_bounds(path):
     node = next(node for node in document["nodes"] if node["name"].startswith("SM_road_connected_surface"))
     mesh = document["meshes"][node["mesh"]]
     accessor = document["accessors"][mesh["primitives"][0]["attributes"]["POSITION"]]
-    return accessor["min"], accessor["max"]
+    view = document["bufferViews"][accessor["bufferView"]]
+    start = 20 + json_length + 8 + view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
+    stride = view.get("byteStride", 12)
+    positions = [tuple(round(v, 3) for v in struct.unpack_from("<3f", data, start + i * stride))
+                 for i in range(accessor["count"])]
+    return accessor["min"], accessor["max"], Counter(positions)
 
 
 def validate(root):
@@ -38,6 +44,8 @@ def validate(root):
         assert set(manifest["shapes"]) == set(SHAPES)
         assert set(manifest["states"]) == set(STATES)
         assert manifest["size"] == [512, 512] and manifest["anchor"] == [256, 320]
+        assert manifest["footprint"] == 3.6
+        assert manifest["port"] == {"width": 3.6, "height": 0.055}
         assert len(manifest["assets"]) == 64
         sheet = Image.new("RGB", (16 * 128, 4 * 160), (47, 52, 48))
         draw = ImageDraw.Draw(sheet)
@@ -50,12 +58,17 @@ def validate(root):
                 image = Image.open(directory / entry["png"]).convert("RGBA")
                 assert image.size == (512, 512), name
                 assert image.getchannel("A").getbbox(), name
-                bounds = glb_surface_bounds(directory / entry["glb"])
-                low, high = bounds
-                expected = {"w": low[0], "e": high[0], "n": low[2], "s": high[2]}
-                for direction, coordinate in expected.items():
-                    target = (-1.8 if direction in "wn" else 1.8) if direction in dirs else (-1.1 if direction in "wn" else 1.1)
-                    assert abs(coordinate - target) < 0.005, (name, direction, coordinate, target)
+                low, high, positions = glb_surface_bounds(directory / entry["glb"])
+                # The closed eight-corner box spans the *entire* tile for every mask.
+                # glTF duplicates corners for each face normal (24 exported vertices).
+                # Thus any adjacent pair, including the four inner corners of a 2x2,
+                # meets with no uncovered terrain between their surfaces.
+                assert len(positions) == 8 and set(positions.values()) == {3}, (name, positions)
+                expected_corners = {(x, y, z) for x in (-1.8, 1.8)
+                                    for y in (0.028, 0.055) for z in (-1.8, 1.8)}
+                assert set(positions) == expected_corners, (name, positions)
+                assert abs(low[0] + 1.8) < 0.005 and abs(high[0] - 1.8) < 0.005, name
+                assert abs(low[2] + 1.8) < 0.005 and abs(high[2] - 1.8) < 0.005, name
                 assert abs(high[1] - 0.055) < 0.005, (name, high[1])
                 thumb = image.resize((128, 128), Image.Resampling.LANCZOS)
                 sheet.paste(thumb, (col * 128, row * 160), thumb)
