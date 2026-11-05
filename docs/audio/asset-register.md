@@ -2,7 +2,18 @@
 
 ## Актуальный каталог с 24 октября 2026 года
 
-Все 147 игровых `sound_id` и 309 вариантов заменены обработанными фрагментами записей. Соответствие каждого варианта исходному файлу приведено в `tools/audio/recorded-sources.json`; сборка выполняется `python3 tools/audio/import_recorded_audio.py`. Исходные архивы и распакованные записи находятся в `.cache/audio-sources/` и не включаются в Git. Точечные источники для звуков монстров сохранены в `tools/audio/sources/`, а смещения и длительности задаются в `tools/audio/source-overrides.json`. Строки прежней таблицы ниже сохраняют историю синтезированных прототипов, но больше не описывают текущие игровые файлы.
+Основная часть игрового каталога заменена обработанными фрагментами записей. Соответствие вариантов исходным файлам приведено в `tools/audio/recorded-sources.json`; базовая сборка выполняется `python3 tools/audio/import_recorded_audio.py`. Исходные архивы и распакованные записи находятся в `.cache/audio-sources/` и не включаются в Git. Точечные источники для звуков монстров сохранены в `tools/audio/sources/`, а смещения и длительности задаются в `tools/audio/source-overrides.json`. Четыре звука орудий ниже обработаны отдельно: базовый импортёр пока не воспроизводит эту замену и при повторном запуске вернёт прежние варианты. Строки прежней таблицы ниже сохраняют историю синтезированных прототипов, но больше не описывают текущие игровые файлы.
+
+## Звуки орудий, 5 ноября 2026 года
+
+| Игровые файлы | Источник и автор | Лицензия | Обработка |
+|---|---|---|---|
+| `combat.weapon.cannon.0/1.mp3` | [Battle at sea, `cannon_fire.ogg`](https://opengameart.org/content/battle-at-sea), Thimras | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) | Из ранее скачанного WAV: обрезка до 1,9 с, срез частот ниже 45 Гц, затухание хвоста, ограничитель, моно 48 кГц, MP3 64 кбит/с. Вариант 1 понижен по высоте до 94 %. |
+| `combat.weapon.bolt_thrower.0/1.mp3` | [Crossbow sounds, `crossbow_shot_and_hit.flac`](https://opengameart.org/content/crossbow-sounds), HolgiB | Выбрана [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) из двух предложенных автором лицензий; указаны автор, произведение, ссылка и изменения | Из ранее скачанного WAV: обрезка до 0,56 с, срез частот ниже 45 Гц, затухание хвоста, ограничитель, моно 48 кГц, MP3 64 кбит/с. Вариант 1 понижен по высоте до 94 %. |
+| `combat.weapon.tower.0/1.mp3` | Собственный рецепт `tools/audio/recipes/weapons.json`, профиль `tower`, seed 5204; Real City / Codex | Стороннего материала нет | Оба варианта созданы `tools/audio/generate_sfx.py` с `--variant 0/1`; затем срез частот ниже 80 Гц, ограничитель, моно 48 кГц, MP3 64 кбит/с. |
+| `combat.weapon.storm_coil.0/1.mp3` | Собственный рецепт `tools/audio/recipes/weapons.json`, профиль `coil`, seed 5206; Real City / Codex | Стороннего материала нет | Оба варианта созданы `tools/audio/generate_sfx.py` с `--variant 0/1`; затем срез частот ниже 80 Гц, ограничитель, моно 48 кГц, MP3 64 кбит/с. |
+
+Проверены первичные страницы [Shatter shot explosion и Arrow shot through air](https://mixkit.co/free-sound-effects/shot/), [Arrow whizz in battle](https://mixkit.co/free-sound-effects/medieval-battle/), [Lightning whip](https://mixkit.co/free-sound-effects/lightning/) и [лицензия Mixkit Free Sound Effects](https://mixkit.co/license/modal/sfxFree/). Лицензия разрешает использование в видеоиграх, но запрещает распространение эффекта вместе с исходниками. Поэтому кандидаты Mixkit не включены в исходный репозиторий даже в обработанном виде; исходные WAV из `tools/assets/audio/defense-candidates/` не добавлены к игровым файлам. `recorded-sources.json` фиксирует происхождение новых MP3, но сам импортёр этот отчёт не читает.
 
 | Источник | Применение | Лицензия |
 |---|---|---|

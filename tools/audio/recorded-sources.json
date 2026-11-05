@@ -296,20 +296,20 @@
     ".cache/audio-sources/extracted/more/Money/Money_05.wav"
   ],
   "combat.weapon.bolt_thrower": [
-    ".cache/audio-sources/extracted/rubberduck/wooden_02.ogg",
-    ".cache/audio-sources/extracted/rubberduck/wooden_03.ogg"
+    "tools/assets/audio/defense-candidates/defense-bolt-thrower-crossbow-shot.wav (OpenGameArt, HolgiB, CC-BY 3.0; original WAV not distributed)",
+    "tools/assets/audio/defense-candidates/defense-bolt-thrower-crossbow-shot.wav (OpenGameArt, HolgiB, CC-BY 3.0; pitch 0.94; original WAV not distributed)"
   ],
   "combat.weapon.cannon": [
-    ".cache/audio-sources/extracted/owlish/Impacts/clamour5.wav",
-    ".cache/audio-sources/extracted/owlish/Impacts/clamour6.wav"
+    "tools/assets/audio/defense-candidates/defense-cannon-cannon-fire.wav (OpenGameArt, Thimras, CC0; original WAV not distributed)",
+    "tools/assets/audio/defense-candidates/defense-cannon-cannon-fire.wav (OpenGameArt, Thimras, CC0; pitch 0.94; original WAV not distributed)"
   ],
   "combat.weapon.storm_coil": [
-    ".cache/audio-sources/extracted/rubberduck/glass_02.ogg",
-    ".cache/audio-sources/extracted/rubberduck/glass_03.ogg"
+    "tools/audio/recipes/weapons.json (combat.weapon.storm_coil, seed 5206, variant 0)",
+    "tools/audio/recipes/weapons.json (combat.weapon.storm_coil, seed 5206, variant 1)"
   ],
   "combat.weapon.tower": [
-    ".cache/audio-sources/extracted/workshop/workshop/workshop - metal tapping.wav",
-    ".cache/audio-sources/extracted/rubberduck/metal_01.ogg"
+    "tools/audio/recipes/weapons.json (combat.weapon.tower, seed 5204, variant 0)",
+    "tools/audio/recipes/weapons.json (combat.weapon.tower, seed 5204, variant 1)"
   ],
   "economy.coin.earned": [
     ".cache/audio-sources/extracted/more/Money/Money_29.wav",
