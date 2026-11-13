@@ -23,6 +23,9 @@
 | [68 Workshop Sounds](https://opengameart.org/content/68-workshop-sounds) | дерево, инструменты, металл, мастерская | CC0 |
 | [Park ambiences](https://opengameart.org/content/park-ambiences) | ветер, птицы и река для фоновых петель | CC0 |
 | [Sunset Walk](https://opengameart.org/content/sunset-walk-ambient-quiet-sweet-loop), KiluaBoy | фоновая музыка `frontend/public/assets/audio/music/sunset-walk.mp3` | CC0, указание автора добровольно |
+| [Meadow Thoughts](https://opengameart.org/content/meadow-thoughts), Écrivain | фоновая музыка `frontend/public/assets/audio/music/meadow-thoughts.mp3`, длительность 2:29 | CC0; перекодировано из OGG в MP3, 64 кбит/с |
+| [Feel good slow ambient track with a beat](https://opengameart.org/content/feel-good-slow-ambient-track-with-a-beat), annandistance | фоновая музыка `frontend/public/assets/audio/music/feel-good-ambient.mp3`, длительность 1:55 | CC0; перекодировано из OGG в MP3, 64 кбит/с |
+| [Exploration Theme](https://opengameart.org/content/exploration-theme), Cleyton Kauffman | фоновая музыка `frontend/public/assets/audio/music/exploration-theme.mp3`, длительность 2:30 | CC0; перекодировано из OGG в MP3, 64 кбит/с |
 | [Monster snarls](https://opengameart.org/content/monster-snarls), Darsycho | звериные рыки для `combat.monster.*.aggro` и `combat.monster.idle` | CC0 |
 
 Для сравнения также скачан [Mysterious Calm](https://opengameart.org/content/mysterious-calm) (CC BY 3.0). Он не включён в игру; при использовании потребуется атрибуция автора и ссылка на OpenGameArt.

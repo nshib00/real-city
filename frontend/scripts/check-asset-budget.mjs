@@ -65,7 +65,7 @@ for (const [family, bytes] of familySizes) {
   if (bytes > limit) audioErrors.push(`${family}: ${formatBytes(bytes)} / ${formatBytes(limit)}`)
 }
 const musicBytes = [...audioByPath].filter(([name]) => name.startsWith('music/')).reduce((sum, [, file]) => sum + file.size, 0)
-if (musicBytes > 2 * 1024 * 1024) audioErrors.push(`Music: ${formatBytes(musicBytes)} / 2 MB`)
+if (musicBytes > 5 * 1024 * 1024) audioErrors.push(`Music: ${formatBytes(musicBytes)} / 5 MB`)
 if (audioTotal > audioTotalLimit) audioErrors.push(`Audio catalog: ${formatBytes(audioTotal)} / ${formatBytes(audioTotalLimit)}`)
 
 const preloadManifest = JSON.parse(await readFile(path.join(audioDir, 'preload.json'), 'utf8'))

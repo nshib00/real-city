@@ -1,6 +1,5 @@
 import { Landmark, Map as MapIcon, X } from '../../shared/ui/icons'
 import { useRef, useState } from 'react'
-import type { PointerEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
@@ -69,7 +68,7 @@ export function MapWidget() {
   }
 
   return (
-    <aside className="map-widget" aria-label="Мини-карта мира">
+    <div className="map-widget" aria-label="Мини-карта мира">
       <IconButton
         label="К ратуше"
         icon={Landmark}
@@ -101,18 +100,8 @@ export function MapWidget() {
                     className={active ? 'world-district world-district-active' : 'world-district'}
                     key={`${districtX}:${districtY}`}
                     type="button"
-                    onClick={(event) => {
-                      if (event.detail === 0) void navigateTo({ x: districtX * DISTRICT_SIZE + DISTRICT_SIZE / 2, y: districtY * DISTRICT_SIZE + DISTRICT_SIZE / 2 })
-                    }}
-                    onPointerDown={(event) => {
-                      const tile = tileFromDistrictClick(event, districtX, districtY)
-                      void navigateTo(tile)
-                    }}
-                  >
-                    <span aria-hidden="true" className="world-district-label">
-                      {label}
-                    </span>
-                  </button>
+                    onClick={() => void navigateTo({ x: districtX * DISTRICT_SIZE + DISTRICT_SIZE / 2, y: districtY * DISTRICT_SIZE + DISTRICT_SIZE / 2 })}
+                  />
                 )
               })}
             </div>
@@ -150,7 +139,7 @@ export function MapWidget() {
           <small>Контуры занятых клеток: сплошной — свой, штрих — союзный, точки — чужой. Это не радиус контроля. Показаны только загруженные объекты мира.</small>
         </section>
       ) : null}
-    </aside>
+    </div>
   )
 }
 
@@ -197,16 +186,6 @@ function wrappedTile(tile: { x: number; y: number }) {
   return {
     x: wrapNumber(tile.x, WORLD_WRAP_TILES),
     y: wrapNumber(tile.y, WORLD_WRAP_TILES),
-  }
-}
-
-function tileFromDistrictClick(event: PointerEvent<HTMLButtonElement>, districtX: number, districtY: number) {
-  const rect = event.currentTarget.getBoundingClientRect()
-  const localX = clamp((event.clientX - rect.left) / rect.width, 0, 0.999)
-  const localY = clamp((event.clientY - rect.top) / rect.height, 0, 0.999)
-  return {
-    x: Math.floor(districtX * DISTRICT_SIZE + localX * DISTRICT_SIZE),
-    y: Math.floor(districtY * DISTRICT_SIZE + localY * DISTRICT_SIZE),
   }
 }
 

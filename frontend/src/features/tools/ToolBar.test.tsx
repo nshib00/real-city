@@ -17,17 +17,17 @@ describe('ToolBar', () => {
     expect(useGameStore.getState().tool).toBe('attack')
     expect(screen.getByLabelText('Атака').getAttribute('aria-pressed')).toBe('true')
   })
-  it('opens sound settings outside the toolbar and closes with Escape', () => {
+  it('opens centered sound settings and closes with Escape', () => {
     render(<ToolBar />)
     expect(screen.queryByText('1–5 — инструменты')).toBeNull()
     const opener = screen.getByRole('button', { name: 'Настройки звука' })
     opener.focus()
     fireEvent.click(opener)
-    const panel = screen.getByRole('complementary', { name: 'Настройки звука' })
+    const panel = screen.getByRole('dialog', { name: 'Настройки звука' })
     expect(panel.closest('.tool-bar')).toBeNull()
     expect(screen.getByRole('slider', { name: /Общая громкость:/ })).toBeTruthy()
     fireEvent.keyDown(panel, { key: 'Escape' })
-    expect(screen.queryByRole('complementary', { name: 'Настройки звука' })).toBeNull()
+    expect(screen.queryByRole('dialog', { name: 'Настройки звука' })).toBeNull()
     expect(document.activeElement).toBe(opener)
   })
   it('switches with digits, cancels preview and ignores typing', () => {

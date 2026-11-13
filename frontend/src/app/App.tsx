@@ -20,7 +20,7 @@ import { ProfilePanel } from '../features/player/ProfilePanel'
 import { ProductionPanel } from '../features/production/ProductionPanel'
 import { ResourceNodeSync } from '../features/resources/ResourceNodeSync'
 import { ToolBar } from '../features/tools/ToolBar'
-import { MapWidget } from '../features/world-map/MapWidget'
+import { AudioControls } from '../features/settings/AudioControls'
 import { WorldRealtime } from '../features/world/WorldRealtime'
 import { IsoMap } from '../game/IsoMap'
 import { FirstCityHelp } from '../features/buildings/FirstCityHelp'
@@ -59,7 +59,7 @@ export function App() {
           <ResourceBar />
           <ProfilePanel />
           <ToolBar />
-          <MapWidget />
+          <AudioControls />
           {buildMenuOpen ? <Suspense fallback={null}><BuildMenu /></Suspense> : null}
           <BuildingSync />
           <ResourceNodeSync />

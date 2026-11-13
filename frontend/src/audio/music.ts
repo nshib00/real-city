@@ -1,6 +1,13 @@
 import { getAudioSettings, onAudioSettings } from './audioSettings'
 
 let player: HTMLAudioElement | null = null
+const playlist = [
+  '/assets/audio/music/sunset-walk.mp3',
+  '/assets/audio/music/meadow-thoughts.mp3',
+  '/assets/audio/music/feel-good-ambient.mp3',
+  '/assets/audio/music/exploration-theme.mp3',
+]
+let trackIndex = 0
 
 function syncMusic(): void {
   if (!player) return
@@ -13,9 +20,14 @@ function syncMusic(): void {
 export function startMusic(): void {
   if (typeof Audio === 'undefined') return
   if (!player) {
-    player = new Audio('/assets/audio/music/sunset-walk.mp3')
-    player.loop = true
+    player = new Audio(playlist[trackIndex])
     player.preload = 'none'
+    player.addEventListener('ended', () => {
+      trackIndex = (trackIndex + 1) % playlist.length
+      if (!player) return
+      player.src = playlist[trackIndex]
+      syncMusic()
+    })
     onAudioSettings(syncMusic)
   }
   syncMusic()
