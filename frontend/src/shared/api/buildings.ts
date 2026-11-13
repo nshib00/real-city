@@ -83,6 +83,10 @@ export function listBuildings() {
   return request<{ buildings: BuildingResponse[] }>('/buildings')
 }
 
+export function getBuilding(id: string) {
+  return request<{ building: BuildingResponse }>(`/buildings/${encodeURIComponent(id)}`)
+}
+
 export function listVisibleBuildings(center: { x: number; y: number }, radius: number) {
   center = normalizeTile(center)
   return request<{ buildings: BuildingResponse[] }>(`/buildings?scope=visible&x=${center.x}&y=${center.y}&radius=${radius}`)

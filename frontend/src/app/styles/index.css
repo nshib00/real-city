@@ -544,7 +544,7 @@ button {
 
 .audio-controls { position: absolute; z-index: 12; left: 12px; bottom: 12px; display: grid; gap: 4px; padding: 6px; border-radius: var(--ui-radius); background: var(--color-panel-strong); }
 .tool-bar .map-widget { position: static; display: contents; }
-.tool-bar .map-widget-panel { position: fixed; left: calc(12px + var(--left-bar-width) + 12px); top: 50%; bottom: auto; transform: translateY(-50%); z-index: 20; }
+.tool-bar .map-widget-panel { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; transform: translate(-50%, -50%); z-index: 30; }
 
 .map-widget-panel {
   width: 288px;
@@ -1534,6 +1534,10 @@ button {
   border-left: 3px solid var(--color-accent);
   border-radius: var(--ui-radius-sm);
 }
+.notification-target { display: grid; width: 100%; gap: 6px; padding: 0; color: inherit; text-align: left; background: transparent; border: 0; cursor: pointer; }
+.notification-target:hover:not(:disabled) strong, .notification-target:focus-visible strong { color: var(--color-accent); }
+.notification-target:disabled { cursor: default; }
+.notification-target time { color: var(--color-muted); font-variant-numeric: tabular-nums; }
 
 .notification span {
   color: var(--color-muted);
@@ -1621,6 +1625,8 @@ button {
 .empty-tile-action-build { left: -48px; top: -80px; }
 .empty-tile-action-road { left: 48px; top: -80px; }
 .empty-tile-action-close { left: 0; top: -137px; }
+.building-actions { z-index: 900003; }
+.building-action { left: 0; top: 0; }
 
 .iso-tile {
   position: absolute;

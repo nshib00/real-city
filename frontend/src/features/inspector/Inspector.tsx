@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { ReactNode } from 'react'
-import { Box, ChevronDown, ChevronUp, Gem, Hammer, Repair, Move, RotateCw, Route, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from '../../shared/ui/icons'
+import { Box, ChevronDown, ChevronUp, Gem, Repair, Move, RotateCw, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from '../../shared/ui/icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { getRepairStatus } from '../../shared/api/buildings'
 import { playUiSound } from '../../audio/playUiSound'
 import { playCombatSound } from '../../audio/voiceManager'
-import { cellLabel, districtFromTile, districtLabel } from '../../game/coordinates/district'
+import { cellLabel } from '../../game/coordinates/district'
 import { HealthBar } from '../../game/HealthBar'
 import { maxHealthForBuilding } from '../../game/health'
 import { BuildingModelPreview } from '../../game/renderers/BuildingModelPreview'
@@ -23,7 +23,7 @@ import { ApiClientError } from '../../shared/api/client'
 import { advanceField, harvestField, patchResourceNode, type InventoryResponse } from '../../shared/api/economy'
 import { createAttackMonster, getCombatRules, listPendingWeaponAttacks, useWeaponOnBuilding, useWeaponOnMonster, toMonster, type MonsterLootResponse, type MonsterResponse, type PendingWeaponAttack } from '../../shared/api/monsters'
 import { weaponFuseLabel } from './weaponFuse'
-import { IconButton, Modal, SegmentedControl, Tabs } from '../../shared/ui'
+import { IconButton, Modal, Tabs } from '../../shared/ui'
 import { formatRemaining } from '../../shared/time/formatRemaining'
 import { useAuthStore } from '../auth/useAuthStore'
 import { useOwnershipContext } from '../alliance/useOwnership'
@@ -45,11 +45,6 @@ type InspectorTab = 'tile' | 'object'
 const tabs = [
   { id: 'tile', label: 'Клетка' },
   { id: 'object', label: 'Объект' },
-] as const
-
-const claimModes = [
-  { id: 'build', label: 'Стройка' },
-  { id: 'attack', label: 'Атака' },
 ] as const
 
 export function Inspector() {
@@ -74,6 +69,8 @@ export function Inspector() {
   const selectedBuildingId = useGameStore((state) => state.selectedBuildingId)
   const repairMenuBuildingId = useGameStore((state) => state.repairMenuBuildingId)
   const setRepairMenuBuildingId = useGameStore((state) => state.setRepairMenuBuildingId)
+  const buildingActionRequest = useGameStore((state) => state.buildingActionRequest)
+  const setBuildingActionRequest = useGameStore((state) => state.setBuildingActionRequest)
   const relocatingBuildingId = useGameStore((state) => state.relocatingBuildingId)
   const setRelocatingBuildingId = useGameStore((state) => state.setRelocatingBuildingId)
   const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
@@ -87,8 +84,17 @@ export function Inspector() {
     if (repairMenuBuildingId === selectedBuildingId) setRepairOpen(true)
     setRepairMenuBuildingId(null)
   }, [repairMenuBuildingId, selectedBuildingId, setRepairMenuBuildingId])
+  useEffect(() => {
+    if (!buildingActionRequest) return
+    if (buildingActionRequest.buildingId === selectedBuildingId) {
+      setActiveTab('object')
+      if (buildingActionRequest.action === 'repair') setRepairOpen(true)
+      if (buildingActionRequest.action === 'upgrade') setUpgradeOpen(true)
+      if (buildingActionRequest.action === 'attack') setWeaponMenuOpen(true)
+    }
+    setBuildingActionRequest(null)
+  }, [buildingActionRequest, selectedBuildingId, setBuildingActionRequest])
   const setTool = useGameStore((state) => state.setTool)
-  const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const deleteBuilding = useGameStore((state) => state.deleteBuilding)
   const addBuilding = useGameStore((state) => state.addBuilding)
   const upsertResourceNode = useGameStore((state) => state.upsertResourceNode)
@@ -150,10 +156,8 @@ export function Inspector() {
   const terrainClass = selectedWorldTile ? `terrain-${selectedWorldTile.terrain}` : 'terrain-unknown'
   const canAttackTarget = Boolean(selectedMonster || canAttackSelectedBuilding)
   const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y && (node.resource !== 'oil' || node.state !== 'depleted')) ?? null : null
-  const canBuildOnActiveTile = !selectedRuin && (!selectedWorldTile || selectedWorldTile.terrain === 'grass' || selectedWorldTile.terrain === 'oil_well') && (!selectedResourceNode || selectedResourceNode.resource === 'oil')
-  const canPlaceRoadOnActiveTile = !selectedWorldTile || selectedWorldTile.terrain === 'grass' || selectedWorldTile.terrain === 'road'
   const selectedOwnership = ownershipOf(selectedBuilding?.owner ?? selectedMonster?.creatorId ?? selectedResourceNode?.ownerId, ownership.viewerId, ownership.alliedIds)
-  const objectThreat = Boolean(selectedMonster && ['aggro', 'attacking'].includes(selectedMonster.state)) || Boolean(selectedBuilding && damageEvents.some(event => event.buildingId === selectedBuilding.id && constructionNow - event.createdAt < 1500))
+  const objectThreat = Boolean(selectedMonster && ['aggro', 'chase', 'investigate', 'attacking', 'windup', 'recover'].includes(selectedMonster.state)) || Boolean(selectedBuilding && damageEvents.some(event => event.buildingId === selectedBuilding.id && constructionNow - event.createdAt < 1500))
   const selectedOilNode = selectedBuilding?.kind === 'oil_well' ? resourceNodes.find((node) => node.resource === 'oil' && node.tile.x === selectedBuilding.tile.x && node.tile.y === selectedBuilding.tile.y) : null
   const selectedOilJob = selectedBuilding?.kind === 'oil_well' ? oilJobsQuery.data?.jobs.find((job) => job.building_id === selectedBuilding.id && (job.state === 'running' || job.state === 'ready')) : null
   const selectedFieldSpec = selectedBuilding ? fieldCropSpec(selectedBuilding.kind) : null
@@ -440,16 +444,8 @@ export function Inspector() {
         {activeTab === 'tile' ? (
           <>
             <dl>
-              <dt>Выбранная клетка</dt>
-              <dd>{selectedTile ? cellLabel(selectedTile) : 'Нет'}</dd>
-              <dt>Наведение</dt>
-              <dd>{hoveredTile ? cellLabel(hoveredTile) : 'Нет'}</dd>
-              <dt>Район</dt>
-              <dd>{activeTile ? districtLabel(districtFromTile(activeTile)) : 'Нет'}</dd>
-              <dt>Поверхность</dt>
-              <dd>{terrainLabel}</dd>
               <dt>Статус</dt>
-              <dd>{activeTile ? 'Можно осмотреть, занять или проложить маршрут' : 'Выберите клетку на карте'}</dd>
+              <dd>{activeTile ? 'Клетка выбрана' : 'Выберите клетку на карте'}</dd>
               {selectedWorldTile?.terrain === 'forest' ? (
                 <>
                   <dt>Густота леса</dt>
@@ -478,7 +474,6 @@ export function Inspector() {
                 </>
               ) : null}
             </dl>
-            <SegmentedControl items={canAttackTarget ? claimModes : [claimModes[0]]} value={tool === 'attack' && canAttackTarget ? 'attack' : 'build'} label="Режим действия" onChange={setTool} />
           </>
         ) : null}
         {activeTab === 'object' ? (
@@ -657,10 +652,6 @@ export function Inspector() {
             ) : null}
           </>
         ) : null}
-        {activeTile && !selectedBuilding && !selectedMonster ? <>
-          {canBuildOnActiveTile ? <IconButton label="Построить" icon={Hammer} active={tool === 'build'} sound="ui.panel.open" onClick={() => setBuildMenuOpen(true)} /> : null}
-          {canPlaceRoadOnActiveTile ? <IconButton label="Маршрут" icon={Route} active={tool === 'road'} onClick={() => setTool('road')} /> : null}
-        </> : null}
         {canAttackTarget ? <IconButton label="Атака" icon={Swords} active={tool === 'attack'} onClick={() => { setTool('attack'); setWeaponMenuOpen(true) }} /> : null}
       </div>
       {createPortal(<Modal title={selectedMonster ? 'Оружие против монстра' : 'Оружие против постройки'} open={weaponMenuOpen && (Boolean(selectedMonster) || canAttackSelectedBuilding)} onClose={() => { if (!attackMonsterMutation.isPending && !attackBuildingMutation.isPending) setWeaponMenuOpen(false) }} className="weapon-menu-modal">
@@ -1093,7 +1084,12 @@ function monsterName(type: string) {
 const monsterStateLabel: Record<string, string> = {
   idle: 'выжидает',
   wandering: 'бродит',
+  investigate: 'ищет след',
+  chase: 'преследует',
+  windup: 'готовится атаковать',
   aggro: 'преследует',
   attacking: 'атакует',
+  recover: 'восстанавливается',
+  retreat: 'отступает',
   dead: 'повержен',
 }

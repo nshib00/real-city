@@ -5,8 +5,8 @@
 .selection-sign { padding-inline: 4px; border: 2px double var(--color-selected); }
 .object-marks[data-selected='true']::after { content: ''; position: absolute; right: 0; top: 0; width: 6px; height: 6px; border-top: 2px solid var(--color-selected); border-right: 2px solid var(--color-selected); pointer-events: none; }
 .object-marks-compact { padding: 2px; background: var(--color-panel-strong); flex-wrap: nowrap; gap: 2px; border-radius: 2px; }
-.game-shell .world-building-marker { width: 20px; height: 20px; padding: 0; border: 0; background: none; color: var(--color-text); rotate: none; }
-.game-shell .world-building-marker[data-owner] { border: 0; rotate: none; border-radius: 0; }
+.game-shell .world-building-marker { width: 10px; height: 10px; padding: 0; border: 1px solid rgba(12, 18, 20, 0.85); border-radius: 50%; rotate: none; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35); }
+.game-shell .world-building-marker[data-selected='true'] { outline: 2px solid white; outline-offset: 2px; }
 .world-building-marker .object-marks { pointer-events: none; }
 .world-map-legend .object-marks { white-space: nowrap; }
 .world-map-legend .object-marks svg { width: 16px; height: 16px; }

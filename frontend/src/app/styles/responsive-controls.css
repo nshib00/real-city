@@ -39,7 +39,7 @@
   .game-shell .profile-panel { top: var(--safe-top); left: 12px; right: auto; width: 160px; min-height: 52px; grid-template-columns: 36px 1fr; }
   .game-shell .resource-bar { top: 84px; left: 12px; right: 12px; max-height: 64px; padding: 4px 8px; }
   .game-shell .map-widget { top: var(--safe-top); left: auto; right: 12px; bottom: auto; display: flex; }
-  .game-shell .map-widget-panel { top: 56px; left: auto; right: 0; bottom: auto; width: min(288px, calc(100vw - 24px)); }
+  .game-shell .tool-bar .map-widget-panel { position: fixed; top: 50%; left: 50%; right: auto; bottom: auto; width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); transform: translate(-50%, -50%); }
   .game-shell .inspector { top: auto; bottom: calc(var(--safe-bottom) + 208px); left: 12px; right: 12px; width: auto; height: auto; max-height: 96px; padding: 8px 12px; }
   .game-shell .inspector h2 { margin: 4px 0 0; font-size: 1rem; }
   .inspector:not(.inspector-expanded) .inspector-details { display: none; }

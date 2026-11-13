@@ -146,7 +146,7 @@
 .tool-context { font-size: var(--text-xs); overflow-wrap: anywhere; display: grid; gap: 6px; }
 .tool-context button { min-height: 44px; padding: 2px; }
 .game-shell .map-widget { top: 50%; bottom: auto; transform: translateY(-50%); }
-.game-shell .map-widget-panel { position: absolute; bottom: 0; left: 56px; max-height: calc(100dvh - 180px); overflow: auto; background: var(--color-panel-strong); }
+.game-shell .map-widget-panel { position: fixed; top: 50%; bottom: auto; left: 50%; right: auto; width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; transform: translate(-50%, -50%); background: var(--color-panel-strong); }
 @media (max-width: 700px) { .game-shell .map-widget { top: 50%; left: 12px; right: auto; bottom: auto; display: grid; transform: translateY(-50%); } }
 .world-map-legend { display: flex; flex-wrap: wrap; gap: 8px; font-size: var(--text-xs); }
 .world-building-marker[data-owner="foreign"] { border-radius: 0; rotate: 45deg; border: 2px solid var(--color-warning); }
@@ -170,7 +170,7 @@
   .tool-bar > * { flex-shrink: 0; }
   .tool-context { width: 136px; }
   .game-shell .map-widget { top: var(--safe-top); bottom: auto; left: auto; right: 12px; display: flex; }
-  .game-shell .map-widget-panel { top: 56px; bottom: auto; left: auto; right: 0; width: min(288px, calc(100vw - 24px)); }
+  .game-shell .map-widget-panel { top: 50%; bottom: auto; left: 50%; right: auto; width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); transform: translate(-50%, -50%); }
   .game-shell .inspector { top: auto; left: 12px; right: 12px; width: auto; bottom: 108px; height: auto; max-height: 30dvh; }
   .game-shell .inspector .tabs { display: block; }
   .game-shell .inspector-actions { display: flex; }

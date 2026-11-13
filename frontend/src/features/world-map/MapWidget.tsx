@@ -3,47 +3,24 @@ import { useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
-import type { BuildingCatalogItem } from '../../../../shared/catalog/buildings'
 import { cellLabel, DISTRICT_COUNT, DISTRICT_SIZE, districtFromTile, districtLabel } from '../../game/coordinates/district'
 import { tileToChunk, WORLD_WRAP_TILES, wrapGridCoord } from '../../game/coordinates/iso'
 import { useGameStore } from '../../game/state/useGameStore'
-import type { BuildingKind, PlacedBuilding } from '../../game/state/useGameStore'
+import type { PlacedBuilding } from '../../game/state/useGameStore'
 import { IconButton } from '../../shared/ui'
 import { useAuthStore } from '../auth/useAuthStore'
 import { visibleChunksQueryOptions } from '../world/useVisibleChunks'
 import { showToast } from '../notifications/toast'
-import { useOwnershipContext } from '../alliance/useOwnership'
-import { ObjectMarks } from '../../shared/ui/ObjectMarks'
-import { ownershipOf, ownershipLabels } from '../../shared/ui/ownership'
-import { occupiedTerritory } from '../../game/territory'
-import { TerritoryLayer } from './TerritoryLayer'
 
-const buildingCategoryByKind = new Map<string, BuildingCatalogItem['category']>(buildingCatalog.map((item) => [item.type, item.category]))
-
-type BuildingCategory = BuildingCatalogItem['category']
-
-const markerClassByCategory: Record<BuildingCategory, string> = {
-  center: 'world-building-marker-center',
-  housing: 'world-building-marker-housing',
-  fields: 'world-building-marker-fields',
-  industry: 'world-building-marker-industry',
-  defense: 'world-building-marker-defense',
-  roads: 'world-building-marker-roads',
-  storage: 'world-building-marker-storage',
-  social: 'world-building-marker-social',
-  trade: 'world-building-marker-trade',
-}
+const buildingColorByKind = new Map(buildingCatalog.map((building, index) => [building.type, `hsl(${(index * 137) % 360} 72% 56%)`]))
 
 export function MapWidget() {
   const [open, setOpen] = useState(false)
-  const { viewerId, alliedIds } = useOwnershipContext()
   const selectedBuildingId = useGameStore(state => state.selectedBuildingId)
   const queryClient = useQueryClient()
   const navigationRequestRef = useRef(0)
   const player = useAuthStore((state) => state.player)
   const buildings = useGameStore((state) => state.buildings)
-  const monsters = useGameStore((state) => state.monsters)
-  const resourceNodes = useGameStore((state) => state.resourceNodes)
   const selectedTile = useGameStore((state) => state.selectedTile)
   const viewport = useGameStore((state) => state.viewport)
   const focusTile = useGameStore((state) => state.focusTile)
@@ -105,20 +82,12 @@ export function MapWidget() {
                 )
               })}
             </div>
-            <TerritoryLayer cells={occupiedTerritory(buildings, viewerId, alliedIds)} />
-            <div
-              aria-label={`Текущая позиция: клетка ${cellLabel(activeTile)}`}
-              className="world-position-marker"
-              style={tileMarkerStyle(activeTile)}
-            />
             <div className="world-building-markers" aria-label="Известные постройки на карте мира">
               {buildings.map((building, index) => (
                 <button
                   aria-label={building.name}
-                  data-owner={ownershipOf(building.owner, viewerId, alliedIds)}
                   data-selected={building.id === selectedBuildingId || undefined}
-                  aria-description={ownershipLabels[ownershipOf(building.owner, viewerId, alliedIds)]}
-                  className={`world-building-marker ${markerClassByCategory[buildingCategory(building.kind)]}`}
+                  className="world-building-marker"
                   key={building.id}
                   style={buildingMarkerStyle(building, index)}
                   title={building.name}
@@ -126,25 +95,18 @@ export function MapWidget() {
                   onClick={() => {
                     void navigateTo(building.tile, building.id)
                   }}
-                ><ObjectMarks ownership={ownershipOf(building.owner, viewerId, alliedIds)} selected={building.id === selectedBuildingId} compact /></button>
+                />
               ))}
             </div>
-            {resourceNodes.map((node) => <span key={node.id} className="world-neutral-marker" style={tileMarkerStyle(node.tile)} title="Ресурс" aria-label="Ресурс"><ObjectMarks ownership={ownershipOf(node.ownerId, viewerId, alliedIds)} compact /></span>)}
-            {monsters.map((monster) => <span key={monster.id} className="world-danger-marker" style={tileMarkerStyle(monster.tile)} title="Опасность: монстр" aria-label="Опасность: монстр">▲</span>)}
           </div>
           <footer>
             <span>{`Район ${activeDistrictLabel} · клетка ${cellLabel(activeTile)}`}</span>
           </footer>
-          <div className="world-map-legend" aria-label="Владение и состояние">{(['own', 'ally', 'foreign', 'neutral'] as const).map(ownership => <ObjectMarks key={ownership} ownership={ownership} />)}<span>△ Угроза — отдельный знак</span></div>
-          <small>Контуры занятых клеток: сплошной — свой, штрих — союзный, точки — чужой. Это не радиус контроля. Показаны только загруженные объекты мира.</small>
+          <small>Каждый тип построек отмечен своим цветом. Показаны загруженные постройки мира.</small>
         </section>
       ) : null}
     </div>
   )
-}
-
-function buildingCategory(kind: BuildingKind) {
-  return buildingCategoryByKind.get(kind) ?? 'center'
 }
 
 function buildingMarkerStyle(building: PlacedBuilding, index: number) {
@@ -154,14 +116,7 @@ function buildingMarkerStyle(building: PlacedBuilding, index: number) {
     left: `${(tile.x / WORLD_WRAP_TILES) * 100}%`,
     top: `${(tile.y / WORLD_WRAP_TILES) * 100}%`,
     transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px))`,
-  }
-}
-
-function tileMarkerStyle(tile: { x: number; y: number }) {
-  const wrapped = wrappedTile(tile)
-  return {
-    left: `${((wrapped.x + 0.5) / WORLD_WRAP_TILES) * 100}%`,
-    top: `${((wrapped.y + 0.5) / WORLD_WRAP_TILES) * 100}%`,
+    backgroundColor: buildingColorByKind.get(building.kind) ?? `hsl(${Math.abs(hashString(building.kind)) % 360} 72% 56%)`,
   }
 }
 
@@ -187,10 +142,6 @@ function wrappedTile(tile: { x: number; y: number }) {
     x: wrapNumber(tile.x, WORLD_WRAP_TILES),
     y: wrapNumber(tile.y, WORLD_WRAP_TILES),
   }
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value))
 }
 
 function wrapNumber(value: number, size: number) {

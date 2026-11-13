@@ -48,7 +48,7 @@ export function ToolBar() {
         const active = preview?.category === 'roads' ? tool.id === 'road' : activeTool === tool.id
         return <IconButton key={tool.id} label={tool.label} shortcut={String(index + 1)} icon={tool.icon} active={active} sound={tool.id === 'build' ? 'ui.panel.open' : 'ui.click'} onClick={onClick} />
       })}
-      <MapWidgetControls />
+      <MapWidget />
       <div className="tool-context" role="status">
         <strong>{preview?.name ?? tools.find((item) => item.id === activeTool)?.label}</strong>
         {preview || activeTool === 'repair' || activeTool === 'attack' ? <span>{preview ? preview.cost.map((cost) => `${cost.label}: ${cost.amount}`).join(', ') || 'Бесплатно' : activeTool === 'repair' ? 'Выберите постройку, чтобы открыть меню ремонта' : 'Расход оружия — в карточке цели'}</span> : null}
@@ -61,4 +61,3 @@ export function ToolBar() {
 
 import { MapWidget } from '../world-map/MapWidget'
 
-function MapWidgetControls() { return <MapWidget /> }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { subscribeToasts, type ToastDetail } from './toast'
+import { LevelEmblem } from '../player/LevelEmblem'
 
 export function ToastCenter() {
   const [toasts, setToasts] = useState<ToastDetail[]>([])
@@ -19,6 +20,6 @@ export function ToastCenter() {
   }, [])
 
   return <div className="audio-toast-stack">
-    {toasts.map((toast) => <div className={`audio-toast audio-toast-${toast.severity}`} role={toast.severity === 'error' ? 'alert' : 'status'} key={toast.id}>{toast.message}</div>)}
+    {toasts.map((toast) => <div className={`audio-toast audio-toast-${toast.severity}`} role={toast.severity === 'error' ? 'alert' : 'status'} key={toast.id}>{toast.message}{toast.player ? <> <LevelEmblem level={toast.player.level} size="small" /> {toast.player.name}</> : null}{toast.suffix}</div>)}
   </div>
 }

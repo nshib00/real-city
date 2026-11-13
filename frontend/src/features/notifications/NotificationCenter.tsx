@@ -1,5 +1,5 @@
 import { Bell } from '../../shared/ui/icons'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -9,14 +9,23 @@ import { request } from '../../shared/api/client'
 import { useAuthStore } from '../auth/useAuthStore'
 import type { CombatRecord } from '../../../../shared/events/combat'
 import { PlayerName } from '../player/PlayerName'
+import { getBuilding, toPlacedBuilding } from '../../shared/api/buildings'
+import { buildingCatalog } from '../../../../shared/catalog/buildings'
+import { tileToChunk, wrapGridCoord } from '../../game/coordinates/iso'
+import { visibleChunksQueryOptions } from '../world/useVisibleChunks'
+import { showToast } from './toast'
+import { monsterDisplayName } from '../../game/renderers/monsterAssetRegistry'
+import type { MonsterEntity } from '../../game/state/useGameStore'
 
 export function NotificationCenter() {
   const [open, setOpen] = useState(false)
+  const queryClient = useQueryClient()
   const player = useAuthStore((state) => state.player)
   const realtimeStatus = useGameStore((state) => state.realtimeStatus)
   const buildings = useGameStore((state) => state.buildings)
   const focusTile = useGameStore((state) => state.focusTile)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
+  const viewport = useGameStore((state) => state.viewport)
   const [read, setRead] = useState<{ playerId?: string; ids: string[] }>({ ids: [] })
   const history = useQuery({
     queryKey: ['combat', 'history', player?.id],
@@ -52,6 +61,19 @@ export function NotificationCenter() {
   }
   const notifications = [...groups.values()].sort((a, b) => Number(b.record.owner_id === player?.id) - Number(a.record.owner_id === player?.id) || Number(b.record.destroyed) - Number(a.record.destroyed) || Date.parse(b.record.created_at) - Date.parse(a.record.created_at))
 
+  async function navigateToBuilding(buildingId: string) {
+    try {
+      const building = buildings.find((item) => item.id === buildingId)
+        ?? toPlacedBuilding((await getBuilding(buildingId)).building)
+      await queryClient.ensureQueryData(visibleChunksQueryOptions(tileToChunk(wrapGridCoord(building.tile)), viewport.radius))
+      focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight })
+      selectBuilding(building.id)
+      setOpen(false)
+    } catch {
+      showToast('warning', 'Не удалось перейти к постройке: она могла быть уничтожена или больше недоступна')
+    }
+  }
+
   return (
     <>
       <p className="ui-sr-only" role="status" aria-atomic="true">{announcement}</p>
@@ -71,10 +93,13 @@ export function NotificationCenter() {
           {!history.isPending && !history.error && !records.length ? <p>Боевых событий пока нет.</p> : null}
           {notifications.map(({ record, count, damage, unread }) => (
             <article className={`notification notification-${record.owner_id === player?.id ? 'danger' : 'info'}`} key={record.id}>
-              <strong>{unread ? '● ' : ''}{record.destroyed ? 'Постройка уничтожена' : 'Атака постройки'}{count > 1 ? ` ×${count}` : ''}</strong>
-              <span>{record.attacker_id ? <PlayerName playerId={record.attacker_id} /> : 'Дикий монстр'} → {record.building_type}, ур. {record.level}, владелец <PlayerName playerId={record.owner_id} />. Урон: {damage}.{record.attacker_id === player?.id && record.xp > 0 ? ` Получено ${record.xp} XP за последнее событие.` : ''}</span>
-              <time dateTime={record.created_at}>{new Date(record.created_at).toLocaleString('ru-RU')}</time>
-              {buildings.some((building) => building.id === record.building_id) ? <button type="button" onClick={() => { const building = buildings.find((item) => item.id === record.building_id); if (building) { focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight }); selectBuilding(building.id) } }}>Показать на карте</button> : <small>Объект уничтожен или находится вне загруженной области.</small>}
+              <button className="notification-target" type="button" disabled={record.destroyed} aria-label={`Перейти к постройке ${buildingName(record.building_type)}`} onClick={() => void navigateToBuilding(record.building_id)}>
+                <strong>{unread ? '● ' : ''}{record.destroyed ? 'Постройка уничтожена' : 'Атака постройки'}{count > 1 ? ` ×${count}` : ''}</strong>
+                {record.owner_id === player?.id ? <span>Ваша постройка «{buildingName(record.building_type)}» {record.destroyed ? 'уничтожена' : 'атакована'}. Урон: {damage}.{record.attacker_id === player?.id && record.xp > 0 ? ` Получено ${record.xp} XP за последнее событие.` : ''}</span> : <span>Постройка «{buildingName(record.building_type)}» {record.destroyed ? 'уничтожена' : 'атакована'}. Урон: {damage}.</span>}
+                <span>{record.source.startsWith('monster:') ? <>Монстр: {monsterDisplayName(record.source.slice('monster:'.length) as MonsterEntity['type'])}</> : record.source === 'monster' ? 'Монстр.' : <>Игрок: <PlayerName playerId={record.attacker_id} showLevelIcon />.</>}</span>
+                <time dateTime={record.created_at}>{new Date(record.created_at).toLocaleString('ru-RU')}</time>
+              </button>
+              {record.destroyed ? <small>Уничтоженная постройка больше не отображается на карте.</small> : null}
             </article>
           ))}
           </div>
@@ -82,4 +107,9 @@ export function NotificationCenter() {
       </Modal>, document.body)}
     </>
   )
+}
+
+function buildingName(type: string) {
+  return buildingCatalog.find((building) => building.type === type)?.name
+    ?? type.replaceAll('_', ' ')
 }

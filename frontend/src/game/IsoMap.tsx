@@ -42,6 +42,8 @@ import { formatRemaining } from '../shared/time/formatRemaining'
 import { updateProductionCache } from '../features/production/updateProductionCache'
 import { useProductionJobs } from '../features/production/useProductionJobs'
 import { mapObjectZIndex } from './renderer/depth'
+import { maxHealthForBuilding } from './health'
+import { buildingCatalog } from '../../../shared/catalog/buildings'
 
 const RECENT_CHOP_TILE_TTL_MS = 10_000
 
@@ -72,10 +74,12 @@ export function IsoMap() {
   const selectedBuildingId = useGameStore((state) => state.selectedBuildingId)
   const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
   const selectTile = useGameStore((state) => state.selectTile)
+  const clearSelection = useGameStore((state) => state.clearSelection)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
   const setPlacementPreviewKind = useGameStore((state) => state.setPlacementPreviewKind)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
   const setRepairMenuBuildingId = useGameStore((state) => state.setRepairMenuBuildingId)
+  const setBuildingActionRequest = useGameStore((state) => state.setBuildingActionRequest)
   const selectMonster = useGameStore((state) => state.selectMonster)
   const hoverTile = useGameStore((state) => state.hoverTile)
   const worldTiles = useGameStore((state) => state.worldTiles)
@@ -151,6 +155,15 @@ export function IsoMap() {
       top: Math.max(118, Math.min(stageSize.height - 72, stageSize.height * 0.16 + camera.y + position.y * camera.zoom)),
     }
   }, [camera, renderCenter, selectedEmptyMeadow, selectedTile, stageSize])
+  const selectedActionBuilding = selectedBuildingId ? buildings.find((item) => item.id === selectedBuildingId) : null
+  const selectedBuildingMenuPosition = useMemo(() => {
+    if (!selectedActionBuilding || actionsDismissed || anotherMenuOpen || stageSize.width <= 0 || stageSize.height <= 0) return null
+    const position = nearestWrappedScreenCoord(selectedActionBuilding.tile, gridToScreen(renderCenter))
+    return {
+      left: Math.max(96, Math.min(stageSize.width - 96, stageSize.width * 0.48 + camera.x + position.x * camera.zoom)),
+      top: Math.max(118, Math.min(stageSize.height - 72, stageSize.height * 0.16 + camera.y + position.y * camera.zoom)),
+    }
+  }, [actionsDismissed, anotherMenuOpen, camera, renderCenter, selectedActionBuilding, stageSize])
   const placementPreview = placementPreviewKind ? buildCatalog.find((item) => item.kind === placementPreviewKind) : undefined
   const previewTile = hoveredTile ?? selectedTile
   const placementValidity = placementPreview ? validatePlacementPreview({ kind: placementPreview.kind, tile: previewTile, buildings, worldTiles: mapTiles, monsters, ownerId: player?.id }) : null
@@ -410,6 +423,7 @@ export function IsoMap() {
   }
 
   function handleBuildingClick(building: PlacedBuilding) {
+    setActionsDismissed(false)
     if (tool === 'repair' && player && building.owner === player.id) {
       selectBuilding(building.id)
       setRepairMenuBuildingId(building.id)
@@ -633,8 +647,37 @@ export function IsoMap() {
       >
         <button type="button" className="empty-tile-action empty-tile-action-build" aria-label="Построить на клетке" title="Построить" onClick={() => setBuildMenuOpen(true)}><AeolianIcon name="build" size={20} /></button>
         <button type="button" className="empty-tile-action empty-tile-action-road" aria-label="Проложить дорогу на клетке" title="Проложить дорогу" onClick={() => { setBuildMenuOpen(true); setPlacementPreviewKind('road') }}><AeolianIcon name="road" size={20} /></button>
-        <button type="button" className="empty-tile-action empty-tile-action-close" aria-label="Снять выделение клетки" title="Снять выделение" onClick={() => selectTile(null)}><AeolianIcon name="cancel" size={18} /></button>
+        <button type="button" className="empty-tile-action empty-tile-action-close" aria-label="Снять выделение клетки" title="Снять выделение" onClick={clearSelection}><AeolianIcon name="cancel" size={18} /></button>
       </div> : null}
+      {selectedBuildingMenuPosition && selectedActionBuilding ? (() => {
+        const own = Boolean(player && selectedActionBuilding.owner === player.id)
+        const allied = ownership.alliedIds.has(selectedActionBuilding.owner)
+        const damaged = selectedActionBuilding.health < maxHealthForBuilding(selectedActionBuilding)
+        const manageable = own && ['active', 'damaged'].includes(selectedActionBuilding.state ?? '')
+        const upgradeSpec = buildingCatalog.find((item) => item.type === selectedActionBuilding.kind)
+        const canUpgrade = Boolean(upgradeSpec?.upgradeLevels?.some((level) => level.level === selectedActionBuilding.level + 1)
+          || upgradeSpec?.upgradeLevels?.some((level) => level.level === selectedActionBuilding.level && level.nextType)
+          || upgradeSpec?.upgradeTo?.length)
+        const actions: { label: string; icon: string; run: () => void }[] = []
+        if (!own && !allied && selectedActionBuilding.health > 0 && ['active', 'damaged'].includes(selectedActionBuilding.state ?? '')) {
+          actions.push({ label: 'Атаковать оружием', icon: 'attack', run: () => setBuildingActionRequest({ buildingId: selectedActionBuilding.id, action: 'attack' }) })
+        }
+        if (own && selectedActionBuilding.status === 'active' && canUpgrade) {
+          actions.push({ label: 'Улучшить', icon: 'build', run: () => setBuildingActionRequest({ buildingId: selectedActionBuilding.id, action: 'upgrade' }) })
+        }
+        if (manageable && damaged) actions.push({ label: 'Ремонт', icon: 'repair', run: () => setBuildingActionRequest({ buildingId: selectedActionBuilding.id, action: 'repair' }) })
+        if (manageable && !selectedActionBuilding.kind.startsWith('ruins_') && selectedActionBuilding.kind !== 'oil_well') {
+          actions.push({ label: 'Переместить', icon: 'move', run: () => { setRelocatingBuildingId(selectedActionBuilding.id); setActionsDismissed(true) } })
+          actions.push({ label: 'Повернуть на 90°', icon: 'rotate', run: () => { relocateMutation.mutate({ id: selectedActionBuilding.id, tile: selectedActionBuilding.tile, rotation: ((selectedActionBuilding.rotation ?? 0) + 1) % 4 }); setActionsDismissed(true) } })
+        }
+        actions.push({ label: 'Снять выделение постройки', icon: 'cancel', run: clearSelection })
+        return <div className="empty-tile-actions building-actions" role="group" aria-label={`Действия: ${selectedActionBuilding.name}`} style={{ left: selectedBuildingMenuPosition.left, top: selectedBuildingMenuPosition.top }} onPointerDown={(event) => event.stopPropagation()} onClick={(event) => event.stopPropagation()}>
+          {actions.map((action, index) => {
+            const angle = -Math.PI / 2 + index * 2 * Math.PI / actions.length
+            return <button key={action.label} type="button" className="empty-tile-action building-action" aria-label={action.label} title={action.label} style={{ left: `${Math.cos(angle) * 88}px`, top: `${Math.sin(angle) * 88}px` }} onClick={() => { action.run(); setActionsDismissed(true) }}><AeolianIcon name={action.icon} size={19} /></button>
+          })}
+        </div>
+      })() : null}
       <div className="map-damage-layer" aria-hidden="true">
         {monsterDamageEvents.filter((event) => Date.now() - event.createdAt < 1500).map((event) => {
           const pos = damageScreenPosition(event.tile, camera, stageSize)
