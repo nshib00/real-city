@@ -21,6 +21,12 @@ export function towerDetectionActive(tower: PlacedBuilding): boolean {
 /** Потенциальная зона обнаружения по серверной манхэттенской дальности. */
 export function towerDetectionRangeCells(tower: PlacedBuilding, tiles: readonly WorldTile[]): DefenseRangeCell[] {
   if (!towerDetectionActive(tower)) return []
+  return towerRangeCells(tower, tiles)
+}
+
+/** Визуальная дальность выбранной башни; не зависит от назначения дозорного. */
+export function towerRangeCells(tower: PlacedBuilding, tiles: readonly WorldTile[]): DefenseRangeCell[] {
+  if (tower.kind !== 'tower' || tower.state === 'building' || tower.state === 'ruined' || tower.health <= 0) return []
   const radius = towerDetectionRadii[tower.level - 1]
   if (!radius) return []
   const loaded = new Set(tiles.map(key))

@@ -24,7 +24,7 @@ import { tileOccupancyKey } from './visibleObjects'
 import { indexWorldTiles, worldTilesNear, type WorldTileIndex } from './worldTileIndex'
 import { observeWorldMotion, worldMotionEnabled } from './motionPolicy'
 import type { TerritoryCell } from '../territory'
-import { defenseRangeCells, towerDetectionActive, towerDetectionRangeCells } from '../defenseRange'
+import { defenseRangeCells, towerDetectionActive, towerRangeCells } from '../defenseRange'
 
 type Camera = {
   x: number
@@ -578,7 +578,7 @@ function drawStage(
   }
   const selectedTower = selectedBuildingId ? allBuildings.find((item) => item.id === selectedBuildingId && item.kind === 'tower') : null
   if (selectedTower) {
-    for (const cell of towerDetectionRangeCells(selectedTower, tiles)) {
+    for (const cell of towerRangeCells(selectedTower, tiles)) {
       const pos = nearestWrappedScreenCoord(cell, screenTarget)
       const x = origin.x + pos.x * camera.zoom, y = origin.y + pos.y * camera.zoom
       const w = TILE_WIDTH * camera.zoom / 2, h = TILE_HEIGHT * camera.zoom / 2
