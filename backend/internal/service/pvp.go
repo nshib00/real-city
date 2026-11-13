@@ -121,7 +121,7 @@ func (s *CombatService) damageBuildingAt(ctx context.Context, item action.GameAc
 	if damaged.Type != target.Type || damaged.Level != target.Level {
 		return nil, apperror.New(apperror.Conflict, "Цель улучшена одновременно с атакой")
 	}
-	removed := damaged.State == building.StateRuined && (damaged.Type == building.TypeOilWell || catalog.IsRuin(damaged.Type))
+	removed := damaged.State == building.StateRuined
 	if damaged.State == building.StateRuined && s.buildingService != nil {
 		if err := s.buildingService.HandleDestruction(ctx, target, damaged, player.ID(item.Actor.ID), now); err != nil {
 			return nil, err

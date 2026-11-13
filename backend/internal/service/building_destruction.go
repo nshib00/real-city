@@ -76,16 +76,12 @@ func (s *BuildingService) HandleDestruction(ctx context.Context, before, after b
 	after.TowerWatchkeeperAssigned = false
 	after.CannonNextAttackAt = nil
 	after.CannonTargetID = ""
-	if before.Type == building.TypeOilWell || catalog.IsRuin(before.Type) {
-		if before.Type == building.TypeOilWell && s.resources != nil {
-			if err := s.resources.ReleaseOilWell(ctx, before.Tile, before.OwnerID); err != nil {
-				return err
-			}
-		}
-		if err := s.buildings.Delete(ctx, before.ID); err != nil {
+	if before.Type == building.TypeOilWell && s.resources != nil {
+		if err := s.resources.ReleaseOilWell(ctx, before.Tile, before.OwnerID); err != nil {
 			return err
 		}
-	} else if err := s.buildings.Update(ctx, after); err != nil {
+	}
+	if err := s.buildings.Delete(ctx, before.ID); err != nil {
 		return err
 	}
 	if s.experience == nil || attacker == "" || before.OwnerID == "" || before.OwnerID == string(attacker) {
