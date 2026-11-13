@@ -5,13 +5,19 @@
 .game-shell :focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; }
 .game-shell :is(button, input:not([type=checkbox]), select, textarea) { min-height: 44px; }
 .game-shell :is(.icon-button, .world-district) { min-width: 44px; min-height: 44px; }
+.game-shell .world-district { min-width: 0; min-height: 0; }
 .game-shell :is(h2, h3, p, dd, .resource-label, .build-card, .notification, .tool-context) { overflow-wrap: anywhere; }
 .game-shell :is(.resource-chip, .build-card, .drawer, .inspector, .chat-panel) { min-width: 0; }
-.inspector-disclosure { display: none; }
+.inspector-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.inspector-header h2 { min-width: 0; }
+.inspector-header .icon-button { flex: 0 0 auto; }
 .inspector-details { min-width: 0; }
+.inspector-collapsed .inspector-details { display: none; }
+.game-shell .inspector-collapsed { height: auto; max-height: none; bottom: auto; }
 .map-stage, .pixi-stage, .pixi-stage canvas { touch-action: pinch-zoom; }
-.map-navigation { position: absolute; z-index: 10; left: 84px; bottom: 144px; display: flex; flex-wrap: wrap; max-width: 288px; background: var(--color-panel-strong); border: 1px solid var(--material-brass); }
-.map-navigation button { min-width: 44px; padding: 4px; color: var(--color-text); background: transparent; border: 1px solid var(--color-panel-border); }
+.map-navigation { position: absolute; z-index: 10; left: 84px; bottom: 144px; display: flex; flex-wrap: nowrap; gap: 4px; width: max-content; max-width: calc(100vw - 24px); padding: 6px; background: var(--color-panel-strong); border: 1px solid var(--material-brass); border-radius: var(--ui-radius); }
+.game-shell .map-navigation > button { box-sizing: border-box; flex: 0 0 36px; width: 36px; min-width: 36px; max-width: 36px; height: 36px; min-height: 36px; max-height: 36px; padding: 4px; color: var(--color-text); background: var(--color-panel); border: 1px solid var(--color-panel-border); border-radius: 9px; }
+.game-shell .empty-tile-actions > .empty-tile-action { box-sizing: border-box; flex: 0 0 38px; width: 38px; min-width: 38px; max-width: 38px; height: 38px; min-height: 38px; max-height: 38px; aspect-ratio: 1; }
 .game-shell .drawer, .game-shell .build-menu { max-height: calc(var(--visible-height, 100dvh) - 24px); overflow-y: auto; overscroll-behavior: contain; }
 .game-shell .drawer { top: max(12px, var(--visible-top, 0px)); bottom: auto; height: calc(var(--visible-height, 100dvh) - 24px); }
 .game-shell .resource-bar { overflow-x: auto; overscroll-behavior-x: contain; }
@@ -36,7 +42,6 @@
   .game-shell .map-widget-panel { top: 56px; left: auto; right: 0; bottom: auto; width: min(288px, calc(100vw - 24px)); }
   .game-shell .inspector { top: auto; bottom: calc(var(--safe-bottom) + 208px); left: 12px; right: 12px; width: auto; height: auto; max-height: 96px; padding: 8px 12px; }
   .game-shell .inspector h2 { margin: 4px 0 0; font-size: 1rem; }
-  .inspector-disclosure { display: block; width: 100%; text-align: start; color: var(--color-text); background: var(--color-panel-strong); border: 1px solid var(--material-brass); }
   .inspector:not(.inspector-expanded) .inspector-details { display: none; }
   .game-shell .inspector-expanded { z-index: 35; max-height: calc(var(--visible-height, 100dvh) - 200px); }
   .game-shell .inspector .tabs { display: grid; }

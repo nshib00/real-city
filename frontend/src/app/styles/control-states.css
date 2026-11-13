@@ -31,4 +31,4 @@ button.ui-button.ui-button-danger, :is(input, select, textarea)[aria-invalid='tr
 }
 .map-debug { color: var(--ref-cream-50); }
 .map-debug span { background: var(--ref-night-800); }
-[data-interface-theme=aeolian] .profile-level-badge { color: var(--ref-paper-50); background: var(--state-warning); }
+[data-interface-theme=aeolian] .profile-level-badge { color: var(--ref-paper-50); background: transparent; }

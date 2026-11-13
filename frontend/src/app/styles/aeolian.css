@@ -68,13 +68,6 @@
 .game-shell .resource-weapon-group { border-inline-start: 2px solid var(--material-brass); margin-inline-start: var(--space-2); padding-inline-start: var(--space-2); }
 .game-shell [hidden] { display: none !important; }
 .inspector-target-status { border-inline-start: 3px solid var(--color-warning); padding: var(--space-2); }
-.map-coordinate-selection { display: inline-block; width: fit-content; max-width: 100%; flex-basis: auto; padding: var(--space-1) var(--space-2); max-height: 35dvh; overflow: auto; font-size: 12px; }
-.map-coordinate-selection summary { cursor: pointer; min-height: 36px; display: flex; align-items: center; white-space: nowrap; font-size: 12px; }
-.map-coordinate-selection form { display: flex; flex-wrap: nowrap; align-items: end; gap: 6px; }
-.map-coordinate-selection label { display: grid; width: 4rem; font-size: 12px; }
-.map-coordinate-selection input { box-sizing: border-box; width: 100%; }
-.map-coordinate-selection form button { min-height: 36px; padding-inline: 8px; font-size: 12px; white-space: nowrap; }
-.map-coordinate-selection p { max-width: 230px; margin-block: 6px 0; font-size: 12px; overflow-wrap: anywhere; }
 @media (max-width: 760px) {
   .map-asset-status { left: 12px; top: 156px; max-height: 22dvh; overflow: auto; }
   .game-shell .drawer { left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right)); width: auto; top: max(env(safe-area-inset-top), var(--visible-top, 0px)); height: calc(var(--visible-height, 100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 8px); max-height: none; }
