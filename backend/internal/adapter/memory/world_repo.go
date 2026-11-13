@@ -16,8 +16,14 @@ type WorldRepo struct {
 	chunks    map[string]world.Chunk
 }
 
+const (
+	devWorldMapID       = "dev-world"
+	devWorldSeed        = 20260727
+	devWorldSpawnRadius = 10
+)
+
 func NewWorldRepo() *WorldRepo {
-	generator := worldgen.New("dev-world", 20260727, 10)
+	generator := worldgen.New(devWorldMapID, devWorldSeed, devWorldSpawnRadius)
 	worldMap := generator.Map()
 	return &WorldRepo{
 		generator: generator,

@@ -3,11 +3,15 @@ package worldgen
 import (
 	"hash/fnv"
 	"math"
+	"math/rand"
+	"sort"
 
 	"real-city/backend/internal/domain/world"
 )
 
 const WorldSizeTiles = world.WorldSize
+
+const oilWellCount = 6
 
 var ruinTypes = [...]string{
 	"ruins_town_square",
@@ -24,23 +28,64 @@ var ruinTypes = [...]string{
 	"ruins_river_lighthouse",
 }
 
-var oilWellTiles = []world.Coord{
-	{X: 24, Y: 18},
-	{X: 91, Y: 73},
-	{X: 126, Y: 35},
-	{X: 38, Y: 124},
-	{X: 142, Y: 116},
-	{X: 76, Y: 139},
-}
-
 type Generator struct {
 	mapID       string
 	seed        int64
 	spawnRadius int
+	oilWells    map[world.Coord]struct{}
 }
 
 func New(mapID string, seed int64, spawnRadius int) Generator {
-	return Generator{mapID: mapID, seed: seed, spawnRadius: spawnRadius}
+	generator := Generator{mapID: mapID, seed: seed, spawnRadius: spawnRadius}
+	generator.oilWells = generator.pickOilWells(oilWellCount)
+	return generator
+}
+
+func (g Generator) OilWellTiles() []world.Coord {
+	coords := make([]world.Coord, 0, len(g.oilWells))
+	for coord := range g.oilWells {
+		coords = append(coords, coord)
+	}
+	sort.Slice(coords, func(i, j int) bool {
+		if coords[i].Y != coords[j].Y {
+			return coords[i].Y < coords[j].Y
+		}
+		return coords[i].X < coords[j].X
+	})
+	return coords
+}
+
+func (g Generator) pickOilWells(count int) map[world.Coord]struct{} {
+	tiles := make(map[world.Coord]struct{}, count)
+	rng := rand.New(rand.NewSource(g.seed))
+	for attempt := 0; attempt < count*128 && len(tiles) < count; attempt++ {
+		coord := world.Coord{
+			X: rng.Intn(WorldSizeTiles),
+			Y: rng.Intn(WorldSizeTiles),
+		}
+		if g.canHostOilWell(coord) {
+			tiles[coord] = struct{}{}
+		}
+	}
+	if len(tiles) < count {
+		for y := 0; y < WorldSizeTiles && len(tiles) < count; y++ {
+			for x := 0; x < WorldSizeTiles && len(tiles) < count; x++ {
+				coord := world.Coord{X: x, Y: y}
+				if g.canHostOilWell(coord) {
+					tiles[coord] = struct{}{}
+				}
+			}
+		}
+	}
+	return tiles
+}
+
+func (g Generator) canHostOilWell(coord world.Coord) bool {
+	distance := math.Hypot(float64(coord.X), float64(coord.Y))
+	if distance <= float64(g.spawnRadius) {
+		return false
+	}
+	return g.terrain(coord, distance, false) == world.TerrainGrass
 }
 
 func (g Generator) Map() world.WorldMap {
@@ -118,12 +163,8 @@ func (g Generator) terrain(coord world.Coord, distance float64, safeZone bool) w
 
 func (g Generator) isOilWellTile(coord world.Coord) bool {
 	wrapped := world.Coord{X: positiveModulo(coord.X, WorldSizeTiles), Y: positiveModulo(coord.Y, WorldSizeTiles)}
-	for _, tile := range oilWellTiles {
-		if wrapped == tile {
-			return true
-		}
-	}
-	return false
+	_, ok := g.oilWells[wrapped]
+	return ok
 }
 
 func (g Generator) elevation(coord world.Coord) int {

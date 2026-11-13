@@ -1,6 +1,7 @@
 package worldgen
 
 import (
+	"slices"
 	"testing"
 
 	"real-city/backend/internal/domain/world"
@@ -54,39 +55,51 @@ func TestTerrainKeepsRiversAndMountainsSparse(t *testing.T) {
 	}
 }
 
-func TestTerrainPlacesSixOilWellsOnWrappedWorld(t *testing.T) {
+func TestTerrainPlacesSixRandomOilWellsOnWrappedWorld(t *testing.T) {
 	generator := New("test-world", 20260727, 10)
-	var oilWells []world.Coord
+	oilWells := oilWellCoords(generator)
 
+	if len(oilWells) != oilWellCount {
+		t.Fatalf("oil well terrain count = %d, want %d: %#v", len(oilWells), oilWellCount, oilWells)
+	}
+	seen := make(map[world.Coord]bool, len(oilWells))
+	for _, coord := range oilWells {
+		if seen[coord] {
+			t.Fatalf("duplicate oil well coordinate: %#v", coord)
+		}
+		seen[coord] = true
+		if coord.X < 0 || coord.X >= WorldSizeTiles || coord.Y < 0 || coord.Y >= WorldSizeTiles {
+			t.Fatalf("oil well coordinate outside wrapped world: %#v", coord)
+		}
+		tile := generator.Tile(coord)
+		if tile.SafeZone {
+			t.Fatalf("oil well placed inside safe zone: %#v", coord)
+		}
+		if tile.Terrain != world.TerrainOilWell {
+			t.Fatalf("tile at %#v has terrain %q, want %q", coord, tile.Terrain, world.TerrainOilWell)
+		}
+	}
+
+	repeated := oilWellCoords(New("test-world", 20260727, 10))
+	if !slices.Equal(oilWells, repeated) {
+		t.Fatalf("oil well placement is not stable for the same seed: %#v != %#v", oilWells, repeated)
+	}
+
+	other := oilWellCoords(New("test-world", 20260728, 10))
+	if slices.Equal(oilWells, other) {
+		t.Fatalf("different seeds produced identical oil well placement: %#v", oilWells)
+	}
+}
+
+func oilWellCoords(generator Generator) []world.Coord {
+	var coords []world.Coord
 	for y := 0; y < WorldSizeTiles; y++ {
 		for x := 0; x < WorldSizeTiles; x++ {
 			tile := generator.Tile(world.Coord{X: x, Y: y})
 			if tile.Terrain == world.TerrainOilWell {
-				oilWells = append(oilWells, tile.Coord)
+				coords = append(coords, tile.Coord)
 			}
 		}
 	}
-
-	if len(oilWells) != 6 {
-		t.Fatalf("oil well terrain count = %d, want 6: %#v", len(oilWells), oilWells)
-	}
-	expected := map[world.Coord]bool{
-		{X: 24, Y: 18}:   false,
-		{X: 91, Y: 73}:   false,
-		{X: 126, Y: 35}:  false,
-		{X: 38, Y: 124}:  false,
-		{X: 142, Y: 116}: false,
-		{X: 76, Y: 139}:  false,
-	}
-	for _, coord := range oilWells {
-		if _, ok := expected[coord]; !ok {
-			t.Fatalf("unexpected oil well coordinate: %#v", coord)
-		}
-		expected[coord] = true
-	}
-	for coord, seen := range expected {
-		if !seen {
-			t.Fatalf("missing oil well coordinate: %#v", coord)
-		}
-	}
+	return coords
 }

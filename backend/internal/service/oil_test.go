@@ -196,7 +196,11 @@ func oilFixture(t *testing.T) (*BuildingService, *ResourceService, *memory.Build
 	if err := buildings.Create(ctx, building.Building{ID: "hall", MapID: DefaultWorldID, OwnerID: "p1", Type: building.TypeTownHall, State: building.StateActive, Health: 100, Level: 1, Tile: world.Coord{X: 0, Y: 0}, Footprint: building.Footprint{Width: 1, Height: 1}}); err != nil {
 		t.Fatal(err)
 	}
-	well, err := service.Place(ctx, PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeOilWell, Tile: world.Coord{X: 24, Y: 18}})
+	oilNode, err := nodes.FindResourceNode(ctx, "node_oil_1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	well, err := service.Place(ctx, PlaceBuildingInput{PlayerID: player.ID("p1"), Type: building.TypeOilWell, Tile: oilNode.Tile})
 	if err != nil {
 		t.Fatal(err)
 	}
