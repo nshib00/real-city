@@ -16,23 +16,23 @@ type DefenseWeaponStats struct {
 }
 
 var boltThrowerStats = [...]DefenseWeaponStats{
-	{2, 18, 5 * time.Second, "piercing", ""},
-	{2, 23, 5 * time.Second, "piercing", ""},
-	{3, 29, 5 * time.Second, "piercing", ""},
-	{3, 36, 5 * time.Second, "piercing", ""},
-	{3, 44, 5 * time.Second, "piercing", ""},
-	{4, 53, 5 * time.Second, "piercing", ""},
-	{4, 63, 5 * time.Second, "piercing", ""},
-	{4, 75, 5 * time.Second, "piercing", ""},
+	{2, 6, 2 * time.Second, "piercing", ""},
+	{2, 8, 2 * time.Second, "piercing", ""},
+	{3, 10, 2 * time.Second, "piercing", ""},
+	{3, 12, 2 * time.Second, "piercing", ""},
+	{3, 15, 2 * time.Second, "piercing", ""},
+	{4, 18, 2 * time.Second, "piercing", ""},
+	{4, 21, 2 * time.Second, "piercing", ""},
+	{4, 25, 2 * time.Second, "piercing", ""},
 }
 
 var stormCoilStats = [...]DefenseWeaponStats{
-	{2, 90, 15 * time.Second, "shock", economy.ResourceFuel},
-	{2, 115, 15 * time.Second, "shock", economy.ResourceFuel},
-	{3, 145, 15 * time.Second, "shock", economy.ResourceFuel},
-	{3, 180, 15 * time.Second, "shock", economy.ResourceFuel},
-	{3, 220, 15 * time.Second, "shock", economy.ResourceFuel},
-	{4, 265, 15 * time.Second, "shock", economy.ResourceFuel},
+	{2, 30, 20 * time.Second, "shock", economy.ResourceFuel},
+	{2, 38, 20 * time.Second, "shock", economy.ResourceFuel},
+	{3, 48, 20 * time.Second, "shock", economy.ResourceFuel},
+	{3, 60, 20 * time.Second, "shock", economy.ResourceFuel},
+	{3, 73, 20 * time.Second, "shock", economy.ResourceFuel},
+	{4, 88, 20 * time.Second, "shock", economy.ResourceFuel},
 }
 
 func DefenseWeaponLevel(kind building.Type, level int) (DefenseWeaponStats, bool) {

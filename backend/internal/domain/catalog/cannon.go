@@ -9,18 +9,18 @@ type CannonStats struct {
 }
 
 var cannonStats = [...]CannonStats{
-	{Range: 2, Damage: 55, Ammo: economy.ResourceStone},
-	{Range: 2, Damage: 68, Ammo: economy.ResourceStone},
-	{Range: 3, Damage: 82, Ammo: economy.ResourceStone},
-	{Range: 3, Damage: 100, Ammo: economy.ResourceStone},
-	{Range: 3, Damage: 122, Ammo: economy.ResourceStone},
-	{Range: 4, Damage: 148, Ammo: economy.ResourceStone},
-	{Range: 4, Damage: 180, Ammo: economy.ResourceExplosives},
-	{Range: 4, Damage: 215, Ammo: economy.ResourceExplosives},
-	{Range: 5, Damage: 255, Ammo: economy.ResourceExplosives},
-	{Range: 5, Damage: 300, Ammo: economy.ResourceExplosives},
-	{Range: 5, Damage: 350, Ammo: economy.ResourceExplosives},
-	{Range: 6, Damage: 410, Ammo: economy.ResourceExplosives},
+	{Range: 2, Damage: 18, Ammo: economy.ResourceStone},
+	{Range: 2, Damage: 23, Ammo: economy.ResourceStone},
+	{Range: 3, Damage: 27, Ammo: economy.ResourceStone},
+	{Range: 3, Damage: 33, Ammo: economy.ResourceStone},
+	{Range: 3, Damage: 41, Ammo: economy.ResourceStone},
+	{Range: 4, Damage: 49, Ammo: economy.ResourceStone},
+	{Range: 4, Damage: 60, Ammo: economy.ResourceExplosives},
+	{Range: 4, Damage: 72, Ammo: economy.ResourceExplosives},
+	{Range: 5, Damage: 85, Ammo: economy.ResourceExplosives},
+	{Range: 5, Damage: 100, Ammo: economy.ResourceExplosives},
+	{Range: 5, Damage: 117, Ammo: economy.ResourceExplosives},
+	{Range: 6, Damage: 137, Ammo: economy.ResourceExplosives},
 }
 
 func CannonLevel(level int) (CannonStats, bool) {

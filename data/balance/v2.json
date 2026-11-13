@@ -23449,57 +23449,57 @@
     "defense_bolt_thrower": [
       {
         "Range": 2,
-        "Damage": 18,
-        "Cooldown": 5000000000,
+        "Damage": 6,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 2,
-        "Damage": 23,
-        "Cooldown": 5000000000,
+        "Damage": 8,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 3,
-        "Damage": 29,
-        "Cooldown": 5000000000,
+        "Damage": 10,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 3,
-        "Damage": 36,
-        "Cooldown": 5000000000,
+        "Damage": 12,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 3,
-        "Damage": 44,
-        "Cooldown": 5000000000,
+        "Damage": 15,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 4,
-        "Damage": 53,
-        "Cooldown": 5000000000,
+        "Damage": 18,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 4,
-        "Damage": 63,
-        "Cooldown": 5000000000,
+        "Damage": 21,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       },
       {
         "Range": 4,
-        "Damage": 75,
-        "Cooldown": 5000000000,
+        "Damage": 25,
+        "Cooldown": 2000000000,
         "DamageType": "piercing",
         "Ammo": ""
       }
@@ -23507,85 +23507,85 @@
     "defense_cannon": [
       {
         "Range": 2,
-        "Damage": 55,
-        "Cooldown": 12000000000,
+        "Damage": 18,
+        "Cooldown": 8000000000,
         "DamageType": "explosive",
         "Ammo": "stone"
       },
       {
         "Range": 2,
-        "Damage": 68,
-        "Cooldown": 12000000000,
+        "Damage": 23,
+        "Cooldown": 8000000000,
         "DamageType": "explosive",
         "Ammo": "stone"
       },
       {
         "Range": 3,
-        "Damage": 82,
-        "Cooldown": 12000000000,
+        "Damage": 27,
+        "Cooldown": 8000000000,
         "DamageType": "explosive",
         "Ammo": "stone"
       },
       {
         "Range": 3,
+        "Damage": 33,
+        "Cooldown": 8000000000,
+        "DamageType": "explosive",
+        "Ammo": "stone"
+      },
+      {
+        "Range": 3,
+        "Damage": 41,
+        "Cooldown": 8000000000,
+        "DamageType": "explosive",
+        "Ammo": "stone"
+      },
+      {
+        "Range": 4,
+        "Damage": 49,
+        "Cooldown": 8000000000,
+        "DamageType": "explosive",
+        "Ammo": "stone"
+      },
+      {
+        "Range": 4,
+        "Damage": 60,
+        "Cooldown": 8000000000,
+        "DamageType": "explosive",
+        "Ammo": "explosives"
+      },
+      {
+        "Range": 4,
+        "Damage": 72,
+        "Cooldown": 8000000000,
+        "DamageType": "explosive",
+        "Ammo": "explosives"
+      },
+      {
+        "Range": 5,
+        "Damage": 85,
+        "Cooldown": 8000000000,
+        "DamageType": "explosive",
+        "Ammo": "explosives"
+      },
+      {
+        "Range": 5,
         "Damage": 100,
-        "Cooldown": 12000000000,
-        "DamageType": "explosive",
-        "Ammo": "stone"
-      },
-      {
-        "Range": 3,
-        "Damage": 122,
-        "Cooldown": 12000000000,
-        "DamageType": "explosive",
-        "Ammo": "stone"
-      },
-      {
-        "Range": 4,
-        "Damage": 148,
-        "Cooldown": 12000000000,
-        "DamageType": "explosive",
-        "Ammo": "stone"
-      },
-      {
-        "Range": 4,
-        "Damage": 180,
-        "Cooldown": 12000000000,
-        "DamageType": "explosive",
-        "Ammo": "explosives"
-      },
-      {
-        "Range": 4,
-        "Damage": 215,
-        "Cooldown": 12000000000,
+        "Cooldown": 8000000000,
         "DamageType": "explosive",
         "Ammo": "explosives"
       },
       {
         "Range": 5,
-        "Damage": 255,
-        "Cooldown": 12000000000,
-        "DamageType": "explosive",
-        "Ammo": "explosives"
-      },
-      {
-        "Range": 5,
-        "Damage": 300,
-        "Cooldown": 12000000000,
-        "DamageType": "explosive",
-        "Ammo": "explosives"
-      },
-      {
-        "Range": 5,
-        "Damage": 350,
-        "Cooldown": 12000000000,
+        "Damage": 117,
+        "Cooldown": 8000000000,
         "DamageType": "explosive",
         "Ammo": "explosives"
       },
       {
         "Range": 6,
-        "Damage": 410,
-        "Cooldown": 12000000000,
+        "Damage": 137,
+        "Cooldown": 8000000000,
         "DamageType": "explosive",
         "Ammo": "explosives"
       }
@@ -23593,43 +23593,43 @@
     "defense_storm_coil": [
       {
         "Range": 2,
-        "Damage": 90,
-        "Cooldown": 15000000000,
+        "Damage": 30,
+        "Cooldown": 20000000000,
         "DamageType": "shock",
         "Ammo": "fuel"
       },
       {
         "Range": 2,
-        "Damage": 115,
-        "Cooldown": 15000000000,
+        "Damage": 38,
+        "Cooldown": 20000000000,
         "DamageType": "shock",
         "Ammo": "fuel"
       },
       {
         "Range": 3,
-        "Damage": 145,
-        "Cooldown": 15000000000,
+        "Damage": 48,
+        "Cooldown": 20000000000,
         "DamageType": "shock",
         "Ammo": "fuel"
       },
       {
         "Range": 3,
-        "Damage": 180,
-        "Cooldown": 15000000000,
+        "Damage": 60,
+        "Cooldown": 20000000000,
         "DamageType": "shock",
         "Ammo": "fuel"
       },
       {
         "Range": 3,
-        "Damage": 220,
-        "Cooldown": 15000000000,
+        "Damage": 73,
+        "Cooldown": 20000000000,
         "DamageType": "shock",
         "Ammo": "fuel"
       },
       {
         "Range": 4,
-        "Damage": 265,
-        "Cooldown": 15000000000,
+        "Damage": 88,
+        "Cooldown": 20000000000,
         "DamageType": "shock",
         "Ammo": "fuel"
       }
@@ -23638,62 +23638,62 @@
   "cannons": [
     {
       "Range": 2,
-      "Damage": 55,
+      "Damage": 18,
       "Ammo": "stone"
     },
     {
       "Range": 2,
-      "Damage": 68,
+      "Damage": 23,
       "Ammo": "stone"
     },
     {
       "Range": 3,
-      "Damage": 82,
+      "Damage": 27,
       "Ammo": "stone"
     },
     {
       "Range": 3,
+      "Damage": 33,
+      "Ammo": "stone"
+    },
+    {
+      "Range": 3,
+      "Damage": 41,
+      "Ammo": "stone"
+    },
+    {
+      "Range": 4,
+      "Damage": 49,
+      "Ammo": "stone"
+    },
+    {
+      "Range": 4,
+      "Damage": 60,
+      "Ammo": "explosives"
+    },
+    {
+      "Range": 4,
+      "Damage": 72,
+      "Ammo": "explosives"
+    },
+    {
+      "Range": 5,
+      "Damage": 85,
+      "Ammo": "explosives"
+    },
+    {
+      "Range": 5,
       "Damage": 100,
-      "Ammo": "stone"
-    },
-    {
-      "Range": 3,
-      "Damage": 122,
-      "Ammo": "stone"
-    },
-    {
-      "Range": 4,
-      "Damage": 148,
-      "Ammo": "stone"
-    },
-    {
-      "Range": 4,
-      "Damage": 180,
-      "Ammo": "explosives"
-    },
-    {
-      "Range": 4,
-      "Damage": 215,
       "Ammo": "explosives"
     },
     {
       "Range": 5,
-      "Damage": 255,
-      "Ammo": "explosives"
-    },
-    {
-      "Range": 5,
-      "Damage": 300,
-      "Ammo": "explosives"
-    },
-    {
-      "Range": 5,
-      "Damage": 350,
+      "Damage": 117,
       "Ammo": "explosives"
     },
     {
       "Range": 6,
-      "Damage": 410,
+      "Damage": 137,
       "Ammo": "explosives"
     }
   ],

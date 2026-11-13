@@ -32,11 +32,11 @@ func TestDefenseFamiliesHaveCompleteLevelProgression(t *testing.T) {
 
 func TestDefenseEffectsMatchSpecifications(t *testing.T) {
 	bolt, ok := DefenseWeaponLevel(building.TypeDefenseBoltThrower, 8)
-	if !ok || bolt.Range != 4 || bolt.Damage != 75 || bolt.Cooldown != 5*time.Second || bolt.Ammo != "" || bolt.DamageType != "piercing" {
+	if !ok || bolt.Range != 4 || bolt.Damage != 25 || bolt.Cooldown != 2*time.Second || bolt.Ammo != "" || bolt.DamageType != "piercing" {
 		t.Fatalf("bolt level 8: %+v", bolt)
 	}
 	storm, ok := DefenseWeaponLevel(building.TypeDefenseStormCoil, 6)
-	if !ok || storm.Range != 4 || storm.Damage != 265 || storm.Cooldown != 15*time.Second || storm.Ammo != economy.ResourceFuel || storm.DamageType != "shock" {
+	if !ok || storm.Range != 4 || storm.Damage != 88 || storm.Cooldown != 20*time.Second || storm.Ammo != economy.ResourceFuel || storm.DamageType != "shock" {
 		t.Fatalf("storm level 6: %+v", storm)
 	}
 	stakes, ok := DefenseTrapLevel(building.TypeDefenseStakes, 6)
