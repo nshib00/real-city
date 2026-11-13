@@ -17,7 +17,6 @@ import { canChopForestTile } from '../features/world/forestActions'
 import { CHUNK_SIZE, WORLD_WRAP_TILES, gridToScreen, nearestWrappedScreenCoord, roundGridCoord, screenToGrid, TILE_HEIGHT, TILE_WIDTH, tileToChunk, wrapGridCoord } from './coordinates/iso'
 import { resolvePerformanceScenarioFromSearch, type PerformanceScenario } from './dev/performanceScenarios'
 import { PixiStage } from './renderer/PixiStage'
-import { AccessibleMapSelection } from './AccessibleMapSelection'
 import { renderPerformanceSnapshot, type RenderPerformanceSnapshot } from './renderer/renderPerformanceMetrics'
 import { beginMapMeasure, endMapMeasure } from './performance/marks'
 import { filterVisibleIndexedMapObjects, filterVisibleMapObjects, indexMapObjects, occupiedTileKeys } from './renderer/visibleObjects'
@@ -37,6 +36,7 @@ import { fieldCropSpec } from '../features/fields/fieldGrowth'
 import { fieldHarvestSound, playConfirmedCoinChange, playConfirmedRareReward, productionMaterialVariant } from '../features/economy/economyAudio'
 import { showToast } from '../features/notifications/toast'
 import { ResourceIcon } from '../features/resources/ResourceIcon'
+import { AeolianIcon } from '../shared/ui/AeolianIcon'
 import { resourceCatalog } from '../../../shared/catalog/resources'
 import { formatRemaining } from '../shared/time/formatRemaining'
 import { updateProductionCache } from '../features/production/updateProductionCache'
@@ -48,6 +48,9 @@ const RECENT_CHOP_TILE_TTL_MS = 10_000
 export function IsoMap() {
   useEffect(() => { beginMapMeasure('map-ready') }, [])
   const mapPowerSave = useGameStore((state) => state.uiPreferences.mapPowerSave)
+  const buildMenuOpen = useGameStore((state) => state.uiPreferences.buildMenuOpen)
+  const resourceRegistryOpen = useGameStore((state) => state.uiPreferences.resourceRegistryOpen)
+  const alliancePanelOpen = useGameStore((state) => state.uiPreferences.alliancePanelOpen)
   const ownership = useOwnershipContext()
   useEffect(() => startAmbience(), [])
   const selectedTile = useGameStore((state) => state.selectedTile)
@@ -70,6 +73,7 @@ export function IsoMap() {
   const selectedMonsterId = useGameStore((state) => state.selectedMonsterId)
   const selectTile = useGameStore((state) => state.selectTile)
   const setBuildMenuOpen = useGameStore((state) => state.setBuildMenuOpen)
+  const setPlacementPreviewKind = useGameStore((state) => state.setPlacementPreviewKind)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
   const setRepairMenuBuildingId = useGameStore((state) => state.setRepairMenuBuildingId)
   const selectMonster = useGameStore((state) => state.selectMonster)
@@ -94,6 +98,8 @@ export function IsoMap() {
   const optimisticChopResultTilesRef = useRef(new Map<string, WorldTile>())
   const recentChopTilesRef = useRef(new Map<string, { tile: WorldTile; expiresAt: number }>())
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
+  const [actionsDismissed, setActionsDismissed] = useState(true)
+  const [dialogOpen, setDialogOpen] = useState(false)
   const [rendererReady, setRendererReady] = useState(false)
   const [rendererFailed, setRendererFailed] = useState(false)
   const [relocationRotation, setRelocationRotation] = useState(0)
@@ -121,6 +127,30 @@ export function IsoMap() {
   const territories = useMemo(() => occupiedTerritory(renderBuildings, ownership.viewerId, ownership.alliedIds), [renderBuildings, ownership.viewerId, ownership.alliedIds])
   const mapTiles = performanceScenario?.tiles ?? (worldTiles.length > 0 ? worldTiles : tiles)
   const mapTilesByKey = useMemo(() => new Map(mapTiles.map((tile) => [tileActionKey(tile), tile])), [mapTiles])
+  const anotherMenuOpen = buildMenuOpen || resourceRegistryOpen || alliancePanelOpen || dialogOpen
+  useEffect(() => {
+    if (anotherMenuOpen) setActionsDismissed(true)
+  }, [anotherMenuOpen])
+  useEffect(() => {
+    const checkDialogs = () => setDialogOpen(Boolean(document.querySelector('[role="dialog"]')))
+    checkDialogs()
+    const observer = new MutationObserver(checkDialogs)
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['role', 'aria-modal', 'hidden'] })
+    return () => observer.disconnect()
+  }, [])
+  const selectedEmptyMeadow = !actionsDismissed && !anotherMenuOpen && selectedTile && !selectedBuildingId && !selectedMonsterId
+    && mapTilesByKey.get(tileActionKey(selectedTile))?.terrain === 'grass'
+    && !buildings.some((building) => building.state !== 'ruined' && building.tile.x === selectedTile.x && building.tile.y === selectedTile.y)
+    && !resourceNodes.some((node) => node.tile.x === selectedTile.x && node.tile.y === selectedTile.y)
+    && !monsters.some((monster) => monster.tile.x === selectedTile.x && monster.tile.y === selectedTile.y)
+  const selectedMeadowMenuPosition = useMemo(() => {
+    if (!selectedEmptyMeadow || !selectedTile || stageSize.width <= 0 || stageSize.height <= 0) return null
+    const position = nearestWrappedScreenCoord(selectedTile, gridToScreen(renderCenter))
+    return {
+      left: Math.max(96, Math.min(stageSize.width - 96, stageSize.width * 0.48 + camera.x + position.x * camera.zoom)),
+      top: Math.max(118, Math.min(stageSize.height - 72, stageSize.height * 0.16 + camera.y + position.y * camera.zoom)),
+    }
+  }, [camera, renderCenter, selectedEmptyMeadow, selectedTile, stageSize])
   const placementPreview = placementPreviewKind ? buildCatalog.find((item) => item.kind === placementPreviewKind) : undefined
   const previewTile = hoveredTile ?? selectedTile
   const placementValidity = placementPreview ? validatePlacementPreview({ kind: placementPreview.kind, tile: previewTile, buildings, worldTiles: mapTiles, monsters, ownerId: player?.id }) : null
@@ -324,6 +354,7 @@ export function IsoMap() {
   })
 
   function handleSelectTile(tile: { x: number; y: number }) {
+    setActionsDismissed(false)
     if (relocatingBuilding) {
       if (relocateMutation.isPending) return
       const preview = validatePlacementPreview({
@@ -563,7 +594,6 @@ export function IsoMap() {
         {([{ label: 'Карта влево', x: 64, y: 0, text: '←' }, { label: 'Карта вверх', x: 0, y: 64, text: '↑' }, { label: 'Карта вниз', x: 0, y: -64, text: '↓' }, { label: 'Карта вправо', x: -64, y: 0, text: '→' }]).map((direction) => <button key={direction.label} type="button" aria-label={direction.label} onClick={() => { scheduleDragFrame(direction); flushDragFrame() }}>{direction.text}</button>)}
         <button type="button" aria-label="Уменьшить карту" onClick={() => setZoomAt({ zoom: camera.zoom - 0.1, viewportSize: stageSize })}>−</button>
         <button type="button" aria-label="Увеличить карту" onClick={() => setZoomAt({ zoom: camera.zoom + 0.1, viewportSize: stageSize })}>+</button>
-        <AccessibleMapSelection />
       </nav>
       {(chunksQuery.isPending || chunksQuery.isError || chunksQuery.isPlaceholderData || missingCenterTile || realtimeStatus !== 'connected') && !performanceScenario ? <div className="world-status" role="status" onPointerDown={(event) => event.stopPropagation()}>
         <strong>{realtimeStatus === 'offline' ? 'Нет связи с миром' : realtimeStatus !== 'connected' ? 'Подключаемся к миру…' : chunksQuery.isError ? 'Район не загрузился' : missingCenterTile && !chunksQuery.isFetching ? 'Данные района отсутствуют' : mapTiles.length ? 'Загружаем район…' : 'Загружаем мир…'}</strong>
@@ -593,6 +623,18 @@ export function IsoMap() {
         onSelectMonster={(monster) => { if (selectedMonsterId !== monster.id) playUiSound('ui.select.monster'); selectMonster(monster.id) }}
         targetTileOnly={Boolean(relocatingBuilding)}
       />
+      {selectedMeadowMenuPosition ? <div
+        className="empty-tile-actions"
+        role="group"
+        aria-label="Действия с пустой клеткой"
+        style={{ left: selectedMeadowMenuPosition.left, top: selectedMeadowMenuPosition.top }}
+        onPointerDown={(event) => event.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button type="button" className="empty-tile-action empty-tile-action-build" aria-label="Построить на клетке" title="Построить" onClick={() => setBuildMenuOpen(true)}><AeolianIcon name="build" size={20} /></button>
+        <button type="button" className="empty-tile-action empty-tile-action-road" aria-label="Проложить дорогу на клетке" title="Проложить дорогу" onClick={() => { setBuildMenuOpen(true); setPlacementPreviewKind('road') }}><AeolianIcon name="road" size={20} /></button>
+        <button type="button" className="empty-tile-action empty-tile-action-close" aria-label="Снять выделение клетки" title="Снять выделение" onClick={() => selectTile(null)}><AeolianIcon name="cancel" size={18} /></button>
+      </div> : null}
       <div className="map-damage-layer" aria-hidden="true">
         {monsterDamageEvents.filter((event) => Date.now() - event.createdAt < 1500).map((event) => {
           const pos = damageScreenPosition(event.tile, camera, stageSize)

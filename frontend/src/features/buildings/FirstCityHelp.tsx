@@ -20,7 +20,7 @@ export function FirstCityHelp() {
     <h2>Выберите место для центра</h2>
     <button type="button" onClick={() => { setDismissed(true); try { localStorage.setItem(key, 'dismissed') } catch { /* Помощь закрыта до перезагрузки. */ } }}>Закрыть помощь</button>
     <p>Нажмите свободную клетку на карте и откройте строительство. Центр открывает остальные постройки.</p>
-    <p>{center.name}: {center.free ? 'бесплатно' : center.cost.map(item => `${item.amount} ${item.label}`).join(', ')}. Размер: {center.footprint.width} × {center.footprint.height}. Лес нужно срубить; реки, горы и руины не подходят. Окончательные правила проверяет сервер.</p>
+    <p>{center.name}: {center.free ? 'бесплатно' : center.cost.map(item => `${item.amount} ${item.label}`).join(', ')}. Лес нужно срубить; реки, горы и руины не подходят. Окончательные правила проверяет сервер.</p>
     <button type="button" onClick={() => { preview('town_hall'); setOpen(true) }}>Выбрать место на карте</button>
   </aside>
 }

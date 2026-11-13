@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Box, Gem, Hammer, Repair, Move, RotateCw, Route, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from '../../shared/ui/icons'
+import type { ReactNode } from 'react'
+import { Box, ChevronDown, ChevronUp, Gem, Hammer, Repair, Move, RotateCw, Route, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from '../../shared/ui/icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { getRepairStatus } from '../../shared/api/buildings'
@@ -37,13 +38,13 @@ import { ResourceIcon } from '../resources/ResourceIcon'
 import { useThreatLevel } from '../threat/ThreatPanel'
 import { showToast } from '../notifications/toast'
 import { PublicProfileButton } from '../player/PublicProfileButton'
+import { PlayerName } from '../player/PlayerName'
 
-type InspectorTab = 'tile' | 'object' | 'player'
+type InspectorTab = 'tile' | 'object'
 
 const tabs = [
   { id: 'tile', label: 'Клетка' },
   { id: 'object', label: 'Объект' },
-  { id: 'player', label: 'Игрок' },
 ] as const
 
 const claimModes = [
@@ -124,6 +125,10 @@ export function Inspector() {
     refetchInterval: 5000, retry: false,
   })
   const selectedMonster = useGameStore((state) => state.monsters.find((monster) => monster.id === selectedMonsterId) ?? null)
+  const inspectorTabs = selectedBuilding || selectedMonster ? tabs : [tabs[0]]
+  useEffect(() => {
+    if (activeTab === 'object' && !selectedBuilding && !selectedMonster) setActiveTab('tile')
+  }, [activeTab, selectedBuilding, selectedMonster])
   const threat = useThreatLevel()
   const nextUpgrades = selectedBuilding && canManageSelectedBuilding ? getNextUpgrades(selectedBuilding) : []
   const selectedBuildingHasModel = selectedBuilding ? canResolveBuildingModelAsset(selectedBuilding) : false
@@ -142,7 +147,11 @@ export function Inspector() {
   const terrainLabel = selectedWorldTile
     ? selectedWorldTile.terrain === 'ruins' ? ruinTypeLabels[selectedWorldTile.ruin_type ?? ''] ?? 'руины' : terrainLabels[selectedWorldTile.terrain] ?? 'луг'
     : activeTile ? 'Загрузка...' : 'Не выбран'
+  const terrainClass = selectedWorldTile ? `terrain-${selectedWorldTile.terrain}` : 'terrain-unknown'
+  const canAttackTarget = Boolean(selectedMonster || canAttackSelectedBuilding)
   const selectedResourceNode = activeTile ? resourceNodes.find((node) => node.tile.x === activeTile.x && node.tile.y === activeTile.y && (node.resource !== 'oil' || node.state !== 'depleted')) ?? null : null
+  const canBuildOnActiveTile = !selectedRuin && (!selectedWorldTile || selectedWorldTile.terrain === 'grass' || selectedWorldTile.terrain === 'oil_well') && (!selectedResourceNode || selectedResourceNode.resource === 'oil')
+  const canPlaceRoadOnActiveTile = !selectedWorldTile || selectedWorldTile.terrain === 'grass' || selectedWorldTile.terrain === 'road'
   const selectedOwnership = ownershipOf(selectedBuilding?.owner ?? selectedMonster?.creatorId ?? selectedResourceNode?.ownerId, ownership.viewerId, ownership.alliedIds)
   const objectThreat = Boolean(selectedMonster && ['aggro', 'attacking'].includes(selectedMonster.state)) || Boolean(selectedBuilding && damageEvents.some(event => event.buildingId === selectedBuilding.id && constructionNow - event.createdAt < 1500))
   const selectedOilNode = selectedBuilding?.kind === 'oil_well' ? resourceNodes.find((node) => node.resource === 'oil' && node.tile.x === selectedBuilding.tile.x && node.tile.y === selectedBuilding.tile.y) : null
@@ -392,11 +401,18 @@ export function Inspector() {
   }, [selectedBuilding?.id, selectedMonster?.id])
 
   return (
-    <aside id="game-inspector" tabIndex={-1} className={`inspector${expanded ? ' inspector-expanded' : ''}${selectedMonster ? ' inspector-monster' : ''}`} aria-label="Инспектор" onKeyDown={(event) => {
+    <aside id="game-inspector" tabIndex={-1} className={`inspector${expanded ? ' inspector-expanded' : ' inspector-collapsed'}${selectedMonster ? ' inspector-monster' : ''}`} aria-label="Инспектор" onKeyDown={(event) => {
       if (event.key === 'Escape' && expanded) { event.preventDefault(); event.stopPropagation(); setExpanded(false); disclosure.current?.focus() }
     }}>
-      <button ref={disclosure} className="inspector-disclosure" type="button" aria-expanded={expanded} aria-controls="inspector-details" onClick={() => setExpanded(!expanded)}>{expanded ? 'Свернуть инспектор' : 'Развернуть инспектор'}</button>
-      <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Клетка ${cellLabel(activeTile)}` : 'Карта мира'}</h2>
+      <div className="inspector-header">
+        <div className="inspector-heading">
+          <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Клетка ${cellLabel(activeTile)}` : 'Карта мира'}</h2>
+          {!selectedMonster && !selectedBuilding && activeTile ? <small className={`inspector-terrain ${terrainClass}`}>{terrainLabel}</small> : null}
+        </div>
+        <button ref={disclosure} className="icon-button" type="button" aria-label={expanded ? 'Свернуть инспектор' : 'Развернуть инспектор'} title={expanded ? 'Свернуть инспектор' : 'Развернуть инспектор'} aria-expanded={expanded} aria-controls="inspector-details" data-audio-handled="true" onClick={() => { playUiSound(expanded ? 'ui.toggle.off' : 'ui.toggle.on'); setExpanded(!expanded) }}>
+          {expanded ? <ChevronDown size={20} aria-hidden="true" /> : <ChevronUp size={20} aria-hidden="true" />}
+        </button>
+      </div>
       {selectedBuildingId && !selectedBuilding || selectedMonsterId && !selectedMonster ? <p className="inspector-target-status" role="status">Выбранный объект больше не доступен в загруженной области. Выберите цель заново.</p> : null}
       <div id="inspector-details" className="inspector-details">
       {(selectedBuilding || selectedMonster || selectedResourceNode) && <ObjectMarks ownership={selectedOwnership} selected threat={objectThreat}
@@ -413,14 +429,14 @@ export function Inspector() {
             <button type="button" disabled={resourceMutation.isPending || selectedResourceNode.state === 'depleted' || (selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId !== player?.id)} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: selectedResourceNode.state === 'neutral' ? 'claim' : 'harvest' })}>{selectedResourceNode.state === 'neutral' ? 'Захватить узел' : 'Собрать ресурс'}</button>
             <small>{selectedResourceNode.state === 'depleted' ? 'Узел истощён. Дождитесь восстановления.' : selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId !== player?.id ? 'Узел принадлежит другому игроку.' : `Доступно: ${selectedResourceNode.amount}/${selectedResourceNode.maxAmount}`}</small>
           </> : selectedRuin ? <button type="button" disabled={ruinOccupied || ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>{ruinOccupied ? 'Восстановление недоступно' : 'Захватить и восстановить'}</button>
-          : <button type="button" disabled={!activeTile} onClick={() => setBuildMenuOpen(true)}>Открыть строительство</button>}
+          : null}
         {!activeTile && !selectedBuilding && !selectedMonster ? <small>Выберите клетку или объект на карте.</small> : null}
         {selectedBuilding ? <small>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}. {selectedBuilding.state === 'repairing' ? 'Ремонт: оставшееся время во вкладке «Объект».' : selectedBuilding.status === 'construction' ? 'Строительство: управление и срок во вкладке «Объект».' : canManageSelectedBuilding && !nextUpgrades.length ? 'Следующий уровень улучшения недоступен.' : ''}</small> : null}
         {selectedRuin && !selectedBuilding ? <small>Восстановление: {selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет.</small> : null}
         {selectedBuilding && !canManageSelectedBuilding && !canAttackSelectedBuilding ? <small>Атака доступна только по действующей уязвимой постройке.</small> : null}
         {resourceMutation.error || ruinMutation.error ? <p role="alert">{(resourceMutation.error ?? ruinMutation.error)?.message}</p> : null}
       </section>
-      <Tabs items={tabs} active={activeTab} onChange={setActiveTab}>
+      <Tabs items={inspectorTabs} active={activeTab} onChange={setActiveTab}>
         {activeTab === 'tile' ? (
           <>
             <dl>
@@ -462,7 +478,7 @@ export function Inspector() {
                 </>
               ) : null}
             </dl>
-            <SegmentedControl items={claimModes} value={tool === 'attack' ? 'attack' : 'build'} label="Режим действия" onChange={setTool} />
+            <SegmentedControl items={canAttackTarget ? claimModes : [claimModes[0]]} value={tool === 'attack' && canAttackTarget ? 'attack' : 'build'} label="Режим действия" onChange={setTool} />
           </>
         ) : null}
         {activeTab === 'object' ? (
@@ -473,7 +489,7 @@ export function Inspector() {
               <span>Здоровье {selectedMonster.health}/{selectedMonster.maxHealth}</span>
               <span>Урон: {selectedMonster.damage}</span>
               <span>Агро-радиус: {selectedMonster.aggroRadius}</span>
-              {selectedMonster.creatorId ? <span>Создатель: {selectedMonster.creatorId}. Наград за убийство нет.</span> : null}
+              {selectedMonster.creatorId ? <span>Создатель: <PlayerName playerId={selectedMonster.creatorId} />. Наград за убийство нет.</span> : null}
               {selectedMonster.creatorId && selectedMonster.expiresAt ? <span>Исчезнет через {formatRemaining(Math.max(0, selectedMonster.expiresAt - constructionNow))}</span> : null}
               {selectedMonster.targetId ? <span>Цель: {selectedMonster.targetType} {selectedMonster.targetId}</span> : null}
               <HealthBar health={selectedMonster.health} maxHealth={selectedMonster.maxHealth} />
@@ -552,13 +568,6 @@ export function Inspector() {
               <span>Нажмите на объект на карте, чтобы открыть меню здания.</span>
             </div>
           )
-        ) : null}
-        {activeTab === 'player' ? (
-          <div className="inspector-card">
-            <strong>Игрок: Северный двор</strong>
-            <span>Союз: Караван Эолии</span>
-            <span>Последняя активность: сейчас</span>
-          </div>
         ) : null}
       </Tabs>
       <div className="inspector-actions">
@@ -648,9 +657,11 @@ export function Inspector() {
             ) : null}
           </>
         ) : null}
-        <IconButton label="Построить" icon={Hammer} active={tool === 'build'} disabled={!activeTile} sound="ui.panel.open" onClick={() => setBuildMenuOpen(true)} />
-        <IconButton label="Маршрут" icon={Route} active={tool === 'road'} disabled={!activeTile} onClick={() => setTool('road')} />
-        <IconButton label="Атака" icon={Swords} active={tool === 'attack'} disabled={!selectedMonster && !canAttackSelectedBuilding} onClick={() => { setTool('attack'); setWeaponMenuOpen(true) }} />
+        {activeTile && !selectedBuilding && !selectedMonster ? <>
+          {canBuildOnActiveTile ? <IconButton label="Построить" icon={Hammer} active={tool === 'build'} sound="ui.panel.open" onClick={() => setBuildMenuOpen(true)} /> : null}
+          {canPlaceRoadOnActiveTile ? <IconButton label="Маршрут" icon={Route} active={tool === 'road'} onClick={() => setTool('road')} /> : null}
+        </> : null}
+        {canAttackTarget ? <IconButton label="Атака" icon={Swords} active={tool === 'attack'} onClick={() => { setTool('attack'); setWeaponMenuOpen(true) }} /> : null}
       </div>
       {createPortal(<Modal title={selectedMonster ? 'Оружие против монстра' : 'Оружие против постройки'} open={weaponMenuOpen && (Boolean(selectedMonster) || canAttackSelectedBuilding)} onClose={() => { if (!attackMonsterMutation.isPending && !attackBuildingMutation.isPending) setWeaponMenuOpen(false) }} className="weapon-menu-modal">
         <div className="weapon-menu-list" role="radiogroup" aria-label="Выбрать оружие">
@@ -782,8 +793,7 @@ function UpgradeModal({
   }
   const nextUpgrade = upgrades[0]!
   const previewAsset = upgradePreviewAsset(building, nextUpgrade)
-  return (
-    <Modal title="Улучшение постройки" open={open} onClose={onClose}>
+  return createPortal(<Modal title="Улучшение постройки" open={open} onClose={onClose} className="upgrade-modal">
       <div className="upgrade-dialog">
         <div className="upgrade-summary">
           <div className={`upgrade-preview build-icon-${nextUpgrade.type}`}>
@@ -801,11 +811,11 @@ function UpgradeModal({
         </div>
         <dl className="upgrade-stats">
           {upgradeComparisons(building, nextUpgrade).map((item) => (
-            <div key={item.label}>
-              <dt>{item.label}</dt>
+            <div className={item.label === 'Время работ' ? 'upgrade-stat-time' : undefined} key={item.label}>
+              <dt>{item.label}{item.resource ? <> <ResourceIcon id={item.resource} label={resourceLabel(item.resource)} /></> : null}</dt>
               <dd>
-                <span>{item.before}{item.label === 'Строители' ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</span>
-                <strong>{item.after}{item.label === 'Строители' ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</strong>
+                {item.before !== 'сейчас' ? <span className="upgrade-stat-before">{item.before}{['Работники', 'Население', 'Жители в доме'].includes(item.label) ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</span> : null}
+                <strong className="upgrade-stat-after">{item.after}{['Работники', 'Население', 'Жители в доме'].includes(item.label) ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</strong>
               </dd>
             </div>
           ))}
@@ -833,8 +843,7 @@ function UpgradeModal({
         </div>
         {error ? <p className="upgrade-error" role="alert">{error}</p> : null}
       </div>
-    </Modal>
-  )
+    </Modal>, document.body)
 }
 
 function upgradePreviewAsset(building: PlacedBuilding, nextUpgrade: UpgradeInfo) {
@@ -922,8 +931,9 @@ type UpgradeInfo = {
 
 type UpgradeComparison = {
   label: string
-  before: string
-  after: string
+  before: ReactNode
+  after: ReactNode
+  resource?: string
 }
 
 function getNextUpgrades(building: PlacedBuilding): UpgradeInfo[] {
@@ -958,17 +968,52 @@ function getNextUpgrades(building: PlacedBuilding): UpgradeInfo[] {
 
 function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo): UpgradeComparison[] {
   const current = getCurrentStats(building)
+  const spec = buildingCatalog.find((item) => item.type === building.kind)
   const comparisons: UpgradeComparison[] = [
     { label: 'Прочность', before: String(current.health), after: String(nextUpgrade.health) },
-    { label: 'Размер', before: `${current.footprint.width}x${current.footprint.height}`, after: `${nextUpgrade.footprint.width}x${nextUpgrade.footprint.height}` },
     { label: 'Время работ', before: 'сейчас', after: formatDuration(nextUpgrade.buildSeconds) },
   ]
-  if (building.kind === 'town_hall') {
+  if (spec?.category === 'housing') {
+    comparisons.push({ label: 'Жители в доме', before: `До: ${formatNumber(current.population)}`, after: `После: ${formatNumber(nextUpgrade.population)}` })
+  } else if (building.kind === 'town_hall') {
     comparisons.push({ label: 'Лимит построек', before: String(buildingLimitForLevel(building.level)), after: String(buildingLimitForLevel(nextUpgrade.level)) })
+  } else if (building.kind === 'coin_storage') {
+    comparisons.push({ label: 'Вместимость', resource: 'coins', before: formatNumber(coinStorageCapacity(building.level)), after: formatNumber(coinStorageCapacity(nextUpgrade.level)) })
+  } else if (spec?.category === 'fields') {
+    const crop = fieldCropSpec(building.kind)
+    const currentYield = crop?.rewardsByLevel[building.level - 1]
+    const nextYield = crop?.rewardsByLevel[nextUpgrade.level - 1]
+    if (currentYield && nextYield) {
+      comparisons.push({ label: 'Урожай за сбор', before: formatFieldYield(currentYield), after: formatFieldYield(nextYield) })
+    }
+    if (current.population > 0 || nextUpgrade.population > 0) {
+      comparisons.push({ label: 'Работники', before: String(current.population), after: String(nextUpgrade.population) })
+    }
   } else if (current.population > 0 || nextUpgrade.population > 0) {
-    comparisons.push({ label: 'Строители', before: String(current.population), after: String(nextUpgrade.population) })
+    comparisons.push({ label: 'Работники', before: String(current.population), after: String(nextUpgrade.population) })
   }
   return comparisons
+}
+
+function formatFieldYield(reward: NonNullable<ReturnType<typeof fieldCropSpec>>['rewardsByLevel'][number]) {
+  const renderItems = (items: { resource: string; amount: number }[], coins?: number) => <span className="upgrade-yield-group">
+    {coins !== undefined ? <span><ResourceIcon id="coins" label={resourceLabel('coins')} decorative />{formatNumber(coins)}</span> : null}
+    {items.map((item) => <span key={item.resource}><ResourceIcon id={item.resource} label={resourceLabel(item.resource)} decorative />{formatNumber(item.amount)}</span>)}
+  </span>
+  return <span className="upgrade-yield">
+    {renderItems(reward.rewards, reward.coins)}
+    {reward.superRewards?.length ? <span className="upgrade-yield-bonus"><small>Редкий урожай</small>{renderItems(reward.superRewards, reward.superCoins)}</span> : null}
+  </span>
+}
+
+const coinStorageCapacityByLevel = [2000, 5000, 10000, 25000, 60000, 150000, 350000, 800000, 1800000, 4000000, 9000000, 20000000]
+
+function coinStorageCapacity(level: number) {
+  return coinStorageCapacityByLevel[Math.max(0, Math.min(level, coinStorageCapacityByLevel.length) - 1)] ?? 0
+}
+
+function formatNumber(value: number) {
+  return value.toLocaleString('ru-RU')
 }
 
 function getCurrentStats(building: PlacedBuilding) {
@@ -977,7 +1022,6 @@ function getCurrentStats(building: PlacedBuilding) {
   return {
     health: level?.health ?? spec?.health ?? building.health,
     population: level?.population ?? spec?.population ?? 0,
-    footprint: spec?.footprint ?? { width: 1, height: 1 },
   }
 }
 
