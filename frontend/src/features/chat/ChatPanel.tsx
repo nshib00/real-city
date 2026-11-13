@@ -7,6 +7,7 @@ import { chatSoundEnabled, isMention, playChatSound, setChatSoundEnabled } from 
 import { useAuthStore } from '../auth/useAuthStore'
 import { useGameStore } from '../../game/state/useGameStore'
 import { chatChannels as channels, useChatChannels } from './useChatChannels'
+import { PlayerName } from '../player/PlayerName'
 
 export function ChatPanel({ visible = true }: { visible?: boolean }) {
   const [channel, setChannel] = useState<ChatMessage['channel']>('global')
@@ -112,7 +113,7 @@ export function ChatPanel({ visible = true }: { visible?: boolean }) {
         {messages.length ? (
           messages.map((message) => (
             <p key={message.id}>
-              <strong>{message.author_id}</strong> {message.flagged ? <em>на модерации</em> : message.body}
+              <strong><PlayerName playerId={message.author_id} showLevelIcon /></strong> {message.flagged ? <em>на модерации</em> : message.body}
             </p>
           ))
         ) : (

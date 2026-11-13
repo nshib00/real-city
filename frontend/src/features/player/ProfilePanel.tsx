@@ -133,7 +133,7 @@ export function ProfilePanel() {
             {profile.avatar_url ? <img src={profile.avatar_url} alt="" /> : avatarLabel}
           </span>
           <span className="profile-level-badge" title={`Уровень ${level}`}>
-            <LevelEmblem level={level} size="medium" /> {level}
+            <LevelEmblem level={level} size="medium" />
           </span>
           <span className="profile-xp-mini" aria-hidden="true">
             <span style={{ width: `${xpPercent}%` }} />

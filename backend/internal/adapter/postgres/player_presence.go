@@ -18,7 +18,7 @@ func (r *PlayerRepo) SavePresence(ctx context.Context, id player.ID, x, y int, n
 
 func (r *PlayerRepo) ListNearbyPresence(ctx context.Context, viewer player.ID, x, y, radius int, since time.Time) ([]player.Presence, error) {
 	rows, err := r.db.QueryContext(ctx, `
-		SELECT presence.player_id, players.name, profiles.level, presence.tile_x, presence.tile_y, presence.updated_at
+		SELECT presence.player_id, COALESCE(NULLIF(profiles.display_name, ''), players.name), profiles.level, presence.tile_x, presence.tile_y, presence.updated_at
 		FROM player_presence AS presence
 		JOIN players ON players.id = presence.player_id
 		JOIN player_profiles AS profiles ON profiles.player_id = presence.player_id

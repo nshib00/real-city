@@ -6,6 +6,7 @@ import { Shield } from '../../shared/ui/icons'
 import { useAuthStore } from '../auth/useAuthStore'
 import { request } from '../../shared/api/client'
 import { IconButton, Modal } from '../../shared/ui'
+import { PlayerName } from '../player/PlayerName'
 
 type PendingMessage = { id: string; channel: string; author_id: string; body: string }
 type Audit = { id: string; actor_id: string; message_id: string; action: string; reason: string; created_at: string }
@@ -41,21 +42,21 @@ function AdminControls() {
       <h3>Игроки</h3>
       <label>Причина изменения аккаунта или решения модератора <input aria-label="Причина решения" value={reason} maxLength={500} onChange={(event) => setReason(event.target.value)} /></label>
       {players.data?.players.map((item) => <article key={item.id}>
-        <p>{item.name} ({item.id}) — {item.status}, {item.role}</p>
+        <p>{item.name} — {item.status}, {item.role}</p>
         <button type="button" disabled={reason.trim().length < 3 || changeAccount.isPending} onClick={() => changeAccount.mutate({ id: item.id, status: item.status === 'suspended' ? 'active' : 'suspended', role: item.role })}>{item.status === 'suspended' ? 'Разблокировать' : 'Заблокировать'} {item.name}</button>
         <button type="button" disabled={reason.trim().length < 3 || changeAccount.isPending} onClick={() => changeAccount.mutate({ id: item.id, status: item.status, role: item.role === 'admin' ? 'user' : 'admin' })}>{item.role === 'admin' ? 'Снять роль администратора:' : 'Назначить администратором:'} {item.name}</button>
       </article>)}
       <h3>Модерация чата</h3>
       {!messages.isPending && !messages.data?.messages.length ? <p>Очередь модерации пуста.</p> : null}
       {messages.data?.messages.map((message) => <article key={message.id}>
-        <p>{message.author_id} · {message.channel}: {message.body}</p>
+        <p><PlayerName playerId={message.author_id} /> · {message.channel}: {message.body}</p>
         <button type="button" disabled={reason.trim().length < 3 || moderate.isPending} onClick={() => moderate.mutate({ id: message.id, action: 'approve' })}>Разрешить сообщение</button>
         <button type="button" disabled={reason.trim().length < 3 || moderate.isPending} onClick={() => moderate.mutate({ id: message.id, action: 'reject' })}>Удалить текст сообщения</button>
       </article>)}
       <h3>Журнал решений</h3>
-      {audit.data?.actions.map((item) => <p key={item.id}>{new Date(item.created_at).toLocaleString('ru-RU')} · {item.actor_id} · {item.action} · {item.message_id}: {item.reason}</p>)}
+      {audit.data?.actions.map((item) => <p key={item.id}>{new Date(item.created_at).toLocaleString('ru-RU')} · <PlayerName playerId={item.actor_id} /> · {item.action} · {item.message_id}: {item.reason}</p>)}
       <h3>Изменения аккаунтов</h3>
-      {accounts.data?.actions.map((item) => <p key={item.id}>{new Date(item.created_at).toLocaleString('ru-RU')} · {item.actor_id} → {item.player_id} · {item.status}, {item.role}: {item.reason}</p>)}
+      {accounts.data?.actions.map((item) => <p key={item.id}>{new Date(item.created_at).toLocaleString('ru-RU')} · <PlayerName playerId={item.actor_id} /> → <PlayerName playerId={item.player_id} /> · {item.status}, {item.role}: {item.reason}</p>)}
       {players.error || messages.error || audit.error || accounts.error || moderate.error || changeAccount.error ? <p role="alert">Не удалось выполнить административный запрос. Проверьте соединение и права доступа.</p> : null}
     </Modal>, document.body)}
   </>

@@ -11,6 +11,7 @@ import { Drawer, IconButton } from '../../shared/ui'
 import { spendAllianceTreasury, transferAllianceLeadership, leaveAlliance, kickAllianceMember, cancelMarketOrder, createAlliance, createMarketOrder, donateToAlliance, getAllianceProfile, inviteToAlliance, listMarketOrders, respondToAllianceInvite, upgradeAllianceBuff } from '../../shared/api/social'
 import { useAuthStore } from '../auth/useAuthStore'
 import { ResourceIcon } from '../resources/ResourceIcon'
+import { PlayerName } from '../player/PlayerName'
 
 const buffCatalog = allianceBuffCatalog.map((buff) => ({ ...buff, icon: buff.id === 'build_speed' || buff.id === 'repair_speed' ? Hammer : buff.id === 'defense' ? Shield : Gauge }))
 
@@ -119,7 +120,7 @@ export function AlliancePanel() {
             <button type="submit" disabled={donateMutation.isPending}>Пожертвовать</button>
             {profile.treasury.slice(0, 4).map((entry) => (
               <p key={entry.id}>
-                <ResourceIcon id={entry.resource} label={entry.resource} /> {entry.amount} от {entry.player_id}
+                <ResourceIcon id={entry.resource} label={entry.resource} /> {entry.amount} от <PlayerName playerId={entry.player_id} />
               </p>
             ))}
           </form>
@@ -136,7 +137,7 @@ export function AlliancePanel() {
             {profile.members.map((member) => (
               <p key={member.player_id}>
                 <strong>{roleLabel(member.role)}{member.treasurer ? ' / казначей' : ''}</strong>
-                <span>{member.player_id}</span>
+                <span><PlayerName playerId={member.player_id} /></span>
                 {profile.self?.role === 'leader' && member.player_id !== playerId ? <button type="button" disabled={transferMutation.isPending} onClick={() => transferMutation.mutate(member.player_id)}>Передать лидерство</button> : null}
                 {profile.self && member.player_id !== playerId && roleRank(profile.self.role) > roleRank(member.role) ? <button type="button" disabled={kickMutation.isPending} onClick={() => kickMutation.mutate(member.player_id)}>Исключить</button> : null}
               </p>
@@ -148,7 +149,7 @@ export function AlliancePanel() {
             {profile.self?.role === 'leader' || profile.self?.treasurer ? <form className="social-form" onSubmit={(event) => { event.preventDefault(); spendMutation.mutate(withdrawal) }}>
               <label>Ресурс<select value={withdrawal.resource} onChange={e => setWithdrawal({ ...withdrawal, resource: e.target.value })}>{resourceCatalog.filter(r => r.id !== 'population').map(r => <option key={r.id} value={r.id}>{r.name}</option>)}</select></label>
               <label>Количество<input type="number" min={1} max={2147483647} value={withdrawal.amount} onChange={e => setWithdrawal({ ...withdrawal, amount: Number(e.target.value) })} /></label>
-              <label>Получатель<select required value={withdrawal.recipient} onChange={e => setWithdrawal({ ...withdrawal, recipient: e.target.value })}><option value="">Выберите участника</option>{profile.members.map(m => <option key={m.player_id} value={m.player_id}>{m.player_id}</option>)}</select></label>
+              <label>Получатель<select required value={withdrawal.recipient} onChange={e => setWithdrawal({ ...withdrawal, recipient: e.target.value })}><option value="">Выберите участника</option>{profile.members.map(m => <option key={m.player_id} value={m.player_id}><PlayerName playerId={m.player_id} /></option>)}</select></label>
               <button type="submit" disabled={spendMutation.isPending}>Выдать из казны</button>
               {spendMutation.error ? <p role="alert">{spendMutation.error.message}</p> : null}
             </form> : null}

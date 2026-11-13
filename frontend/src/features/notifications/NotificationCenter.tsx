@@ -8,6 +8,7 @@ import { useGameStore } from '../../game/state/useGameStore'
 import { request } from '../../shared/api/client'
 import { useAuthStore } from '../auth/useAuthStore'
 import type { CombatRecord } from '../../../../shared/events/combat'
+import { PlayerName } from '../player/PlayerName'
 
 export function NotificationCenter() {
   const [open, setOpen] = useState(false)
@@ -71,7 +72,7 @@ export function NotificationCenter() {
           {notifications.map(({ record, count, damage, unread }) => (
             <article className={`notification notification-${record.owner_id === player?.id ? 'danger' : 'info'}`} key={record.id}>
               <strong>{unread ? '● ' : ''}{record.destroyed ? 'Постройка уничтожена' : 'Атака постройки'}{count > 1 ? ` ×${count}` : ''}</strong>
-              <span>{record.attacker_id || 'Дикий монстр'} → {record.building_type}, ур. {record.level}, владелец {record.owner_id}. Урон: {damage}.{record.attacker_id === player?.id && record.xp > 0 ? ` Получено ${record.xp} XP за последнее событие.` : ''}</span>
+              <span>{record.attacker_id ? <PlayerName playerId={record.attacker_id} /> : 'Дикий монстр'} → {record.building_type}, ур. {record.level}, владелец <PlayerName playerId={record.owner_id} />. Урон: {damage}.{record.attacker_id === player?.id && record.xp > 0 ? ` Получено ${record.xp} XP за последнее событие.` : ''}</span>
               <time dateTime={record.created_at}>{new Date(record.created_at).toLocaleString('ru-RU')}</time>
               {buildings.some((building) => building.id === record.building_id) ? <button type="button" onClick={() => { const building = buildings.find((item) => item.id === record.building_id); if (building) { focusTile({ tile: building.tile, viewportWidth: window.innerWidth, viewportHeight: window.innerHeight }); selectBuilding(building.id) } }}>Показать на карте</button> : <small>Объект уничтожен или находится вне загруженной области.</small>}
             </article>
