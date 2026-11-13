@@ -25,6 +25,7 @@ export type WorldEventType =
   | 'cannon.shot'
   | 'defense.triggered'
   | 'tower.threat.detected'
+  | 'tower.threat.shared'
   | 'alliance.created'
   | 'alliance.invite.created'
   | 'alliance.invite.accepted'
@@ -145,5 +146,13 @@ export type TowerThreatPayload = {
   tile_x: number
   tile_y: number
   target_building_id: string
+  detected_at: string
+}
+
+export type TowerSharedThreatPayload = {
+  incident_id: string
+  monster_type: string
+  region_x: number
+  region_y: number
   detected_at: string
 }

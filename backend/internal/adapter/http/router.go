@@ -142,6 +142,8 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("GET /api/v1/combat/attacks", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.PendingWeapons)))
 	mux.Handle("GET /api/v1/combat/history", authenticated(deps.Tokens, http.HandlerFunc(combatHandler.History)))
 	mux.Handle("GET /api/v1/tower-alerts", authenticated(deps.Tokens, http.HandlerFunc(towerAlertHandler.List)))
+	mux.Handle("PUT /api/v1/buildings/{id}/tower-share", authenticated(deps.Tokens, http.HandlerFunc(towerAlertHandler.PutShare)))
+	mux.Handle("DELETE /api/v1/buildings/{id}/tower-share", authenticated(deps.Tokens, http.HandlerFunc(towerAlertHandler.DeleteShare)))
 	mux.Handle("POST /api/v1/monster-loot/{id}/claim", authenticated(deps.Tokens, http.HandlerFunc(monsterHandler.ClaimLoot)))
 	mux.Handle("POST /api/v1/alliances/members/{id}/leadership", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.TransferLeadership)))
 	mux.Handle("DELETE /api/v1/alliances/me", authenticated(deps.Tokens, http.HandlerFunc(allianceHandler.Leave)))

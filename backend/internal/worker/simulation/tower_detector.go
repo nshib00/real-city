@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"real-city/backend/internal/domain/building"
-	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
+	"real-city/backend/internal/domain/toweralert"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
 )
@@ -75,7 +75,7 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 	towers := make(map[string][]building.Building)
 	for _, structure := range structures {
 		byID[structure.ID] = structure
-		if towerActive(structure) {
+		if toweralert.ActiveTower(structure) {
 			towers[structure.OwnerID] = append(towers[structure.OwnerID], structure)
 		}
 	}
@@ -130,6 +130,7 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 					OwnerID: player.ID(target.OwnerID), TowerID: string(tower.ID), MonsterID: string(creature.ID),
 					MonsterType: string(creature.Type), TileX: creature.Tile.X, TileY: creature.Tile.Y,
 					TargetBuildingID: string(target.ID), RelayTowerIDs: towerRelayIDs(tower, towers[target.OwnerID]),
+					CreatorID: player.ID(creature.CreatorID),
 				})
 				break
 			}
@@ -205,19 +206,4 @@ func towerRelayIDs(source building.Building, active []building.Building) []strin
 	return ids
 }
 
-func towerActive(tower building.Building) bool {
-	if tower.Type != building.TypeTower || !tower.TowerWatchkeeperAssigned || tower.OwnerID == "" || tower.Level < 1 || tower.Level > len(towerRadii) ||
-		(tower.State != building.StateActive && tower.State != building.StateDamaged) {
-		return false
-	}
-	spec, ok := catalog.GetBuilding(building.TypeTower)
-	if !ok {
-		return false
-	}
-	for _, level := range spec.UpgradeLevels {
-		if level.Level == tower.Level {
-			return level.Health > 0 && tower.Health*4 > level.Health
-		}
-	}
-	return false
-}
+func towerActive(tower building.Building) bool { return toweralert.ActiveTower(tower) }

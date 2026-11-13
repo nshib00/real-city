@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"time"
 
+	"real-city/backend/internal/adapter/http/middleware"
+	"real-city/backend/internal/domain/alliance"
 	"real-city/backend/internal/service"
 	"real-city/backend/pkg/apperror"
 )
@@ -36,10 +38,49 @@ func (h *TowerAlertHandler) List(w http.ResponseWriter, r *http.Request) {
 		writeError(w, apperror.New(apperror.BadRequest, "before_id requires before"))
 		return
 	}
-	items, err := h.alerts.ListForPlayer(r.Context(), playerID, queryLimit(r, 50), before, beforeID)
+	items, err := h.alerts.ListHistoryForPlayer(r.Context(), playerID, queryLimit(r, 50), before, beforeID)
 	if err != nil {
 		writeError(w, err)
 		return
 	}
 	writeJSON(w, http.StatusOK, envelope{"alerts": items})
+}
+
+func (h *TowerAlertHandler) PutShare(w http.ResponseWriter, r *http.Request) {
+	if h.alerts == nil { writeJSON(w, http.StatusServiceUnavailable, envelope{"error":"tower sharing unavailable"}); return }
+	actor, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
+		return
+	}
+	var input struct {
+		AllianceID string `json:"alliance_id"`
+	}
+	if err := decodeJSON(r, &input); err != nil {
+		writeError(w, err)
+		return
+	}
+	if input.AllianceID == "" {
+		writeError(w, apperror.New(apperror.Validation, "alliance_id is required"))
+		return
+	}
+	if err := h.alerts.SetShare(r.Context(), r.PathValue("id"), actor, alliance.ID(input.AllianceID), true); err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"enabled": true, "alliance_id": input.AllianceID})
+}
+
+func (h *TowerAlertHandler) DeleteShare(w http.ResponseWriter, r *http.Request) {
+	if h.alerts == nil { writeJSON(w, http.StatusServiceUnavailable, envelope{"error":"tower sharing unavailable"}); return }
+	actor, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
+		return
+	}
+	if err := h.alerts.SetShare(r.Context(), r.PathValue("id"), actor, "", false); err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"enabled": false})
 }

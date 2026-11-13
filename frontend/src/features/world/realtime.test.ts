@@ -82,6 +82,27 @@ describe('world realtime reducer', () => {
     expect(useGameStore.getState().buildings[0].towerWatchkeeperAssigned).toBe(false)
   })
 
+  it('shows only the redacted allied tower warning to its private recipient', () => {
+    useAuthStore.setState({ player: { id: 'ally' } as never })
+    const state = useGameStore.getState()
+    const handlers = { queryClient: new QueryClient(), updateWorldTile: state.updateWorldTile, addBuilding: state.addBuilding,
+      deleteBuilding: state.deleteBuilding, upsertResourceNode: state.upsertResourceNode, upsertMonster: state.upsertMonster }
+    const messages: string[] = []
+    const listener = (event: Event) => messages.push((event as CustomEvent<{ message: string }>).detail.message)
+    window.addEventListener('real-city:toast', listener)
+    const event = { type: 'tower.threat.shared' as const, event_id: 'shared-1', seq: 1,
+      sent_at: '2026-11-05T00:00:00Z', payload_version: 1, player_id: 'ally',
+      payload: { incident_id: 'incident', monster_type: 'forest_stalker', region_x: 4, region_y: 0, detected_at: '2026-11-05T00:00:00Z' } }
+    applyRealtimeEvent(event, handlers)
+    applyRealtimeEvent({ ...event, player_id: 'other' }, handlers)
+    window.removeEventListener('real-city:toast', listener)
+    expect(messages).toHaveLength(1)
+    expect(messages[0]).toContain('Лесной следопыт')
+    expect(messages[0]).toContain('4:0')
+    expect(messages[0]).not.toContain('incident')
+    expect(messages[0]).not.toContain('target')
+  })
+
   it('moves nearby player balloons immediately and removes them from old viewports', () => {
     useAuthStore.setState({ player: null })
     const queryClient = new QueryClient()

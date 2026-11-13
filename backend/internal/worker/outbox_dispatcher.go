@@ -3,6 +3,7 @@ package worker
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"log/slog"
 	"time"
 
@@ -14,11 +15,16 @@ import (
 )
 
 type OutboxDispatcher struct {
-	repo   service.OutboxRepository
-	events *service.EventBus
-	log    *slog.Logger
-	cfg    config.SimulationConfig
-	now    func() time.Time
+	repo        service.OutboxRepository
+	events      *service.EventBus
+	log         *slog.Logger
+	cfg         config.SimulationConfig
+	now         func() time.Time
+	sharedGuard func(context.Context, string, func() error) (bool, error)
+}
+
+func (d *OutboxDispatcher) SetSharedTowerGuard(guard func(context.Context, string, func() error) (bool, error)) {
+	d.sharedGuard = guard
 }
 
 func NewOutboxDispatcher(repo service.OutboxRepository, events *service.EventBus, log *slog.Logger, cfg config.SimulationConfig) *OutboxDispatcher {
@@ -69,7 +75,14 @@ func (d *OutboxDispatcher) Dispatch(ctx context.Context) (processed int, resultE
 	}
 	for _, item := range items {
 		publishStarted := time.Now()
-		publishErr := d.publish(item)
+		var publishErr error
+		if service.EventType(item.Type) == service.EventTowerThreatShared && d.sharedGuard != nil {
+			_, publishErr = d.sharedGuard(ctx, string(item.ID), func() error { return d.publish(item) })
+		} else if service.EventType(item.Type) == service.EventTowerThreatShared {
+			publishErr = errors.New("shared tower delivery guard is missing")
+		} else {
+			publishErr = d.publish(item)
+		}
 		observability.Dispatch("publish", publishStarted, publishErr)
 		if err := publishErr; err != nil {
 			if item.Attempts >= 5 {
@@ -143,6 +156,8 @@ func decodePayload(item outbox.OutboxEvent) (any, error) {
 		payload = &service.DefenseTriggeredPayload{}
 	case service.EventTowerThreatDetected:
 		payload = &service.TowerThreatPayload{}
+	case service.EventTowerThreatShared:
+		payload = &service.TowerSharedThreatPayload{}
 	default:
 		payload = &map[string]any{}
 	}
@@ -175,6 +190,8 @@ func decodePayload(item outbox.OutboxEvent) (any, error) {
 	case *service.DefenseTriggeredPayload:
 		return *typed, nil
 	case *service.TowerThreatPayload:
+		return *typed, nil
+	case *service.TowerSharedThreatPayload:
 		return *typed, nil
 	default:
 		return *payload.(*map[string]any), nil

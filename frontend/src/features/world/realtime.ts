@@ -4,7 +4,8 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import { visibleChunks } from '../../../../shared/world/coordinates'
 import { CHUNK_SIZE, WORLD_WRAP_TILES, tileToChunk, wrappedGridDistance } from '../../game/coordinates/iso'
-import { useGameStore } from '../../game/state/useGameStore'
+import { useGameStore, type MonsterEntity } from '../../game/state/useGameStore'
+import { monsterDisplayName } from '../../game/renderers/monsterAssetRegistry'
 import { realtimeClient } from '../../shared/realtime/client'
 import { toPlacedBuilding, type BuildingResponse } from '../../shared/api/buildings'
 import type { ResourceNodeResponse } from '../../shared/api/economy'
@@ -18,7 +19,7 @@ import { useAuthStore } from '../auth/useAuthStore'
 import { showToast } from '../notifications/toast'
 import type { CombatRecord } from '../../../../shared/events/combat'
 import type { MarketOrderPayload } from '../../../../shared/events/market'
-import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload, TowerThreatPayload } from '../../../../shared/events/world'
+import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload, TowerThreatPayload, TowerSharedThreatPayload } from '../../../../shared/events/world'
 
 const DEFAULT_WORLD_ID = 'dev-world'
 
@@ -121,6 +122,14 @@ export function applyRealtimeEvent(
     void handlers.queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
   }
   switch (event.type) {
+    case 'tower.threat.shared': {
+      const threat = event.payload as TowerSharedThreatPayload | undefined
+      if (threat && event.player_id === useAuthStore.getState().player?.id) {
+        void handlers.queryClient.invalidateQueries({ queryKey: ['tower-alerts'] })
+        showToast('warning', `Союзный сигнал: ${monsterDisplayName(threat.monster_type as MonsterEntity['type'])}, район ${threat.region_x}:${threat.region_y}.`)
+      }
+      return
+    }
     case 'tower.threat.detected': {
       const threat = event.payload as TowerThreatPayload | undefined
       if (threat && event.player_id === useAuthStore.getState().player?.id) {

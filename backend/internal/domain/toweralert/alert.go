@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
+	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/player"
 )
 
@@ -17,6 +19,7 @@ type Observation struct {
 	TileX            int
 	TileY            int
 	TargetBuildingID string
+	CreatorID        player.ID
 	RelayTowerIDs    []string
 }
 
@@ -31,6 +34,27 @@ type Alert struct {
 	TargetBuildingID string    `json:"target_building_id"`
 	RelayTowerIDs    []string  `json:"relay_tower_ids"`
 	DetectedAt       time.Time `json:"detected_at"`
+}
+
+// SharedAlert has no exact location or object identifiers.
+type SharedAlert struct {
+	IncidentID  string    `json:"incident_id"`
+	MonsterType string    `json:"monster_type"`
+	RegionX     int       `json:"region_x"`
+	RegionY     int       `json:"region_y"`
+	DetectedAt  time.Time `json:"detected_at"`
+}
+
+type HistoryEntry struct {
+	Owner  *Alert
+	Shared *SharedAlert
+}
+
+func (e HistoryEntry) MarshalJSON() ([]byte, error) {
+	if e.Shared != nil {
+		return json.Marshal(e.Shared)
+	}
+	return json.Marshal(e.Owner)
 }
 
 type State struct {
@@ -56,4 +80,21 @@ func IncidentID(mapID string, ownerID player.ID, monsterID string, episode int64
 	key, _ := json.Marshal([]any{mapID, ownerID, monsterID, episode})
 	sum := sha256.Sum256(key)
 	return hex.EncodeToString(sum[:16])
+}
+
+func ActiveTower(tower building.Building) bool {
+	if tower.Type != building.TypeTower || !tower.TowerWatchkeeperAssigned || tower.OwnerID == "" || tower.Level < 1 || tower.Level > 6 ||
+		(tower.State != building.StateActive && tower.State != building.StateDamaged) {
+		return false
+	}
+	spec, ok := catalog.GetBuilding(building.TypeTower)
+	if !ok {
+		return false
+	}
+	for _, level := range spec.UpgradeLevels {
+		if level.Level == tower.Level {
+			return level.Health > 0 && tower.Health*4 > level.Health
+		}
+	}
+	return false
 }

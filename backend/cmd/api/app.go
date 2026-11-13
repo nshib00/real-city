@@ -18,6 +18,8 @@ import (
 	redisadapter "real-city/backend/internal/adapter/redis"
 	wsadapter "real-city/backend/internal/adapter/ws"
 	"real-city/backend/internal/domain/catalog"
+	"real-city/backend/internal/domain/player"
+	"real-city/backend/internal/domain/toweralert"
 	"real-city/backend/internal/observability"
 	"real-city/backend/internal/service"
 	"real-city/backend/internal/worker"
@@ -106,6 +108,11 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 	populationService := service.NewPopulationService(economyService)
 	forestService := service.NewForestService(worldRepo, economyService, log)
 	eventBus := service.NewEventBus(128)
+	if db == nil {
+		towerAlerts.(*memory.TowerAlertRepo).SetAllySources(buildingRepo.(*memory.BuildingRepo), socialRepo.(*memory.SocialRepo), func(recipient player.ID, alert toweralert.SharedAlert) error {
+			return eventBus.Publish(service.Event{Type: service.EventTowerThreatShared, PlayerID: recipient, Payload: alert, CreatedAt: alert.DetectedAt})
+		})
+	}
 	marketService.SetEventBus(eventBus)
 	allianceService.SetEventBus(eventBus)
 	chatService.SetEventBus(eventBus)
@@ -134,6 +141,7 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 	monsterService.SetEventBus(eventBus)
 	var simulationRunner *simulation.Runner
 	outboxDispatcher := worker.NewOutboxDispatcher(outboxRepo, eventBus, log, cfg.Simulation)
+	outboxDispatcher.SetSharedTowerGuard(towerAlerts.PublishSharedIfEligible)
 	if cfg.Simulation.Embedded {
 		simulationRunner = simulation.NewRunner(actionRepo, uow, buildingService, productionService, resourceService, log, cfg.Simulation)
 		simulationRunner.SetForestService(forestService)

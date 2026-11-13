@@ -50,6 +50,25 @@ func TestOutboxDispatcherPublishesEvent(t *testing.T) {
 	}
 }
 
+func TestOutboxDispatcherCompletesRevokedSharedEventWithoutPublishing(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	repo := memory.NewOutboxRepo()
+	bus := service.NewEventBus(2)
+	stream := bus.Subscribe(ctx)
+	now := time.Date(2026, 11, 5, 12, 0, 0, 0, time.UTC)
+	item := outbox.NewOutboxEvent("tower-share:incident:ally", string(service.EventTowerThreatShared), "incident", []byte(`{"incident_id":"incident","monster_type":"forest_stalker","region_x":4,"region_y":0,"detected_at":"2026-11-05T12:00:00Z"}`), now)
+	item.PlayerID = "ally"
+	if err := repo.Append(ctx, item); err != nil { t.Fatal(err) }
+	dispatcher := NewOutboxDispatcher(repo, bus, slog.New(slog.NewTextHandler(io.Discard, nil)), config.SimulationConfig{BatchSize: 10, LockTTL: time.Second})
+	dispatcher.now = func() time.Time { return now }
+	checks := 0
+	dispatcher.SetSharedTowerGuard(func(_ context.Context, _ string, _ func() error) (bool,error) { checks++; return false,nil })
+	if count,err:=dispatcher.Dispatch(ctx); err!=nil || count!=1 { t.Fatalf("first dispatch count=%d err=%v",count,err) }
+	if count,err:=dispatcher.Dispatch(ctx); err!=nil || count!=0 || checks!=1 { t.Fatalf("revoked event retried count=%d checks=%d err=%v",count,checks,err) }
+	select { case event:=<-stream: t.Fatalf("revoked event leaked: %+v",event); default: }
+}
+
 func TestStandaloneWorkerEventReachesAPIBusWithClientPayload(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

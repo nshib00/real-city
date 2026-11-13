@@ -8,6 +8,7 @@ import (
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
+	"real-city/backend/internal/domain/toweralert"
 	"real-city/backend/internal/domain/world"
 )
 
@@ -35,6 +36,7 @@ const (
 	EventCannonShot          EventType = "cannon.shot"
 	EventDefenseTriggered    EventType = "defense.triggered"
 	EventTowerThreatDetected EventType = "tower.threat.detected"
+	EventTowerThreatShared   EventType = "tower.threat.shared"
 )
 
 type Event struct {
@@ -129,5 +131,7 @@ type TowerThreatPayload struct {
 	TargetBuildingID string    `json:"target_building_id"`
 	DetectedAt       time.Time `json:"detected_at"`
 }
+
+type TowerSharedThreatPayload = toweralert.SharedAlert
 
 type ChatMessagePayload struct{ Message chat.Message }

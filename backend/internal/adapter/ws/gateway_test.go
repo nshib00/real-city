@@ -173,6 +173,24 @@ func TestTowerThreatTargetsOnlyOwnerPrivateConnection(t *testing.T) {
 	}
 }
 
+func TestSharedTowerThreatTargetsOnlyAllyPrivateConnection(t *testing.T) {
+	gateway := NewGateway(nil, service.NewEventBus(2), slog.New(slog.NewTextHandler(io.Discard, nil)))
+	defer gateway.Shutdown()
+	for _, id := range []player.ID{"owner", "ally", "viewer"} {
+		socket, peer := net.Pipe()
+		defer peer.Close()
+		conn := NewConnection(socket, nil, id, 2)
+		defer conn.Close("test")
+		before := conn.Subscriptions()
+		conn.Apply(ClientCommand{Type: "subscribe", ChunkIDs: []string{"dev-world:0:0"}, Private: true})
+		gateway.updateIndexes(conn, before, conn.Subscriptions())
+	}
+	connections := gateway.targetConnections(service.Event{Type: service.EventTowerThreatShared, PlayerID: "ally"})
+	if len(connections) != 1 || connections[0].PlayerID() != player.ID("ally") {
+		t.Fatalf("shared alert leaked beyond recipient: %#v", connections)
+	}
+}
+
 func TestBuildingPlacedReachesAnotherPlayerSubscribedToChunk(t *testing.T) {
 	bus := service.NewEventBus(8)
 	gateway := NewGateway(nil, bus, slog.New(slog.NewTextHandler(io.Discard, nil)))

@@ -34,6 +34,7 @@ func OpenAPISpec() map[string]any {
 			"/combat/attacks":                    map[string]any{"get": operation("List pending weapon attacks")},
 			"/combat/history":                    map[string]any{"get": operation("GET /combat/history")},
 			"/tower-alerts":                      map[string]any{"get": operation("List private tower alert history")},
+			"/buildings/{id}/tower-share":        map[string]any{"put": operation("Enable selected alliance tower sharing"), "delete": operation("Revoke alliance tower sharing")},
 			"/combat/rules":                      map[string]any{"get": operation("PvP rules and monster creation cost")},
 			"/economy/inventory":                 map[string]any{"get": operation("Inventory")},
 			"/economy/population":                map[string]any{"get": operation("Population summary")},
