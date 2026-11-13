@@ -1,14 +1,26 @@
 [mcp_servers.playwright]
 enabled = false
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
 
 [mcp_servers.blender]
 enabled = true
-command = "uvx"
-args = ["mcp-for-blender"]
+command = "/home/nshib/.local/share/real-city-blender-mcp/venv/bin/mcp-for-blender"
+args = []
 
 [mcp_servers.blender.env]
-BLENDER_HOST = "172.28.192.1"
-BLENDER_PORT = "9877"
+BLENDER_HOST = "127.0.0.1"
+BLENDER_PORT = "9876"
 DISABLE_TELEMETRY = "true"
-UV_CACHE_DIR = "/tmp/real-city-uv-cache"
-UV_TOOL_DIR = "/tmp/real-city-uv-tools"
+
+[mcp_servers.blender.tools.get_scene_info]
+approval_mode = "approve"
+
+[mcp_servers.blender.tools.get_addon_status]
+approval_mode = "approve"
+
+[mcp_servers.blender.tools.execute_blender_code]
+approval_mode = "approve"
+
+[mcp_servers.blender.tools.look]
+approval_mode = "approve"
