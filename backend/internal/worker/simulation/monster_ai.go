@@ -480,6 +480,9 @@ func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coor
 					return nil, err
 				}
 				for _, item := range buildings {
+					if building.IsTrapType(item.Type) {
+						continue
+					}
 					if flying && item.Type != building.TypeConcreteWall && item.Type != building.TypeModernWall {
 						continue
 					}

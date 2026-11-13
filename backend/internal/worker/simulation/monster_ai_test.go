@@ -469,42 +469,59 @@ func TestMonsterAITargetSelectionIsDeterministicAndLimitedByAggroRadius(t *testi
 	}
 }
 
-func TestMonsterAIAvoidsOccupiedTrapTile(t *testing.T) {
-	ctx := context.Background()
-	now := time.Now().UTC()
-	monsters := memory.NewMonsterRepo()
-	buildings := memory.NewBuildingRepo()
-	start := monster.Monster{ID: "fast", MapID: "dev-world", Type: monster.TypeForestStalker,
-		State: monster.StateWandering, Tile: world.Coord{X: 0, Y: 0}, HomeTile: world.Coord{X: 0, Y: 0},
-		Health: 150, MaxHealth: 150, SpeedTiles: 2, AggroRadius: 5, AttackRange: 1,
-		AttackCooldown: 6 * time.Second, CreatedAt: now, UpdatedAt: now}
-	if err := monsters.Create(ctx, start); err != nil {
-		t.Fatal(err)
-	}
-	if err := buildings.Create(ctx, building.Building{ID: "trap", MapID: "dev-world", OwnerID: "owner",
-		Type: building.TypeDefenseStakes, Level: 1, State: building.StateActive, Tile: world.Coord{X: 1, Y: 0},
-		Health: 80, TrapCharges: 3, CreatedAt: now, UpdatedAt: now}); err != nil {
-		t.Fatal(err)
-	}
-	if err := buildings.Create(ctx, building.Building{ID: "target", MapID: "dev-world", OwnerID: "owner",
-		Type: building.TypeTownHall, State: building.StateActive, Tile: world.Coord{X: 4, Y: 0},
-		Health: 100, CreatedAt: now, UpdatedAt: now}); err != nil {
-		t.Fatal(err)
-	}
-	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
-	if _, err := ai.Tick(ctx, now.Add(time.Second), 1); err != nil {
-		t.Fatal(err)
-	}
-	got, err := monsters.FindByID(ctx, start.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-	trap, err := buildings.FindByID(ctx, "trap")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if got.Tile == (world.Coord{X: 1, Y: 0}) || got.Health != 150 || trap.TrapCharges != 3 {
-		t.Fatalf("monster entered an occupied tile: monster=%+v trap=%+v", got, trap)
+func TestMonsterAITriggersTrapsOnPath(t *testing.T) {
+	for _, tc := range []struct {
+		name       string
+		kind       building.Type
+		health     int
+		charges    int
+		damage     int
+		finalMoved time.Duration
+	}{
+		{name: "stakes", kind: building.TypeDefenseStakes, health: 80, charges: 3, damage: 25},
+		{name: "resin snare", kind: building.TypeDefenseResinSnare, health: 90, charges: 2, damage: 12, finalMoved: 1500 * time.Millisecond},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := context.Background()
+			now := time.Now().UTC()
+			monsters := memory.NewMonsterRepo()
+			buildings := memory.NewBuildingRepo()
+			start := monster.Monster{ID: "fast", MapID: "dev-world", Type: monster.TypeForestStalker,
+				State: monster.StateWandering, Tile: world.Coord{X: 0, Y: 0}, HomeTile: world.Coord{X: 0, Y: 0},
+				Health: 150, MaxHealth: 150, SpeedTiles: 2, AggroRadius: 5, AttackRange: 1,
+				AttackCooldown: 6 * time.Second, CreatedAt: now, UpdatedAt: now}
+			if err := monsters.Create(ctx, start); err != nil {
+				t.Fatal(err)
+			}
+			if err := buildings.Create(ctx, building.Building{ID: "trap", MapID: "dev-world", OwnerID: "owner",
+				Type: tc.kind, Level: 1, State: building.StateActive, Tile: world.Coord{X: 1, Y: 0},
+				Health: tc.health, TrapCharges: tc.charges, CreatedAt: now, UpdatedAt: now}); err != nil {
+				t.Fatal(err)
+			}
+			if err := buildings.Create(ctx, building.Building{ID: "target", MapID: "dev-world", OwnerID: "owner",
+				Type: building.TypeTownHall, State: building.StateActive, Tile: world.Coord{X: 4, Y: 0},
+				Health: 100, CreatedAt: now, UpdatedAt: now}); err != nil {
+				t.Fatal(err)
+			}
+			ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
+			if _, err := ai.Tick(ctx, now.Add(time.Second), 1); err != nil {
+				t.Fatal(err)
+			}
+			got, err := monsters.FindByID(ctx, start.ID)
+			if err != nil {
+				t.Fatal(err)
+			}
+			trap, err := buildings.FindByID(ctx, "trap")
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got.Tile != (world.Coord{X: 2, Y: 0}) || got.Health != 150-tc.damage || trap.TrapCharges != tc.charges-1 {
+				t.Fatalf("trap did not trigger while monster crossed it: monster=%+v trap=%+v", got, trap)
+			}
+			if tc.finalMoved > 0 && !got.LastMovedAt.Equal(now.Add(time.Second+tc.finalMoved)) {
+				t.Fatalf("snare did not slow the monster: last moved at %s", got.LastMovedAt)
+			}
+		})
 	}
 }
 
