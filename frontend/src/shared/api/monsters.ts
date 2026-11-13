@@ -6,7 +6,7 @@ import type { BuildingResponse } from './buildings'
 export type MonsterResponse = {
   id: string
   type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
-  state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
+  state: 'idle' | 'wandering' | 'investigate' | 'chase' | 'windup' | 'aggro' | 'attacking' | 'recover' | 'retreat' | 'dead'
   tile_x: number
   tile_y: number
   target_id: string

@@ -59,3 +59,14 @@ func TestConcurrentDurationSnapshots(t *testing.T) {
 	}
 	group.Wait()
 }
+
+func TestMonsterPathMetricsAreExposed(t *testing.T) {
+	MonsterPathSearch(time.Now().Add(-time.Millisecond), 7, 4, true)
+	var output bytes.Buffer
+	WriteSimulation(Writer{Out: &output})
+	for _, metric := range []string{"real_city_monster_path_searches_total", "real_city_monster_path_search_failures_total", "real_city_monster_path_nodes_visited_total", "real_city_monster_path_queue_max", "real_city_monster_path_search_duration_seconds"} {
+		if !strings.Contains(output.String(), metric) {
+			t.Errorf("missing metric %s", metric)
+		}
+	}
+}

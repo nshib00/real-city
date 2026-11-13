@@ -15,28 +15,29 @@ import (
 type EventType string
 
 const (
-	EventTileChanged         EventType = "world.tile.changed"
-	EventBuildingPlaced      EventType = "world.building.placed"
-	EventBuildingUpdated     EventType = "world.building.updated"
-	EventBuildingRemoved     EventType = "world.building.removed"
-	EventResourceChanged     EventType = "world.resource.changed"
-	EventProductionDone      EventType = "economy.production.completed"
-	EventInventoryChanged    EventType = "economy.inventory.changed"
-	EventPresenceChanged     EventType = "presence.changed"
-	EventPresenceMoved       EventType = "presence.moved"
-	EventCombatResolved      EventType = "combat.resolved"
-	EventMonsterSpawned      EventType = "monster.spawned"
-	EventMonsterMoved        EventType = "monster.moved"
-	EventMonsterAttacked     EventType = "monster.attacked"
-	EventMonsterDamaged      EventType = "monster.damaged"
-	EventMonsterDied         EventType = "monster.died"
-	EventMonsterDespawned    EventType = "monster.despawned"
-	EventMonsterLootDropped  EventType = "monster.loot.dropped"
-	EventMonsterLootClaimed  EventType = "monster.loot.claimed"
-	EventCannonShot          EventType = "cannon.shot"
-	EventDefenseTriggered    EventType = "defense.triggered"
-	EventTowerThreatDetected EventType = "tower.threat.detected"
-	EventTowerThreatShared   EventType = "tower.threat.shared"
+	EventTileChanged          EventType = "world.tile.changed"
+	EventBuildingPlaced       EventType = "world.building.placed"
+	EventBuildingUpdated      EventType = "world.building.updated"
+	EventBuildingRemoved      EventType = "world.building.removed"
+	EventResourceChanged      EventType = "world.resource.changed"
+	EventProductionDone       EventType = "economy.production.completed"
+	EventInventoryChanged     EventType = "economy.inventory.changed"
+	EventPresenceChanged      EventType = "presence.changed"
+	EventPresenceMoved        EventType = "presence.moved"
+	EventCombatResolved       EventType = "combat.resolved"
+	EventMonsterSpawned       EventType = "monster.spawned"
+	EventMonsterMoved         EventType = "monster.moved"
+	EventMonsterAttacked      EventType = "monster.attacked"
+	EventMonsterDamaged       EventType = "monster.damaged"
+	EventMonsterDied          EventType = "monster.died"
+	EventMonsterDespawned     EventType = "monster.despawned"
+	EventMonsterThreatWarning EventType = "monster.threat.warning"
+	EventMonsterLootDropped   EventType = "monster.loot.dropped"
+	EventMonsterLootClaimed   EventType = "monster.loot.claimed"
+	EventCannonShot           EventType = "cannon.shot"
+	EventDefenseTriggered     EventType = "defense.triggered"
+	EventTowerThreatDetected  EventType = "tower.threat.detected"
+	EventTowerThreatShared    EventType = "tower.threat.shared"
 )
 
 type Event struct {
@@ -94,6 +95,13 @@ type MonsterPayload struct {
 	Monster monster.Monster `json:"monster"`
 	Damage  int             `json:"damage,omitempty"`
 	Source  string          `json:"source,omitempty"`
+}
+
+type MonsterThreatWarningPayload struct {
+	MonsterType string    `json:"monster_type"`
+	TileX       int       `json:"tile_x"`
+	TileY       int       `json:"tile_y"`
+	ArrivesAt   time.Time `json:"arrives_at"`
 }
 
 type MonsterLootPayload struct {

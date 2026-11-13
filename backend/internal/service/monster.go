@@ -157,11 +157,18 @@ func (s *MonsterService) Damage(ctx context.Context, id monster.ID, playerID pla
 }
 
 func (s *MonsterService) SpawnFromPoint(ctx context.Context, spawn monster.SpawnPoint, now time.Time) (monster.Monster, error) {
-	spec, ok := randomMonsterSpec()
+	var spec monster.Spec
+	var ok bool
+	if !spawn.WarningAt.IsZero() {
+		spec, ok = catalog.MonsterSpec(spawn.Type)
+	} else {
+		spec, ok = randomMonsterSpec()
+	}
 	if !ok {
 		return monster.Monster{}, apperror.New(apperror.Validation, "monster catalog is empty")
 	}
 	spawn.Type = spec.Type
+	spawn.WarningAt = time.Time{}
 	spawn.NextSpawnAt = now.Add(RandomSpawnCooldown())
 	spawn.UpdatedAt = now
 	if err := s.repo.SaveSpawnPoint(ctx, spawn); err != nil {
@@ -179,6 +186,17 @@ func (s *MonsterService) SpawnFromPoint(ctx context.Context, spawn monster.Spawn
 	s.publish(EventMonsterSpawned, item, "")
 	s.log.Info("pve.monster.spawned", "event", "pve.monster.spawned", "monster_id", item.ID, "monster_type", item.Type, "chunk_id", world.ChunkID(item.MapID, world.ChunkForTile(item.Tile)))
 	return item, nil
+}
+
+func (s *MonsterService) WarnThreat(spawn monster.SpawnPoint, arrivesAt time.Time) {
+	if s.events == nil {
+		return
+	}
+	s.events.Publish(Event{
+		Type:      EventMonsterThreatWarning,
+		Payload:   MonsterThreatWarningPayload{MonsterType: string(spawn.Type), TileX: spawn.Tile.X, TileY: spawn.Tile.Y, ArrivesAt: arrivesAt},
+		CreatedAt: arrivesAt.Add(-20 * time.Second),
+	})
 }
 
 func (s *MonsterService) ListLoot(ctx context.Context, center world.Coord, radius int) ([]monster.LootDrop, error) {
@@ -373,7 +391,9 @@ func randomMonsterSpec() (monster.Spec, bool) {
 	specs := catalog.MonsterSpecs()
 	total := 0
 	for _, spec := range specs {
-		if spec.SpawnWeight > 0 {
+		// The colossus requires a global warning and coordinated encounter rules;
+		// keep it out of ordinary point spawns until those are implemented.
+		if spec.SpawnWeight > 0 && spec.Type != monster.TypeAncientColossus {
 			total += spec.SpawnWeight
 		}
 	}
@@ -382,7 +402,7 @@ func randomMonsterSpec() (monster.Spec, bool) {
 	}
 	roll := rand.Intn(total)
 	for _, spec := range specs {
-		if spec.SpawnWeight <= 0 {
+		if spec.SpawnWeight <= 0 || spec.Type == monster.TypeAncientColossus {
 			continue
 		}
 		if roll < spec.SpawnWeight {

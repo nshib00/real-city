@@ -21,6 +21,27 @@ var simulation = struct {
 
 var tickDurations = map[string]*durationSample{}
 
+var monsterPath = struct {
+	sync.Mutex
+	searches, failures, visited, maxQueue uint64
+	durations                             map[string]*durationSample
+}{durations: map[string]*durationSample{}}
+
+// MonsterPathSearch records bounded, low-cardinality pathfinding diagnostics.
+func MonsterPathSearch(started time.Time, visited, maxQueue int, failed bool) {
+	observe(monsterPath.durations, "bfs", time.Since(started))
+	monsterPath.Lock()
+	monsterPath.searches++
+	monsterPath.visited += uint64(max(0, visited))
+	if uint64(max(0, maxQueue)) > monsterPath.maxQueue {
+		monsterPath.maxQueue = uint64(maxQueue)
+	}
+	if failed {
+		monsterPath.failures++
+	}
+	monsterPath.Unlock()
+}
+
 func EnableSimulation() { simulation.Lock(); simulation.enabled = true; simulation.Unlock() }
 
 // TickMode is one of scheduled or catch_up; callers use fixed names only.
@@ -63,6 +84,17 @@ func WriteSimulation(w Writer) {
 	writeDurations(w, "real_city_simulation_tick_duration_seconds", "Duration of simulation ticks by invocation mode.", "mode", tickDurations)
 	writeDurations(w, "real_city_simulation_stage_duration_seconds", "Duration of named simulation stages.", "component", simulation.stages)
 	writeDurations(w, "real_city_outbox_dispatch_duration_seconds", "Duration of outbox fetch, publish and total dispatch.", "component", simulation.dispatch)
+	writeDurations(w, "real_city_monster_path_search_duration_seconds", "Duration of monster BFS path searches.", "operation", monsterPath.durations)
+	monsterPath.Lock()
+	w.Family("real_city_monster_path_searches_total", "Number of BFS path searches for monsters.", "counter")
+	w.Sample("real_city_monster_path_searches_total", nil, float64(monsterPath.searches))
+	w.Family("real_city_monster_path_search_failures_total", "Number of monster BFS searches that found no path or failed.", "counter")
+	w.Sample("real_city_monster_path_search_failures_total", nil, float64(monsterPath.failures))
+	w.Family("real_city_monster_path_nodes_visited_total", "Total BFS nodes visited by monster path searches.", "counter")
+	w.Sample("real_city_monster_path_nodes_visited_total", nil, float64(monsterPath.visited))
+	w.Family("real_city_monster_path_queue_max", "Largest remaining BFS queue observed in a monster path search.", "gauge")
+	w.Sample("real_city_monster_path_queue_max", nil, float64(monsterPath.maxQueue))
+	monsterPath.Unlock()
 	simulation.Lock()
 	defer simulation.Unlock()
 	w.Family("real_city_simulation_enabled", "One if this process owns a scheduled simulation runner.", "gauge")

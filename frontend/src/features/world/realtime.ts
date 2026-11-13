@@ -17,6 +17,8 @@ import type { MonsterPayload } from '../../../../shared/events/monster'
 import { playRealtimeAudio } from '../../audio/realtimeAudio'
 import { useAuthStore } from '../auth/useAuthStore'
 import { showToast } from '../notifications/toast'
+import { buildingCatalog } from '../../../../shared/catalog/buildings'
+import { getPublicPlayer } from '../auth/api'
 import type { CombatRecord } from '../../../../shared/events/combat'
 import type { MarketOrderPayload } from '../../../../shared/events/market'
 import type { RealtimeEnvelope, TileChangedPayload, BuildingPayload, BuildingRemovedPayload, ResourceChangedPayload, PresenceMovedPayload, TowerThreatPayload, TowerSharedThreatPayload } from '../../../../shared/events/world'
@@ -142,7 +144,21 @@ export function applyRealtimeEvent(
       void handlers.queryClient.invalidateQueries({ queryKey: ['combat', 'history'] })
       if (record && record.owner_id === useAuthStore.getState().player?.id) {
         if (useAuthStore.getState().player?.profile.settings.notifications.attack_alerts !== false) {
-          showToast('warning', `${record.destroyed ? 'Уничтожена' : 'Атакована'} ваша постройка: ${record.building_type}. Урон: ${record.damage}.`)
+          const buildingName = buildingDisplayName(record.building_type)
+          const isMonster = record.source === 'monster' || record.source.startsWith('monster:')
+          const monsterType = record.source.startsWith('monster:') ? record.source.slice('monster:'.length) : ''
+          const attacker = monsterType ? `Монстр ${monsterDisplayName(monsterType as MonsterEntity['type'])}` : 'Монстр'
+          const message = `${attacker} атаковал вашу постройку: ${buildingName}. Урон: ${record.damage}.`
+          if (!isMonster && record.attacker_id) {
+            const self = useAuthStore.getState().player
+            if (self?.id === record.attacker_id) {
+              showToast('warning', 'Игрок:', { name: self.profile.display_name || self.name, level: self.profile.level }, ` атаковал вашу постройку: ${buildingName}. Урон: ${record.damage}.`)
+            } else {
+              const cached = handlers.queryClient.getQueryData<{ id: string; display_name: string; level: number }>(['players', 'public', record.attacker_id])
+              if (cached) showToast('warning', 'Игрок:', { name: cached.display_name || 'Игрок', level: cached.level }, ` атаковал вашу постройку: ${buildingName}. Урон: ${record.damage}.`)
+              else void getPublicPlayer(record.attacker_id).then((profile) => showToast('warning', 'Игрок:', { name: profile.display_name || 'Игрок', level: profile.level }, ` атаковал вашу постройку: ${buildingName}. Урон: ${record.damage}.`)).catch(() => showToast('warning', message))
+            }
+          } else showToast('warning', message)
         }
       }
       return
@@ -237,6 +253,16 @@ export function applyRealtimeEvent(
       }
       return
     }
+    case 'monster.threat.warning': {
+      const warning = event.payload as { monster_type?: string; tile_x?: number; tile_y?: number; arrives_at?: string } | undefined
+      if (warning) {
+        const arrival = warning.arrives_at ? Date.parse(warning.arrives_at) : Date.now() + 20_000
+        const seconds = Math.max(1, Math.round((arrival - Date.now()) / 1000))
+        const name = warning.monster_type === 'ironback_brute' ? 'Железоспин' : 'Крупная угроза'
+        showToast('warning', `${name} приближается к району (${warning.tile_x ?? '?'}, ${warning.tile_y ?? '?'}). Примерное время: ${seconds} сек.`)
+      }
+      return
+    }
     case 'monster.loot.dropped':
     case 'monster.loot.claimed': {
       void handlers.queryClient.invalidateQueries({ queryKey: ['monster-loot'] })
@@ -264,6 +290,10 @@ export function applyRealtimeEvent(
       return
     }
   }
+}
+
+function buildingDisplayName(type: string) {
+  return buildingCatalog.find((building) => building.type === type)?.name ?? type.replaceAll('_', ' ')
 }
 
 function normalizeBuildingEvent(value: BuildingPayload['building']): BuildingResponse {
@@ -381,6 +411,7 @@ function toMonsterEntity(monster: MonsterPayload['monster']) {
     tile,
     targetId: monster.target_id ?? monster.TargetID ?? '',
     targetType: monster.target_type ?? monster.TargetType ?? '',
+    targetTile: monster.TargetTile ? { x: monster.TargetTile.X, y: monster.TargetTile.Y } : undefined,
     health: monster.health,
     maxHealth: monster.max_health ?? monster.MaxHealth ?? monster.health,
     damage: monster.damage,

@@ -136,6 +136,8 @@ export function monsterAnimationKeyForState(state: MonsterEntity['state']): Mons
   switch (state) {
     case 'wandering':
     case 'aggro':
+    case 'chase':
+    case 'investigate':
       return 'walk'
     case 'attacking':
       return 'attack'

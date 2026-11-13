@@ -48,11 +48,247 @@ func TestMonsterAITickAggrosNearestBuilding(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if updated.State != monster.StateAggro {
-		t.Fatalf("expected aggro state, got %s", updated.State)
+	if updated.State != monster.StateChase {
+		t.Fatalf("expected chase state, got %s", updated.State)
 	}
 	if updated.Tile != (world.Coord{X: 2, Y: 1}) {
 		t.Fatalf("expected movement toward target, got %+v", updated.Tile)
+	}
+}
+
+func TestIronbackTelegraphsRamBeforeDamagingWall(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters, buildings := memory.NewMonsterRepo(), memory.NewBuildingRepo()
+	spec, _ := catalog.MonsterSpec(monster.TypeIronbackBrute)
+	item := monster.Monster{ID: "ironback-ram", MapID: "dev-world", Type: spec.Type, State: monster.StateChase,
+		Tile: world.Coord{X: 20, Y: 20}, Health: spec.MaxHealth, MaxHealth: spec.MaxHealth, Damage: spec.Damage,
+		SpeedTiles: spec.SpeedTiles, AggroRadius: spec.AggroRadius, AttackRange: spec.AttackRange,
+		AttackCooldown: spec.AttackCooldown, TargetID: "wall", TargetType: "building", UpdatedAt: now.Add(-time.Hour)}
+	if err := monsters.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildings.Create(ctx, building.Building{ID: "wall", MapID: "dev-world", OwnerID: "p1", Type: building.TypeStoneWall,
+		State: building.StateActive, Tile: world.Coord{X: 21, Y: 20}, Health: 1000}); err != nil {
+		t.Fatal(err)
+	}
+	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
+	if _, err := ai.Tick(ctx, now, 10); err != nil {
+		t.Fatal(err)
+	}
+	windup, err := monsters.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if windup.State != monster.StateWindup || !windup.NextAttackAt.Equal(now.Add(ironbackRamWindup)) {
+		t.Fatalf("ram should expose a two-second windup: state=%s deadline=%s", windup.State, windup.NextAttackAt)
+	}
+	wall, _ := buildings.FindByID(ctx, "wall")
+	if wall.Health != 1000 {
+		t.Fatalf("wall took damage before the telegraph finished: %d", wall.Health)
+	}
+	if _, err := ai.Tick(ctx, now.Add(ironbackRamWindup), 10); err != nil {
+		t.Fatal(err)
+	}
+	wall, _ = buildings.FindByID(ctx, "wall")
+	if wall.Health != 1000-2*spec.Damage {
+		t.Fatalf("ram damage=%d, want %d", 1000-wall.Health, 2*spec.Damage)
+	}
+}
+
+func TestMonsterSpecialAttacksCanBeDisabledForRollback(t *testing.T) {
+	ai := NewMonsterAI(nil, nil, nil, nil, slog.Default())
+	if got := ai.attackWindup(monster.TypeIronbackBrute, building.TypeStoneWall); got != ironbackRamWindup {
+		t.Fatalf("default ironback windup = %s, want %s", got, ironbackRamWindup)
+	}
+	ai.SetSpecialAttacksEnabled(false)
+	if got := ai.attackWindup(monster.TypeIronbackBrute, building.TypeStoneWall); got != 0 {
+		t.Fatalf("disabled ironback windup = %s, want 0", got)
+	}
+	base := 100
+	if got := ai.abilityDamage(monster.TypeIronbackBrute, building.TypeStoneWall, base); got != base {
+		t.Fatalf("disabled ironback damage = %d, want %d", got, base)
+	}
+}
+
+func TestEmberWispTelegraphsVolleyAndHitsIndustryHarder(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters, buildings := memory.NewMonsterRepo(), memory.NewBuildingRepo()
+	spec, _ := catalog.MonsterSpec(monster.TypeEmberWisp)
+	item := monster.Monster{ID: "ember-volley", MapID: "dev-world", Type: spec.Type, State: monster.StateChase,
+		Tile: world.Coord{X: 30, Y: 30}, Health: spec.MaxHealth, MaxHealth: spec.MaxHealth, Damage: spec.Damage,
+		SpeedTiles: spec.SpeedTiles, AggroRadius: spec.AggroRadius, AttackRange: spec.AttackRange,
+		AttackCooldown: spec.AttackCooldown, TargetID: "workshop", TargetType: "building", UpdatedAt: now.Add(-time.Hour)}
+	if err := monsters.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildings.Create(ctx, building.Building{ID: "workshop", MapID: "dev-world", OwnerID: "p1", Type: building.TypeWorkshop,
+		State: building.StateActive, Tile: world.Coord{X: 32, Y: 30}, Health: 500}); err != nil {
+		t.Fatal(err)
+	}
+	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
+	if _, err := ai.Tick(ctx, now, 10); err != nil {
+		t.Fatal(err)
+	}
+	windup, err := monsters.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if windup.State != monster.StateWindup || !windup.NextAttackAt.Equal(now.Add(emberVolleyWindup)) {
+		t.Fatalf("volley should expose a 1.5-second windup: state=%s deadline=%s", windup.State, windup.NextAttackAt)
+	}
+	workshop, _ := buildings.FindByID(ctx, "workshop")
+	if workshop.Health != 500 {
+		t.Fatalf("workshop took damage before the telegraph finished: %d", workshop.Health)
+	}
+	if _, err := ai.Tick(ctx, now.Add(2*time.Second), 10); err != nil {
+		t.Fatal(err)
+	}
+	workshop, _ = buildings.FindByID(ctx, "workshop")
+	if workshop.Health != 500-spec.Damage*3/2 {
+		t.Fatalf("volley damage=%d, want %d", 500-workshop.Health, spec.Damage*3/2)
+	}
+}
+
+func TestEmberWispVolleyIsBlockedByInterveningWall(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	for _, item := range []building.Building{
+		{ID: "blocking-wall", MapID: "dev-world", Type: building.TypeStoneWall, State: building.StateActive,
+			Tile: world.Coord{X: 41, Y: 40}, Health: 100},
+		{ID: "target", MapID: "dev-world", Type: building.TypeWorkshop, State: building.StateActive,
+			Tile: world.Coord{X: 43, Y: 40}, Health: 100},
+	} {
+		if err := buildings.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	ai := NewMonsterAI(memory.NewMonsterRepo(), buildings, nil, nil, slog.Default())
+	clear, err := ai.clearShotToBuilding(ctx,
+		monster.Monster{ID: "ember", MapID: "dev-world", Type: monster.TypeEmberWisp, Tile: world.Coord{X: 40, Y: 40}},
+		building.Building{ID: "target", Type: building.TypeWorkshop, Tile: world.Coord{X: 43, Y: 40}},
+		world.Coord{X: 43, Y: 40}, make(map[world.ChunkCoord]world.Chunk), newTickBuildingCache(buildings))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if clear {
+		t.Fatal("intervening wall should block the volley line")
+	}
+}
+
+func TestMonsterAITargetsWithinExpandedDetectionRadius(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters, buildings := memory.NewMonsterRepo(), memory.NewBuildingRepo()
+	item := monster.Monster{ID: "wide-detection", MapID: "dev-world", Type: monster.TypeRoamingMelee,
+		State: monster.StateWandering, Tile: world.Coord{X: 10, Y: 10}, Health: 100, MaxHealth: 100,
+		SpeedTiles: 1, AggroRadius: 5, AttackRange: 1, UpdatedAt: now.Add(-time.Hour), LastMovedAt: now.Add(-time.Hour)}
+	if err := monsters.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildings.Create(ctx, building.Building{ID: "outside-base-radius", MapID: "dev-world", OwnerID: "p1",
+		Type: building.TypeTownHall, State: building.StateActive, Tile: world.Coord{X: 17, Y: 10}, Health: 100}); err != nil {
+		t.Fatal(err)
+	}
+	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
+	if _, err := ai.Tick(ctx, now, 10); err != nil {
+		t.Fatal(err)
+	}
+	updated, err := monsters.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if updated.State != monster.StateChase || updated.TargetID != "outside-base-radius" {
+		t.Fatalf("target outside base radius was not acquired: state=%s target=%s", updated.State, updated.TargetID)
+	}
+	if updated.TargetTile != (world.Coord{X: 17, Y: 10}) || !updated.TargetLastSeenAt.Equal(now) {
+		t.Fatalf("last known target data not saved: tile=%+v seen=%s", updated.TargetTile, updated.TargetLastSeenAt)
+	}
+}
+
+func TestMonsterAIDoesNotSwitchLiveTargetForNewNearbyBuilding(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters, buildings := memory.NewMonsterRepo(), memory.NewBuildingRepo()
+	item := monster.Monster{ID: "stable-target", MapID: "dev-world", Type: monster.TypeRoamingMelee,
+		State: monster.StateWandering, Tile: world.Coord{X: 10, Y: 10}, Health: 100, MaxHealth: 100,
+		SpeedTiles: 1, AggroRadius: 5, AttackRange: 1, UpdatedAt: now.Add(-time.Hour), LastMovedAt: now.Add(-time.Hour)}
+	if err := monsters.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildings.Create(ctx, building.Building{ID: "original-target", MapID: "dev-world", OwnerID: "p1",
+		Type: building.TypeTownHall, State: building.StateActive, Tile: world.Coord{X: 14, Y: 10}, Health: 100}); err != nil {
+		t.Fatal(err)
+	}
+	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
+	if _, err := ai.Tick(ctx, now, 10); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildings.Create(ctx, building.Building{ID: "new-nearer-target", MapID: "dev-world", OwnerID: "p1",
+		Type: building.TypeTownHall, State: building.StateActive, Tile: world.Coord{X: 12, Y: 10}, Health: 100}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := ai.Tick(ctx, now.Add(time.Second), 10); err != nil {
+		t.Fatal(err)
+	}
+	updated, err := monsters.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if updated.TargetID != "original-target" || updated.State != monster.StateChase {
+		t.Fatalf("live target changed without a reason: state=%s target=%s", updated.State, updated.TargetID)
+	}
+}
+
+func TestMonsterAIInvestigatesDestroyedTargetThenForgetsIt(t *testing.T) {
+	ctx := context.Background()
+	now := time.Now().UTC().Truncate(time.Second)
+	monsters, buildings := memory.NewMonsterRepo(), memory.NewBuildingRepo()
+	item := monster.Monster{ID: "investigator", MapID: "dev-world", Type: monster.TypeRoamingMelee,
+		State: monster.StateWandering, Tile: world.Coord{X: 10, Y: 10}, Health: 100, MaxHealth: 100,
+		SpeedTiles: 1, AggroRadius: 5, AttackRange: 1, UpdatedAt: now.Add(-time.Hour), LastMovedAt: now.Add(-time.Hour)}
+	if err := monsters.Create(ctx, item); err != nil {
+		t.Fatal(err)
+	}
+	if err := buildings.Create(ctx, building.Building{ID: "vanished-target", MapID: "dev-world", OwnerID: "p1",
+		Type: building.TypeTownHall, State: building.StateActive, Tile: world.Coord{X: 15, Y: 10}, Health: 100}); err != nil {
+		t.Fatal(err)
+	}
+	ai := NewMonsterAI(monsters, buildings, nil, nil, slog.Default())
+	if _, err := ai.Tick(ctx, now, 10); err != nil {
+		t.Fatal(err)
+	}
+	target, err := buildings.FindByID(ctx, "vanished-target")
+	if err != nil {
+		t.Fatal(err)
+	}
+	target.State, target.Health = building.StateRuined, 0
+	if err := buildings.Update(ctx, target); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := ai.Tick(ctx, now.Add(time.Second), 10); err != nil {
+		t.Fatal(err)
+	}
+	updated, err := monsters.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if updated.State != monster.StateInvestigate || updated.TargetID != "vanished-target" {
+		t.Fatalf("monster did not investigate the last target: state=%s target=%s", updated.State, updated.TargetID)
+	}
+	if updated.TargetTile != (world.Coord{X: 15, Y: 10}) || !updated.TargetLastSeenAt.Equal(now) {
+		t.Fatalf("last known position/time changed after target loss: tile=%+v seen=%s", updated.TargetTile, updated.TargetLastSeenAt)
+	}
+	if _, err := ai.Tick(ctx, now.Add(monsterLostTargetMemory+2*time.Second), 10); err != nil {
+		t.Fatal(err)
+	}
+	updated, err = monsters.FindByID(ctx, item.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if updated.State != monster.StateWandering || updated.TargetID != "" || !updated.TargetLastSeenAt.IsZero() {
+		t.Fatalf("monster did not forget expired target: state=%s target=%s seen=%s", updated.State, updated.TargetID, updated.TargetLastSeenAt)
 	}
 }
 
@@ -372,6 +608,53 @@ func TestMonsterAITargetPreferencesAndFallback(t *testing.T) {
 				t.Fatalf("fallback when preferred is outside aggro: target=%s ok=%v err=%v", target.ID, ok, err)
 			}
 		})
+	}
+}
+
+func TestMonsterAITargetScoringDistributesLightMonstersAcrossBuildings(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	for _, item := range []building.Building{
+		{ID: "house-a", MapID: "dev-world", Type: building.TypeDugout, State: building.StateActive, Tile: world.Coord{X: 11, Y: 10}, Health: 100},
+		{ID: "house-b", MapID: "dev-world", Type: building.TypeDugout, State: building.StateActive, Tile: world.Coord{X: 10, Y: 11}, Health: 100},
+	} {
+		if err := buildings.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	ai := NewMonsterAI(memory.NewMonsterRepo(), buildings, nil, nil, slog.Default())
+	item := monster.Monster{MapID: "dev-world", Type: monster.TypeRoamingMelee, Tile: world.Coord{X: 10, Y: 10}, AggroRadius: 5}
+	assigned := map[string]int{"house-a": 1}
+	ctx = context.WithValue(ctx, monsterTargetCacheKey{}, &monsterTargetCache{assignedTargets: assigned})
+	target, ok, err := ai.nearestTargetExceptCached(ctx, item, nil, nil)
+	if err != nil || !ok {
+		t.Fatalf("target=%+v ok=%v err=%v", target, ok, err)
+	}
+	if target.ID != "house-b" {
+		t.Fatalf("expected unassigned equivalent target house-b, got %s", target.ID)
+	}
+}
+
+func TestMonsterAITargetScoringAllowsIronbacksToConcentrateOnDefense(t *testing.T) {
+	ctx := context.Background()
+	buildings := memory.NewBuildingRepo()
+	for _, item := range []building.Building{
+		{ID: "wall-a", MapID: "dev-world", Type: building.TypeStoneWall, State: building.StateActive, Tile: world.Coord{X: 11, Y: 10}, Health: 100},
+		{ID: "wall-b", MapID: "dev-world", Type: building.TypeStoneWall, State: building.StateActive, Tile: world.Coord{X: 10, Y: 11}, Health: 100},
+	} {
+		if err := buildings.Create(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
+	ai := NewMonsterAI(memory.NewMonsterRepo(), buildings, nil, nil, slog.Default())
+	item := monster.Monster{MapID: "dev-world", Type: monster.TypeIronbackBrute, Tile: world.Coord{X: 10, Y: 10}, AggroRadius: 5}
+	ctx = context.WithValue(ctx, monsterTargetCacheKey{}, &monsterTargetCache{assignedTargets: map[string]int{"wall-a": 2}})
+	target, ok, err := ai.nearestTargetExceptCached(ctx, item, nil, nil)
+	if err != nil || !ok {
+		t.Fatalf("target=%+v ok=%v err=%v", target, ok, err)
+	}
+	if target.ID != "wall-a" {
+		t.Fatalf("expected ironback to keep concentrating on wall-a, got %s", target.ID)
 	}
 }
 

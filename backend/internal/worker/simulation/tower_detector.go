@@ -110,7 +110,7 @@ func (d *TowerDetector) Tick(ctx context.Context, now time.Time) (int, error) {
 	sent := 0
 	for _, creature := range creatures {
 		if !creature.Alive() || creature.TargetType != "building" || creature.TargetID == "" ||
-			(creature.State != monster.StateAggro && creature.State != monster.StateAttacking) {
+			(creature.State != monster.StateAggro && creature.State != monster.StateChase && creature.State != monster.StateRecover && creature.State != monster.StateAttacking) {
 			continue
 		}
 		target, ok := byID[building.ID(creature.TargetID)]

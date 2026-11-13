@@ -94,10 +94,10 @@ export function playCombatEvent(event: RealtimeEnvelope): void {
     playCombatSound('combat.player.attack', gain, `${event.event_id}:player-attack`, pan)
   }
   if (event.type === 'monster.moved') {
-    if (monster.state === 'aggro' && previous && (previous.state === 'idle' || previous.state === 'wandering')) {
+    if ((monster.state === 'aggro' || monster.state === 'chase') && previous && (previous.state === 'idle' || previous.state === 'wandering' || previous.state === 'investigate')) {
       playCombatSound(monsterActionSound(monster.type, 'aggro'), gain, `${event.event_id}:aggro`, pan)
       if (ownTarget) playCombatSound('combat.threat.nearby', 1, `${event.event_id}:threat`)
-    } else if (monster.state === 'wandering' && previous?.state === 'aggro' && previous.targetId) {
+    } else if ((monster.state === 'wandering' || monster.state === 'investigate') && (previous?.state === 'aggro' || previous?.state === 'chase') && previous.targetId) {
       const wasOwnTarget = useGameStore.getState().buildings.some((item) => item.id === previous.targetId && item.owner === ownerId)
       if (wasOwnTarget) playCombatSound('combat.retreat', gain, `${event.event_id}:retreat`, pan)
     } else if (previous && tile && (previous.tile.x !== tile.x || previous.tile.y !== tile.y)) {

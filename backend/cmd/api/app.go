@@ -147,6 +147,7 @@ func newApp(cfg config.Config, log *slog.Logger) (*app, error) {
 		simulationRunner.SetForestService(forestService)
 		simulationRunner.SetMonsterSpawner(simulation.NewMonsterSpawner(monsterService, monsterRepo, buildingRepo, worldRepo, log))
 		monsterAI := simulation.NewMonsterAI(monsterRepo, buildingRepo, worldRepo, eventBus, log)
+		monsterAI.SetSpecialAttacksEnabled(cfg.Simulation.MonsterSpecialAttacks)
 		monsterAI.SetUnitOfWork(uow)
 		monsterAI.SetExperience(experienceService)
 		monsterAI.SetBuildingService(buildingService)

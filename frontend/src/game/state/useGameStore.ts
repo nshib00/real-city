@@ -145,10 +145,11 @@ export type MonsterEntity = {
   creatorId?: string
   expiresAt?: number
   type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
-  state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
+  state: 'idle' | 'wandering' | 'investigate' | 'chase' | 'windup' | 'aggro' | 'attacking' | 'recover' | 'retreat' | 'dead'
   tile: TileCoord
   targetId: string
   targetType: string
+  targetTile?: TileCoord
   health: number
   maxHealth: number
   damage: number
@@ -209,11 +210,14 @@ function writeUIPreferences(preferences: UIPreferences) {
   localStorage.setItem(uiPreferencesStorageKey, JSON.stringify(preferences))
 }
 
+type BuildingActionRequest = { buildingId: string; action: 'repair' | 'upgrade' | 'attack' }
+
 type GameState = {
   tool: ToolMode
   selectedTile: TileCoord | null
   selectedBuildingId: string | null
   repairMenuBuildingId: string | null
+  buildingActionRequest: BuildingActionRequest | null
   selectedMonsterId: string | null
   hoveredTile: TileCoord | null
   placementPreviewKind: BuildingKind | null
@@ -238,8 +242,10 @@ type GameState = {
   setTool: (tool: ToolMode) => void
   setRelocatingBuildingId: (id: string | null) => void
   selectTile: (tile: TileCoord) => void
+  clearSelection: () => void
   selectBuilding: (buildingId: string) => void
   setRepairMenuBuildingId: (buildingId: string | null) => void
+  setBuildingActionRequest: (request: BuildingActionRequest | null) => void
   selectMonster: (monsterId: string) => void
   hoverTile: (tile: TileCoord | null) => void
   setPlacementPreviewKind: (kind: BuildingKind | null) => void
@@ -279,6 +285,7 @@ export const useGameStore = create<GameState>((set) => ({
   selectedTile: null,
   selectedBuildingId: null,
   repairMenuBuildingId: null,
+  buildingActionRequest: null,
   selectedMonsterId: null,
   hoveredTile: null,
   placementPreviewKind: null,
@@ -326,6 +333,7 @@ export const useGameStore = create<GameState>((set) => ({
   selectTile: (selectedTile) => {
     set({ selectedTile, selectedBuildingId: null, selectedMonsterId: null })
   },
+  clearSelection: () => set({ selectedTile: null, selectedBuildingId: null, selectedMonsterId: null }),
   selectBuilding: (selectedBuildingId) =>
     set((state) => {
       const building = findByIndexedId(state.buildings, state.buildingIndexById, selectedBuildingId)
@@ -339,6 +347,7 @@ export const useGameStore = create<GameState>((set) => ({
       }
     }),
   setRepairMenuBuildingId: (repairMenuBuildingId) => set({ repairMenuBuildingId }),
+  setBuildingActionRequest: (buildingActionRequest) => set({ buildingActionRequest }),
   selectMonster: (selectedMonsterId) =>
     set((state) => {
       const monster = findByIndexedId(state.monsters, state.monsterIndexById, selectedMonsterId)

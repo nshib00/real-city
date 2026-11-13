@@ -28,6 +28,16 @@ func TestMonsterSpawnerRelocatesUnsafeSpawnAndCreatesMonster(t *testing.T) {
 	if err := monsterRepo.Update(ctx, source); err != nil {
 		t.Fatal(err)
 	}
+	active, err := monsterRepo.ListByMap(ctx, service.DefaultWorldID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, item := range active {
+		item.Tile = world.Coord{X: 100, Y: 100}
+		if err := monsterRepo.Update(ctx, item); err != nil {
+			t.Fatal(err)
+		}
+	}
 	spawn := monster.SpawnPoint{
 		ID:          "spawn_generated_000",
 		MapID:       service.DefaultWorldID,
@@ -113,5 +123,50 @@ func TestSpawnUnsafeWithinThreeTilesAcrossWorldEdge(t *testing.T) {
 		if err != nil || !unsafe {
 			t.Fatalf("spawn %+v should be unsafe: unsafe=%v err=%v", tile, unsafe, err)
 		}
+	}
+}
+
+func TestLocalMonsterGroupCapScalesWithSettlementActivity(t *testing.T) {
+	if got := localMonsterGroupCap(world.Coord{}, nil); got != 1 {
+		t.Fatalf("wilderness cap = %d, want 1", got)
+	}
+	settlements := make([]building.Building, 3)
+	for i := range settlements {
+		settlements[i] = building.Building{
+			ID: building.ID(string(rune('a' + i))), State: building.StateActive,
+			Tile: world.Coord{X: i, Y: i}, Footprint: building.Footprint{Width: 1, Height: 1},
+		}
+	}
+	if got := localMonsterGroupCap(world.Coord{}, settlements); got != monsterLocalGroupCap {
+		t.Fatalf("settlement cap = %d, want %d", got, monsterLocalGroupCap)
+	}
+}
+
+func TestShouldWarnForSpawnIsLimitedToGeneratedPoints(t *testing.T) {
+	if !shouldWarnForSpawn("spawn_generated_000", time.Unix(0, 0)) {
+		t.Fatal("expected scheduled warning for generated spawn point 000")
+	}
+	if shouldWarnForSpawn("custom_spawn", time.Unix(0, 0)) {
+		t.Fatal("custom spawn point should not be forced into the warning rotation")
+	}
+	if shouldWarnForSpawn("spawn_generated_001", time.Unix(0, 0)) {
+		t.Fatal("more than one point should not warn in the same time window")
+	}
+}
+
+func TestSmallSettlementGetsSpawnProtection(t *testing.T) {
+	settlements := []building.Building{{
+		ID: "starter", State: building.StateActive, Tile: world.Coord{X: 8, Y: 8},
+		Footprint: building.Footprint{Width: 1, Height: 1},
+	}}
+	if !nearNewSettlement(world.Coord{X: 20, Y: 8}, settlements) {
+		t.Fatal("expected 12-tile starter settlement protection")
+	}
+	settlements = append(settlements,
+		building.Building{ID: "b2", State: building.StateActive, Tile: world.Coord{X: 9, Y: 8}, Footprint: building.Footprint{Width: 1, Height: 1}},
+		building.Building{ID: "b3", State: building.StateActive, Tile: world.Coord{X: 10, Y: 8}, Footprint: building.Footprint{Width: 1, Height: 1}},
+	)
+	if nearNewSettlement(world.Coord{X: 20, Y: 8}, settlements) {
+		t.Fatal("mature settlement should use group caps instead of starter protection")
 	}
 }

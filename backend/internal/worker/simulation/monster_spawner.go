@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"real-city/backend/internal/domain/building"
+	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
@@ -19,6 +21,9 @@ import (
 const (
 	monsterSpawnPointCount = 100
 	monsterSpawnSafeRange  = 3
+	monsterLocalGroupCap   = 3
+	monsterLocalGroupRange = 24
+	monsterThreatLeadTime  = 20 * time.Second
 )
 
 type MonsterSpawner struct {
@@ -45,6 +50,17 @@ func (s *MonsterSpawner) Tick(ctx context.Context, now time.Time, limit int) (in
 	if err != nil {
 		return 0, err
 	}
+	activeMonsters, err := s.monsters.ListByMap(ctx, service.DefaultWorldID)
+	if err != nil {
+		return 0, err
+	}
+	settlements := []building.Building(nil)
+	if s.buildings != nil {
+		settlements, err = s.buildings.ListByMap(ctx, service.DefaultWorldID)
+		if err != nil {
+			return 0, err
+		}
+	}
 	spawned := 0
 	for _, spawn := range spawns {
 		if limit > 0 && spawned >= limit {
@@ -54,11 +70,30 @@ func (s *MonsterSpawner) Tick(ctx context.Context, now time.Time, limit int) (in
 		if spawn.NextSpawnAt.After(now) || aliveBySpawn[spawn.ID] >= spawn.MaxAlive {
 			continue
 		}
+		if !spawn.WarningAt.IsZero() && spawn.WarningAt.After(now) {
+			continue
+		}
+		nearbyMonsters := 0
+		for _, active := range activeMonsters {
+			if wrappedChebyshev(active.Tile, spawn.Tile) <= monsterLocalGroupRange {
+				nearbyMonsters++
+			}
+		}
+		if nearbyMonsters >= localMonsterGroupCap(spawn.Tile, settlements) {
+			continue
+		}
 		relocated, err := s.relocateIfUnsafe(ctx, spawn, now)
 		if err != nil {
 			return spawned, err
 		}
 		spawn = relocated
+		if protected, err := s.relocateFromNewSettlement(ctx, spawn, settlements, now); err != nil {
+			return spawned, err
+		} else if protected == nil {
+			continue
+		} else {
+			spawn = *protected
+		}
 		unsafe, err := s.spawnUnsafe(ctx, spawn.Tile)
 		if err != nil {
 			return spawned, err
@@ -66,14 +101,105 @@ func (s *MonsterSpawner) Tick(ctx context.Context, now time.Time, limit int) (in
 		if unsafe {
 			continue
 		}
-		if _, err := s.service.SpawnFromPoint(ctx, spawn, now); err != nil {
+		if spawn.WarningAt.IsZero() && shouldWarnForSpawn(spawn.ID, now) {
+			if spec, ok := catalog.MonsterSpec(monster.TypeIronbackBrute); ok {
+				spawn.Type = spec.Type
+				spawn.WarningAt = now.Add(monsterThreatLeadTime)
+				spawn.NextSpawnAt = spawn.WarningAt
+				spawn.UpdatedAt = now
+				if err := s.monsters.SaveSpawnPoint(ctx, spawn); err != nil {
+					return spawned, err
+				}
+				s.service.WarnThreat(spawn, spawn.WarningAt)
+			}
+			continue
+		}
+		created, err := s.service.SpawnFromPoint(ctx, spawn, now)
+		if err != nil {
 			return spawned, err
 		}
+		activeMonsters = append(activeMonsters, created)
 		aliveBySpawn[spawn.ID]++
 		spawned++
 		s.log.Info("pve.monster.spawn_point.used", "event", "pve.monster.spawn_point.used", "spawn_id", spawn.ID, "tile_x", spawn.Tile.X, "tile_y", spawn.Tile.Y)
 	}
 	return spawned, nil
+}
+
+func (s *MonsterSpawner) relocateFromNewSettlement(ctx context.Context, spawn monster.SpawnPoint, settlements []building.Building, now time.Time) (*monster.SpawnPoint, error) {
+	if !nearNewSettlement(spawn.Tile, settlements) {
+		return &spawn, nil
+	}
+	for ring := monsterSpawnSafeRange + 1; ring <= spawn.Radius+12; ring++ {
+		for _, candidate := range ringCandidates(spawn.Tile, ring) {
+			candidate = wrappedCoord(candidate)
+			if nearNewSettlement(candidate, settlements) {
+				continue
+			}
+			unsafe, err := s.spawnUnsafe(ctx, candidate)
+			if err != nil {
+				return nil, err
+			}
+			if unsafe {
+				continue
+			}
+			spawn.Tile = candidate
+			spawn.UpdatedAt = now
+			if err := s.monsters.SaveSpawnPoint(ctx, spawn); err != nil {
+				return nil, err
+			}
+			return &spawn, nil
+		}
+	}
+	return nil, nil
+}
+
+func nearNewSettlement(tile world.Coord, buildings []building.Building) bool {
+	nearbySettlements := 0
+	tooClose := false
+	for _, item := range buildings {
+		if item.State == building.StateRuined {
+			continue
+		}
+		for _, occupied := range item.OccupiedTiles() {
+			if wrappedChebyshev(tile, occupied) <= monsterLocalGroupRange {
+				nearbySettlements++
+				if wrappedChebyshev(tile, occupied) <= 12 {
+					tooClose = true
+				}
+				break
+			}
+		}
+	}
+	return nearbySettlements > 0 && nearbySettlements < 3 && tooClose
+}
+
+func localMonsterGroupCap(tile world.Coord, buildings []building.Building) int {
+	nearby := 0
+	for _, item := range buildings {
+		if item.State == building.StateRuined {
+			continue
+		}
+		for _, occupied := range item.OccupiedTiles() {
+			if wrappedChebyshev(tile, occupied) <= monsterLocalGroupRange {
+				nearby++
+				break
+			}
+		}
+	}
+	if nearby >= 3 {
+		return monsterLocalGroupCap
+	}
+	return 1
+}
+
+func shouldWarnForSpawn(id monster.SpawnID, now time.Time) bool {
+	index, ok := generatedSpawnIndex(id)
+	if !ok {
+		return false
+	}
+	window := now.Unix() / int64((10*time.Minute)/time.Second)
+	return index == int(window%monsterSpawnPointCount)
 }
 
 func (s *MonsterSpawner) ensureSpawnPoints(ctx context.Context, now time.Time) ([]monster.SpawnPoint, error) {

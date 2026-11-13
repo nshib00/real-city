@@ -13,24 +13,35 @@ import (
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
+	"real-city/backend/internal/observability"
 	"real-city/backend/internal/service"
 	"real-city/backend/internal/service/worldgen"
 	"real-city/backend/pkg/apperror"
 )
 
 type MonsterAI struct {
-	monsters        service.MonsterRepository
-	buildings       service.BuildingRepository
-	worlds          service.WorldRepository
-	uow             service.UnitOfWork
-	experience      *service.ExperienceService
-	buildingService *service.BuildingService
-	moveInterval    time.Duration
-	events          *service.EventBus
-	log             *slog.Logger
+	monsters              service.MonsterRepository
+	buildings             service.BuildingRepository
+	worlds                service.WorldRepository
+	uow                   service.UnitOfWork
+	experience            *service.ExperienceService
+	buildingService       *service.BuildingService
+	moveInterval          time.Duration
+	specialAttacksEnabled bool
+	events                *service.EventBus
+	log                   *slog.Logger
 }
 
 var errMonsterTickConflict = errors.New("monster tick state changed")
+
+const (
+	monsterDetectionBonus      = 3
+	monsterTargetLeashBonus    = 6
+	monsterLostTargetMemory    = 20 * time.Second
+	monsterInvestigationRadius = 2
+	ironbackRamWindup          = 2 * time.Second
+	emberVolleyWindup          = 1500 * time.Millisecond
+)
 
 func (ai *MonsterAI) SetUnitOfWork(uow service.UnitOfWork)                { ai.uow = uow }
 func (ai *MonsterAI) SetExperience(experience *service.ExperienceService) { ai.experience = experience }
@@ -40,8 +51,10 @@ func (ai *MonsterAI) SetBuildingService(buildings *service.BuildingService) {
 }
 
 func NewMonsterAI(monsters service.MonsterRepository, buildings service.BuildingRepository, worlds service.WorldRepository, events *service.EventBus, log *slog.Logger) *MonsterAI {
-	return &MonsterAI{monsters: monsters, buildings: buildings, worlds: worlds, events: events, log: log, moveInterval: time.Second}
+	return &MonsterAI{monsters: monsters, buildings: buildings, worlds: worlds, events: events, log: log, moveInterval: time.Second, specialAttacksEnabled: true}
 }
+
+func (ai *MonsterAI) SetSpecialAttacksEnabled(enabled bool) { ai.specialAttacksEnabled = enabled }
 
 func (ai *MonsterAI) SetMoveInterval(interval time.Duration) {
 	if interval > 0 {
@@ -56,6 +69,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 	}
 	chunkCache := make(map[world.ChunkCoord]world.Chunk)
 	buildingCache := newTickBuildingCache(ai.buildings)
+	assignedTargets := make(map[string]int)
 	processed := 0
 	for _, item := range items {
 		if limit > 0 && processed >= limit {
@@ -77,7 +91,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 			var path []world.Coord
 			var trapOwner string
 			var err error
-			updated, eventType, targetID, path, err = ai.stepCached(txCtx, item, now, chunkCache, buildingCache)
+			updated, eventType, targetID, path, err = ai.stepCached(txCtx, item, now, chunkCache, buildingCache, assignedTargets)
 			if err != nil || updated.ID == "" {
 				return err
 			}
@@ -121,6 +135,7 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 				}
 				var damaged bool
 				damage := updated.Damage
+				damage = ai.abilityDamage(updated.Type, target.Type, damage)
 				if ai.buildingService != nil {
 					damage, err = ai.buildingService.ProtectedDamage(txCtx, player.ID(target.OwnerID), damage)
 					if err != nil {
@@ -151,15 +166,15 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 					if err := ai.buildingService.HandleDestruction(txCtx, target, damagedBuilding, player.ID(updated.CreatorID), now); err != nil {
 						return err
 					}
-					removedRuin = damagedBuilding.Type == building.TypeOilWell || catalog.IsRuin(damagedBuilding.Type)
-				} else if damagedBuilding.State == building.StateRuined && catalog.IsRuin(damagedBuilding.Type) {
+					removedRuin = true
+				} else if damagedBuilding.State == building.StateRuined {
 					if err := ai.buildings.Delete(txCtx, damagedBuilding.ID); err != nil {
 						return err
 					}
 					removedRuin = true
 				}
 				if ai.buildingService != nil {
-					if err := ai.buildingService.RecordBuildingAttack(txCtx, target, damagedBuilding, player.ID(updated.CreatorID), "monster", fmt.Sprintf("%s:%d", updated.ID, now.UnixNano()), now); err != nil {
+					if err := ai.buildingService.RecordBuildingAttack(txCtx, target, damagedBuilding, player.ID(updated.CreatorID), "monster:"+string(updated.Type), fmt.Sprintf("%s:%d", updated.ID, now.UnixNano()), now); err != nil {
 						return err
 					}
 				}
@@ -223,47 +238,128 @@ func (ai *MonsterAI) Tick(ctx context.Context, now time.Time, limit int) (int, e
 		}
 		ai.log.Debug("pve.monster.tick", "event", "pve.monster.tick", "monster_id", updated.ID, "monster_type", updated.Type, "state", updated.State, "target_id", targetID, "chunk_id", world.ChunkID(updated.MapID, world.ChunkForTile(updated.Tile)))
 		processed++
+		if updated.TargetType == "building" && updated.TargetID != "" {
+			assignedTargets[updated.TargetID]++
+		}
 	}
 	return processed, nil
 }
 
 func (ai *MonsterAI) step(ctx context.Context, item monster.Monster, now time.Time, chunkCache map[world.ChunkCoord]world.Chunk) (monster.Monster, service.EventType, string, []world.Coord, error) {
-	return ai.stepCached(ctx, item, now, chunkCache, nil)
+	return ai.stepCached(ctx, item, now, chunkCache, nil, nil)
 }
 
-func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now time.Time, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) (monster.Monster, service.EventType, string, []world.Coord, error) {
-	ctx = context.WithValue(ctx, monsterTargetCacheKey{}, &monsterTargetCache{})
+func (ai *MonsterAI) retainedTarget(ctx context.Context, item *monster.Monster, now time.Time) (building.Building, bool, world.Coord, bool, error) {
+	if item.TargetType != "building" || item.TargetID == "" {
+		return building.Building{}, false, world.Coord{}, false, nil
+	}
+	if ai.buildings == nil {
+		return building.Building{}, false, item.TargetTile, !item.TargetLastSeenAt.IsZero() && now.Sub(item.TargetLastSeenAt) <= monsterLostTargetMemory, nil
+	}
+	if item.TargetLastSeenAt.IsZero() {
+		item.TargetLastSeenAt = item.UpdatedAt
+	}
+	target, err := ai.buildings.FindByID(ctx, building.ID(item.TargetID))
+	if err == nil && target.State != building.StateRuined && target.State != building.StatePlanned && target.Health > 0 && !building.IsTrapType(target.Type) {
+		tile := closestBuildingTile(item.Tile, target)
+		item.TargetTile = tile
+		if wrappedManhattan(item.Tile, tile) <= max(0, item.AggroRadius+monsterTargetLeashBonus) {
+			item.TargetLastSeenAt = now
+			return target, true, tile, false, nil
+		}
+	} else if err != nil {
+		var appErr *apperror.Error
+		if !errors.As(err, &appErr) || appErr.Kind != apperror.NotFound {
+			return building.Building{}, false, world.Coord{}, false, err
+		}
+	}
+	if now.Sub(item.TargetLastSeenAt) <= monsterLostTargetMemory {
+		return building.Building{}, false, item.TargetTile, true, nil
+	}
+	item.TargetID, item.TargetType = "", ""
+	item.TargetTile, item.TargetLastSeenAt = world.Coord{}, time.Time{}
+	return building.Building{}, false, world.Coord{}, false, nil
+}
+
+func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now time.Time, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache, assignedTargets map[string]int) (monster.Monster, service.EventType, string, []world.Coord, error) {
+	ctx = context.WithValue(ctx, monsterTargetCacheKey{}, &monsterTargetCache{assignedTargets: assignedTargets})
 	if item.CreatorID != "" && !item.ExpiresAt.After(now) {
 		item.State, item.Health, item.UpdatedAt = monster.StateDead, 0, now
 		return item, service.EventMonsterDespawned, "", nil, nil
 	}
 	origin := item.Tile
 	excluded := make(map[building.ID]bool)
-	target, ok, err := ai.nearestTargetExceptCached(ctx, item, excluded, buildingCache)
+	target, ok, investigateTile, investigating, err := ai.retainedTarget(ctx, &item, now)
 	if err != nil {
 		return monster.Monster{}, "", "", nil, err
 	}
+	if !ok && !investigating && ai.buildings != nil {
+		search := item
+		search.AggroRadius += monsterDetectionBonus
+		target, ok, err = ai.nearestTargetExceptCached(ctx, search, excluded, buildingCache)
+		if err != nil {
+			return monster.Monster{}, "", "", nil, err
+		}
+		if ok {
+			item.TargetID, item.TargetType = string(target.ID), "building"
+			item.TargetTile = closestBuildingTile(item.Tile, target)
+			item.TargetLastSeenAt = now
+		}
+	}
 	item.UpdatedAt = now
 	for ok {
+		isWindingUp := item.State == monster.StateWindup
 		targetTile := closestBuildingTile(item.Tile, target)
-		item.State = monster.StateAggro
+		lineOfSight := true
+		if item.Type == monster.TypeEmberWisp {
+			lineOfSight, err = ai.clearShotToBuilding(ctx, item, target, targetTile, chunkCache, buildingCache)
+			if err != nil {
+				return monster.Monster{}, "", "", nil, err
+			}
+		}
+		item.State = monster.StateChase
 		item.TargetID = string(target.ID)
 		item.TargetType = "building"
-		if item.Alive() && wrappedManhattan(item.Tile, targetTile) <= item.AttackRange && !item.NextAttackAt.After(now) && !item.ShockUntil.After(now) {
+		item.TargetTile = targetTile
+		item.TargetLastSeenAt = now
+		if item.Alive() && wrappedManhattan(item.Tile, targetTile) <= item.AttackRange && lineOfSight && !item.NextAttackAt.After(now) && !item.ShockUntil.After(now) {
+			if windup := ai.attackWindup(item.Type, target.Type); windup > 0 && !isWindingUp {
+				item.State = monster.StateWindup
+				item.NextAttackAt = now.Add(windup)
+				return item, service.EventMonsterMoved, string(target.ID), nil, nil
+			}
+			if isWindingUp && item.NextAttackAt.After(now) {
+				item.State = monster.StateWindup
+				return item, service.EventMonsterMoved, string(target.ID), nil, nil
+			}
 			item.State = monster.StateAttacking
 			item.NextAttackAt = now.Add(item.AttackCooldown)
 			return item, service.EventMonsterAttacked, string(target.ID), nil, nil
 		}
+		if isWindingUp && item.NextAttackAt.After(now) {
+			item.State = monster.StateWindup
+			return item, service.EventMonsterMoved, string(target.ID), nil, nil
+		}
+		if wrappedManhattan(item.Tile, targetTile) <= item.AttackRange && lineOfSight {
+			item.State = monster.StateRecover
+			return item, service.EventMonsterMoved, string(target.ID), nil, nil
+		}
 		if item.LastMovedAt.After(now) {
 			return item, service.EventMonsterMoved, string(target.ID), nil, nil
 		}
-		path, err := ai.nextPassablePathCached(ctx, item.Tile, targetTile, item.SpeedTiles, item.AttackRange, item.Type == monster.TypeEmberWisp, chunkCache, buildingCache)
+		pathItem := item
+		if !lineOfSight && item.Type == monster.TypeEmberWisp {
+			pathItem.AttackRange = 1
+		}
+		path, err := ai.pathToBuildingContact(ctx, pathItem, target, chunkCache, buildingCache)
 		if err != nil {
 			return monster.Monster{}, "", "", nil, err
 		}
 		if len(path) == 0 {
 			excluded[target.ID] = true
-			target, ok, err = ai.nearestTargetExceptCached(ctx, item, excluded, buildingCache)
+			search := item
+			search.AggroRadius += monsterDetectionBonus
+			target, ok, err = ai.nearestTargetExceptCached(ctx, search, excluded, buildingCache)
 			if err != nil {
 				return monster.Monster{}, "", "", nil, err
 			}
@@ -274,6 +370,25 @@ func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now t
 		}
 		item.LastMovedAt = now
 		return item, service.EventMonsterMoved, string(target.ID), path, nil
+	}
+	if investigating {
+		item.State = monster.StateInvestigate
+		if wrappedManhattan(item.Tile, investigateTile) > monsterInvestigationRadius && !item.LastMovedAt.After(now) {
+			path, err := ai.nextPassablePathCached(ctx, item.Tile, investigateTile, item.SpeedTiles, monsterInvestigationRadius, item.Type == monster.TypeEmberWisp, chunkCache, buildingCache)
+			if err != nil {
+				return monster.Monster{}, "", "", nil, err
+			}
+			if len(path) > 0 {
+				item.Tile = path[len(path)-1]
+				item.LastMovedAt = now
+				return item, service.EventMonsterMoved, item.TargetID, path, nil
+			}
+		}
+		if now.Sub(item.TargetLastSeenAt) <= monsterLostTargetMemory {
+			return item, service.EventMonsterMoved, item.TargetID, nil, nil
+		}
+		item.TargetID, item.TargetType = "", ""
+		item.TargetTile, item.TargetLastSeenAt = world.Coord{}, time.Time{}
 	}
 	if targetMonster, ok, err := ai.collidingMonster(ctx, item); err != nil {
 		return monster.Monster{}, "", "", nil, err
@@ -304,6 +419,7 @@ func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now t
 	item.State = monster.StateWandering
 	item.TargetID = ""
 	item.TargetType = ""
+	item.TargetTile, item.TargetLastSeenAt = world.Coord{}, time.Time{}
 	if item.LastMovedAt.After(now) {
 		return item, service.EventMonsterMoved, "", nil, nil
 	}
@@ -320,6 +436,55 @@ func (ai *MonsterAI) stepCached(ctx context.Context, item monster.Monster, now t
 		return item, service.EventMonsterMoved, "", path, nil
 	}
 	return item, service.EventMonsterMoved, "", nil, nil
+}
+
+func monsterAttackWindup(monsterType monster.Type, targetType building.Type) time.Duration {
+	switch monsterType {
+	case monster.TypeIronbackBrute:
+		if isMonsterRamTarget(targetType) {
+			return ironbackRamWindup
+		}
+	case monster.TypeEmberWisp:
+		return emberVolleyWindup
+	}
+	return 0
+}
+
+func (ai *MonsterAI) attackWindup(monsterType monster.Type, targetType building.Type) time.Duration {
+	if !ai.specialAttacksEnabled {
+		return 0
+	}
+	return monsterAttackWindup(monsterType, targetType)
+}
+
+func monsterAbilityDamage(monsterType monster.Type, targetType building.Type, damage int) int {
+	switch monsterType {
+	case monster.TypeIronbackBrute:
+		if isMonsterRamTarget(targetType) {
+			return damage * 2
+		}
+	case monster.TypeEmberWisp:
+		if spec, ok := catalog.GetBuilding(targetType); ok && (spec.Category == "industry" || spec.Category == "fields") {
+			return damage * 3 / 2
+		}
+	}
+	return damage
+}
+
+func (ai *MonsterAI) abilityDamage(monsterType monster.Type, targetType building.Type, damage int) int {
+	if !ai.specialAttacksEnabled {
+		return damage
+	}
+	return monsterAbilityDamage(monsterType, targetType, damage)
+}
+
+func isMonsterRamTarget(targetType building.Type) bool {
+	switch targetType {
+	case building.TypeWoodenWall, building.TypeStoneWall, building.TypeConcreteWall, building.TypeModernWall:
+		return true
+	default:
+		return false
+	}
 }
 
 func (ai *MonsterAI) nearestTarget(ctx context.Context, item monster.Monster) (building.Building, bool, error) {
@@ -363,6 +528,10 @@ func (ai *MonsterAI) nearestTargetExceptCached(ctx context.Context, item monster
 	var best building.Building
 	bestDistance := 0
 	bestPreferred := false
+	var assignedTargets map[string]int
+	if cache != nil {
+		assignedTargets = cache.assignedTargets
+	}
 	var bestDefense building.Building
 	bestDefenseDistance := 0
 	for _, target := range buildings {
@@ -374,11 +543,15 @@ func (ai *MonsterAI) nearestTargetExceptCached(ctx context.Context, item monster
 			continue
 		}
 		preferred := catalog.MonsterPrefersBuilding(item.Type, target.Type)
+		score := targetScore(item, target, distance, preferred, buildings, assignedTargets)
 		if isDefenseTarget(target.Type) && (bestDefense.ID == "" || distance < bestDefenseDistance || distance == bestDefenseDistance && target.ID < bestDefense.ID) {
 			bestDefense, bestDefenseDistance = target, distance
 		}
-		if best.ID == "" || preferred && !bestPreferred || preferred == bestPreferred &&
-			(distance < bestDistance || distance == bestDistance && target.ID < best.ID) {
+		bestScore := -int(^uint(0) >> 1)
+		if best.ID != "" {
+			bestScore = targetScore(item, best, bestDistance, bestPreferred, buildings, assignedTargets)
+		}
+		if best.ID == "" || score > bestScore || score == bestScore && target.ID < best.ID {
 			best = target
 			bestDistance = distance
 			bestPreferred = preferred
@@ -392,8 +565,59 @@ func (ai *MonsterAI) nearestTargetExceptCached(ctx context.Context, item monster
 
 type monsterTargetCacheKey struct{}
 type monsterTargetCache struct {
-	buildings []building.Building
-	loaded    bool
+	buildings       []building.Building
+	loaded          bool
+	assignedTargets map[string]int
+}
+
+func targetScore(item monster.Monster, target building.Building, distance int, preferred bool, nearby []building.Building, assigned map[string]int) int {
+	score := -distance * 24
+	if preferred {
+		score += 1000
+	}
+	if spec, ok := catalog.GetBuilding(target.Type); ok {
+		switch spec.Category {
+		case "center":
+			score += 220
+		case "housing":
+			score += 100
+		case "industry", "fields", "storage", "trade", "resource":
+			score += 80
+		case "defense":
+			score += 65
+		}
+		if spec.Health > 0 && target.Health > 0 {
+			damageTaken := max(0, spec.Health-target.Health)
+			score += min(40, damageTaken*40/spec.Health)
+		}
+	}
+	for _, guard := range nearby {
+		if guard.ID != target.ID && isDefenseTarget(guard.Type) && wrappedManhattan(closestBuildingTile(target.Tile, target), closestBuildingTile(target.Tile, guard)) <= 2 {
+			score -= 45
+		}
+	}
+	if item.Type != monster.TypeIronbackBrute {
+		score -= min(3, assigned[string(target.ID)]) * 180
+	}
+	return score
+}
+
+func (ai *MonsterAI) pathToBuildingContact(ctx context.Context, item monster.Monster, target building.Building, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) ([]world.Coord, error) {
+	contacts := target.OccupiedTiles()
+	if len(contacts) == 0 {
+		contacts = []world.Coord{target.Tile}
+	}
+	var best []world.Coord
+	for _, contact := range contacts {
+		path, err := ai.nextPassablePathCached(ctx, item.Tile, contact, item.SpeedTiles, item.AttackRange, item.Type == monster.TypeEmberWisp, chunkCache, buildingCache)
+		if err != nil {
+			return nil, err
+		}
+		if len(path) > 0 && (best == nil || len(path) < len(best) || len(path) == len(best) && (path[len(path)-1].X < best[len(best)-1].X || path[len(path)-1].X == best[len(best)-1].X && path[len(path)-1].Y < best[len(best)-1].Y)) {
+			best = path
+		}
+	}
+	return best, nil
 }
 
 func isDefenseTarget(kind building.Type) bool {
@@ -463,7 +687,10 @@ func (ai *MonsterAI) nextPassablePath(ctx context.Context, from world.Coord, to 
 	return ai.nextPassablePathCached(ctx, from, to, speed, attackRange, false, chunkCache, nil)
 }
 
-func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, flying bool, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) ([]world.Coord, error) {
+func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coord, to world.Coord, speed, attackRange int, flying bool, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) (result []world.Coord, resultErr error) {
+	started := time.Now()
+	visited, maxQueue, failed := 0, 0, false
+	defer func() { observability.MonsterPathSearch(started, visited, maxQueue, failed || resultErr != nil) }()
 	from, to = wrappedCoord(from), wrappedCoord(to)
 	if wrappedManhattan(from, to) <= attackRange {
 		return nil, nil
@@ -497,6 +724,8 @@ func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coor
 	parents := map[world.Coord]world.Coord{from: from}
 	directions := []world.Coord{{X: 1}, {X: -1}, {Y: 1}, {Y: -1}}
 	for head := 0; head < len(queue) && head < 2048; head++ {
+		visited++
+		maxQueue = max(maxQueue, len(queue)-head)
 		current := queue[head]
 		if current != from && wrappedManhattan(current, to) <= attackRange {
 			path := []world.Coord{}
@@ -528,6 +757,7 @@ func (ai *MonsterAI) nextPassablePathCached(ctx context.Context, from world.Coor
 			}
 		}
 	}
+	failed = true
 	return nil, nil
 }
 
@@ -607,6 +837,58 @@ func (ai *MonsterAI) isPassable(ctx context.Context, tile world.Coord, chunkCach
 		}
 	}
 	return false, nil
+}
+
+func (ai *MonsterAI) clearShotToBuilding(ctx context.Context, item monster.Monster, target building.Building, targetTile world.Coord, chunkCache map[world.ChunkCoord]world.Chunk, buildingCache *tickBuildingCache) (bool, error) {
+	dx, dy := targetTile.X-item.Tile.X, targetTile.Y-item.Tile.Y
+	if dx > world.WorldSize/2 {
+		dx -= world.WorldSize
+	} else if dx < -world.WorldSize/2 {
+		dx += world.WorldSize
+	}
+	if dy > world.WorldSize/2 {
+		dy -= world.WorldSize
+	} else if dy < -world.WorldSize/2 {
+		dy += world.WorldSize
+	}
+	absDX, absDY := dx, dy
+	if absDX < 0 {
+		absDX = -absDX
+	}
+	if absDY < 0 {
+		absDY = -absDY
+	}
+	steps := max(absDX, absDY)
+	if steps < 2 {
+		return true, nil
+	}
+	for step := 1; step < steps; step++ {
+		tile := wrappedCoord(world.Coord{X: item.Tile.X + dx*step/steps, Y: item.Tile.Y + dy*step/steps})
+		passable, err := ai.isPassable(ctx, tile, chunkCache)
+		if err != nil {
+			return false, err
+		}
+		if !passable {
+			return false, nil
+		}
+		if ai.buildings == nil {
+			continue
+		}
+		items, err := ai.buildingsInRect(ctx, item.MapID, tile.X, tile.Y, tile.X, tile.Y, buildingCache)
+		if err != nil {
+			return false, err
+		}
+		for _, obstacle := range items {
+			if obstacle.ID != target.ID && !building.IsTrapType(obstacle.Type) && obstacle.State != building.StateRuined {
+				for _, occupied := range obstacle.OccupiedTiles() {
+					if wrappedCoord(occupied) == tile {
+						return false, nil
+					}
+				}
+			}
+		}
+	}
+	return true, nil
 }
 
 func (ai *MonsterAI) createLootDrop(ctx context.Context, item monster.Monster, now time.Time) error {

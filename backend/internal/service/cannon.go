@@ -132,6 +132,12 @@ func (s *CannonService) fire(ctx context.Context, id building.ID, now time.Time)
 		previous := target
 		killed := target.ApplyDamage(stats.Damage, now)
 		dealt = previous.Health - target.Health
+		if !killed && (target.Type == monster.TypeForestStalker || target.Type == monster.TypeEmberWisp) &&
+			(target.CreatorID == "" || target.CreatorID != cannon.OwnerID) && shouldRetaliateToCannon(txCtx, s.buildings, target) {
+			target.State = monster.StateChase
+			target.TargetID, target.TargetType = string(cannon.ID), "building"
+			target.TargetTile, target.TargetLastSeenAt = cannon.Tile, now
+		}
 		if cannon.Type == building.TypeDefenseStormCoil && target.ShockUntil.Before(now.Add(2*time.Second)) {
 			target.ShockUntil = now.Add(2 * time.Second)
 		}
@@ -195,6 +201,18 @@ func (s *CannonService) fire(ctx context.Context, id building.ID, now time.Time)
 	s.publishShot(ctx, cannon, target, drop, dealt)
 	s.log.Info("defense_weapon.fired", "event", "defense_weapon.fired", "building_id", id, "monster_id", target.ID, "ammo", ammo, "damage", catalogDamage(cannon.Type, cannon.Level))
 	return true, nil
+}
+
+func shouldRetaliateToCannon(ctx context.Context, buildings BuildingRepository, target monster.Monster) bool {
+	if target.TargetType != "building" || target.TargetID == "" || buildings == nil {
+		return true
+	}
+	current, err := buildings.FindByID(ctx, building.ID(target.TargetID))
+	if err != nil {
+		return true
+	}
+	spec, ok := catalog.GetBuilding(current.Type)
+	return !ok || spec.Category != "defense"
 }
 
 func catalogDamage(kind building.Type, level int) int {

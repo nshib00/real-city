@@ -25,11 +25,16 @@ const (
 	TypeEmberWisp        Type = "ember_wisp"
 	TypeAncientColossus  Type = "ancient_colossus"
 
-	StateIdle      State = "idle"
-	StateWandering State = "wandering"
-	StateAggro     State = "aggro"
-	StateAttacking State = "attacking"
-	StateDead      State = "dead"
+	StateIdle        State = "idle"
+	StateWandering   State = "wandering"
+	StateInvestigate State = "investigate"
+	StateChase       State = "chase"
+	StateWindup      State = "windup"
+	StateAggro       State = "aggro"
+	StateAttacking   State = "attacking"
+	StateRecover     State = "recover"
+	StateRetreat     State = "retreat"
+	StateDead        State = "dead"
 
 	IntentNone   Intent = "none"
 	IntentWander Intent = "wander"
@@ -38,30 +43,32 @@ const (
 )
 
 type Monster struct {
-	ID             ID
-	MapID          string
-	SpawnID        SpawnID
-	CreatorID      string
-	ExpiresAt      time.Time
-	Type           Type
-	State          State
-	Tile           world.Coord
-	HomeTile       world.Coord
-	TargetID       string
-	TargetType     string
-	Health         int
-	MaxHealth      int
-	Damage         int
-	SpeedTiles     int
-	AggroRadius    int
-	AttackRange    int
-	AttackCooldown time.Duration
-	NextAttackAt   time.Time
-	ShockUntil     time.Time
-	LastMovedAt    time.Time
-	LootCoins      int
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	ID               ID
+	MapID            string
+	SpawnID          SpawnID
+	CreatorID        string
+	ExpiresAt        time.Time
+	Type             Type
+	State            State
+	Tile             world.Coord
+	HomeTile         world.Coord
+	TargetID         string
+	TargetType       string
+	TargetTile       world.Coord
+	TargetLastSeenAt time.Time
+	Health           int
+	MaxHealth        int
+	Damage           int
+	SpeedTiles       int
+	AggroRadius      int
+	AttackRange      int
+	AttackCooldown   time.Duration
+	NextAttackAt     time.Time
+	ShockUntil       time.Time
+	LastMovedAt      time.Time
+	LootCoins        int
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
 }
 
 type SpawnPoint struct {
@@ -73,6 +80,7 @@ type SpawnPoint struct {
 	MaxAlive    int
 	Cooldown    time.Duration
 	NextSpawnAt time.Time
+	WarningAt   time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }

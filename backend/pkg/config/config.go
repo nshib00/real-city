@@ -58,6 +58,7 @@ type SimulationConfig struct {
 	LockTTL                time.Duration
 	CatchUpLimit           time.Duration
 	ShutdownTimeout        time.Duration
+	MonsterSpecialAttacks  bool
 }
 
 type StorageConfig struct {
@@ -112,6 +113,7 @@ func Load() Config {
 			LockTTL:                duration("SIMULATION_LOCK_TTL", 15*time.Second),
 			CatchUpLimit:           duration("SIMULATION_CATCH_UP_LIMIT", 10*time.Minute),
 			ShutdownTimeout:        duration("SIMULATION_SHUTDOWN_TIMEOUT", 5*time.Second),
+			MonsterSpecialAttacks:  boolean("MONSTER_SPECIAL_ATTACKS", true),
 		},
 		Storage: StorageConfig{
 			PublicURL: env("STORAGE_PUBLIC_URL", "http://localhost:8080/assets"),

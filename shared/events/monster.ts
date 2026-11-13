@@ -16,7 +16,7 @@ export type MonsterPayload = {
     creator_id?: string
     expires_at?: string
     type: 'roaming_melee' | 'resource_guardian' | 'ruins_guardian' | 'forest_stalker' | 'spore_beast' | 'ironback_brute' | 'ember_wisp' | 'ancient_colossus'
-    state: 'idle' | 'wandering' | 'aggro' | 'attacking' | 'dead'
+    state: 'idle' | 'wandering' | 'investigate' | 'chase' | 'windup' | 'aggro' | 'attacking' | 'recover' | 'retreat' | 'dead'
     tile_x?: number
     tile_y?: number
     Tile?: { X: number; Y: number }
@@ -30,6 +30,7 @@ export type MonsterPayload = {
     TargetID?: string
     target_type?: string
     TargetType?: string
+    TargetTile?: { X: number; Y: number }
     updated_at?: string
     UpdatedAt?: string
   }

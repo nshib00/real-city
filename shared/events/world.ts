@@ -20,6 +20,7 @@ export type WorldEventType =
   | 'monster.damaged'
   | 'monster.died'
   | 'monster.despawned'
+  | 'monster.threat.warning'
   | 'monster.loot.dropped'
   | 'monster.loot.claimed'
   | 'cannon.shot'

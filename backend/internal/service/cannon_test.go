@@ -148,6 +148,56 @@ func TestMultipleWeaponsFireAtSameMonsterInOneTick(t *testing.T) {
 	}
 }
 
+func TestRangedMonstersRetaliateAgainstWeaponThatDamagesThem(t *testing.T) {
+	for _, tc := range []struct {
+		kind         monster.Type
+		wantRetarget bool
+	}{
+		{kind: monster.TypeEmberWisp, wantRetarget: true},
+		{kind: monster.TypeForestStalker, wantRetarget: true},
+		{kind: monster.TypeRoamingMelee, wantRetarget: false},
+	} {
+		t.Run(string(tc.kind), func(t *testing.T) {
+			ctx := context.Background()
+			now := time.Date(2026, 10, 24, 12, 0, 0, 0, time.UTC)
+			log := slog.New(slog.NewTextHandler(io.Discard, nil))
+			buildings, monsters := memory.NewBuildingRepo(), memory.NewMonsterRepo()
+			for _, item := range []building.Building{
+				{ID: "hostile-weapon", MapID: DefaultWorldID, OwnerID: "defender", Type: building.TypeDefenseBoltThrower,
+					Level: 1, State: building.StateActive, Health: 180, Tile: world.Coord{X: 1, Y: 1}, CannonEnabled: true},
+				{ID: "chosen-goal", MapID: DefaultWorldID, OwnerID: "other", Type: building.TypeTownHall,
+					State: building.StateActive, Health: 500, Tile: world.Coord{X: 7, Y: 1}},
+			} {
+				if err := buildings.Create(ctx, item); err != nil {
+					t.Fatal(err)
+				}
+			}
+			creature := monster.Monster{ID: "attacked-monster", MapID: DefaultWorldID, Type: tc.kind,
+				State: monster.StateChase, Tile: world.Coord{X: 2, Y: 1}, Health: 1000, MaxHealth: 1000,
+				TargetID: "chosen-goal", TargetType: "building", TargetTile: world.Coord{X: 7, Y: 1},
+				TargetLastSeenAt: now, UpdatedAt: now.Add(-time.Second)}
+			if err := monsters.Create(ctx, creature); err != nil {
+				t.Fatal(err)
+			}
+			svc := NewCannonService(buildings, monsters, memory.NewEconomyRepo(), nil, nil, NewMonsterService(monsters, log), nil, nil, log)
+			fired, err := svc.Tick(ctx, now, 10)
+			if err != nil || fired != 1 {
+				t.Fatalf("weapon shot: fired=%d err=%v", fired, err)
+			}
+			updated, err := monsters.FindByID(ctx, creature.ID)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if tc.wantRetarget && (updated.TargetID != "hostile-weapon" || updated.State != monster.StateChase || updated.TargetTile != (world.Coord{X: 1, Y: 1})) {
+				t.Fatalf("ranged monster did not retaliate: %+v", updated)
+			}
+			if !tc.wantRetarget && updated.TargetID != "chosen-goal" {
+				t.Fatalf("ordinary monster unexpectedly switched target: %+v", updated)
+			}
+		})
+	}
+}
+
 func TestDefenseWeaponTargetsMonsterAcrossWrappedWorld(t *testing.T) {
 	for _, tc := range []struct {
 		name     string

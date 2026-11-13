@@ -979,6 +979,19 @@ function drawMonsterSprite(
   } else {
     marker.ellipse(x, y + 5 * zoom, markerWidth, 9 * zoom).fill({ color: 0x000000, alpha: 0.18 })
   }
+  if (command.monster.state === 'windup') {
+    const target = command.monster.targetTile
+    const dx = target ? target.x - command.monster.tile.x : 0
+    const dy = target ? target.y - command.monster.tile.y : 0
+    const screenX = dx - dy
+    const screenY = (dx + dy) * 0.5
+    const length = Math.hypot(screenX, screenY) || 1
+    marker.ellipse(x, y + 5 * zoom, markerWidth + 8 * zoom, 16 * zoom)
+      .stroke({ color: 0xff9b45, alpha: 0.95, width: Math.max(2, 3 * zoom) })
+    marker.moveTo(x, y + 5 * zoom)
+      .lineTo(x + screenX / length * 22 * zoom, y + 5 * zoom + screenY / length * 22 * zoom)
+      .stroke({ color: 0xffd17a, alpha: 0.9, width: Math.max(2, 2.5 * zoom) })
+  }
 
   const previewUrl = `/assets/monsters/${command.monster.type}/${command.monster.type}_preview.png`
   const atlasTexture = monsterFrameTexture(command)

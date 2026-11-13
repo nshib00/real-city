@@ -116,6 +116,34 @@ func TestEarlyMonsterLootTables(t *testing.T) {
 	}
 }
 
+func TestRandomMonsterSpawnsExcludeUnwarnedColossus(t *testing.T) {
+	for range 1000 {
+		spec, ok := randomMonsterSpec()
+		if !ok {
+			t.Fatal("expected a monster spec")
+		}
+		if spec.Type == monster.TypeAncientColossus {
+			t.Fatal("colossus must wait for its global warning flow")
+		}
+	}
+}
+
+func TestMonsterThreatWarningPublishesArrivalTimeAndLocation(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	service := NewMonsterService(memory.NewMonsterRepo(), slog.Default())
+	bus := NewEventBus(1)
+	service.SetEventBus(bus)
+	events := bus.Subscribe(ctx)
+	arrival := time.Date(2026, 11, 14, 12, 0, 20, 0, time.UTC)
+	service.WarnThreat(monster.SpawnPoint{MapID: DefaultWorldID, Type: monster.TypeIronbackBrute, Tile: world.Coord{X: 17, Y: 23}}, arrival)
+	event := <-events
+	payload, ok := event.Payload.(MonsterThreatWarningPayload)
+	if event.Type != EventMonsterThreatWarning || !ok || payload.MonsterType != string(monster.TypeIronbackBrute) || payload.TileX != 17 || payload.TileY != 23 || !payload.ArrivesAt.Equal(arrival) {
+		t.Fatalf("unexpected threat warning event: %#v", event)
+	}
+}
+
 func TestMonsterDeathCreatesPublicLootDrop(t *testing.T) {
 	ctx := context.Background()
 	monsterRepo := memory.NewMonsterRepo()
