@@ -51,7 +51,9 @@ func (s *CombatService) validatePvPTarget(ctx context.Context, actor player.ID, 
 		}
 		for _, from := range source.OccupiedTiles() {
 			for _, to := range target.OccupiedTiles() {
-				if wrappedTileDistance(from.X, to.X)+wrappedTileDistance(from.Y, to.Y) <= catalog.CombatRules().AttackRangeTiles {
+				dx, dy := wrappedTileDistance(from.X, to.X), wrappedTileDistance(from.Y, to.Y)
+				rangeTiles := catalog.CombatRules().AttackRangeTiles
+				if dx*dx+dy*dy <= rangeTiles*rangeTiles {
 					return target, nil
 				}
 			}
