@@ -36,7 +36,7 @@ func TestDefenseEffectsMatchSpecifications(t *testing.T) {
 		t.Fatalf("bolt level 8: %+v", bolt)
 	}
 	storm, ok := DefenseWeaponLevel(building.TypeDefenseStormCoil, 6)
-	if !ok || storm.Range != 4 || storm.Damage != 88 || storm.Cooldown != 20*time.Second || storm.Ammo != economy.ResourceFuel || storm.DamageType != "shock" {
+	if !ok || storm.Range != 3 || storm.Damage != 88 || storm.Cooldown != 20*time.Second || storm.Ammo != economy.ResourceFuel || storm.DamageType != "shock" {
 		t.Fatalf("storm level 6: %+v", storm)
 	}
 	stakes, ok := DefenseTrapLevel(building.TypeDefenseStakes, 6)

@@ -23627,7 +23627,7 @@
         "Ammo": "fuel"
       },
       {
-        "Range": 4,
+        "Range": 3,
         "Damage": 88,
         "Cooldown": 20000000000,
         "DamageType": "shock",
