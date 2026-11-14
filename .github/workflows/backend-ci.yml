@@ -47,7 +47,11 @@ jobs:
       redis:
         image: redis:7-alpine
         ports: ['6379:6379']
-        options: --health-cmd 'redis-cli ping' --health-interval 5s --health-timeout 5s --health-retries 20
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
     env:
       POSTGRES_DSN: postgres://real_city:real_city@localhost:5432/real_city?sslmode=disable
       TEST_POSTGRES_DSN: postgres://real_city:real_city@localhost:5432/real_city?sslmode=disable

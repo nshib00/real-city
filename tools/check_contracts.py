@@ -8,7 +8,12 @@ config=json.loads(read('data/world/config.json'))
 assert int(re.search(r'const WorldSize\s*=\s*(\d+)',read('backend/internal/domain/world/wrap.go'))[1])==config['size_tiles']
 assert int(re.search(r'const ChunkSize\s*=\s*(\d+)',read('backend/internal/domain/world/coord.go'))[1])==config['chunk_size']
 router=read('backend/internal/adapter/http/router.go')
-routes={(m.lower(),p) for m,p in re.findall(r'mux.Handle(?:Func)?\("([A-Z]+) /api/v1([^" ]+)"',router) if p!='/realtime'}
+routes=set()
+for method,path in re.findall(r'mux.Handle(?:Func)?\("([A-Z]+) (/[^" ]+)"',router):
+    if path == '/api/v1/realtime':
+        continue  # WebSocket endpoint is not an OpenAPI operation.
+    path=path.removeprefix('/api/v1') if path.startswith('/api/v1/') else path
+    routes.add((method.lower(),path))
 spec=json.loads(read('backend/docs/swagger/openapi.json'))
 documented={(m,p) for p,ops in spec['paths'].items() for m in ops if m in ['get','post','patch','delete','put']}
 assert routes==documented, f'OpenAPI/routes differ: missing={routes-documented}, obsolete={documented-routes}'

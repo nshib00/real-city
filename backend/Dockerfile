@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM golang:1.24-alpine AS build
+FROM golang:1.26.11-alpine3.24 AS build
 WORKDIR /src
 
 COPY go.mod go.sum ./
@@ -18,7 +18,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     go build -o /out/worker ./cmd/worker
 
-FROM alpine:3.20
+FROM alpine:3.24.3
 RUN apk add --no-cache ca-certificates && addgroup -S app && adduser -S -G app -u 10001 app
 WORKDIR /app
 COPY --from=build /out/api /app/api
