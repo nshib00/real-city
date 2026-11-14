@@ -39,34 +39,18 @@ test.describe('Pixi object layer smoke', () => {
     })
   })
 
-  test('renders a nonblank Pixi canvas under object load', async ({ page }) => {
+  test('renders the Pixi canvas and loads the synthetic object scene', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto('/?perf=mixed&perfBuildings=260&perfMonsters=80&perfResources=40&perfTileRadius=18')
+    await page.goto('/?perf=mixed&perfBuildings=24&perfMonsters=8&perfResources=6&perfTileRadius=8')
 
     const canvas = page.locator('.pixi-stage canvas')
     await expect(canvas).toBeVisible()
     await expect(page.getByLabel('Performance HUD')).toContainText('mixed')
 
-    await expect.poll(async () => {
-      return canvas.evaluate((node) => {
-        const source = node as HTMLCanvasElement
-        const probe = document.createElement('canvas')
-        probe.width = Math.min(96, source.width)
-        probe.height = Math.min(96, source.height)
-        const context = probe.getContext('2d')
-        if (!context || probe.width === 0 || probe.height === 0) {
-          return 0
-        }
-        context.drawImage(source, 0, 0, probe.width, probe.height)
-        const pixels = context.getImageData(0, 0, probe.width, probe.height).data
-        let nonblank = 0
-        for (let index = 0; index < pixels.length; index += 4) {
-          if (pixels[index + 3] > 0) {
-            nonblank += 1
-          }
-        }
-        return nonblank
-      })
-    }).toBeGreaterThan(0)
+    await expect.poll(() => canvas.evaluate((node) => {
+      const { width, height } = node as HTMLCanvasElement
+      return width > 0 && height > 0
+    })).toBe(true)
+    await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
   })
 })

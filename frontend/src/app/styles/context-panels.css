@@ -6,6 +6,25 @@
 }
 .inspector-context { display: grid; gap: var(--space-2); margin-bottom: var(--space-3); }
 .inspector-context > button { background: var(--color-accent); color: var(--color-accent-ink); font-weight: 700; }
+.monster-attack-button {
+  flex: 1 0 100%;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 120px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid #ffaaa5;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ef514a, #c92f2a);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(130, 20, 16, 0.35), inset 0 1px rgba(255, 255, 255, 0.2);
+}
+.monster-attack-button:hover { background: linear-gradient(180deg, #ff6258, #d63831); }
 :is(.inspector-context, .build-filters, .production-card) small, .panel-note { color: var(--color-muted); line-height: var(--line-body); }
 .panel-note { padding: var(--space-3); margin-block: var(--space-2) var(--space-4); border-bottom: 1px solid var(--material-brass); }
 .build-filters { display: grid; grid-template-columns: minmax(220px, 1fr) auto auto; align-items: center; gap: var(--space-3); margin: var(--space-2) var(--space-3); }
@@ -43,8 +62,8 @@
 .profile-drawer-body .profile-identity { padding: var(--space-3); border-bottom: 2px solid var(--material-brass); background: var(--material-wood); }
 .profile-drawer-body :is(.profile-meta, .profile-stat-grid) { padding: var(--space-3); background: var(--color-panel-soft); border: 1px solid var(--color-panel-border); border-radius: var(--ui-radius-sm); }
 .profile-drawer-body .profile-stat-grid article { background: var(--color-panel-strong); }
-.drawer :is(.alliance-list, .alliance-treasury, .market-panel) { padding: var(--space-3); border-top: 1px solid var(--material-brass); }
-.drawer .alliance-list > p { padding-block: var(--space-2); border-bottom: 1px solid var(--color-panel-border); overflow-wrap: anywhere; }
+:is(.drawer, .alliance-modal-content) :is(.alliance-list, .alliance-treasury, .market-panel) { padding: var(--space-3); border-top: 1px solid var(--material-brass); }
+:is(.drawer, .alliance-modal-content) .alliance-list > p { padding-block: var(--space-2); border-bottom: 1px solid var(--color-panel-border); overflow-wrap: anywhere; }
 @media (max-width: 700px) {
   .build-filters { margin-inline: var(--space-2); }
   .inspector-context { padding: var(--space-2); }

@@ -17,6 +17,7 @@ export async function mockInterfaceWorld(page: Page, options: { objects?: boolea
   await page.addInitScript((theme) => {
     localStorage.setItem('real-city.access-token', 'ui-review')
     localStorage.setItem('real-city.refresh-token', 'ui-review')
+    localStorage.setItem('real-city.first-city-help.player_e2e', 'dismissed')
     if (theme) localStorage.setItem('real-city.interface-theme', theme)
   }, options.theme ?? process.env.REAL_CITY_REVIEW_THEME)
   await page.routeWebSocket('**/api/v1/realtime?*', socket => { socket.onMessage(() => {}) })

@@ -7,7 +7,7 @@ import { allianceBuffCatalog } from '../../../../shared/catalog/alliance-buffs'
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import { playUiSound } from '../../audio/playUiSound'
 import { useGameStore } from '../../game/state/useGameStore'
-import { Drawer, IconButton } from '../../shared/ui'
+import { IconButton, Modal } from '../../shared/ui'
 import { spendAllianceTreasury, transferAllianceLeadership, leaveAlliance, kickAllianceMember, cancelMarketOrder, createAlliance, createMarketOrder, donateToAlliance, getAllianceProfile, inviteToAlliance, listMarketOrders, respondToAllianceInvite, upgradeAllianceBuff } from '../../shared/api/social'
 import { useAuthStore } from '../auth/useAuthStore'
 import { ResourceIcon } from '../resources/ResourceIcon'
@@ -73,7 +73,8 @@ export function AlliancePanel() {
   }
 
   return (
-    <Drawer title="Союзный дом" open={open} onClose={() => setAlliancePanelOpen(false)}>
+    <Modal title="Меню союза" open={open} onClose={() => setAlliancePanelOpen(false)} className="alliance-modal">
+      <div className="alliance-modal-content">
       <p className="panel-note">Участники, казна и полномочия вашего союза. Действия доступны согласно вашей роли.</p>
       {profileQuery.isPending ? <p role="status">Загружаем сведения о союзе…</p> : null}
       {profileQuery.error ? <p role="alert">Не удалось загрузить союз. <button type="button" onClick={() => void profileQuery.refetch()}>Повторить</button></p> : null}
@@ -201,7 +202,8 @@ export function AlliancePanel() {
       <section className="alliance-treasury">
         <p><Coins size={16} aria-hidden="true" /> Комиссия рынка резервируется сразу, пожертвования списываются из инвентаря.</p>
       </section>
-    </Drawer>
+      </div>
+    </Modal>
   )
 }
 

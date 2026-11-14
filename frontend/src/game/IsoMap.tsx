@@ -1039,7 +1039,7 @@ function BuildingWorkBadge({ overlay, onActivate }: { overlay: BuildingOverlay; 
   if (overlay.type === 'workers') {
     return (
       <span className="building-work-badge building-work-badge-workers" onClick={handleActivate} onPointerDown={stopMapDrag}>
-        <ResourceIcon id="population" label="Жители" />
+        <ResourceIcon id="population" label="Жители" iconVariant="asset" />
         {overlay.workers}
         {overlay.inputs?.map((input) => (
           <span className="building-work-badge-input" key={input.resource}>

@@ -87,12 +87,29 @@ test('two players: upgrade, production, trade, private chat, destruction and XP'
   const privateResponse = await request.get('/api/v1/chat/messages?channel=private', { headers: { Authorization: `Bearer ${outsider.access_token}` } })
   expect((await privateResponse.json()).messages).toEqual([])
 
-  const attackXP = (await json('GET', '/players/me')).profile.xp
-  await json('POST', `/buildings/${victim.id}/weapons`, { weapon: 'throwing_knives' })
   const rules = (await json('GET', '/combat/rules')).rules
-  await page.waitForTimeout(rules.attack_cooldown_seconds * 1000 + 100)
-  await json('POST', `/buildings/${victim.id}/weapons`, { weapon: 'throwing_knives' })
-  expect((await json('GET', `/buildings/${victim.id}`, undefined, true)).building.state).toBe('ruined')
+  const attack = async () => {
+    const deadline = Date.now() + (rules.attack_cooldown_seconds + 60) * 1000
+    while (Date.now() < deadline) {
+      const response = await request.post(`/api/v1/buildings/${victim.id}/weapons`, {
+        headers: { ...headers, 'Idempotency-Key': `${nonce}-attack-${crypto.randomUUID()}` },
+        data: { weapon: 'throwing_knives' },
+      })
+      if (response.ok()) return response.json()
+      const body = await response.json().catch(() => ({}))
+      if (response.status() === 409 && body.error?.message === 'Подождите перед следующей атакой') {
+        await page.waitForTimeout(500)
+        continue
+      }
+      throw new Error(`POST /buildings/${victim.id}/weapons: ${JSON.stringify(body)}`)
+    }
+    throw new Error('Attack cooldown did not expire within the expected window')
+  }
+  const attackXP = (await json('GET', '/players/me')).profile.xp
+  await attack()
+  await attack()
+  const destroyedBuilding = await request.get(`/api/v1/buildings/${victim.id}`, { headers: otherHeaders })
+  expect(destroyedBuilding.status()).toBe(404)
   const record = (await json('GET', '/combat/history')).records.find((r: any) => r.building_id === victim.id && r.destroyed)
   expect(record.xp).toBeGreaterThan(0)
   expect((await json('GET', '/players/me')).profile.xp - attackXP).toBe(record.xp)

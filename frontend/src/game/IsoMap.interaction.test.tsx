@@ -430,7 +430,7 @@ describe('IsoMap production interactions', () => {
     const distantTile: WorldTile = { ...firstTile, x: 129, chunk_x: 4 }
     vi.mocked(getChunks).mockResolvedValue({ chunks: [testChunk([distantTile])] })
     act(() => useGameStore.getState().setViewportCenter({ x: 128, y: 0 }))
-    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toEqual([distantTile]))
+    await waitFor(() => expect(pixiMocks.latestProps?.tiles).toEqual([firstTile, nextTile, distantTile]))
   })
 
   it('moves a placement preview without chopping a forest tile', async () => {

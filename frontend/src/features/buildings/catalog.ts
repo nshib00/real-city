@@ -104,12 +104,12 @@ const straightPreviewKinds = new Set<BuildingKind>([
   'road', 'standard_road', 'paved_road',
 ])
 
-function previewImage(kind: BuildingKind, shape?: string) {
+export function buildingLevelPreviewImage(kind: BuildingKind, level: number, shape = straightPreviewKinds.has(kind) ? 'straight_ew' : undefined) {
   return resolveBuildingSpriteAsset({
     id: `${kind}-preview`,
     kind,
     name: kind,
-    level: 1,
+    level,
     tile: { x: 0, y: 0 },
     owner: 'preview',
     status: 'active',
@@ -119,6 +119,10 @@ function previewImage(kind: BuildingKind, shape?: string) {
     startedAt: 0,
     completesAt: null,
   } satisfies PlacedBuilding, { shape }) ?? undefined
+}
+
+function previewImage(kind: BuildingKind, shape?: string) {
+  return buildingLevelPreviewImage(kind, 1, shape)
 }
 
 export const buildCatalog = buildingCatalog

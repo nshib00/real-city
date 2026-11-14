@@ -14,7 +14,7 @@ describe('ResourceBar', () => {
     useAuthStore.setState({ player: { id: 'test' } as Player })
     useGameStore.setState({
       buildings: [],
-      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
+      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
       realtimeStatus: 'connected',
     })
   })
@@ -28,14 +28,14 @@ describe('ResourceBar', () => {
     )
 
     expect(screen.getByLabelText('Жители: 0')).toBeTruthy()
-    expect(screen.getByLabelText('Монеты: 50/2000')).toBeTruthy()
+    expect(screen.getByLabelText(/Монеты: 50\/2\s*000/)).toBeTruthy()
     expect(screen.getByLabelText('Постройки: 0/8')).toBeTruthy()
     expect(screen.getByLabelText('Эолийские кристаллы: 0')).toBeTruthy()
     expect(screen.queryByLabelText('Древесина: 0')).toBeNull()
     expect(screen.queryByLabelText('Нефть: 0')).toBeNull()
     expect(screen.queryByLabelText('Бензин: 0')).toBeNull()
     expect(screen.getByLabelText('Ресурсы').querySelector('.resource-chip')?.getAttribute('aria-label')).toBe('Постройки: 0/8')
-    expect(screen.getByLabelText('Монеты: 50/2000').querySelector('img')?.getAttribute('src')).toContain('/assets/resources/icons/runtime/coins.webp')
+    expect(screen.getByLabelText(/Монеты: 50\/2\s*000/).querySelector('img')?.getAttribute('src')).toContain('/assets/resources/icons/runtime/coins.webp')
     expect(screen.queryByRole('group', { name: 'Оружие и бомбы' })).toBeNull()
 
     fireEvent.click(screen.getByLabelText('Реестр ресурсов'))
@@ -73,7 +73,7 @@ describe('ResourceBar', () => {
     expect(resourceChipLabels().filter((label) => !resourceCatalog.some((resource) => resource.category === 'weapons' && label?.startsWith(`${resource.name}:`)))).toEqual([
       'Постройки: 0/8',
       'Жители: 0',
-      'Монеты: 50/2000',
+      'Монеты: 50/2 000',
       'Эолийские кристаллы: 0',
       'Глина: 3',
       'Камень: 5',

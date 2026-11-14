@@ -23,7 +23,7 @@ describe('api client', () => {
   })
 
   it('adds idempotency keys to unsafe durable POST routes', async () => {
-    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }))
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => new Response(JSON.stringify({ ok: true }), { status: 200 }))
     const routes = [
       '/buildings',
       '/buildings/building-1/weapons',

@@ -64,23 +64,20 @@ describe('Inspector', () => {
     expect(useGameStore.getState().selectedTile).toEqual({ x: 2, y: 3 })
   })
 
-  it('shows selected tile details and object/player tabs', () => {
+  it('shows selected tile details and hides irrelevant object/player tabs', () => {
     useGameStore.setState({
       worldTiles: [{ x: 2, y: 3, chunk_x: 0, chunk_y: 0, terrain: 'forest', elevation: 0, safe_zone: false, forest_density: 2 }],
     })
     renderWithClient(<Inspector />)
 
     expect(screen.getByText('Клетка A99')).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Развернуть инспектор' }))
     expect(screen.getByRole('tab', { name: 'Клетка' })).toBeTruthy()
-    expect(screen.getByText('A99')).toBeTruthy()
     expect(screen.getByText('2/3')).toBeTruthy()
     expect(screen.queryByLabelText('Срубить лес')).toBeNull()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Объект' }))
-    expect(screen.getByText('Постройка не выбрана')).toBeTruthy()
-
-    fireEvent.click(screen.getByRole('tab', { name: 'Игрок' }))
-    expect(screen.getByText('Игрок: Северный двор')).toBeTruthy()
+    expect(screen.queryByRole('tab', { name: 'Объект' })).toBeNull()
+    expect(screen.queryByRole('tab', { name: 'Игрок' })).toBeNull()
   })
 
   it('сворачивает мобильный лист при переходе к размещению, сохраняя клетку', () => {
@@ -147,8 +144,9 @@ describe('Inspector', () => {
     queryClient.setQueryData(['monsters', 0, 0, 1], { monsters: [{ id: 'monster-1', state: 'wandering', health: 20 }] })
     render(<QueryClientProvider client={queryClient}><Inspector /></QueryClientProvider>)
 
+    fireEvent.click(screen.getByRole('button', { name: 'Развернуть инспектор' }))
     queryClient.setQueryData(['economy', 'inventory'], { inventory: { player_id: 'player-1', items: [{ resource: 'throwing_knives', amount: 1 }], coin_capacity: 2000, updated_at: '2026-10-16T00:00:00Z' } })
-    fireEvent.click(screen.getByRole('button', { name: 'Выбрать оружие' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Атака' }))
     const weaponButton = screen.getByRole('button', { name: 'Применить оружие' }) as HTMLButtonElement
     expect(weaponButton.disabled).toBe(false)
     fireEvent.click(weaponButton)
@@ -172,7 +170,8 @@ describe('Inspector', () => {
     queryClient.setQueryData(['economy', 'inventory'], { inventory: { player_id: 'player-1', items: [{ resource: 'throwing_knives', amount: 2 }, { resource: 'blackpowder_bomb', amount: 1 }], coin_capacity: 2000, updated_at: new Date().toISOString() } })
     render(<QueryClientProvider client={queryClient}><Inspector /></QueryClientProvider>)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Выбрать оружие' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Развернуть инспектор' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Атака' }))
     const menu = screen.getByRole('dialog', { name: 'Оружие против монстра' })
     expect(menu.querySelector('img[src*="throwing_knives.webp"]')).toBeTruthy()
     expect(menu.querySelector('img[src*="blackpowder_bomb.webp"]')).toBeTruthy()
@@ -219,6 +218,7 @@ describe('Inspector', () => {
           level: 1,
           tile: { x: 2, y: 3 },
           status: 'active',
+          state: 'active',
           health: 100,
           demolitionRefundCoins: 20,
           owner: 'player-1',
@@ -234,16 +234,18 @@ describe('Inspector', () => {
     const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
     queryClient.setQueryData(['buildings'], { buildings: [{ id: 'town-hall-test' } as BuildingResponse] })
     render(<QueryClientProvider client={queryClient}><Inspector /></QueryClientProvider>)
+    openSelectedObject()
+    openMoreActions()
     expect(screen.getByText('Ратуша, уровень 1')).toBeTruthy()
 
-    fireEvent.click(screen.getByLabelText('Удалить'))
+    fireEvent.click(screen.getByRole('button', { name: 'Удалить' }))
     expect(screen.getByRole('dialog', { name: 'Подтвердите снос' })).toBeTruthy()
     expect(screen.getByText(/Возврат: 20 монет/)).toBeTruthy()
     expect(useGameStore.getState().buildings).toHaveLength(1)
     fireEvent.click(screen.getByText('Отмена'))
     expect(deleteBuildingRequest).not.toHaveBeenCalled()
 
-    fireEvent.click(screen.getByLabelText('Удалить'))
+    fireEvent.click(screen.getByRole('button', { name: 'Удалить' }))
     fireEvent.click(screen.getByText('Удалить постройку'))
     await waitFor(() => expect(vi.mocked(deleteBuildingRequest).mock.calls[0]?.[0]).toBe('town-hall-test'))
     expect(useGameStore.getState().buildings).toHaveLength(1)
@@ -259,14 +261,16 @@ describe('Inspector', () => {
     useGameStore.setState({
       buildings: [{
         id: 'dugout-test', kind: 'dugout', name: 'Землянка', level: 1,
-        tile: { x: 2, y: 3 }, status: 'active', health: 35,
+        tile: { x: 2, y: 3 }, status: 'active', state: 'active', health: 35,
         owner: 'player-1', startedAt: 1000, completesAt: null,
       }],
       selectedBuildingId: 'dugout-test',
     })
     renderWithClient(<Inspector />)
+    openSelectedObject()
+    openMoreActions()
 
-    fireEvent.click(screen.getByLabelText('Удалить'))
+    fireEvent.click(screen.getByRole('button', { name: 'Удалить' }))
     fireEvent.click(screen.getByText('Удалить постройку'))
 
     expect(await screen.findByRole('alert')).toHaveProperty('textContent', 'Снос недоступен')
@@ -283,6 +287,7 @@ describe('Inspector', () => {
           level: 1,
           tile: { x: 2, y: 3 },
           status: 'active',
+          state: 'active',
           health: 35,
           owner: 'player-1',
           startedAt: 1000,
@@ -293,7 +298,8 @@ describe('Inspector', () => {
     })
 
     renderWithClient(<Inspector />)
-    fireEvent.click(screen.getByLabelText('Улучшить'))
+    openSelectedObject()
+    fireEvent.click(screen.getByRole('button', { name: 'Улучшить' }))
 
     expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
     expect(screen.getByAltText('Модель: Землянка, уровень 2').getAttribute('src')).toBe('/assets/buildings/housing/dugout/dugout_l02_active.png')
@@ -304,9 +310,10 @@ describe('Inspector', () => {
   })
 
   it('closes the confirmation when its target disappears instead of acting on another object', () => {
-    useGameStore.setState({ buildings: [{ id: 'gone-target', kind: 'dugout', name: 'Землянка', level: 1, tile: { x: 2, y: 3 }, status: 'active', health: 35, owner: 'player-1', startedAt: 1000, completesAt: null }], selectedBuildingId: 'gone-target' })
+    useGameStore.setState({ buildings: [{ id: 'gone-target', kind: 'dugout', name: 'Землянка', level: 1, tile: { x: 2, y: 3 }, status: 'active', state: 'active', health: 35, owner: 'player-1', startedAt: 1000, completesAt: null }], selectedBuildingId: 'gone-target' })
     renderWithClient(<Inspector />)
-    fireEvent.click(screen.getByLabelText('Улучшить'))
+    openSelectedObject()
+    fireEvent.click(screen.getByRole('button', { name: 'Улучшить' }))
     expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
     act(() => useGameStore.setState({ buildings: [] }))
     expect(screen.queryByRole('dialog', { name: 'Улучшение постройки' })).toBeNull()
@@ -318,13 +325,14 @@ describe('Inspector', () => {
     useGameStore.setState({
       buildings: [{
         id: 'stone-6', kind: 'stone_house', name: 'Каменный дом', level: 6,
-        tile: { x: 2, y: 3 }, status: 'active', health: 8700,
+        tile: { x: 2, y: 3 }, status: 'active', state: 'active', health: 8700,
         owner: 'player-1', startedAt: 1000, completesAt: null,
       }],
       selectedBuildingId: 'stone-6',
     })
     renderWithClient(<Inspector />)
-    fireEvent.click(screen.getByLabelText('Улучшить'))
+    openSelectedObject()
+    fireEvent.click(screen.getByRole('button', { name: 'Улучшить' }))
     expect(screen.getByRole('dialog', { name: 'Выбор ветки улучшения' })).toBeTruthy()
     expect(screen.getByText('Многоквартирный дом')).toBeTruthy()
     expect(screen.getByText('Вилла')).toBeTruthy()
@@ -350,20 +358,11 @@ describe('Inspector', () => {
       cannon_enabled: true, cannon_range: 2, cannon_damage: 55, cannon_ammo: 'stone',
     } })
     renderWithClient(<Inspector />)
-    fireEvent.click(screen.getByRole('tab', { name: 'Объект' }))
+    openSelectedObject()
     expect(screen.getByText('Радиус: 2 кл. · Урон: 55')).toBeTruthy()
-    fireEvent.click(screen.getByLabelText('Включить пушку'))
+    fireEvent.click(screen.getByRole('button', { name: 'Включить пушку' }))
     await waitFor(() => expect(patchBuilding).toHaveBeenCalledWith('cannon-1', 'enable_cannon'))
-    await waitFor(() => expect(screen.getByLabelText('Выключить пушку')).toBeTruthy())
-  })
-
-  it('opens build menu from the inspector build action', () => {
-    renderWithClient(<Inspector />)
-
-    fireEvent.click(screen.getByLabelText('Построить'))
-
-    expect(useGameStore.getState().tool).toBe('build')
-    expect(useGameStore.getState().uiPreferences.buildMenuOpen).toBe(true)
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Выключить пушку' })).toBeTruthy())
   })
 
   it('opens town hall upgrade dialog when town hall has next level', () => {
@@ -376,6 +375,7 @@ describe('Inspector', () => {
           level: 1,
           tile: { x: 2, y: 3 },
           status: 'active',
+          state: 'active',
           health: 100,
           owner: 'player-1',
           startedAt: 1000,
@@ -386,7 +386,8 @@ describe('Inspector', () => {
     })
 
     renderWithClient(<Inspector />)
-    fireEvent.click(screen.getByLabelText('Улучшить'))
+    openSelectedObject()
+    fireEvent.click(screen.getByRole('button', { name: 'Улучшить' }))
 
     expect(screen.getByRole('dialog', { name: 'Улучшение постройки' })).toBeTruthy()
     expect(screen.getByAltText('Модель: Ратуша, уровень 2').getAttribute('src')).toBe(`/assets/buildings/center/town_hall/town_hall_l02_active.png?v=${TOWN_HALL_ASSET_REVISION}`)
@@ -416,9 +417,9 @@ describe('Inspector', () => {
     })
 
     renderWithClient(<Inspector />)
+    openSelectedObject()
 
-    expect(screen.getByText('Мгновенно: 1 крист.')).toBeTruthy()
-    expect(screen.getByLabelText('Завершить за 1 крист.')).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'Завершить · 1 крист.' })).toBeTruthy()
   })
 
   it('shows the owner name and level without management actions', async () => {
@@ -431,6 +432,7 @@ describe('Inspector', () => {
           level: 1,
           tile: { x: 2, y: 3 },
           status: 'active',
+          state: 'active',
           health: 100,
           owner: 'player-2',
           startedAt: 1000,
@@ -441,18 +443,30 @@ describe('Inspector', () => {
     })
 
     renderWithClient(<Inspector />)
+    openSelectedObject()
 
-    expect(screen.getByText('Чужая постройка: управление недоступно')).toBeTruthy()
+    fireEvent.click(screen.getByText('Владелец'))
     expect(await screen.findByText(/Игрок Севера/)).toBeTruthy()
     expect(screen.getByText(/Игрок Севера/).textContent).toContain('7')
-    expect(screen.queryByLabelText('Улучшить')).toBeNull()
-    expect(screen.queryByLabelText('Удалить')).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Улучшить' })).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Удалить' })).toBeNull()
   })
 })
 
 function renderWithClient(ui: ReactElement) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } })
   return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>)
+}
+
+function openSelectedObject() {
+  const expand = screen.queryByRole('button', { name: 'Развернуть инспектор' })
+  if (expand) fireEvent.click(expand)
+  const objectTab = screen.queryByRole('tab', { name: 'Объект' })
+  if (objectTab && objectTab.getAttribute('aria-selected') !== 'true') fireEvent.click(objectTab)
+}
+
+function openMoreActions() {
+  fireEvent.click(screen.getByText('Ещё'))
 }
 
 function testPlayer(id: string): Player {

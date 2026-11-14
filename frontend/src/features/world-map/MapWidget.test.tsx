@@ -33,18 +33,22 @@ describe('MapWidget', () => {
     })
   })
 
-  it.each([['group', 'ally'], ['different-group', 'foreign']])('показывает союзный знак только при совпадении подтверждённого союза %s', async (group, expected) => {
+  it.each([['group', true], ['different-group', false]])('показывает союзный знак только при совпадении подтверждённого союза %s', async (group, isAllied) => {
     useAuthStore.setState({ player: { id: 'test', profile: { group_id: 'group' } } as Player })
     vi.mocked(getAllianceProfile).mockResolvedValue({ profile: {
       alliance: { id: group, name: 'Союз', leader_id: 'test', level: 1, member_limit: 10 }, self: null,
       members: [{ player_id: 'ally', role: 'member', treasurer: false, joined_at: '2026-10-31T00:00:00Z' }],
       invites: [], treasury: [], buffs: [], aid: [],
     } })
-    useGameStore.setState({ buildings: [{ ...building('dugout', 'Землянка'), owner: 'ally' }] })
+    useGameStore.setState({ buildings: [{ ...building('alliance_house', 'Дом союза'), owner: 'ally' }] })
     renderMapWidget()
     fireEvent.click(screen.getByLabelText('Карта мира'))
     await waitFor(() => expect(getAllianceProfile).toHaveBeenCalled())
-    await waitFor(() => expect(screen.getByLabelText('Землянка').getAttribute('data-owner')).toBe(expected))
+    if (isAllied) {
+      await waitFor(() => expect(screen.getByLabelText('Дом союза').getAttribute('data-owner')).toBe('alliance'))
+    } else {
+      expect(screen.queryByLabelText('Дом союза')).toBeNull()
+    }
   })
 
   it('disables town hall teleport until an active town hall exists', () => {

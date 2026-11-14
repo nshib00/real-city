@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import type { ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import { Box, ChevronDown, ChevronUp, Gem, Repair, Move, RotateCw, Shield, Sprout, Star, Swords, Trash2, TrendingUp } from '../../shared/ui/icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -15,6 +15,7 @@ import { canResolveBuildingModelAsset } from '../../game/renderers/buildingRegis
 import { buildingSpriteAsset } from '../../game/renderers/buildingSpriteAssets'
 import { useGameStore, type BuildingKind, type PlacedBuilding } from '../../game/state/useGameStore'
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
+import { defenseLevelStats, formatDamagePerSecond, isDefenseTrap, isDefenseWeapon } from '../buildings/defenseStats'
 import { resourceCatalog } from '../../../../shared/catalog/resources'
 import { deleteBuilding as deleteBuildingRequest, patchBuilding, placeBuilding, relocateBuilding, toPlacedBuilding, type BuildingResponse } from '../../shared/api/buildings'
 import { ruinRestoration } from './ruinRestoration'
@@ -131,16 +132,17 @@ export function Inspector() {
     refetchInterval: 5000, retry: false,
   })
   const selectedMonster = useGameStore((state) => state.monsters.find((monster) => monster.id === selectedMonsterId) ?? null)
-  const inspectorTabs = selectedBuilding || selectedMonster ? tabs : [tabs[0]]
+  const inspectorTabs = selectedBuilding ? [tabs[1]] : selectedMonster ? tabs : [tabs[0]]
+  const displayedTab: InspectorTab = selectedBuilding ? 'object' : activeTab
   useEffect(() => {
-    if (activeTab === 'object' && !selectedBuilding && !selectedMonster) setActiveTab('tile')
+    if (selectedBuilding && activeTab !== 'object') setActiveTab('object')
+    else if (activeTab === 'object' && !selectedBuilding && !selectedMonster) setActiveTab('tile')
   }, [activeTab, selectedBuilding, selectedMonster])
   const threat = useThreatLevel()
   const nextUpgrades = selectedBuilding && canManageSelectedBuilding ? getNextUpgrades(selectedBuilding) : []
   const selectedBuildingHasModel = selectedBuilding ? canResolveBuildingModelAsset(selectedBuilding) : false
   const selectedBuildingMaxHealth = selectedBuilding ? maxHealthForBuilding(selectedBuilding) : 100
   const rushCost = selectedBuilding?.status === 'construction' && selectedBuilding.state !== 'repairing' && selectedBuilding.completesAt ? rushCompletionCrystalCost(selectedBuilding.completesAt - constructionNow) : 0
-  const crystals = inventoryAmount(inventoryQuery.data?.inventory.items, 'aeolian-crystal')
   const cannonCharges = selectedBuilding?.cannonAmmo ? inventoryAmount(inventoryQuery.data?.inventory.items, selectedBuilding.cannonAmmo) : 0
   const cannonIdleReason = selectedBuilding && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) && selectedBuilding.cannonEnabled
     ? selectedBuilding.state === 'ruined' || selectedBuilding.status === 'construction' ? 'Стройка или разрушение'
@@ -410,7 +412,10 @@ export function Inspector() {
     }}>
       <div className="inspector-header">
         <div className="inspector-heading">
-          <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? selectedBuilding.name : activeTile ? `Клетка ${cellLabel(activeTile)}` : 'Карта мира'}</h2>
+          <h2>{selectedMonster ? monsterName(selectedMonster.type) : selectedBuilding ? `${selectedBuilding.name}, уровень ${selectedBuilding.level}` : activeTile ? `Клетка ${cellLabel(activeTile)}` : 'Карта мира'}</h2>
+          {selectedBuilding ? <small className={`inspector-object-state inspector-state-${selectedBuilding.state ?? selectedBuilding.status}`}>
+            {selectedBuilding.state === 'ruined' ? 'Разрушена' : selectedBuilding.state === 'repairing' ? `Ремонтируется · ${selectedBuilding.completesAt ? formatRemaining(selectedBuilding.completesAt - constructionNow) : 'ожидание'}` : selectedBuilding.status === 'construction' ? `Строится · ${selectedBuilding.completesAt ? formatRemaining(selectedBuilding.completesAt - constructionNow) : 'ожидание'}` : selectedBuilding.state === 'damaged' || selectedBuilding.health < selectedBuildingMaxHealth ? `Повреждена · ${Math.round((1 - selectedBuilding.health / selectedBuildingMaxHealth) * 100)}%` : 'Работает'}
+          </small> : null}
           {!selectedMonster && !selectedBuilding && activeTile ? <small className={`inspector-terrain ${terrainClass}`}>{terrainLabel}</small> : null}
         </div>
         <button ref={disclosure} className="icon-button" type="button" aria-label={expanded ? 'Свернуть инспектор' : 'Развернуть инспектор'} title={expanded ? 'Свернуть инспектор' : 'Развернуть инспектор'} aria-expanded={expanded} aria-controls="inspector-details" data-audio-handled="true" onClick={() => { playUiSound(expanded ? 'ui.toggle.off' : 'ui.toggle.on'); setExpanded(!expanded) }}>
@@ -421,27 +426,20 @@ export function Inspector() {
       <div id="inspector-details" className="inspector-details">
       {(selectedBuilding || selectedMonster || selectedResourceNode) && <ObjectMarks ownership={selectedOwnership} selected threat={objectThreat}
         category={selectedBuilding ? buildingCatalog.find(item => item.type === selectedBuilding.kind)?.category : undefined}
-        status={selectedBuilding ? selectedBuilding.state === 'building' || selectedBuilding.state === 'repairing' ? 'building' : selectedBuilding.health < selectedBuildingMaxHealth ? 'damage' : 'ready' : selectedResourceNode?.state === 'depleted' ? 'depleted' : undefined}
+        status={!selectedBuilding && selectedResourceNode?.state === 'depleted' ? 'depleted' : undefined}
         rare={Boolean(selectedResourceNode && resourceCatalog.find(item => item.id === selectedResourceNode.resource)?.category === 'rare')} />}
-      <section className="inspector-context" aria-label="Действие с целью">
-        <strong>{selectedMonster ? 'Угроза' : selectedBuilding ? canManageSelectedBuilding ? 'Ваша постройка' : selectedOwnership === 'ally' ? 'Союзная постройка' : selectedOwnership === 'neutral' ? 'Нейтральная постройка' : 'Чужая постройка' : selectedResourceNode ? 'Ресурсный узел' : selectedRuin ? 'Руины' : 'Участок мира'}</strong>
-        {selectedMonster || canAttackSelectedBuilding ? <button type="button" onClick={() => setWeaponMenuOpen(true)}>Выбрать оружие</button>
-          : selectedBuilding ? canManageSelectedBuilding && selectedBuilding.status === 'active' && nextUpgrades.length > 0
-            ? <button type="button" onClick={() => setUpgradeOpen(true)}>Открыть улучшение</button>
-            : <button type="button" onClick={() => setActiveTab('object')}>Осмотреть постройку</button>
-          : selectedResourceNode && selectedResourceNode.resource !== 'oil' ? <>
+      {!selectedBuilding ? <section className="inspector-context" aria-label="Действие с целью">
+        <strong>{selectedMonster ? 'Угроза' : selectedResourceNode ? 'Ресурсный узел' : selectedRuin ? 'Руины' : 'Участок мира'}</strong>
+        {selectedResourceNode && selectedResourceNode.resource !== 'oil' ? <>
             <button type="button" disabled={resourceMutation.isPending || selectedResourceNode.state === 'depleted' || (selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId !== player?.id)} onClick={() => resourceMutation.mutate({ id: selectedResourceNode.id, action: selectedResourceNode.state === 'neutral' ? 'claim' : 'harvest' })}>{selectedResourceNode.state === 'neutral' ? 'Захватить узел' : 'Собрать ресурс'}</button>
             <small>{selectedResourceNode.state === 'depleted' ? 'Узел истощён. Дождитесь восстановления.' : selectedResourceNode.state === 'claimed' && selectedResourceNode.ownerId !== player?.id ? 'Узел принадлежит другому игроку.' : `Доступно: ${selectedResourceNode.amount}/${selectedResourceNode.maxAmount}`}</small>
-          </> : selectedRuin ? <button type="button" disabled={ruinOccupied || ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>{ruinOccupied ? 'Восстановление недоступно' : 'Захватить и восстановить'}</button>
-          : null}
-        {!activeTile && !selectedBuilding && !selectedMonster ? <small>Выберите клетку или объект на карте.</small> : null}
-        {selectedBuilding ? <small>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}. {selectedBuilding.state === 'repairing' ? 'Ремонт: оставшееся время во вкладке «Объект».' : selectedBuilding.status === 'construction' ? 'Строительство: управление и срок во вкладке «Объект».' : canManageSelectedBuilding && !nextUpgrades.length ? 'Следующий уровень улучшения недоступен.' : ''}</small> : null}
-        {selectedRuin && !selectedBuilding ? <small>Восстановление: {selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет.</small> : null}
-        {selectedBuilding && !canManageSelectedBuilding && !canAttackSelectedBuilding ? <small>Атака доступна только по действующей уязвимой постройке.</small> : null}
+          </> : selectedRuin ? <button type="button" disabled={ruinOccupied || ruinMutation.isPending} onClick={() => ruinMutation.mutate()}>{ruinOccupied ? 'Восстановление недоступно' : 'Захватить и восстановить'}</button> : null}
+        {!activeTile && !selectedMonster ? <small>Выберите клетку или объект на карте.</small> : null}
+        {selectedRuin ? <small>Восстановление: {selectedRuin.hours} ч · {selectedRuin.coins.toLocaleString('ru-RU')} монет.</small> : null}
         {resourceMutation.error || ruinMutation.error ? <p role="alert">{(resourceMutation.error ?? ruinMutation.error)?.message}</p> : null}
-      </section>
-      <Tabs items={inspectorTabs} active={activeTab} onChange={setActiveTab}>
-        {activeTab === 'tile' ? (
+      </section> : null}
+      <Tabs items={inspectorTabs} active={displayedTab} onChange={setActiveTab}>
+        {displayedTab === 'tile' ? (
           <>
             <dl>
               <dt>Статус</dt>
@@ -476,7 +474,7 @@ export function Inspector() {
             </dl>
           </>
         ) : null}
-        {activeTab === 'object' ? (
+        {displayedTab === 'object' ? (
           selectedMonster ? (
             <div className="inspector-card inspector-card-threat">
               <strong>{monsterName(selectedMonster.type)}</strong>
@@ -494,42 +492,36 @@ export function Inspector() {
             </div>
           ) : selectedBuilding ? (
             <div className="inspector-card">
-              <strong>
-                {selectedBuilding.name}, уровень {selectedBuilding.level}
-              </strong>
-              <span>Здоровье {selectedBuilding.health}/{selectedBuildingMaxHealth}</span>
-              <span>Поворот: {(selectedBuilding.rotation ?? 0) * 90}°</span>
-              <span className="building-owner">Владелец: <Star size={15} aria-label="Уровень" /> {ownerLevel ?? '—'} · {ownerName ?? 'Игрок'}</span>
-              {selectedBuilding.owner ? <PublicProfileButton key={selectedBuilding.owner} playerId={selectedBuilding.owner} /> : null}
-              {!canManageSelectedBuilding ? <span>Чужая постройка: управление недоступно</span> : null}
-              <span>Состояние: {selectedBuilding.state === 'ruined' ? 'разрушена' : selectedBuilding.state === 'repairing' ? 'ремонтируется' : selectedBuilding.status === 'construction' ? 'строится' : selectedBuilding.state === 'damaged' ? 'повреждена' : 'работает'}</span>
+              <div className="inspector-health"><HealthBar health={selectedBuilding.health} maxHealth={selectedBuildingMaxHealth} /><span>{selectedBuilding.health}/{selectedBuildingMaxHealth}</span></div>
+              {!canManageSelectedBuilding && selectedBuilding.owner ? <details className="inspector-more"><summary>Владелец</summary><div className="inspector-more-content"><span className="building-owner"><Star size={15} aria-label="Уровень" /> {ownerLevel ?? '—'} · {ownerName ?? 'Игрок'}</span><PublicProfileButton key={selectedBuilding.owner} playerId={selectedBuilding.owner} /></div></details> : null}
               {selectedBuilding.kind === 'oil_well' ? (
                 <>
                   <span>Запас нефти: {selectedOilNode ? `${selectedOilNode.amount.toLocaleString('ru-RU')}/${selectedOilNode.maxAmount.toLocaleString('ru-RU')}` : 'загрузка'}</span>
-                  <span>Добыча: {selectedBuilding.level === 1 ? '100 нефти за 30 мин. · 15 рабочих' : selectedBuilding.level === 2 ? '250 нефти за 25 мин. · 21 рабочий' : '400 нефти за 60 мин. · 27 рабочих'} <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></span>
+                  <span>Добыча: {selectedBuilding.level === 1 ? '100 нефти за 30 мин. · 15 рабочих' : selectedBuilding.level === 2 ? '250 нефти за 25 мин. · 21 рабочий' : '400 нефти за 60 мин. · 27 рабочих'} <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /></span>
                   {selectedOilJob ? <span>{selectedOilJob.state === 'ready' ? 'Добыча завершена — соберите нефть' : `До конца добычи: ${formatRemaining(Math.max(0, Date.parse(selectedOilJob.completes_at) - constructionNow))}`}</span> : null}
-                  {canManageSelectedBuilding && selectedBuilding.status === 'active' ? <span>Запустить добычу или собрать нефть можно нажатием на вышку либо в панели «Производство».</span> : null}
                 </>
               ) : null}
               {['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) ? (
                 <>
                   <span>Радиус: {selectedBuilding.cannonRange ?? '—'} кл. · Урон: {selectedBuilding.cannonDamage ?? '—'}</span>
                   {canManageSelectedBuilding ? (
-                    <>
-                      <span>Перезарядка: {selectedBuilding.cannonCooldownSeconds ?? 12} с · Гарнизон: {selectedBuilding.cannonEnabled ? <>1 житель <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></> : 'нет'}</span>
+                    <details className="inspector-more"><summary>Подробности орудия</summary><div className="inspector-more-content">
+                      <span>Перезарядка: {selectedBuilding.cannonCooldownSeconds ?? 12} с · Гарнизон: {selectedBuilding.cannonEnabled ? <>1 житель <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /></> : 'нет'}</span>
                       {selectedBuilding.cannonAmmo ? <span>Заряды: {cannonCharges} ({selectedBuilding.cannonAmmo === 'explosives' ? 'взрывчатка' : selectedBuilding.cannonAmmo === 'fuel' ? 'бензин' : 'камень'})</span> : <span>Боеприпасы не требуются</span>}
                       <span>Автоатака: {selectedBuilding.cannonEnabled ? cannonIdleReason ?? 'включена' : 'выключена'}</span>
                       {selectedBuilding.cannonTargetId ? <span>Последняя цель: {selectedBuilding.cannonTargetId}</span> : null}
                       {selectedBuilding.cannonEnabled && selectedBuilding.cannonNextAttackAt && selectedBuilding.cannonNextAttackAt > constructionNow ? <span>До выстрела: {formatRemaining(selectedBuilding.cannonNextAttackAt - constructionNow)}</span> : null}
-                    </>
+                    </div></details>
                   ) : null}
                 </>
               ) : null}
               {['defense_stakes', 'defense_resin_snare'].includes(selectedBuilding.kind) ? (
                 <>
-                  <span>Урон при входе: {selectedBuilding.trapDamage ?? '—'}</span>
+                  <span>Урон ловушки: {selectedBuilding.trapDamage ?? '—'}</span>
+                  <details className="inspector-more"><summary>Подробности ловушки</summary><div className="inspector-more-content">
                   <span>Заряды: {selectedBuilding.trapCharges ?? 0}/{selectedBuilding.trapMaxCharges ?? '—'}</span>
                   {selectedBuilding.kind === 'defense_resin_snare' ? <span>Замедляет следующий шаг монстра в 1,5 раза</span> : null}
+                  </div></details>
                 </>
               ) : null}
               {['defense_automaton_bay', 'defense_guardian_enclosure'].includes(selectedBuilding.kind) ? (
@@ -540,7 +532,6 @@ export function Inspector() {
                   <span>Создание защитников пока недоступно</span>
                 </>
               ) : null}
-              {selectedBuilding.status === 'construction' && selectedBuilding.completesAt ? <span>{selectedBuilding.state === 'repairing' ? 'До конца ремонта: ' : 'До завершения: '}{formatRemaining(selectedBuilding.completesAt - constructionNow)}</span> : null}
               {selectedFieldSpec && selectedBuilding.status === 'active' && selectedFieldStage > 0 ? (
                 <>
                   <span>Фаза роста: {selectedFieldStage}/{selectedFieldMaxStage}{selectedBuilding.isSuperCrop ? ' · супер-цикл' : ''}</span>
@@ -549,10 +540,6 @@ export function Inspector() {
                   {!selectedFieldStageReady && selectedFieldNextAt ? <span>До конца фазы: {formatRemaining(selectedFieldNextAt - constructionNow)}</span> : null}
                 </>
               ) : null}
-              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' && selectedBuilding.completesAt ? <span>Мгновенно: {rushCost} крист.</span> : null}
-              {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' && rushCost > 0 && crystals < rushCost ? <small className="upgrade-error">Не хватает эолийских кристаллов: {crystals}/{rushCost}</small> : null}
-              {canManageSelectedBuilding && !selectedBuilding.kind.startsWith('ruins_') ? <span>Улучшение выполняется из меню этой постройки.</span> : null}
-              <HealthBar health={selectedBuilding.health} maxHealth={selectedBuildingMaxHealth} />
               {modelPreviewOpen ? <BuildingModelPreview building={selectedBuilding} className="inspector-model-preview" /> : null}
               {constructionError ? <small className="upgrade-error" role="alert">{constructionError}</small> : null}
               {cannonError ? <small className="upgrade-error" role="alert">{cannonError}</small> : null}
@@ -568,91 +555,42 @@ export function Inspector() {
       <div className="inspector-actions">
         {selectedBuilding ? (
           <>
-            {canAttackSelectedBuilding ? <>
-              <IconButton label="Атаковать оружием" icon={Swords} onClick={() => setWeaponMenuOpen(true)} />
-              <button type="button" disabled={createMonsterMutation.isPending || !combatRulesQuery.data} onClick={() => setSummonMenuOpen(true)}>Создать монстра{combatRulesQuery.data ? ` · ${combatRulesQuery.data.rules.summon_cost_coins} монет` : ''}</button>
-              {selectedBuildingAttacks.map((attack) => <span key={attack.id}>Заряд: {resourceCatalog.find((item) => item.id === attack.weapon)?.name ?? attack.weapon} — {formatRemaining(Math.max(0, Date.parse(attack.due_at) - constructionNow))}</span>)}
-            </> : null}
-            {canManageSelectedBuilding ? <IconButton label="Улучшить" icon={TrendingUp} disabled={selectedBuilding.status !== 'active' || nextUpgrades.length === 0} onClick={() => setUpgradeOpen(true)} /> : null}
-            {canManageSelectedBuilding && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) ? (
-              <IconButton
+            {canAttackSelectedBuilding ? <InspectorAction icon={Swords} label="Атаковать" onClick={() => setWeaponMenuOpen(true)} /> : null}
+            {canManageSelectedBuilding && selectedFieldSpec && selectedFieldStage < selectedFieldMaxStage ? <InspectorAction icon={Sprout} label={selectedFieldStage <= 0 ? 'Запустить рост' : 'Следующая фаза'} disabled={selectedBuilding.status !== 'active' || (selectedFieldStage > 0 && !selectedFieldReadyToAdvance) || advanceFieldMutation.isPending} onClick={() => advanceFieldMutation.mutate(selectedBuilding.id)} /> : null}
+            {canManageSelectedBuilding && selectedFieldSpec ? <InspectorAction icon={Sprout} label="Собрать урожай" disabled={selectedBuilding.status !== 'active' || !selectedFieldReadyToHarvest || harvestFieldMutation.isPending} onClick={() => harvestFieldMutation.mutate(selectedBuilding.id)} /> : null}
+            {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' ? <InspectorAction icon={Gem} label={`Завершить · ${rushCost} крист.`} disabled={rushMutation.isPending || rushCost <= 0} onClick={() => { setConstructionError(''); rushMutation.mutate(selectedBuilding.id) }} /> : null}
+            {canManageSelectedBuilding && selectedBuilding.status === 'active' && selectedBuilding.state === 'active' && nextUpgrades.length > 0 ? <InspectorAction icon={TrendingUp} label="Улучшить" onClick={() => setUpgradeOpen(true)} /> : null}
+            {canManageSelectedBuilding && ['active', 'damaged'].includes(selectedBuilding.state ?? '') && selectedBuilding.health < selectedBuildingMaxHealth ? <InspectorAction icon={Repair} label="Ремонтировать" disabled={repairMutation.isPending} onClick={() => setRepairOpen(true)} /> : null}
+            {canManageSelectedBuilding && selectedBuilding.status === 'active' && selectedBuilding.state !== 'ruined' && ['defense_cannon', 'defense_bolt_thrower', 'defense_storm_coil'].includes(selectedBuilding.kind) ? (
+              <InspectorAction
                 label={selectedBuilding.kind === 'defense_cannon'
                   ? selectedBuilding.cannonEnabled ? 'Выключить пушку' : 'Включить пушку'
                   : selectedBuilding.cannonEnabled ? 'Выключить орудие' : 'Включить орудие'}
                 icon={Shield}
                 active={Boolean(selectedBuilding.cannonEnabled)}
-                disabled={cannonMutation.isPending || (!selectedBuilding.cannonEnabled && (selectedBuilding.status !== 'active' || selectedBuilding.state === 'ruined'))}
+                disabled={cannonMutation.isPending || (!selectedBuilding.cannonEnabled && selectedBuilding.status !== 'active')}
                 onClick={() => { setCannonError(''); cannonMutation.mutate({ id: selectedBuilding.id, enabled: !selectedBuilding.cannonEnabled }) }}
               />
             ) : null}
-            {canManageSelectedBuilding && ['defense_stakes', 'defense_resin_snare'].includes(selectedBuilding.kind) ? (
-              <IconButton label="Перезарядить ловушку" icon={Shield}
-                disabled={trapMutation.isPending || selectedBuilding.status !== 'active' || selectedBuilding.state === 'ruined' || (selectedBuilding.trapCharges ?? 0) >= (selectedBuilding.trapMaxCharges ?? 0)}
+            {canManageSelectedBuilding && selectedBuilding.status === 'active' && (selectedBuilding.trapCharges ?? 0) < (selectedBuilding.trapMaxCharges ?? 0) && ['defense_stakes', 'defense_resin_snare'].includes(selectedBuilding.kind) ? (
+              <InspectorAction label="Перезарядить ловушку" icon={Shield}
+                disabled={trapMutation.isPending || selectedBuilding.status !== 'active' || (selectedBuilding.trapCharges ?? 0) >= (selectedBuilding.trapMaxCharges ?? 0)}
                 onClick={() => { setCannonError(''); trapMutation.mutate(selectedBuilding.id) }} />
             ) : null}
-            {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' ? (
-              <IconButton
-                label={`Завершить за ${rushCost} крист.`}
-                icon={Gem}
-                disabled={rushMutation.isPending || rushCost <= 0}
-                onClick={() => {
-                  setConstructionError('')
-                  rushMutation.mutate(selectedBuilding.id)
-                }}
-              />
-            ) : null}
-            {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' ? (
-              <IconButton label="Отменить строительство" icon={Trash2} disabled={cancelConstructionMutation.isPending}
-                onClick={() => cancelConstructionMutation.mutate(selectedBuilding.id)} />
-            ) : null}
-            {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && selectedBuilding.health < selectedBuildingMaxHealth ? (
-              <IconButton label="Ремонт" icon={Repair} disabled={repairMutation.isPending}
-                onClick={() => setRepairOpen(true)} />
-            ) : null}
-            {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && !selectedBuilding.kind.startsWith('ruins_') && selectedBuilding.kind !== 'oil_well' ? (
-              <>
-                <IconButton label={relocatingBuildingId === selectedBuilding.id ? 'Отменить перенос' : 'Переместить'} icon={Move}
-                  active={relocatingBuildingId === selectedBuilding.id}
-                  onClick={() => setRelocatingBuildingId(relocatingBuildingId === selectedBuilding.id ? null : selectedBuilding.id)} />
-                <IconButton label="Повернуть на 90°" icon={RotateCw} disabled={rotateMutation.isPending || relocatingBuildingId === selectedBuilding.id}
-                  onClick={() => rotateMutation.mutate(selectedBuilding)} />
-              </>
-            ) : null}
-            {canManageSelectedBuilding && selectedFieldSpec && selectedFieldStage < selectedFieldMaxStage ? (
-              <IconButton
-                label={selectedFieldStage <= 0 ? 'Запустить' : 'Следующая фаза'}
-                icon={Sprout}
-                disabled={selectedBuilding.status !== 'active' || (selectedFieldStage > 0 && !selectedFieldReadyToAdvance) || advanceFieldMutation.isPending}
-                onClick={() => advanceFieldMutation.mutate(selectedBuilding.id)}
-              />
-            ) : null}
-            {canManageSelectedBuilding && selectedFieldSpec ? (
-              <IconButton
-                label="Собрать урожай"
-                icon={Sprout}
-                disabled={selectedBuilding.status !== 'active' || !selectedFieldReadyToHarvest || harvestFieldMutation.isPending}
-                onClick={() => harvestFieldMutation.mutate(selectedBuilding.id)}
-              />
-            ) : null}
-            {canManageSelectedBuilding ? (
-              <IconButton
-                label={selectedBuilding.kind === 'oil_well' || selectedBuilding.kind.startsWith('ruins_') ? 'Продать' : 'Удалить'}
-                icon={Trash2}
-                onClick={() => { deleteMutation.reset(); setDeleteOpen(true) }}
-              />
-            ) : null}
-            {selectedBuildingHasModel ? (
-              <IconButton
-                label={modelPreviewOpen ? 'Скрыть 3D' : '3D preview'}
-                icon={Box}
-                active={modelPreviewOpen}
-                sound={modelPreviewOpen ? 'ui.toggle.off' : 'ui.toggle.on'}
-                onClick={() => setModelPreviewOpen((current) => !current)}
-              />
-            ) : null}
+            {(canManageSelectedBuilding || canAttackSelectedBuilding) && <details className="inspector-more inspector-actions-more"><summary>Ещё</summary><div className="inspector-more-content">
+              {canManageSelectedBuilding && (selectedBuilding.state === 'active' || selectedBuilding.state === 'damaged') && !selectedBuilding.kind.startsWith('ruins_') && selectedBuilding.kind !== 'oil_well' ? <>
+                <InspectorAction icon={Move} label={relocatingBuildingId === selectedBuilding.id ? 'Отменить перенос' : 'Переместить'} active={relocatingBuildingId === selectedBuilding.id} toggle onClick={() => setRelocatingBuildingId(relocatingBuildingId === selectedBuilding.id ? null : selectedBuilding.id)} />
+                <InspectorAction icon={RotateCw} label="Повернуть на 90°" disabled={rotateMutation.isPending || relocatingBuildingId === selectedBuilding.id} onClick={() => rotateMutation.mutate(selectedBuilding)} />
+              </> : null}
+              {canManageSelectedBuilding ? <InspectorAction icon={Trash2} label={selectedBuilding.status === 'construction' ? 'Отменить строительство' : selectedBuilding.kind === 'oil_well' || selectedBuilding.kind.startsWith('ruins_') ? 'Продать' : 'Удалить'} disabled={selectedBuilding.status === 'construction' ? cancelConstructionMutation.isPending : false} onClick={() => { if (selectedBuilding.status === 'construction') cancelConstructionMutation.mutate(selectedBuilding.id); else { deleteMutation.reset(); setDeleteOpen(true) } }} /> : null}
+              {canAttackSelectedBuilding ? <InspectorAction icon={Swords} label={`Создать монстра${combatRulesQuery.data ? ` · ${combatRulesQuery.data.rules.summon_cost_coins} монет` : ''}`} disabled={createMonsterMutation.isPending || !combatRulesQuery.data} onClick={() => setSummonMenuOpen(true)} /> : null}
+              {selectedBuildingAttacks.map((attack) => <span key={attack.id}>Заряд: {resourceCatalog.find((item) => item.id === attack.weapon)?.name ?? attack.weapon} — {formatRemaining(Math.max(0, Date.parse(attack.due_at) - constructionNow))}</span>)}
+              {selectedBuildingHasModel ? <InspectorAction icon={Box} label={modelPreviewOpen ? 'Скрыть 3D' : 'Показать 3D'} active={modelPreviewOpen} toggle onClick={() => setModelPreviewOpen((current) => !current)} /> : null}
+            </div></details>}
           </>
         ) : null}
-        {canAttackTarget ? <IconButton label="Атака" icon={Swords} active={tool === 'attack'} onClick={() => { setTool('attack'); setWeaponMenuOpen(true) }} /> : null}
+        {selectedMonster ? <button className="monster-attack-button" type="button" onClick={() => setWeaponMenuOpen(true)}><Swords size={20} aria-hidden="true" />Атака</button>
+          : !selectedBuilding && canAttackTarget ? <IconButton label="Атака" icon={Swords} active={tool === 'attack'} onClick={() => { setTool('attack'); setWeaponMenuOpen(true) }} /> : null}
       </div>
       {createPortal(<Modal title={selectedMonster ? 'Оружие против монстра' : 'Оружие против постройки'} open={weaponMenuOpen && (Boolean(selectedMonster) || canAttackSelectedBuilding)} onClose={() => { if (!attackMonsterMutation.isPending && !attackBuildingMutation.isPending) setWeaponMenuOpen(false) }} className="weapon-menu-modal">
         <div className="weapon-menu-list" role="radiogroup" aria-label="Выбрать оружие">
@@ -711,7 +649,7 @@ export function Inspector() {
             <p>Ремонт уже выполняется. Осталось {formatRemaining(Date.parse(repairQuery.data.repair.job.due_at) - constructionNow)}.</p>
           ) : repairQuery.data ? (
             <>
-              <p>Время ремонта: {formatDuration(repairQuery.data.repair.duration_seconds)} · Рабочие: {repairQuery.data.repair.workers} <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /></p>
+              <p>Время ремонта: {formatDuration(repairQuery.data.repair.duration_seconds)} · Рабочие: {repairQuery.data.repair.workers} <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /></p>
               <div className="upgrade-cost repair-cost">
                 <span>Стоимость ремонта</span>
                 {repairQuery.data.repair.cost.map((item) => <em key={item.resource} title={`${resourceLabel(item.resource)}: ${item.amount}`}><ResourceIcon id={item.resource} label={resourceLabel(item.resource)} />{item.amount}</em>)}
@@ -738,6 +676,19 @@ export function Inspector() {
       </div>
     </aside>
   )
+}
+
+function InspectorAction({ icon: Icon, label, onClick, disabled = false, active = false, toggle = false }: {
+  icon: ComponentType<{ size?: number; 'aria-hidden'?: boolean }>
+  label: string
+  onClick: () => void
+  disabled?: boolean
+  active?: boolean
+  toggle?: boolean
+}) {
+  return <button className={`inspector-action${active ? ' inspector-action-active' : ''}`} type="button" aria-pressed={toggle ? active : undefined} disabled={disabled} onClick={onClick}>
+    <Icon size={18} aria-hidden={true} /><span>{label}</span>
+  </button>
 }
 
 function UpgradeModal({
@@ -802,27 +753,35 @@ function UpgradeModal({
         </div>
         <dl className="upgrade-stats">
           {upgradeComparisons(building, nextUpgrade).map((item) => (
-            <div className={item.label === 'Время работ' ? 'upgrade-stat-time' : undefined} key={item.label}>
+            <div key={item.label}>
               <dt>{item.label}{item.resource ? <> <ResourceIcon id={item.resource} label={resourceLabel(item.resource)} /></> : null}</dt>
               <dd>
-                {item.before !== 'сейчас' ? <span className="upgrade-stat-before">{item.before}{['Работники', 'Население', 'Жители в доме'].includes(item.label) ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</span> : null}
-                <strong className="upgrade-stat-after">{item.after}{['Работники', 'Население', 'Жители в доме'].includes(item.label) ? <ResourceIcon id="population" label="Жители" className="resident-icon-inline" decorative /> : null}</strong>
+                {item.before !== 'сейчас' ? <span className="upgrade-stat-before">{item.before}{['Работники', 'Население', 'Жители в доме', 'Размер гарнизона'].includes(item.label) ? <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /> : null}</span> : null}
+                <strong className="upgrade-stat-after">{item.after}{['Работники', 'Население', 'Жители в доме', 'Размер гарнизона'].includes(item.label) ? <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /> : null}</strong>
               </dd>
             </div>
           ))}
         </dl>
         <div className="upgrade-cost">
-          <span>Стоимость</span>
-          {nextUpgrade.cost.length > 0 ? (
-            nextUpgrade.cost.map((cost) => (
-              <em key={`${cost.resource}:${cost.amount}`} title={`${resourceLabel(cost.resource)}: ${cost.amount}`}>
-                <ResourceIcon id={cost.resource} label={resourceLabel(cost.resource)} />
-                {cost.amount}
-              </em>
-            ))
-          ) : (
-            <em>бесплатно</em>
-          )}
+          <div className="upgrade-cost-column upgrade-time-column">
+            <span>Время работы</span>
+            <em>{formatDuration(nextUpgrade.buildSeconds)}</em>
+          </div>
+          <div className="upgrade-cost-column upgrade-resources-column">
+            <span>Стоимость</span>
+            <div className="upgrade-cost-items">
+            {nextUpgrade.cost.length > 0 ? (
+              nextUpgrade.cost.map((cost) => (
+                <em key={`${cost.resource}:${cost.amount}`} title={`${resourceLabel(cost.resource)}: ${cost.amount}`}>
+                  <ResourceIcon id={cost.resource} label={resourceLabel(cost.resource)} />
+                  {cost.amount}
+                </em>
+              ))
+            ) : (
+              <em>бесплатно</em>
+            )}
+            </div>
+          </div>
         </div>
         <div className="upgrade-actions">
           <button className="text-button" type="button" onClick={onClose}>
@@ -962,8 +921,24 @@ function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo):
   const spec = buildingCatalog.find((item) => item.type === building.kind)
   const comparisons: UpgradeComparison[] = [
     { label: 'Прочность', before: String(current.health), after: String(nextUpgrade.health) },
-    { label: 'Время работ', before: 'сейчас', after: formatDuration(nextUpgrade.buildSeconds) },
   ]
+  const currentDefense = defenseLevelStats(building.kind, building.level)
+  const nextDefense = defenseLevelStats(nextUpgrade.type, nextUpgrade.level)
+  if (currentDefense && nextDefense && isDefenseWeapon(building.kind) && isDefenseWeapon(nextUpgrade.type)) {
+    comparisons.push(
+      { label: 'Урон за выстрел', before: String(currentDefense.damage), after: String(nextDefense.damage) },
+      { label: 'Урон/с', before: formatDamagePerSecond(currentDefense), after: formatDamagePerSecond(nextDefense) },
+      { label: 'Перезарядка', before: 'сейчас', after: `${nextDefense.cooldownSeconds} с.` },
+      { label: 'Радиус атаки', before: `${currentDefense.range} кл.`, after: `${nextDefense.range} кл.` },
+      { label: 'Размер гарнизона', before: String(current.population), after: String(nextUpgrade.population) },
+    )
+  } else if (currentDefense && nextDefense && isDefenseTrap(building.kind) && isDefenseTrap(nextUpgrade.type)) {
+    comparisons.push(
+      { label: 'Урон', before: String(currentDefense.damage), after: String(nextDefense.damage) },
+      { label: 'Количество зарядов', before: String(currentDefense.charges), after: String(nextDefense.charges) },
+      { label: 'Перезарядка', before: 'не требуется', after: 'не требуется' },
+    )
+  }
   if (spec?.category === 'housing') {
     comparisons.push({ label: 'Жители в доме', before: `До: ${formatNumber(current.population)}`, after: `После: ${formatNumber(nextUpgrade.population)}` })
   } else if (building.kind === 'town_hall') {
@@ -980,7 +955,7 @@ function upgradeComparisons(building: PlacedBuilding, nextUpgrade: UpgradeInfo):
     if (current.population > 0 || nextUpgrade.population > 0) {
       comparisons.push({ label: 'Работники', before: String(current.population), after: String(nextUpgrade.population) })
     }
-  } else if (current.population > 0 || nextUpgrade.population > 0) {
+  } else if (!currentDefense && !nextDefense && (current.population > 0 || nextUpgrade.population > 0)) {
     comparisons.push({ label: 'Работники', before: String(current.population), after: String(nextUpgrade.population) })
   }
   return comparisons

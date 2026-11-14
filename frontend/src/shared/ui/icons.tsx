@@ -15,6 +15,7 @@ export const Map = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name=
 export const MapPinned = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="world" {...props} />
 export const UserRound = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="profile" {...props} />
 export const Bell = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="events" {...props} />
+export const BookOpen = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="events" {...props} />
 export const Settings = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="settings" {...props} />
 export const SlidersHorizontal = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="settings" {...props} />
 export const Building2 = (props: Omit<AeolianIconProps, 'name'>) => <AeolianIcon name="housing" {...props} />

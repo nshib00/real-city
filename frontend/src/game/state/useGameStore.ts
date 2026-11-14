@@ -166,6 +166,7 @@ export type UIPreferences = {
   compactPanels: boolean
   resourceRegistryOpen: boolean
   alliancePanelOpen: boolean
+  helpCenterOpen: boolean
   buildMenuOpen: boolean
   isChatCollapsed: boolean
   areNotificationsCollapsed: boolean
@@ -176,6 +177,7 @@ const defaultUIPreferences: UIPreferences = {
   compactPanels: false,
   resourceRegistryOpen: false,
   alliancePanelOpen: false,
+  helpCenterOpen: false,
   buildMenuOpen: false,
   isChatCollapsed: false,
   areNotificationsCollapsed: false,
@@ -275,6 +277,7 @@ type GameState = {
   toggleResourceRegistry: () => void
   setBuildMenuOpen: (buildMenuOpen: boolean) => void
   setAlliancePanelOpen: (alliancePanelOpen: boolean) => void
+  setHelpCenterOpen: (helpCenterOpen: boolean) => void
   setChatCollapsed: (isChatCollapsed: boolean) => void
   setNotificationsCollapsed: (areNotificationsCollapsed: boolean) => void
   setRealtimeStatus: (realtimeStatus: RealtimeStatus) => void
@@ -547,6 +550,10 @@ export const useGameStore = create<GameState>((set) => ({
   setAlliancePanelOpen: (alliancePanelOpen) =>
     set((state) => ({
       uiPreferences: persistUIPreferences({ ...state.uiPreferences, alliancePanelOpen }),
+    })),
+  setHelpCenterOpen: (helpCenterOpen) =>
+    set((state) => ({
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, helpCenterOpen }),
     })),
   setChatCollapsed: (isChatCollapsed) =>
     set((state) => ({

@@ -1,5 +1,6 @@
 import { Landmark, Map as MapIcon, X } from '../../shared/ui/icons'
 import { useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { buildingCatalog } from '../../../../shared/catalog/buildings'
@@ -9,6 +10,7 @@ import { useGameStore } from '../../game/state/useGameStore'
 import type { PlacedBuilding } from '../../game/state/useGameStore'
 import { IconButton } from '../../shared/ui'
 import { useAuthStore } from '../auth/useAuthStore'
+import { useOwnershipContext } from '../alliance/useOwnership'
 import { visibleChunksQueryOptions } from '../world/useVisibleChunks'
 import { showToast } from '../notifications/toast'
 
@@ -20,12 +22,15 @@ export function MapWidget() {
   const queryClient = useQueryClient()
   const navigationRequestRef = useRef(0)
   const player = useAuthStore((state) => state.player)
+  const { alliedIds } = useOwnershipContext()
   const buildings = useGameStore((state) => state.buildings)
   const selectedTile = useGameStore((state) => state.selectedTile)
   const viewport = useGameStore((state) => state.viewport)
   const focusTile = useGameStore((state) => state.focusTile)
   const selectBuilding = useGameStore((state) => state.selectBuilding)
   const townHall = buildings.find((building) => building.owner === player?.id && building.kind === 'town_hall' && building.status === 'active')
+  const mapBuildings = buildings.filter((building) => building.owner === player?.id
+    || (alliedIds.has(building.owner) && (building.kind === 'town_hall' || building.kind === 'alliance_house')))
   const activeTile = selectedTile ?? viewport.center
   const activeDistrict = districtFromTile(activeTile)
   const activeDistrictLabel = districtLabel(activeDistrict)
@@ -58,8 +63,9 @@ export function MapWidget() {
         }}
       />
       <IconButton label="Карта мира" icon={MapIcon} active={open} onClick={() => setOpen(!open)} />
-      {open ? (
-        <section className="map-widget-panel" aria-label="Районы мира">
+      {open ? createPortal(
+        <div className="world-map-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setOpen(false) }}>
+        <section className="map-widget-panel world-map-modal" aria-label="Районы мира" role="dialog" aria-modal="true">
           <header>
             <span>Карта мира</span>
             <IconButton label="Закрыть карту мира" icon={X} onClick={() => setOpen(false)} />
@@ -82,12 +88,21 @@ export function MapWidget() {
                 )
               })}
             </div>
+            <div
+              className="world-position-marker"
+              aria-label={`Текущая позиция: клетка ${cellLabel(activeTile)}`}
+              style={{
+                left: `${((wrappedTile(activeTile).x + 0.5) / WORLD_WRAP_TILES) * 100}%`,
+                top: `${((wrappedTile(activeTile).y + 0.5) / WORLD_WRAP_TILES) * 100}%`,
+              }}
+            />
             <div className="world-building-markers" aria-label="Известные постройки на карте мира">
-              {buildings.map((building, index) => (
+              {mapBuildings.map((building, index) => (
                 <button
                   aria-label={building.name}
                   data-selected={building.id === selectedBuildingId || undefined}
-                  className="world-building-marker"
+                  data-owner={building.kind === 'alliance_house' && alliedIds.has(building.owner) ? 'alliance' : building.owner === player?.id ? 'own' : 'ally'}
+                  className={buildingMarkerClass(building)}
                   key={building.id}
                   style={buildingMarkerStyle(building, index)}
                   title={building.name}
@@ -102,8 +117,9 @@ export function MapWidget() {
           <footer>
             <span>{`Район ${activeDistrictLabel} · клетка ${cellLabel(activeTile)}`}</span>
           </footer>
-          <small>Каждый тип построек отмечен своим цветом. Показаны загруженные постройки мира.</small>
+          <small>Показаны ваши постройки и главные постройки союзников. Дом союза отмечен отдельным цветом.</small>
         </section>
+        </div>, document.body,
       ) : null}
     </div>
   )
@@ -116,8 +132,14 @@ function buildingMarkerStyle(building: PlacedBuilding, index: number) {
     left: `${(tile.x / WORLD_WRAP_TILES) * 100}%`,
     top: `${(tile.y / WORLD_WRAP_TILES) * 100}%`,
     transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px))`,
-    backgroundColor: buildingColorByKind.get(building.kind) ?? `hsl(${Math.abs(hashString(building.kind)) % 360} 72% 56%)`,
+    backgroundColor: building.kind === 'alliance_house' ? 'var(--color-alliance-map, #c277ff)' : buildingColorByKind.get(building.kind) ?? `hsl(${Math.abs(hashString(building.kind)) % 360} 72% 56%)`,
   }
+}
+
+function buildingMarkerClass(building: PlacedBuilding) {
+  if (building.kind === 'alliance_house') return 'world-building-marker world-building-marker-alliance'
+  const category = buildingCatalog.find((item) => item.type === building.kind)?.category ?? 'center'
+  return `world-building-marker world-building-marker-${category}`
 }
 
 function markerOffset(building: PlacedBuilding, index: number) {

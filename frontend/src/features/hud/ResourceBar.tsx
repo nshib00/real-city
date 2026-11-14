@@ -64,7 +64,7 @@ export function ResourceBar() {
         const amount = id === 'population' ? availablePopulation(items) : resourceAmount(items, id, fallback)
         const limit = resourceLimit({ id, limitFallback, coinCapacity, buildings: ownerBuildings })
         const warning = id === 'coins' && coinCapacity && amount >= coinCapacity * 0.9
-        const title = `${label}: ${formatFullAmount(amount)}`
+        const title = `${label}: ${formatFullAmount(amount)}${limit ? `/${formatFullAmount(limit)}` : ''}`
         return (
           <div className={`resource-chip resource-${id}`} key={id} title={title} aria-label={title}>
             <ResourceIcon id={id} label={label} className="resource-icon-topbar" iconVariant="asset" decorative />

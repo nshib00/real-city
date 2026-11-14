@@ -17,7 +17,7 @@ import { NotificationCenter } from '../features/notifications/NotificationCenter
 import { ToastCenter } from '../features/notifications/ToastCenter'
 import { MonsterSync } from '../features/monster/MonsterSync'
 import { ProfilePanel } from '../features/player/ProfilePanel'
-import { ProductionPanel } from '../features/production/ProductionPanel'
+import { HelpCenter } from '../features/help/HelpCenter'
 import { ResourceNodeSync } from '../features/resources/ResourceNodeSync'
 import { ToolBar } from '../features/tools/ToolBar'
 import { AudioControls } from '../features/settings/AudioControls'
@@ -69,7 +69,7 @@ export function App() {
           <IsoMap />
           <FirstCityHelp key={playerId} />
           <Inspector />
-          <ProductionPanel />
+          <HelpCenter />
           <EventLog />
           <NotificationCenter />
           <ToastCenter />

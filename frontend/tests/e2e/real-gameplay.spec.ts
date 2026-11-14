@@ -45,7 +45,7 @@ test('real login, shared map, construction, harvest and WebSocket deltas', async
  const completed = await (await request.get(`/api/v1/buildings/${built.id}`, { headers })).json()
  expect(completed.building.state).toBe('active')
  const before = await (await request.get('/api/v1/economy/inventory', { headers })).json()
- const wood = (response: any) => response.inventory.items.find((v: any) => v.resource === 'wood')?.amount ?? 0
+ const wood = (inventory: any) => inventory.items.find((v: any) => v.resource === 'wood')?.amount ?? 0
  const forest = tiles.find((t: any) => t.terrain === 'forest' && t.forest_density > 0)
  expect(forest).toBeTruthy()
  const gathered = await request.post('/api/v1/world/tiles/chop-forest', { headers, data: { tile_x: forest.x, tile_y: forest.y } })

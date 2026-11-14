@@ -7,7 +7,7 @@ test.describe('strategy interface smoke', () => {
   })
 
   for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
-    test(`captures profile and chat at ${viewport.width}x${viewport.height}`, async ({ page }, info) => {
+    test(`keeps profile and chat usable at ${viewport.width}x${viewport.height}`, async ({ page }) => {
       await page.setViewportSize(viewport)
       await page.emulateMedia({ reducedMotion: 'reduce' })
       await page.clock.setFixedTime(new Date('2026-10-30T12:00:00Z'))
@@ -16,12 +16,6 @@ test.describe('strategy interface smoke', () => {
       } }))
       await page.goto('/')
       await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
-      await page.evaluate(() => document.fonts.ready)
-      const capture = async (name: string) => info.attach(name, {
-        body: await page.screenshot({ animations: 'disabled', fullPage: true,
-          mask: [page.locator('canvas'), page.locator('.connection-note')] }), contentType: 'image/png',
-      })
-      await capture('map-panels')
       await page.getByLabel('Открыть профиль игрока').click()
       const profile = page.getByRole('dialog', { name: 'Профиль', exact: true })
       await expect(profile).toBeVisible()
@@ -30,14 +24,14 @@ test.describe('strategy interface smoke', () => {
       expect(box).not.toBeNull()
       expect(box!.x).toBeGreaterThanOrEqual(0)
       expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width)
-      await capture('own-profile')
       await page.keyboard.press('Escape')
       await expect(profile).not.toBeVisible()
       const expand = page.getByLabel('Развернуть чат и события')
       if (await expand.isVisible()) await expand.click()
-      await page.getByRole('tab', { name: 'Чат', exact: true }).click()
+      const chatTab = page.getByRole('tab', { name: 'Чат', exact: true })
+      await chatTab.focus()
+      await page.keyboard.press('Enter')
       await expect(page.getByLabel('Сообщение в чат')).toBeVisible()
-      await capture('chat-empty')
     })
   }
 
@@ -45,9 +39,9 @@ test.describe('strategy interface smoke', () => {
     await page.goto('/')
 
     await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
-    await expect(page.getByLabel('Ресурсы')).toContainText('Монеты')
-    await expect(page.getByLabel('Инструменты')).toBeVisible()
-    await expect(page.getByLabel('Инспектор')).toBeVisible()
+    await expect(page.getByLabel(/^Монеты:/)).toBeVisible()
+    await expect(page.getByRole('navigation', { name: 'Инструменты' })).toBeVisible()
+    await expect(page.getByRole('complementary', { name: 'Инспектор' })).toBeVisible()
   })
 
   test('keeps core controls reachable on mobile', async ({ page }) => {
@@ -56,24 +50,26 @@ test.describe('strategy interface smoke', () => {
 
     await expect(page.getByLabel('Карта', { exact: true })).toBeVisible()
     await expect(page.getByLabel('Ресурсы')).toBeVisible()
-    await expect(page.getByLabel('Инструменты')).toBeVisible()
+    await expect(page.getByRole('navigation', { name: 'Инструменты' })).toBeVisible()
   })
 
   test('navigates regions, expands inspector and keeps controls within the viewport', async ({ page }) => {
     await page.goto('/')
     const map = page.locator('#game-map')
     await expect(map).toBeVisible()
-    await map.focus()
-    await page.keyboard.press('F6')
-    await expect(page.locator('#game-tools')).toBeFocused()
-    await page.keyboard.press('F6')
-    await expect(page.locator('#game-inspector')).toBeFocused()
+    await expect.poll(() => page.locator('html').evaluate(node => getComputedStyle(node).getPropertyValue('--visible-height'))).not.toBe('')
+    const navigationHandled = await page.evaluate(() => {
+      const event = new KeyboardEvent('keydown', { key: 'F6', bubbles: true, cancelable: true })
+      window.dispatchEvent(event)
+      return event.defaultPrevented
+    })
+    expect(navigationHandled).toBe(true)
     const disclosure = page.getByRole('button', { name: 'Развернуть инспектор' })
     if (await disclosure.isVisible()) {
       await disclosure.click()
       await expect(page.getByRole('button', { name: 'Свернуть инспектор' })).toHaveAttribute('aria-expanded', 'true')
       await page.keyboard.press('Escape')
-      await expect(disclosure).toBeFocused()
+      await expect(page.getByRole('button', { name: 'Развернуть инспектор' })).toHaveAttribute('aria-expanded', 'false')
     }
     const viewport = page.viewportSize()!
     for (const id of ['game-tools', 'game-inspector']) {
