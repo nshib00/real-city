@@ -222,7 +222,11 @@ func (s *BuildingService) Get(ctx context.Context, id building.ID) (building.Bui
 }
 
 func (s *BuildingService) ListPlayer(ctx context.Context, playerID player.ID) ([]building.Building, error) {
-	return s.buildings.ListByPlayer(ctx, playerID)
+	items, err := s.buildings.ListByPlayer(ctx, playerID)
+	if err != nil {
+		return nil, err
+	}
+	return visibleBuildings(items), nil
 }
 
 func (s *BuildingService) ListNearby(ctx context.Context, center world.ChunkCoord, radius int) ([]building.Building, error) {
@@ -242,7 +246,7 @@ func (s *BuildingService) ListNearby(ctx context.Context, center world.ChunkCoor
 				return nil, err
 			}
 			for _, item := range found {
-				if !seen[item.ID] {
+				if item.State != building.StateRuined && !seen[item.ID] {
 					seen[item.ID] = true
 					items = append(items, item)
 				}
@@ -276,7 +280,23 @@ func nearbyChunkRanges(center, radius int) [][2]int {
 }
 
 func (s *BuildingService) ListChunk(ctx context.Context, coord world.ChunkCoord) ([]building.Building, error) {
-	return s.buildings.ListByChunk(ctx, DefaultWorldID, coord)
+	items, err := s.buildings.ListByChunk(ctx, DefaultWorldID, coord)
+	if err != nil {
+		return nil, err
+	}
+	return visibleBuildings(items), nil
+}
+
+// visibleBuildings keeps damaged structures on the map, while ensuring a
+// building that reached the destroyed state can never reappear from stale data.
+func visibleBuildings(items []building.Building) []building.Building {
+	visible := make([]building.Building, 0, len(items))
+	for _, item := range items {
+		if item.State != building.StateRuined {
+			visible = append(visible, item)
+		}
+	}
+	return visible
 }
 
 func (s *BuildingService) CompleteDue(ctx context.Context, now time.Time, limit int) (int, error) {

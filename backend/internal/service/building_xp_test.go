@@ -15,6 +15,7 @@ import (
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/economy"
 	"real-city/backend/internal/domain/player"
+	"real-city/backend/pkg/apperror"
 )
 
 func xpBuildingSpecs() []catalog.BuildingType {
@@ -73,15 +74,12 @@ func TestEveryBuildingLevelAwardsCompletionAndDestructionExactlyOnce(t *testing.
 					t.Fatalf("XP %d, want %d", got, want.Completion+want.Destruction)
 				}
 				_, err := buildings.FindByID(ctx, item.ID)
-				if spec.Type == building.TypeOilWell || catalog.IsRuin(spec.Type) {
-					if err == nil {
-						t.Fatal("destroyed special building still exists")
-					}
-				} else {
-					destroyed, err := buildings.FindByID(ctx, item.ID)
-					if err != nil || destroyed.Health != 0 || destroyed.State != building.StateRuined {
-						t.Fatalf("not destroyed: %+v %v", destroyed, err)
-					}
+				if err == nil {
+					t.Fatal("destroyed building still exists")
+				}
+				var appErr *apperror.Error
+				if !errors.As(err, &appErr) || appErr.Kind != apperror.NotFound {
+					t.Fatalf("find destroyed building: %v", err)
 				}
 			})
 		}
