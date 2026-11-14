@@ -32,7 +32,7 @@ type WorldService struct {
 }
 
 type chunkCacheState struct {
-	mu sync.Mutex
+	mu         sync.Mutex
 	generation uint64
 }
 
@@ -160,10 +160,16 @@ func (s *WorldService) ListChunks(ctx context.Context, center world.ChunkCoord, 
 }
 
 func (s *WorldService) listChunksCached(ctx context.Context, coords []world.ChunkCoord) ([]world.Chunk, error) {
-	cache, ok := s.cache.(interface { GetMany(context.Context, []string) (map[string][]byte, error) })
-	if !ok { return s.repo.GetOrCreateChunks(ctx, DefaultWorldID, coords) }
+	cache, ok := s.cache.(interface {
+		GetMany(context.Context, []string) (map[string][]byte, error)
+	})
+	if !ok {
+		return s.repo.GetOrCreateChunks(ctx, DefaultWorldID, coords)
+	}
 	keys := make([]string, len(coords))
-	for i, coord := range coords { keys[i] = chunkCacheKey(DefaultWorldID, coord) }
+	for i, coord := range coords {
+		keys[i] = chunkCacheKey(DefaultWorldID, coord)
+	}
 	raw, err := cache.GetMany(ctx, keys)
 	if err != nil {
 		s.warnCacheFailure("world.cache.get_many_failed", err)
@@ -187,22 +193,30 @@ func (s *WorldService) listChunksCached(ctx context.Context, coords []world.Chun
 	s.log.Debug("world.cache.batch", "hits", len(coords)-len(missing), "misses", len(missing))
 	if len(missing) > 0 {
 		loaded, err := s.repo.GetOrCreateChunks(ctx, DefaultWorldID, missing)
-		if err != nil { return nil, err }
+		if err != nil {
+			return nil, err
+		}
 		for _, chunk := range loaded {
 			result[chunk.Coord] = chunk
 			value, marshalErr := json.Marshal(chunk)
-			if marshalErr != nil { continue }
+			if marshalErr != nil {
+				continue
+			}
 			key := chunkCacheKey(DefaultWorldID, chunk.Coord)
 			state := s.chunkState(key)
 			state.mu.Lock()
 			if state.generation == versions[chunk.Coord] {
-				if err := s.cache.Set(ctx, key, value, 2*time.Second); err != nil { s.warnCacheFailure("world.cache.set_failed", err) }
+				if err := s.cache.Set(ctx, key, value, 2*time.Second); err != nil {
+					s.warnCacheFailure("world.cache.set_failed", err)
+				}
 			}
 			state.mu.Unlock()
 		}
 	}
 	chunks := make([]world.Chunk, 0, len(coords))
-	for _, coord := range coords { chunks = append(chunks, result[coord]) }
+	for _, coord := range coords {
+		chunks = append(chunks, result[coord])
+	}
 	return chunks, nil
 }
 

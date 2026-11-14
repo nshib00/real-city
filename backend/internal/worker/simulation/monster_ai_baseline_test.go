@@ -7,11 +7,13 @@ import (
 	"testing"
 	"time"
 
+	"errors"
 	"real-city/backend/internal/adapter/memory"
 	"real-city/backend/internal/domain/building"
 	"real-city/backend/internal/domain/catalog"
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/world"
+	"real-city/backend/pkg/apperror"
 )
 
 // This scenario is a reproducible baseline, not a balance assertion: one
@@ -55,6 +57,14 @@ func TestMonsterThreatBaselineAgainstUndefendedBuilding(t *testing.T) {
 				}
 				target, err := buildings.FindByID(ctx, "baseline-target")
 				if err != nil {
+					var appErr *apperror.Error
+					if errors.As(err, &appErr) && appErr.Kind == apperror.NotFound {
+						attacks++
+						pathLength := max(0, spec.AggroRadius-spec.AttackRange)
+						t.Logf("damage=%d cooldown=%s first_hit=%s destroy=%s attacks=%d path_length=%d target_switches=0",
+							spec.Damage, spec.AttackCooldown, firstHit, elapsed, attacks, pathLength)
+						return
+					}
 					t.Fatal(err)
 				}
 				if target.Health < 400-attacks*spec.Damage {

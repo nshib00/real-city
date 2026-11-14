@@ -86,11 +86,15 @@ func (r *countingBatchWorldRepo) GetOrCreateChunks(ctx context.Context, mapID st
 	return r.WorldRepository.GetOrCreateChunks(ctx, mapID, coords)
 }
 
-type batchWorldCache struct { testWorldCache }
+type batchWorldCache struct{ testWorldCache }
 
 func (c *batchWorldCache) GetMany(_ context.Context, keys []string) (map[string][]byte, error) {
 	result := make(map[string][]byte)
-	for _, key := range keys { if value, ok := c.values[key]; ok { result[key] = value } }
+	for _, key := range keys {
+		if value, ok := c.values[key]; ok {
+			result[key] = value
+		}
+	}
 	return result, nil
 }
 
@@ -102,12 +106,20 @@ func TestChunkBatchCacheLoadsOnlyChangedChunk(t *testing.T) {
 	center := world.ChunkCoord{X: 0, Y: 0}
 	for i := 0; i < 2; i++ {
 		chunks, err := s.ListChunks(context.Background(), center, 1)
-		if err != nil || len(chunks) != 9 { t.Fatalf("load %d: chunks=%d err=%v", i, len(chunks), err) }
+		if err != nil || len(chunks) != 9 {
+			t.Fatalf("load %d: chunks=%d err=%v", i, len(chunks), err)
+		}
 	}
-	if len(repo.loads) != 1 || repo.loads[0] != 9 { t.Fatalf("batch repo calls: %v", repo.loads) }
+	if len(repo.loads) != 1 || repo.loads[0] != 9 {
+		t.Fatalf("batch repo calls: %v", repo.loads)
+	}
 	s.InvalidateEvent(context.Background(), Event{Type: EventTileChanged, ChunkID: world.ChunkID(DefaultWorldID, center)})
-	if _, err := s.ListChunks(context.Background(), center, 1); err != nil { t.Fatal(err) }
-	if len(repo.loads) != 2 || repo.loads[1] != 1 { t.Fatalf("changed batch repo calls: %v", repo.loads) }
+	if _, err := s.ListChunks(context.Background(), center, 1); err != nil {
+		t.Fatal(err)
+	}
+	if len(repo.loads) != 2 || repo.loads[1] != 1 {
+		t.Fatalf("changed batch repo calls: %v", repo.loads)
+	}
 }
 
 func (r *countingWorldRepo) GetOrCreateChunk(ctx context.Context, mapID string, coord world.ChunkCoord) (world.Chunk, bool, error) {

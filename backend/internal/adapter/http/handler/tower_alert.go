@@ -47,7 +47,10 @@ func (h *TowerAlertHandler) List(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *TowerAlertHandler) PutShare(w http.ResponseWriter, r *http.Request) {
-	if h.alerts == nil { writeJSON(w, http.StatusServiceUnavailable, envelope{"error":"tower sharing unavailable"}); return }
+	if h.alerts == nil {
+		writeJSON(w, http.StatusServiceUnavailable, envelope{"error": "tower sharing unavailable"})
+		return
+	}
 	actor, ok := middleware.PlayerID(r.Context())
 	if !ok {
 		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
@@ -72,7 +75,10 @@ func (h *TowerAlertHandler) PutShare(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *TowerAlertHandler) DeleteShare(w http.ResponseWriter, r *http.Request) {
-	if h.alerts == nil { writeJSON(w, http.StatusServiceUnavailable, envelope{"error":"tower sharing unavailable"}); return }
+	if h.alerts == nil {
+		writeJSON(w, http.StatusServiceUnavailable, envelope{"error": "tower sharing unavailable"})
+		return
+	}
 	actor, ok := middleware.PlayerID(r.Context())
 	if !ok {
 		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))

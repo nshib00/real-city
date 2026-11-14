@@ -16,6 +16,7 @@ import (
 	"real-city/backend/internal/domain/player"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
+	"real-city/backend/pkg/apperror"
 )
 
 type failingMonsterXPRepo struct {
@@ -176,14 +177,12 @@ func TestMonsterDestructionAwardsCreatorAndRollsBackFailedXP(t *testing.T) {
 				if profile.Profile.XP != want {
 					t.Fatalf("XP %d, want %d", profile.Profile.XP, want)
 				}
-				if kind == building.TypeOilWell || catalog.IsRuin(kind) {
-					if _, err := buildings.FindByID(ctx, target.ID); err == nil {
-						t.Fatal("destroyed special building still exists")
-					}
+				if _, err := buildings.FindByID(ctx, target.ID); err == nil {
+					t.Fatal("destroyed building still exists")
 				} else {
-					destroyed, _ := buildings.FindByID(ctx, target.ID)
-					if destroyed.State != building.StateRuined {
-						t.Fatal("building survived lethal hit")
+					var appErr *apperror.Error
+					if !errors.As(err, &appErr) || appErr.Kind != apperror.NotFound {
+						t.Fatalf("find destroyed building: %v", err)
 					}
 				}
 			})

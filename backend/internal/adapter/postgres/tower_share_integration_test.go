@@ -138,7 +138,9 @@ func TestTowerSharedPendingPrivacyRevokeAndMembershipEpoch(t *testing.T) {
 	guardDone := make(chan error, 1)
 	go func() {
 		published, err := repo.PublishSharedIfEligible(ctx, raceID, func() error { close(entered); <-release; return nil })
-		if err == nil && !published { err = fmt.Errorf("guard denied eligible race event") }
+		if err == nil && !published {
+			err = fmt.Errorf("guard denied eligible race event")
+		}
 		guardDone <- err
 	}()
 	<-entered
@@ -150,10 +152,16 @@ func TestTowerSharedPendingPrivacyRevokeAndMembershipEpoch(t *testing.T) {
 	case <-time.After(50 * time.Millisecond):
 	}
 	close(release)
-	if err := <-guardDone; err != nil { t.Fatal(err) }
-	if err := <-revokeDone; err != nil { t.Fatal(err) }
+	if err := <-guardDone; err != nil {
+		t.Fatal(err)
+	}
+	if err := <-revokeDone; err != nil {
+		t.Fatal(err)
+	}
 	assertSharedCount(2)
-	if err := repo.SetShare(ctx, sourceID, player.ID(owner), alliance.ID(guild), true); err != nil { t.Fatal(err) }
+	if err := repo.SetShare(ctx, sourceID, player.ID(owner), alliance.ID(guild), true); err != nil {
+		t.Fatal(err)
+	}
 	_, rejoinID := create("monster-rejoin")
 	if _, err := db.ExecContext(ctx, `DELETE FROM alliance_members WHERE player_id=$1`, ally); err != nil {
 		t.Fatal(err)

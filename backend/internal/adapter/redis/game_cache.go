@@ -42,28 +42,46 @@ func (c *GameCache) Delete(ctx context.Context, key string) error {
 
 func (c *GameCache) GetMany(ctx context.Context, keys []string) (map[string][]byte, error) {
 	result := make(map[string][]byte)
-	if len(keys) == 0 { return result, nil }
-	if len(keys) > 64 { return nil, errors.New("too many Redis keys") }
+	if len(keys) == 0 {
+		return result, nil
+	}
+	if len(keys) > 64 {
+		return nil, errors.New("too many Redis keys")
+	}
 	conn, reader, err := c.connect(ctx)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 	defer conn.Close()
 	args := append([]string{"MGET"}, keys...)
-	if err := writeRedisCommand(conn, args...); err != nil { return nil, err }
+	if err := writeRedisCommand(conn, args...); err != nil {
+		return nil, err
+	}
 	line, err := reader.ReadString('\n')
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 	count, err := strconv.Atoi(strings.TrimSpace(strings.TrimPrefix(line, "*")))
-	if err != nil || !strings.HasPrefix(line, "*") || count != len(keys) { return nil, errors.New("invalid Redis array response") }
+	if err != nil || !strings.HasPrefix(line, "*") || count != len(keys) {
+		return nil, errors.New("invalid Redis array response")
+	}
 	for _, key := range keys {
 		value, err := readRedisValue(reader)
-		if err != nil { return nil, err }
-		if value != nil { result[key] = value }
+		if err != nil {
+			return nil, err
+		}
+		if value != nil {
+			result[key] = value
+		}
 	}
 	return result, nil
 }
 
 func (c *GameCache) query(ctx context.Context, args ...string) ([]byte, error) {
 	conn, reader, err := c.connect(ctx)
-	if err != nil { return nil, err }
+	if err != nil {
+		return nil, err
+	}
 	defer conn.Close()
 	return redisCommand(conn, reader, args...)
 }
@@ -103,7 +121,9 @@ func (c *GameCache) connect(ctx context.Context) (net.Conn, *bufio.Reader, error
 }
 
 func redisCommand(conn net.Conn, reader *bufio.Reader, args ...string) ([]byte, error) {
-	if err := writeRedisCommand(conn, args...); err != nil { return nil, err }
+	if err := writeRedisCommand(conn, args...); err != nil {
+		return nil, err
+	}
 	return readRedisValue(reader)
 }
 

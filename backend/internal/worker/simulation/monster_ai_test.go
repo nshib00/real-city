@@ -2,6 +2,7 @@ package simulation
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"testing"
@@ -13,6 +14,7 @@ import (
 	"real-city/backend/internal/domain/monster"
 	"real-city/backend/internal/domain/world"
 	"real-city/backend/internal/service"
+	"real-city/backend/pkg/apperror"
 )
 
 func TestMonsterAITickAggrosNearestBuilding(t *testing.T) {
@@ -386,14 +388,27 @@ func TestMonsterAIDamagesAndRuinsBuilding(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	target, err := buildings.FindByID(ctx, "house")
-	if err != nil || target.State != building.StateRuined || target.Health != 0 {
-		t.Fatalf("building was not ruined: %+v err=%v", target, err)
+	if _, err := buildings.FindByID(ctx, "house"); err == nil {
+		t.Fatal("building survived lethal monster attacks")
+	} else {
+		var appErr *apperror.Error
+		if !errors.As(err, &appErr) || appErr.Kind != apperror.NotFound {
+			t.Fatalf("find destroyed building: %v", err)
+		}
 	}
 	monsterHits := 0
 	for len(received) > 0 {
 		event := <-received
-		if event.Type == service.EventBuildingUpdated {
+		if event.Type == service.EventBuildingRemoved {
+			payload := event.Payload.(service.BuildingRemovedPayload)
+			if payload.Reason != "monster_attack" {
+				t.Fatalf("expected monster attack reason, got %q", payload.Reason)
+			}
+			monsterHits++
+			if payload.Damage != 18 && payload.Damage != 12 {
+				t.Fatalf("wrong confirmed damage: %d", payload.Damage)
+			}
+		} else if event.Type == service.EventBuildingUpdated {
 			payload := event.Payload.(service.BuildingPayload)
 			if payload.Reason != "monster_attack" {
 				t.Fatalf("expected monster attack reason, got %q", payload.Reason)

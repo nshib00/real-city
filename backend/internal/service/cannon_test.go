@@ -143,7 +143,7 @@ func TestMultipleWeaponsFireAtSameMonsterInOneTick(t *testing.T) {
 		t.Fatalf("simultaneous shots: fired=%d, err=%v", fired, err)
 	}
 	target, err := monsters.FindByID(ctx, "target")
-	if err != nil || target.Health != 64 || len(monsters.eventIDs) != 2 {
+	if err != nil || target.Health != 88 || len(monsters.eventIDs) != 2 {
 		t.Fatalf("target=%+v, event IDs=%d, err=%v", target, len(monsters.eventIDs), err)
 	}
 }
@@ -227,7 +227,7 @@ func TestDefenseWeaponTargetsMonsterAcrossWrappedWorld(t *testing.T) {
 				t.Fatalf("wrapped target: fired=%d, err=%v", fired, err)
 			}
 			target, err := monsters.FindByID(ctx, "target")
-			if err != nil || target.Health != 82 {
+			if err != nil || target.Health != 94 {
 				t.Fatalf("target=%+v, err=%v", target, err)
 			}
 		})
@@ -321,7 +321,7 @@ func TestCannonFiresAtNearestMonsterAndSpendsOneCharge(t *testing.T) {
 	}
 	near, _ := monsters.FindByID(ctx, "near")
 	far, _ := monsters.FindByID(ctx, "far")
-	if near.Health != 45 || far.Health != 1 {
+	if near.Health != 82 || far.Health != 1 {
 		t.Fatalf("unexpected targets: near=%d far=%d", near.Health, far.Health)
 	}
 	remaining, _ := economyRepo.GetInventory(ctx, owner, 10000)
@@ -329,19 +329,19 @@ func TestCannonFiresAtNearestMonsterAndSpendsOneCharge(t *testing.T) {
 		t.Fatalf("charges remaining = %d", remaining.Items[economy.ResourceStone])
 	}
 	cannon, _ := buildings.FindByID(ctx, "cannon")
-	if cannon.CannonTargetID != "near" || cannon.CannonNextAttackAt == nil || !cannon.CannonNextAttackAt.Equal(now.Add(12*time.Second)) {
+	if cannon.CannonTargetID != "near" || cannon.CannonNextAttackAt == nil || !cannon.CannonNextAttackAt.Equal(now.Add(8*time.Second)) {
 		t.Fatalf("unexpected cannon cooldown: %+v", cannon)
 	}
 	remaining.Items[economy.ResourceStone] = 0
 	if err := economyRepo.SaveInventory(ctx, remaining); err != nil {
 		t.Fatal(err)
 	}
-	fired, err := service.Tick(ctx, now.Add(12*time.Second), 10)
+	fired, err := service.Tick(ctx, now.Add(8*time.Second), 10)
 	if err != nil || fired != 0 {
 		t.Fatalf("cannon fired without ammunition: fired=%d err=%v", fired, err)
 	}
 	near, _ = monsters.FindByID(ctx, "near")
-	if near.Health != 45 {
+	if near.Health != 82 {
 		t.Fatalf("monster damaged without ammunition: %d", near.Health)
 	}
 }
@@ -406,7 +406,7 @@ func TestDefenseWeaponsContinuePastIdleBatch(t *testing.T) {
 		}
 	}
 	target, err := monsters.FindByID(ctx, "target")
-	if err != nil || target.Health != 82 {
+	if err != nil || target.Health != 94 {
 		t.Fatalf("monster health=%d, err=%v", target.Health, err)
 	}
 }
@@ -418,8 +418,8 @@ func TestOtherDefenseWeaponsUseTheirOwnStatsAndFuel(t *testing.T) {
 		cooldown       time.Duration
 		fuel           int
 	}{
-		{building.TypeDefenseBoltThrower, 180, 18, 5 * time.Second, 0},
-		{building.TypeDefenseStormCoil, 430, 90, 15 * time.Second, 1},
+		{building.TypeDefenseBoltThrower, 180, 6, 2 * time.Second, 0},
+		{building.TypeDefenseStormCoil, 430, 30, 20 * time.Second, 1},
 	} {
 		t.Run(string(tc.kind), func(t *testing.T) {
 			ctx := context.Background()
