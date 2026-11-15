@@ -42,7 +42,7 @@ Compose использует локальные значения для разр
 
 ```bash
 make migrate-up
-make backend-run-local
+make backend-local-up
 ```
 
 Backend доступен на `http://localhost:8080`. Для локального запуска используются параметры из [`backend/.env.example`](backend/.env.example). Замените `SESSION_SECRET` на случайное значение для любого окружения, которое не является одноразовой локальной разработкой.
@@ -55,7 +55,7 @@ Backend доступен на `http://localhost:8080`. Для локальног
 cd frontend
 npm install
 cd ..
-make frontend-dev
+make frontend-dev-up
 ```
 
 Откройте <http://localhost:5173>. Vite проксирует `/api` на backend по адресу `http://localhost:8080`; другой адрес можно задать переменной `VITE_API_PROXY_TARGET`.
@@ -63,7 +63,7 @@ make frontend-dev
 Чтобы остановить базовые сервисы разработки:
 
 ```bash
-make backend-down
+make backend-dev-down
 ```
 
 Команды Compose, конфигурация тестовой базы и известные ограничения совместной игры в локальной сети описаны в [руководстве локального запуска](docs/operations/local-multiplayer.md).
@@ -79,14 +79,14 @@ make backend-down
 | `make frontend-test` | Vitest для frontend |
 | `make catalog-check` | Проверка баланса, каталогов и таблиц прогрессии |
 | `make contracts-check` | Проверка синхронизации API-контрактов |
-| `make backend-up` | Миграции и запуск backend через Compose |
-| `make backend-down` | Остановка dev Compose-стека |
-| `make frontend-dev` | Vite dev-сервер на `0.0.0.0:5173` |
-| `make frontend-dev-test` | Vite с прокси тестового API на `localhost:18080` |
-| `make test-backend-up` | Тестовые PostgreSQL/Redis и backend на порту `18080` |
-| `make test-backend-down` | Остановка тестового Compose-проекта |
-| `make observability-up` | Backend, Prometheus и Grafana |
-| `make observability-down` | Остановка Prometheus и Grafana |
+| `make backend-dev-up` | Миграции и запуск backend через Compose |
+| `make backend-dev-down` | Остановка dev Compose-стека |
+| `make frontend-dev-up` | Vite dev-сервер на `0.0.0.0:5173` |
+| `make frontend-test-up` | Vite с прокси тестового API на `localhost:18080` |
+| `make backend-test-up` | Тестовые PostgreSQL/Redis и backend на порту `18080` |
+| `make backend-test-down` | Остановка тестового Compose-проекта |
+| `make backend-observability-up` | Backend, Prometheus и Grafana |
+| `make backend-observability-down` | Остановка Prometheus и Grafana |
 
 Frontend-команды также доступны из `frontend/`: `npm run build`, `npm run lint`, `npm run test`, `npm run test:e2e` и `npm run assets:budget`. `npm run lint` выполняет проверку TypeScript (`tsc --noEmit`). E2E-команды запускаются через Playwright и могут требовать запущенного приложения.
 

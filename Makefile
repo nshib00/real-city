@@ -1,18 +1,22 @@
 COMPOSE := docker compose -f docker-compose.yml -f docker-compose.dev.yml
 COMPOSE_OBSERVABILITY := $(COMPOSE) -f docker-compose.observability.yml
+COMPOSE_PRODUCTION_BUILD := docker compose -f docker-compose.production.yml -f docker-compose.production-build.yml
 COMPOSE_TEST := docker compose -p real-city-test -f docker-compose.test.yml
+COMPOSE_TEST_OBSERVABILITY := $(COMPOSE_TEST) -f docker-compose.observability.yml
 COMPOSE_LAPTOP := $(COMPOSE_TEST) -f docker-compose.laptop.yml
 POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
 TEST_POSTGRES_DSN ?= postgres://real_city:real_city@postgres:5432/real_city?sslmode=disable
 BLENDER ?= blender
 
-.PHONY: test backend-test frontend-test catalog-check backend-run backend-up backend-down \
- backend-logs backend-run-local db-up \
+.PHONY: test backend-test frontend-test backend-prod-up frontend-prod-up backend-prod-down frontend-prod-down backend-dev-up backend-dev-down backend-local-up frontend-dev-up frontend-test-up backend-test-up backend-test-down backend-laptop-up backend-laptop-down catalog-check \
+	migrate-production \
+	 backend-logs db-up \
  migrate-up migrate-down migrate-status \
- test-backend-up test-backend-down test-backend-logs test-db-up \
+	 test-backend-logs test-db-up \
  test-migrate-up test-migrate-down test-migrate-status \
- create-test-admin frontend-dev frontend-dev-test \
- observability-up observability-down observability-targets observability-logs \
+	 create-test-admin \
+	 backend-observability-up backend-observability-down observability-targets observability-logs \
+	 backend-test-observability-up backend-test-observability-down test-observability-logs \
  asset-pipeline-smoke asset-pipeline-local asset-contact-sheets asset-pipeline-blender-roundtrip
 
 test: backend-test frontend-test
@@ -33,21 +37,40 @@ backend-test:
 frontend-test:
 	cd frontend && npm test
 
-backend-run: backend-up
+# Build the production backend image and start the backend services.
+backend-prod-up:
+	$(COMPOSE_PRODUCTION_BUILD) build backend
+	$(COMPOSE_PRODUCTION_BUILD) up -d --wait postgres redis
+	$(MAKE) migrate-production
+	$(COMPOSE_PRODUCTION_BUILD) up -d --wait backend
 
-backend-up: migrate-up
+migrate-production:
+	$(COMPOSE_PRODUCTION_BUILD) up -d --wait postgres redis
+	$(COMPOSE_PRODUCTION_BUILD) run --rm --no-deps backend /app/migrate up
+
+frontend-prod-up:
+	$(COMPOSE_PRODUCTION_BUILD) build web
+	$(COMPOSE_PRODUCTION_BUILD) up -d --wait
+
+backend-prod-down:
+	$(COMPOSE_PRODUCTION_BUILD) stop backend postgres redis
+
+frontend-prod-down:
+	$(COMPOSE_PRODUCTION_BUILD) stop web backend postgres redis
+
+backend-dev-up: migrate-up
 	$(COMPOSE) up --build backend
 
-backend-down:
+backend-dev-down:
 	$(COMPOSE) down
 
 backend-logs:
 	$(COMPOSE) logs -f backend
 
-observability-up: migrate-up
+backend-observability-up: migrate-up
 	$(COMPOSE_OBSERVABILITY) up -d --build --wait --wait-timeout 120 backend prometheus grafana
 
-observability-down:
+backend-observability-down:
 	$(COMPOSE_OBSERVABILITY) stop grafana prometheus
 
 observability-targets:
@@ -55,6 +78,15 @@ observability-targets:
 
 observability-logs:
 	$(COMPOSE_OBSERVABILITY) logs -f prometheus grafana
+
+backend-test-observability-up: backend-test-up
+	$(COMPOSE_TEST_OBSERVABILITY) up -d --build --wait --wait-timeout 120 prometheus grafana
+
+backend-test-observability-down:
+	$(COMPOSE_TEST_OBSERVABILITY) stop grafana prometheus
+
+test-observability-logs:
+	$(COMPOSE_TEST_OBSERVABILITY) logs -f prometheus grafana
 
 db-up:
 	docker compose up -d postgres redis
@@ -80,10 +112,10 @@ test-migrate-down: test-db-up
 test-migrate-status: test-db-up
 	$(COMPOSE_TEST) run --rm --build -e POSTGRES_DSN="$(TEST_POSTGRES_DSN)" backend /app/migrate status
 
-test-backend-up: test-migrate-up
+backend-test-up: test-migrate-up
 	$(COMPOSE_TEST) up -d --build backend
 
-test-backend-down:
+backend-test-down:
 	$(COMPOSE_TEST) down
 
 test-backend-logs:
@@ -92,13 +124,13 @@ test-backend-logs:
 create-test-admin: test-migrate-up
 	./scripts/create-test-admin.sh
 
-backend-run-local:
+backend-local-up:
 	cd backend && go run ./cmd/api
 
-frontend-dev:
+frontend-dev-up:
 	cd frontend && npm run dev -- --host 0.0.0.0
 
-frontend-dev-test:
+frontend-test-up:
 	cd frontend && VITE_API_PROXY_TARGET=http://localhost:18080 npm run dev -- --host 0.0.0.0
 
 asset-pipeline-smoke:
@@ -127,19 +159,19 @@ contracts-check:
 contracts-generate:
 	python3 tools/sync_api_contracts.py
 
-.PHONY: laptop-build laptop-up laptop-stop laptop-config laptop-measure
+.PHONY: laptop-build backend-laptop-up backend-laptop-down laptop-config laptop-measure
 laptop-build:
 	$(COMPOSE_LAPTOP) --parallel 1 build backend frontend
 
 # Сборка вынесена отдельно: обычный запуск не запускает компиляторы.
-laptop-up:
+backend-laptop-up:
 	$(COMPOSE_LAPTOP) stop frontend backend
 	$(COMPOSE_LAPTOP) up -d --no-build --wait postgres redis
 	$(COMPOSE_LAPTOP) run --rm --no-deps backend /app/migrate up
 	$(COMPOSE_LAPTOP) exec -T postgres psql -X -U real_city -d real_city -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS pg_stat_statements'
 	$(COMPOSE_LAPTOP) up -d --no-build backend frontend
 
-laptop-stop:
+backend-laptop-down:
 	$(COMPOSE_LAPTOP) stop frontend backend redis postgres
 
 laptop-config:
