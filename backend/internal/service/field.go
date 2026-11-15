@@ -130,6 +130,40 @@ func (s *FieldService) advanceField(ctx context.Context, playerID player.ID, id 
 	return item, inventory, nil
 }
 
+func (s *FieldService) Rush(ctx context.Context, playerID player.ID, id building.ID) (item building.Building, inventory economy.Inventory, price int, err error) {
+	err = s.fieldTransaction(ctx, id, func(ctx context.Context) error {
+		current, e := s.requireField(ctx, playerID, id)
+		if e != nil {
+			return e
+		}
+		if current.FieldStage <= 0 || current.FieldStageStartedAt == nil || current.FieldStageReadyAt == nil || !current.FieldStageReadyAt.After(s.now()) {
+			return apperror.New(apperror.Conflict, "field has no running growth phase")
+		}
+		price = building.RushCompletionCrystalCost(current.FieldStageReadyAt.Sub(s.now()))
+		if price > 0 {
+			if _, e = s.economy.Spend(ctx, playerID, []economy.ResourceAmount{{Resource: economy.ResourceAeolianCrystal, Amount: price}}, fieldReason(current, "rush")); e != nil {
+				return e
+			}
+		}
+		now := s.now()
+		current.FieldStageReadyAt = &now
+		current.UpdatedAt = now
+		if e = s.buildings.Update(ctx, current); e != nil {
+			return e
+		}
+		if e = s.releaseCompletedFieldPhase(ctx, playerID, &current, now); e != nil {
+			return e
+		}
+		item = current
+		inventory, e = s.currentInventory(ctx, playerID)
+		return e
+	})
+	if err != nil {
+		return building.Building{}, economy.Inventory{}, price, err
+	}
+	return
+}
+
 func (s *FieldService) HarvestWindleaf(ctx context.Context, playerID player.ID, id building.ID) (building.Building, economy.Inventory, error) {
 	return s.HarvestField(ctx, playerID, id)
 }

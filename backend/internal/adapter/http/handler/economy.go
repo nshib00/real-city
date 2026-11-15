@@ -168,6 +168,13 @@ func (h *EconomyHandler) PatchProduction(w http.ResponseWriter, r *http.Request)
 			return
 		}
 		writeJSON(w, http.StatusOK, envelope{"job": dto.ProductionJob(job), "inventory": dto.Inventory(inventory)})
+	case "rush":
+		job, inventory, price, err := h.production.Rush(r.Context(), playerID, id)
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		writeJSON(w, http.StatusOK, envelope{"job": dto.ProductionJob(job), "inventory": dto.Inventory(inventory), "rush": dto.RushCompletionResponse{CrystalCost: price}})
 	case "cancel":
 		job, err := h.production.Cancel(r.Context(), playerID, id)
 		if err != nil {
@@ -176,7 +183,7 @@ func (h *EconomyHandler) PatchProduction(w http.ResponseWriter, r *http.Request)
 		}
 		writeJSON(w, http.StatusOK, envelope{"job": dto.ProductionJob(job)})
 	default:
-		writeError(w, apperror.WithFields(apperror.Validation, "unsupported production action", map[string]string{"action": "must be complete or cancel"}))
+		writeError(w, apperror.WithFields(apperror.Validation, "unsupported production action", map[string]string{"action": "must be complete, cancel or rush"}))
 	}
 }
 
@@ -216,4 +223,23 @@ func (h *EconomyHandler) AdvanceField(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item), "inventory": dto.Inventory(inventory)})
+}
+
+func (h *EconomyHandler) RushField(w http.ResponseWriter, r *http.Request) {
+	playerID, ok := middleware.PlayerID(r.Context())
+	if !ok {
+		writeError(w, apperror.New(apperror.Unauthorized, "player id is missing"))
+		return
+	}
+	var req dto.AdvanceFieldRequest
+	if err := decodeJSON(r, &req); err != nil {
+		writeError(w, err)
+		return
+	}
+	item, inventory, price, err := h.fields.Rush(r.Context(), playerID, building.ID(req.BuildingID))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, envelope{"building": dto.Building(item), "inventory": dto.Inventory(inventory), "rush": dto.RushCompletionResponse{CrystalCost: price}})
 }

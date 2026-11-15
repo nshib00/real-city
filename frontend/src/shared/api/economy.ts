@@ -77,10 +77,17 @@ export function startProduction(input: { building_id: string; recipe_id: string 
   })
 }
 
-export function patchProductionJob(id: string, action: 'complete' | 'cancel') {
-  return request<{ job: ProductionJobResponse; inventory?: InventoryResponse }>(`/production/jobs/${id}`, {
+export function patchProductionJob(id: string, action: 'complete' | 'cancel' | 'rush') {
+	return request<{ job: ProductionJobResponse; inventory?: InventoryResponse; rush?: { crystal_cost: number } }>(`/production/jobs/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ action }),
+  })
+}
+
+export function rushField(buildingId: string) {
+  return request<{ building: BuildingResponse; inventory: InventoryResponse; rush?: { crystal_cost: number } }>('/fields/rush', {
+    method: 'POST',
+    body: JSON.stringify({ building_id: buildingId }),
   })
 }
 

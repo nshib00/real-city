@@ -21,7 +21,7 @@ import { deleteBuilding as deleteBuildingRequest, patchBuilding, placeBuilding, 
 import { ruinRestoration } from './ruinRestoration'
 import { playBuildingSound } from '../buildings/buildingAudio'
 import { ApiClientError } from '../../shared/api/client'
-import { advanceField, harvestField, patchResourceNode, type InventoryResponse } from '../../shared/api/economy'
+import { advanceField, harvestField, patchResourceNode, patchProductionJob, rushField, type InventoryResponse } from '../../shared/api/economy'
 import { createAttackMonster, getCombatRules, listPendingWeaponAttacks, useWeaponOnBuilding, useWeaponOnMonster, toMonster, type MonsterLootResponse, type MonsterResponse, type PendingWeaponAttack } from '../../shared/api/monsters'
 import { weaponFuseLabel } from './weaponFuse'
 import { IconButton, Modal, Tabs } from '../../shared/ui'
@@ -162,6 +162,7 @@ export function Inspector() {
   const objectThreat = Boolean(selectedMonster && ['aggro', 'chase', 'investigate', 'attacking', 'windup', 'recover'].includes(selectedMonster.state)) || Boolean(selectedBuilding && damageEvents.some(event => event.buildingId === selectedBuilding.id && constructionNow - event.createdAt < 1500))
   const selectedOilNode = selectedBuilding?.kind === 'oil_well' ? resourceNodes.find((node) => node.resource === 'oil' && node.tile.x === selectedBuilding.tile.x && node.tile.y === selectedBuilding.tile.y) : null
   const selectedOilJob = selectedBuilding?.kind === 'oil_well' ? oilJobsQuery.data?.jobs.find((job) => job.building_id === selectedBuilding.id && (job.state === 'running' || job.state === 'ready')) : null
+  const selectedProductionJob = selectedBuilding ? oilJobsQuery.data?.jobs.find((job) => job.building_id === selectedBuilding.id && job.state === 'running') : null
   const selectedFieldSpec = selectedBuilding ? fieldCropSpec(selectedBuilding.kind) : null
   const selectedFieldMaxStage = selectedFieldSpec && selectedBuilding?.isSuperCrop ? selectedFieldSpec.superStages : selectedFieldSpec?.stages ?? 0
   const selectedFieldStageReady = selectedFieldSpec && selectedBuilding?.fieldStageReadyAt ? selectedBuilding.fieldStageReadyAt <= constructionNow : Boolean(selectedBuilding?.fieldStageReady)
@@ -169,6 +170,8 @@ export function Inspector() {
   const selectedFieldReadyToHarvest = Boolean(selectedFieldSpec && selectedFieldMaxStage > 0 && selectedFieldStage >= selectedFieldMaxStage && selectedFieldStageReady)
   const selectedFieldReadyToAdvance = Boolean(selectedFieldSpec && selectedFieldStage > 0 && selectedFieldStage < selectedFieldMaxStage && selectedFieldStageReady)
   const selectedFieldNextAt = selectedFieldSpec ? selectedBuilding?.fieldStageReadyAt : null
+  const fieldRushCost = selectedFieldNextAt && selectedFieldNextAt > constructionNow ? rushCompletionCrystalCost(selectedFieldNextAt - constructionNow) : 0
+  const productionRushCost = selectedProductionJob ? rushCompletionCrystalCost(Date.parse(selectedProductionJob.completes_at) - constructionNow) : 0
   const upgradeMutation = useMutation({
     mutationFn: ({ buildingId, targetType }: { buildingId: string; targetType?: BuildingKind }) => patchBuilding(buildingId, 'upgrade', targetType),
     onSuccess: (result) => {
@@ -238,6 +241,23 @@ export function Inspector() {
       notifyInsufficientPopulation(error)
       setConstructionError(formatActionError(error))
     },
+  })
+  const rushFieldMutation = useMutation({
+    mutationFn: (buildingId: string) => rushField(buildingId),
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: (error) => { setConstructionError(formatActionError(error)) },
+  })
+  const rushProductionMutation = useMutation({
+    mutationFn: (jobId: string) => patchProductionJob(jobId, 'rush'),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['production', 'jobs'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: (error) => { setConstructionError(formatActionError(error)) },
   })
   const repairMutation = useMutation({
     mutationFn: (buildingId: string) => patchBuilding(buildingId, 'repair'),
@@ -559,6 +579,8 @@ export function Inspector() {
           <>
             {canAttackSelectedBuilding ? <InspectorAction icon={Swords} label="Атаковать" onClick={() => setWeaponMenuOpen(true)} /> : null}
             {canManageSelectedBuilding && selectedFieldSpec && selectedFieldStage < selectedFieldMaxStage ? <InspectorAction icon={Sprout} label={selectedFieldStage <= 0 ? 'Запустить рост' : 'Следующая фаза'} disabled={selectedBuilding.status !== 'active' || (selectedFieldStage > 0 && !selectedFieldReadyToAdvance) || advanceFieldMutation.isPending} onClick={() => advanceFieldMutation.mutate(selectedBuilding.id)} /> : null}
+            {canManageSelectedBuilding && selectedFieldSpec && selectedBuilding.status === 'active' && selectedFieldStage > 0 && selectedFieldNextAt && selectedFieldNextAt > constructionNow ? <InspectorAction icon={Gem} label={`Ускорить · ${fieldRushCost} крист.`} disabled={rushFieldMutation.isPending || fieldRushCost <= 0} onClick={() => rushFieldMutation.mutate(selectedBuilding.id)} /> : null}
+            {canManageSelectedBuilding && selectedProductionJob ? <InspectorAction icon={Gem} label={`Ускорить работу · ${productionRushCost} крист.`} disabled={rushProductionMutation.isPending || productionRushCost <= 0} onClick={() => rushProductionMutation.mutate(selectedProductionJob.id)} /> : null}
             {canManageSelectedBuilding && selectedFieldSpec ? <InspectorAction icon={Sprout} label="Собрать урожай" disabled={selectedBuilding.status !== 'active' || !selectedFieldReadyToHarvest || harvestFieldMutation.isPending} onClick={() => harvestFieldMutation.mutate(selectedBuilding.id)} /> : null}
             {canManageSelectedBuilding && selectedBuilding.status === 'construction' && selectedBuilding.state !== 'repairing' ? <InspectorAction icon={Gem} label={`Завершить · ${rushCost} крист.`} disabled={rushMutation.isPending || rushCost <= 0} onClick={() => { setConstructionError(''); rushMutation.mutate(selectedBuilding.id) }} /> : null}
             {canManageSelectedBuilding && selectedBuilding.status === 'active' && selectedBuilding.state === 'active' && nextUpgrades.length > 0 ? <InspectorAction icon={TrendingUp} label="Улучшить" onClick={() => setUpgradeOpen(true)} /> : null}

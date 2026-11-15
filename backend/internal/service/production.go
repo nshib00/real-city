@@ -187,6 +187,38 @@ func (s *ProductionService) Complete(ctx context.Context, playerID player.ID, id
 	return s.CompleteAt(ctx, playerID, id, s.now())
 }
 
+// Rush completes a running production job immediately in exchange for crystals.
+func (s *ProductionService) Rush(ctx context.Context, playerID player.ID, id economy.ProductionJobID) (job economy.ProductionJob, inventory economy.Inventory, price int, err error) {
+	initial, err := s.repo.FindProductionJob(ctx, id)
+	if err != nil {
+		return job, inventory, 0, err
+	}
+	err = s.transaction(ctx, initial.BuildingID, func(ctx context.Context) error {
+		current, e := s.repo.FindProductionJob(ctx, id)
+		if e != nil {
+			return e
+		}
+		if current.PlayerID != string(playerID) {
+			return apperror.New(apperror.Forbidden, "production job belongs to another player")
+		}
+		if current.State != economy.ProductionRunning {
+			return apperror.New(apperror.Conflict, "production job is not running")
+		}
+		price = building.RushCompletionCrystalCost(current.CompletesAt.Sub(s.now()))
+		if price > 0 {
+			if _, e = s.economy.Spend(ctx, playerID, []economy.ResourceAmount{{Resource: economy.ResourceAeolianCrystal, Amount: price}}, "production:rush:"+string(current.RecipeID)); e != nil {
+				return e
+			}
+		}
+		job, inventory, e = s.completeAt(ctx, playerID, id, current.CompletesAt)
+		return e
+	})
+	if err != nil {
+		return economy.ProductionJob{}, economy.Inventory{}, price, err
+	}
+	return
+}
+
 func (s *ProductionService) completeAt(ctx context.Context, playerID player.ID, id economy.ProductionJobID, now time.Time) (economy.ProductionJob, economy.Inventory, error) {
 	job, err := s.repo.FindProductionJob(ctx, id)
 	if err != nil {

@@ -134,6 +134,7 @@ func NewRouter(log *slog.Logger, deps RouterDeps) http.Handler {
 	mux.Handle("POST /api/v1/production/jobs", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.StartProduction)))
 	mux.Handle("PATCH /api/v1/production/jobs/{id}", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.PatchProduction)))
 	mux.Handle("POST /api/v1/fields/advance", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
+	mux.Handle("POST /api/v1/fields/rush", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.RushField)))
 	mux.Handle("POST /api/v1/fields/harvest", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
 	mux.Handle("POST /api/v1/fields/windleaf/advance", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.AdvanceField)))
 	mux.Handle("POST /api/v1/fields/windleaf/harvest", authenticated(deps.Tokens, http.HandlerFunc(economyHandler.HarvestField)))
