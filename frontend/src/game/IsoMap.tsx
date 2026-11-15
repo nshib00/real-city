@@ -111,6 +111,8 @@ export function IsoMap() {
   const rejectedRelocationIdRef = useRef<string | null>(null)
   const activePointers = useRef(new Set<number>())
   const performanceScenario = useMemo(() => resolvePerformanceScenarioFromSearch(typeof window === 'undefined' ? '' : window.location.search), [])
+  const showPerformanceHud = Boolean(performanceScenario)
+    || (import.meta.env.DEV && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('perfHud') === '1')
   const viewportCenterRef = useRef(viewport.center)
   const renderCenter = useMemo(() => {
     if (stageSize.width <= 0 || stageSize.height <= 0) return viewport.center
@@ -807,7 +809,7 @@ export function IsoMap() {
         <MapPerformanceHud
           scenario={performanceScenario}
         />
-      ) : null}
+      ) : showPerformanceHud ? <MapPerformanceHud /> : null}
     </section>
   )
 }
@@ -832,19 +834,30 @@ function MapFpsLabel() {
 function MapPerformanceHud({
   scenario,
 }: {
-  scenario: PerformanceScenario
+  scenario?: PerformanceScenario
 }) {
   const snapshot = useRenderPerformanceSnapshot()
+  const phase = (key: keyof typeof snapshot.redraw.phases) => {
+    const value = snapshot.redraw.phases[key]
+    return `${value.p50Ms.toFixed(1)}/${value.p95Ms.toFixed(1)}`
+  }
 
   return (
     <div className="map-performance-hud" aria-label="Performance HUD">
-      <span>{scenario.name}</span>
+      <span>{scenario ? scenario.name : 'live map'}</span>
       <span>fps {snapshot.fps.toFixed(1)}</span>
       <span>frame p50/p95 {snapshot.frameP50Ms.toFixed(1)}/{snapshot.frameP95Ms.toFixed(1)} ms</span>
       <span>visible tile/build/resource/monster {snapshot.visible.tiles}/{snapshot.visible.buildings}/{snapshot.visible.resources}/{snapshot.visible.monsters}</span>
       <span>Pixi children terrain/objects {snapshot.pixiChildren.terrain}/{snapshot.pixiChildren.objects}</span>
       <span>cache terrain/build/resource/overlay {snapshot.retainedCaches.terrain}/{snapshot.retainedCaches.buildings}/{snapshot.retainedCaches.resources}/{snapshot.retainedCaches.overlays}</span>
       <span>redraw #{snapshot.redraw.count} +{snapshot.redraw.created}/-{snapshot.redraw.destroyed}</span>
+      <span>redraw 10s n{snapshot.redraw.samples10s} total p50/p95 {phase('total')}</span>
+      <span>ms p50/p95 terrain {phase('terrain')} · overlays {phase('mapOverlays')}</span>
+      <span>ms p50/p95 commands {phase('commandBuild')} · buildings {phase('buildings')}</span>
+      <span>ms p50/p95 resources {phase('resources')} · monsters {phase('monsters')}</span>
+      <span>ms p50/p95 anim overlays {phase('buildingOverlays')}</span>
+      <span>objects b/r/m {snapshot.redraw.objects.buildings}/{snapshot.redraw.objects.resources}/{snapshot.redraw.objects.monsters}; commands b/r/o {snapshot.redraw.objects.buildingCommands}/{snapshot.redraw.objects.resourceCommands}/{snapshot.redraw.objects.overlayCommands}</span>
+      <span>ticker p95 monsters {snapshot.animation.monsters.p95Ms.toFixed(1)} ms ({snapshot.animation.monsters.items}); overlays {snapshot.animation.buildingOverlays.p95Ms.toFixed(1)} ms ({snapshot.animation.buildingOverlays.items})</span>
       <span>heap {snapshot.usedHeapMb === null ? 'n/a' : `${snapshot.usedHeapMb} MB`}</span>
       <span>gl {snapshot.activePixiContexts}+{snapshot.activeThreePreviews}</span>
     </div>

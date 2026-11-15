@@ -18,7 +18,7 @@ import { buildingDrawCommands, type BuildingDrawCommand } from './objectLayer/ob
 import { projectedObjectSortKey } from './objectLayer/objectDepth'
 import { resourceDrawCommands, type ResourceDrawCommand } from './objectLayer/resourceDrawData'
 import { buildingHitAtClick, createRenderedTileLookup } from './mapHitTarget'
-import { pixiMutationCounts, recordPixiChildMutation, recordPixiFrame, recordPixiRedraw, registerPixiContext } from './renderPerformanceMetrics'
+import { pixiMutationCounts, recordPixiAnimation, recordPixiChildMutation, recordPixiFrame, recordPixiRedraw, registerPixiContext } from './renderPerformanceMetrics'
 import { isRaisedTerrain, TERRAIN_SPRITE, terrainTextureUrl } from './terrainTextures'
 import { tileOccupancyKey } from './visibleObjects'
 import { indexWorldTiles, worldTilesNear, type WorldTileIndex } from './worldTileIndex'
@@ -240,7 +240,7 @@ export function PixiStage({
         resources: resourceSpriteCacheRef.current.size,
         overlays: buildingOverlayCacheRef.current.size,
       },
-    }, before)
+      }, before, drawn.diagnostics)
   }
 
   redrawRef.current = () => {
@@ -307,6 +307,7 @@ export function PixiStage({
         if (!objectSpritesRef.current || !worldMotionEnabled()) {
           return
         }
+        const diagnosticStart = import.meta.env.DEV ? performance.now() : 0
         drawMonsterLayer(
           objectSpritesRef.current,
           monstersRef.current,
@@ -319,11 +320,13 @@ export function PixiStage({
           monsterGroupsRef.current,
           performance.now(),
         )
+        if (import.meta.env.DEV) recordPixiAnimation('monsters', performance.now() - diagnosticStart, monstersRef.current.length)
       }
       const animateBuildingOverlays = () => {
         if (!objectSpritesRef.current || !worldMotionEnabled()) {
           return
         }
+        const diagnosticStart = import.meta.env.DEV ? performance.now() : 0
         drawBuildingAnimationOverlays(
           objectSpritesRef.current,
           buildingOverlayCacheRef.current,
@@ -334,6 +337,7 @@ export function PixiStage({
           performance.now(),
           viewerIdRef.current,
         )
+        if (import.meta.env.DEV) recordPixiAnimation('buildingOverlays', performance.now() - diagnosticStart, buildingDrawCommandsRef.current.length)
       }
       app.ticker.add(animateMonsters)
       app.ticker.add(animateBuildingOverlays)
@@ -494,6 +498,19 @@ function drawStage(
   redrawTerrain: boolean,
   previousVisibleTiles: number,
 ) {
+  const collectDiagnostics = import.meta.env.DEV
+  const totalStartedAt = collectDiagnostics ? performance.now() : 0
+  const phaseTimings = {
+    terrain: 0,
+    mapOverlays: 0,
+    commandBuild: 0,
+    buildings: 0,
+    resources: 0,
+    monsters: 0,
+    buildingOverlays: 0,
+    total: 0,
+  }
+  let phaseStartedAt = totalStartedAt
   const width = app.screen.width
   const height = app.screen.height
   const origin = { x: width * 0.48 + camera.x, y: height * 0.16 + camera.y }
@@ -511,6 +528,7 @@ function drawStage(
   const activeResourceIds = new Set<string>()
 
   const visibleTiles: { tile: WorldTile; x: number; y: number; sortKey: number }[] = []
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
   if (redrawTerrain) {
     for (const tile of worldTilesNear(tileIndex, centerGrid, tileReach)) {
       if (wrappedGridDistance(tile.x, centerGrid.x) > tileReach || wrappedGridDistance(tile.y, centerGrid.y) > tileReach) continue
@@ -541,7 +559,9 @@ function drawStage(
       drawDiamond(terrain, x, y, camera.zoom, terrainColor(tile), tile.safe_zone ? 0xf2c14e : 0xffffff, tile.safe_zone ? 0.42 : 0.18)
     }
   }
+  if (collectDiagnostics) phaseTimings.terrain = performance.now() - phaseStartedAt
 
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
   for (const cell of territories) {
     if (wrappedGridDistance(cell.x, centerGrid.x) > tileReach || wrappedGridDistance(cell.y, centerGrid.y) > tileReach) continue
     const pos = nearestWrappedScreenCoord(cell, screenTarget)
@@ -598,31 +618,63 @@ function drawStage(
     drawOverlay(overlay, selectedTile, origin, screenTarget, camera.zoom, 0x183e2c, 1)
     drawOverlay(overlay, selectedTile, origin, screenTarget, camera.zoom, overlayColors.focus, 0.9)
   }
+  if (collectDiagnostics) phaseTimings.mapOverlays = performance.now() - phaseStartedAt
 
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
   const buildingCommands = buildingDrawCommands(buildings, { allBuildings, selectedBuildingId })
+  const resourceCommands = resourceDrawCommands(resources)
+  if (collectDiagnostics) phaseTimings.commandBuild = performance.now() - phaseStartedAt
+
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
   for (const command of buildingCommands) {
     activeBuildingIds.add(command.id)
     drawBuildingSprite(isRoadBuilding(command.building) ? terrainSprites : objectSprites, buildingSpriteCache, command, origin, screenTarget, camera.zoom, buildingHitAreas, requestRedraw)
   }
-  for (const command of resourceDrawCommands(resources)) {
+  if (collectDiagnostics) phaseTimings.buildings = performance.now() - phaseStartedAt
+
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
+  for (const command of resourceCommands) {
     activeResourceIds.add(command.id)
     drawResourceNode(objectSprites, resourceSpriteCache, command, origin, screenTarget, camera.zoom, resourceHitAreas)
   }
   if (redrawTerrain) pruneRetainedChildren(terrainSpriteCache, activeTerrainKeys)
   pruneRetainedChildren(buildingSpriteCache, activeBuildingIds)
   pruneRetainedChildren(resourceSpriteCache, activeResourceIds)
+  if (collectDiagnostics) phaseTimings.resources = performance.now() - phaseStartedAt
+
   const nowMs = performance.now()
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
   drawMonsterLayer(objectSprites, monsters, selectedMonsterId, camera, width, height, monsterHitAreas, monsterRenderMemory, monsterGroups, nowMs)
+  if (collectDiagnostics) phaseTimings.monsters = performance.now() - phaseStartedAt
+
+  phaseStartedAt = collectDiagnostics ? performance.now() : 0
+  const overlayCommands = buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs: worldMotionEnabled() ? nowMs : 0, viewerId })
   drawBuildingOverlayCommands(
     objectSprites,
     buildingOverlayCache,
-    buildingOverlayDrawCommands(buildingCommands, { zoom: camera.zoom, nowMs: worldMotionEnabled() ? nowMs : 0, viewerId }),
+    overlayCommands,
     buildingCommands,
     origin,
     screenTarget,
     camera.zoom,
   )
-  return { buildingCommands, visibleTiles: redrawTerrain ? visibleTiles.length : previousVisibleTiles }
+  if (collectDiagnostics) phaseTimings.buildingOverlays = performance.now() - phaseStartedAt
+  if (collectDiagnostics) phaseTimings.total = performance.now() - totalStartedAt
+  return {
+    buildingCommands,
+    visibleTiles: redrawTerrain ? visibleTiles.length : previousVisibleTiles,
+    diagnostics: {
+      phases: phaseTimings,
+      objects: {
+        buildings: buildings.length,
+        resources: resources.length,
+        monsters: monsters.length,
+        buildingCommands: buildingCommands.length,
+        resourceCommands: resourceCommands.length,
+        overlayCommands: overlayCommands.length,
+      },
+    },
+  }
 }
 
 function isRoadBuilding(building: PlacedBuilding) {
