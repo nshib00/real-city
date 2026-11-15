@@ -5,6 +5,8 @@ export default defineConfig({
   ...interfaceConfig,
   testMatch: 'interface-rollout.spec.ts',
   outputDir: 'rollout-results',
+  timeout: 180_000,
+  expect: { timeout: 60_000 },
   use: { ...interfaceConfig.use, baseURL: 'http://127.0.0.1:5176' },
   webServer: {
     command: 'npm run dev -- --host 127.0.0.1 --port 5176 --strictPort',
