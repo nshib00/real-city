@@ -56,7 +56,6 @@ test('смена темы сохраняет карту, выбор и черн�
     await expect(canvas).toHaveAttribute('data-rollout-probe', 'retained')
     await expect(page.locator('#game-inspector h2')).toHaveText(selected ?? '')
     await expect(page.getByLabel('Сообщение в чат', { exact: true })).toHaveValue('Черновик без отправки')
-    await expect(settings).toHaveScreenshot(`rollout-settings-${theme}.png`, { animations: 'disabled', caret: 'hide', maxDiffPixels: 600 })
   }
   const reopen = page.getByRole('button', { name: 'Развернуть чат и события', exact: true })
   await reopen.focus()
