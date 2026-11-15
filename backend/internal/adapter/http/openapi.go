@@ -78,6 +78,7 @@ func OpenAPISpec() map[string]any {
 			"/combat/monsters":                   map[string]any{"post": idempotentOperation("Create monster against rival buildings")},
 			"/fields/advance":                    map[string]any{"post": operation("POST /fields/advance")},
 			"/fields/harvest":                    map[string]any{"post": operation("POST /fields/harvest")},
+			"/fields/rush":                       map[string]any{"post": operation("Rush field growth with crystals")},
 			"/fields/windleaf/advance":           map[string]any{"post": operation("POST /fields/windleaf/advance")},
 			"/fields/windleaf/harvest":           map[string]any{"post": operation("Harvest windleaf field")},
 			"/monster-loot/{id}/claim":           map[string]any{"post": operation("Claim public monster loot drop")},
