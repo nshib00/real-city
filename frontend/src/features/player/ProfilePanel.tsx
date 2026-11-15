@@ -9,6 +9,7 @@ import { Modal } from '../../shared/ui/Modal'
 
 import { levelThresholds, playerProgress } from './levels'
 import { LevelEmblem } from './LevelEmblem'
+import { useGameStore } from '../../game/state/useGameStore'
 
 export function ProfilePanel() {
   const { player, setPlayer } = useAuthStore()
@@ -24,6 +25,7 @@ export function ProfilePanel() {
   const [attackAlerts, setAttackAlerts] = useState(true)
   const [productionReady, setProductionReady] = useState(true)
   const [marketUpdates, setMarketUpdates] = useState(false)
+  const [showFps, setShowFps] = useState(() => useGameStore.getState().uiPreferences.showFps)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
   const lastLevel = useRef<{ playerId: string; level: number } | null>(null)
@@ -67,6 +69,7 @@ export function ProfilePanel() {
     setAttackAlerts(player.profile.settings.notifications.attack_alerts)
     setProductionReady(player.profile.settings.notifications.production_ready)
     setMarketUpdates(player.profile.settings.notifications.market_updates)
+    setShowFps(useGameStore.getState().uiPreferences.showFps)
   }, [player, settingsOpen])
 
   if (!player) {
@@ -263,6 +266,11 @@ export function ProfilePanel() {
             <Bell size={16} />
             <span>Рынок</span>
             <input checked={marketUpdates} onChange={(event) => setMarketUpdates(event.target.checked)} type="checkbox" />
+          </label>
+          <label>
+            <MonitorCog size={16} />
+            <span>Показывать FPS</span>
+            <input checked={showFps} onChange={(event) => { setShowFps(event.target.checked); useGameStore.getState().setShowFps(event.target.checked) }} type="checkbox" />
           </label>
           <label>
             <MonitorCog size={16} />

@@ -9,7 +9,7 @@ describe('ResourceRegistry', () => {
   beforeEach(() => {
     useGameStore.setState({
       buildings: [],
-      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: true, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
+      uiPreferences: { mapPowerSave: false, showFps: false, compactPanels: false, resourceRegistryOpen: true, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
     })
   })
 

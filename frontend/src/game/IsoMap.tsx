@@ -50,6 +50,7 @@ const RECENT_CHOP_TILE_TTL_MS = 10_000
 export function IsoMap() {
   useEffect(() => { beginMapMeasure('map-ready') }, [])
   const mapPowerSave = useGameStore((state) => state.uiPreferences.mapPowerSave)
+  const showFps = useGameStore((state) => state.uiPreferences.showFps)
   const buildMenuOpen = useGameStore((state) => state.uiPreferences.buildMenuOpen)
   const resourceRegistryOpen = useGameStore((state) => state.uiPreferences.resourceRegistryOpen)
   const alliancePanelOpen = useGameStore((state) => state.uiPreferences.alliancePanelOpen)
@@ -795,10 +796,12 @@ export function IsoMap() {
       />
       <div className="map-debug" aria-live="polite">
         {performanceScenario ? <span>{performanceScenarioLabel(performanceScenario)}</span> : null}
-        <MapFpsLabel />
-        <span>chunk {centerChunk.x}:{centerChunk.y}</span>
-        <span>zoom {camera.zoom.toFixed(2)}</span>
-        <span>{chunksQuery.isFetching ? 'loading' : `${tiles.length} tiles`}</span>
+        {showFps ? <MapFpsLabel /> : null}
+        {import.meta.env.DEV || import.meta.env.MODE === 'test' ? <>
+          <span>chunk {centerChunk.x}:{centerChunk.y}</span>
+          <span>zoom {camera.zoom.toFixed(2)}</span>
+          <span>{chunksQuery.isFetching ? 'loading' : `${tiles.length} tiles`}</span>
+        </> : null}
       </div>
       {performanceScenario ? (
         <MapPerformanceHud

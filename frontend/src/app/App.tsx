@@ -54,7 +54,7 @@ export function App() {
           if (button && !button.disabled && button.dataset.audioHandled !== 'true') playUiSound('ui.click')
         }}>
           <InterfaceNavigation />
-          <ActionFeedback />
+          {import.meta.env.DEV || import.meta.env.MODE === 'test' ? <ActionFeedback /> : null}
           <MapAssetStatus />
           <ResourceBar />
           <ProfilePanel />

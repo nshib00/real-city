@@ -42,7 +42,7 @@ describe('BuildMenu', () => {
       selectedBuildingId: null,
       buildings: [],
       worldTiles: [],
-      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: true, isChatCollapsed: false, areNotificationsCollapsed: false },
+      uiPreferences: { mapPowerSave: false, showFps: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: true, isChatCollapsed: false, areNotificationsCollapsed: false },
     })
     useAuthStore.setState({ player: testPlayer('p1'), isAuthenticated: true })
   })

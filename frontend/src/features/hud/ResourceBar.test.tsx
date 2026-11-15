@@ -14,7 +14,7 @@ describe('ResourceBar', () => {
     useAuthStore.setState({ player: { id: 'test' } as Player })
     useGameStore.setState({
       buildings: [],
-      uiPreferences: { mapPowerSave: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
+      uiPreferences: { mapPowerSave: false, showFps: false, compactPanels: false, resourceRegistryOpen: false, alliancePanelOpen: false, helpCenterOpen: false, buildMenuOpen: false, isChatCollapsed: false, areNotificationsCollapsed: false },
       realtimeStatus: 'connected',
     })
   })

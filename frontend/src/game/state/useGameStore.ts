@@ -163,6 +163,7 @@ export type BuildingDamageEvent = { id: string; buildingId: string; tile: TileCo
 
 export type UIPreferences = {
   mapPowerSave: boolean
+  showFps: boolean
   compactPanels: boolean
   resourceRegistryOpen: boolean
   alliancePanelOpen: boolean
@@ -174,6 +175,7 @@ export type UIPreferences = {
 
 const defaultUIPreferences: UIPreferences = {
   mapPowerSave: false,
+  showFps: import.meta.env.DEV || import.meta.env.MODE === 'test',
   compactPanels: false,
   resourceRegistryOpen: false,
   alliancePanelOpen: false,
@@ -274,6 +276,7 @@ type GameState = {
   setViewportRadius: (radius: number) => void
   setCompactPanels: (compactPanels: boolean) => void
   setMapPowerSave: (enabled: boolean) => void
+  setShowFps: (enabled: boolean) => void
   toggleResourceRegistry: () => void
   setBuildMenuOpen: (buildMenuOpen: boolean) => void
   setAlliancePanelOpen: (alliancePanelOpen: boolean) => void
@@ -533,6 +536,10 @@ export const useGameStore = create<GameState>((set) => ({
   setMapPowerSave: (mapPowerSave) =>
     set((state) => ({
       uiPreferences: persistUIPreferences({ ...state.uiPreferences, mapPowerSave }),
+    })),
+  setShowFps: (showFps) =>
+    set((state) => ({
+      uiPreferences: persistUIPreferences({ ...state.uiPreferences, showFps }),
     })),
   toggleResourceRegistry: () =>
     set((state) => ({
