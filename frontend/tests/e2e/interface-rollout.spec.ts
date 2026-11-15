@@ -35,7 +35,12 @@ test('смена темы сохраняет карту, выбор и черн�
   await page.keyboard.press('Enter')
   await expect(page.getByRole('button', { name: 'Развернуть чат и события', exact: true })).toBeVisible()
   const settings = page.locator('.interface-settings')
-  if (!await settings.getAttribute('open').then(value => value !== null)) await settings.locator('summary').click()
+  if (!await settings.getAttribute('open').then(value => value !== null)) {
+    await settings.locator('summary').focus()
+    await page.keyboard.press('Enter')
+    await expect(settings).toHaveAttribute('open', '')
+    await settings.locator('summary').evaluate((node) => (node as HTMLElement).blur())
+  }
   const feedbackBox = await page.locator('.action-feedback').boundingBox()
   const inspectorBox = await page.locator('#game-inspector').boundingBox()
   expect(feedbackBox).not.toBeNull()
@@ -54,7 +59,9 @@ test('смена темы сохраняет карту, выбор и черн�
     await page.screenshot({ path: info.outputPath(`${theme}.png`), animations: 'disabled' })
     await expect(page).toHaveScreenshot(`rollout-${theme}.png`, { animations: 'disabled', caret: 'hide', maxDiffPixels: 600 })
   }
-  await page.getByRole('button', { name: 'Развернуть чат и события', exact: true }).click()
+  const reopen = page.getByRole('button', { name: 'Развернуть чат и события', exact: true })
+  await reopen.focus()
+  await page.keyboard.press('Enter')
   await expect(page.getByLabel('Сообщение в чат', { exact: true })).toHaveValue('Черновик без отправки')
   expect(errors).toEqual([])
   expect(mutations).toEqual([])
