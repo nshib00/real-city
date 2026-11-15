@@ -25,9 +25,10 @@ import type { PlacedBuilding } from './state/useGameStore'
 import type { WorldTile } from '../shared/contracts'
 import { chopForest, type ChunksResponse } from '../shared/api/world'
 import { relocateBuilding, patchBuilding, toPlacedBuilding } from '../shared/api/buildings'
+import { ApiClientError } from '../shared/api/client'
 import { buildingSpriteAsset } from './renderers/buildingSpriteAssets'
 import { claimMonsterLoot, listMonsterLoot, type MonsterLootResponse } from '../shared/api/monsters'
-import { advanceField, harvestField, listProductionRecipes, patchProductionJob, startProduction } from '../shared/api/economy'
+import { advanceField, harvestField, listProductionRecipes, patchProductionJob, rushField, startProduction } from '../shared/api/economy'
 import type { InventoryItem, InventoryResponse, ProductionJobResponse, ProductionRecipeResponse } from '../shared/api/economy'
 import { useAuthStore } from '../features/auth/useAuthStore'
 import { PlayerBalloon } from '../features/player/PlayerBalloon'
@@ -368,6 +369,32 @@ export function IsoMap() {
     },
     onError: (error) => showToast('warning', error instanceof Error ? error.message : 'Не удалось собрать продукцию'),
   })
+  const rushProductionMutation = useMutation({
+    mutationFn: (id: string) => patchProductionJob(id, 'rush'),
+    onSuccess: (result) => {
+      void updateProductionCache(queryClient, result)
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: (error) => notifyCrystalRushError(error),
+  })
+  const rushFieldMutation = useMutation({
+    mutationFn: (id: string) => rushField(id),
+    onSuccess: (result) => {
+      addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: (error) => notifyCrystalRushError(error),
+  })
+  const rushUpgradeMutation = useMutation({
+    mutationFn: (id: string) => patchBuilding(id, 'rush_complete'),
+    onSuccess: (result) => {
+      if (result.building) addBuilding(toPlacedBuilding(result.building))
+      void queryClient.invalidateQueries({ queryKey: ['buildings'] })
+      void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
+    },
+    onError: (error) => notifyCrystalRushError(error),
+  })
 
   function handleSelectTile(tile: { x: number; y: number }) {
     setActionsDismissed(false)
@@ -661,9 +688,31 @@ export function IsoMap() {
         const canUpgrade = Boolean(upgradeSpec?.upgradeLevels?.some((level) => level.level === selectedActionBuilding.level + 1)
           || upgradeSpec?.upgradeLevels?.some((level) => level.level === selectedActionBuilding.level && level.nextType)
           || upgradeSpec?.upgradeTo?.length)
-        const actions: { label: string; icon: string; run: () => void }[] = []
+        const runningJob = activeProductionByBuilding.get(selectedActionBuilding.id)
+        const productionRecipe = findRecipeForBuilding(recipes, selectedActionBuilding)
+        const fieldSpec = fieldCropSpec(selectedActionBuilding.kind)
+        const fieldStage = selectedActionBuilding.fieldStage ?? selectedActionBuilding.growthStage ?? selectedActionBuilding.cropStage ?? 0
+        const fieldReadyAt = selectedActionBuilding.fieldStageReadyAt ?? null
+        const upgradeInProgress = own
+          && selectedActionBuilding.status === 'construction'
+          && selectedActionBuilding.state !== 'repairing'
+          && (selectedActionBuilding.level > 1 || Boolean(upgradeSpec && !upgradeSpec.firstLevel))
+          && selectedActionBuilding.completesAt != null
+          && selectedActionBuilding.completesAt > constructionNow
+        const actions: { label: string; icon: string; run: () => void; disabled?: boolean }[] = []
         if (!own && !allied && selectedActionBuilding.health > 0 && ['active', 'damaged'].includes(selectedActionBuilding.state ?? '')) {
           actions.push({ label: 'Атаковать оружием', icon: 'attack', run: () => setBuildingActionRequest({ buildingId: selectedActionBuilding.id, action: 'attack' }) })
+        }
+        if (upgradeInProgress && selectedActionBuilding.completesAt) {
+          const cost = rushCompletionCrystalCost(selectedActionBuilding.completesAt - constructionNow)
+          actions.push({ label: `Ускорить апгрейд · ${cost} крист.`, icon: 'crystal', disabled: rushUpgradeMutation.isPending, run: () => rushUpgradeMutation.mutate(selectedActionBuilding.id) })
+        }
+        if (own && selectedActionBuilding.state === 'active' && fieldSpec && fieldStage > 0 && fieldReadyAt && fieldReadyAt > constructionNow) {
+          const cost = rushCompletionCrystalCost(fieldReadyAt - constructionNow)
+          actions.push({ label: `Ускорить работу · ${cost} крист.`, icon: 'crystal', disabled: rushFieldMutation.isPending, run: () => rushFieldMutation.mutate(selectedActionBuilding.id) })
+        } else if (own && selectedActionBuilding.state === 'active' && productionRecipe && runningJob?.state === 'running' && Date.parse(runningJob.completes_at) > constructionNow) {
+          const cost = rushCompletionCrystalCost(Date.parse(runningJob.completes_at) - constructionNow)
+          actions.push({ label: `Ускорить работу · ${cost} крист.`, icon: 'crystal', disabled: rushProductionMutation.isPending, run: () => rushProductionMutation.mutate(runningJob.id) })
         }
         if (own && selectedActionBuilding.status === 'active' && canUpgrade) {
           actions.push({ label: 'Улучшить', icon: 'build', run: () => setBuildingActionRequest({ buildingId: selectedActionBuilding.id, action: 'upgrade' }) })
@@ -677,7 +726,7 @@ export function IsoMap() {
         return <div className="empty-tile-actions building-actions" role="group" aria-label={`Действия: ${selectedActionBuilding.name}`} style={{ left: selectedBuildingMenuPosition.left, top: selectedBuildingMenuPosition.top }} onPointerDown={(event) => event.stopPropagation()} onClick={(event) => event.stopPropagation()}>
           {actions.map((action, index) => {
             const angle = -Math.PI / 2 + index * 2 * Math.PI / actions.length
-            return <button key={action.label} type="button" className="empty-tile-action building-action" aria-label={action.label} title={action.label} style={{ left: `${Math.cos(angle) * 88}px`, top: `${Math.sin(angle) * 88}px` }} onClick={() => { action.run(); setActionsDismissed(true) }}><AeolianIcon name={action.icon} size={19} /></button>
+            return <button key={action.label} type="button" className="empty-tile-action building-action" aria-label={action.label} title={action.label} disabled={action.disabled} style={{ left: `${Math.cos(angle) * 88}px`, top: `${Math.sin(angle) * 88}px` }} onClick={() => { action.run(); setActionsDismissed(true) }}><AeolianIcon name={action.icon} size={19} /></button>
           })}
         </div>
       })() : null}
@@ -1116,6 +1165,21 @@ function isFieldStageReady(building: PlacedBuilding, now: number) {
 
 function isProductionReady(job: ProductionJobResponse, now: number) {
   return job.state === 'ready' || (job.state === 'running' && Date.parse(job.completes_at) <= now)
+}
+
+function rushCompletionCrystalCost(ms: number) {
+  if (ms <= 0) return 0
+  const step = 3 * 60 * 1000
+  if (ms < step) return 1
+  return 2 + Math.floor((ms - step) / step)
+}
+
+function notifyCrystalRushError(error: unknown) {
+  if (error instanceof ApiClientError && error.apiError.fields?.['aeolian-crystal']) {
+    showToast('warning', 'Недостаточно эолийских кристаллов')
+    return
+  }
+  showToast('warning', error instanceof Error ? error.message : 'Не удалось ускорить работу за кристаллы')
 }
 
 function tileActionKey(tile: { x: number; y: number }) {
