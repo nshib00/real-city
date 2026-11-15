@@ -4060,7 +4060,7 @@ button {
 
 .upgrade-cost {
   display: grid;
-  grid-template-columns: minmax(120px, max-content) minmax(0, max-content);
+  grid-template-columns: repeat(3, minmax(0, max-content));
   justify-content: center;
   align-items: start;
   gap: 8px 32px;
@@ -4095,6 +4095,10 @@ button {
   text-align: center;
   font-style: normal;
 }
+
+.upgrade-population { display: inline-flex; justify-content: center; align-items: center; gap: 4px; }
+.upgrade-population > em,
+.upgrade-population-column > em { display: inline-flex; align-items: center; gap: 4px; font-style: normal; }
 
 .repair-cost {
   display: flex;

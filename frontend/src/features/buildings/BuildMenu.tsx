@@ -188,6 +188,7 @@ export function BuildMenu() {
                       void queryClient.invalidateQueries({ queryKey: ['economy', 'inventory'] })
                     } catch (error) {
                       if (useAuthStore.getState().player?.id !== actorId) return
+                      if (error instanceof ApiClientError && error.apiError.fields?.population) showToast('warning', 'Недостаточно свободного населения')
                       playUiSound(error instanceof ApiClientError && error.apiError.fields?.coins ? 'economy.coin.insufficient'
                         : error instanceof ApiClientError && Object.keys(error.apiError.fields ?? {}).some((field) => field !== 'tile' && field !== 'terrain' && field !== 'limit') ? 'ui.resource.insufficient' : 'ui.action.invalid')
                       setBuildError(formatBuildError(error))

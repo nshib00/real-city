@@ -183,6 +183,7 @@ export function Inspector() {
     },
     onError: (error) => {
       playUiSound(error instanceof ApiClientError && error.apiError.fields?.coins ? 'economy.coin.insufficient' : 'ui.action.invalid')
+      notifyInsufficientPopulation(error)
       setUpgradeError(error instanceof Error ? error.message : 'Не удалось улучшить постройку')
     },
   })
@@ -234,6 +235,7 @@ export function Inspector() {
     },
     onError: (error) => {
       playUiSound('ui.action.invalid')
+      notifyInsufficientPopulation(error)
       setConstructionError(formatActionError(error))
     },
   })
@@ -250,7 +252,7 @@ export function Inspector() {
       void queryClient.invalidateQueries({ queryKey: ['buildings'] })
       setRepairOpen(false)
     },
-    onError: (error) => { playUiSound('ui.action.invalid'); showToast('warning', formatActionError(error)) },
+    onError: (error) => { playUiSound('ui.action.invalid'); notifyInsufficientPopulation(error); showToast('warning', formatActionError(error)) },
   })
   const rotateMutation = useMutation({
     mutationFn: (item: PlacedBuilding) => relocateBuilding(item.id, item.tile, ((item.rotation ?? 0) + 1) % 4),
@@ -724,6 +726,7 @@ function UpgradeModal({
               </div>
               <h3>{option.name}</h3>
               <span>Уровень {option.level} · HP {option.health} · {formatDuration(option.buildSeconds)}</span>
+              <span className="upgrade-population"><em>{option.population}</em> <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /></span>
               <div className="upgrade-branch-cost">{option.cost.map((cost) => <em key={cost.resource}><ResourceIcon id={cost.resource} label={resourceLabel(cost.resource)} />{cost.amount}</em>)}</div>
               <button className="text-button text-button-primary" type="button" disabled={pending} onClick={() => onUpgrade(option.type)}>Улучшить до {option.name}</button>
             </article>
@@ -766,6 +769,10 @@ function UpgradeModal({
           <div className="upgrade-cost-column upgrade-time-column">
             <span>Время работы</span>
             <em>{formatDuration(nextUpgrade.buildSeconds)}</em>
+          </div>
+          <div className="upgrade-cost-column upgrade-population-column">
+            <span>Население</span>
+            <em>{nextUpgrade.population} <ResourceIcon id="population" label="Жители" iconVariant="asset" className="resident-icon-inline" decorative /></em>
           </div>
           <div className="upgrade-cost-column upgrade-resources-column">
             <span>Стоимость</span>
@@ -832,6 +839,12 @@ function formatActionError(error: unknown) {
 		return error.message
 	}
 	return error instanceof Error ? error.message : 'Не удалось выполнить действие'
+}
+
+function notifyInsufficientPopulation(error: unknown) {
+  if (error instanceof ApiClientError && error.apiError.fields?.population) {
+    showToast('warning', 'Недостаточно свободного населения')
+  }
 }
 
 function resourceLabel(resource: string) {
